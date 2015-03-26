@@ -1,12 +1,15 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
-use_frameworks!
-link_with ['Tomo','TomoTests']
+link_with 'Tomo','TomoTests'
 
 pod 'JSQMessagesViewController'
 pod 'NYXImagesKit'
 pod 'UIColor-HexString'
 pod 'MagicalRecord'
 pod 'SVProgressHUD'
+
+target :Tomo do
 pod 'Reveal-iOS-SDK', :configurations => ['Debug']
+end
+
 pod 'RestKit'

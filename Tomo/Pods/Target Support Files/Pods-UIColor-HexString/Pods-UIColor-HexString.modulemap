@@ -1,6 +1,0 @@
-framework module UIColor_HexString {
-  umbrella header "Pods-UIColor-HexString-umbrella.h"
-
-  export *
-  module * { export * }
-}
