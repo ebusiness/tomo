@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F9940CFC-9A31-434D-9D7E-99B1BF087101</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Tomo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>AB7571BA5A7872AC5707E18B1E207FC8992E82E9</key>
+		<string>https://github.com/starboychina/tomo.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Tomo/Tomo.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>AB7571BA5A7872AC5707E18B1E207FC8992E82E9</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/starboychina/tomo.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>AB7571BA5A7872AC5707E18B1E207FC8992E82E9</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AB7571BA5A7872AC5707E18B1E207FC8992E82E9</string>
+			<key>IDESourceControlWCCName</key>
+			<string>tomo</string>
+		</dict>
+	</array>
+</dict>
+</plist>
