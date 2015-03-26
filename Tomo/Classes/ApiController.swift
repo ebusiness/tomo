@@ -28,12 +28,26 @@ class ApiController: NSObject {
         
         let userInfoMapping = RKEntityMapping(forEntityForName: "UserInfo", inManagedObjectStore: store)
         userInfoMapping.identificationAttributes = ["id"]
-        userInfoMapping.addAttributeMappingsFromArray(["firstName", "lastName"])
-        userInfoMapping.addAttributeMappingsFromDictionary(["_id" : "id"])
+        userInfoMapping.addAttributeMappingsFromDictionary(dicFromPlist("UserInfoMapping"))
+        
+        let postMapping = RKEntityMapping(forEntityForName: "Post", inManagedObjectStore: store)
+        postMapping.identificationAttributes = ["id"]
+        postMapping.addAttributeMappingsFromDictionary(dicFromPlist("PostMapping"))
+        
+        userInfoMapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "posts", toKeyPath: "posts", withMapping: postMapping))
         
         let userInfoDescriptor = RKResponseDescriptor(mapping: userInfoMapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
         
         RKObjectManager.sharedManager().addResponseDescriptor(userInfoDescriptor)
+        
+        
+
+        
+//        let postDescriptor = RKResponseDescriptor(mapping: userInfoMapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
+        
+//        RKObjectManager.sharedManager().addResponseDescriptor(postDescriptor)
+        
+        
         
         AFNetworkActivityIndicatorManager.sharedManager().enabled = true
     }
@@ -56,5 +70,10 @@ class ApiController: NSObject {
         }) { (_, error) -> Void in
             done(error)
         }
+    }
+    
+    class func dicFromPlist(name: String) -> NSDictionary {
+        let path = NSBundle.mainBundle().pathForResource(name, ofType: "plist")
+        return NSDictionary(contentsOfFile: path!)!
     }
 }

@@ -9,6 +9,10 @@ enum UserInfoAttributes: String {
     case lastName = "lastName"
 }
 
+enum UserInfoRelationships: String {
+    case posts = "posts"
+}
+
 @objc
 class _UserInfo: NSManagedObject {
 
@@ -32,7 +36,7 @@ class _UserInfo: NSManagedObject {
         let entity = _UserInfo.entity(managedObjectContext)
         self.init(entity: entity, insertIntoManagedObjectContext: managedObjectContext)
     }
-    
+
     // MARK: - Properties
 
     @NSManaged
@@ -52,5 +56,35 @@ class _UserInfo: NSManagedObject {
 
     // MARK: - Relationships
 
+    @NSManaged
+    var posts: NSSet
+
 }
 
+extension _UserInfo {
+
+    func addPosts(objects: NSSet) {
+        let mutable = self.posts.mutableCopy() as NSMutableSet
+        mutable.unionSet(objects)
+        self.posts = mutable.copy() as NSSet
+    }
+
+    func removePosts(objects: NSSet) {
+        let mutable = self.posts.mutableCopy() as NSMutableSet
+        mutable.minusSet(objects)
+        self.posts = mutable.copy() as NSSet
+    }
+
+    func addPostsObject(value: Post!) {
+        let mutable = self.posts.mutableCopy() as NSMutableSet
+        mutable.addObject(value)
+        self.posts = mutable.copy() as NSSet
+    }
+
+    func removePostsObject(value: Post!) {
+        let mutable = self.posts.mutableCopy() as NSMutableSet
+        mutable.removeObject(value)
+        self.posts = mutable.copy() as NSSet
+    }
+
+}
