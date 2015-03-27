@@ -43,11 +43,6 @@ class ApiControllerTests: XCTestCase {
             expect.fulfill()
         }
         
-        ApiController.loginWithEmail("zhangzhihua.dev@gmail.com", password: "1234567") { (error) -> Void in
-            XCTAssertNotNil(error, "")
-            expect.fulfill()
-        }
-        
         waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
             println(error)
         })
@@ -73,6 +68,23 @@ class ApiControllerTests: XCTestCase {
             XCTAssertNil(error, "")
             
             ApiController.getUserInfo("5387053ade9ace7c4c00010f", done: { (error) -> Void in
+                XCTAssertNil(error, "should success")
+                expect.fulfill()
+            })
+        }
+        
+        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
+            println(error)
+        })
+    }
+    
+    func testGetNewsfeed() {
+        let expect = expectationWithDescription("api")
+        
+        ApiController.loginWithEmail("zhangzhihua.dev@gmail.com", password: "12345678") { (error) -> Void in
+            XCTAssertNil(error, "")
+            
+            ApiController.getNewsfeed({ (error) -> Void in
                 XCTAssertNil(error, "should success")
                 expect.fulfill()
             })

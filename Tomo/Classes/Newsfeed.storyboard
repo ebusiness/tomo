@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="9dh-D8-bK6">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <scenes>
+        <!--Newsfeed View Controller-->
+        <scene sceneID="6me-Nt-Z0q">
+            <objects>
+                <viewController id="kv0-HR-FpL" customClass="NewsfeedViewController" customModule="Tomo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="A3K-n8-zcL"/>
+                        <viewControllerLayoutGuide type="bottom" id="Epl-6x-odW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ImA-hP-A71">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="z3Q-Ck-eif">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewsfeedCell" rowHeight="100" id="RQo-2C-8lT" customClass="NewsfeedCell" customModule="Tomo" customModuleProvider="target">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RQo-2C-8lT" id="aYN-iB-FA7">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="71G-sV-jb7">
+                                                    <rect key="frame" x="8" y="8" width="42" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xRq-pl-8tr">
+                                                    <rect key="frame" x="270" y="8" width="42" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="304" translatesAutoresizingMaskIntoConstraints="NO" id="Fb1-S9-KHf" customClass="MultilineLabel" customModule="Tomo" customModuleProvider="target">
+                                                    <rect key="frame" x="8" y="37" width="304" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Fb1-S9-KHf" secondAttribute="trailing" constant="8" id="71C-y4-r3G"/>
+                                                <constraint firstItem="71G-sV-jb7" firstAttribute="leading" secondItem="aYN-iB-FA7" secondAttribute="leading" constant="8" id="BCJ-vF-s7W"/>
+                                                <constraint firstItem="xRq-pl-8tr" firstAttribute="top" secondItem="aYN-iB-FA7" secondAttribute="top" constant="8" id="H03-Fd-7Ep"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Fb1-S9-KHf" secondAttribute="bottom" constant="8" id="MfR-2Z-cFM"/>
+                                                <constraint firstAttribute="trailing" secondItem="xRq-pl-8tr" secondAttribute="trailing" constant="8" id="PJ6-GB-OpN"/>
+                                                <constraint firstItem="Fb1-S9-KHf" firstAttribute="top" secondItem="xRq-pl-8tr" secondAttribute="bottom" constant="8" id="YlW-HZ-JrG"/>
+                                                <constraint firstItem="71G-sV-jb7" firstAttribute="top" secondItem="aYN-iB-FA7" secondAttribute="top" constant="8" id="hYH-ge-S2t"/>
+                                                <constraint firstItem="Fb1-S9-KHf" firstAttribute="leading" secondItem="aYN-iB-FA7" secondAttribute="leading" constant="8" id="mSW-Sc-e4m"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="contentLabel" destination="Fb1-S9-KHf" id="XrF-ec-E5u"/>
+                                            <outlet property="dateLabel" destination="xRq-pl-8tr" id="bqT-1u-5HR"/>
+                                            <outlet property="nameLabel" destination="71G-sV-jb7" id="xhR-L6-ai7"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="kv0-HR-FpL" id="16c-a6-qSQ"/>
+                                    <outlet property="delegate" destination="kv0-HR-FpL" id="uJp-kl-Pgg"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Epl-6x-odW" firstAttribute="top" secondItem="z3Q-Ck-eif" secondAttribute="bottom" id="0ud-D8-23n"/>
+                            <constraint firstItem="z3Q-Ck-eif" firstAttribute="leading" secondItem="ImA-hP-A71" secondAttribute="leading" id="DGt-GW-xAn"/>
+                            <constraint firstItem="z3Q-Ck-eif" firstAttribute="top" secondItem="ImA-hP-A71" secondAttribute="top" id="prt-8F-MyK"/>
+                            <constraint firstAttribute="trailing" secondItem="z3Q-Ck-eif" secondAttribute="trailing" id="yLG-xj-E7P"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="o25-rx-cDF"/>
+                    <connections>
+                        <outlet property="tableView" destination="z3Q-Ck-eif" id="4Zz-xc-elz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1NA-r7-HyB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="609" y="383"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="cBJ-kb-sfj">
+            <objects>
+                <navigationController storyboardIdentifier="NewsfeedNavi" automaticallyAdjustsScrollViewInsets="NO" id="9dh-D8-bK6" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hr5-Ta-kKq">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="kv0-HR-FpL" kind="relationship" relationship="rootViewController" id="j5J-b6-MMB"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5lr-aY-TUa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="176.53333333333333" y="383.39999999999998"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

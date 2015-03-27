@@ -1,20 +1,21 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to User.swift instead.
+// Make changes to Newsfeed.swift instead.
 
 import CoreData
 
-enum UserAttributes: String {
-    case email = "email"
+enum NewsfeedAttributes: String {
+    case content = "content"
+    case createDate = "createDate"
     case id = "id"
 }
 
 @objc
-class _User: NSManagedObject {
+class _Newsfeed: NSManagedObject {
 
     // MARK: - Class methods
 
     class func entityName () -> String {
-        return "User"
+        return "Newsfeed"
     }
 
     class func entity(managedObjectContext: NSManagedObjectContext!) -> NSEntityDescription! {
@@ -28,16 +29,21 @@ class _User: NSManagedObject {
     }
 
     convenience init(managedObjectContext: NSManagedObjectContext!) {
-        let entity = _User.entity(managedObjectContext)
+        let entity = _Newsfeed.entity(managedObjectContext)
         self.init(entity: entity, insertIntoManagedObjectContext: managedObjectContext)
     }
 
     // MARK: - Properties
 
     @NSManaged
-    var email: String?
+    var content: String?
 
-    // func validateEmail(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+    // func validateContent(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var createDate: NSDate?
+
+    // func validateCreateDate(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var id: String?

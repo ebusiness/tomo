@@ -51,6 +51,25 @@
 		29A1AFF81AC4113000775765 /* _Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1AFF61AC4113000775765 /* _Post.swift */; };
 		29A1AFFA1AC414E900775765 /* PostMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29A1AFF91AC414E900775765 /* PostMapping.plist */; };
 		29A1AFFB1AC414E900775765 /* PostMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29A1AFF91AC414E900775765 /* PostMapping.plist */; };
+		29A1AFFD1AC527BD00775765 /* NewsfeedMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29A1AFFC1AC527BD00775765 /* NewsfeedMapping.plist */; };
+		29A1AFFE1AC527BD00775765 /* NewsfeedMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29A1AFFC1AC527BD00775765 /* NewsfeedMapping.plist */; };
+		29A1B0001AC52EFA00775765 /* Newsfeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1AFFF1AC52EFA00775765 /* Newsfeed.swift */; };
+		29A1B0011AC52EFA00775765 /* Newsfeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1AFFF1AC52EFA00775765 /* Newsfeed.swift */; };
+		29A1B0031AC52F0300775765 /* _Newsfeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1B0021AC52F0300775765 /* _Newsfeed.swift */; };
+		29A1B0041AC52F0300775765 /* _Newsfeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1B0021AC52F0300775765 /* _Newsfeed.swift */; };
+		29A1B0061AC533A800775765 /* UserMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29A1B0051AC533A800775765 /* UserMapping.plist */; };
+		29A1B0071AC533A800775765 /* UserMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29A1B0051AC533A800775765 /* UserMapping.plist */; };
+		29BE7E121AC54224008110B4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
+		29BE7E131AC54224008110B4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
+		29BE7E151AC54506008110B4 /* NewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E141AC54506008110B4 /* NewsfeedViewController.swift */; };
+		29BE7E161AC54506008110B4 /* NewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E141AC54506008110B4 /* NewsfeedViewController.swift */; };
+		29BE7E181AC54525008110B4 /* Newsfeed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29BE7E171AC54525008110B4 /* Newsfeed.storyboard */; };
+		29BE7E191AC54525008110B4 /* Newsfeed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29BE7E171AC54525008110B4 /* Newsfeed.storyboard */; };
+		29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E1A1AC54663008110B4 /* DBController.swift */; };
+		29BE7E1C1AC54663008110B4 /* DBController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E1A1AC54663008110B4 /* DBController.swift */; };
+		29BE7E201AC557CC008110B4 /* NewsfeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E1F1AC557CC008110B4 /* NewsfeedCell.swift */; };
+		29BE7E211AC557CC008110B4 /* NewsfeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E1F1AC557CC008110B4 /* NewsfeedCell.swift */; };
+		29BE7E231AC55A28008110B4 /* MultilineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E221AC55A28008110B4 /* MultilineLabel.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		EDFAD76DAD0CE73107864C44 /* libPods-Tomo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5D8E21410882F4EFD2B7A7 /* libPods-Tomo.a */; };
@@ -90,6 +109,16 @@
 		29A1AFF31AC4112800775765 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		29A1AFF61AC4113000775765 /* _Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Post.swift; sourceTree = "<group>"; };
 		29A1AFF91AC414E900775765 /* PostMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PostMapping.plist; sourceTree = "<group>"; };
+		29A1AFFC1AC527BD00775765 /* NewsfeedMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NewsfeedMapping.plist; sourceTree = "<group>"; };
+		29A1AFFF1AC52EFA00775765 /* Newsfeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Newsfeed.swift; sourceTree = "<group>"; };
+		29A1B0021AC52F0300775765 /* _Newsfeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Newsfeed.swift; sourceTree = "<group>"; };
+		29A1B0051AC533A800775765 /* UserMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserMapping.plist; sourceTree = "<group>"; };
+		29BE7E111AC54224008110B4 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = Classes/Util.swift; sourceTree = "<group>"; };
+		29BE7E141AC54506008110B4 /* NewsfeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsfeedViewController.swift; path = Classes/NewsfeedViewController.swift; sourceTree = "<group>"; };
+		29BE7E171AC54525008110B4 /* Newsfeed.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Newsfeed.storyboard; path = Classes/Newsfeed.storyboard; sourceTree = "<group>"; };
+		29BE7E1A1AC54663008110B4 /* DBController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBController.swift; path = Classes/DBController.swift; sourceTree = "<group>"; };
+		29BE7E1F1AC557CC008110B4 /* NewsfeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsfeedCell.swift; path = Classes/NewsfeedCell.swift; sourceTree = "<group>"; };
+		29BE7E221AC55A28008110B4 /* MultilineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultilineLabel.swift; path = Classes/MultilineLabel.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		CA5D8E21410882F4EFD2B7A7 /* libPods-Tomo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tomo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +150,13 @@
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
+				29BE7E221AC55A28008110B4 /* MultilineLabel.swift */,
+				29BE7E1F1AC557CC008110B4 /* NewsfeedCell.swift */,
+				29BE7E1A1AC54663008110B4 /* DBController.swift */,
+				290134DB1AC3991C00BBFE29 /* Main.storyboard */,
+				29BE7E171AC54525008110B4 /* Newsfeed.storyboard */,
+				29BE7E141AC54506008110B4 /* NewsfeedViewController.swift */,
+				29BE7E111AC54224008110B4 /* Util.swift */,
 				2901351C1AC3A90C00BBFE29 /* Constants.swift */,
 				290134F71AC39F4600BBFE29 /* ApiController.swift */,
 				290135081AC3A67200BBFE29 /* Model */,
@@ -146,7 +182,6 @@
 			children = (
 				290134D71AC3991C00BBFE29 /* AppDelegate.swift */,
 				290134D91AC3991C00BBFE29 /* ViewController.swift */,
-				290134DB1AC3991C00BBFE29 /* Main.storyboard */,
 				290134DE1AC3991C00BBFE29 /* Images.xcassets */,
 				290134E01AC3991C00BBFE29 /* LaunchScreen.xib */,
 				290134D51AC3991C00BBFE29 /* Supporting Files */,
@@ -184,6 +219,7 @@
 		290135081AC3A67200BBFE29 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				29A1AFFF1AC52EFA00775765 /* Newsfeed.swift */,
 				29A1AFF31AC4112800775765 /* Post.swift */,
 				294BA3301AC3F29E00089204 /* UserInfo.swift */,
 				290135161AC3A78E00BBFE29 /* User.swift */,
@@ -197,6 +233,7 @@
 		290135091AC3A67200BBFE29 /* Machine */ = {
 			isa = PBXGroup;
 			children = (
+				29A1B0021AC52F0300775765 /* _Newsfeed.swift */,
 				29A1AFF61AC4113000775765 /* _Post.swift */,
 				294BA3331AC3F2A700089204 /* _UserInfo.swift */,
 				290135191AC3A79500BBFE29 /* _User.swift */,
@@ -209,6 +246,8 @@
 			children = (
 				29A1AFEF1AC40FC100775765 /* UserInfoMapping.plist */,
 				29A1AFF91AC414E900775765 /* PostMapping.plist */,
+				29A1AFFC1AC527BD00775765 /* NewsfeedMapping.plist */,
+				29A1B0051AC533A800775765 /* UserMapping.plist */,
 			);
 			name = Mapping;
 			sourceTree = "<group>";
@@ -320,10 +359,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				290134DD1AC3991C00BBFE29 /* Main.storyboard in Resources */,
+				29A1AFFD1AC527BD00775765 /* NewsfeedMapping.plist in Resources */,
 				290134E21AC3991C00BBFE29 /* LaunchScreen.xib in Resources */,
+				29BE7E181AC54525008110B4 /* Newsfeed.storyboard in Resources */,
 				29A1AFF01AC40FC100775765 /* UserInfoMapping.plist in Resources */,
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
 				29A1AFFA1AC414E900775765 /* PostMapping.plist in Resources */,
+				29A1B0061AC533A800775765 /* UserMapping.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,7 +374,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				29A1AFF11AC40FC100775765 /* UserInfoMapping.plist in Resources */,
+				29A1AFFE1AC527BD00775765 /* NewsfeedMapping.plist in Resources */,
 				29A1AFFB1AC414E900775765 /* PostMapping.plist in Resources */,
+				29BE7E191AC54525008110B4 /* Newsfeed.storyboard in Resources */,
+				29A1B0071AC533A800775765 /* UserMapping.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,13 +466,20 @@
 			files = (
 				2901351A1AC3A79500BBFE29 /* _User.swift in Sources */,
 				290134DA1AC3991C00BBFE29 /* ViewController.swift in Sources */,
+				29A1B0031AC52F0300775765 /* _Newsfeed.swift in Sources */,
+				29A1B0001AC52EFA00775765 /* Newsfeed.swift in Sources */,
+				29BE7E201AC557CC008110B4 /* NewsfeedCell.swift in Sources */,
 				290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */,
+				29BE7E151AC54506008110B4 /* NewsfeedViewController.swift in Sources */,
 				290134F81AC39F4600BBFE29 /* ApiController.swift in Sources */,
+				29BE7E231AC55A28008110B4 /* MultilineLabel.swift in Sources */,
+				29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */,
 				29A1AFF71AC4113000775765 /* _Post.swift in Sources */,
 				294BA3311AC3F29E00089204 /* UserInfo.swift in Sources */,
 				2901351D1AC3A90C00BBFE29 /* Constants.swift in Sources */,
 				294BA3341AC3F2A700089204 /* _UserInfo.swift in Sources */,
 				290135171AC3A78E00BBFE29 /* User.swift in Sources */,
+				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
 				290135121AC3A67200BBFE29 /* Model.xcdatamodeld in Sources */,
 				29A1AFF41AC4112800775765 /* Post.swift in Sources */,
 			);
@@ -439,13 +491,19 @@
 			files = (
 				290135181AC3A78E00BBFE29 /* User.swift in Sources */,
 				2901351B1AC3A79500BBFE29 /* _User.swift in Sources */,
+				29A1B0041AC52F0300775765 /* _Newsfeed.swift in Sources */,
+				29A1B0011AC52EFA00775765 /* Newsfeed.swift in Sources */,
+				29BE7E211AC557CC008110B4 /* NewsfeedCell.swift in Sources */,
 				2901351F1AC3AB4100BBFE29 /* ApiController.swift in Sources */,
+				29BE7E161AC54506008110B4 /* NewsfeedViewController.swift in Sources */,
 				290135131AC3A67200BBFE29 /* Model.xcdatamodeld in Sources */,
+				29BE7E1C1AC54663008110B4 /* DBController.swift in Sources */,
 				29A1AFF81AC4113000775765 /* _Post.swift in Sources */,
 				294BA3321AC3F29E00089204 /* UserInfo.swift in Sources */,
 				294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */,
 				294BA3351AC3F2A700089204 /* _UserInfo.swift in Sources */,
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
+				29BE7E131AC54224008110B4 /* Util.swift in Sources */,
 				2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */,
 				29A1AFF51AC4112800775765 /* Post.swift in Sources */,
 			);
@@ -468,6 +526,7 @@
 				290134DC1AC3991C00BBFE29 /* Base */,
 			);
 			name = Main.storyboard;
+			path = Tomo;
 			sourceTree = "<group>";
 		};
 		290134E01AC3991C00BBFE29 /* LaunchScreen.xib */ = {
@@ -565,6 +624,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Tomo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
@@ -579,6 +639,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Tomo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";

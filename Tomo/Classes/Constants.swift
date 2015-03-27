@@ -8,7 +8,9 @@
 
 import UIKit
 
-let kAPIBaseURLString = "http://new.selink.jp"
+//let kAPIBaseURLString = "http://new.selink.jp"
+let kAPIBaseURLString = "http://tomo.e-business.co.jp"
+
 let kAPIBaseURL = NSURL(string: kAPIBaseURLString)
 
 class Constants: NSObject {

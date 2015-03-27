@@ -26,28 +26,9 @@ class ApiController: NSObject {
         
         store.managedObjectCache = RKInMemoryManagedObjectCache(managedObjectContext: store.persistentStoreManagedObjectContext)
         
-        let userInfoMapping = RKEntityMapping(forEntityForName: "UserInfo", inManagedObjectStore: store)
-        userInfoMapping.identificationAttributes = ["id"]
-        userInfoMapping.addAttributeMappingsFromDictionary(dicFromPlist("UserInfoMapping"))
-        
-        let postMapping = RKEntityMapping(forEntityForName: "Post", inManagedObjectStore: store)
-        postMapping.identificationAttributes = ["id"]
-        postMapping.addAttributeMappingsFromDictionary(dicFromPlist("PostMapping"))
-        
-        userInfoMapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "posts", toKeyPath: "posts", withMapping: postMapping))
-        
-        let userInfoDescriptor = RKResponseDescriptor(mapping: userInfoMapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
-        
-        RKObjectManager.sharedManager().addResponseDescriptor(userInfoDescriptor)
-        
-        
-
-        
-//        let postDescriptor = RKResponseDescriptor(mapping: userInfoMapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
-        
-//        RKObjectManager.sharedManager().addResponseDescriptor(postDescriptor)
-        
-        
+        addUserResponseDescriptor()
+        addUserInfoResponseDescriptor()
+        addNewsfeedResponseDescriptor()
         
         AFNetworkActivityIndicatorManager.sharedManager().enabled = true
     }
@@ -72,8 +53,58 @@ class ApiController: NSObject {
         }
     }
     
+    class func getNewsfeed(done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/newsfeed", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+        }) { (_, error) -> Void in
+            done(error)
+        }
+    }
+    
     class func dicFromPlist(name: String) -> NSDictionary {
         let path = NSBundle.mainBundle().pathForResource(name, ofType: "plist")
         return NSDictionary(contentsOfFile: path!)!
+    }
+    
+    class func addUserResponseDescriptor() {
+        let store = RKObjectManager.sharedManager().managedObjectStore
+        
+        let userMapping = RKEntityMapping(forEntityForName: "User", inManagedObjectStore: store)
+        userMapping.identificationAttributes = ["id"]
+        userMapping.addAttributeMappingsFromDictionary(dicFromPlist("UserMapping"))
+        
+        let userDescriptor = RKResponseDescriptor(mapping: userMapping, method: .POST, pathPattern: "/login", keyPath: nil, statusCodes: nil)
+        
+        RKObjectManager.sharedManager().addResponseDescriptor(userDescriptor)
+    }
+    
+    class func addUserInfoResponseDescriptor() {
+        let store = RKObjectManager.sharedManager().managedObjectStore
+        
+        let userInfoMapping = RKEntityMapping(forEntityForName: "UserInfo", inManagedObjectStore: store)
+        userInfoMapping.identificationAttributes = ["id"]
+        userInfoMapping.addAttributeMappingsFromDictionary(dicFromPlist("UserInfoMapping"))
+        
+        let postMapping = RKEntityMapping(forEntityForName: "Post", inManagedObjectStore: store)
+        postMapping.identificationAttributes = ["id"]
+        postMapping.addAttributeMappingsFromDictionary(dicFromPlist("PostMapping"))
+        
+        userInfoMapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "posts", toKeyPath: "posts", withMapping: postMapping))
+        
+        let userInfoDescriptor = RKResponseDescriptor(mapping: userInfoMapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
+        
+        RKObjectManager.sharedManager().addResponseDescriptor(userInfoDescriptor)
+    }
+    
+    class func addNewsfeedResponseDescriptor() {
+        let store = RKObjectManager.sharedManager().managedObjectStore
+        
+        let newsfeedMapping = RKEntityMapping(forEntityForName: "Newsfeed", inManagedObjectStore: store)
+        newsfeedMapping.identificationAttributes = ["id"]
+        newsfeedMapping.addAttributeMappingsFromDictionary(dicFromPlist("NewsfeedMapping"))
+        
+        let newsfeedDescriptor = RKResponseDescriptor(mapping: newsfeedMapping, method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: nil)
+        
+        RKObjectManager.sharedManager().addResponseDescriptor(newsfeedDescriptor)
     }
 }
