@@ -33,11 +33,20 @@ class ApiController: NSObject {
         AFNetworkActivityIndicatorManager.sharedManager().enabled = true
     }
     
+    class func signUp(#email: String, password: String, firstName: String, lastName: String, done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().postObject(nil, path: "/mobile/user/regist", parameters: ["email" : email, "password" : password, "firstName" : firstName, "lastName" : lastName], success: { (_, result) -> Void in
+            println(result)
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    
     class func loginWithUser(user: User, done: (NSError?) -> Void) {
         
     }
     
-    class func loginWithEmail(email: String, password: String, done: (NSError?) -> Void) {
+    class func login(#email: String, password: String, done: (NSError?) -> Void) {
         RKObjectManager.sharedManager().postObject(nil, path: "/login", parameters: ["email" : email, "password" : password], success: { (_, result) -> Void in
             done(nil)
         }) { (_, error) -> Void in
@@ -65,6 +74,8 @@ class ApiController: NSObject {
         let path = NSBundle.mainBundle().pathForResource(name, ofType: "plist")
         return NSDictionary(contentsOfFile: path!)!
     }
+    
+    // MARK: - Descriptor
     
     class func addUserResponseDescriptor() {
         let store = RKObjectManager.sharedManager().managedObjectStore

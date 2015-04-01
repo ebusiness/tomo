@@ -5,7 +5,9 @@ import CoreData
 
 enum UserAttributes: String {
     case email = "email"
+    case firstName = "firstName"
     case id = "id"
+    case lastName = "lastName"
 }
 
 @objc
@@ -40,9 +42,19 @@ class _User: NSManagedObject {
     // func validateEmail(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
+    var firstName: String?
+
+    // func validateFirstName(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
     var id: String?
 
     // func validateId(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var lastName: String?
+
+    // func validateLastName(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     // MARK: - Relationships
 

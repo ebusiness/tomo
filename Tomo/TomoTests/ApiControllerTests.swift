@@ -34,10 +34,22 @@ class ApiControllerTests: XCTestCase {
         }
     }
 
+    func testSignUp() {
+        let expect = expectationWithDescription("api")
+        
+        ApiController.signUp(email: "1@1.com", password: "12345678", firstName: "fName", lastName: "lName") { (error) -> Void in
+            
+        }
+        
+        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
+            println(error)
+        })
+    }
+    
     func testLogin() {
         let expect = expectationWithDescription("api")
         
-        ApiController.loginWithEmail("zhangzhihua.dev@gmail.com", password: "12345678") { (error) -> Void in
+        ApiController.login(email: "zhangzhihua.dev@gmail.com", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             expect.fulfill()
@@ -64,7 +76,7 @@ class ApiControllerTests: XCTestCase {
     func testGetUserInfo() {
         let expect = expectationWithDescription("api")
         
-        ApiController.loginWithEmail("zhangzhihua.dev@gmail.com", password: "12345678") { (error) -> Void in
+        ApiController.login(email: "zhangzhihua.dev@gmail.com", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             ApiController.getUserInfo("5387053ade9ace7c4c00010f", done: { (error) -> Void in
@@ -81,7 +93,7 @@ class ApiControllerTests: XCTestCase {
     func testGetNewsfeed() {
         let expect = expectationWithDescription("api")
         
-        ApiController.loginWithEmail("zhangzhihua.dev@gmail.com", password: "12345678") { (error) -> Void in
+        ApiController.login(email: "zhangzhihua.dev@gmail.com", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             ApiController.getNewsfeed({ (error) -> Void in

@@ -70,6 +70,7 @@
 		29BE7E201AC557CC008110B4 /* NewsfeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E1F1AC557CC008110B4 /* NewsfeedCell.swift */; };
 		29BE7E211AC557CC008110B4 /* NewsfeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E1F1AC557CC008110B4 /* NewsfeedCell.swift */; };
 		29BE7E231AC55A28008110B4 /* MultilineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E221AC55A28008110B4 /* MultilineLabel.swift */; };
+		29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		EDFAD76DAD0CE73107864C44 /* libPods-Tomo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5D8E21410882F4EFD2B7A7 /* libPods-Tomo.a */; };
@@ -119,6 +120,7 @@
 		29BE7E1A1AC54663008110B4 /* DBController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBController.swift; path = Classes/DBController.swift; sourceTree = "<group>"; };
 		29BE7E1F1AC557CC008110B4 /* NewsfeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsfeedCell.swift; path = Classes/NewsfeedCell.swift; sourceTree = "<group>"; };
 		29BE7E221AC55A28008110B4 /* MultilineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultilineLabel.swift; path = Classes/MultilineLabel.swift; sourceTree = "<group>"; };
+		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		CA5D8E21410882F4EFD2B7A7 /* libPods-Tomo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tomo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,6 +152,7 @@
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
+				29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */,
 				29BE7E221AC55A28008110B4 /* MultilineLabel.swift */,
 				29BE7E1F1AC557CC008110B4 /* NewsfeedCell.swift */,
 				29BE7E1A1AC54663008110B4 /* DBController.swift */,
@@ -470,6 +473,7 @@
 				29A1B0001AC52EFA00775765 /* Newsfeed.swift in Sources */,
 				29BE7E201AC557CC008110B4 /* NewsfeedCell.swift in Sources */,
 				290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */,
+				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
 				29BE7E151AC54506008110B4 /* NewsfeedViewController.swift in Sources */,
 				290134F81AC39F4600BBFE29 /* ApiController.swift in Sources */,
 				29BE7E231AC55A28008110B4 /* MultilineLabel.swift in Sources */,
