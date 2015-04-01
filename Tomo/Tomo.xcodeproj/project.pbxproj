@@ -43,6 +43,7 @@
 		294BA3321AC3F29E00089204 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BA3301AC3F29E00089204 /* UserInfo.swift */; };
 		294BA3341AC3F2A700089204 /* _UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BA3331AC3F2A700089204 /* _UserInfo.swift */; };
 		294BA3351AC3F2A700089204 /* _UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BA3331AC3F2A700089204 /* _UserInfo.swift */; };
+		29643CD81ACBBF27000648BE /* RegPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29643CD71ACBBF27000648BE /* RegPageViewController.swift */; };
 		29A1AFF01AC40FC100775765 /* UserInfoMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29A1AFEF1AC40FC100775765 /* UserInfoMapping.plist */; };
 		29A1AFF11AC40FC100775765 /* UserInfoMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29A1AFEF1AC40FC100775765 /* UserInfoMapping.plist */; };
 		29A1AFF41AC4112800775765 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1AFF31AC4112800775765 /* Post.swift */; };
@@ -106,6 +107,7 @@
 		294BA32E1AC3D79100089204 /* ApiControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiControllerTests.swift; sourceTree = "<group>"; };
 		294BA3301AC3F29E00089204 /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		294BA3331AC3F2A700089204 /* _UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _UserInfo.swift; sourceTree = "<group>"; };
+		29643CD71ACBBF27000648BE /* RegPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegPageViewController.swift; path = Classes/RegPageViewController.swift; sourceTree = "<group>"; };
 		29A1AFEF1AC40FC100775765 /* UserInfoMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserInfoMapping.plist; sourceTree = "<group>"; };
 		29A1AFF31AC4112800775765 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		29A1AFF61AC4113000775765 /* _Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Post.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
+				29643CD71ACBBF27000648BE /* RegPageViewController.swift */,
 				29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */,
 				29BE7E221AC55A28008110B4 /* MultilineLabel.swift */,
 				29BE7E1F1AC557CC008110B4 /* NewsfeedCell.swift */,
@@ -467,6 +470,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29643CD81ACBBF27000648BE /* RegPageViewController.swift in Sources */,
 				2901351A1AC3A79500BBFE29 /* _User.swift in Sources */,
 				290134DA1AC3991C00BBFE29 /* ViewController.swift in Sources */,
 				29A1B0031AC52F0300775765 /* _Newsfeed.swift in Sources */,

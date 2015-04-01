@@ -101,6 +101,24 @@
             </objects>
             <point key="canvasLocation" x="115" y="286"/>
         </scene>
+        <!--Reg Page View Controller-->
+        <scene sceneID="o8T-6i-19i">
+            <objects>
+                <viewController id="sEG-zC-Et1" customClass="RegPageViewController" customModule="Tomo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PgN-6U-vQ0"/>
+                        <viewControllerLayoutGuide type="bottom" id="VFE-fm-hgZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MMw-Ic-UGL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tpb-EQ-lj4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="465" y="396"/>
+        </scene>
     </scenes>
     <resources>
         <image name="btn_footer_bg_blue" width="10" height="40"/>
