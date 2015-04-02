@@ -28,7 +28,6 @@ PODS:
     - RKValueTransformers (~> 1.1.0)
   - RestKit/Support (0.24.0):
     - TransitionKit (= 2.1.0)
-  - Reveal-iOS-SDK (1.5.1)
   - RKValueTransformers (1.1.1)
   - SOCKit (1.1)
   - SVProgressHUD (1.1.2)
@@ -40,23 +39,21 @@ DEPENDENCIES:
   - MagicalRecord
   - NYXImagesKit
   - RestKit
-  - Reveal-iOS-SDK
   - SVProgressHUD
   - UIColor-HexString
 
 SPEC CHECKSUMS:
-  AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
-  ISO8601DateFormatterValueTransformer: a705384ea6531255258e25b6480ba1180db703a0
+  AFNetworking: cf8e418e16f0c9c7e5c3150d019a3c679d015018
+  ISO8601DateFormatterValueTransformer: 3ac3a721381697cab4e792d8049ce2f2e9ad3036
   JSQMessagesViewController: 9fd7e9ac96e9fc91f2deca86928e2cc916aeebaa
-  JSQSystemSoundPlayer: 55528c699a283aae2220d3ae7b8b527d2ecef4b4
-  MagicalRecord: 2b471584fc9e3137f3d0a56967917baa4979e224
-  NYXImagesKit: 1c9f228ae78fab475d267b3b3a1308e0fba11731
-  RestKit: 8e301e50e1d25ce427215539f4fd72463f4a2a58
-  Reveal-iOS-SDK: dcfeb671c7da222c85f18f866da2ce88de075524
-  RKValueTransformers: 67b4ea3eb6a1c1a0b8c3c37eb4e4c05e4febeba2
-  SOCKit: d8d0dd3688ae1026c12367570da8fa8e1a6980fb
-  SVProgressHUD: da7a49e789af645d9279ffbca62318945a832438
-  TransitionKit: 6a6f3ddda38ae758778aa889dcb930e4f8d64edc
-  UIColor-HexString: a9eabf02c1a2f9036ed6ac9cb2a3ea086f3b39e4
+  JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
+  MagicalRecord: f8a56bb87ab6552f20c4bb8681a1958a197ea3cd
+  NYXImagesKit: 8163e3335a40eaa173ca5bbbf81fafb57d3947eb
+  RestKit: 34ba15ca955f7d5436a4120b7f19884f3df056a8
+  RKValueTransformers: d016f1967ae67997e492520fd0f9c512ccf168ae
+  SOCKit: c7376ac262bea9115b8f749358f762522a47d392
+  SVProgressHUD: 3afb875b9eb23acd1bed9b82495695c68621a8b2
+  TransitionKit: bc306605fb5e05a743c18d42239dc0e211619547
+  UIColor-HexString: f8a5612bd6772fed8db58ee594b42a0b2831750e
 
-COCOAPODS: 0.36.0
+COCOAPODS: 0.36.3

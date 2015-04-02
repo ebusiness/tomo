@@ -14,7 +14,7 @@ class ApiControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        ApiController.setup()
+//        ApiController.setup()
     }
     
     override func tearDown() {

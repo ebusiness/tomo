@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>imageName</key>
+		<string>img_reg_01</string>
+		<key>iconName</key>
+		<string>signin_logo</string>
+		<key>textA</key>
+		<string>Tomoでキャリアを躍進。</string>
+		<key>textB</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>imageName</key>
+		<string>img_reg_02</string>
+		<key>iconName</key>
+		<string>ico_reg_02</string>
+		<key>textA</key>
+		<string>ネットワークを構築</string>
+		<key>textB</key>
+		<string>知り合いとつながってビジネス機会を見つけよう。</string>
+	</dict>
+	<dict>
+		<key>imageName</key>
+		<string>img_reg_03</string>
+		<key>iconName</key>
+		<string>ico_reg_03</string>
+		<key>textA</key>
+		<string>最新情報をキャッチ</string>
+		<key>textB</key>
+		<string>気になるトピックをフォローして
+</string>
+	</dict>
+	<dict>
+		<key>imageName</key>
+		<string>img_reg_04</string>
+		<key>iconName</key>
+		<string>ico_reg_04</string>
+		<key>textA</key>
+		<string>人材募集をチェックしよう。</string>
+		<key>textB</key>
+		<string>Tomoに掲載されている求人情報に目を通しましょう。</string>
+	</dict>
+	<dict>
+		<key>imageName</key>
+		<string>img_reg_05</string>
+		<key>iconName</key>
+		<string>ico_reg_05</string>
+		<key>textA</key>
+		<string>プロフィールを作成</string>
+		<key>textB</key>
+		<string>プロフィールを通してあなたについて知ってもらいましょう。</string>
+	</dict>
+</array>
+</plist>

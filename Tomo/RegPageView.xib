@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="rbM-yE-Y4S" customClass="RegPageView" customModule="Tomo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="njc-OI-pb1">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="199.5"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="signin_logo" translatesAutoresizingMaskIntoConstraints="NO" id="yg7-c2-9P6">
+                    <rect key="frame" x="130" y="249" width="60" height="61"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LinkedInでキャリアを躍進。" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ofy-za-OMf">
+                    <rect key="frame" x="20" y="320" width="280" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="280" id="A6f-HQ-5ej"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qgd-5w-rKE">
+                    <rect key="frame" x="20" y="350" width="280" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="280" id="asI-wW-XVk"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sLk-IX-iNB">
+                    <rect key="frame" x="0.0" y="368" width="320" height="199.5"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="ofy-za-OMf" secondAttribute="centerX" id="5Lw-ie-BVB"/>
+                <constraint firstAttribute="centerX" secondItem="ofy-za-OMf" secondAttribute="centerX" id="5gG-5G-hvP"/>
+                <constraint firstAttribute="centerX" secondItem="yg7-c2-9P6" secondAttribute="centerX" id="6KV-zI-Ztq"/>
+                <constraint firstItem="njc-OI-pb1" firstAttribute="height" secondItem="sLk-IX-iNB" secondAttribute="height" id="Cvt-q4-fsy"/>
+                <constraint firstItem="yg7-c2-9P6" firstAttribute="top" secondItem="njc-OI-pb1" secondAttribute="bottom" constant="50" id="LKj-AG-xNI"/>
+                <constraint firstItem="sLk-IX-iNB" firstAttribute="leading" secondItem="rbM-yE-Y4S" secondAttribute="leading" id="LwC-j8-077"/>
+                <constraint firstItem="njc-OI-pb1" firstAttribute="leading" secondItem="rbM-yE-Y4S" secondAttribute="leading" id="QVw-21-vVo"/>
+                <constraint firstItem="njc-OI-pb1" firstAttribute="top" secondItem="rbM-yE-Y4S" secondAttribute="top" id="SGf-F0-iWv"/>
+                <constraint firstItem="Qgd-5w-rKE" firstAttribute="top" secondItem="ofy-za-OMf" secondAttribute="bottom" constant="6" id="UpO-sa-YwW"/>
+                <constraint firstItem="ofy-za-OMf" firstAttribute="top" secondItem="yg7-c2-9P6" secondAttribute="bottom" constant="10" id="Uuq-eo-eAO"/>
+                <constraint firstAttribute="trailing" secondItem="sLk-IX-iNB" secondAttribute="trailing" id="X7V-Lz-i7T"/>
+                <constraint firstAttribute="trailing" secondItem="njc-OI-pb1" secondAttribute="trailing" id="aIS-8b-f0Z"/>
+                <constraint firstAttribute="bottom" secondItem="sLk-IX-iNB" secondAttribute="bottom" id="cZL-uo-iBj"/>
+                <constraint firstAttribute="centerX" secondItem="Qgd-5w-rKE" secondAttribute="centerX" id="uek-ds-XFd"/>
+                <constraint firstItem="sLk-IX-iNB" firstAttribute="top" secondItem="Qgd-5w-rKE" secondAttribute="bottom" id="wNX-WH-KVw"/>
+            </constraints>
+            <connections>
+                <outlet property="imageView" destination="yg7-c2-9P6" id="VcU-jE-elD"/>
+                <outlet property="labelA" destination="ofy-za-OMf" id="iSY-Fn-gop"/>
+                <outlet property="labelB" destination="Qgd-5w-rKE" id="oYE-gR-6tv"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="signin_logo" width="60" height="61"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

@@ -7,9 +7,4 @@ pod 'NYXImagesKit'
 pod 'UIColor-HexString'
 pod 'MagicalRecord'
 pod 'SVProgressHUD'
-
-target :Tomo do
-pod 'Reveal-iOS-SDK', :configurations => ['Debug']
-end
-
 pod 'RestKit'

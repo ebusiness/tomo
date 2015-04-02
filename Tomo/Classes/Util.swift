@@ -22,5 +22,15 @@ class Util: NSObject {
     class func createViewWithNibName(name: String) -> UIView {
         return UINib(nibName: name, bundle: nil).instantiateWithOwner(self, options: nil)[0] as UIView
     }
+    
+    class func dicFromPlist(name: String) -> NSDictionary {
+        let path = NSBundle.mainBundle().pathForResource(name, ofType: "plist")
+        return NSDictionary(contentsOfFile: path!)!
+    }
+    
+    class func arrayFromPlist(name: String) -> NSArray {
+        let path = NSBundle.mainBundle().pathForResource(name, ofType: "plist")
+        return NSArray(contentsOfFile: path!)!
+    }
 }
 
