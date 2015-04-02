@@ -32,5 +32,33 @@ class Util: NSObject {
         let path = NSBundle.mainBundle().pathForResource(name, ofType: "plist")
         return NSArray(contentsOfFile: path!)!
     }
+    
+    // MARK: - SVProgress
+    
+    class func showTodo() {
+        SVProgressHUD.showInfoWithStatus("TODO", maskType: .Clear)
+    }
+    
+    class func showError(error: NSError) {
+        SVProgressHUD.showErrorWithStatus(error.localizedDescription, maskType: .Clear)
+    }
 }
+
+extension UIApplication {
+    
+    class func appVersion() -> String {
+        return NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as String
+    }
+    
+    class func appBuild() -> String {
+        return NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as NSString) as String
+    }
+    
+    class func versionBuild() -> String {
+        let version = appVersion(), build = appBuild()
+        
+        return version == build ? "v\(version)" : "v\(version)(\(build))"
+    }
+}
+
 

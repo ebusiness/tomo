@@ -47,6 +47,9 @@ class ApiController: NSObject {
     }
     
     class func login(#email: String, password: String, done: (NSError?) -> Void) {
+        var email = "zhangzhihua.dev@gmail.com"
+        var password = "12345678"
+        
         RKObjectManager.sharedManager().postObject(nil, path: "/login", parameters: ["email" : email, "password" : password], success: { (_, result) -> Void in
             done(nil)
         }) { (_, error) -> Void in

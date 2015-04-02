@@ -38,6 +38,9 @@
 		2901351D1AC3A90C00BBFE29 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901351C1AC3A90C00BBFE29 /* Constants.swift */; };
 		2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901351C1AC3A90C00BBFE29 /* Constants.swift */; };
 		2901351F1AC3AB4100BBFE29 /* ApiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134F71AC39F4600BBFE29 /* ApiController.swift */; };
+		2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */; };
+		2942CCCF1ACCE5EA007CDC97 /* Newsfeed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2942CCCE1ACCE5EA007CDC97 /* Newsfeed.storyboard */; };
+		2942CCD11ACCE75A007CDC97 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCD01ACCE75A007CDC97 /* BaseViewController.swift */; };
 		294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BA32E1AC3D79100089204 /* ApiControllerTests.swift */; };
 		294BA3311AC3F29E00089204 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BA3301AC3F29E00089204 /* UserInfo.swift */; };
 		294BA3321AC3F29E00089204 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BA3301AC3F29E00089204 /* UserInfo.swift */; };
@@ -107,6 +110,9 @@
 		290135161AC3A78E00BBFE29 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		290135191AC3A79500BBFE29 /* _User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _User.swift; sourceTree = "<group>"; };
 		2901351C1AC3A90C00BBFE29 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Classes/Constants.swift; sourceTree = "<group>"; };
+		2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegLoginViewController.swift; path = Classes/RegLoginViewController.swift; sourceTree = "<group>"; };
+		2942CCCE1ACCE5EA007CDC97 /* Newsfeed.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Newsfeed.storyboard; sourceTree = "<group>"; };
+		2942CCD01ACCE75A007CDC97 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		294BA32E1AC3D79100089204 /* ApiControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiControllerTests.swift; sourceTree = "<group>"; };
 		294BA3301AC3F29E00089204 /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		294BA3331AC3F2A700089204 /* _UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _UserInfo.swift; sourceTree = "<group>"; };
@@ -160,6 +166,9 @@
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
+				2942CCD01ACCE75A007CDC97 /* BaseViewController.swift */,
+				2942CCCE1ACCE5EA007CDC97 /* Newsfeed.storyboard */,
+				2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */,
 				29A5D1DA1ACBE03000D95B77 /* RegPageView.xib */,
 				29A5D1D81ACBE01700D95B77 /* RegPageView.swift */,
 				29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */,
@@ -379,6 +388,7 @@
 				290134E21AC3991C00BBFE29 /* LaunchScreen.xib in Resources */,
 				29BE7E181AC54525008110B4 /* Newsfeed.storyboard in Resources */,
 				29A1AFF01AC40FC100775765 /* UserInfoMapping.plist in Resources */,
+				2942CCCF1ACCE5EA007CDC97 /* Newsfeed.storyboard in Resources */,
 				29A5D1DB1ACBE03000D95B77 /* RegPageView.xib in Resources */,
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
 				29A1AFFA1AC414E900775765 /* PostMapping.plist in Resources */,
@@ -484,6 +494,7 @@
 				2901351A1AC3A79500BBFE29 /* _User.swift in Sources */,
 				290134DA1AC3991C00BBFE29 /* ViewController.swift in Sources */,
 				29A1B0031AC52F0300775765 /* _Newsfeed.swift in Sources */,
+				2942CCD11ACCE75A007CDC97 /* BaseViewController.swift in Sources */,
 				29A1B0001AC52EFA00775765 /* Newsfeed.swift in Sources */,
 				29BE7E201AC557CC008110B4 /* NewsfeedCell.swift in Sources */,
 				290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */,
@@ -496,6 +507,7 @@
 				29A1AFF71AC4113000775765 /* _Post.swift in Sources */,
 				294BA3311AC3F29E00089204 /* UserInfo.swift in Sources */,
 				2901351D1AC3A90C00BBFE29 /* Constants.swift in Sources */,
+				2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */,
 				294BA3341AC3F2A700089204 /* _UserInfo.swift in Sources */,
 				290135171AC3A78E00BBFE29 /* User.swift in Sources */,
 				29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */,

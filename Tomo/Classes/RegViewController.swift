@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RegViewController: UIViewController {
+class RegViewController: BaseViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
@@ -84,6 +84,12 @@ class RegViewController: UIViewController {
     }
     
 
+    // MARK: - Action
+    
+    @IBAction func login(sender: AnyObject) {
+        
+    }
+    
     /*
     // MARK: - Navigation
 

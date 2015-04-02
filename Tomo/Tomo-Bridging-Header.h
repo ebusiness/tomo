@@ -5,3 +5,4 @@
 #import "CoreData+MagicalRecord.h"
 #import "RestKit.h"
 #import "AFNetworking.h"
+#import "SVProgressHUD.h"
