@@ -979,7 +979,7 @@
 		D9C62F310B06280DB58A2E70 /* Network.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Network.h; path = Code/Network.h; sourceTree = "<group>"; };
 		D9DA079E34511084EFC28D90 /* JSQMessagesTypingIndicatorFooterView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSQMessagesTypingIndicatorFooterView.m; path = JSQMessagesViewController/Views/JSQMessagesTypingIndicatorFooterView.m; sourceTree = "<group>"; };
 		D9DCE374ABBCF3F630CC17F2 /* RKPropertyInspector+CoreData.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "RKPropertyInspector+CoreData.m"; path = "Code/CoreData/RKPropertyInspector+CoreData.m"; sourceTree = "<group>"; };
-		D9F9555DC27CFF867B8DB41F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		D9F9555DC27CFF867B8DB41F /* podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = podfile; path = ../podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DA13BB693BED9F205FA038A7 /* RKRequestDescriptor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RKRequestDescriptor.m; path = Code/Network/RKRequestDescriptor.m; sourceTree = "<group>"; };
 		DAD2E2BA1C24332460DCBDF3 /* RKManagedObjectRequestOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RKManagedObjectRequestOperation.m; path = Code/Network/RKManagedObjectRequestOperation.m; sourceTree = "<group>"; };
 		DAE39B83641703F488C3ADE6 /* JSQMessagesInputToolbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSQMessagesInputToolbar.m; path = JSQMessagesViewController/Views/JSQMessagesInputToolbar.m; sourceTree = "<group>"; };
@@ -1316,7 +1316,7 @@
 		341EC1F386C8C171F1BD2F47 = {
 			isa = PBXGroup;
 			children = (
-				D9F9555DC27CFF867B8DB41F /* Podfile */,
+				D9F9555DC27CFF867B8DB41F /* podfile */,
 				61B22213FDC547E787C56D13 /* Frameworks */,
 				645298175BBE821FDC9A9090 /* Pods */,
 				FBB9CC230C8ED590BDC5C415 /* Products */,
