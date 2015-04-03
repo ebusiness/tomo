@@ -51,8 +51,6 @@ extension ApiController {
     }
     
     class func login(#email: String, password: String, done: (NSError?) -> Void) {
-        var email = "zhangzhihua.dev@gmail.com"
-        var password = "12345678"
         
         RKObjectManager.sharedManager().postObject(nil, path: "/login", parameters: ["email" : email, "password" : password], success: { (_, result) -> Void in
             done(nil)
@@ -141,7 +139,10 @@ extension ApiController {
     //post
     private class func getPostMapping()->RKEntityMapping{
         var mapping = _postMapping
+        mapping.addPropertyMappingById("User",fromKey: "bookmarked",toKeyPath: "bookmarked")
+        mapping.addPropertyMappingById("User",fromKey: "liked",toKeyPath: "liked")
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: _userMapping))
+        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "comments", toKeyPath: "comments", withMapping: _commentsMapping))
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "images_mobile", toKeyPath: "imagesmobile", withMapping: _imagesMapping))
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "group", toKeyPath: "group", withMapping: _groupMapping))
         
@@ -175,6 +176,13 @@ extension ApiController {
     }
     private class var _devicesMapping: RKEntityMapping {
         return ApiController.getMapping("Devices", identification: nil,pListName: nil)
+    }
+    private class var _commentsMapping: RKEntityMapping {
+        var mapping = ApiController.getMapping("Comments", identification: nil,pListName: nil)
+        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: _userMapping))
+        mapping.addPropertyMappingById("User",fromKey: "liked",toKeyPath: "liked")
+        //mapping.addPropertyMappingById("User",fromKey: "_owner",toKeyPath: "owner")
+        return mapping
     }
 }
 

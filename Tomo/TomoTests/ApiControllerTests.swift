@@ -14,7 +14,7 @@ class ApiControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-//        ApiController.setup()
+        ApiController.setup()
     }
     
     override func tearDown() {
@@ -95,7 +95,7 @@ class ApiControllerTests: XCTestCase {
         
         ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
-            
+            println("logined")
             ApiController.getNewsfeed({ (error) -> Void in
                 XCTAssertNil(error, "should success")
                 expect.fulfill()

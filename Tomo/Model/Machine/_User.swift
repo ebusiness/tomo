@@ -18,9 +18,12 @@ enum UserAttributes: String {
 }
 
 enum UserRelationships: String {
+    case bookmarked_posts = "bookmarked_posts"
     case devices = "devices"
     case friends = "friends"
     case groups = "groups"
+    case liked_comments = "liked_comments"
+    case liked_posts = "liked_posts"
     case messages = "messages"
     case posts = "posts"
 }
@@ -62,7 +65,7 @@ class _User: NSManagedObject {
     // func validateCover_ref(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
-    var createDate: String?
+    var createDate: NSDate?
 
     // func validateCreateDate(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
@@ -109,6 +112,9 @@ class _User: NSManagedObject {
     // MARK: - Relationships
 
     @NSManaged
+    var bookmarked_posts: NSSet
+
+    @NSManaged
     var devices: NSSet
 
     @NSManaged
@@ -118,10 +124,44 @@ class _User: NSManagedObject {
     var groups: NSSet
 
     @NSManaged
+    var liked_comments: NSSet
+
+    @NSManaged
+    var liked_posts: NSSet
+
+    @NSManaged
     var messages: NSSet
 
     @NSManaged
     var posts: NSSet
+
+}
+
+extension _User {
+
+    func addBookmarked_posts(objects: NSSet) {
+        let mutable = self.bookmarked_posts.mutableCopy() as NSMutableSet
+        mutable.unionSet(objects)
+        self.bookmarked_posts = mutable.copy() as NSSet
+    }
+
+    func removeBookmarked_posts(objects: NSSet) {
+        let mutable = self.bookmarked_posts.mutableCopy() as NSMutableSet
+        mutable.minusSet(objects)
+        self.bookmarked_posts = mutable.copy() as NSSet
+    }
+
+    func addBookmarked_postsObject(value: Post!) {
+        let mutable = self.bookmarked_posts.mutableCopy() as NSMutableSet
+        mutable.addObject(value)
+        self.bookmarked_posts = mutable.copy() as NSSet
+    }
+
+    func removeBookmarked_postsObject(value: Post!) {
+        let mutable = self.bookmarked_posts.mutableCopy() as NSMutableSet
+        mutable.removeObject(value)
+        self.bookmarked_posts = mutable.copy() as NSSet
+    }
 
 }
 
@@ -205,6 +245,62 @@ extension _User {
         let mutable = self.groups.mutableCopy() as NSMutableSet
         mutable.removeObject(value)
         self.groups = mutable.copy() as NSSet
+    }
+
+}
+
+extension _User {
+
+    func addLiked_comments(objects: NSSet) {
+        let mutable = self.liked_comments.mutableCopy() as NSMutableSet
+        mutable.unionSet(objects)
+        self.liked_comments = mutable.copy() as NSSet
+    }
+
+    func removeLiked_comments(objects: NSSet) {
+        let mutable = self.liked_comments.mutableCopy() as NSMutableSet
+        mutable.minusSet(objects)
+        self.liked_comments = mutable.copy() as NSSet
+    }
+
+    func addLiked_commentsObject(value: Comments!) {
+        let mutable = self.liked_comments.mutableCopy() as NSMutableSet
+        mutable.addObject(value)
+        self.liked_comments = mutable.copy() as NSSet
+    }
+
+    func removeLiked_commentsObject(value: Comments!) {
+        let mutable = self.liked_comments.mutableCopy() as NSMutableSet
+        mutable.removeObject(value)
+        self.liked_comments = mutable.copy() as NSSet
+    }
+
+}
+
+extension _User {
+
+    func addLiked_posts(objects: NSSet) {
+        let mutable = self.liked_posts.mutableCopy() as NSMutableSet
+        mutable.unionSet(objects)
+        self.liked_posts = mutable.copy() as NSSet
+    }
+
+    func removeLiked_posts(objects: NSSet) {
+        let mutable = self.liked_posts.mutableCopy() as NSMutableSet
+        mutable.minusSet(objects)
+        self.liked_posts = mutable.copy() as NSSet
+    }
+
+    func addLiked_postsObject(value: Post!) {
+        let mutable = self.liked_posts.mutableCopy() as NSMutableSet
+        mutable.addObject(value)
+        self.liked_posts = mutable.copy() as NSSet
+    }
+
+    func removeLiked_postsObject(value: Post!) {
+        let mutable = self.liked_posts.mutableCopy() as NSMutableSet
+        mutable.removeObject(value)
+        self.liked_posts = mutable.copy() as NSSet
     }
 
 }
