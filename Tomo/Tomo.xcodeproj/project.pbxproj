@@ -171,9 +171,7 @@
 		29A5D1DE1ACBE9CB00D95B77 /* RegPageData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegPageData.plist; path = ../RegPageData.plist; sourceTree = "<group>"; };
 		29A5D1E01ACCCFB400D95B77 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		29BE7E111AC54224008110B4 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = Classes/Util.swift; sourceTree = "<group>"; };
-		29BE7E141AC54506008110B4 /* NewsfeedViewController_bak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsfeedViewController_bak.swift; path = Classes/NewsfeedViewController_bak.swift; sourceTree = "<group>"; };
 		29BE7E1A1AC54663008110B4 /* DBController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBController.swift; path = Classes/DBController.swift; sourceTree = "<group>"; };
-		29BE7E1F1AC557CC008110B4 /* NewsfeedCellBak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsfeedCellBak.swift; path = Classes/NewsfeedCellBak.swift; sourceTree = "<group>"; };
 		29BE7E221AC55A28008110B4 /* MultilineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultilineLabel.swift; path = Classes/MultilineLabel.swift; sourceTree = "<group>"; };
 		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -217,10 +215,8 @@
 				29A5D1D81ACBE01700D95B77 /* RegPageView.swift */,
 				29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */,
 				29BE7E221AC55A28008110B4 /* MultilineLabel.swift */,
-				29BE7E1F1AC557CC008110B4 /* NewsfeedCellBak.swift */,
 				29BE7E1A1AC54663008110B4 /* DBController.swift */,
 				290134DB1AC3991C00BBFE29 /* Main.storyboard */,
-				29BE7E141AC54506008110B4 /* NewsfeedViewController_bak.swift */,
 				29BE7E111AC54224008110B4 /* Util.swift */,
 				2901351C1AC3A90C00BBFE29 /* Constants.swift */,
 				290134F71AC39F4600BBFE29 /* ApiController.swift */,
