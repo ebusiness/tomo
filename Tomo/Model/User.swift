@@ -3,4 +3,9 @@ class User: _User {
 
 	// Custom logic goes here.
 
+    func fullName() -> String {
+        let fName = firstName ?? ""
+        let lName = lastName ?? ""
+        return "\(fName) \(lName)"
+    }
 }

@@ -20,15 +20,28 @@ class NewsfeedViewController: BaseViewController {
     
     var cellForHeight: NewsfeedCell!
     
+    var postsFRC: NSFetchedResultsController!
+    
+    var count: Int {
+        return (postsFRC.sections as [NSFetchedResultsSectionInfo])[0].numberOfObjects
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        postsFRC = DBController.newsfeeds()
+        postsFRC.delegate = self
+        
         collectionView.registerNib(UINib(nibName: "NewsfeedCell", bundle: nil), forCellWithReuseIdentifier: "NewsfeedCell")
         newsfeeds = DBController.newsfeeds()
         
         setupLayout()
         
         setupSizes()
+        
+        ApiController.getNewsfeed { (error) -> Void in
+            println("getNewsfeed done")
+        }
     }
     
     func setupLayout() {
@@ -39,7 +52,7 @@ class NewsfeedViewController: BaseViewController {
 
     func setupSizes() {
         for i in 0..<count {
-            let size = CGSizeMake(CGFloat(arc4random() % 250 + 250), CGFloat(arc4random() % 250 + 250))
+            let size = CGSizeMake(CGFloat(arc4random() % 500 + 500), CGFloat(arc4random() % 500 + 500))
             sizes.append(size)
         }
     }
@@ -69,9 +82,12 @@ extension NewsfeedViewController: UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let post = postsFRC.objectAtIndexPath(indexPath) as Post
+        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("NewsfeedCell", forIndexPath: indexPath) as NewsfeedCell
         
         cell.imageSize = sizes[indexPath.item]
+        cell.post = post
         
         cell.configCell()
         
@@ -83,6 +99,8 @@ extension NewsfeedViewController: CHTCollectionViewDelegateWaterfallLayout {
     
     func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize {
         
+        let post = postsFRC.objectAtIndexPath(indexPath) as Post
+        
         if cellForHeight == nil {
             cellForHeight = Util.createViewWithNibName("NewsfeedCell") as NewsfeedCell
         }
@@ -91,12 +109,20 @@ extension NewsfeedViewController: CHTCollectionViewDelegateWaterfallLayout {
         let imageSize = sizes[indexPath.item]
         
         cellForHeight.imageSize = imageSize
-
+        cellForHeight.post = post
+        
         var size = cellForHeight.sizeOfCell(cellWidth)
         size.width = cellWidth
         
         return size
     }
+}
 
+extension NewsfeedViewController: NSFetchedResultsControllerDelegate {
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        setupSizes()
+        self.collectionView.reloadData()
+    }
 }
 

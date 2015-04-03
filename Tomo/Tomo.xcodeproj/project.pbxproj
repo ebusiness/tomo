@@ -75,6 +75,12 @@
 		294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BA32E1AC3D79100089204 /* ApiControllerTests.swift */; };
 		296040401ACE46E000D2A338 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901351C1AC3A90C00BBFE29 /* Constants.swift */; };
 		296040411ACE476B00D2A338 /* ApiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134F71AC39F4600BBFE29 /* ApiController.swift */; };
+		296040431ACE644800D2A338 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040421ACE644800D2A338 /* TestData.swift */; };
+		296040461ACE669900D2A338 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040451ACE669900D2A338 /* Alamofire.swift */; };
+		296040471ACE687D00D2A338 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040421ACE644800D2A338 /* TestData.swift */; };
+		296040481ACE688500D2A338 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040451ACE669900D2A338 /* Alamofire.swift */; };
+		2960404C1ACE68C500D2A338 /* TestDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404B1ACE68C500D2A338 /* TestDataTests.swift */; };
+		2960404F1ACE75C500D2A338 /* AF+Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404D1ACE6E5B00D2A338 /* AF+Date+Extension.swift */; };
 		29A1AFF41AC4112800775765 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1AFF31AC4112800775765 /* Post.swift */; };
 		29A1AFF51AC4112800775765 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1AFF31AC4112800775765 /* Post.swift */; };
 		29A1AFF71AC4113000775765 /* _Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1AFF61AC4113000775765 /* _Post.swift */; };
@@ -150,6 +156,10 @@
 		2942CCD41ACD03BF007CDC97 /* NewsfeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsfeedCell.swift; path = Classes/NewsfeedCell.swift; sourceTree = "<group>"; };
 		2942CCD61ACD2B75007CDC97 /* NewsfeedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsfeedCell.xib; sourceTree = "<group>"; };
 		294BA32E1AC3D79100089204 /* ApiControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiControllerTests.swift; sourceTree = "<group>"; };
+		296040421ACE644800D2A338 /* TestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestData.swift; path = Classes/TestData.swift; sourceTree = "<group>"; };
+		296040451ACE669900D2A338 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
+		2960404B1ACE68C500D2A338 /* TestDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataTests.swift; sourceTree = "<group>"; };
+		2960404D1ACE6E5B00D2A338 /* AF+Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AF+Date+Extension.swift"; sourceTree = "<group>"; };
 		29A1AFF31AC4112800775765 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		29A1AFF61AC4113000775765 /* _Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Post.swift; sourceTree = "<group>"; };
 		29A1AFF91AC414E900775765 /* PostMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PostMapping.plist; sourceTree = "<group>"; };
@@ -196,6 +206,7 @@
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
+				296040421ACE644800D2A338 /* TestData.swift */,
 				2942CCD61ACD2B75007CDC97 /* NewsfeedCell.xib */,
 				2942CCD41ACD03BF007CDC97 /* NewsfeedCell.swift */,
 				2942CCD21ACCF761007CDC97 /* NewsfeedViewController.swift */,
@@ -214,6 +225,7 @@
 				2901351C1AC3A90C00BBFE29 /* Constants.swift */,
 				290134F71AC39F4600BBFE29 /* ApiController.swift */,
 				290135081AC3A67200BBFE29 /* Model */,
+				296040441ACE669900D2A338 /* Vendors */,
 				290134D41AC3991C00BBFE29 /* Tomo */,
 				290134EA1AC3991D00BBFE29 /* TomoTests */,
 				290134D31AC3991C00BBFE29 /* Products */,
@@ -259,6 +271,7 @@
 				290134EB1AC3991D00BBFE29 /* Supporting Files */,
 				294BA32E1AC3D79100089204 /* ApiControllerTests.swift */,
 				1712BE3B1ACE1E1B000A9C47 /* DBControllerTests.swift */,
+				2960404B1ACE68C500D2A338 /* TestDataTests.swift */,
 			);
 			path = TomoTests;
 			sourceTree = "<group>";
@@ -302,6 +315,15 @@
 				290135191AC3A79500BBFE29 /* _User.swift */,
 			);
 			path = Machine;
+			sourceTree = "<group>";
+		};
+		296040441ACE669900D2A338 /* Vendors */ = {
+			isa = PBXGroup;
+			children = (
+				2960404D1ACE6E5B00D2A338 /* AF+Date+Extension.swift */,
+				296040451ACE669900D2A338 /* Alamofire.swift */,
+			);
+			path = Vendors;
 			sourceTree = "<group>";
 		};
 		29A1AFF21AC40FFC00775765 /* Mapping */ = {
@@ -545,6 +567,7 @@
 				290134DA1AC3991C00BBFE29 /* ViewController.swift in Sources */,
 				1712BE481ACE5A54000A9C47 /* Comments.swift in Sources */,
 				2942CCD11ACCE75A007CDC97 /* BaseViewController.swift in Sources */,
+				2960404F1ACE75C500D2A338 /* AF+Date+Extension.swift in Sources */,
 				1712BE2E1ACCE809000A9C47 /* Group.swift in Sources */,
 				178D64A01ACC10B600185368 /* Message.swift in Sources */,
 				1712BE4B1ACE5D0F000A9C47 /* _Comments.swift in Sources */,
@@ -561,6 +584,8 @@
 				29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */,
 				29A1AFF71AC4113000775765 /* _Post.swift in Sources */,
 				2942CCD51ACD03BF007CDC97 /* NewsfeedCell.swift in Sources */,
+				296040431ACE644800D2A338 /* TestData.swift in Sources */,
+				296040461ACE669900D2A338 /* Alamofire.swift in Sources */,
 				2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */,
 				290135171AC3A78E00BBFE29 /* User.swift in Sources */,
 				29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */,
@@ -583,11 +608,14 @@
 				1712BE2F1ACCE810000A9C47 /* Group.swift in Sources */,
 				172EADD11ACC1C910039F42E /* Message.swift in Sources */,
 				290135131AC3A67200BBFE29 /* Model.xcdatamodeld in Sources */,
+				2960404C1ACE68C500D2A338 /* TestDataTests.swift in Sources */,
 				29BE7E1C1AC54663008110B4 /* DBController.swift in Sources */,
+				296040481ACE688500D2A338 /* Alamofire.swift in Sources */,
 				1712BE3A1ACE195B000A9C47 /* _Images.swift in Sources */,
 				29A1AFF81AC4113000775765 /* _Post.swift in Sources */,
 				1712BE431ACE4140000A9C47 /* Devices.swift in Sources */,
 				1712BE301ACCE819000A9C47 /* _Group.swift in Sources */,
+				296040471ACE687D00D2A338 /* TestData.swift in Sources */,
 				294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */,
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
 				1712BE391ACE1958000A9C47 /* Images.swift in Sources */,
