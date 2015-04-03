@@ -6,3 +6,6 @@
 #import "RestKit.h"
 #import "AFNetworking.h"
 #import "SVProgressHUD.h"
+#import "CHTCollectionViewWaterfallLayout.h"
+#import "SDWebImage/UIImageView+WebCache.h"
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"

@@ -2,25 +2,48 @@
 //  NewsfeedViewController.swift
 //  Tomo
 //
-//  Created by 張志華 on 2015/03/27.
+//  Created by 張志華 on 2015/04/02.
 //  Copyright (c) 2015年 &#24373;&#24535;&#33775;. All rights reserved.
 //
 
 import UIKit
 
-class NewsfeedViewController: UIViewController {
+let count = 30
 
-    @IBOutlet weak var tableView: UITableView!
+class NewsfeedViewController: BaseViewController {
+
+    @IBOutlet weak var collectionView: UICollectionView!
     
     var newsfeeds: NSFetchedResultsController!
+    
+    var sizes = [CGSize]()
+    
     var cellForHeight: NewsfeedCell!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        collectionView.registerNib(UINib(nibName: "NewsfeedCell", bundle: nil), forCellWithReuseIdentifier: "NewsfeedCell")
         newsfeeds = DBController.newsfeeds()
+        
+        setupLayout()
+        
+        setupSizes()
+    }
+    
+    func setupLayout() {
+        let layout = CHTCollectionViewWaterfallLayout()
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        collectionView.collectionViewLayout = layout
     }
 
+    func setupSizes() {
+        for i in 0..<count {
+            let size = CGSizeMake(CGFloat(arc4random() % 195 + 195), CGFloat(arc4random() % 195 + 195))
+            sizes.append(size)
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -37,49 +60,43 @@ class NewsfeedViewController: UIViewController {
     }
     */
 
-    
 }
 
-// MARK: - TableView
-
-extension NewsfeedViewController: UITableViewDataSource, UITableViewDelegate {
+extension NewsfeedViewController: UICollectionViewDataSource {
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let newsfeed = newsfeeds.objectAtIndexPath(indexPath) as Newsfeed
-        let cell = tableView.dequeueReusableCellWithIdentifier("NewsfeedCell", forIndexPath: indexPath) as NewsfeedCell
-        cell.newsfeed = newsfeed
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("NewsfeedCell", forIndexPath: indexPath) as NewsfeedCell
+        
+        cell.imageSize = sizes[indexPath.item]
+        
+        cell.configCell()
         
         return cell
     }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let s = newsfeeds.sections as [NSFetchedResultsSectionInfo]
-        return s[section].numberOfObjects
-    }
-    
-//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        let newsfeed = newsfeeds.objectAtIndexPath(indexPath) as Newsfeed
-//
-//        if cellForHeight == nil {
-//            cellForHeight = self.tableView.dequeueReusableCellWithIdentifier("NewsfeedCell") as? NewsfeedCell
-//        }
-//        
-//        cellForHeight.newsfeed = newsfeed
-//        
-//        return calculateHeightForConfiguredSizingCell(cellForHeight)
-//    }
-//    
-//    func calculateHeightForConfiguredSizingCell(cell: UITableViewCell) -> CGFloat {
-//        cell.bounds = CGRectMake(0,0,tableView.bounds.width,cell.bounds.height)
-//        cell.setNeedsLayout()
-//        cell.layoutIfNeeded()
-//        
-//        let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize) as CGSize
-//        
-//        return size.height + 1
-//    }
 }
+
+extension NewsfeedViewController: CHTCollectionViewDelegateWaterfallLayout {
+    
+    func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize {
+        
+        if cellForHeight == nil {
+            cellForHeight = Util.createViewWithNibName("NewsfeedCell") as NewsfeedCell
+        }
+        
+        let cellWidth = (collectionView.bounds.width - 3 * 10) / 2
+        let imageSize = sizes[indexPath.item]
+        
+        cellForHeight.imageSize = imageSize
+
+        var size = cellForHeight.sizeOfCell(cellWidth)
+        size.width = cellWidth
+        
+        return size
+    }
+
+}
+

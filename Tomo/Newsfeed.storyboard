@@ -53,12 +53,12 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ztO-Nh-Sbd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="702" y="169"/>
+            <point key="canvasLocation" x="1077" y="67"/>
         </scene>
-        <!--View Controller-->
+        <!--Newsfeed View Controller-->
         <scene sceneID="6pv-4Q-PNE">
             <objects>
-                <viewController id="pQ2-07-Tsh" sceneMemberID="viewController">
+                <viewController id="pQ2-07-Tsh" customClass="NewsfeedViewController" customModule="Tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YIL-or-QUe"/>
                         <viewControllerLayoutGuide type="bottom" id="GXU-LD-aeB"/>
@@ -66,13 +66,38 @@
                     <view key="view" contentMode="scaleToFill" id="szZ-nY-57x">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.26667884059494973" green="1" blue="0.11257735854409134" alpha="1" colorSpace="calibratedRGB"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZrA-dX-J4y">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="e3A-oM-bdZ">
+                                    <size key="itemSize" width="145" height="357"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <connections>
+                                    <outlet property="dataSource" destination="pQ2-07-Tsh" id="f4F-8Z-J4P"/>
+                                    <outlet property="delegate" destination="pQ2-07-Tsh" id="e4g-Xy-gq1"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="GXU-LD-aeB" firstAttribute="top" secondItem="ZrA-dX-J4y" secondAttribute="bottom" id="CZX-02-i6e"/>
+                            <constraint firstAttribute="trailing" secondItem="ZrA-dX-J4y" secondAttribute="trailing" id="TlT-IP-1qw"/>
+                            <constraint firstItem="ZrA-dX-J4y" firstAttribute="top" secondItem="szZ-nY-57x" secondAttribute="top" id="gRb-fN-n7m"/>
+                            <constraint firstItem="ZrA-dX-J4y" firstAttribute="leading" secondItem="szZ-nY-57x" secondAttribute="leading" id="nyn-9f-OPr"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="uKo-2v-h3N"/>
+                    <connections>
+                        <outlet property="collectionView" destination="ZrA-dX-J4y" id="fQq-9S-cwo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yDC-Be-xUJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="770" y="476"/>
+            <point key="canvasLocation" x="708" y="152"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

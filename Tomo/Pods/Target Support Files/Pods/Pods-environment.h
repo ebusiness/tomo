@@ -12,6 +12,12 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking 3
 #define COCOAPODS_VERSION_PATCH_AFNetworking 4
 
+// CHTCollectionViewWaterfallLayout
+#define COCOAPODS_POD_AVAILABLE_CHTCollectionViewWaterfallLayout
+#define COCOAPODS_VERSION_MAJOR_CHTCollectionViewWaterfallLayout 0
+#define COCOAPODS_VERSION_MINOR_CHTCollectionViewWaterfallLayout 8
+#define COCOAPODS_VERSION_PATCH_CHTCollectionViewWaterfallLayout 0
+
 // ISO8601DateFormatterValueTransformer
 #define COCOAPODS_POD_AVAILABLE_ISO8601DateFormatterValueTransformer
 #define COCOAPODS_VERSION_MAJOR_ISO8601DateFormatterValueTransformer 0
@@ -90,6 +96,18 @@
 #define COCOAPODS_VERSION_MINOR_RestKit_Support 24
 #define COCOAPODS_VERSION_PATCH_RestKit_Support 0
 
+// SDWebImage
+#define COCOAPODS_POD_AVAILABLE_SDWebImage
+#define COCOAPODS_VERSION_MAJOR_SDWebImage 3
+#define COCOAPODS_VERSION_MINOR_SDWebImage 7
+#define COCOAPODS_VERSION_PATCH_SDWebImage 2
+
+// SDWebImage/Core
+#define COCOAPODS_POD_AVAILABLE_SDWebImage_Core
+#define COCOAPODS_VERSION_MAJOR_SDWebImage_Core 3
+#define COCOAPODS_VERSION_MINOR_SDWebImage_Core 7
+#define COCOAPODS_VERSION_PATCH_SDWebImage_Core 2
+
 // SOCKit
 #define COCOAPODS_POD_AVAILABLE_SOCKit
 #define COCOAPODS_VERSION_MAJOR_SOCKit 1
@@ -107,6 +125,12 @@
 #define COCOAPODS_VERSION_MAJOR_TransitionKit 2
 #define COCOAPODS_VERSION_MINOR_TransitionKit 1
 #define COCOAPODS_VERSION_PATCH_TransitionKit 0
+
+// UIActivityIndicator-for-SDWebImage
+#define COCOAPODS_POD_AVAILABLE_UIActivityIndicator_for_SDWebImage
+#define COCOAPODS_VERSION_MAJOR_UIActivityIndicator_for_SDWebImage 1
+#define COCOAPODS_VERSION_MINOR_UIActivityIndicator_for_SDWebImage 2
+#define COCOAPODS_VERSION_PATCH_UIActivityIndicator_for_SDWebImage 0
 
 // UIColor-HexString
 #define COCOAPODS_POD_AVAILABLE_UIColor_HexString
