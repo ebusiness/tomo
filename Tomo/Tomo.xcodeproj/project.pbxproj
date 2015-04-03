@@ -95,7 +95,6 @@
 		29A5D1DB1ACBE03000D95B77 /* RegPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A5D1DA1ACBE03000D95B77 /* RegPageView.xib */; };
 		29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A5D1DC1ACBE85C00D95B77 /* RegPageData.swift */; };
 		29A5D1DF1ACBE9CB00D95B77 /* RegPageData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29A5D1DE1ACBE9CB00D95B77 /* RegPageData.plist */; };
-		29A5D1E11ACCCFB400D95B77 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29A5D1E01ACCCFB400D95B77 /* Reveal.framework */; };
 		29BE7E121AC54224008110B4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
 		29BE7E131AC54224008110B4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
 		29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E1A1AC54663008110B4 /* DBController.swift */; };
@@ -185,7 +184,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */,
-				29A5D1E11ACCCFB400D95B77 /* Reveal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,9 +819,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-lz",
-					"-framework",
-					Reveal,
 					"-l\"Pods-AFNetworking\"",
 					"-l\"Pods-ISO8601DateFormatterValueTransformer\"",
 					"-l\"Pods-JSQMessagesViewController\"",
