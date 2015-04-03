@@ -1,25 +1,29 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to UserInfo.swift instead.
+// Make changes to Group.swift instead.
 
 import CoreData
 
-enum UserInfoAttributes: String {
-    case firstName = "firstName"
+enum GroupAttributes: String {
+    case cover = "cover"
+    case cover_ref = "cover_ref"
+    case createDate = "createDate"
+    case depiction = "depiction"
     case id = "id"
-    case lastName = "lastName"
+    case name = "name"
 }
 
-enum UserInfoRelationships: String {
+enum GroupRelationships: String {
+    case owner = "owner"
     case posts = "posts"
 }
 
 @objc
-class _UserInfo: NSManagedObject {
+class _Group: NSManagedObject {
 
     // MARK: - Class methods
 
     class func entityName () -> String {
-        return "UserInfo"
+        return "Group"
     }
 
     class func entity(managedObjectContext: NSManagedObjectContext!) -> NSEntityDescription! {
@@ -33,16 +37,31 @@ class _UserInfo: NSManagedObject {
     }
 
     convenience init(managedObjectContext: NSManagedObjectContext!) {
-        let entity = _UserInfo.entity(managedObjectContext)
+        let entity = _Group.entity(managedObjectContext)
         self.init(entity: entity, insertIntoManagedObjectContext: managedObjectContext)
     }
 
     // MARK: - Properties
 
     @NSManaged
-    var firstName: String?
+    var cover: String?
 
-    // func validateFirstName(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+    // func validateCover(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var cover_ref: String?
+
+    // func validateCover_ref(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var createDate: NSDate?
+
+    // func validateCreateDate(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var depiction: String?
+
+    // func validateDepiction(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var id: String?
@@ -50,18 +69,23 @@ class _UserInfo: NSManagedObject {
     // func validateId(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
-    var lastName: String?
+    var name: String?
 
-    // func validateLastName(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+    // func validateName(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     // MARK: - Relationships
+
+    @NSManaged
+    var owner: User?
+
+    // func validateOwner(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var posts: NSSet
 
 }
 
-extension _UserInfo {
+extension _Group {
 
     func addPosts(objects: NSSet) {
         let mutable = self.posts.mutableCopy() as NSMutableSet

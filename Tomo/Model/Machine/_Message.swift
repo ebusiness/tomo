@@ -1,0 +1,71 @@
+// DO NOT EDIT. This file is machine-generated and constantly overwritten.
+// Make changes to Message.swift instead.
+
+import CoreData
+
+enum MessageAttributes: String {
+    case content = "content"
+    case createDate = "createDate"
+    case id = "id"
+    case subject = "subject"
+}
+
+enum MessageRelationships: String {
+    case from = "from"
+}
+
+@objc
+class _Message: NSManagedObject {
+
+    // MARK: - Class methods
+
+    class func entityName () -> String {
+        return "Message"
+    }
+
+    class func entity(managedObjectContext: NSManagedObjectContext!) -> NSEntityDescription! {
+        return NSEntityDescription.entityForName(self.entityName(), inManagedObjectContext: managedObjectContext);
+    }
+
+    // MARK: - Life cycle methods
+
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext!) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+
+    convenience init(managedObjectContext: NSManagedObjectContext!) {
+        let entity = _Message.entity(managedObjectContext)
+        self.init(entity: entity, insertIntoManagedObjectContext: managedObjectContext)
+    }
+
+    // MARK: - Properties
+
+    @NSManaged
+    var content: String?
+
+    // func validateContent(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var createDate: NSDate?
+
+    // func validateCreateDate(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var id: String?
+
+    // func validateId(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var subject: String?
+
+    // func validateSubject(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    // MARK: - Relationships
+
+    @NSManaged
+    var from: User?
+
+    // func validateFrom(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+}
+

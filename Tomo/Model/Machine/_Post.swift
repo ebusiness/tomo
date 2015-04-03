@@ -6,12 +6,13 @@ import CoreData
 enum PostAttributes: String {
     case content = "content"
     case createDate = "createDate"
-    case group = "group"
     case id = "id"
 }
 
 enum PostRelationships: String {
-    case userInfo = "userInfo"
+    case group = "group"
+    case imagesmobile = "imagesmobile"
+    case owner = "owner"
 }
 
 @objc
@@ -51,11 +52,6 @@ class _Post: NSManagedObject {
     // func validateCreateDate(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
-    var group: String?
-
-    // func validateGroup(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
-
-    @NSManaged
     var id: String?
 
     // func validateId(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
@@ -63,9 +59,44 @@ class _Post: NSManagedObject {
     // MARK: - Relationships
 
     @NSManaged
-    var userInfo: UserInfo?
+    var group: Group?
 
-    // func validateUserInfo(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+    // func validateGroup(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var imagesmobile: NSSet
+
+    @NSManaged
+    var owner: User?
+
+    // func validateOwner(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
 }
 
+extension _Post {
+
+    func addImagesmobile(objects: NSSet) {
+        let mutable = self.imagesmobile.mutableCopy() as NSMutableSet
+        mutable.unionSet(objects)
+        self.imagesmobile = mutable.copy() as NSSet
+    }
+
+    func removeImagesmobile(objects: NSSet) {
+        let mutable = self.imagesmobile.mutableCopy() as NSMutableSet
+        mutable.minusSet(objects)
+        self.imagesmobile = mutable.copy() as NSSet
+    }
+
+    func addImagesmobileObject(value: Images!) {
+        let mutable = self.imagesmobile.mutableCopy() as NSMutableSet
+        mutable.addObject(value)
+        self.imagesmobile = mutable.copy() as NSSet
+    }
+
+    func removeImagesmobileObject(value: Images!) {
+        let mutable = self.imagesmobile.mutableCopy() as NSMutableSet
+        mutable.removeObject(value)
+        self.imagesmobile = mutable.copy() as NSSet
+    }
+
+}

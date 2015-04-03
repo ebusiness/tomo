@@ -6,8 +6,6 @@
 	<string>content</string>
 	<key>createDate</key>
 	<string>createDate</string>
-	<key>group</key>
-	<string>group</string>
 	<key>_id</key>
 	<string>id</string>
 </dict>

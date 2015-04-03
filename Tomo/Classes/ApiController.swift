@@ -8,6 +8,8 @@
 
 import UIKit
 
+private let store = RKObjectManager.sharedManager().managedObjectStore
+
 class ApiController: NSObject {
    
     class func setup() {
@@ -29,6 +31,8 @@ class ApiController: NSObject {
         addUserResponseDescriptor()
         addUserInfoResponseDescriptor()
         addNewsfeedResponseDescriptor()
+        
+        addMessageResponseDescriptor()
         
         AFNetworkActivityIndicatorManager.sharedManager().enabled = true
     }
@@ -68,8 +72,16 @@ class ApiController: NSObject {
     class func getNewsfeed(done: (NSError?) -> Void) {
         RKObjectManager.sharedManager().getObjectsAtPath("/newsfeed", parameters: nil, success: { (_, _) -> Void in
             done(nil)
-        }) { (_, error) -> Void in
-            done(error)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    
+    class func getMessage(done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/messages", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
         }
     }
     
@@ -81,11 +93,8 @@ class ApiController: NSObject {
     // MARK: - Descriptor
     
     class func addUserResponseDescriptor() {
-        let store = RKObjectManager.sharedManager().managedObjectStore
         
-        let userMapping = RKEntityMapping(forEntityForName: "User", inManagedObjectStore: store)
-        userMapping.identificationAttributes = ["id"]
-        userMapping.addAttributeMappingsFromDictionary(dicFromPlist("UserMapping"))
+        let userMapping = getMapping("User", identification: nil,pListName: nil)
         
         let userDescriptor = RKResponseDescriptor(mapping: userMapping, method: .POST, pathPattern: "/login", keyPath: nil, statusCodes: nil)
         
@@ -93,32 +102,66 @@ class ApiController: NSObject {
     }
     
     class func addUserInfoResponseDescriptor() {
-        let store = RKObjectManager.sharedManager().managedObjectStore
+        let userMapping = getMapping("User", identification: nil,pListName: nil)
+//        let postMapping = getMapping("Post", identification: nil,pListName: nil)
         
-        let userInfoMapping = RKEntityMapping(forEntityForName: "UserInfo", inManagedObjectStore: store)
-        userInfoMapping.identificationAttributes = ["id"]
-        userInfoMapping.addAttributeMappingsFromDictionary(dicFromPlist("UserInfoMapping"))
+        userMapping.addPropertyMappingById("User",fromKey: "friends",toKeyPath: "friends")
+        userMapping.addPropertyMappingById("Post",fromKey: "posts",toKeyPath: "posts")
         
-        let postMapping = RKEntityMapping(forEntityForName: "Post", inManagedObjectStore: store)
-        postMapping.identificationAttributes = ["id"]
-        postMapping.addAttributeMappingsFromDictionary(dicFromPlist("PostMapping"))
         
-        userInfoMapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "posts", toKeyPath: "posts", withMapping: postMapping))
-        
-        let userInfoDescriptor = RKResponseDescriptor(mapping: userInfoMapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
+        let userInfoDescriptor = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
         
         RKObjectManager.sharedManager().addResponseDescriptor(userInfoDescriptor)
     }
     
     class func addNewsfeedResponseDescriptor() {
-        let store = RKObjectManager.sharedManager().managedObjectStore
+        let newsfeedMapping = getMapping("Post", identification: nil,pListName: nil)
+        let imagesMapping = getMapping("Images", identification: nil,pListName: nil)
+        let userMapping = getMapping("User", identification: nil,pListName: nil)
         
-        let newsfeedMapping = RKEntityMapping(forEntityForName: "Newsfeed", inManagedObjectStore: store)
-        newsfeedMapping.identificationAttributes = ["id"]
-        newsfeedMapping.addAttributeMappingsFromDictionary(dicFromPlist("NewsfeedMapping"))
+        newsfeedMapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping))
+        newsfeedMapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "images_mobile", toKeyPath: "imagesmobile", withMapping: imagesMapping))
         
         let newsfeedDescriptor = RKResponseDescriptor(mapping: newsfeedMapping, method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: nil)
         
         RKObjectManager.sharedManager().addResponseDescriptor(newsfeedDescriptor)
+    }
+    
+    class func addMessageResponseDescriptor() {
+        let messageMapping = getMapping("Message", identification: nil,pListName:nil)
+        let userMapping = getMapping("User", identification: nil,pListName: nil)
+        
+        messageMapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_from", toKeyPath: "from", withMapping: userMapping))
+        
+        let messageDescriptor = RKResponseDescriptor(mapping: messageMapping, method: .GET, pathPattern: "/messages", keyPath: nil, statusCodes: nil)
+        
+        RKObjectManager.sharedManager().addResponseDescriptor(messageDescriptor)
+    }
+    
+    private class func getMapping(entityName:String,identification:[String]?,pListName:String?)->RKEntityMapping{
+        let mapping = RKEntityMapping(forEntityForName: entityName, inManagedObjectStore: store)
+        
+        if let id = identification {
+            mapping.identificationAttributes = id
+        }else{
+            mapping.identificationAttributes = ["id"]
+        }
+        
+        var plistname = entityName + "Mapping"
+        if let name = pListName {
+            plistname = name
+        }
+        let path = NSBundle.mainBundle().pathForResource(plistname, ofType: "plist")
+        let Plist = NSDictionary(contentsOfFile: path!)!
+        mapping.addAttributeMappingsFromDictionary(Plist)
+        return mapping
+    }
+}
+extension RKEntityMapping{
+    func addPropertyMappingById(entityName:String,fromKey:String,toKeyPath:String){
+        let mapping = RKEntityMapping(forEntityForName: entityName, inManagedObjectStore: store)
+        mapping.addPropertyMapping(RKAttributeMapping(fromKeyPath: nil, toKeyPath: "id"))
+        let propertyMapping = RKRelationshipMapping(fromKeyPath: fromKey, toKeyPath: toKeyPath, withMapping: mapping)
+        self.addPropertyMapping(propertyMapping)
     }
 }

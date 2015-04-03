@@ -25,6 +25,7 @@ class NewsfeedCell: UICollectionViewCell {
     }
     
     var post: Post! {
+
         didSet {
             
         }

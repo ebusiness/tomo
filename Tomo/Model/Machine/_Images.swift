@@ -1,21 +1,23 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to Newsfeed.swift instead.
+// Make changes to Images.swift instead.
 
 import CoreData
 
-enum NewsfeedAttributes: String {
-    case content = "content"
-    case createDate = "createDate"
+enum ImagesAttributes: String {
+    case height = "height"
     case id = "id"
+    case name = "name"
+    case type = "type"
+    case width = "width"
 }
 
 @objc
-class _Newsfeed: NSManagedObject {
+class _Images: NSManagedObject {
 
     // MARK: - Class methods
 
     class func entityName () -> String {
-        return "Newsfeed"
+        return "Images"
     }
 
     class func entity(managedObjectContext: NSManagedObjectContext!) -> NSEntityDescription! {
@@ -29,26 +31,36 @@ class _Newsfeed: NSManagedObject {
     }
 
     convenience init(managedObjectContext: NSManagedObjectContext!) {
-        let entity = _Newsfeed.entity(managedObjectContext)
+        let entity = _Images.entity(managedObjectContext)
         self.init(entity: entity, insertIntoManagedObjectContext: managedObjectContext)
     }
 
     // MARK: - Properties
 
     @NSManaged
-    var content: String?
+    var height: NSNumber?
 
-    // func validateContent(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
-
-    @NSManaged
-    var createDate: NSDate?
-
-    // func validateCreateDate(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+    // func validateHeight(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var id: String?
 
     // func validateId(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var name: String?
+
+    // func validateName(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var type: String?
+
+    // func validateType(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var width: NSNumber?
+
+    // func validateWidth(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     // MARK: - Relationships
 

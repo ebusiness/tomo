@@ -4,10 +4,25 @@
 import CoreData
 
 enum UserAttributes: String {
+    case commentLiked = "commentLiked"
+    case cover = "cover"
+    case cover_ref = "cover_ref"
+    case createDate = "createDate"
     case email = "email"
     case firstName = "firstName"
     case id = "id"
     case lastName = "lastName"
+    case photo = "photo"
+    case photo_ref = "photo_ref"
+    case provider = "provider"
+    case type = "type"
+}
+
+enum UserRelationships: String {
+    case friends = "friends"
+    case groups = "groups"
+    case messages = "messages"
+    case posts = "posts"
 }
 
 @objc
@@ -37,6 +52,26 @@ class _User: NSManagedObject {
     // MARK: - Properties
 
     @NSManaged
+    var commentLiked: NSNumber?
+
+    // func validateCommentLiked(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var cover: String?
+
+    // func validateCover(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var cover_ref: String?
+
+    // func validateCover_ref(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var createDate: String?
+
+    // func validateCreateDate(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
     var email: String?
 
     // func validateEmail(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
@@ -56,7 +91,150 @@ class _User: NSManagedObject {
 
     // func validateLastName(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
+    @NSManaged
+    var photo: String?
+
+    // func validatePhoto(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var photo_ref: String?
+
+    // func validatePhoto_ref(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var provider: String?
+
+    // func validateProvider(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var type: String?
+
+    // func validateType(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
     // MARK: - Relationships
+
+    @NSManaged
+    var friends: NSSet
+
+    @NSManaged
+    var groups: NSSet
+
+    @NSManaged
+    var messages: NSSet
+
+    @NSManaged
+    var posts: NSSet
 
 }
 
+extension _User {
+
+    func addFriends(objects: NSSet) {
+        let mutable = self.friends.mutableCopy() as NSMutableSet
+        mutable.unionSet(objects)
+        self.friends = mutable.copy() as NSSet
+    }
+
+    func removeFriends(objects: NSSet) {
+        let mutable = self.friends.mutableCopy() as NSMutableSet
+        mutable.minusSet(objects)
+        self.friends = mutable.copy() as NSSet
+    }
+
+    func addFriendsObject(value: User!) {
+        let mutable = self.friends.mutableCopy() as NSMutableSet
+        mutable.addObject(value)
+        self.friends = mutable.copy() as NSSet
+    }
+
+    func removeFriendsObject(value: User!) {
+        let mutable = self.friends.mutableCopy() as NSMutableSet
+        mutable.removeObject(value)
+        self.friends = mutable.copy() as NSSet
+    }
+
+}
+
+extension _User {
+
+    func addGroups(objects: NSSet) {
+        let mutable = self.groups.mutableCopy() as NSMutableSet
+        mutable.unionSet(objects)
+        self.groups = mutable.copy() as NSSet
+    }
+
+    func removeGroups(objects: NSSet) {
+        let mutable = self.groups.mutableCopy() as NSMutableSet
+        mutable.minusSet(objects)
+        self.groups = mutable.copy() as NSSet
+    }
+
+    func addGroupsObject(value: Group!) {
+        let mutable = self.groups.mutableCopy() as NSMutableSet
+        mutable.addObject(value)
+        self.groups = mutable.copy() as NSSet
+    }
+
+    func removeGroupsObject(value: Group!) {
+        let mutable = self.groups.mutableCopy() as NSMutableSet
+        mutable.removeObject(value)
+        self.groups = mutable.copy() as NSSet
+    }
+
+}
+
+extension _User {
+
+    func addMessages(objects: NSSet) {
+        let mutable = self.messages.mutableCopy() as NSMutableSet
+        mutable.unionSet(objects)
+        self.messages = mutable.copy() as NSSet
+    }
+
+    func removeMessages(objects: NSSet) {
+        let mutable = self.messages.mutableCopy() as NSMutableSet
+        mutable.minusSet(objects)
+        self.messages = mutable.copy() as NSSet
+    }
+
+    func addMessagesObject(value: Message!) {
+        let mutable = self.messages.mutableCopy() as NSMutableSet
+        mutable.addObject(value)
+        self.messages = mutable.copy() as NSSet
+    }
+
+    func removeMessagesObject(value: Message!) {
+        let mutable = self.messages.mutableCopy() as NSMutableSet
+        mutable.removeObject(value)
+        self.messages = mutable.copy() as NSSet
+    }
+
+}
+
+extension _User {
+
+    func addPosts(objects: NSSet) {
+        let mutable = self.posts.mutableCopy() as NSMutableSet
+        mutable.unionSet(objects)
+        self.posts = mutable.copy() as NSSet
+    }
+
+    func removePosts(objects: NSSet) {
+        let mutable = self.posts.mutableCopy() as NSMutableSet
+        mutable.minusSet(objects)
+        self.posts = mutable.copy() as NSSet
+    }
+
+    func addPostsObject(value: Post!) {
+        let mutable = self.posts.mutableCopy() as NSMutableSet
+        mutable.addObject(value)
+        self.posts = mutable.copy() as NSSet
+    }
+
+    func removePostsObject(value: Post!) {
+        let mutable = self.posts.mutableCopy() as NSMutableSet
+        mutable.removeObject(value)
+        self.posts = mutable.copy() as NSSet
+    }
+
+}

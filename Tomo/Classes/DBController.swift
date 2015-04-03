@@ -15,7 +15,20 @@ class DBController: NSObject {
     }
     
     class func newsfeeds() -> NSFetchedResultsController {
-        return Newsfeed.MR_fetchAllGroupedBy(nil, withPredicate: nil, sortedBy: "createDate", ascending: false, inContext: context)
+        return Post.MR_fetchAllGroupedBy(nil, withPredicate: nil, sortedBy: "createDate", ascending: false, inContext: context)
     }
     
+//    class func newsfeeds(key: String, value: String) -> Post? {
+//        return nil
+//    }
+    
+    class func newsfeedsHasImage() -> [Post]? {
+        let p = NSPredicate(format: "imagesmobile.count = 0", argumentArray: nil)
+       return Post.MR_findAllWithPredicate(p, inContext: context) as? [Post]
+    }
+    
+    class func allNewsfeeds() -> [Post]? {
+        let res = Post.MR_findAllInContext(context)
+        return Post.MR_findAllInContext(context) as? [Post]
+    }
 }
