@@ -51,6 +51,10 @@ extension ApiController {
     }
     
     class func login(#email: String, password: String, done: (NSError?) -> Void) {
+        #if AutoLogin
+            var email = "zhangzhihua.dev@gmail.com"
+            var password = "12345678"
+        #endif
         
         RKObjectManager.sharedManager().postObject(nil, path: "/login", parameters: ["email" : email, "password" : password], success: { (_, result) -> Void in
             done(nil)

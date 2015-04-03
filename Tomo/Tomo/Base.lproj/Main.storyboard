@@ -157,9 +157,16 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="4Wm-m0-0bg" id="ixg-08-hhu"/>
+                                                </connections>
                                             </textField>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellDividerLine" translatesAutoresizingMaskIntoConstraints="NO" id="uue-KQ-Ogo">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uue-KQ-Ogo">
                                                 <rect key="frame" x="10" y="44" width="300" height="1"/>
+                                                <color key="backgroundColor" red="0.84946547269999995" green="0.84946547269999995" blue="0.84946547269999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="XTP-vW-Gpx"/>
+                                                </constraints>
                                             </imageView>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="パスワード" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C21-6s-cOa">
                                                 <rect key="frame" x="10" y="45" width="300" height="44"/>
@@ -169,6 +176,9 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" secureTextEntry="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="4Wm-m0-0bg" id="0Je-hB-D4g"/>
+                                                </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hPu-le-qKh">
                                                 <rect key="frame" x="10" y="104" width="300" height="44"/>
@@ -256,7 +266,6 @@
     <resources>
         <image name="btn_footer_bg_blue" width="10" height="40"/>
         <image name="btn_footer_bg_gray" width="10" height="40"/>
-        <image name="cellDividerLine" width="310" height="1"/>
         <image name="ico_reg_close" width="18" height="18"/>
         <image name="img_reg_login" width="360" height="572"/>
     </resources>

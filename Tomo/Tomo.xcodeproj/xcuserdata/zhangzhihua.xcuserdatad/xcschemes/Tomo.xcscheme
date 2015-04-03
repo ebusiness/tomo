@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "290134D11AC3991C00BBFE29"
-               BuildableName = "Tomo.app"
+               BuildableName = "tomo.app"
                BlueprintName = "Tomo"
                ReferencedContainer = "container:Tomo.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "290134D11AC3991C00BBFE29"
-            BuildableName = "Tomo.app"
+            BuildableName = "tomo.app"
             BlueprintName = "Tomo"
             ReferencedContainer = "container:Tomo.xcodeproj">
          </BuildableReference>
@@ -77,7 +77,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "290134D11AC3991C00BBFE29"
-            BuildableName = "Tomo.app"
+            BuildableName = "tomo.app"
             BlueprintName = "Tomo"
             ReferencedContainer = "container:Tomo.xcodeproj">
          </BuildableReference>
@@ -96,7 +96,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "290134D11AC3991C00BBFE29"
-            BuildableName = "Tomo.app"
+            BuildableName = "tomo.app"
             BlueprintName = "Tomo"
             ReferencedContainer = "container:Tomo.xcodeproj">
          </BuildableReference>

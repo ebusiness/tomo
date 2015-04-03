@@ -133,7 +133,7 @@
 		178D649D1ACC0DDF00185368 /* MessageMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MessageMapping.plist; sourceTree = "<group>"; };
 		178D649F1ACC10B600185368 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		178D64A11ACC10BE00185368 /* _Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Message.swift; sourceTree = "<group>"; };
-		290134D21AC3991C00BBFE29 /* Tomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		290134D21AC3991C00BBFE29 /* tomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		290134D61AC3991C00BBFE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		290134D71AC3991C00BBFE29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		290134D91AC3991C00BBFE29 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -233,7 +233,7 @@
 		290134D31AC3991C00BBFE29 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				290134D21AC3991C00BBFE29 /* Tomo.app */,
+				290134D21AC3991C00BBFE29 /* tomo.app */,
 				290134E71AC3991C00BBFE29 /* TomoTests.xctest */,
 			);
 			name = Products;
@@ -374,7 +374,7 @@
 			);
 			name = Tomo;
 			productName = Tomo;
-			productReference = 290134D21AC3991C00BBFE29 /* Tomo.app */;
+			productReference = 290134D21AC3991C00BBFE29 /* tomo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		290134E61AC3991C00BBFE29 /* TomoTests */ = {
@@ -715,7 +715,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: E-BUSINESS Inc.";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -728,6 +728,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "86cfd64e-cf6f-466b-ae99-f63fb8fbb46c";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -797,7 +798,8 @@
 					"-framework",
 					"\"UIKit\"",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				OTHER_SWIFT_FLAGS = "-D DEBUG -D AutoLogin";
+				PRODUCT_NAME = tomo;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -867,7 +869,7 @@
 					"-framework",
 					"\"UIKit\"",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = tomo;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
