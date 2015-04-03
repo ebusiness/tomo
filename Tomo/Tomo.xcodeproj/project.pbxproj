@@ -32,6 +32,11 @@
 		1712BE391ACE1958000A9C47 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1712BE351ACE1836000A9C47 /* Images.swift */; };
 		1712BE3A1ACE195B000A9C47 /* _Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1712BE371ACE183C000A9C47 /* _Images.swift */; };
 		1712BE3C1ACE1E1B000A9C47 /* DBControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1712BE3B1ACE1E1B000A9C47 /* DBControllerTests.swift */; };
+		1712BE3E1ACE4101000A9C47 /* DevicesMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1712BE3D1ACE4101000A9C47 /* DevicesMapping.plist */; };
+		1712BE401ACE4135000A9C47 /* _Devices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1712BE3F1ACE4135000A9C47 /* _Devices.swift */; };
+		1712BE421ACE413C000A9C47 /* Devices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1712BE411ACE413C000A9C47 /* Devices.swift */; };
+		1712BE431ACE4140000A9C47 /* Devices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1712BE411ACE413C000A9C47 /* Devices.swift */; };
+		1712BE441ACE4143000A9C47 /* _Devices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1712BE3F1ACE4135000A9C47 /* _Devices.swift */; };
 		172EADD01ACC1C850039F42E /* _Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D64A11ACC10BE00185368 /* _Message.swift */; };
 		172EADD11ACC1C910039F42E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D649F1ACC10B600185368 /* Message.swift */; };
 		178D649E1ACC0DDF00185368 /* MessageMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 178D649D1ACC0DDF00185368 /* MessageMapping.plist */; };
@@ -116,6 +121,9 @@
 		1712BE351ACE1836000A9C47 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		1712BE371ACE183C000A9C47 /* _Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Images.swift; sourceTree = "<group>"; };
 		1712BE3B1ACE1E1B000A9C47 /* DBControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBControllerTests.swift; sourceTree = "<group>"; };
+		1712BE3D1ACE4101000A9C47 /* DevicesMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DevicesMapping.plist; sourceTree = "<group>"; };
+		1712BE3F1ACE4135000A9C47 /* _Devices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Devices.swift; sourceTree = "<group>"; };
+		1712BE411ACE413C000A9C47 /* Devices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Devices.swift; sourceTree = "<group>"; };
 		178D649D1ACC0DDF00185368 /* MessageMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MessageMapping.plist; sourceTree = "<group>"; };
 		178D649F1ACC10B600185368 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		178D64A11ACC10BE00185368 /* _Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Message.swift; sourceTree = "<group>"; };
@@ -275,9 +283,10 @@
 		290135081AC3A67200BBFE29 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-
 				29A5D1DE1ACBE9CB00D95B77 /* RegPageData.plist */,
 				29A1AFFF1AC52EFA00775765 /* Newsfeed.swift */,
+
+				1712BE411ACE413C000A9C47 /* Devices.swift */,
 
 				1712BE351ACE1836000A9C47 /* Images.swift */,
 				1712BE2D1ACCE809000A9C47 /* Group.swift */,
@@ -296,6 +305,7 @@
 		290135091AC3A67200BBFE29 /* Machine */ = {
 			isa = PBXGroup;
 			children = (
+				1712BE3F1ACE4135000A9C47 /* _Devices.swift */,
 				1712BE371ACE183C000A9C47 /* _Images.swift */,
 				1712BE2B1ACCE801000A9C47 /* _Group.swift */,
 				178D64A11ACC10BE00185368 /* _Message.swift */,
@@ -309,6 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				29A1AFF91AC414E900775765 /* PostMapping.plist */,
+				1712BE3D1ACE4101000A9C47 /* DevicesMapping.plist */,
 				1712BE311ACD0808000A9C47 /* MailSettingMapping.plist */,
 				29A1AFFC1AC527BD00775765 /* GroupMapping.plist */,
 				1712BE331ACE17AB000A9C47 /* ImagesMapping.plist */,
@@ -427,6 +438,7 @@
 				29A5D1DF1ACBE9CB00D95B77 /* RegPageData.plist in Resources */,
 				290134DD1AC3991C00BBFE29 /* Main.storyboard in Resources */,
 				1712BE341ACE17AB000A9C47 /* ImagesMapping.plist in Resources */,
+				1712BE3E1ACE4101000A9C47 /* DevicesMapping.plist in Resources */,
 				1712BE321ACD0808000A9C47 /* MailSettingMapping.plist in Resources */,
 				29A1AFFD1AC527BD00775765 /* GroupMapping.plist in Resources */,
 				290134E21AC3991C00BBFE29 /* LaunchScreen.xib in Resources */,
@@ -554,8 +566,13 @@
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
 				1712BE2C1ACCE801000A9C47 /* _Group.swift in Sources */,
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
+
 				29A5D1D91ACBE01700D95B77 /* RegPageView.swift in Sources */,
 				2942CCD31ACCF761007CDC97 /* NewsfeedViewController.swift in Sources */,
+
+				1712BE421ACE413C000A9C47 /* Devices.swift in Sources */,
+				29BE7E151AC54506008110B4 /* NewsfeedViewController.swift in Sources */,
+
 				290134F81AC39F4600BBFE29 /* ApiController.swift in Sources */,
 				29BE7E231AC55A28008110B4 /* MultilineLabel.swift in Sources */,
 				29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */,
@@ -574,6 +591,7 @@
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
 				178D64A21ACC10BE00185368 /* _Message.swift in Sources */,
 				290135121AC3A67200BBFE29 /* Model.xcdatamodeld in Sources */,
+				1712BE401ACE4135000A9C47 /* _Devices.swift in Sources */,
 				29A1AFF41AC4112800775765 /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -583,6 +601,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				290135181AC3A78E00BBFE29 /* User.swift in Sources */,
+				1712BE441ACE4143000A9C47 /* _Devices.swift in Sources */,
 				2901351B1AC3A79500BBFE29 /* _User.swift in Sources */,
 
 				29A1B0041AC52F0300775765 /* _Newsfeed.swift in Sources */,
@@ -599,6 +618,7 @@
 				29BE7E1C1AC54663008110B4 /* DBController.swift in Sources */,
 				1712BE3A1ACE195B000A9C47 /* _Images.swift in Sources */,
 				29A1AFF81AC4113000775765 /* _Post.swift in Sources */,
+				1712BE431ACE4140000A9C47 /* Devices.swift in Sources */,
 				1712BE301ACCE819000A9C47 /* _Group.swift in Sources */,
 				294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */,
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,

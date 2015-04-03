@@ -10,8 +10,9 @@ import UIKit
 
 private let store = RKObjectManager.sharedManager().managedObjectStore
 
+
 class ApiController: NSObject {
-   
+    
     class func setup() {
         RKObjectManager(baseURL: kAPIBaseURL)
         
@@ -28,14 +29,13 @@ class ApiController: NSObject {
         
         store.managedObjectCache = RKInMemoryManagedObjectCache(managedObjectContext: store.persistentStoreManagedObjectContext)
         
-        addUserResponseDescriptor()
-        addUserInfoResponseDescriptor()
-        addNewsfeedResponseDescriptor()
-        
-        addMessageResponseDescriptor()
+        addResponseDescriptor()
         
         AFNetworkActivityIndicatorManager.sharedManager().enabled = true
     }
+}
+// MARK: - Action
+extension ApiController {
     
     class func signUp(#email: String, password: String, firstName: String, lastName: String, done: (NSError?) -> Void) {
         RKObjectManager.sharedManager().postObject(nil, path: "/mobile/user/regist", parameters: ["email" : email, "password" : password, "firstName" : firstName, "lastName" : lastName], success: { (_, result) -> Void in
@@ -89,55 +89,27 @@ class ApiController: NSObject {
         let path = NSBundle.mainBundle().pathForResource(name, ofType: "plist")
         return NSDictionary(contentsOfFile: path!)!
     }
-    
-    // MARK: - Descriptor
-    
-    class func addUserResponseDescriptor() {
-        
-        let userMapping = getMapping("User", identification: nil,pListName: nil)
-        
-        let userDescriptor = RKResponseDescriptor(mapping: userMapping, method: .POST, pathPattern: "/login", keyPath: nil, statusCodes: nil)
-        
-        RKObjectManager.sharedManager().addResponseDescriptor(userDescriptor)
+}
+// MARK: - Descriptor
+extension ApiController {
+    private class func addCommonResponseDescriptor(mapping:RKEntityMapping,method:RKRequestMethod,pathPattern:String?,keyPath:String?,statusCodes:NSIndexSet?) {
+        let descriptor = RKResponseDescriptor(mapping: mapping, method: method, pathPattern: pathPattern, keyPath: keyPath, statusCodes: statusCodes)
+        RKObjectManager.sharedManager().addResponseDescriptor(descriptor)
     }
-    
-    class func addUserInfoResponseDescriptor() {
-        let userMapping = getMapping("User", identification: nil,pListName: nil)
-//        let postMapping = getMapping("Post", identification: nil,pListName: nil)
-        
-        userMapping.addPropertyMappingById("User",fromKey: "friends",toKeyPath: "friends")
-        userMapping.addPropertyMappingById("Post",fromKey: "posts",toKeyPath: "posts")
-        
-        
-        let userInfoDescriptor = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
-        
-        RKObjectManager.sharedManager().addResponseDescriptor(userInfoDescriptor)
+    private class func addResponseDescriptor() {
+        //login
+        addCommonResponseDescriptor(getUserMapping(), method: .POST, pathPattern: "/login", keyPath: nil, statusCodes: nil)
+        //UserInfo
+        addCommonResponseDescriptor(getUserMapping(), method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
+        //newsfeed
+        addCommonResponseDescriptor(getPostMapping(), method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: nil)
+        //messages
+        addCommonResponseDescriptor(getMessageMapping(), method: .GET, pathPattern: "/messages", keyPath: nil, statusCodes: nil)
     }
-    
-    class func addNewsfeedResponseDescriptor() {
-        let newsfeedMapping = getMapping("Post", identification: nil,pListName: nil)
-        let imagesMapping = getMapping("Images", identification: nil,pListName: nil)
-        let userMapping = getMapping("User", identification: nil,pListName: nil)
-        
-        newsfeedMapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping))
-        newsfeedMapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "images_mobile", toKeyPath: "imagesmobile", withMapping: imagesMapping))
-        
-        let newsfeedDescriptor = RKResponseDescriptor(mapping: newsfeedMapping, method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: nil)
-        
-        RKObjectManager.sharedManager().addResponseDescriptor(newsfeedDescriptor)
-    }
-    
-    class func addMessageResponseDescriptor() {
-        let messageMapping = getMapping("Message", identification: nil,pListName:nil)
-        let userMapping = getMapping("User", identification: nil,pListName: nil)
-        
-        messageMapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_from", toKeyPath: "from", withMapping: userMapping))
-        
-        let messageDescriptor = RKResponseDescriptor(mapping: messageMapping, method: .GET, pathPattern: "/messages", keyPath: nil, statusCodes: nil)
-        
-        RKObjectManager.sharedManager().addResponseDescriptor(messageDescriptor)
-    }
-    
+}
+// MARK: - mapping
+extension ApiController {
+    //common
     private class func getMapping(entityName:String,identification:[String]?,pListName:String?)->RKEntityMapping{
         let mapping = RKEntityMapping(forEntityForName: entityName, inManagedObjectStore: store)
         
@@ -156,7 +128,59 @@ class ApiController: NSObject {
         mapping.addAttributeMappingsFromDictionary(Plist)
         return mapping
     }
+    //user
+    private class func getUserMapping()->RKEntityMapping{
+        var mapping = _userMapping
+        mapping.addPropertyMappingById("User",fromKey: "friends",toKeyPath: "friends")
+        mapping.addPropertyMappingById("Group",fromKey: "groups",toKeyPath: "groups")
+        mapping.addPropertyMappingById("Post",fromKey: "posts",toKeyPath: "posts")
+        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "devices", toKeyPath: "devices", withMapping: _devicesMapping))
+        
+        return mapping
+    }
+    //post
+    private class func getPostMapping()->RKEntityMapping{
+        var mapping = _postMapping
+        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: _userMapping))
+        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "images_mobile", toKeyPath: "imagesmobile", withMapping: _imagesMapping))
+        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "group", toKeyPath: "group", withMapping: _groupMapping))
+        
+        return mapping
+    }
+    //message
+    private class func getMessageMapping()->RKEntityMapping{
+        var mapping = _messageMapping
+        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_from", toKeyPath: "from", withMapping: _userMapping))
+        return mapping
+    }    
 }
+
+
+// MARK: - mapping from plist
+extension ApiController {
+    private class var _postMapping: RKEntityMapping {
+        return ApiController.getMapping("Post", identification: nil,pListName: nil)
+    }
+    private class var _imagesMapping: RKEntityMapping {
+        return ApiController.getMapping("Images", identification: nil,pListName: nil)
+    }
+    private class var _groupMapping: RKEntityMapping {
+        return ApiController.getMapping("Group", identification: nil,pListName: nil)
+    }
+    private class var _messageMapping: RKEntityMapping {
+        return ApiController.getMapping("Message", identification: nil,pListName: nil)
+    }
+    private class var _userMapping: RKEntityMapping {
+        return ApiController.getMapping("User", identification: nil,pListName: nil)
+    }
+    private class var _devicesMapping: RKEntityMapping {
+        return ApiController.getMapping("Devices", identification: nil,pListName: nil)
+    }
+}
+
+
+
+
 extension RKEntityMapping{
     func addPropertyMappingById(entityName:String,fromKey:String,toKeyPath:String){
         let mapping = RKEntityMapping(forEntityForName: entityName, inManagedObjectStore: store)

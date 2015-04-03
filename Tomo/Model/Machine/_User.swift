@@ -4,7 +4,6 @@
 import CoreData
 
 enum UserAttributes: String {
-    case commentLiked = "commentLiked"
     case cover = "cover"
     case cover_ref = "cover_ref"
     case createDate = "createDate"
@@ -19,6 +18,7 @@ enum UserAttributes: String {
 }
 
 enum UserRelationships: String {
+    case devices = "devices"
     case friends = "friends"
     case groups = "groups"
     case messages = "messages"
@@ -50,11 +50,6 @@ class _User: NSManagedObject {
     }
 
     // MARK: - Properties
-
-    @NSManaged
-    var commentLiked: NSNumber?
-
-    // func validateCommentLiked(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var cover: String?
@@ -114,6 +109,9 @@ class _User: NSManagedObject {
     // MARK: - Relationships
 
     @NSManaged
+    var devices: NSSet
+
+    @NSManaged
     var friends: NSSet
 
     @NSManaged
@@ -124,6 +122,34 @@ class _User: NSManagedObject {
 
     @NSManaged
     var posts: NSSet
+
+}
+
+extension _User {
+
+    func addDevices(objects: NSSet) {
+        let mutable = self.devices.mutableCopy() as NSMutableSet
+        mutable.unionSet(objects)
+        self.devices = mutable.copy() as NSSet
+    }
+
+    func removeDevices(objects: NSSet) {
+        let mutable = self.devices.mutableCopy() as NSMutableSet
+        mutable.minusSet(objects)
+        self.devices = mutable.copy() as NSSet
+    }
+
+    func addDevicesObject(value: Devices!) {
+        let mutable = self.devices.mutableCopy() as NSMutableSet
+        mutable.addObject(value)
+        self.devices = mutable.copy() as NSSet
+    }
+
+    func removeDevicesObject(value: Devices!) {
+        let mutable = self.devices.mutableCopy() as NSMutableSet
+        mutable.removeObject(value)
+        self.devices = mutable.copy() as NSSet
+    }
 
 }
 

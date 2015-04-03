@@ -49,7 +49,7 @@ class ApiControllerTests: XCTestCase {
     func testLogin() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "zhangzhihua.dev@gmail.com", password: "12345678") { (error) -> Void in
+        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             expect.fulfill()
