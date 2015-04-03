@@ -9,3 +9,5 @@
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
+#import "NYXImagesKit.h"
+#import "UIColor+HexString.h"

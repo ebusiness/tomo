@@ -13,8 +13,10 @@ let kBasePath = "http://lorempixel.com"
 class NewsfeedCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
-
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var detailLabel: UILabel!
+    @IBOutlet weak var userNameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,10 +38,13 @@ class NewsfeedCell: UICollectionViewCell {
         }
         
         imageView.setImageWithURL(NSURL(string: imagePath()), completed: { (image, error, cacheType, url) -> Void in
-            if image == nil {
-//                imageView.image = ITEM_NOIMAGE
+            if cacheType == .None {
+                UIView.animateWithDuration(0.5, animations: { () -> Void in
+                    self.imageView.alpha = 0.2
+                    self.imageView.alpha = 1
+                })
             }
-            }, usingActivityIndicatorStyle: .Gray)
+        }, usingActivityIndicatorStyle: .Gray)
     }
     
     func imagePath() -> String {
@@ -48,6 +53,10 @@ class NewsfeedCell: UICollectionViewCell {
     
     func sizeOfCell(cellWidth: CGFloat) -> CGSize {
         heightConstraint.constant = cellWidth * imageSize.height / imageSize.width
+        
+        let labelWidth = cellWidth - 2*8
+        titleLabel.preferredMaxLayoutWidth = labelWidth
+        detailLabel.preferredMaxLayoutWidth = labelWidth
         
         let size = self.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize) as CGSize
         return size

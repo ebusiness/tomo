@@ -39,7 +39,7 @@ class NewsfeedViewController: BaseViewController {
 
     func setupSizes() {
         for i in 0..<count {
-            let size = CGSizeMake(CGFloat(arc4random() % 195 + 195), CGFloat(arc4random() % 195 + 195))
+            let size = CGSizeMake(CGFloat(arc4random() % 250 + 250), CGFloat(arc4random() % 250 + 250))
             sizes.append(size)
         }
     }
