@@ -107,6 +107,47 @@ class ApiControllerTests: XCTestCase {
         })
     }
     
+    func testGetUserPosts() {
+        let expect = expectationWithDescription("api")
+        
+        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+            XCTAssertNil(error, "")
+            println("logined")
+            ApiController.getUserPosts("5387053ade9ace7c4c00010f", done: { (error) -> Void in
+                XCTAssertNil(error, "should success")
+                expect.fulfill()
+            })
+        }
+        
+        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
+            println(error)
+        })
+    }
+    
+    func testCreatePosts() {
+        let expect = expectationWithDescription("api")
+        
+        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+            XCTAssertNil(error, "")
+            var param = Dictionary<String, String>();
+            param["content"] = "記事コンテンツ";
+            for i in 1...3{
+                param["images[\(i)][name]"] = "upload_2f0a4f9bfee51eacdc38f339d42eba21";
+                param["images[\(i)][size][width]"] = "100";
+                param["images[\(i)][size][height]"] = "100";
+            }
+            
+            ApiController.createPosts(param,  done: { (error) -> Void in
+                XCTAssertNil(error, "should success")
+                expect.fulfill()
+            })
+        }
+        
+        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
+            println(error)
+        })
+    }
+    
     func testGetMessage() {
         let expect = expectationWithDescription("api")
         

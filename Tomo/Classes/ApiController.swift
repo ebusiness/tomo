@@ -67,14 +67,6 @@ extension ApiController {
         }
     }
     
-    class func getNewsfeed(done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().getObjectsAtPath("/newsfeed", parameters: nil, success: { (_, _) -> Void in
-            done(nil)
-            }) { (_, error) -> Void in
-                done(error)
-        }
-    }
-    
     class func getMessage(done: (NSError?) -> Void) {
         RKObjectManager.sharedManager().getObjectsAtPath("/messages", parameters: nil, success: { (_, _) -> Void in
             done(nil)
@@ -88,6 +80,46 @@ extension ApiController {
         return NSDictionary(contentsOfFile: path!)!
     }
 }
+
+// MARK: - Post
+extension ApiController {
+
+    class func getNewsfeed(done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/newsfeed", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    //ユーザの投稿一覧
+    class func getUserPosts(id: String, done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/users/\(id)/posts", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    //記事の投稿
+    class func createPosts(param: NSDictionary, done: (NSError?) -> Void) {
+        /*
+        var param = Dictionary<String, String>();
+        param["content"] = "記事コンテンツ";
+        for i in 1...3{
+        param["images[\(i)][name]"] = "upload_2f0a4f9bfee51eacdc38f339d42eba21";
+        param["images[\(i)][size][width]"] = "100";
+        param["images[\(i)][size][height]"] = "100";
+        }
+        
+        */
+        RKObjectManager.sharedManager().postObject(nil, path: "/mobile/posts", parameters: param, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+}
+
+
 // MARK: - Descriptor
 extension ApiController {
     private class func addCommonResponseDescriptor(mapping:RKEntityMapping,method:RKRequestMethod,pathPattern:String?,keyPath:String?,statusCodes:NSIndexSet?) {
@@ -95,12 +127,17 @@ extension ApiController {
         RKObjectManager.sharedManager().addResponseDescriptor(descriptor)
     }
     private class func addResponseDescriptor() {
+        let usermapping = getUserMapping()
         //login
-        addCommonResponseDescriptor(getUserMapping(), method: .POST, pathPattern: "/login", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(usermapping, method: .POST, pathPattern: "/login", keyPath: nil, statusCodes: nil)
         //UserInfo
-        addCommonResponseDescriptor(getUserMapping(), method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(usermapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
         //newsfeed
-        addCommonResponseDescriptor(getPostMapping(), method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getPostMapping(false), method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: nil)
+        //ユーザの投稿一覧
+        addCommonResponseDescriptor(getPostMapping(true), method: .GET, pathPattern: "/users/:id/posts", keyPath: nil, statusCodes: nil)
+        //記事の投稿
+        addCommonResponseDescriptor(getPostMapping(false), method: .POST, pathPattern: "/mobile/posts", keyPath: nil, statusCodes: nil)
         //messages
         addCommonResponseDescriptor(getMessageMapping(), method: .GET, pathPattern: "/messages", keyPath: nil, statusCodes: nil)
     }
@@ -137,11 +174,15 @@ extension ApiController {
         return mapping
     }
     //post
-    private class func getPostMapping()->RKEntityMapping{
+    private class func getPostMapping(isusers:Bool)->RKEntityMapping{
         var mapping = _postMapping
         mapping.addPropertyMappingById("User",fromKey: "bookmarked",toKeyPath: "bookmarked")
         mapping.addPropertyMappingById("User",fromKey: "liked",toKeyPath: "liked")
-        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: _userMapping))
+        if isusers {
+            mapping.addPropertyMappingById("User",fromKey: "_owner",toKeyPath: "owner")
+        }else{
+            mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: _userMapping))
+        }
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "comments", toKeyPath: "comments", withMapping: _commentsMapping))
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "images_mobile", toKeyPath: "imagesmobile", withMapping: _imagesMapping))
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "group", toKeyPath: "group", withMapping: _groupMapping))
