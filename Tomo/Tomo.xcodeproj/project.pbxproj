@@ -72,6 +72,8 @@
 		291ADF971AD24892009D8BE3 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */; };
 		291ADF991AD24F7B009D8BE3 /* PostDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */; };
 		291ADF9B1AD24FAE009D8BE3 /* PostDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 291ADF9A1AD24FAE009D8BE3 /* PostDetailHeaderView.xib */; };
+		291ADF9D1AD2654E009D8BE3 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF9C1AD2654E009D8BE3 /* AddPostViewController.swift */; };
+		291ADF9F1AD26575009D8BE3 /* AddPost.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 291ADF9E1AD26575009D8BE3 /* AddPost.storyboard */; };
 		2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */; };
 		2942CCCF1ACCE5EA007CDC97 /* Newsfeed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2942CCCE1ACCE5EA007CDC97 /* Newsfeed.storyboard */; };
 		2942CCD11ACCE75A007CDC97 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCD01ACCE75A007CDC97 /* BaseViewController.swift */; };
@@ -157,6 +159,8 @@
 		291ADF941AD229B3009D8BE3 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentCell.swift; path = Classes/CommentCell.swift; sourceTree = "<group>"; };
 		291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailHeaderView.swift; path = Classes/PostDetailHeaderView.swift; sourceTree = "<group>"; };
 		291ADF9A1AD24FAE009D8BE3 /* PostDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostDetailHeaderView.xib; sourceTree = "<group>"; };
+		291ADF9C1AD2654E009D8BE3 /* AddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPostViewController.swift; path = Classes/AddPostViewController.swift; sourceTree = "<group>"; };
+		291ADF9E1AD26575009D8BE3 /* AddPost.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddPost.storyboard; sourceTree = "<group>"; };
 		2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegLoginViewController.swift; path = Classes/RegLoginViewController.swift; sourceTree = "<group>"; };
 		2942CCCE1ACCE5EA007CDC97 /* Newsfeed.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Newsfeed.storyboard; sourceTree = "<group>"; };
 		2942CCD01ACCE75A007CDC97 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -211,6 +215,8 @@
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
+				291ADF9E1AD26575009D8BE3 /* AddPost.storyboard */,
+				291ADF9C1AD2654E009D8BE3 /* AddPostViewController.swift */,
 				291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */,
 				291ADF9A1AD24FAE009D8BE3 /* PostDetailHeaderView.xib */,
 				291ADF941AD229B3009D8BE3 /* CommentCell.swift */,
@@ -461,6 +467,7 @@
 				1712BE3E1ACE4101000A9C47 /* DevicesMapping.plist in Resources */,
 				1712BE321ACD0808000A9C47 /* MailSettingMapping.plist in Resources */,
 				291ADF9B1AD24FAE009D8BE3 /* PostDetailHeaderView.xib in Resources */,
+				291ADF9F1AD26575009D8BE3 /* AddPost.storyboard in Resources */,
 				29A1AFFD1AC527BD00775765 /* GroupMapping.plist in Resources */,
 				290134E21AC3991C00BBFE29 /* LaunchScreen.xib in Resources */,
 				2942CCCF1ACCE5EA007CDC97 /* Newsfeed.storyboard in Resources */,
@@ -598,6 +605,7 @@
 				296040461ACE669900D2A338 /* Alamofire.swift in Sources */,
 				2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */,
 				291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */,
+				291ADF9D1AD2654E009D8BE3 /* AddPostViewController.swift in Sources */,
 				290135171AC3A78E00BBFE29 /* User.swift in Sources */,
 				29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,

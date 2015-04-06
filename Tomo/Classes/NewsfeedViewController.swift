@@ -77,7 +77,34 @@ class NewsfeedViewController: BaseViewController {
             vc.imageSize = imageSize
         }
     }
-
+    
+    // MARK: - Action
+    
+    @IBAction func addPostBtnTapped(sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let cameraAction = UIAlertAction(title: "写真を撮る", style: .Default, handler: { (action) -> Void in
+            let picker = UIImagePickerController()
+            picker.sourceType = .Camera
+            picker.delegate = self
+            self.presentViewController(picker, animated: true, completion: nil)
+        })
+        let albumAction = UIAlertAction(title: "写真から選択", style: .Default, handler: { (action) -> Void in
+            let picker = UIImagePickerController()
+            picker.sourceType = .PhotoLibrary
+            picker.delegate = self
+            self.presentViewController(picker, animated: true, completion: nil)
+        })
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .Cancel, handler: { (action) -> Void in
+            
+        })
+        
+        alertController.addAction(cameraAction)
+        alertController.addAction(albumAction)
+        alertController.addAction(cancelAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
 }
 
 // MARK: - UICollectionView
@@ -140,6 +167,40 @@ extension NewsfeedViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         setupSizes()
         self.collectionView.reloadData()
+    }
+}
+
+// MARK: - UIImagePickerControllerDelegate
+
+extension NewsfeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        
+        picker.dismissViewControllerAnimated(false, completion: { () -> Void in
+            let vcNavi = Util.createViewControllerWithIdentifier(nil, storyboardName: "AddPost") as UINavigationController
+            
+            let vc = vcNavi.topViewController as AddPostViewController
+            vc.image = image
+            self.presentViewController(vcNavi, animated: true, completion: nil)
+        })
+
+        
+        
+//        let smallImage = image.scaleToFitSize(CGSize(width: 500, height: 500))
+//        let orgImage = image.scaleToFitSize(CGSize(width: 750, height: 750))
+//        
+//        let path = NSUUID().UUIDString.lowercaseString
+//        DatabaseManager.saveDataOfPath(path, data: UIImagePNGRepresentation(smallImage)) { () -> Void in
+//            XMPPManager.instance.sendLocalPhotoMessage(path, to: self.jid)
+//            
+//            self.finishSendingMessageAnimated(true)
+//            
+//            // TODO: UploadToS3
+//            
+//            XMPPManager.instance.sendRemotePhotoMessage("http://lorempixel.com/500/500/?" + NSUUID().UUIDString.lowercaseString, to: self.jid)
+//            
+//            self.dismissViewControllerAnimated(true, completion: nil)
+//        }
     }
 }
 

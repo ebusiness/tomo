@@ -56,7 +56,13 @@
                             <constraint firstItem="ZrA-dX-J4y" firstAttribute="leading" secondItem="szZ-nY-57x" secondAttribute="leading" id="nyn-9f-OPr"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="uKo-2v-h3N"/>
+                    <navigationItem key="navigationItem" id="uKo-2v-h3N">
+                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="dct-t8-x0i">
+                            <connections>
+                                <action selector="addPostBtnTapped:" destination="pQ2-07-Tsh" id="qTU-aL-mnm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="ZrA-dX-J4y" id="fQq-9S-cwo"/>
                         <segue destination="OTK-dR-r8Z" kind="push" identifier="SeguePostDetail" id="QxN-tA-NLz"/>
