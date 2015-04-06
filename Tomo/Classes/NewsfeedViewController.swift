@@ -63,19 +63,26 @@ class NewsfeedViewController: BaseViewController {
     }
     
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "SeguePostDetail" {
+            let vc = segue.destinationViewController as PostDetailViewController
+//            vc.post = sender as Post
+            let indexPath = sender as NSIndexPath
+            let post = postsFRC.objectAtIndexPath(indexPath) as Post
+            let imageSize = sizes[indexPath.item]
+            
+            vc.post = post
+            vc.imageSize = imageSize
+        }
     }
-    */
 
 }
 
-extension NewsfeedViewController: UICollectionViewDataSource {
+// MARK: - UICollectionView
+
+extension NewsfeedViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return count
@@ -93,7 +100,15 @@ extension NewsfeedViewController: UICollectionViewDataSource {
         
         return cell
     }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+//        let post = postsFRC.objectAtIndexPath(indexPath) as Post
+        
+        performSegueWithIdentifier("SeguePostDetail", sender: indexPath)
+    }
 }
+
+// MARK: - layout
 
 extension NewsfeedViewController: CHTCollectionViewDelegateWaterfallLayout {
     
@@ -117,6 +132,8 @@ extension NewsfeedViewController: CHTCollectionViewDelegateWaterfallLayout {
         return size
     }
 }
+
+// MARK: - NSFetchedResultsControllerDelegate
 
 extension NewsfeedViewController: NSFetchedResultsControllerDelegate {
     

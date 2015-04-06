@@ -66,6 +66,12 @@
 		2901351A1AC3A79500BBFE29 /* _User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290135191AC3A79500BBFE29 /* _User.swift */; };
 		2901351B1AC3A79500BBFE29 /* _User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290135191AC3A79500BBFE29 /* _User.swift */; };
 		2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901351C1AC3A90C00BBFE29 /* Constants.swift */; };
+		291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */; };
+		291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF941AD229B3009D8BE3 /* CommentCell.swift */; };
+		291ADF961AD247C4009D8BE3 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
+		291ADF971AD24892009D8BE3 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */; };
+		291ADF991AD24F7B009D8BE3 /* PostDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */; };
+		291ADF9B1AD24FAE009D8BE3 /* PostDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 291ADF9A1AD24FAE009D8BE3 /* PostDetailHeaderView.xib */; };
 		2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */; };
 		2942CCCF1ACCE5EA007CDC97 /* Newsfeed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2942CCCE1ACCE5EA007CDC97 /* Newsfeed.storyboard */; };
 		2942CCD11ACCE75A007CDC97 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCD01ACCE75A007CDC97 /* BaseViewController.swift */; };
@@ -80,7 +86,7 @@
 		296040471ACE687D00D2A338 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040421ACE644800D2A338 /* TestData.swift */; };
 		296040481ACE688500D2A338 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040451ACE669900D2A338 /* Alamofire.swift */; };
 		2960404C1ACE68C500D2A338 /* TestDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404B1ACE68C500D2A338 /* TestDataTests.swift */; };
-		2960404F1ACE75C500D2A338 /* AF+Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404D1ACE6E5B00D2A338 /* AF+Date+Extension.swift */; };
+		2960404F1ACE75C500D2A338 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */; };
 		29A1AFF41AC4112800775765 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1AFF31AC4112800775765 /* Post.swift */; };
 		29A1AFF51AC4112800775765 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1AFF31AC4112800775765 /* Post.swift */; };
 		29A1AFF71AC4113000775765 /* _Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1AFF61AC4113000775765 /* _Post.swift */; };
@@ -96,7 +102,6 @@
 		29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A5D1DC1ACBE85C00D95B77 /* RegPageData.swift */; };
 		29A5D1DF1ACBE9CB00D95B77 /* RegPageData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29A5D1DE1ACBE9CB00D95B77 /* RegPageData.plist */; };
 		29BE7E121AC54224008110B4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
-		29BE7E131AC54224008110B4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
 		29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E1A1AC54663008110B4 /* DBController.swift */; };
 		29BE7E1C1AC54663008110B4 /* DBController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E1A1AC54663008110B4 /* DBController.swift */; };
 		29BE7E231AC55A28008110B4 /* MultilineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E221AC55A28008110B4 /* MultilineLabel.swift */; };
@@ -148,6 +153,10 @@
 		290135161AC3A78E00BBFE29 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		290135191AC3A79500BBFE29 /* _User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _User.swift; sourceTree = "<group>"; };
 		2901351C1AC3A90C00BBFE29 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Classes/Constants.swift; sourceTree = "<group>"; };
+		291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailViewController.swift; path = Classes/PostDetailViewController.swift; sourceTree = "<group>"; };
+		291ADF941AD229B3009D8BE3 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentCell.swift; path = Classes/CommentCell.swift; sourceTree = "<group>"; };
+		291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailHeaderView.swift; path = Classes/PostDetailHeaderView.swift; sourceTree = "<group>"; };
+		291ADF9A1AD24FAE009D8BE3 /* PostDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostDetailHeaderView.xib; sourceTree = "<group>"; };
 		2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegLoginViewController.swift; path = Classes/RegLoginViewController.swift; sourceTree = "<group>"; };
 		2942CCCE1ACCE5EA007CDC97 /* Newsfeed.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Newsfeed.storyboard; sourceTree = "<group>"; };
 		2942CCD01ACCE75A007CDC97 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -158,7 +167,7 @@
 		296040421ACE644800D2A338 /* TestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestData.swift; path = Classes/TestData.swift; sourceTree = "<group>"; };
 		296040451ACE669900D2A338 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
 		2960404B1ACE68C500D2A338 /* TestDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataTests.swift; sourceTree = "<group>"; };
-		2960404D1ACE6E5B00D2A338 /* AF+Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AF+Date+Extension.swift"; sourceTree = "<group>"; };
+		2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFDateExtension.swift; sourceTree = "<group>"; };
 		29A1AFF31AC4112800775765 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		29A1AFF61AC4113000775765 /* _Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Post.swift; sourceTree = "<group>"; };
 		29A1AFF91AC414E900775765 /* PostMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PostMapping.plist; sourceTree = "<group>"; };
@@ -202,6 +211,10 @@
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
+				291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */,
+				291ADF9A1AD24FAE009D8BE3 /* PostDetailHeaderView.xib */,
+				291ADF941AD229B3009D8BE3 /* CommentCell.swift */,
+				291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */,
 				296040421ACE644800D2A338 /* TestData.swift */,
 				2942CCD61ACD2B75007CDC97 /* NewsfeedCell.xib */,
 				2942CCD41ACD03BF007CDC97 /* NewsfeedCell.swift */,
@@ -314,7 +327,7 @@
 		296040441ACE669900D2A338 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
-				2960404D1ACE6E5B00D2A338 /* AF+Date+Extension.swift */,
+				2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */,
 				296040451ACE669900D2A338 /* Alamofire.swift */,
 			);
 			path = Vendors;
@@ -447,6 +460,7 @@
 				1712BE341ACE17AB000A9C47 /* ImagesMapping.plist in Resources */,
 				1712BE3E1ACE4101000A9C47 /* DevicesMapping.plist in Resources */,
 				1712BE321ACD0808000A9C47 /* MailSettingMapping.plist in Resources */,
+				291ADF9B1AD24FAE009D8BE3 /* PostDetailHeaderView.xib in Resources */,
 				29A1AFFD1AC527BD00775765 /* GroupMapping.plist in Resources */,
 				290134E21AC3991C00BBFE29 /* LaunchScreen.xib in Resources */,
 				2942CCCF1ACCE5EA007CDC97 /* Newsfeed.storyboard in Resources */,
@@ -556,15 +570,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				291ADF991AD24F7B009D8BE3 /* PostDetailHeaderView.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
 				2901351A1AC3A79500BBFE29 /* _User.swift in Sources */,
 				290134DA1AC3991C00BBFE29 /* ViewController.swift in Sources */,
 				1712BE481ACE5A54000A9C47 /* Comments.swift in Sources */,
 				2942CCD11ACCE75A007CDC97 /* BaseViewController.swift in Sources */,
-				2960404F1ACE75C500D2A338 /* AF+Date+Extension.swift in Sources */,
+				2960404F1ACE75C500D2A338 /* AFDateExtension.swift in Sources */,
 				1712BE2E1ACCE809000A9C47 /* Group.swift in Sources */,
 				178D64A01ACC10B600185368 /* Message.swift in Sources */,
 				1712BE4B1ACE5D0F000A9C47 /* _Comments.swift in Sources */,
+				291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */,
 				290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */,
 				1712BE381ACE183C000A9C47 /* _Images.swift in Sources */,
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
@@ -581,6 +597,7 @@
 				296040431ACE644800D2A338 /* TestData.swift in Sources */,
 				296040461ACE669900D2A338 /* Alamofire.swift in Sources */,
 				2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */,
+				291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */,
 				290135171AC3A78E00BBFE29 /* User.swift in Sources */,
 				29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
@@ -595,6 +612,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				291ADF971AD24892009D8BE3 /* AFDateExtension.swift in Sources */,
 				296040411ACE476B00D2A338 /* ApiController.swift in Sources */,
 				290135181AC3A78E00BBFE29 /* User.swift in Sources */,
 				1712BE441ACE4143000A9C47 /* _Devices.swift in Sources */,
@@ -614,10 +632,10 @@
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
 				1712BE391ACE1958000A9C47 /* Images.swift in Sources */,
 				1712BE4C1ACE5D12000A9C47 /* _Comments.swift in Sources */,
-				29BE7E131AC54224008110B4 /* Util.swift in Sources */,
 				2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */,
 				1712BE491ACE5D05000A9C47 /* Comments.swift in Sources */,
 				29A1AFF51AC4112800775765 /* Post.swift in Sources */,
+				291ADF961AD247C4009D8BE3 /* Util.swift in Sources */,
 				172EADD01ACC1C850039F42E /* _Message.swift in Sources */,
 				1712BE3C1ACE1E1B000A9C47 /* DBControllerTests.swift in Sources */,
 			);
@@ -743,7 +761,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Tomo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -814,7 +832,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Tomo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

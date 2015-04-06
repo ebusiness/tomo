@@ -15,7 +15,7 @@ class TestData: NSObject {
             .responseJSON { (_, _, JSON, _) in
                 if let dic = JSON as? Dictionary<String, AnyObject> {
                     if let urls = dic["image_urls"] as? Dictionary<String, AnyObject> {
-                        if let url = urls["normal"] as? String {
+                        if let url = urls["bigger"] as? String {
                             done(path: url)
                         }
                     }

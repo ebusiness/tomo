@@ -42,6 +42,25 @@ class Util: NSObject {
     class func showError(error: NSError) {
         SVProgressHUD.showErrorWithStatus(error.localizedDescription, maskType: .Clear)
     }
+    
+    
+    class func displayDate(date: NSDate?) -> String {
+        let now = NSDate()
+        
+        if let date = date {
+            if !date.isToday() {
+                return date.toString()
+            } else if date.hoursBeforeDate(now) > 0 {
+                return "\(date.hoursBeforeDate(now))時"
+            } else if date.minutesBeforeDate(now) > 0 {
+                return "\(date.minutesBeforeDate(now))分"
+            } else {
+                return "\(date.seconds())秒"
+            }
+        }
+        
+        return ""
+    }
 }
 
 extension UIApplication {
