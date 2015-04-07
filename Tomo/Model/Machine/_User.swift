@@ -4,6 +4,7 @@
 import CoreData
 
 enum UserAttributes: String {
+    case bio = "bio"
     case cover = "cover"
     case cover_ref = "cover_ref"
     case createDate = "createDate"
@@ -53,6 +54,11 @@ class _User: NSManagedObject {
     }
 
     // MARK: - Properties
+
+    @NSManaged
+    var bio: String?
+
+    // func validateBio(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var cover: String?

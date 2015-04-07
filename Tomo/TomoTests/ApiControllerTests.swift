@@ -148,6 +148,22 @@ class ApiControllerTests: XCTestCase {
         })
     }
     
+    func testGetFriends() {
+        let expect = expectationWithDescription("api")
+        
+        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+            XCTAssertNil(error, "")
+            
+            ApiController.getFriends({ (error) -> Void in
+                XCTAssertNil(error, "should success")
+                expect.fulfill()
+            })
+        }
+        
+        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
+            println(error)
+        })
+    }
     func testGetMessage() {
         let expect = expectationWithDescription("api")
         
@@ -165,3 +181,4 @@ class ApiControllerTests: XCTestCase {
         })
     }
 }
+

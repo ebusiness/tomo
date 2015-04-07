@@ -141,6 +141,17 @@ extension ApiController {
     }
 }
 
+// MARK: - ユーザ情報
+extension ApiController {
+    // 友達一覧
+    class func getFriends(done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/connections/friends", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+}
 
 // MARK: - Descriptor
 extension ApiController {
@@ -162,6 +173,8 @@ extension ApiController {
         addCommonResponseDescriptor(getPostMapping(false), method: .POST, pathPattern: "/mobile/posts", keyPath: nil, statusCodes: nil)
         //messages
         addCommonResponseDescriptor(getMessageMapping(), method: .GET, pathPattern: "/messages", keyPath: nil, statusCodes: nil)
+        //友達一覧
+        addCommonResponseDescriptor(usermapping, method: .GET, pathPattern: "/connections/friends", keyPath: nil, statusCodes: nil)
     }
 }
 // MARK: - mapping
