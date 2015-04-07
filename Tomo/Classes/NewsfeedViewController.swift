@@ -176,32 +176,22 @@ extension NewsfeedViewController: NSFetchedResultsControllerDelegate {
 extension NewsfeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
+        
+        let name = NSUUID().UUIDString
+        let path = NSTemporaryDirectory() + name
+        
+        let newImage = image.normalizedImage()
+
+        newImage.saveToPath(path)
         
         picker.dismissViewControllerAnimated(false, completion: { () -> Void in
             let vcNavi = Util.createViewControllerWithIdentifier(nil, storyboardName: "AddPost") as UINavigationController
             
             let vc = vcNavi.topViewController as AddPostViewController
-            vc.image = image
+            vc.imagePath = path
             self.presentViewController(vcNavi, animated: true, completion: nil)
         })
-
-        
-        
-//        let smallImage = image.scaleToFitSize(CGSize(width: 500, height: 500))
-//        let orgImage = image.scaleToFitSize(CGSize(width: 750, height: 750))
-//        
-//        let path = NSUUID().UUIDString.lowercaseString
-//        DatabaseManager.saveDataOfPath(path, data: UIImagePNGRepresentation(smallImage)) { () -> Void in
-//            XMPPManager.instance.sendLocalPhotoMessage(path, to: self.jid)
-//            
-//            self.finishSendingMessageAnimated(true)
-//            
-//            // TODO: UploadToS3
-//            
-//            XMPPManager.instance.sendRemotePhotoMessage("http://lorempixel.com/500/500/?" + NSUUID().UUIDString.lowercaseString, to: self.jid)
-//            
-//            self.dismissViewControllerAnimated(true, completion: nil)
-//        }
     }
 }
 

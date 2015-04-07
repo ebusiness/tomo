@@ -13,6 +13,8 @@ let kAPIBaseURLString = "http://tomo.e-business.co.jp"
 
 let kAPIBaseURL = NSURL(string: kAPIBaseURLString)
 
+let MaxWidth = 500
+
 //let BackgroundSessionUploadIdentifier: String = "com.amazon.example.s3BackgroundTransferSwift.uploadSession"
 //let BackgroundSessionDownloadIdentifier: String = "com.amazon.example.s3BackgroundTransferSwift.downloadSession"
 

@@ -13,7 +13,13 @@ class AddPostViewController: UITableViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!
     
-    var image: UIImage!
+    var image: UIImage! {
+        get {
+            return UIImage(contentsOfFile: imagePath)
+        }
+    }
+    
+    var imagePath: String!
     
     var content: String?
     
@@ -37,11 +43,9 @@ class AddPostViewController: UITableViewController {
     }
     
     @IBAction func send(sender: AnyObject) {
-        
-        let data = UIImagePNGRepresentation(image)
         let name = NSUUID().UUIDString
         
-        S3Controller.uploadFile(name: name, data: data, done: { (error) -> Void in
+        S3Controller.uploadFile(name: name, path: imagePath, done: { (error) -> Void in
             println(error)
             println("done")
             
