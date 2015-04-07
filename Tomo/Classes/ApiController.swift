@@ -182,6 +182,17 @@ extension ApiController {
                 done(error)
         }
     }
+    //記事のコメントー＞編集
+    class func commentEdit(id: String,cid: String,content:String, done: (NSError?) -> Void) {
+        var param = Dictionary<String, String>();
+        param["content"] = content;
+        
+        RKObjectManager.sharedManager().patchObject(nil, path: "/posts/\(id)/comments/\(cid)", parameters: param, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
     
 }
 
@@ -220,13 +231,15 @@ extension ApiController {
         //友達一覧
         addCommonResponseDescriptor(usermapping, method: .GET, pathPattern: "/connections/friends", keyPath: nil, statusCodes: nil)
         //記事のコメント
-        addCommonResponseDescriptor(getCommoentMapping(), method: .POST, pathPattern: "/posts/:id/comments", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getCommoentMapping(false), method: .POST, pathPattern: "/posts/:id/comments", keyPath: nil, statusCodes: nil)
         //記事ー＞いいね 登録・解除
         addCommonResponseDescriptor(getPostMapping(false), method: .PATCH, pathPattern: "/posts/:id/like", keyPath: nil, statusCodes: nil)
         //記事ー＞bookmark 登録・解除
         addCommonResponseDescriptor(getPostMapping(false), method: .PATCH, pathPattern: "/posts/:id/bookmark", keyPath: nil, statusCodes: nil)
         //記事ー＞編集
         addCommonResponseDescriptor(getPostMapping(false), method: .PATCH, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
+        //記事のコメントー＞編集
+        addCommonResponseDescriptor(getCommoentMapping(true), method: .PATCH, pathPattern: "/posts/:id/comments/:cid", keyPath: nil, statusCodes: nil)
     }
 }
 // MARK: - mapping
@@ -283,10 +296,14 @@ extension ApiController {
         return mapping
     }
     //comment
-    private class func getCommoentMapping()->RKEntityMapping{
+    private class func getCommoentMapping(isidonly:Bool)->RKEntityMapping{
         var mapping = _commentsMapping
-//        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: _userMapping))
-//        mapping.addPropertyMappingById("User",fromKey: "liked",toKeyPath: "liked")
+        if(isidonly){
+            mapping.addPropertyMappingById("User",fromKey: "_owner",toKeyPath: "owner")
+        }else{
+            mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: _userMapping))
+        }
+        mapping.addPropertyMappingById("User",fromKey: "liked",toKeyPath: "liked")
         return mapping
     }
 }
@@ -314,9 +331,6 @@ extension ApiController {
     }
     private class var _commentsMapping: RKEntityMapping {
         var mapping = ApiController.getMapping("Comments", identification: nil,pListName: nil)
-        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: _userMapping))
-        mapping.addPropertyMappingById("User",fromKey: "liked",toKeyPath: "liked")
-        //mapping.addPropertyMappingById("User",fromKey: "_owner",toKeyPath: "owner")
         return mapping
     }
 }
