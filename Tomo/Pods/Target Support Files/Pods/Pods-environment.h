@@ -12,11 +12,35 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking 3
 #define COCOAPODS_VERSION_PATCH_AFNetworking 4
 
+// AWSCore
+#define COCOAPODS_POD_AVAILABLE_AWSCore
+#define COCOAPODS_VERSION_MAJOR_AWSCore 2
+#define COCOAPODS_VERSION_MINOR_AWSCore 1
+#define COCOAPODS_VERSION_PATCH_AWSCore 0
+
+// AWSS3
+#define COCOAPODS_POD_AVAILABLE_AWSS3
+#define COCOAPODS_VERSION_MAJOR_AWSS3 2
+#define COCOAPODS_VERSION_MINOR_AWSS3 1
+#define COCOAPODS_VERSION_PATCH_AWSS3 0
+
+// Bolts
+#define COCOAPODS_POD_AVAILABLE_Bolts
+#define COCOAPODS_VERSION_MAJOR_Bolts 1
+#define COCOAPODS_VERSION_MINOR_Bolts 1
+#define COCOAPODS_VERSION_PATCH_Bolts 4
+
 // CHTCollectionViewWaterfallLayout
 #define COCOAPODS_POD_AVAILABLE_CHTCollectionViewWaterfallLayout
 #define COCOAPODS_VERSION_MAJOR_CHTCollectionViewWaterfallLayout 0
 #define COCOAPODS_VERSION_MINOR_CHTCollectionViewWaterfallLayout 8
 #define COCOAPODS_VERSION_PATCH_CHTCollectionViewWaterfallLayout 0
+
+// GZIP
+#define COCOAPODS_POD_AVAILABLE_GZIP
+#define COCOAPODS_VERSION_MAJOR_GZIP 1
+#define COCOAPODS_VERSION_MINOR_GZIP 0
+#define COCOAPODS_VERSION_PATCH_GZIP 3
 
 // ISO8601DateFormatterValueTransformer
 #define COCOAPODS_POD_AVAILABLE_ISO8601DateFormatterValueTransformer
@@ -48,6 +72,18 @@
 #define COCOAPODS_VERSION_MINOR_MagicalRecord_Core 2
 #define COCOAPODS_VERSION_PATCH_MagicalRecord_Core 0
 
+// Mantle
+#define COCOAPODS_POD_AVAILABLE_Mantle
+#define COCOAPODS_VERSION_MAJOR_Mantle 1
+#define COCOAPODS_VERSION_MINOR_Mantle 5
+#define COCOAPODS_VERSION_PATCH_Mantle 4
+
+// Mantle/extobjc
+#define COCOAPODS_POD_AVAILABLE_Mantle_extobjc
+#define COCOAPODS_VERSION_MAJOR_Mantle_extobjc 1
+#define COCOAPODS_VERSION_MINOR_Mantle_extobjc 5
+#define COCOAPODS_VERSION_PATCH_Mantle_extobjc 4
+
 // NYXImagesKit
 #define COCOAPODS_POD_AVAILABLE_NYXImagesKit
 #define COCOAPODS_VERSION_MAJOR_NYXImagesKit 2
@@ -59,6 +95,12 @@
 #define COCOAPODS_VERSION_MAJOR_RKValueTransformers 1
 #define COCOAPODS_VERSION_MINOR_RKValueTransformers 1
 #define COCOAPODS_VERSION_PATCH_RKValueTransformers 1
+
+// Reachability
+#define COCOAPODS_POD_AVAILABLE_Reachability
+#define COCOAPODS_VERSION_MAJOR_Reachability 3
+#define COCOAPODS_VERSION_MINOR_Reachability 2
+#define COCOAPODS_VERSION_PATCH_Reachability 0
 
 // RestKit
 #define COCOAPODS_POD_AVAILABLE_RestKit
@@ -120,6 +162,12 @@
 #define COCOAPODS_VERSION_MINOR_SVProgressHUD 1
 #define COCOAPODS_VERSION_PATCH_SVProgressHUD 2
 
+// TMCache
+#define COCOAPODS_POD_AVAILABLE_TMCache
+#define COCOAPODS_VERSION_MAJOR_TMCache 1
+#define COCOAPODS_VERSION_MINOR_TMCache 2
+#define COCOAPODS_VERSION_PATCH_TMCache 4
+
 // TransitionKit
 #define COCOAPODS_POD_AVAILABLE_TransitionKit
 #define COCOAPODS_VERSION_MAJOR_TransitionKit 2
@@ -132,9 +180,21 @@
 #define COCOAPODS_VERSION_MINOR_UIActivityIndicator_for_SDWebImage 2
 #define COCOAPODS_VERSION_PATCH_UIActivityIndicator_for_SDWebImage 0
 
+// UICKeyChainStore
+#define COCOAPODS_POD_AVAILABLE_UICKeyChainStore
+#define COCOAPODS_VERSION_MAJOR_UICKeyChainStore 2
+#define COCOAPODS_VERSION_MINOR_UICKeyChainStore 0
+#define COCOAPODS_VERSION_PATCH_UICKeyChainStore 4
+
 // UIColor-HexString
 #define COCOAPODS_POD_AVAILABLE_UIColor_HexString
 #define COCOAPODS_VERSION_MAJOR_UIColor_HexString 1
 #define COCOAPODS_VERSION_MINOR_UIColor_HexString 1
 #define COCOAPODS_VERSION_PATCH_UIColor_HexString 0
+
+// XMLDictionary
+#define COCOAPODS_POD_AVAILABLE_XMLDictionary
+#define COCOAPODS_VERSION_MAJOR_XMLDictionary 1
+#define COCOAPODS_VERSION_MINOR_XMLDictionary 4
+#define COCOAPODS_VERSION_PATCH_XMLDictionary 0
 
