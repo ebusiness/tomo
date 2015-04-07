@@ -37,6 +37,14 @@ class AddPostViewController: UITableViewController {
     }
     
     @IBAction func send(sender: AnyObject) {
+        
+        let data = UIImagePNGRepresentation(image)
+        
+        S3Controller.instance.uploadData(data, done: { (error) -> Void in
+            println(error)
+            println("done")
+            
+        })
     }
     
     /*

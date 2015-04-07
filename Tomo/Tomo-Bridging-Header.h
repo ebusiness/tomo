@@ -11,3 +11,4 @@
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 #import "NYXImagesKit.h"
 #import "UIColor+HexString.h"
+#import "AWSS3.h"
