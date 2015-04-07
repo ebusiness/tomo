@@ -158,6 +158,17 @@ extension ApiController {
                 done(error)
         }
     }
+    //記事ー＞編集
+    class func postEdit(id: String,content:String, done: (NSError?) -> Void) {
+        var param = Dictionary<String, String>();
+        param["content"] = content;
+        
+        RKObjectManager.sharedManager().patchObject(nil, path: "/posts/\(id)", parameters: param, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
     //記事のコメント
     class func createComment(id: String,param: NSDictionary, done: (NSError?) -> Void) {
         /*
@@ -214,6 +225,8 @@ extension ApiController {
         addCommonResponseDescriptor(getPostMapping(false), method: .PATCH, pathPattern: "/posts/:id/like", keyPath: nil, statusCodes: nil)
         //記事ー＞bookmark 登録・解除
         addCommonResponseDescriptor(getPostMapping(false), method: .PATCH, pathPattern: "/posts/:id/bookmark", keyPath: nil, statusCodes: nil)
+        //記事ー＞編集
+        addCommonResponseDescriptor(getPostMapping(false), method: .PATCH, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
     }
 }
 // MARK: - mapping
