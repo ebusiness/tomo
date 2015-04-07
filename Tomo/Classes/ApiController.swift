@@ -139,6 +139,25 @@ extension ApiController {
                 done(error)
         }
     }
+    
+    //記事ー＞いいね 登録・解除
+    class func postLike(id: String, done: (NSError?) -> Void) {
+        
+        RKObjectManager.sharedManager().patchObject(nil, path: "/posts/\(id)/like", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    //記事ー＞bookmark 登録・解除
+    class func postBookmark(id: String, done: (NSError?) -> Void) {
+        
+        RKObjectManager.sharedManager().patchObject(nil, path: "/posts/\(id)/bookmark", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
     //記事のコメント
     class func createComment(id: String,param: NSDictionary, done: (NSError?) -> Void) {
         /*
@@ -152,6 +171,7 @@ extension ApiController {
                 done(error)
         }
     }
+    
 }
 
 // MARK: - ユーザ情報
@@ -190,6 +210,10 @@ extension ApiController {
         addCommonResponseDescriptor(usermapping, method: .GET, pathPattern: "/connections/friends", keyPath: nil, statusCodes: nil)
         //記事のコメント
         addCommonResponseDescriptor(getCommoentMapping(), method: .POST, pathPattern: "/posts/:id/comments", keyPath: nil, statusCodes: nil)
+        //記事ー＞いいね 登録・解除
+        addCommonResponseDescriptor(getPostMapping(false), method: .PATCH, pathPattern: "/posts/:id/like", keyPath: nil, statusCodes: nil)
+        //記事ー＞bookmark 登録・解除
+        addCommonResponseDescriptor(getPostMapping(false), method: .PATCH, pathPattern: "/posts/:id/bookmark", keyPath: nil, statusCodes: nil)
     }
 }
 // MARK: - mapping
