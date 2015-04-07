@@ -39,12 +39,20 @@ class AddPostViewController: UITableViewController {
     @IBAction func send(sender: AnyObject) {
         
         let data = UIImagePNGRepresentation(image)
+        let name = NSUUID().UUIDString
         
-        S3Controller.instance.uploadData(data, done: { (error) -> Void in
+        S3Controller.uploadFile(name: name, data: data, done: { (error) -> Void in
             println(error)
             println("done")
             
+            if error == nil {
+                ApiController.addPost([name], sizes: [self.image.size], content: self.textView.text, done: { (error) -> Void in
+                    println(error)
+                })
+            }
         })
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     /*

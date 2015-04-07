@@ -89,6 +89,13 @@
 		296040481ACE688500D2A338 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040451ACE669900D2A338 /* Alamofire.swift */; };
 		2960404C1ACE68C500D2A338 /* TestDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404B1ACE68C500D2A338 /* TestDataTests.swift */; };
 		2960404F1ACE75C500D2A338 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */; };
+		299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299389441AD3B33800043D91 /* AmazonS3RequestManager.swift */; };
+		299389491AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299389441AD3B33800043D91 /* AmazonS3RequestManager.swift */; };
+		2993894A1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */; };
+		2993894B1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */; };
+		2993894E1AD3B70200043D91 /* SwiftyUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */; };
+		299389501AD3C5C800043D91 /* S3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2993894F1AD3C5C800043D91 /* S3.swift */; };
+		299389511AD3C5C800043D91 /* S3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2993894F1AD3C5C800043D91 /* S3.swift */; };
 		29A1AFF41AC4112800775765 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1AFF31AC4112800775765 /* Post.swift */; };
 		29A1AFF51AC4112800775765 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1AFF31AC4112800775765 /* Post.swift */; };
 		29A1AFF71AC4113000775765 /* _Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1AFF61AC4113000775765 /* _Post.swift */; };
@@ -174,6 +181,11 @@
 		296040451ACE669900D2A338 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
 		2960404B1ACE68C500D2A338 /* TestDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataTests.swift; sourceTree = "<group>"; };
 		2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFDateExtension.swift; sourceTree = "<group>"; };
+		299389431AD3B33800043D91 /* AmazonS3RequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonS3RequestManager.h; sourceTree = "<group>"; };
+		299389441AD3B33800043D91 /* AmazonS3RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestManager.swift; sourceTree = "<group>"; };
+		299389451AD3B33800043D91 /* AmazonS3SignatureHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonS3SignatureHelpers.h; sourceTree = "<group>"; };
+		299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonS3SignatureHelpers.m; sourceTree = "<group>"; };
+		2993894F1AD3C5C800043D91 /* S3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3.swift; path = Classes/S3.swift; sourceTree = "<group>"; };
 		29A1AFF31AC4112800775765 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		29A1AFF61AC4113000775765 /* _Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Post.swift; sourceTree = "<group>"; };
 		29A1AFF91AC414E900775765 /* PostMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PostMapping.plist; sourceTree = "<group>"; };
@@ -241,6 +253,7 @@
 				290134DB1AC3991C00BBFE29 /* Main.storyboard */,
 				29BE7E111AC54224008110B4 /* Util.swift */,
 				2901351C1AC3A90C00BBFE29 /* Constants.swift */,
+				2993894F1AD3C5C800043D91 /* S3.swift */,
 				290134F71AC39F4600BBFE29 /* ApiController.swift */,
 				290135081AC3A67200BBFE29 /* Model */,
 				296040441ACE669900D2A338 /* Vendors */,
@@ -338,11 +351,23 @@
 		296040441ACE669900D2A338 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				299389421AD3B33800043D91 /* AmazonS3RequestManager */,
 				29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */,
 				2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */,
 				296040451ACE669900D2A338 /* Alamofire.swift */,
 			);
 			path = Vendors;
+			sourceTree = "<group>";
+		};
+		299389421AD3B33800043D91 /* AmazonS3RequestManager */ = {
+			isa = PBXGroup;
+			children = (
+				299389431AD3B33800043D91 /* AmazonS3RequestManager.h */,
+				299389441AD3B33800043D91 /* AmazonS3RequestManager.swift */,
+				299389451AD3B33800043D91 /* AmazonS3SignatureHelpers.h */,
+				299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */,
+			);
+			path = AmazonS3RequestManager;
 			sourceTree = "<group>";
 		};
 		29A1AFF21AC40FFC00775765 /* Mapping */ = {
@@ -588,6 +613,7 @@
 				2901351A1AC3A79500BBFE29 /* _User.swift in Sources */,
 				290134DA1AC3991C00BBFE29 /* ViewController.swift in Sources */,
 				1712BE481ACE5A54000A9C47 /* Comments.swift in Sources */,
+				299389501AD3C5C800043D91 /* S3.swift in Sources */,
 				2942CCD11ACCE75A007CDC97 /* BaseViewController.swift in Sources */,
 				2960404F1ACE75C500D2A338 /* AFDateExtension.swift in Sources */,
 				1712BE2E1ACCE809000A9C47 /* Group.swift in Sources */,
@@ -598,12 +624,14 @@
 				29C1DA7A1AD36659009A02CC /* S3Controller.swift in Sources */,
 				1712BE381ACE183C000A9C47 /* _Images.swift in Sources */,
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
+				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				1712BE2C1ACCE801000A9C47 /* _Group.swift in Sources */,
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
 				29A5D1D91ACBE01700D95B77 /* RegPageView.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				2942CCD31ACCF761007CDC97 /* NewsfeedViewController.swift in Sources */,
 				1712BE421ACE413C000A9C47 /* Devices.swift in Sources */,
+				2993894A1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
 				290134F81AC39F4600BBFE29 /* ApiController.swift in Sources */,
 				29BE7E231AC55A28008110B4 /* MultilineLabel.swift in Sources */,
 				29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */,
@@ -642,12 +670,16 @@
 				1712BE3A1ACE195B000A9C47 /* _Images.swift in Sources */,
 				29A1AFF81AC4113000775765 /* _Post.swift in Sources */,
 				1712BE431ACE4140000A9C47 /* Devices.swift in Sources */,
+				2993894B1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
 				1712BE301ACCE819000A9C47 /* _Group.swift in Sources */,
 				296040471ACE687D00D2A338 /* TestData.swift in Sources */,
+				2993894E1AD3B70200043D91 /* SwiftyUserDefaults.swift in Sources */,
 				294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */,
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
+				299389491AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				1712BE391ACE1958000A9C47 /* Images.swift in Sources */,
 				1712BE4C1ACE5D12000A9C47 /* _Comments.swift in Sources */,
+				299389511AD3C5C800043D91 /* S3.swift in Sources */,
 				2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */,
 				1712BE491ACE5D05000A9C47 /* Comments.swift in Sources */,
 				29A1AFF51AC4112800775765 /* Post.swift in Sources */,

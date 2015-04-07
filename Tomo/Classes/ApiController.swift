@@ -57,6 +57,7 @@ extension ApiController {
         #endif
         
         RKObjectManager.sharedManager().postObject(nil, path: "/login", parameters: ["email" : email, "password" : password], success: { (_, result) -> Void in
+            Defaults["myId"] = (result.firstObject() as User).id
             done(nil)
         }) { (_, error) -> Void in
             done(error)
@@ -65,6 +66,7 @@ extension ApiController {
     
     class func getUserInfo(id: String, done: (NSError?) -> Void) {
         RKObjectManager.sharedManager().getObject(nil, path: "/users/\(id)", parameters: nil, success: { (_,result) -> Void in
+            
             done(nil)
         }) { (_, error) -> Void in
             done(error)
@@ -103,6 +105,20 @@ extension ApiController {
                 done(error)
         }
     }
+    
+    class func addPost(imageNames: [String], sizes: [CGSize], content: String, done: (NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        param["content"] = content
+        
+        for i in 0..<imageNames.count {
+            param["images[\(i)][name]"] = imageNames[i]
+            param["images[\(i)][size][width]"] = "\(sizes[i].width)"
+            param["images[\(i)][size][height]"] = "\(sizes[i].height)"
+        }
+        
+        createPosts(param, done: done)
+    }
+    
     //記事の投稿
     class func createPosts(param: NSDictionary, done: (NSError?) -> Void) {
         /*
