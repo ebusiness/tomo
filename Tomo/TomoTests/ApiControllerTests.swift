@@ -164,6 +164,27 @@ class ApiControllerTests: XCTestCase {
             println(error)
         })
     }
+    func testCreateComment() {
+        let expect = expectationWithDescription("api")
+        
+        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+            XCTAssertNil(error, "")
+            
+            var param = Dictionary<String, String>();
+            param["content"] = "記事コンテンツ";
+            param["replyTo"] = "5523a7c3a74dece90358bfdf";//
+            
+            let postid = "5523a697fc7c94126d3184b9"
+            ApiController.createComment(postid, param: param, done: { (error) -> Void in
+                XCTAssertNil(error, "should success")
+                expect.fulfill()
+            })
+        }
+        
+        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
+            println(error)
+        })
+    }
     func testGetMessage() {
         let expect = expectationWithDescription("api")
         

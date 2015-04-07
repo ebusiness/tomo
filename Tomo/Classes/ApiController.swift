@@ -139,6 +139,19 @@ extension ApiController {
                 done(error)
         }
     }
+    //記事のコメント
+    class func createComment(id: String,param: NSDictionary, done: (NSError?) -> Void) {
+        /*
+        var param = Dictionary<String, String>();
+        param["content"] = "記事コンテンツ";
+        param["replyTo"] = "552220aa915a1dd84834731b";//コメントID
+        */
+        RKObjectManager.sharedManager().postObject(nil, path: "/posts/\(id)/comments", parameters: param, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
 }
 
 // MARK: - ユーザ情報
@@ -175,6 +188,8 @@ extension ApiController {
         addCommonResponseDescriptor(getMessageMapping(), method: .GET, pathPattern: "/messages", keyPath: nil, statusCodes: nil)
         //友達一覧
         addCommonResponseDescriptor(usermapping, method: .GET, pathPattern: "/connections/friends", keyPath: nil, statusCodes: nil)
+        //記事のコメント
+        addCommonResponseDescriptor(getCommoentMapping(), method: .POST, pathPattern: "/posts/:id/comments", keyPath: nil, statusCodes: nil)
     }
 }
 // MARK: - mapping
@@ -229,7 +244,14 @@ extension ApiController {
         var mapping = _messageMapping
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_from", toKeyPath: "from", withMapping: _userMapping))
         return mapping
-    }    
+    }
+    //comment
+    private class func getCommoentMapping()->RKEntityMapping{
+        var mapping = _commentsMapping
+//        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: _userMapping))
+//        mapping.addPropertyMappingById("User",fromKey: "liked",toKeyPath: "liked")
+        return mapping
+    }
 }
 
 
