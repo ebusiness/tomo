@@ -53,7 +53,6 @@
 		178D64A21ACC10BE00185368 /* _Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D64A11ACC10BE00185368 /* _Message.swift */; };
 		222D6DC71A44F8CC6929BFD6 /* (null) in Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (Weak, ); }; };
 		290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
-		290134DA1AC3991C00BBFE29 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D91AC3991C00BBFE29 /* ViewController.swift */; };
 		290134DD1AC3991C00BBFE29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 290134DB1AC3991C00BBFE29 /* Main.storyboard */; };
 		290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290134DE1AC3991C00BBFE29 /* Images.xcassets */; };
 		290134E21AC3991C00BBFE29 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 290134E01AC3991C00BBFE29 /* LaunchScreen.xib */; };
@@ -151,7 +150,6 @@
 		290134D21AC3991C00BBFE29 /* tomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		290134D61AC3991C00BBFE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		290134D71AC3991C00BBFE29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		290134D91AC3991C00BBFE29 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		290134DC1AC3991C00BBFE29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		290134DE1AC3991C00BBFE29 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		290134E11AC3991C00BBFE29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -163,7 +161,7 @@
 		2901350D1AC3A67200BBFE29 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		290135161AC3A78E00BBFE29 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		290135191AC3A79500BBFE29 /* _User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _User.swift; sourceTree = "<group>"; };
-		2901351C1AC3A90C00BBFE29 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Classes/Constants.swift; sourceTree = "<group>"; };
+		2901351C1AC3A90C00BBFE29 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Classes/Constants.swift; sourceTree = "<group>"; };
 		291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailViewController.swift; path = Classes/PostDetailViewController.swift; sourceTree = "<group>"; };
 		291ADF941AD229B3009D8BE3 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentCell.swift; path = Classes/CommentCell.swift; sourceTree = "<group>"; };
 		291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailHeaderView.swift; path = Classes/PostDetailHeaderView.swift; sourceTree = "<group>"; };
@@ -177,7 +175,7 @@
 		2942CCD41ACD03BF007CDC97 /* NewsfeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsfeedCell.swift; path = Classes/NewsfeedCell.swift; sourceTree = "<group>"; };
 		2942CCD61ACD2B75007CDC97 /* NewsfeedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsfeedCell.xib; sourceTree = "<group>"; };
 		294BA32E1AC3D79100089204 /* ApiControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiControllerTests.swift; sourceTree = "<group>"; };
-		296040421ACE644800D2A338 /* TestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestData.swift; path = Classes/TestData.swift; sourceTree = "<group>"; };
+		296040421ACE644800D2A338 /* TestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestData.swift; path = ../Classes/TestData.swift; sourceTree = "<group>"; };
 		296040451ACE669900D2A338 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
 		2960404B1ACE68C500D2A338 /* TestDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataTests.swift; sourceTree = "<group>"; };
 		2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFDateExtension.swift; sourceTree = "<group>"; };
@@ -185,7 +183,7 @@
 		299389441AD3B33800043D91 /* AmazonS3RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestManager.swift; sourceTree = "<group>"; };
 		299389451AD3B33800043D91 /* AmazonS3SignatureHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonS3SignatureHelpers.h; sourceTree = "<group>"; };
 		299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonS3SignatureHelpers.m; sourceTree = "<group>"; };
-		2993894F1AD3C5C800043D91 /* S3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3.swift; path = Classes/S3.swift; sourceTree = "<group>"; };
+		2993894F1AD3C5C800043D91 /* S3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3.swift; path = ../Classes/S3.swift; sourceTree = "<group>"; };
 		29A1AFF31AC4112800775765 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		29A1AFF61AC4113000775765 /* _Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Post.swift; sourceTree = "<group>"; };
 		29A1AFF91AC414E900775765 /* PostMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PostMapping.plist; sourceTree = "<group>"; };
@@ -196,9 +194,9 @@
 		29A5D1DC1ACBE85C00D95B77 /* RegPageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegPageData.swift; sourceTree = "<group>"; };
 		29A5D1DE1ACBE9CB00D95B77 /* RegPageData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegPageData.plist; path = ../RegPageData.plist; sourceTree = "<group>"; };
 		29A5D1E01ACCCFB400D95B77 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
-		29BE7E111AC54224008110B4 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = Classes/Util.swift; sourceTree = "<group>"; };
+		29BE7E111AC54224008110B4 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = ../Classes/Util.swift; sourceTree = "<group>"; };
 		29BE7E1A1AC54663008110B4 /* DBController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBController.swift; path = Classes/DBController.swift; sourceTree = "<group>"; };
-		29BE7E221AC55A28008110B4 /* MultilineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultilineLabel.swift; path = Classes/MultilineLabel.swift; sourceTree = "<group>"; };
+		29BE7E221AC55A28008110B4 /* MultilineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultilineLabel.swift; path = ../Classes/MultilineLabel.swift; sourceTree = "<group>"; };
 		29C1DA781AD36659009A02CC /* S3Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3Controller.swift; path = Classes/S3Controller.swift; sourceTree = "<group>"; };
 		29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyUserDefaults.swift; sourceTree = "<group>"; };
 		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
@@ -231,33 +229,12 @@
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
-				29C1DA781AD36659009A02CC /* S3Controller.swift */,
-				291ADF9E1AD26575009D8BE3 /* AddPost.storyboard */,
-				291ADF9C1AD2654E009D8BE3 /* AddPostViewController.swift */,
-				291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */,
-				291ADF9A1AD24FAE009D8BE3 /* PostDetailHeaderView.xib */,
-				291ADF941AD229B3009D8BE3 /* CommentCell.swift */,
-				291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */,
-				296040421ACE644800D2A338 /* TestData.swift */,
-				2942CCD61ACD2B75007CDC97 /* NewsfeedCell.xib */,
-				2942CCD41ACD03BF007CDC97 /* NewsfeedCell.swift */,
-				2942CCD21ACCF761007CDC97 /* NewsfeedViewController.swift */,
-				2942CCD01ACCE75A007CDC97 /* BaseViewController.swift */,
-				2942CCCE1ACCE5EA007CDC97 /* Newsfeed.storyboard */,
-				2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */,
-				29A5D1DA1ACBE03000D95B77 /* RegPageView.xib */,
-				29A5D1D81ACBE01700D95B77 /* RegPageView.swift */,
-				29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */,
-				29BE7E221AC55A28008110B4 /* MultilineLabel.swift */,
-				29BE7E1A1AC54663008110B4 /* DBController.swift */,
-				290134DB1AC3991C00BBFE29 /* Main.storyboard */,
-				29BE7E111AC54224008110B4 /* Util.swift */,
-				2901351C1AC3A90C00BBFE29 /* Constants.swift */,
-				2993894F1AD3C5C800043D91 /* S3.swift */,
-				290134F71AC39F4600BBFE29 /* ApiController.swift */,
+				299389561AD3C7CA00043D91 /* ViewController */,
+				299389521AD3C6FB00043D91 /* Controller */,
+				299389531AD3C71500043D91 /* xib&storyboard */,
+				290134D51AC3991C00BBFE29 /* Supporting Files */,
 				290135081AC3A67200BBFE29 /* Model */,
 				296040441ACE669900D2A338 /* Vendors */,
-				290134D41AC3991C00BBFE29 /* Tomo */,
 				290134EA1AC3991D00BBFE29 /* TomoTests */,
 				290134D31AC3991C00BBFE29 /* Products */,
 				B0C026D5F93A7DC22E9DF996 /* Pods */,
@@ -274,25 +251,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		290134D41AC3991C00BBFE29 /* Tomo */ = {
-			isa = PBXGroup;
-			children = (
-				290134D71AC3991C00BBFE29 /* AppDelegate.swift */,
-				290134D91AC3991C00BBFE29 /* ViewController.swift */,
-				290134DE1AC3991C00BBFE29 /* Images.xcassets */,
-				290134E01AC3991C00BBFE29 /* LaunchScreen.xib */,
-				290134D51AC3991C00BBFE29 /* Supporting Files */,
-			);
-			path = Tomo;
-			sourceTree = "<group>";
-		};
 		290134D51AC3991C00BBFE29 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				290134DE1AC3991C00BBFE29 /* Images.xcassets */,
+				290134D71AC3991C00BBFE29 /* AppDelegate.swift */,
+				29BE7E111AC54224008110B4 /* Util.swift */,
+				2901351C1AC3A90C00BBFE29 /* Constants.swift */,
+				2993894F1AD3C5C800043D91 /* S3.swift */,
 				290134FA1AC3A3D200BBFE29 /* Tomo-Bridging-Header.h */,
 				290134D61AC3991C00BBFE29 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			path = Tomo;
 			sourceTree = "<group>";
 		};
 		290134EA1AC3991D00BBFE29 /* TomoTests */ = {
@@ -318,6 +289,7 @@
 		290135081AC3A67200BBFE29 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				296040421ACE644800D2A338 /* TestData.swift */,
 				1712BE471ACE5A54000A9C47 /* Comments.swift */,
 				29A5D1DE1ACBE9CB00D95B77 /* RegPageData.plist */,
 				1712BE411ACE413C000A9C47 /* Devices.swift */,
@@ -351,6 +323,7 @@
 		296040441ACE669900D2A338 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				29BE7E221AC55A28008110B4 /* MultilineLabel.swift */,
 				299389421AD3B33800043D91 /* AmazonS3RequestManager */,
 				29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */,
 				2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */,
@@ -368,6 +341,79 @@
 				299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */,
 			);
 			path = AmazonS3RequestManager;
+			sourceTree = "<group>";
+		};
+		299389521AD3C6FB00043D91 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				29BE7E1A1AC54663008110B4 /* DBController.swift */,
+				290134F71AC39F4600BBFE29 /* ApiController.swift */,
+				29C1DA781AD36659009A02CC /* S3Controller.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		299389531AD3C71500043D91 /* xib&storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				290134E01AC3991C00BBFE29 /* LaunchScreen.xib */,
+				291ADF9E1AD26575009D8BE3 /* AddPost.storyboard */,
+				291ADF9A1AD24FAE009D8BE3 /* PostDetailHeaderView.xib */,
+				2942CCD61ACD2B75007CDC97 /* NewsfeedCell.xib */,
+				2942CCCE1ACCE5EA007CDC97 /* Newsfeed.storyboard */,
+				29A5D1DA1ACBE03000D95B77 /* RegPageView.xib */,
+				290134DB1AC3991C00BBFE29 /* Main.storyboard */,
+			);
+			name = "xib&storyboard";
+			sourceTree = "<group>";
+		};
+		299389541AD3C77300043D91 /* login */ = {
+			isa = PBXGroup;
+			children = (
+				2942CCD01ACCE75A007CDC97 /* BaseViewController.swift */,
+				29A5D1D81ACBE01700D95B77 /* RegPageView.swift */,
+				2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */,
+				29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */,
+			);
+			name = login;
+			sourceTree = "<group>";
+		};
+		299389551AD3C79000043D91 /* Post追加 */ = {
+			isa = PBXGroup;
+			children = (
+				291ADF9C1AD2654E009D8BE3 /* AddPostViewController.swift */,
+			);
+			name = "Post追加";
+			sourceTree = "<group>";
+		};
+		299389561AD3C7CA00043D91 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				299389571AD3D13700043D91 /* Newsfeed一覧 */,
+				299389581AD3D15800043D91 /* Post詳細 */,
+				299389551AD3C79000043D91 /* Post追加 */,
+				299389541AD3C77300043D91 /* login */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		299389571AD3D13700043D91 /* Newsfeed一覧 */ = {
+			isa = PBXGroup;
+			children = (
+				2942CCD41ACD03BF007CDC97 /* NewsfeedCell.swift */,
+				2942CCD21ACCF761007CDC97 /* NewsfeedViewController.swift */,
+			);
+			name = "Newsfeed一覧";
+			sourceTree = "<group>";
+		};
+		299389581AD3D15800043D91 /* Post詳細 */ = {
+			isa = PBXGroup;
+			children = (
+				291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */,
+				291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */,
+				291ADF941AD229B3009D8BE3 /* CommentCell.swift */,
+			);
+			name = "Post詳細";
 			sourceTree = "<group>";
 		};
 		29A1AFF21AC40FFC00775765 /* Mapping */ = {
@@ -611,7 +657,6 @@
 				291ADF991AD24F7B009D8BE3 /* PostDetailHeaderView.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
 				2901351A1AC3A79500BBFE29 /* _User.swift in Sources */,
-				290134DA1AC3991C00BBFE29 /* ViewController.swift in Sources */,
 				1712BE481ACE5A54000A9C47 /* Comments.swift in Sources */,
 				299389501AD3C5C800043D91 /* S3.swift in Sources */,
 				2942CCD11ACCE75A007CDC97 /* BaseViewController.swift in Sources */,
@@ -715,6 +760,7 @@
 				290134E11AC3991C00BBFE29 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			path = Tomo;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

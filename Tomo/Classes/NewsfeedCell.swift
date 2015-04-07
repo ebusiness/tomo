@@ -29,18 +29,11 @@ class NewsfeedCell: UICollectionViewCell {
         avatarImageView.layer.masksToBounds = true
     }
     
-    var post: Post! {
-
-        didSet {
-            
-        }
-    }
+    var post: Post!
     
-    var imageSize: CGSize!
-    
-    func configCell() {
+    func configCellForShow() {
         if heightConstraint != nil {
-//            heightConstraint.active = false
+            //            heightConstraint.active = false
             imageView.removeConstraint(heightConstraint)
         }
         
@@ -59,7 +52,7 @@ class NewsfeedCell: UICollectionViewCell {
                 }
             }
         }
-
+        
         let now = NSDate()
         if let date = post.createDate {
             if !date.isToday() {
@@ -73,27 +66,28 @@ class NewsfeedCell: UICollectionViewCell {
             }
         }
         
-        if post.imagesmobile.count > 0 {
-            let image = post.imagesmobile.anyObject() as Images
-            println(image.name)
+        if let imagePath = post.image?.name {
+            imageView.setImageWithURL(NSURL(string: imagePath), completed: { (image, error, cacheType, url) -> Void in
+                if cacheType == .None {
+                    UIView.animateWithDuration(0.5, animations: { () -> Void in
+                        self.imageView.alpha = 0.2
+                        self.imageView.alpha = 1
+                    })
+                }
+                }, usingActivityIndicatorStyle: .Gray)
         }
-        
-        imageView.setImageWithURL(NSURL(string: imagePath()), completed: { (image, error, cacheType, url) -> Void in
-            if cacheType == .None {
-                UIView.animateWithDuration(0.5, animations: { () -> Void in
-                    self.imageView.alpha = 0.2
-                    self.imageView.alpha = 1
-                })
-            }
-        }, usingActivityIndicatorStyle: .Gray)
-    }
-    
-    func imagePath() -> String {
-        return kBasePath + "/\(Int(imageSize.width))" + "/\(Int(imageSize.height))"
-    }
-    
+}
+
+//    func imagePath() -> String {
+//        return kBasePath + "/\(Int(imageSize.width))" + "/\(Int(imageSize.height))"
+//    }
+
     func sizeOfCell(cellWidth: CGFloat) -> CGSize {
-        heightConstraint.constant = cellWidth * imageSize.height / imageSize.width
+        if let imageSize = post.imageSize {
+            heightConstraint.constant = cellWidth * imageSize.height / imageSize.width
+        } else {
+            heightConstraint.constant = 0
+        }
         
         updateTitleWithPost()
         

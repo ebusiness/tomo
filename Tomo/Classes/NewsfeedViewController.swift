@@ -16,7 +16,7 @@ class NewsfeedViewController: BaseViewController {
     
     var newsfeeds: NSFetchedResultsController!
     
-    var sizes = [CGSize]()
+//    var sizes = [CGSize]()
     
     var cellForHeight: NewsfeedCell!
     
@@ -37,7 +37,7 @@ class NewsfeedViewController: BaseViewController {
         
         setupLayout()
         
-        setupSizes()
+//        setupSizes()
         
         ApiController.getNewsfeed { (error) -> Void in
             println("getNewsfeed done")
@@ -50,12 +50,12 @@ class NewsfeedViewController: BaseViewController {
         collectionView.collectionViewLayout = layout
     }
 
-    func setupSizes() {
-        for i in 0..<count {
-            let size = CGSizeMake(CGFloat(arc4random() % 500 + 500), CGFloat(arc4random() % 500 + 500))
-            sizes.append(size)
-        }
-    }
+//    func setupSizes() {
+//        for i in 0..<count {
+//            let size = CGSizeMake(CGFloat(arc4random() % 500 + 500), CGFloat(arc4random() % 500 + 500))
+//            sizes.append(size)
+//        }
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -68,13 +68,13 @@ class NewsfeedViewController: BaseViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "SeguePostDetail" {
             let vc = segue.destinationViewController as PostDetailViewController
-//            vc.post = sender as Post
-            let indexPath = sender as NSIndexPath
-            let post = postsFRC.objectAtIndexPath(indexPath) as Post
-            let imageSize = sizes[indexPath.item]
+            vc.post = sender as Post
+//            let indexPath = sender as NSIndexPath
+//            let post = postsFRC.objectAtIndexPath(indexPath) as Post
+//            let imageSize = sizes[indexPath.item]
             
-            vc.post = post
-            vc.imageSize = imageSize
+//            vc.post = post
+//            vc.imageSize = imageSize
         }
     }
     
@@ -120,18 +120,19 @@ extension NewsfeedViewController: UICollectionViewDataSource, UICollectionViewDe
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("NewsfeedCell", forIndexPath: indexPath) as NewsfeedCell
         
-        cell.imageSize = sizes[indexPath.item]
+//        cell.imageSize = sizes[indexPath.item]
         cell.post = post
         
-        cell.configCell()
+        cell.configCellForShow()
         
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        let post = postsFRC.objectAtIndexPath(indexPath) as Post
+        let post = postsFRC.objectAtIndexPath(indexPath) as Post
         
-        performSegueWithIdentifier("SeguePostDetail", sender: indexPath)
+//        performSegueWithIdentifier("SeguePostDetail", sender: indexPath)
+        performSegueWithIdentifier("SeguePostDetail", sender: post)
     }
 }
 
@@ -148,9 +149,9 @@ extension NewsfeedViewController: CHTCollectionViewDelegateWaterfallLayout {
         }
         
         let cellWidth = (collectionView.bounds.width - 3 * 10) / 2
-        let imageSize = sizes[indexPath.item]
-        
-        cellForHeight.imageSize = imageSize
+//        let imageSize = sizes[indexPath.item]
+//        
+//        cellForHeight.imageSize = imageSize
         cellForHeight.post = post
         
         var size = cellForHeight.sizeOfCell(cellWidth)
@@ -165,7 +166,7 @@ extension NewsfeedViewController: CHTCollectionViewDelegateWaterfallLayout {
 extension NewsfeedViewController: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        setupSizes()
+//        setupSizes()
         self.collectionView.reloadData()
     }
 }

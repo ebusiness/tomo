@@ -20,11 +20,10 @@ class PostDetailViewController: UIViewController {
     var cellForHeight: CommentCell!
     
     var post: Post!
-    var imageSize: CGSize!
     
     var comments: [Comments] {
         get {
-            return post.sortedComments()
+            return post.comments.array as [Comments]
         }
     }
     
@@ -33,10 +32,7 @@ class PostDetailViewController: UIViewController {
 
         headerView = Util.createViewWithNibName("PostDetailHeaderView") as PostDetailHeaderView
         headerView.viewWidth = view.bounds.width
-        headerView.imageSize = imageSize
         headerView.post = post
-//        postImageViewHeightConstraint.constant = imageSize.height / imageSize.width * view.bounds.width
-
     }
     
     override func didReceiveMemoryWarning() {

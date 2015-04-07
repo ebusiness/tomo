@@ -81,34 +81,34 @@ class _Group: NSManagedObject {
     // func validateOwner(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
-    var posts: NSSet
+    var posts: NSOrderedSet
 
 }
 
 extension _Group {
 
-    func addPosts(objects: NSSet) {
-        let mutable = self.posts.mutableCopy() as NSMutableSet
-        mutable.unionSet(objects)
-        self.posts = mutable.copy() as NSSet
+    func addPosts(objects: NSOrderedSet) {
+        let mutable = self.posts.mutableCopy() as NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.posts = mutable.copy() as NSOrderedSet
     }
 
-    func removePosts(objects: NSSet) {
-        let mutable = self.posts.mutableCopy() as NSMutableSet
-        mutable.minusSet(objects)
-        self.posts = mutable.copy() as NSSet
+    func removePosts(objects: NSOrderedSet) {
+        let mutable = self.posts.mutableCopy() as NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.posts = mutable.copy() as NSOrderedSet
     }
 
     func addPostsObject(value: Post!) {
-        let mutable = self.posts.mutableCopy() as NSMutableSet
+        let mutable = self.posts.mutableCopy() as NSMutableOrderedSet
         mutable.addObject(value)
-        self.posts = mutable.copy() as NSSet
+        self.posts = mutable.copy() as NSOrderedSet
     }
 
     func removePostsObject(value: Post!) {
-        let mutable = self.posts.mutableCopy() as NSMutableSet
+        let mutable = self.posts.mutableCopy() as NSMutableOrderedSet
         mutable.removeObject(value)
-        self.posts = mutable.copy() as NSSet
+        self.posts = mutable.copy() as NSOrderedSet
     }
 
 }

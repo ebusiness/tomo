@@ -64,7 +64,7 @@ class _Comments: NSManagedObject {
     // MARK: - Relationships
 
     @NSManaged
-    var liked: NSSet
+    var liked: NSOrderedSet
 
     @NSManaged
     var owner: User?
@@ -75,28 +75,28 @@ class _Comments: NSManagedObject {
 
 extension _Comments {
 
-    func addLiked(objects: NSSet) {
-        let mutable = self.liked.mutableCopy() as NSMutableSet
-        mutable.unionSet(objects)
-        self.liked = mutable.copy() as NSSet
+    func addLiked(objects: NSOrderedSet) {
+        let mutable = self.liked.mutableCopy() as NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.liked = mutable.copy() as NSOrderedSet
     }
 
-    func removeLiked(objects: NSSet) {
-        let mutable = self.liked.mutableCopy() as NSMutableSet
-        mutable.minusSet(objects)
-        self.liked = mutable.copy() as NSSet
+    func removeLiked(objects: NSOrderedSet) {
+        let mutable = self.liked.mutableCopy() as NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.liked = mutable.copy() as NSOrderedSet
     }
 
     func addLikedObject(value: User!) {
-        let mutable = self.liked.mutableCopy() as NSMutableSet
+        let mutable = self.liked.mutableCopy() as NSMutableOrderedSet
         mutable.addObject(value)
-        self.liked = mutable.copy() as NSSet
+        self.liked = mutable.copy() as NSOrderedSet
     }
 
     func removeLikedObject(value: User!) {
-        let mutable = self.liked.mutableCopy() as NSMutableSet
+        let mutable = self.liked.mutableCopy() as NSMutableOrderedSet
         mutable.removeObject(value)
-        self.liked = mutable.copy() as NSSet
+        self.liked = mutable.copy() as NSOrderedSet
     }
 
 }

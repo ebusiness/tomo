@@ -26,14 +26,14 @@ class PostDetailHeaderView: UIView {
     
     var viewWidth: CGFloat!
     
-    var imageSize: CGSize! {
-        didSet {
-            postImageViewHeightConstraint.constant = viewWidth * imageSize.height / imageSize.width
-        }
-    }
-    
     var post: Post! {
         didSet {
+            if let imageSize = post.imageSize {
+                postImageViewHeightConstraint.constant = viewWidth * imageSize.height / imageSize.width
+            } else {
+                postImageViewHeightConstraint.constant = 0
+            }
+            
             TestData.getRandomAvatarPath { (path) -> Void in
                 if let path = path {
                     self.avatarImageView.sd_setImageWithURL(NSURL(string: path))
@@ -43,13 +43,13 @@ class PostDetailHeaderView: UIView {
             userName.text = post.owner?.fullName()
             timeLabel.text = Util.displayDate(post.createDate)
             
-            postImageView.setImageWithURL(NSURL(string: imagePath()), completed: { (image, error, cacheType, url) -> Void in
-                }, usingActivityIndicatorStyle: .Gray)
-            
+            if let imagePath = post.imagePath {
+                postImageView.setImageWithURL(NSURL(string: imagePath), completed: { (image, error, cacheType, url) -> Void in
+                    }, usingActivityIndicatorStyle: .Gray)
+            }
             contentLabel.text = post.content
             
             commentsCount.text = "\(post.comments.count)条评论"
-
         }
     }
 
@@ -62,8 +62,5 @@ class PostDetailHeaderView: UIView {
             return size.height
         }
     }
-    
-    func imagePath() -> String {
-        return kBasePath + "/\(Int(imageSize.width))" + "/\(Int(imageSize.height))"
-    }
+
 }

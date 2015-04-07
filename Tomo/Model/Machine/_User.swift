@@ -112,251 +112,251 @@ class _User: NSManagedObject {
     // MARK: - Relationships
 
     @NSManaged
-    var bookmarked_posts: NSSet
+    var bookmarked_posts: NSOrderedSet
 
     @NSManaged
-    var devices: NSSet
+    var devices: NSOrderedSet
 
     @NSManaged
-    var friends: NSSet
+    var friends: NSOrderedSet
 
     @NSManaged
-    var groups: NSSet
+    var groups: NSOrderedSet
 
     @NSManaged
-    var liked_comments: NSSet
+    var liked_comments: NSOrderedSet
 
     @NSManaged
-    var liked_posts: NSSet
+    var liked_posts: NSOrderedSet
 
     @NSManaged
-    var messages: NSSet
+    var messages: NSOrderedSet
 
     @NSManaged
-    var posts: NSSet
+    var posts: NSOrderedSet
 
 }
 
 extension _User {
 
-    func addBookmarked_posts(objects: NSSet) {
-        let mutable = self.bookmarked_posts.mutableCopy() as NSMutableSet
-        mutable.unionSet(objects)
-        self.bookmarked_posts = mutable.copy() as NSSet
+    func addBookmarked_posts(objects: NSOrderedSet) {
+        let mutable = self.bookmarked_posts.mutableCopy() as NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.bookmarked_posts = mutable.copy() as NSOrderedSet
     }
 
-    func removeBookmarked_posts(objects: NSSet) {
-        let mutable = self.bookmarked_posts.mutableCopy() as NSMutableSet
-        mutable.minusSet(objects)
-        self.bookmarked_posts = mutable.copy() as NSSet
+    func removeBookmarked_posts(objects: NSOrderedSet) {
+        let mutable = self.bookmarked_posts.mutableCopy() as NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.bookmarked_posts = mutable.copy() as NSOrderedSet
     }
 
     func addBookmarked_postsObject(value: Post!) {
-        let mutable = self.bookmarked_posts.mutableCopy() as NSMutableSet
+        let mutable = self.bookmarked_posts.mutableCopy() as NSMutableOrderedSet
         mutable.addObject(value)
-        self.bookmarked_posts = mutable.copy() as NSSet
+        self.bookmarked_posts = mutable.copy() as NSOrderedSet
     }
 
     func removeBookmarked_postsObject(value: Post!) {
-        let mutable = self.bookmarked_posts.mutableCopy() as NSMutableSet
+        let mutable = self.bookmarked_posts.mutableCopy() as NSMutableOrderedSet
         mutable.removeObject(value)
-        self.bookmarked_posts = mutable.copy() as NSSet
+        self.bookmarked_posts = mutable.copy() as NSOrderedSet
     }
 
 }
 
 extension _User {
 
-    func addDevices(objects: NSSet) {
-        let mutable = self.devices.mutableCopy() as NSMutableSet
-        mutable.unionSet(objects)
-        self.devices = mutable.copy() as NSSet
+    func addDevices(objects: NSOrderedSet) {
+        let mutable = self.devices.mutableCopy() as NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.devices = mutable.copy() as NSOrderedSet
     }
 
-    func removeDevices(objects: NSSet) {
-        let mutable = self.devices.mutableCopy() as NSMutableSet
-        mutable.minusSet(objects)
-        self.devices = mutable.copy() as NSSet
+    func removeDevices(objects: NSOrderedSet) {
+        let mutable = self.devices.mutableCopy() as NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.devices = mutable.copy() as NSOrderedSet
     }
 
     func addDevicesObject(value: Devices!) {
-        let mutable = self.devices.mutableCopy() as NSMutableSet
+        let mutable = self.devices.mutableCopy() as NSMutableOrderedSet
         mutable.addObject(value)
-        self.devices = mutable.copy() as NSSet
+        self.devices = mutable.copy() as NSOrderedSet
     }
 
     func removeDevicesObject(value: Devices!) {
-        let mutable = self.devices.mutableCopy() as NSMutableSet
+        let mutable = self.devices.mutableCopy() as NSMutableOrderedSet
         mutable.removeObject(value)
-        self.devices = mutable.copy() as NSSet
+        self.devices = mutable.copy() as NSOrderedSet
     }
 
 }
 
 extension _User {
 
-    func addFriends(objects: NSSet) {
-        let mutable = self.friends.mutableCopy() as NSMutableSet
-        mutable.unionSet(objects)
-        self.friends = mutable.copy() as NSSet
+    func addFriends(objects: NSOrderedSet) {
+        let mutable = self.friends.mutableCopy() as NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.friends = mutable.copy() as NSOrderedSet
     }
 
-    func removeFriends(objects: NSSet) {
-        let mutable = self.friends.mutableCopy() as NSMutableSet
-        mutable.minusSet(objects)
-        self.friends = mutable.copy() as NSSet
+    func removeFriends(objects: NSOrderedSet) {
+        let mutable = self.friends.mutableCopy() as NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.friends = mutable.copy() as NSOrderedSet
     }
 
     func addFriendsObject(value: User!) {
-        let mutable = self.friends.mutableCopy() as NSMutableSet
+        let mutable = self.friends.mutableCopy() as NSMutableOrderedSet
         mutable.addObject(value)
-        self.friends = mutable.copy() as NSSet
+        self.friends = mutable.copy() as NSOrderedSet
     }
 
     func removeFriendsObject(value: User!) {
-        let mutable = self.friends.mutableCopy() as NSMutableSet
+        let mutable = self.friends.mutableCopy() as NSMutableOrderedSet
         mutable.removeObject(value)
-        self.friends = mutable.copy() as NSSet
+        self.friends = mutable.copy() as NSOrderedSet
     }
 
 }
 
 extension _User {
 
-    func addGroups(objects: NSSet) {
-        let mutable = self.groups.mutableCopy() as NSMutableSet
-        mutable.unionSet(objects)
-        self.groups = mutable.copy() as NSSet
+    func addGroups(objects: NSOrderedSet) {
+        let mutable = self.groups.mutableCopy() as NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.groups = mutable.copy() as NSOrderedSet
     }
 
-    func removeGroups(objects: NSSet) {
-        let mutable = self.groups.mutableCopy() as NSMutableSet
-        mutable.minusSet(objects)
-        self.groups = mutable.copy() as NSSet
+    func removeGroups(objects: NSOrderedSet) {
+        let mutable = self.groups.mutableCopy() as NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.groups = mutable.copy() as NSOrderedSet
     }
 
     func addGroupsObject(value: Group!) {
-        let mutable = self.groups.mutableCopy() as NSMutableSet
+        let mutable = self.groups.mutableCopy() as NSMutableOrderedSet
         mutable.addObject(value)
-        self.groups = mutable.copy() as NSSet
+        self.groups = mutable.copy() as NSOrderedSet
     }
 
     func removeGroupsObject(value: Group!) {
-        let mutable = self.groups.mutableCopy() as NSMutableSet
+        let mutable = self.groups.mutableCopy() as NSMutableOrderedSet
         mutable.removeObject(value)
-        self.groups = mutable.copy() as NSSet
+        self.groups = mutable.copy() as NSOrderedSet
     }
 
 }
 
 extension _User {
 
-    func addLiked_comments(objects: NSSet) {
-        let mutable = self.liked_comments.mutableCopy() as NSMutableSet
-        mutable.unionSet(objects)
-        self.liked_comments = mutable.copy() as NSSet
+    func addLiked_comments(objects: NSOrderedSet) {
+        let mutable = self.liked_comments.mutableCopy() as NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.liked_comments = mutable.copy() as NSOrderedSet
     }
 
-    func removeLiked_comments(objects: NSSet) {
-        let mutable = self.liked_comments.mutableCopy() as NSMutableSet
-        mutable.minusSet(objects)
-        self.liked_comments = mutable.copy() as NSSet
+    func removeLiked_comments(objects: NSOrderedSet) {
+        let mutable = self.liked_comments.mutableCopy() as NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.liked_comments = mutable.copy() as NSOrderedSet
     }
 
     func addLiked_commentsObject(value: Comments!) {
-        let mutable = self.liked_comments.mutableCopy() as NSMutableSet
+        let mutable = self.liked_comments.mutableCopy() as NSMutableOrderedSet
         mutable.addObject(value)
-        self.liked_comments = mutable.copy() as NSSet
+        self.liked_comments = mutable.copy() as NSOrderedSet
     }
 
     func removeLiked_commentsObject(value: Comments!) {
-        let mutable = self.liked_comments.mutableCopy() as NSMutableSet
+        let mutable = self.liked_comments.mutableCopy() as NSMutableOrderedSet
         mutable.removeObject(value)
-        self.liked_comments = mutable.copy() as NSSet
+        self.liked_comments = mutable.copy() as NSOrderedSet
     }
 
 }
 
 extension _User {
 
-    func addLiked_posts(objects: NSSet) {
-        let mutable = self.liked_posts.mutableCopy() as NSMutableSet
-        mutable.unionSet(objects)
-        self.liked_posts = mutable.copy() as NSSet
+    func addLiked_posts(objects: NSOrderedSet) {
+        let mutable = self.liked_posts.mutableCopy() as NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.liked_posts = mutable.copy() as NSOrderedSet
     }
 
-    func removeLiked_posts(objects: NSSet) {
-        let mutable = self.liked_posts.mutableCopy() as NSMutableSet
-        mutable.minusSet(objects)
-        self.liked_posts = mutable.copy() as NSSet
+    func removeLiked_posts(objects: NSOrderedSet) {
+        let mutable = self.liked_posts.mutableCopy() as NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.liked_posts = mutable.copy() as NSOrderedSet
     }
 
     func addLiked_postsObject(value: Post!) {
-        let mutable = self.liked_posts.mutableCopy() as NSMutableSet
+        let mutable = self.liked_posts.mutableCopy() as NSMutableOrderedSet
         mutable.addObject(value)
-        self.liked_posts = mutable.copy() as NSSet
+        self.liked_posts = mutable.copy() as NSOrderedSet
     }
 
     func removeLiked_postsObject(value: Post!) {
-        let mutable = self.liked_posts.mutableCopy() as NSMutableSet
+        let mutable = self.liked_posts.mutableCopy() as NSMutableOrderedSet
         mutable.removeObject(value)
-        self.liked_posts = mutable.copy() as NSSet
+        self.liked_posts = mutable.copy() as NSOrderedSet
     }
 
 }
 
 extension _User {
 
-    func addMessages(objects: NSSet) {
-        let mutable = self.messages.mutableCopy() as NSMutableSet
-        mutable.unionSet(objects)
-        self.messages = mutable.copy() as NSSet
+    func addMessages(objects: NSOrderedSet) {
+        let mutable = self.messages.mutableCopy() as NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.messages = mutable.copy() as NSOrderedSet
     }
 
-    func removeMessages(objects: NSSet) {
-        let mutable = self.messages.mutableCopy() as NSMutableSet
-        mutable.minusSet(objects)
-        self.messages = mutable.copy() as NSSet
+    func removeMessages(objects: NSOrderedSet) {
+        let mutable = self.messages.mutableCopy() as NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.messages = mutable.copy() as NSOrderedSet
     }
 
     func addMessagesObject(value: Message!) {
-        let mutable = self.messages.mutableCopy() as NSMutableSet
+        let mutable = self.messages.mutableCopy() as NSMutableOrderedSet
         mutable.addObject(value)
-        self.messages = mutable.copy() as NSSet
+        self.messages = mutable.copy() as NSOrderedSet
     }
 
     func removeMessagesObject(value: Message!) {
-        let mutable = self.messages.mutableCopy() as NSMutableSet
+        let mutable = self.messages.mutableCopy() as NSMutableOrderedSet
         mutable.removeObject(value)
-        self.messages = mutable.copy() as NSSet
+        self.messages = mutable.copy() as NSOrderedSet
     }
 
 }
 
 extension _User {
 
-    func addPosts(objects: NSSet) {
-        let mutable = self.posts.mutableCopy() as NSMutableSet
-        mutable.unionSet(objects)
-        self.posts = mutable.copy() as NSSet
+    func addPosts(objects: NSOrderedSet) {
+        let mutable = self.posts.mutableCopy() as NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.posts = mutable.copy() as NSOrderedSet
     }
 
-    func removePosts(objects: NSSet) {
-        let mutable = self.posts.mutableCopy() as NSMutableSet
-        mutable.minusSet(objects)
-        self.posts = mutable.copy() as NSSet
+    func removePosts(objects: NSOrderedSet) {
+        let mutable = self.posts.mutableCopy() as NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.posts = mutable.copy() as NSOrderedSet
     }
 
     func addPostsObject(value: Post!) {
-        let mutable = self.posts.mutableCopy() as NSMutableSet
+        let mutable = self.posts.mutableCopy() as NSMutableOrderedSet
         mutable.addObject(value)
-        self.posts = mutable.copy() as NSSet
+        self.posts = mutable.copy() as NSOrderedSet
     }
 
     func removePostsObject(value: Post!) {
-        let mutable = self.posts.mutableCopy() as NSMutableSet
+        let mutable = self.posts.mutableCopy() as NSMutableOrderedSet
         mutable.removeObject(value)
-        self.posts = mutable.copy() as NSSet
+        self.posts = mutable.copy() as NSOrderedSet
     }
 
 }
