@@ -143,9 +143,7 @@ extension NewsfeedViewController: CHTCollectionViewDelegateWaterfallLayout {
         }
         
         let cellWidth = (collectionView.bounds.width - 3 * 10) / 2
-//        let imageSize = sizes[indexPath.item]
-//        
-//        cellForHeight.imageSize = imageSize
+
         cellForHeight.post = post
         
         var size = cellForHeight.sizeOfCell(cellWidth)
@@ -159,9 +157,21 @@ extension NewsfeedViewController: CHTCollectionViewDelegateWaterfallLayout {
 
 extension NewsfeedViewController: NSFetchedResultsControllerDelegate {
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+//    func controllerDidChangeContent(controller: NSFetchedResultsController) {
 //        setupSizes()
-        self.collectionView.reloadData()
+//        self.collectionView.reloadData()
+//    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        switch type {
+        case .Insert:
+            if let newIndexPath = newIndexPath {
+                self.collectionView.insertItemsAtIndexPaths([newIndexPath])
+            }
+        default:
+            self.collectionView.reloadData()
+        }
     }
 }
 
