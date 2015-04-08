@@ -309,6 +309,22 @@ class ApiControllerTests: XCTestCase {
             println(error)
         })
     }
+    func testSetDeviceInfo() {
+        let expect = expectationWithDescription("api")
+        
+        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+            XCTAssertNil(error, "")
+            let token = "てst"//"" の場合はtokenを変更しない
+            ApiController.setDeviceInfo(token, done: { (error) -> Void in
+                XCTAssertNil(error, "should success")
+                expect.fulfill()
+            })
+        }
+        
+        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
+            println(error)
+        })
+    }
     func testGetMessage() {
         let expect = expectationWithDescription("api")
         

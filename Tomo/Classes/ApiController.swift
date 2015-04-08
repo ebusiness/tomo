@@ -99,14 +99,7 @@ extension ApiController {
                 done(error)
         }
     }
-    //ユーザの投稿一覧
-    class func getUserPosts(id: String, done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().getObjectsAtPath("/users/\(id)/posts", parameters: nil, success: { (_, _) -> Void in
-            done(nil)
-            }) { (_, error) -> Void in
-                done(error)
-        }
-    }
+
     
     class func addPost(imageNames: [String], sizes: [CGSize], content: String, done: (NSError?) -> Void) {
         var param = Dictionary<String, String>()
@@ -121,6 +114,7 @@ extension ApiController {
         createPosts(param, done: done)
     }
     
+
     //記事の投稿
     class func createPosts(param: NSDictionary, done: (NSError?) -> Void) {
         /*
@@ -225,6 +219,14 @@ extension ApiController {
 
 // MARK: - ユーザ情報
 extension ApiController {
+    //ユーザの投稿一覧
+    class func getUserPosts(id: String, done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/users/\(id)/posts", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
     // 友達一覧
     class func getFriends(done: (NSError?) -> Void) {
         RKObjectManager.sharedManager().getObjectsAtPath("/connections/friends", parameters: nil, success: { (_, _) -> Void in
@@ -232,6 +234,26 @@ extension ApiController {
             }) { (_, error) -> Void in
                 done(error)
         }
+    }
+    // token uuid の登録・編集
+    class func setDeviceInfo(token:String,done: (NSError?) -> Void) {
+        
+        
+        
+        var param = Dictionary<String, String>();
+        param["name"] = UIDevice.currentDevice().name
+        param["uuid"] = UIDevice.currentDevice().identifierForVendor.UUIDString; 
+        if "" != token {//"" の場合,変更しない
+            param["token"] = token
+        }
+        
+        RKObjectManager.sharedManager().postObject(nil, path: "/mobile/user/device", parameters: param, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+        
+        
     }
 }
 
