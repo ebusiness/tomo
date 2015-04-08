@@ -121,7 +121,9 @@
 		29CA441A1AD4CA48009EB177 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA44191AD4CA48009EB177 /* Chat.storyboard */; };
 		29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA441B1AD4CAAA009EB177 /* Map.storyboard */; };
 		29CA441E1AD4CAF0009EB177 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA441D1AD4CAF0009EB177 /* Account.storyboard */; };
-		29CA446F1AD4CD0F009EB177 /* Tab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA446E1AD4CD0F009EB177 /* Tab.storyboard */; };
+		29CA44901AD4DEE4009EB177 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA448F1AD4DEE4009EB177 /* AccountViewController.swift */; };
+		29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA44921AD4EEBB009EB177 /* Tab.storyboard */; };
+		29CA44951AD4F6F1009EB177 /* AccountEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA44941AD4F6F1009EB177 /* AccountEditViewController.swift */; };
 		29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
@@ -211,7 +213,9 @@
 		29CA44191AD4CA48009EB177 /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Chat.storyboard; path = Classes/Chat.storyboard; sourceTree = "<group>"; };
 		29CA441B1AD4CAAA009EB177 /* Map.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Map.storyboard; path = Classes/Map.storyboard; sourceTree = "<group>"; };
 		29CA441D1AD4CAF0009EB177 /* Account.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Account.storyboard; path = Classes/Account.storyboard; sourceTree = "<group>"; };
-		29CA446E1AD4CD0F009EB177 /* Tab.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Tab.storyboard; path = Classes/Tab.storyboard; sourceTree = "<group>"; };
+		29CA448F1AD4DEE4009EB177 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountViewController.swift; path = Classes/AccountViewController.swift; sourceTree = "<group>"; };
+		29CA44921AD4EEBB009EB177 /* Tab.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Tab.storyboard; path = Classes/Tab.storyboard; sourceTree = "<group>"; };
+		29CA44941AD4F6F1009EB177 /* AccountEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountEditViewController.swift; sourceTree = "<group>"; };
 		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -373,13 +377,13 @@
 				291ADF9E1AD26575009D8BE3 /* AddPost.storyboard */,
 				291ADF9A1AD24FAE009D8BE3 /* PostDetailHeaderView.xib */,
 				2942CCD61ACD2B75007CDC97 /* NewsfeedCell.xib */,
-				2942CCCE1ACCE5EA007CDC97 /* Newsfeed.storyboard */,
 				29A5D1DA1ACBE03000D95B77 /* RegPageView.xib */,
 				290134DB1AC3991C00BBFE29 /* Main.storyboard */,
+				2942CCCE1ACCE5EA007CDC97 /* Newsfeed.storyboard */,
 				29CA44191AD4CA48009EB177 /* Chat.storyboard */,
 				29CA441B1AD4CAAA009EB177 /* Map.storyboard */,
 				29CA441D1AD4CAF0009EB177 /* Account.storyboard */,
-				29CA446E1AD4CD0F009EB177 /* Tab.storyboard */,
+				29CA44921AD4EEBB009EB177 /* Tab.storyboard */,
 			);
 			name = "xib&storyboard";
 			sourceTree = "<group>";
@@ -387,11 +391,11 @@
 		299389541AD3C77300043D91 /* login */ = {
 			isa = PBXGroup;
 			children = (
+				29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */,
+				2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */,
+				29A5D1D81ACBE01700D95B77 /* RegPageView.swift */,
 				29CA44131AD4B9E8009EB177 /* LoadingViewController.swift */,
 				2942CCD01ACCE75A007CDC97 /* BaseViewController.swift */,
-				29A5D1D81ACBE01700D95B77 /* RegPageView.swift */,
-				2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */,
-				29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */,
 			);
 			name = login;
 			sourceTree = "<group>";
@@ -412,6 +416,7 @@
 				299389581AD3D15800043D91 /* Post詳細 */,
 				299389551AD3C79000043D91 /* Post追加 */,
 				299389541AD3C77300043D91 /* login */,
+				29CA44911AD4DEEA009EB177 /* Account */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -456,6 +461,15 @@
 				29CA44161AD4C9FF009EB177 /* TabBarController.swift */,
 			);
 			name = Tab;
+			sourceTree = "<group>";
+		};
+		29CA44911AD4DEEA009EB177 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				29CA448F1AD4DEE4009EB177 /* AccountViewController.swift */,
+				29CA44941AD4F6F1009EB177 /* AccountEditViewController.swift */,
+			);
+			name = Account;
 			sourceTree = "<group>";
 		};
 		B0C026D5F93A7DC22E9DF996 /* Pods */ = {
@@ -580,8 +594,8 @@
 				2942CCCF1ACCE5EA007CDC97 /* Newsfeed.storyboard in Resources */,
 				29A5D1DB1ACBE03000D95B77 /* RegPageView.xib in Resources */,
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
+				29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */,
 				178D649E1ACC0DDF00185368 /* MessageMapping.plist in Resources */,
-				29CA446F1AD4CD0F009EB177 /* Tab.storyboard in Resources */,
 				29A1AFFA1AC414E900775765 /* PostMapping.plist in Resources */,
 				2942CCD71ACD2B75007CDC97 /* NewsfeedCell.xib in Resources */,
 				29A1B0061AC533A800775765 /* UserMapping.plist in Resources */,
@@ -689,8 +703,10 @@
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
 				2901351A1AC3A79500BBFE29 /* _User.swift in Sources */,
 				1712BE481ACE5A54000A9C47 /* Comments.swift in Sources */,
+				29CA44951AD4F6F1009EB177 /* AccountEditViewController.swift in Sources */,
 				299389501AD3C5C800043D91 /* S3.swift in Sources */,
 				2942CCD11ACCE75A007CDC97 /* BaseViewController.swift in Sources */,
+				29CA44901AD4DEE4009EB177 /* AccountViewController.swift in Sources */,
 				2960404F1ACE75C500D2A338 /* AFDateExtension.swift in Sources */,
 				1712BE2E1ACCE809000A9C47 /* Group.swift in Sources */,
 				178D64A01ACC10B600185368 /* Message.swift in Sources */,

@@ -14,12 +14,18 @@ class TabBarController: UITabBarController {
     let tabImageNames = ["tab_share","tab_map","tab_chat","tab_person"]
     let tabImageNamesHL = ["tab_share","tab_map","tab_chat","tab_person"]
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+         setupViewControllers()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
 //        self.delegate = self
 
-        setupViewControllers()
+       
         
 //        self.navigationItem.hidesBackButton = true
     }

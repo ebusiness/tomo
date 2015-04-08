@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         ApiController.setup()
         
-        if Defaults["email"].string != nil {
+        if Defaults["email"].string != nil && Defaults["shouldAutoLogin"].bool == true {
             let vc = Util.createViewControllerWithIdentifier("LoadingViewController", storyboardName: "Main")
             self.window?.rootViewController = vc
         }

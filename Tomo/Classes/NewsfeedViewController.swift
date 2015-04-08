@@ -13,9 +13,7 @@ let count = 30
 class NewsfeedViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    
-    var newsfeeds: NSFetchedResultsController!
-    
+        
 //    var sizes = [CGSize]()
     
     var cellForHeight: NewsfeedCell!
@@ -33,7 +31,6 @@ class NewsfeedViewController: BaseViewController {
         postsFRC.delegate = self
         
         collectionView.registerNib(UINib(nibName: "NewsfeedCell", bundle: nil), forCellWithReuseIdentifier: "NewsfeedCell")
-        newsfeeds = DBController.newsfeeds()
         
         setupLayout()
         

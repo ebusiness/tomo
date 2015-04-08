@@ -24,12 +24,18 @@ class RegLoginViewController: BaseViewController {
         passwordTF.leftViewMode = .Always
         passwordTF.leftView = passwordSpacerView
         
+
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        mailTF.becomeFirstResponder()
+        if let email = Defaults["email"].string {
+            mailTF.text = email
+            passwordTF.becomeFirstResponder()
+        } else {
+            mailTF.becomeFirstResponder()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -59,6 +65,8 @@ class RegLoginViewController: BaseViewController {
             }
             
             Defaults["email"] = self.mailTF.text
+            Defaults["shouldAutoLogin"] = true
+            
             SSKeychain.setPassword(self.passwordTF.text, forService: kTomoService, account: self.mailTF.text)
             
             println("OK")
