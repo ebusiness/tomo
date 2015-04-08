@@ -57,6 +57,10 @@ extension ApiController {
         #endif
         
         RKObjectManager.sharedManager().postObject(nil, path: "/login", parameters: ["email" : email, "password" : password], success: { (_, result) -> Void in
+            
+            //no email in db
+            Defaults["myId"] = (result.firstObject() as User).id
+            
             done(nil)
         }) { (_, error) -> Void in
             done(error)
@@ -65,10 +69,6 @@ extension ApiController {
     
     class func getUserInfo(id: String, done: (NSError?) -> Void) {
         RKObjectManager.sharedManager().getObject(nil, path: "/users/\(id)", parameters: nil, success: { (_,result) -> Void in
-            
-            //no email in db
-            Defaults["myId"] = (result.firstObject() as User).id
-
             done(nil)
         }) { (_, error) -> Void in
             done(error)
