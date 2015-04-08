@@ -13,9 +13,7 @@ let count = 30
 class NewsfeedViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
-        
-//    var sizes = [CGSize]()
-    
+
     var cellForHeight: NewsfeedCell!
     
     var postsFRC: NSFetchedResultsController!
@@ -34,8 +32,7 @@ class NewsfeedViewController: BaseViewController {
         
         setupLayout()
         
-//        setupSizes()
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
 
     }
     
@@ -52,31 +49,26 @@ class NewsfeedViewController: BaseViewController {
             println("getNewsfeed done")
         }
     }
-//    func setupSizes() {
-//        for i in 0..<count {
-//            let size = CGSizeMake(CGFloat(arc4random() % 500 + 500), CGFloat(arc4random() % 500 + 500))
-//            sizes.append(size)
-//        }
-//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    // MARK: - Notification
+    
+    func becomeActive() {
+        ApiController.getNewsfeed { (error) -> Void in
+            println("getNewsfeed done")
+        }
+    }
+    
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "SeguePostDetail" {
             let vc = segue.destinationViewController as PostDetailViewController
             vc.post = sender as Post
-//            let indexPath = sender as NSIndexPath
-//            let post = postsFRC.objectAtIndexPath(indexPath) as Post
-//            let imageSize = sizes[indexPath.item]
-            
-//            vc.post = post
-//            vc.imageSize = imageSize
         }
     }
     

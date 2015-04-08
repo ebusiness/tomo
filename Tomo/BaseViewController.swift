@@ -19,6 +19,10 @@ class BaseViewController: UIViewController {
         super.didReceiveMemoryWarning()
 
         println("メモリー不足")
+        
+        #if DEBUG
+            SVProgressHUD.showInfoWithStatus("メモリー不足", maskType: .Clear)
+        #endif
     }
     
     deinit {
