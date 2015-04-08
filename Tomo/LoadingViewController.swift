@@ -28,9 +28,9 @@ class LoadingViewController: BaseViewController {
             
             SVProgressHUD.dismiss()
             
-            let newsfeed = Util.createViewControllerWithIdentifier(nil, storyboardName: "Newsfeed")
+            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
             
-            Util.changeRootViewController(from: self, to: newsfeed)
+            Util.changeRootViewController(from: self, to: tab)
         }
     }
 

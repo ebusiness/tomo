@@ -39,9 +39,7 @@ class NewsfeedViewController: BaseViewController {
         
 //        setupSizes()
         
-        ApiController.getNewsfeed { (error) -> Void in
-            println("getNewsfeed done")
-        }
+
     }
     
     func setupLayout() {
@@ -50,6 +48,13 @@ class NewsfeedViewController: BaseViewController {
         collectionView.collectionViewLayout = layout
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        ApiController.getNewsfeed { (error) -> Void in
+            println("getNewsfeed done")
+        }
+    }
 //    func setupSizes() {
 //        for i in 0..<count {
 //            let size = CGSizeMake(CGFloat(arc4random() % 500 + 500), CGFloat(arc4random() % 500 + 500))

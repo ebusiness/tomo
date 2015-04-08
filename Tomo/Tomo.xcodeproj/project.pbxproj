@@ -117,6 +117,11 @@
 		29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */; };
 		29CA44141AD4B9E8009EB177 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA44131AD4B9E8009EB177 /* LoadingViewController.swift */; };
 		29CA44151AD4C050009EB177 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
+		29CA44171AD4C9FF009EB177 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA44161AD4C9FF009EB177 /* TabBarController.swift */; };
+		29CA441A1AD4CA48009EB177 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA44191AD4CA48009EB177 /* Chat.storyboard */; };
+		29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA441B1AD4CAAA009EB177 /* Map.storyboard */; };
+		29CA441E1AD4CAF0009EB177 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA441D1AD4CAF0009EB177 /* Account.storyboard */; };
+		29CA446F1AD4CD0F009EB177 /* Tab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA446E1AD4CD0F009EB177 /* Tab.storyboard */; };
 		29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
@@ -202,6 +207,11 @@
 		29C1DA781AD36659009A02CC /* S3Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3Controller.swift; path = Classes/S3Controller.swift; sourceTree = "<group>"; };
 		29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyUserDefaults.swift; sourceTree = "<group>"; };
 		29CA44131AD4B9E8009EB177 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		29CA44161AD4C9FF009EB177 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		29CA44191AD4CA48009EB177 /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Chat.storyboard; path = Classes/Chat.storyboard; sourceTree = "<group>"; };
+		29CA441B1AD4CAAA009EB177 /* Map.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Map.storyboard; path = Classes/Map.storyboard; sourceTree = "<group>"; };
+		29CA441D1AD4CAF0009EB177 /* Account.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Account.storyboard; path = Classes/Account.storyboard; sourceTree = "<group>"; };
+		29CA446E1AD4CD0F009EB177 /* Tab.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Tab.storyboard; path = Classes/Tab.storyboard; sourceTree = "<group>"; };
 		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -366,6 +376,10 @@
 				2942CCCE1ACCE5EA007CDC97 /* Newsfeed.storyboard */,
 				29A5D1DA1ACBE03000D95B77 /* RegPageView.xib */,
 				290134DB1AC3991C00BBFE29 /* Main.storyboard */,
+				29CA44191AD4CA48009EB177 /* Chat.storyboard */,
+				29CA441B1AD4CAAA009EB177 /* Map.storyboard */,
+				29CA441D1AD4CAF0009EB177 /* Account.storyboard */,
+				29CA446E1AD4CD0F009EB177 /* Tab.storyboard */,
 			);
 			name = "xib&storyboard";
 			sourceTree = "<group>";
@@ -393,6 +407,7 @@
 		299389561AD3C7CA00043D91 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				29CA44181AD4CA0B009EB177 /* Tab */,
 				299389571AD3D13700043D91 /* Newsfeed一覧 */,
 				299389581AD3D15800043D91 /* Post詳細 */,
 				299389551AD3C79000043D91 /* Post追加 */,
@@ -433,6 +448,14 @@
 				1712BE451ACE57B6000A9C47 /* CommentsMapping.plist */,
 			);
 			name = Mapping;
+			sourceTree = "<group>";
+		};
+		29CA44181AD4CA0B009EB177 /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				29CA44161AD4C9FF009EB177 /* TabBarController.swift */,
+			);
+			name = Tab;
 			sourceTree = "<group>";
 		};
 		B0C026D5F93A7DC22E9DF996 /* Pods */ = {
@@ -541,10 +564,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29CA441A1AD4CA48009EB177 /* Chat.storyboard in Resources */,
 				29A5D1DF1ACBE9CB00D95B77 /* RegPageData.plist in Resources */,
+				29CA441E1AD4CAF0009EB177 /* Account.storyboard in Resources */,
 				290134DD1AC3991C00BBFE29 /* Main.storyboard in Resources */,
 				1712BE461ACE57B6000A9C47 /* CommentsMapping.plist in Resources */,
 				1712BE341ACE17AB000A9C47 /* ImagesMapping.plist in Resources */,
+				29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */,
 				1712BE3E1ACE4101000A9C47 /* DevicesMapping.plist in Resources */,
 				1712BE321ACD0808000A9C47 /* MailSettingMapping.plist in Resources */,
 				291ADF9B1AD24FAE009D8BE3 /* PostDetailHeaderView.xib in Resources */,
@@ -555,6 +581,7 @@
 				29A5D1DB1ACBE03000D95B77 /* RegPageView.xib in Resources */,
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
 				178D649E1ACC0DDF00185368 /* MessageMapping.plist in Resources */,
+				29CA446F1AD4CD0F009EB177 /* Tab.storyboard in Resources */,
 				29A1AFFA1AC414E900775765 /* PostMapping.plist in Resources */,
 				2942CCD71ACD2B75007CDC97 /* NewsfeedCell.xib in Resources */,
 				29A1B0061AC533A800775765 /* UserMapping.plist in Resources */,
@@ -697,6 +724,7 @@
 				178D64A21ACC10BE00185368 /* _Message.swift in Sources */,
 				290135121AC3A67200BBFE29 /* Model.xcdatamodeld in Sources */,
 				1712BE401ACE4135000A9C47 /* _Devices.swift in Sources */,
+				29CA44171AD4C9FF009EB177 /* TabBarController.swift in Sources */,
 				29CA44141AD4B9E8009EB177 /* LoadingViewController.swift in Sources */,
 				29A1AFF41AC4112800775765 /* Post.swift in Sources */,
 			);
