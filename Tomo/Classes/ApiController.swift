@@ -169,6 +169,17 @@ extension ApiController {
                 done(error)
         }
     }
+    //記事ー＞コメント禁止・許可
+    class func postCommentable(id: String,commentable:Bool, done: (NSError?) -> Void) {
+        var param = Dictionary<String, AnyObject >();
+        param["setting.commentable"] = commentable;
+        
+        RKObjectManager.sharedManager().patchObject(nil, path: "/posts/\(id)", parameters: param, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
     //記事ー＞削除
     class func postDelete(id: String, done: (NSError?) -> Void) {
         RKObjectManager.sharedManager().deleteObject(nil, path: "/posts/\(id)", parameters: nil, success: { (_, _) -> Void in
@@ -252,7 +263,7 @@ extension ApiController {
         addCommonResponseDescriptor(getPostMapping(false), method: .PATCH, pathPattern: "/posts/:id/like", keyPath: nil, statusCodes: nil)
         //記事ー＞bookmark 登録・解除
         addCommonResponseDescriptor(getPostMapping(false), method: .PATCH, pathPattern: "/posts/:id/bookmark", keyPath: nil, statusCodes: nil)
-        //記事ー＞編集
+        //記事ー＞編集  コメント禁止・許可
         addCommonResponseDescriptor(getPostMapping(false), method: .PATCH, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
         //記事のコメントー＞編集
         addCommonResponseDescriptor(getCommoentMapping(true), method: .PATCH, pathPattern: "/posts/:id/comments/:cid", keyPath: nil, statusCodes: nil)
