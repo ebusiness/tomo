@@ -15,7 +15,23 @@ class LoadingViewController: BaseViewController {
         
         SVProgressHUD.showWithStatus("ログイン", maskType: .Clear)
         
+        let email = Defaults["email"].string!
+        let password = SSKeychain.passwordForService(kTomoService, account: email)
         
+        ApiController.login(email: email, password: password) { (error) -> Void in
+            assert(NSThread.currentThread().isMainThread, "not main thread")
+            
+            if let error = error {
+                Util.showError(error)
+                return
+            }
+            
+            SVProgressHUD.dismiss()
+            
+            let newsfeed = Util.createViewControllerWithIdentifier(nil, storyboardName: "Newsfeed")
+            
+            Util.changeRootViewController(from: self, to: newsfeed)
+        }
     }
 
 }

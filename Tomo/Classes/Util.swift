@@ -23,6 +23,22 @@ class Util: NSObject {
         return UINib(nibName: name, bundle: nil).instantiateWithOwner(self, options: nil)[0] as UIView
     }
     
+    class func changeRootViewController(#from: UIViewController, to: UIViewController) {
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        UIView.transitionWithView(appDelegate.window!, duration: 0.4, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+            
+            if let parent = from.presentingViewController {
+                from.dismissViewControllerAnimated(false, completion: { () -> Void in
+                    appDelegate.window!.rootViewController = to
+                })
+            } else {
+                appDelegate.window!.rootViewController = to
+            }
+            
+
+            }, completion: nil)
+    }
+    
     class func dicFromPlist(name: String) -> NSDictionary {
         let path = NSBundle.mainBundle().pathForResource(name, ofType: "plist")
         return NSDictionary(contentsOfFile: path!)!

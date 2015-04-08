@@ -58,17 +58,15 @@ class RegLoginViewController: BaseViewController {
                 return
             }
             
+            Defaults["email"] = self.mailTF.text
+            SSKeychain.setPassword(self.passwordTF.text, forService: kTomoService, account: self.mailTF.text)
+            
             println("OK")
             SVProgressHUD.dismiss()
             
-            let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
             let newsfeed = Util.createViewControllerWithIdentifier(nil, storyboardName: "Newsfeed")
             
-            UIView.transitionWithView(appDelegate.window!, duration: 0.4, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
-                self.dismissViewControllerAnimated(false, completion: { () -> Void in
-                    appDelegate.window!.rootViewController = newsfeed
-                })
-                }, completion: nil)
+            Util.changeRootViewController(from: self, to: newsfeed)
         }
     }
 }

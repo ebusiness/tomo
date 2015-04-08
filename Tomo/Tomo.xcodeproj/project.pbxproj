@@ -116,6 +116,7 @@
 		29C1DA7A1AD36659009A02CC /* S3Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA781AD36659009A02CC /* S3Controller.swift */; };
 		29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */; };
 		29CA44141AD4B9E8009EB177 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA44131AD4B9E8009EB177 /* LoadingViewController.swift */; };
+		29CA44151AD4C050009EB177 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
 		29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
@@ -727,6 +728,7 @@
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
 				299389491AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				1712BE391ACE1958000A9C47 /* Images.swift in Sources */,
+				29CA44151AD4C050009EB177 /* AppDelegate.swift in Sources */,
 				1712BE4C1ACE5D12000A9C47 /* _Comments.swift in Sources */,
 				299389511AD3C5C800043D91 /* S3.swift in Sources */,
 				2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */,
@@ -913,7 +915,7 @@
 					"-framework",
 					"\"UIKit\"",
 				);
-				OTHER_SWIFT_FLAGS = "-D DEBUG -D AutoLogin";
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = tomo;
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";

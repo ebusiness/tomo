@@ -8,6 +8,8 @@
 
 import UIKit
 
+let kTomoService = "jp.co.e-business.tomo"
+
 //let kAPIBaseURLString = "http://new.selink.jp"
 let kAPIBaseURLString = "http://tomo.e-business.co.jp"
 

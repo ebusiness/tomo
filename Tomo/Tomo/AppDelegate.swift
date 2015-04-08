@@ -17,8 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         ApiController.setup()
         
-        if Defaults["myId"].string != nil {
-            
+        if Defaults["email"].string != nil {
+            let vc = Util.createViewControllerWithIdentifier("LoadingViewController", storyboardName: "Main")
+            self.window?.rootViewController = vc
         }
         
         return true
