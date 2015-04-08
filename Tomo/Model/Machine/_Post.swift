@@ -68,7 +68,7 @@ class _Post: NSManagedObject {
     // MARK: - Relationships
 
     @NSManaged
-    var bookmarked: NSOrderedSet
+    var bookmarked: NSSet
 
     @NSManaged
     var comments: NSOrderedSet
@@ -93,28 +93,28 @@ class _Post: NSManagedObject {
 
 extension _Post {
 
-    func addBookmarked(objects: NSOrderedSet) {
-        let mutable = self.bookmarked.mutableCopy() as NSMutableOrderedSet
-        mutable.unionOrderedSet(objects)
-        self.bookmarked = mutable.copy() as NSOrderedSet
+    func addBookmarked(objects: NSSet) {
+        let mutable = self.bookmarked.mutableCopy() as NSMutableSet
+        mutable.unionSet(objects)
+        self.bookmarked = mutable.copy() as NSSet
     }
 
-    func removeBookmarked(objects: NSOrderedSet) {
-        let mutable = self.bookmarked.mutableCopy() as NSMutableOrderedSet
-        mutable.minusOrderedSet(objects)
-        self.bookmarked = mutable.copy() as NSOrderedSet
+    func removeBookmarked(objects: NSSet) {
+        let mutable = self.bookmarked.mutableCopy() as NSMutableSet
+        mutable.minusSet(objects)
+        self.bookmarked = mutable.copy() as NSSet
     }
 
     func addBookmarkedObject(value: User!) {
-        let mutable = self.bookmarked.mutableCopy() as NSMutableOrderedSet
+        let mutable = self.bookmarked.mutableCopy() as NSMutableSet
         mutable.addObject(value)
-        self.bookmarked = mutable.copy() as NSOrderedSet
+        self.bookmarked = mutable.copy() as NSSet
     }
 
     func removeBookmarkedObject(value: User!) {
-        let mutable = self.bookmarked.mutableCopy() as NSMutableOrderedSet
+        let mutable = self.bookmarked.mutableCopy() as NSMutableSet
         mutable.removeObject(value)
-        self.bookmarked = mutable.copy() as NSOrderedSet
+        self.bookmarked = mutable.copy() as NSSet
     }
 
 }
