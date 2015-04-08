@@ -169,6 +169,14 @@ extension ApiController {
                 done(error)
         }
     }
+    //記事ー＞削除
+    class func postDelete(id: String, done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().deleteObject(nil, path: "/posts/\(id)", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
     //記事のコメント
     class func createComment(id: String,param: NSDictionary, done: (NSError?) -> Void) {
         /*
@@ -188,6 +196,14 @@ extension ApiController {
         param["content"] = content;
         
         RKObjectManager.sharedManager().patchObject(nil, path: "/posts/\(id)/comments/\(cid)", parameters: param, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    //記事のコメントー＞削除
+    class func commentDelete(id: String,cid: String, done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().deleteObject(nil, path: "/posts/\(id)/comments/\(cid)", parameters: nil, success: { (_, _) -> Void in
             done(nil)
             }) { (_, error) -> Void in
                 done(error)
@@ -240,6 +256,10 @@ extension ApiController {
         addCommonResponseDescriptor(getPostMapping(false), method: .PATCH, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
         //記事のコメントー＞編集
         addCommonResponseDescriptor(getCommoentMapping(true), method: .PATCH, pathPattern: "/posts/:id/comments/:cid", keyPath: nil, statusCodes: nil)
+        //記事のコメントー＞削除
+        addCommonResponseDescriptor(getCommoentMapping(true), method: .DELETE, pathPattern: "/posts/:id/comments/:cid", keyPath: nil, statusCodes: nil)
+        //記事ー＞削除
+        addCommonResponseDescriptor(getPostMapping(true), method: .DELETE, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
     }
 }
 // MARK: - mapping

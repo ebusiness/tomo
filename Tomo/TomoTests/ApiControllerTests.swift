@@ -256,6 +256,41 @@ class ApiControllerTests: XCTestCase {
             println(error)
         })
     }
+    func testPostDel() {
+        let expect = expectationWithDescription("api")
+        
+        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+            XCTAssertNil(error, "")
+            
+            let postid = "5523abcd454c85990f1fb0b3"
+            ApiController.postDelete(postid,done: { (error) -> Void in
+                XCTAssertNil(error, "should success")
+                expect.fulfill()
+            })
+        }
+        
+        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
+            println(error)
+        })
+    }
+    func testCommentDel() {
+        let expect = expectationWithDescription("api")
+        
+        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+            XCTAssertNil(error, "")
+            
+            let postid = "5523a697fc7c94126d3184b9"
+            let commentid = "5523a6d9a74dece90358bfdc"
+            ApiController.commentDelete(postid, cid: commentid,done: { (error) -> Void in
+                XCTAssertNil(error, "should success")
+                expect.fulfill()
+            })
+        }
+        
+        waitForExpectationsWithTimeout(1115, handler: { (error) -> Void in
+            println(error)
+        })
+    }
     func testGetMessage() {
         let expect = expectationWithDescription("api")
         
