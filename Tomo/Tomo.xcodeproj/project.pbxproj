@@ -115,6 +115,7 @@
 		29BE7E231AC55A28008110B4 /* MultilineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E221AC55A28008110B4 /* MultilineLabel.swift */; };
 		29C1DA7A1AD36659009A02CC /* S3Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA781AD36659009A02CC /* S3Controller.swift */; };
 		29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */; };
+		29CA44141AD4B9E8009EB177 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA44131AD4B9E8009EB177 /* LoadingViewController.swift */; };
 		29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
@@ -199,6 +200,7 @@
 		29BE7E221AC55A28008110B4 /* MultilineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultilineLabel.swift; path = ../Classes/MultilineLabel.swift; sourceTree = "<group>"; };
 		29C1DA781AD36659009A02CC /* S3Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3Controller.swift; path = Classes/S3Controller.swift; sourceTree = "<group>"; };
 		29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyUserDefaults.swift; sourceTree = "<group>"; };
+		29CA44131AD4B9E8009EB177 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 		299389541AD3C77300043D91 /* login */ = {
 			isa = PBXGroup;
 			children = (
+				29CA44131AD4B9E8009EB177 /* LoadingViewController.swift */,
 				2942CCD01ACCE75A007CDC97 /* BaseViewController.swift */,
 				29A5D1D81ACBE01700D95B77 /* RegPageView.swift */,
 				2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */,
@@ -693,6 +696,7 @@
 				178D64A21ACC10BE00185368 /* _Message.swift in Sources */,
 				290135121AC3A67200BBFE29 /* Model.xcdatamodeld in Sources */,
 				1712BE401ACE4135000A9C47 /* _Devices.swift in Sources */,
+				29CA44141AD4B9E8009EB177 /* LoadingViewController.swift in Sources */,
 				29A1AFF41AC4112800775765 /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -849,6 +853,7 @@
 			baseConfigurationReference = F1801CE63ECC013D9C8C9BB6 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -920,6 +925,7 @@
 			baseConfigurationReference = B5997E727845063A13A5D63E /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

@@ -68,43 +68,9 @@ class RegLoginViewController: BaseViewController {
                 self.dismissViewControllerAnimated(false, completion: { () -> Void in
                     appDelegate.window!.rootViewController = newsfeed
                 })
-//                self.dismissViewControllerAnimated(false, completion: nil)
-                
-                
                 }, completion: nil)
-            
-//            self.dismissViewControllerAnimated(false, completion: { () -> Void in
-            
-            
-//                let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-//                let newsfeed = Util.createViewControllerWithIdentifier(nil, storyboardName: "Newsfeed")
-//                
-//                UIView.transitionWithView(appDelegate.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
-//                    appDelegate.window!.rootViewController = newsfeed
-//
-//                }, completion: nil)
-//            })
-//            
-//            let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-//            let newsfeed = Util.createViewControllerWithIdentifier(nil, storyboardName: "Newsfeed")
-//            
-//            UIView.transitionWithView(appDelegate.window!, duration: 4.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
-//                appDelegate.window!.rootViewController = newsfeed
-//                
-//                }, completion: nil)
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 // MARK: - UITextFieldDelegate

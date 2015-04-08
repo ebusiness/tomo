@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
@@ -8,7 +8,7 @@
         <!--Reg View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="RegViewController" customModule="Tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="RegViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -118,7 +118,7 @@
         <!--Reg Login View Controller-->
         <scene sceneID="6u5-in-iwm">
             <objects>
-                <viewController id="4Wm-m0-0bg" customClass="RegLoginViewController" customModule="Tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="4Wm-m0-0bg" customClass="RegLoginViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="oOO-9a-Qba"/>
                         <viewControllerLayoutGuide type="bottom" id="QoN-l7-ZhX"/>
@@ -262,12 +262,43 @@
             </objects>
             <point key="canvasLocation" x="507" y="285"/>
         </scene>
+        <!--Loading View Controller-->
+        <scene sceneID="vFK-4q-WnM">
+            <objects>
+                <viewController storyboardIdentifier="LoadingViewController" id="XFY-gJ-Fd4" customClass="LoadingViewController" customModule="spot" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="g04-yr-Bwx"/>
+                        <viewControllerLayoutGuide type="bottom" id="gGQ-Bc-W0x"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="F7L-JL-Kon">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch" translatesAutoresizingMaskIntoConstraints="NO" id="YlX-bD-4CI">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="YlX-bD-4CI" secondAttribute="trailing" id="7VC-vf-QRL"/>
+                            <constraint firstItem="YlX-bD-4CI" firstAttribute="leading" secondItem="F7L-JL-Kon" secondAttribute="leading" id="NrL-Mb-Ibx"/>
+                            <constraint firstItem="YlX-bD-4CI" firstAttribute="top" secondItem="F7L-JL-Kon" secondAttribute="top" id="nez-Ax-dCv"/>
+                            <constraint firstItem="gGQ-Bc-W0x" firstAttribute="top" secondItem="YlX-bD-4CI" secondAttribute="bottom" id="zem-6t-iqO"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="43e-43-lXl"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e6b-q5-fyv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="115" y="1109"/>
+        </scene>
     </scenes>
     <resources>
         <image name="btn_footer_bg_blue" width="10" height="40"/>
         <image name="btn_footer_bg_gray" width="10" height="40"/>
         <image name="ico_reg_close" width="18" height="18"/>
         <image name="img_reg_login" width="360" height="572"/>
+        <image name="launch" width="320" height="568"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
