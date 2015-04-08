@@ -51,10 +51,6 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "AWSCore/AWSCore/CognitoIdentity/Resources/cognito-identity-2014-06-30.json"
-  install_resource "AWSCore/AWSCore/MobileAnalyticsERS/Resources/mobileanalytics-2014-06-30.json"
-  install_resource "AWSCore/AWSCore/STS/Resources/sts-2011-06-15.json"
-  install_resource "AWSS3/S3/Resources/s3-2006-03-01.json"
   install_resource "JSQMessagesViewController/JSQMessagesViewController/Assets/JSQMessagesAssets.bundle"
   install_resource "JSQMessagesViewController/JSQMessagesViewController/Controllers/JSQMessagesViewController.xib"
   install_resource "JSQMessagesViewController/JSQMessagesViewController/Views/JSQMessagesCollectionViewCellIncoming.xib"
@@ -65,10 +61,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "AWSCore/AWSCore/CognitoIdentity/Resources/cognito-identity-2014-06-30.json"
-  install_resource "AWSCore/AWSCore/MobileAnalyticsERS/Resources/mobileanalytics-2014-06-30.json"
-  install_resource "AWSCore/AWSCore/STS/Resources/sts-2011-06-15.json"
-  install_resource "AWSS3/S3/Resources/s3-2006-03-01.json"
   install_resource "JSQMessagesViewController/JSQMessagesViewController/Assets/JSQMessagesAssets.bundle"
   install_resource "JSQMessagesViewController/JSQMessagesViewController/Controllers/JSQMessagesViewController.xib"
   install_resource "JSQMessagesViewController/JSQMessagesViewController/Views/JSQMessagesCollectionViewCellIncoming.xib"
