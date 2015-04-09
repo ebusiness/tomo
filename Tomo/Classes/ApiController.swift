@@ -61,7 +61,12 @@ extension ApiController {
             //no email in db
             Defaults["myId"] = (result.firstObject() as User).id
             
-            done(nil)
+//            done(nil)
+            
+            //get detail
+            self.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
+                done(error)
+            })
         }) { (_, error) -> Void in
             done(error)
         }
@@ -229,8 +234,14 @@ extension ApiController {
     }
     // 友達一覧
     class func getFriends(done: (NSError?) -> Void) {
+        //取得情报
         RKObjectManager.sharedManager().getObjectsAtPath("/connections/friends", parameters: nil, success: { (_, _) -> Void in
-            done(nil)
+//            done(nil)
+            
+            //建立关联
+            self.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
+                done(error)
+            })
             }) { (_, error) -> Void in
                 done(error)
         }

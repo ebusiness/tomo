@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="XyA-vo-0z7">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <scenes>
+        <!--Debug View Controller-->
+        <scene sceneID="gLa-yH-qWh">
+            <objects>
+                <viewController id="Eu1-KS-r46" customClass="DebugViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Mzp-bI-rfo"/>
+                        <viewControllerLayoutGuide type="bottom" id="WnL-XT-pmh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="r7u-BH-rTb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GzC-om-Hdh">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ih1-by-ZWo">
+                                    <size key="itemSize" width="80" height="80"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DebugCell" id="bq2-1w-fvh">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iH5-9v-mXs">
+                                                    <rect key="frame" x="8" y="8" width="31.5" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="iH5-9v-mXs" firstAttribute="leading" secondItem="bq2-1w-fvh" secondAttribute="leading" constant="8" id="P6R-rC-U9a"/>
+                                            <constraint firstItem="iH5-9v-mXs" firstAttribute="top" secondItem="bq2-1w-fvh" secondAttribute="top" constant="8" id="XU7-FK-9Bd"/>
+                                        </constraints>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="Eu1-KS-r46" id="uRY-AS-tYT"/>
+                                    <outlet property="delegate" destination="Eu1-KS-r46" id="Kjp-HA-em7"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="WnL-XT-pmh" firstAttribute="top" secondItem="GzC-om-Hdh" secondAttribute="bottom" id="XQ9-dh-0ps"/>
+                            <constraint firstAttribute="trailing" secondItem="GzC-om-Hdh" secondAttribute="trailing" id="Zo4-LI-kPn"/>
+                            <constraint firstItem="GzC-om-Hdh" firstAttribute="leading" secondItem="r7u-BH-rTb" secondAttribute="leading" id="htU-pV-GKj"/>
+                            <constraint firstItem="GzC-om-Hdh" firstAttribute="top" secondItem="r7u-BH-rTb" secondAttribute="top" id="nQC-t4-fV3"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="SJa-Kb-fKm">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="7If-Tu-lMH">
+                            <connections>
+                                <action selector="close:" destination="Eu1-KS-r46" id="bZ8-n0-B67"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="GzC-om-Hdh" id="U5p-Jv-9HO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zPD-Z6-reN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="529" y="380"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ZDL-SA-DIT">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XyA-vo-0z7" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1co-R1-3w8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Eu1-KS-r46" kind="relationship" relationship="rootViewController" id="YQb-Bo-pMp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LD7-Vk-fqb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="170" y="380"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

@@ -21,6 +21,8 @@ let MaxWidth = 500
 //let BackgroundSessionDownloadIdentifier: String = "com.amazon.example.s3BackgroundTransferSwift.downloadSession"
 
 
+let DefaultAvatarImage = UIImage(named: "avatar")!
+
 class Constants: NSObject {
    
     class func postPath(#fileName: String) -> String {

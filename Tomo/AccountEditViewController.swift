@@ -23,7 +23,9 @@ class AccountEditViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
+        user = DBController.myUser()
+        userImage.layer.cornerRadius = userImage.bounds.width / 2
+        
 //        sexLabel.text = 
 //        stationLabel.text = 
     }
@@ -31,15 +33,18 @@ class AccountEditViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-//        userImage.image = user.avatarImage()
-//        nameLabel.text = user.displayName
-//        
-//        idLabel.text = user.username
-//        
+        if let photo_ref = user.photo_ref {
+            userImage.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
+        }
+        
+        nameLabel.text = user.fullName()
+        
+        idLabel.text = Defaults["email"].string
+        
 //        if let gender = user.gender {
 //            sexLabel.text = user.genderStr()
 //        }
-//        
+        
 //        if let station = user.stations.firstObject as? Station {
 //            stationLabel.text = station.name
 //        } else {

@@ -76,6 +76,13 @@ class NewsfeedViewController: BaseViewController {
     
     // MARK: - Action
     
+    @IBAction func debug(sender: AnyObject) {
+        let debug = Util.createViewControllerWithIdentifier(nil, storyboardName: "Debug")
+        debug.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        
+        presentViewController(debug, animated: true, completion: nil)
+    }
+    
     @IBAction func addPostBtnTapped(sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         let cameraAction = UIAlertAction(title: "写真を撮る", style: .Default, handler: { (action) -> Void in

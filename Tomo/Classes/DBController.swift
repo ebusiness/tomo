@@ -31,4 +31,17 @@ class DBController: NSObject {
         let res = Post.MR_findAllInContext(context)
         return Post.MR_findAllInContext(context) as? [Post]
     }
+    
+    // MARK: - User
+    
+    class func myUser() -> User {
+        return User.MR_findFirstByAttribute("id", withValue: Defaults["myId"].string!, inContext: context) as User
+    }
+    
+    // MARK: - Friend
+    
+    class func friends() -> [User] {
+        let me = myUser()
+        return me.friends.array as [User]
+    }
 }

@@ -812,7 +812,7 @@
 		6AE78C13E1E12D1BDBA77691 /* RKRouteSet.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RKRouteSet.m; path = Code/Network/RKRouteSet.m; sourceTree = "<group>"; };
 		6AEBBA273EC2B294B7C3716B /* RKRouter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RKRouter.h; path = Code/Network/RKRouter.h; sourceTree = "<group>"; };
 		6BA30E9DC40C26E27C97AE69 /* JSQMessagesCollectionViewCellOutgoing.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSQMessagesCollectionViewCellOutgoing.h; path = JSQMessagesViewController/Views/JSQMessagesCollectionViewCellOutgoing.h; sourceTree = "<group>"; };
-		6BD98494AD0C05ACDE0866DE /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		6BD98494AD0C05ACDE0866DE /* podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = podfile; path = ../podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		6C82D869BFAB5CCCA1B5E436 /* JSQMessagesToolbarContentView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSQMessagesToolbarContentView.m; path = JSQMessagesViewController/Views/JSQMessagesToolbarContentView.m; sourceTree = "<group>"; };
 		6D48D427743F1E268035B4BA /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-acknowledgements.plist"; sourceTree = "<group>"; };
 		6DDCDA798D34AD6923256C52 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/AssetsLibrary.framework; sourceTree = DEVELOPER_DIR; };
@@ -1261,7 +1261,7 @@
 		0CD199F631FDF67394FCF110 = {
 			isa = PBXGroup;
 			children = (
-				6BD98494AD0C05ACDE0866DE /* Podfile */,
+				6BD98494AD0C05ACDE0866DE /* podfile */,
 				405BB130A21E2260AA9409FE /* Frameworks */,
 				E8990DE2A01CE36265243AA2 /* Pods */,
 				24E01CF9D30BA1540CA9802E /* Products */,
