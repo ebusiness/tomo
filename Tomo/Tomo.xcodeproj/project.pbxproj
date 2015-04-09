@@ -88,12 +88,10 @@
 		2952730D1AD653F000FC7833 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2952730C1AD653F000FC7833 /* FriendCell.swift */; };
 		296040401ACE46E000D2A338 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901351C1AC3A90C00BBFE29 /* Constants.swift */; };
 		296040411ACE476B00D2A338 /* ApiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134F71AC39F4600BBFE29 /* ApiController.swift */; };
-		296040431ACE644800D2A338 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040421ACE644800D2A338 /* TestData.swift */; };
-		296040461ACE669900D2A338 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040451ACE669900D2A338 /* Alamofire.swift */; };
-		296040471ACE687D00D2A338 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040421ACE644800D2A338 /* TestData.swift */; };
-		296040481ACE688500D2A338 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040451ACE669900D2A338 /* Alamofire.swift */; };
 		2960404C1ACE68C500D2A338 /* TestDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404B1ACE68C500D2A338 /* TestDataTests.swift */; };
 		2960404F1ACE75C500D2A338 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */; };
+		29925BAA1AD6693F00F98BD7 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040451ACE669900D2A338 /* Alamofire.swift */; };
+		29925BAB1AD6693F00F98BD7 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040451ACE669900D2A338 /* Alamofire.swift */; };
 		299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299389441AD3B33800043D91 /* AmazonS3RequestManager.swift */; };
 		299389491AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299389441AD3B33800043D91 /* AmazonS3RequestManager.swift */; };
 		2993894A1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */; };
@@ -722,6 +720,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29925BAA1AD6693F00F98BD7 /* Alamofire.swift in Sources */,
 				291ADF991AD24F7B009D8BE3 /* PostDetailHeaderView.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
 				2901351A1AC3A79500BBFE29 /* _User.swift in Sources */,
@@ -754,8 +753,6 @@
 				29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */,
 				29A1AFF71AC4113000775765 /* _Post.swift in Sources */,
 				2942CCD51ACD03BF007CDC97 /* NewsfeedCell.swift in Sources */,
-				296040431ACE644800D2A338 /* TestData.swift in Sources */,
-				296040461ACE669900D2A338 /* Alamofire.swift in Sources */,
 				2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */,
 				291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */,
 				291ADF9D1AD2654E009D8BE3 /* AddPostViewController.swift in Sources */,
@@ -786,18 +783,17 @@
 				290135131AC3A67200BBFE29 /* Model.xcdatamodeld in Sources */,
 				2960404C1ACE68C500D2A338 /* TestDataTests.swift in Sources */,
 				29BE7E1C1AC54663008110B4 /* DBController.swift in Sources */,
-				296040481ACE688500D2A338 /* Alamofire.swift in Sources */,
 				1712BE3A1ACE195B000A9C47 /* _Images.swift in Sources */,
 				29A1AFF81AC4113000775765 /* _Post.swift in Sources */,
 				1712BE431ACE4140000A9C47 /* Devices.swift in Sources */,
 				2993894B1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
 				1712BE301ACCE819000A9C47 /* _Group.swift in Sources */,
-				296040471ACE687D00D2A338 /* TestData.swift in Sources */,
 				2993894E1AD3B70200043D91 /* SwiftyUserDefaults.swift in Sources */,
 				294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */,
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
 				299389491AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				1712BE391ACE1958000A9C47 /* Images.swift in Sources */,
+				29925BAB1AD6693F00F98BD7 /* Alamofire.swift in Sources */,
 				29CA44151AD4C050009EB177 /* AppDelegate.swift in Sources */,
 				1712BE4C1ACE5D12000A9C47 /* _Comments.swift in Sources */,
 				2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */,

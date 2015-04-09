@@ -45,7 +45,7 @@ class RegViewController: BaseViewController {
     func loadRegPageData() {
         let array = Util.arrayFromPlist("RegPageData")
         for dic in array {
-            let regPageData = RegPageData(dic: dic as NSDictionary)
+            let regPageData = RegPageData(dic: dic as! NSDictionary)
             regPageDatas.append(regPageData)
         }
     }
@@ -54,7 +54,7 @@ class RegViewController: BaseViewController {
         var lastPageView: RegPageView?
         
         for i in 0..<pages {
-            let pageView = Util.createViewWithNibName("RegPageView") as RegPageView
+            let pageView = Util.createViewWithNibName("RegPageView") as! RegPageView
             pageView.regPageData = regPageDatas[i]
             
             scrollView.addSubview(pageView)

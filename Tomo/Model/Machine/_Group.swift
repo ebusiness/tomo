@@ -88,27 +88,27 @@ class _Group: NSManagedObject {
 extension _Group {
 
     func addPosts(objects: NSOrderedSet) {
-        let mutable = self.posts.mutableCopy() as NSMutableOrderedSet
+        let mutable = self.posts.mutableCopy() as! NSMutableOrderedSet
         mutable.unionOrderedSet(objects)
-        self.posts = mutable.copy() as NSOrderedSet
+        self.posts = mutable.copy() as! NSOrderedSet
     }
 
     func removePosts(objects: NSOrderedSet) {
-        let mutable = self.posts.mutableCopy() as NSMutableOrderedSet
+        let mutable = self.posts.mutableCopy() as! NSMutableOrderedSet
         mutable.minusOrderedSet(objects)
-        self.posts = mutable.copy() as NSOrderedSet
+        self.posts = mutable.copy() as! NSOrderedSet
     }
 
     func addPostsObject(value: Post!) {
-        let mutable = self.posts.mutableCopy() as NSMutableOrderedSet
+        let mutable = self.posts.mutableCopy() as! NSMutableOrderedSet
         mutable.addObject(value)
-        self.posts = mutable.copy() as NSOrderedSet
+        self.posts = mutable.copy() as! NSOrderedSet
     }
 
     func removePostsObject(value: Post!) {
-        let mutable = self.posts.mutableCopy() as NSMutableOrderedSet
+        let mutable = self.posts.mutableCopy() as! NSMutableOrderedSet
         mutable.removeObject(value)
-        self.posts = mutable.copy() as NSOrderedSet
+        self.posts = mutable.copy() as! NSOrderedSet
     }
 
 }

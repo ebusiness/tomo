@@ -59,7 +59,7 @@ extension ApiController {
         RKObjectManager.sharedManager().postObject(nil, path: "/login", parameters: ["email" : email, "password" : password], success: { (_, result) -> Void in
             
             //no email in db
-            Defaults["myId"] = (result.firstObject() as User).id
+            Defaults["myId"] = (result.firstObject() as! User).id
             
 //            done(nil)
             
@@ -132,7 +132,7 @@ extension ApiController {
         }
         
         */
-        RKObjectManager.sharedManager().postObject(nil, path: "/mobile/posts", parameters: param, success: { (_, _) -> Void in
+        RKObjectManager.sharedManager().postObject(nil, path: "/mobile/posts", parameters: param as [NSObject : AnyObject], success: { (_, _) -> Void in
             done(nil)
             }) { (_, error) -> Void in
                 done(error)
@@ -194,7 +194,7 @@ extension ApiController {
         param["content"] = "記事コンテンツ";
         param["replyTo"] = "552220aa915a1dd84834731b";//コメントID
         */
-        RKObjectManager.sharedManager().postObject(nil, path: "/posts/\(id)/comments", parameters: param, success: { (_, _) -> Void in
+        RKObjectManager.sharedManager().postObject(nil, path: "/posts/\(id)/comments", parameters: param as [NSObject : AnyObject], success: { (_, _) -> Void in
             done(nil)
             }) { (_, error) -> Void in
                 done(error)
@@ -324,7 +324,7 @@ extension ApiController {
         }
         let path = NSBundle.mainBundle().pathForResource(plistname, ofType: "plist")
         let Plist = NSDictionary(contentsOfFile: path!)!
-        mapping.addAttributeMappingsFromDictionary(Plist)
+        mapping.addAttributeMappingsFromDictionary(Plist as [NSObject : AnyObject])
         return mapping
     }
     //user

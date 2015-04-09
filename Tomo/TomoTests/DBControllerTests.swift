@@ -56,7 +56,7 @@ class DBControllerTests: XCTestCase {
     
     func test() {
         let frc = DBController.newsfeeds()
-        let info = frc.sections![0] as NSFetchedResultsSectionInfo
+        let info = frc.sections![0] as! NSFetchedResultsSectionInfo
         
         println(info.numberOfObjects)
         

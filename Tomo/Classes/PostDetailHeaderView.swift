@@ -34,11 +34,11 @@ class PostDetailHeaderView: UIView {
                 postImageViewHeightConstraint.constant = 0
             }
             
-            TestData.getRandomAvatarPath { (path) -> Void in
-                if let path = path {
-                    self.avatarImageView.sd_setImageWithURL(NSURL(string: path))
-                }
-            }
+//            TestData.getRandomAvatarPath { (path) -> Void in
+//                if let path = path {
+//                    self.avatarImageView.sd_setImageWithURL(NSURL(string: path))
+//                }
+//            }
             
             userName.text = post.owner?.fullName()
             timeLabel.text = Util.displayDate(post.createDate)

@@ -11,15 +11,15 @@ import UIKit
 class TestData: NSObject {
    
     class func getRandomAvatarPath(done: (path: String?) -> Void) {
-        request(.GET, "http://uifaces.com/api/v1/random")
-            .responseJSON { (_, _, JSON, _) in
-                if let dic = JSON as? Dictionary<String, AnyObject> {
-                    if let urls = dic["image_urls"] as? Dictionary<String, AnyObject> {
-                        if let url = urls["bigger"] as? String {
-                            done(path: url)
-                        }
-                    }
-                }
-        }
+//        request(.GET, "http://uifaces.com/api/v1/random")
+//            .responseJSON { (_, _, JSON, _) in
+//                if let dic = JSON as? Dictionary<String, AnyObject> {
+//                    if let urls = dic["image_urls"] as? Dictionary<String, AnyObject> {
+//                        if let url = urls["bigger"] as? String {
+//                            done(path: url)
+//                        }
+//                    }
+//                }
+//        }
     }
 }

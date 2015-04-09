@@ -23,14 +23,14 @@ class PostDetailViewController: UIViewController {
     
     var comments: [Comments] {
         get {
-            return post.comments.array as [Comments]
+            return post.comments.array as! [Comments]
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        headerView = Util.createViewWithNibName("PostDetailHeaderView") as PostDetailHeaderView
+        headerView = Util.createViewWithNibName("PostDetailHeaderView") as! PostDetailHeaderView
         headerView.viewWidth = view.bounds.width
         headerView.post = post
     }
@@ -60,7 +60,7 @@ extension PostDetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as CommentCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as! CommentCell
         
         cell.comment = comments[indexPath.row]
         

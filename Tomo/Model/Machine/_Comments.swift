@@ -76,27 +76,27 @@ class _Comments: NSManagedObject {
 extension _Comments {
 
     func addLiked(objects: NSOrderedSet) {
-        let mutable = self.liked.mutableCopy() as NSMutableOrderedSet
+        let mutable = self.liked.mutableCopy() as! NSMutableOrderedSet
         mutable.unionOrderedSet(objects)
-        self.liked = mutable.copy() as NSOrderedSet
+        self.liked = mutable.copy() as! NSOrderedSet
     }
 
     func removeLiked(objects: NSOrderedSet) {
-        let mutable = self.liked.mutableCopy() as NSMutableOrderedSet
+        let mutable = self.liked.mutableCopy() as! NSMutableOrderedSet
         mutable.minusOrderedSet(objects)
-        self.liked = mutable.copy() as NSOrderedSet
+        self.liked = mutable.copy() as! NSOrderedSet
     }
 
     func addLikedObject(value: User!) {
-        let mutable = self.liked.mutableCopy() as NSMutableOrderedSet
+        let mutable = self.liked.mutableCopy() as! NSMutableOrderedSet
         mutable.addObject(value)
-        self.liked = mutable.copy() as NSOrderedSet
+        self.liked = mutable.copy() as! NSOrderedSet
     }
 
     func removeLikedObject(value: User!) {
-        let mutable = self.liked.mutableCopy() as NSMutableOrderedSet
+        let mutable = self.liked.mutableCopy() as! NSMutableOrderedSet
         mutable.removeObject(value)
-        self.liked = mutable.copy() as NSOrderedSet
+        self.liked = mutable.copy() as! NSOrderedSet
     }
 
 }

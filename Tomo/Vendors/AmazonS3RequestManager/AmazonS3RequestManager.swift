@@ -297,7 +297,7 @@ public class AmazonS3RequestManager {
     }
     
   private func MIMEType(request: NSURLRequest) -> String? {
-    if let fileExtension = request.URL.pathExtension {
+    if let fileExtension = request.URL!.pathExtension {
       if !fileExtension.isEmpty {
         
         let UTIRef = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, nil)
@@ -308,7 +308,7 @@ public class AmazonS3RequestManager {
         let MIMEType = MIMETypeRef.takeUnretainedValue()
         MIMETypeRef.release()
         
-        return MIMEType
+        return MIMEType as String
         
       }
     }
@@ -317,7 +317,7 @@ public class AmazonS3RequestManager {
   
   private func requestBySettingAuthorizationHeaders(forRequest request: NSURLRequest) -> (NSURLRequest, NSError?) {
     
-    let mutableRequest = request.mutableCopy() as NSMutableURLRequest
+    let mutableRequest = request.mutableCopy() as! NSMutableURLRequest
     
     mutableRequest.cachePolicy = .ReloadIgnoringLocalCacheData
     

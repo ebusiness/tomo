@@ -33,16 +33,16 @@ class TestDataTests: XCTestCase {
         }
     }
     
-    func test() {
-        let expect = expectationWithDescription("api")
-        
-        TestData.getRandomAvatarPath { (path) -> Void in
-            expect.fulfill()
-        }
-        
-        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
-            println(error)
-        })
-    }
+//    func test() {
+//        let expect = expectationWithDescription("api")
+//        
+//        TestData.getRandomAvatarPath { (path) -> Void in
+//            expect.fulfill()
+//        }
+//        
+//        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
+//            println(error)
+//        })
+//    }
 
 }

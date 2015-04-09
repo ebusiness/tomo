@@ -45,8 +45,8 @@ class DebugViewController: UIViewController {
 extension DebugViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DebugCell", forIndexPath: indexPath) as UICollectionViewCell
-        let label = cell.viewWithTag(1) as UILabel
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DebugCell", forIndexPath: indexPath) as! UICollectionViewCell
+        let label = cell.viewWithTag(1) as! UILabel
         label.text = titles[indexPath.item]
         
         return cell

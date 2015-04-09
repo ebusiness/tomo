@@ -13,18 +13,18 @@ class Util: NSObject {
     class func createViewControllerWithIdentifier(id: String?, storyboardName: String) -> UIViewController {
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         if let id = id {
-            return storyboard.instantiateViewControllerWithIdentifier(id) as UIViewController
+            return storyboard.instantiateViewControllerWithIdentifier(id) as! UIViewController
         }
         
-        return storyboard.instantiateInitialViewController() as UIViewController
+        return storyboard.instantiateInitialViewController() as! UIViewController
     }
     
     class func createViewWithNibName(name: String) -> UIView {
-        return UINib(nibName: name, bundle: nil).instantiateWithOwner(self, options: nil)[0] as UIView
+        return UINib(nibName: name, bundle: nil).instantiateWithOwner(self, options: nil)[0] as! UIView
     }
     
     class func changeRootViewController(#from: UIViewController, to: UIViewController) {
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         UIView.transitionWithView(appDelegate.window!, duration: 0.4, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
             
             if let parent = from.presentingViewController {
@@ -82,11 +82,11 @@ class Util: NSObject {
 extension UIApplication {
     
     class func appVersion() -> String {
-        return NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as String
+        return NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
     }
     
     class func appBuild() -> String {
-        return NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as NSString) as String
+        return NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleVersionKey as NSString as String) as! String
     }
     
     class func versionBuild() -> String {

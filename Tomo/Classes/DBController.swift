@@ -35,13 +35,13 @@ class DBController: NSObject {
     // MARK: - User
     
     class func myUser() -> User {
-        return User.MR_findFirstByAttribute("id", withValue: Defaults["myId"].string!, inContext: context) as User
+        return User.MR_findFirstByAttribute("id", withValue: Defaults["myId"].string!, inContext: context) as! User
     }
     
     // MARK: - Friend
     
     class func friends() -> [User] {
         let me = myUser()
-        return me.friends.array as [User]
+        return me.friends.array as! [User]
     }
 }

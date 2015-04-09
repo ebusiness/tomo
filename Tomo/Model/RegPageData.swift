@@ -16,7 +16,7 @@ class RegPageData: NSObject {
     var textB: String?
     
     init(dic: NSDictionary) {
-        self.imageName = dic["imageName"] as String
+        self.imageName = dic["imageName"] as! String
         self.iconName = dic["iconName"] as? String
         self.textA = dic["textA"] as? String
         self.textB = dic["textB"] as? String
