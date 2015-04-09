@@ -32,6 +32,17 @@ class CommentCell: UITableViewCell {
         }
     }
     
+    func height(comment: Comments, width: CGFloat) -> CGFloat {
+        contentLabel.preferredMaxLayoutWidth = width
+        
+        userNameLabel.text = comment.owner?.fullName()
+        timeLabel.text = Util.displayDate(comment.createDate)
+        contentLabel.text = comment.content
+        
+        let size = contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize) as CGSize
+        return size.height
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         

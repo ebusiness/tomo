@@ -17,7 +17,7 @@ class PostDetailViewController: UIViewController {
 //    @IBOutlet weak var avatarImageView: UIImageView!
 //    @IBOutlet weak var avatarImageView: UIImageView!
     
-    var cellForHeight: CommentCell!
+//    var cellForHeight: CommentCell!
     
     var post: Post!
     
@@ -29,7 +29,7 @@ class PostDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         headerView = Util.createViewWithNibName("PostDetailHeaderView") as! PostDetailHeaderView
         headerView.viewWidth = view.bounds.width
         headerView.post = post
@@ -74,4 +74,12 @@ extension PostDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return headerView
     }
+    
+//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        if cellForHeight == nil {
+//            cellForHeight = tableView.dequeueReusableCellWithIdentifier("CommentCell") as! CommentCell
+//        }
+//        
+//        return cellForHeight.height(comments[indexPath.row], width: tableView.bounds.width)
+//    }
 }

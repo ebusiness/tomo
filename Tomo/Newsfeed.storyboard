@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="mio-7p-z6M">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="mio-7p-z6M">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -57,7 +57,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="uKo-2v-h3N">
-                        <barButtonItem key="leftBarButtonItem" title="Debug" id="u1b-jn-j74">
+                        <barButtonItem key="leftBarButtonItem" title="機能一覧" id="u1b-jn-j74">
                             <connections>
                                 <action selector="debug:" destination="pQ2-07-Tsh" id="eKQ-lU-4Hr"/>
                             </connections>
@@ -93,7 +93,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CommentCell" rowHeight="107" id="TD4-CO-AhV" customClass="CommentCell" customModule="tomo" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CommentCell" rowHeight="128" id="TD4-CO-AhV" customClass="CommentCell" customModule="tomo" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TD4-CO-AhV" id="AZp-cm-NVx">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -106,25 +106,25 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zf6-jS-Uxx">
-                                                    <rect key="frame" x="52" y="8" width="260" height="19.5"/>
+                                                    <rect key="frame" x="52" y="8" width="260" height="20"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qxk-Wc-d5U">
-                                                    <rect key="frame" x="52" y="31" width="260" height="17"/>
+                                                    <rect key="frame" x="52" y="32" width="260" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.64000000000000001" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPH-Qy-0BT">
-                                                    <rect key="frame" x="52" y="54" width="260" height="19.5"/>
+                                                    <rect key="frame" x="52" y="55" width="260" height="20"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FVe-d0-bCK">
-                                                    <rect key="frame" x="0.0" y="81.5" width="320" height="1"/>
+                                                    <rect key="frame" x="0.0" y="83" width="320" height="1"/>
                                                     <color key="backgroundColor" red="0.87450980392156863" green="0.87450980392156863" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="6AR-a1-Qbs"/>
@@ -179,7 +179,45 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uwZ-v7-G3v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1039" y="172.5"/>
+            <point key="canvasLocation" x="1039" y="172"/>
+        </scene>
+        <!--Comment Input View Controller-->
+        <scene sceneID="IZd-Lg-nFj">
+            <objects>
+                <viewController storyboardIdentifier="ReportInputViewController" id="U6t-qj-mPT" customClass="CommentInputViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="d6r-Vj-Vkm"/>
+                        <viewControllerLayoutGuide type="bottom" id="pM0-lS-wNu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="giO-gO-rg1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hgA-ru-dxU">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="hgA-ru-dxU" secondAttribute="trailing" id="2Jk-Bz-4Ed"/>
+                            <constraint firstItem="pM0-lS-wNu" firstAttribute="top" secondItem="hgA-ru-dxU" secondAttribute="bottom" id="3n1-vd-bTd"/>
+                            <constraint firstItem="hgA-ru-dxU" firstAttribute="top" secondItem="giO-gO-rg1" secondAttribute="top" id="Wym-Jd-796"/>
+                            <constraint firstItem="hgA-ru-dxU" firstAttribute="leading" secondItem="giO-gO-rg1" secondAttribute="leading" id="fuh-Mu-MN2"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="4xo-Yd-zPf"/>
+                    <connections>
+                        <outlet property="bottomSpace" destination="3n1-vd-bTd" id="nBs-7N-wx3"/>
+                        <outlet property="textView" destination="hgA-ru-dxU" id="Dye-Il-U8R"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H0B-Vu-j6w" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1386" y="172"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

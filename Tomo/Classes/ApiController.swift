@@ -61,12 +61,8 @@ extension ApiController {
             //no email in db
             Defaults["myId"] = (result.firstObject() as! User).id
             
-//            done(nil)
-            
-            //get detail
-            self.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
-                done(error)
-            })
+            done(nil)
+
         }) { (_, error) -> Void in
             done(error)
         }
