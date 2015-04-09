@@ -22,6 +22,8 @@ class NewsfeedViewController: BaseViewController {
         return (postsFRC.sections as [NSFetchedResultsSectionInfo])[0].numberOfObjects
     }
     
+    var objectChanges = Dictionary<NSFetchedResultsChangeType, [NSIndexPath]>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -157,21 +159,44 @@ extension NewsfeedViewController: CHTCollectionViewDelegateWaterfallLayout {
 
 extension NewsfeedViewController: NSFetchedResultsControllerDelegate {
     
-//    func controllerDidChangeContent(controller: NSFetchedResultsController) {
-//        setupSizes()
-//        self.collectionView.reloadData()
-//    }
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        objectChanges.removeAll(keepCapacity: false)
+    }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
+        if objectChanges[type] == nil {
+            objectChanges[type] = [NSIndexPath]()
+        }
+
         switch type {
         case .Insert:
             if let newIndexPath = newIndexPath {
-                self.collectionView.insertItemsAtIndexPaths([newIndexPath])
+                objectChanges[type]!.append(newIndexPath)
             }
-        default:
-            self.collectionView.reloadData()
+        case .Delete:
+            if let indexPath = indexPath {
+                objectChanges[type]!.append(indexPath)
+            }
+        case .Update:
+            if let indexPath = indexPath {
+                objectChanges[type]!.append(indexPath)
+            }
+        case .Move:
+            // TODO: 
+            println("move")
         }
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        // TODO: move,update,delete
+        
+        collectionView.performBatchUpdates({ () -> Void in
+            let insertedItems = self.objectChanges[.Insert]
+            if insertedItems?.count > 0 {
+                self.collectionView.insertItemsAtIndexPaths(insertedItems!)
+            }
+        }, completion: nil)
     }
 }
 
