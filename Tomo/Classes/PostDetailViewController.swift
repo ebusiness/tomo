@@ -8,18 +8,18 @@
 
 import UIKit
 
-class PostDetailViewController: UIViewController {
+class PostDetailViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
     var headerView: PostDetailHeaderView!
-//    @IBOutlet weak var avatarImageView: UIImageView!
-//    @IBOutlet weak var avatarImageView: UIImageView!
-//    @IBOutlet weak var avatarImageView: UIImageView!
     
-//    var cellForHeight: CommentCell!
+    var cellForHeight: CommentCell!
     
-    var post: Post!
+    var postId: String!
+    var post: Post! {
+        return DBController.postById(postId)
+    }
     
     var comments: [Comments] {
         get {
@@ -31,8 +31,24 @@ class PostDetailViewController: UIViewController {
         super.viewDidLoad()
         
         headerView = Util.createViewWithNibName("PostDetailHeaderView") as! PostDetailHeaderView
+        
         headerView.viewWidth = view.bounds.width
-        headerView.post = post
+        
+        headerView.delegate = self
+        
+        headerView.post = self.post
+
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        ApiController.getUserPosts(postId, done: { (error) -> Void in
+            if error == nil {
+                self.headerView.post = self.post
+                self.tableView.reloadData()
+            }
+        })
     }
     
     override func didReceiveMemoryWarning() {
@@ -41,15 +57,15 @@ class PostDetailViewController: UIViewController {
     }
 
     
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "SegueCommentInput" {
+            let vc = segue.destinationViewController as! CommentInputViewController
+            vc.postId = post.id!
+        }
     }
-    */
 
 }
 
@@ -75,11 +91,18 @@ extension PostDetailViewController: UITableViewDataSource, UITableViewDelegate {
         return headerView
     }
     
-//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        if cellForHeight == nil {
-//            cellForHeight = tableView.dequeueReusableCellWithIdentifier("CommentCell") as! CommentCell
-//        }
-//        
-//        return cellForHeight.height(comments[indexPath.row], width: tableView.bounds.width)
-//    }
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if cellForHeight == nil {
+            cellForHeight = tableView.dequeueReusableCellWithIdentifier("CommentCell") as! CommentCell
+        }
+        
+        return cellForHeight.height(comments[indexPath.row], width: tableView.bounds.width)
+    }
+}
+
+extension PostDetailViewController: PostDetailHeaderViewDelegate {
+    
+    func commentBtnTapped() {
+        performSegueWithIdentifier("SegueCommentInput", sender: nil)
+    }
 }

@@ -70,7 +70,7 @@ class NewsfeedViewController: BaseViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "SeguePostDetail" {
             let vc = segue.destinationViewController as! PostDetailViewController
-            vc.post = sender as! Post
+            vc.postId = sender as! String
         }
     }
     
@@ -123,7 +123,6 @@ extension NewsfeedViewController: UICollectionViewDataSource, UICollectionViewDe
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("NewsfeedCell", forIndexPath: indexPath) as! NewsfeedCell
         
-//        cell.imageSize = sizes[indexPath.item]
         cell.post = post
         
         cell.configCellForShow()
@@ -134,8 +133,7 @@ extension NewsfeedViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let post = postsFRC.objectAtIndexPath(indexPath) as! Post
         
-//        performSegueWithIdentifier("SeguePostDetail", sender: indexPath)
-        performSegueWithIdentifier("SeguePostDetail", sender: post)
+        performSegueWithIdentifier("SeguePostDetail", sender: post.id!)
     }
 }
 
@@ -211,7 +209,7 @@ extension NewsfeedViewController: NSFetchedResultsControllerDelegate {
 
 extension NewsfeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
         
         let name = NSUUID().UUIDString

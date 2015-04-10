@@ -183,6 +183,16 @@ extension ApiController {
                 done(error)
         }
     }
+    
+    class func addComment(id: String,content: String, done: (NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        param["content"] = content
+        
+        createComment(id, param: param) { (error) -> Void in
+            done(error)
+        }
+    }
+    
     //記事のコメント
     class func createComment(id: String,param: NSDictionary, done: (NSError?) -> Void) {
         /*

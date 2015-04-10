@@ -175,6 +175,7 @@
                     <navigationItem key="navigationItem" id="SQ2-Zc-yt1"/>
                     <connections>
                         <outlet property="tableView" destination="hhk-e5-gw7" id="C5d-or-qgc"/>
+                        <segue destination="U6t-qj-mPT" kind="push" identifier="SegueCommentInput" id="X4E-BX-3oc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uwZ-v7-G3v" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -209,7 +210,13 @@
                             <constraint firstItem="hgA-ru-dxU" firstAttribute="leading" secondItem="giO-gO-rg1" secondAttribute="leading" id="fuh-Mu-MN2"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="4xo-Yd-zPf"/>
+                    <navigationItem key="navigationItem" id="4xo-Yd-zPf">
+                        <barButtonItem key="rightBarButtonItem" title="送信" id="iRs-oq-JfB">
+                            <connections>
+                                <action selector="send:" destination="U6t-qj-mPT" id="dBS-zZ-yo6"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="bottomSpace" destination="3n1-vd-bTd" id="nBs-7N-wx3"/>
                         <outlet property="textView" destination="hgA-ru-dxU" id="Dye-Il-U8R"/>
@@ -217,7 +224,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H0B-Vu-j6w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1386" y="172"/>
+            <point key="canvasLocation" x="1393" y="172"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

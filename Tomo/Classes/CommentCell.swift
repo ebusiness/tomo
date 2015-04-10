@@ -17,14 +17,9 @@ class CommentCell: UITableViewCell {
     
     var comment: Comments! {
         didSet {
-            
-//            if avatarImageView.image == nil {
-//                TestData.getRandomAvatarPath { (path) -> Void in
-//                    if let path = path {
-//                        self.avatarImageView.sd_setImageWithURL(NSURL(string: path))
-//                    }
-//                }
-//            }
+            if let photo_ref = comment.owner?.photo_ref {
+                avatarImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
+            }
             
             userNameLabel.text = comment.owner?.fullName()
             timeLabel.text = Util.displayDate(comment.createDate)

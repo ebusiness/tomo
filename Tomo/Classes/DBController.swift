@@ -14,13 +14,15 @@ class DBController: NSObject {
         return RKObjectManager.sharedManager().managedObjectStore.persistentStoreManagedObjectContext
     }
     
+    // MARK: - Post
+    
+    class func postById(postId: String) -> Post {
+        return Post.MR_findFirstByAttribute("id", withValue: postId, inContext: context) as! Post
+    }
+    
     class func newsfeeds() -> NSFetchedResultsController {
         return Post.MR_fetchAllGroupedBy(nil, withPredicate: nil, sortedBy: "createDate", ascending: false, inContext: context)
     }
-    
-//    class func newsfeeds(key: String, value: String) -> Post? {
-//        return nil
-//    }
     
     class func newsfeedsHasImage() -> [Post]? {
         let p = NSPredicate(format: "imagesmobile.count = 0", argumentArray: nil)

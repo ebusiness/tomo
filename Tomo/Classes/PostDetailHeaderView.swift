@@ -8,7 +8,11 @@
 
 import UIKit
 
-class PostDetailHeaderView: UIView {
+@objc protocol PostDetailHeaderViewDelegate {
+    func commentBtnTapped()
+}
+
+class PostDetailHeaderView: UITableViewHeaderFooterView {
 
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var userName: UILabel!
@@ -19,6 +23,10 @@ class PostDetailHeaderView: UIView {
     
     @IBOutlet weak var postImageViewHeightConstraint: NSLayoutConstraint!
 
+    weak var delegate: PostDetailHeaderViewDelegate?
+    
+    var layoutSize: CGSize!
+    
     override func awakeFromNib() {
         avatarImageView.layer.cornerRadius = 18.0
         avatarImageView.layer.masksToBounds = true
@@ -28,17 +36,9 @@ class PostDetailHeaderView: UIView {
     
     var post: Post! {
         didSet {
-            if let imageSize = post.imageSize {
-                postImageViewHeightConstraint.constant = viewWidth * imageSize.height / imageSize.width
-            } else {
-                postImageViewHeightConstraint.constant = 0
+            if let photo_ref = post.owner?.photo_ref {
+                avatarImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
             }
-            
-//            TestData.getRandomAvatarPath { (path) -> Void in
-//                if let path = path {
-//                    self.avatarImageView.sd_setImageWithURL(NSURL(string: path))
-//                }
-//            }
             
             userName.text = post.owner?.fullName()
             timeLabel.text = Util.displayDate(post.createDate)
@@ -55,6 +55,12 @@ class PostDetailHeaderView: UIView {
 
     var viewHeight: CGFloat! {
         get {
+            if let imageSize = post.imageSize {
+                postImageViewHeightConstraint.constant = viewWidth * imageSize.height / imageSize.width
+            } else {
+                postImageViewHeightConstraint.constant = 0
+            }
+            
             contentLabel.preferredMaxLayoutWidth = viewWidth
             
             let size = self.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize) as CGSize
@@ -63,4 +69,7 @@ class PostDetailHeaderView: UIView {
         }
     }
 
+    @IBAction func commentBtnTapped(sender: AnyObject) {
+        delegate?.commentBtnTapped()
+    }
 }

@@ -6,6 +6,8 @@ class CommentInputViewController: BaseViewController {
     
     @IBOutlet weak var bottomSpace: NSLayoutConstraint!
     
+    var postId: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,6 +32,22 @@ class CommentInputViewController: BaseViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - Action
+    
+    @IBAction func send(sender: AnyObject) {
+        SVProgressHUD.show()
+        ApiController.addComment(postId, content: textView.text) { (error) -> Void in
+            println("done")
+            SVProgressHUD.dismiss()
+            
+            if let error = error {
+                Util.showError(error)
+            } else {
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+        }
     }
     
     // MARK: - Notification

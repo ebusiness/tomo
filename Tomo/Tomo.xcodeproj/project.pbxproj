@@ -255,7 +255,6 @@
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
-				293004551AD6803100FC9100 /* CommentInputViewController.swift */,
 				299389561AD3C7CA00043D91 /* ViewController */,
 				299389521AD3C6FB00043D91 /* Controller */,
 				299389531AD3C71500043D91 /* xib&storyboard */,
@@ -347,6 +346,14 @@
 			path = Machine;
 			sourceTree = "<group>";
 		};
+		293004571AD685CF00FC9100 /* コメント */ = {
+			isa = PBXGroup;
+			children = (
+				293004551AD6803100FC9100 /* CommentInputViewController.swift */,
+			);
+			name = "コメント";
+			sourceTree = "<group>";
+		};
 		2952730B1AD64E6E00FC7833 /* 友達 */ = {
 			isa = PBXGroup;
 			children = (
@@ -433,6 +440,7 @@
 			isa = PBXGroup;
 			children = (
 				295272D31AD60E9300FC7833 /* DebugViewController.swift */,
+				293004571AD685CF00FC9100 /* コメント */,
 				29CA44181AD4CA0B009EB177 /* Tab */,
 				299389571AD3D13700043D91 /* Newsfeed一覧 */,
 				299389581AD3D15800043D91 /* Post詳細 */,
