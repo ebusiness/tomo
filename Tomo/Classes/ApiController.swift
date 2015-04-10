@@ -59,7 +59,7 @@ extension ApiController {
         RKObjectManager.sharedManager().postObject(nil, path: "/login", parameters: ["email" : email, "password" : password], success: { (_, result) -> Void in
             
             //no email in db
-            Defaults["myId"] = (result.firstObject() as! User).id
+            Defaults["myId"] = (result.firstObject as! User).id
             
             done(nil)
 
