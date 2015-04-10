@@ -67,6 +67,15 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let friend = friends[indexPath.row] as User
+        
+        let groupId = ChatController.startPrivateChat(user1: ChatController.myUser(), user2: friend)
+        
+        let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: "Message") as! MessageViewController
+        vc.groupId = groupId
+        //Test
+        vc.friend = friend
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

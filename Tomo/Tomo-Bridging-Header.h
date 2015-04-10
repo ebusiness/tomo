@@ -13,3 +13,5 @@
 #import "UIColor+HexString.h"
 #import "AmazonS3SignatureHelpers.h"
 #import "SSKeychain.h"
+#import "JSQMessages.h"
+#import "NSManagedObjectContext+Tomo.h"

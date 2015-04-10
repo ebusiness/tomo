@@ -32,7 +32,7 @@
  */
 @protocol JSQMessagesCollectionViewDataSource <UICollectionViewDataSource>
 
-@required
+@optional
 
 /**
  *  Asks the data source for the current sender's display name, that is, the current user who is sending messages.

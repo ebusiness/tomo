@@ -10,34 +10,24 @@ import UIKit
 
 class DBController: NSObject {
    
-    class var context: NSManagedObjectContext {
-        return RKObjectManager.sharedManager().managedObjectStore.persistentStoreManagedObjectContext
-    }
+//    class var context: NSManagedObjectContext {
+//        return RKObjectManager.sharedManager().managedObjectStore.persistentStoreManagedObjectContext
+//    }
     
     // MARK: - Post
     
     class func postById(postId: String) -> Post {
-        return Post.MR_findFirstByAttribute("id", withValue: postId, inContext: context) as! Post
+        return Post.MR_findFirstByAttribute("id", withValue: postId) as! Post
     }
     
     class func newsfeeds() -> NSFetchedResultsController {
-        return Post.MR_fetchAllGroupedBy(nil, withPredicate: nil, sortedBy: "createDate", ascending: false, inContext: context)
-    }
-    
-    class func newsfeedsHasImage() -> [Post]? {
-        let p = NSPredicate(format: "imagesmobile.count = 0", argumentArray: nil)
-       return Post.MR_findAllWithPredicate(p, inContext: context) as? [Post]
-    }
-    
-    class func allNewsfeeds() -> [Post]? {
-        let res = Post.MR_findAllInContext(context)
-        return Post.MR_findAllInContext(context) as? [Post]
+        return Post.MR_fetchAllGroupedBy(nil, withPredicate: nil, sortedBy: "createDate", ascending: false)
     }
     
     // MARK: - User
     
     class func myUser() -> User {
-        return User.MR_findFirstByAttribute("id", withValue: Defaults["myId"].string!, inContext: context) as! User
+        return User.MR_findFirstByAttribute("id", withValue: Defaults["myId"].string!) as! User
     }
     
     // MARK: - Friend

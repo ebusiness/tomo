@@ -29,6 +29,10 @@ class ApiController: NSObject {
         
         store.managedObjectCache = RKInMemoryManagedObjectCache(managedObjectContext: store.persistentStoreManagedObjectContext)
         
+        NSPersistentStoreCoordinator.MR_setDefaultStoreCoordinator(store.persistentStoreCoordinator)
+        NSManagedObjectContext.MR_setRootSavingContext(store.persistentStoreManagedObjectContext)
+        NSManagedObjectContext.MR_setDefaultContext(store.mainQueueManagedObjectContext)
+        
         addResponseDescriptor()
         
         AFNetworkActivityIndicatorManager.sharedManager().enabled = true
