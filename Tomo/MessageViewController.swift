@@ -325,7 +325,7 @@ extension MessageViewController: JSQMessagesCollectionViewDataSource {
         
         if avatars[user.id!] == nil {
             if let photo_ref = user.photo_ref {
-                SDWebImageDownloader.sharedDownloader().downloadImageWithURL(NSURL(string: photo_ref), options: nil, progress: nil, completed: { (image, _, error, _) -> Void in
+                SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: photo_ref), options: nil, progress: nil, completed: { (image, error, _, _, _) -> Void in
                     if error == nil && image != nil {
                         self.avatars[user.id!] = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
