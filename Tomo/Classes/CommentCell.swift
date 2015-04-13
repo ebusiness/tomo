@@ -28,7 +28,7 @@ class CommentCell: UITableViewCell {
     }
     
     func height(comment: Comments, width: CGFloat) -> CGFloat {
-        contentLabel.preferredMaxLayoutWidth = width
+        contentLabel.preferredMaxLayoutWidth = width - 8 - 36 - 8
         
         userNameLabel.text = comment.owner?.fullName()
         timeLabel.text = Util.displayDate(comment.createDate)
