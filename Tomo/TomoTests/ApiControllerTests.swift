@@ -90,22 +90,22 @@ class ApiControllerTests: XCTestCase {
         })
     }
     
-    func testGetNewsfeed() {
-        let expect = expectationWithDescription("api")
-        
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
-            XCTAssertNil(error, "")
-            println("logined")
-            ApiController.getNewsfeed({ (error) -> Void in
-                XCTAssertNil(error, "should success")
-                expect.fulfill()
-            })
-        }
-        
-        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
-            println(error)
-        })
-    }
+//    func testGetNewsfeed() {
+//        let expect = expectationWithDescription("api")
+//        
+//        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+//            XCTAssertNil(error, "")
+//            println("logined")
+//            ApiController.getNewsfeed({ (error) -> Void in
+//                XCTAssertNil(error, "should success")
+//                expect.fulfill()
+//            })
+//        }
+//        
+//        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
+//            println(error)
+//        })
+//    }
     
     func testGetUserPosts() {
         let expect = expectationWithDescription("api")

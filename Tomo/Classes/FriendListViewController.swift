@@ -8,11 +8,17 @@
 
 import UIKit
 
+enum NextView: Int {
+    case Chat,Posts
+}
+
 class FriendListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     var friends: [User]!
+
     
+    var nextView: NextView!
 //    var count: Int {
 //        return (friends.sections as [NSFetchedResultsSectionInfo])[0].numberOfObjects
 //    }
@@ -69,13 +75,21 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let friend = friends[indexPath.row] as User
         
-        let groupId = ChatController.startPrivateChat(user1: ChatController.myUser(), user2: friend)
+        if nextView == .Chat {
+            let groupId = ChatController.startPrivateChat(user1: ChatController.myUser(), user2: friend)
+            
+            let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: "Message") as! MessageViewController
+            vc.groupId = groupId
+            //Test
+            vc.friend = friend
+            navigationController?.pushViewController(vc, animated: true)
+        }
         
-        let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: "Message") as! MessageViewController
-        vc.groupId = groupId
-        //Test
-        vc.friend = friend
-        navigationController?.pushViewController(vc, animated: true)
+        if nextView == .Posts {
+            let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
+            vc.user = friend
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

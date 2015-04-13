@@ -12,8 +12,8 @@ class DebugViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var titles = ["FriendList"]
-    var names = ["Friend"]
+    var titles = ["聊天", "用户帖子一览"]
+    var names = ["Friend", "Friend"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +44,11 @@ class DebugViewController: UIViewController {
 
 extension DebugViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
+    func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize {
+        
+        return CGSize(width: 80, height: 80)
+    }
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DebugCell", forIndexPath: indexPath) as! UICollectionViewCell
         let label = cell.viewWithTag(1) as! UILabel
@@ -53,8 +58,13 @@ extension DebugViewController: UICollectionViewDataSource, UICollectionViewDeleg
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: names[indexPath.row])
-        self.presentViewController(vc, animated: true, completion: nil)
+        if indexPath.section == 0 {
+            let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: names[indexPath.row]) as! UINavigationController
+            
+            (vc.topViewController as! FriendListViewController).nextView = NextView(rawValue: indexPath.item)
+            
+            self.presentViewController(vc, animated: true, completion: nil)
+        }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

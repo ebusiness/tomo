@@ -20,7 +20,11 @@ class DBController: NSObject {
         return Post.MR_findFirstByAttribute("id", withValue: postId) as! Post
     }
     
-    class func newsfeeds() -> NSFetchedResultsController {
+    class func newsfeeds(user: User? = nil) -> NSFetchedResultsController {
+        if let user = user {
+            return Post.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "owner=%@", user), sortedBy: "createDate", ascending: false)
+        }
+        
         return Post.MR_fetchAllGroupedBy(nil, withPredicate: nil, sortedBy: "createDate", ascending: false)
     }
     

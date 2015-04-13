@@ -8,8 +8,6 @@
 
 import UIKit
 
-let count = 30
-
 class NewsfeedViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -17,6 +15,8 @@ class NewsfeedViewController: BaseViewController {
     var cellForHeight: NewsfeedCell!
     
     var postsFRC: NSFetchedResultsController!
+    
+    var user: User?
     
     var count: Int {
         return (postsFRC.sections as! [NSFetchedResultsSectionInfo])[0].numberOfObjects
@@ -27,8 +27,12 @@ class NewsfeedViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        postsFRC = DBController.newsfeeds()
-        postsFRC.delegate = self
+        if user != nil {
+            self.navigationItem.rightBarButtonItem = nil
+            self.navigationItem.leftBarButtonItem = nil
+        }
+        
+        loadLocalData()
         
         collectionView.registerNib(UINib(nibName: "NewsfeedCell", bundle: nil), forCellWithReuseIdentifier: "NewsfeedCell")
         
@@ -36,6 +40,11 @@ class NewsfeedViewController: BaseViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
 
+    }
+    
+    func loadLocalData() {
+        postsFRC = DBController.newsfeeds(user: user)
+        postsFRC.delegate = self
     }
     
     func setupLayout() {
@@ -47,8 +56,12 @@ class NewsfeedViewController: BaseViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        ApiController.getNewsfeed { (error) -> Void in
-            println("getNewsfeed done")
+        loadRemoteData()
+    }
+    
+    func loadRemoteData() {
+        ApiController.getNewsfeed(user: user) { (error) -> Void in
+            
         }
     }
     
@@ -60,9 +73,7 @@ class NewsfeedViewController: BaseViewController {
     // MARK: - Notification
     
     func becomeActive() {
-        ApiController.getNewsfeed { (error) -> Void in
-            println("getNewsfeed done")
-        }
+        loadRemoteData()
     }
     
     // MARK: - Navigation

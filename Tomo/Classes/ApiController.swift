@@ -97,7 +97,12 @@ extension ApiController {
 // MARK: - Post
 extension ApiController {
 
-    class func getNewsfeed(done: (NSError?) -> Void) {
+    class func getNewsfeed(user: User? = nil, done: (NSError?) -> Void) {
+        if let user = user {
+            getUserPosts(user.id!, done: done)
+            return
+        }
+        
         RKObjectManager.sharedManager().getObjectsAtPath("/newsfeed", parameters: nil, success: { (_, _) -> Void in
             done(nil)
             }) { (_, error) -> Void in

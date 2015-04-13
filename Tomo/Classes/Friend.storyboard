@@ -8,7 +8,7 @@
         <!--Friend List View Controller-->
         <scene sceneID="7UV-6o-H99">
             <objects>
-                <viewController id="Idv-zt-2iB" customClass="FriendListViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FriendListViewController" id="Idv-zt-2iB" customClass="FriendListViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8t1-pt-BHg"/>
                         <viewControllerLayoutGuide type="bottom" id="XEP-V0-vrD"/>

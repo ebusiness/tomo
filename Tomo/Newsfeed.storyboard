@@ -24,7 +24,7 @@
         <!--Newsfeed View Controller-->
         <scene sceneID="6pv-4Q-PNE">
             <objects>
-                <viewController id="pQ2-07-Tsh" customClass="NewsfeedViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewsfeedViewController" id="pQ2-07-Tsh" customClass="NewsfeedViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YIL-or-QUe"/>
                         <viewControllerLayoutGuide type="bottom" id="GXU-LD-aeB"/>
