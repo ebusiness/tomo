@@ -80,14 +80,6 @@ extension ApiController {
         }
     }
     
-    class func getMessage(done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().getObjectsAtPath("/messages", parameters: nil, success: { (_, _) -> Void in
-            done(nil)
-            }) { (_, error) -> Void in
-                done(error)
-        }
-    }
-    
     class func dicFromPlist(name: String) -> NSDictionary {
         let path = NSBundle.mainBundle().pathForResource(name, ofType: "plist")
         return NSDictionary(contentsOfFile: path!)!
@@ -305,6 +297,38 @@ extension ApiController {
         }
     }
     
+    class func getMessage(done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/messages", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    
+    class func getMessageUnread(done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/messages/unread", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    
+    class func getMessageSent(done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/messages/sent", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    
+    class func readMessage(id :String,done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().patchObject(nil,path:"/messages/\(id)", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    
     
 }
 
@@ -316,6 +340,7 @@ extension ApiController {
     }
     private class func addResponseDescriptor() {
         let usermapping = getUserMapping()
+        let msgmapping = getMessageMapping()
         //login
         addCommonResponseDescriptor(usermapping, method: .POST, pathPattern: "/login", keyPath: nil, statusCodes: nil)
         //UserInfo
@@ -327,7 +352,13 @@ extension ApiController {
         //記事の投稿
         addCommonResponseDescriptor(getPostMapping(false), method: .POST, pathPattern: "/mobile/posts", keyPath: nil, statusCodes: nil)
         //messages
-        addCommonResponseDescriptor(getMessageMapping(), method: .GET, pathPattern: "/messages", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(msgmapping, method: .GET, pathPattern: "/messages", keyPath: nil, statusCodes: nil)
+        //messages
+        addCommonResponseDescriptor(msgmapping, method: .GET, pathPattern: "/messages/unread", keyPath: nil, statusCodes: nil)
+        //messages
+        addCommonResponseDescriptor(msgmapping, method: .GET, pathPattern: "/messages/sent", keyPath: nil, statusCodes: nil)
+        //messages
+        addCommonResponseDescriptor(msgmapping, method: .PATCH, pathPattern: "/messages/:id", keyPath: nil, statusCodes: nil)
         //messages
 //        addCommonResponseDescriptor(getMessageMapping(), method: .POST, pathPattern: "/messages", keyPath: nil, statusCodes: nil)
         //友達一覧

@@ -341,5 +341,37 @@ class ApiControllerTests: XCTestCase {
             println(error)
         })
     }
+    func testGetMessageUnread() {
+        let expect = expectationWithDescription("api")
+        
+        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+            XCTAssertNil(error, "")
+            
+            ApiController.getMessageUnread({ (error) -> Void in
+                XCTAssertNil(error, "should success")
+                expect.fulfill()
+            })
+        }
+        
+        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
+            println(error)
+        })
+    }
+    func testReadMessage() {
+        let expect = expectationWithDescription("api")
+        
+        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+            XCTAssertNil(error, "")
+            
+            ApiController.readMessage("552ce7054dc3f737080cd558", done:{ (error) -> Void in
+                XCTAssertNil(error, "should success")
+                expect.fulfill()
+            })
+        }
+        
+        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
+            println(error)
+        })
+    }
 }
 
