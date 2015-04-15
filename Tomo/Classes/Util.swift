@@ -77,6 +77,21 @@ class Util: NSObject {
         
         return ""
     }
+    
+    class func showGotMessageLocalNotification() {
+        if UIApplication.sharedApplication().applicationState == .Background {
+            let notification = UILocalNotification()
+            notification.soundName = UILocalNotificationDefaultSoundName
+            notification.applicationIconBadgeNumber = 1
+            
+            let message = ChatController.latestMessage()
+            notification.alertBody = message.from!.fullName() + " : " + message.content!
+            
+//            notification.userInfo = ["kNotificationFriendAccountName" : message.fromStr()]
+            
+            UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+        }
+    }
 }
 
 extension UIApplication {

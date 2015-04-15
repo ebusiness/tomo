@@ -76,7 +76,7 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
         let friend = friends[indexPath.row] as User
         
         if nextView == .Chat {
-            let groupId = ChatController.startPrivateChat(user1: ChatController.myUser(), user2: friend)
+//            let groupId = ChatController.startPrivateChat(user1: ChatController.myUser(), user2: friend)
             
             let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: "Message") as! MessageViewController
 //            vc.groupId = groupId

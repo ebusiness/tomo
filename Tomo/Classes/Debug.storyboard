@@ -66,7 +66,6 @@
                                 <action selector="close:" destination="Eu1-KS-r46" id="bZ8-n0-B67"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="2wQ-3l-ehk"/>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="GzC-om-Hdh" id="U5p-Jv-9HO"/>

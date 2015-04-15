@@ -79,6 +79,7 @@ class MessageViewController: JSQMessagesViewController {
         }
         
         if !Defaults.hasKey("didGetMessageSent") {
+            self.messageSend = true
             ApiController.getMessageSent { (error) -> Void in
                 if error == nil {
                     Defaults["didGetMessageSent"] = true
@@ -158,8 +159,9 @@ class MessageViewController: JSQMessagesViewController {
 //        ChatController.createChat(groupId, text: text)
 //        ChatController.updateMessage(groupId, text: text)
 
-        ChatController.createMessage(friend, text: text)
         messageSend = true
+
+        ChatController.createMessage(friend, text: text)
         
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
 //        loadMessages()
@@ -219,7 +221,26 @@ extension MessageViewController: JSQMessagesCollectionViewDataSource {
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
-        return avatarImageBlank
+        let message = frc.objectAtIndexPath(indexPath) as! Message
+        let user = message.from!
+        
+        if avatars[user.id!] == nil {
+            if let photo_ref = user.photo_ref {
+                SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: photo_ref), options: nil, progress: nil, completed: { (image, error, _, _, _) -> Void in
+                    if error == nil && image != nil {
+                        self.avatars[user.id!] = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.collectionView.reloadData()
+                        })
+                    }
+                })
+            } else {
+                return avatarImageBlank
+            }
+            return avatarImageBlank
+        } else {
+            return avatars[user.id!]
+        }
         
         /*
         let user = users[indexPath.item]

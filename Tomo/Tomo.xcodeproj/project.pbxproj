@@ -62,6 +62,7 @@
 		2901351A1AC3A79500BBFE29 /* _User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290135191AC3A79500BBFE29 /* _User.swift */; };
 		2901351B1AC3A79500BBFE29 /* _User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290135191AC3A79500BBFE29 /* _User.swift */; };
 		2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901351C1AC3A90C00BBFE29 /* Constants.swift */; };
+		290144101ADE12990048F3D8 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1E11AD797B600AA39CE /* ChatController.swift */; };
 		291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */; };
 		291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF941AD229B3009D8BE3 /* CommentCell.swift */; };
 		291ADF961AD247C4009D8BE3 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
@@ -840,6 +841,7 @@
 				29BE7E1C1AC54663008110B4 /* DBController.swift in Sources */,
 				1712BE3A1ACE195B000A9C47 /* _Images.swift in Sources */,
 				29A1AFF81AC4113000775765 /* _Post.swift in Sources */,
+				290144101ADE12990048F3D8 /* ChatController.swift in Sources */,
 				1712BE431ACE4140000A9C47 /* Devices.swift in Sources */,
 				2993894B1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
 				1712BE301ACCE819000A9C47 /* _Group.swift in Sources */,
@@ -1118,6 +1120,7 @@
 			baseConfigurationReference = B5997E727845063A13A5D63E /* Pods.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1125,6 +1128,7 @@
 				INFOPLIST_FILE = TomoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tomo.app/Tomo";
 			};

@@ -55,7 +55,9 @@ class TabBarController: UITabBarController {
                 })*/
                 
                 ApiController.getMessage({ (error) -> Void in
-                    
+                    if error == nil {
+                        Util.showGotMessageLocalNotification()
+                    }
                 })
             }
         }

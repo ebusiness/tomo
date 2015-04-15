@@ -10,6 +10,7 @@ import UIKit
 
 class ChatController: DBController {
    
+    /*
     class func startPrivateChat(#user1: User, user2: User) -> String {
 //        let groupId = user1.id! + user2.id!
         let groupId = makeGroupId(user1: user1, user2: user2)
@@ -50,25 +51,12 @@ class ChatController: DBController {
         return Chat.MR_findByAttribute("groupId", withValue: groupId, andOrderBy: "createdAt", ascending: true) as! [Chat]
     }
     
-    /*
     class func createChat(groupId: String, text: String) {
         let chat = Chat.MR_createEntity() as! Chat
         chat.groupId = groupId
         chat.text = text
         chat.createdAt = NSDate()
         chat.user = myUser()
-        
-        save()
-    }
-    */
-    
-    class func createMessage(user: User, text: String) {
-        let message = Message.MR_createEntity() as! Message
-        message.to = NSOrderedSet(array: [user])
-        message.content = text
-        message.subject = "no subject"
-        message.from = myUser()
-        message.createDate = NSDate()
         
         save()
     }
@@ -85,6 +73,18 @@ class ChatController: DBController {
         save()
 }
     
+        */
+    
+    class func createMessage(user: User, text: String) {
+        let message = Message.MR_createEntity() as! Message
+        message.to = NSOrderedSet(array: [user])
+        message.content = text
+        message.subject = "no subject"
+        message.from = myUser()
+        message.createDate = NSDate()
+        
+        save()
+    }
     
     class func save(done: (() -> Void)? = nil) {
         NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreWithCompletion { (b, error) -> Void in
@@ -92,6 +92,7 @@ class ChatController: DBController {
         }
     }
     
+    /*
     class func addChat(dic: NSDictionary) {
         // TODO: if not exist
         
@@ -103,14 +104,18 @@ class ChatController: DBController {
         chat.text = dic["content"] as? String
         chat.createdAt = NSDate()
         chat.user = user
-    }
+    }*/
     
     // TODO: 群聊
     class func messageWithUser(user: User) -> NSFetchedResultsController {
-//        return Message.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "from=%@ OR ALL to=%@", user, user), sortedBy: "createDate", ascending: true)
         return Message.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "from=%@ OR (to.@count = 1 AND ANY to.id=%@)", user, user.id!), sortedBy: "createDate", ascending: true)
     }
     
+    class func latestMessage() -> Message {
+        return Message.MR_findFirstOrderedByAttribute("createDate", ascending: false) as! Message
+    }
+    
+    /*
     // MARK: - Test
     
     class func createChatFrom(userId: String) {
@@ -125,6 +130,6 @@ class ChatController: DBController {
         chat.user = user
         
         save()
-    }
+    }*/
 
 }
