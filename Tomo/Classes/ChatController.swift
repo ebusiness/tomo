@@ -105,8 +105,10 @@ class ChatController: DBController {
         chat.user = user
     }
     
+    // TODO: 群聊
     class func messageWithUser(user: User) -> NSFetchedResultsController {
-        return Message.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "from=%@ OR ANY to=%@", user), sortedBy: "createDate", ascending: true)
+//        return Message.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "from=%@ OR ALL to=%@", user, user), sortedBy: "createDate", ascending: true)
+        return Message.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "from=%@ OR (to.@count = 1 AND ANY to.id=%@)", user, user.id!), sortedBy: "createDate", ascending: true)
     }
     
     // MARK: - Test

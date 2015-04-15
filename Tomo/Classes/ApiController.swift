@@ -340,7 +340,7 @@ extension ApiController {
     }
     private class func addResponseDescriptor() {
         let usermapping = getUserMapping()
-        let msgmapping = getMessageMapping()
+        let msgmapping = getMessageMapping(true)
         //login
         addCommonResponseDescriptor(usermapping, method: .POST, pathPattern: "/login", keyPath: nil, statusCodes: nil)
         //UserInfo
@@ -356,7 +356,7 @@ extension ApiController {
         //messages
         addCommonResponseDescriptor(msgmapping, method: .GET, pathPattern: "/messages/unread", keyPath: nil, statusCodes: nil)
         //messages
-        addCommonResponseDescriptor(msgmapping, method: .GET, pathPattern: "/messages/sent", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getMessageMapping(false), method: .GET, pathPattern: "/messages/sent", keyPath: nil, statusCodes: nil)
         //messages
         addCommonResponseDescriptor(msgmapping, method: .PATCH, pathPattern: "/messages/:id", keyPath: nil, statusCodes: nil)
         //messages
@@ -427,11 +427,15 @@ extension ApiController {
         return mapping
     }
     //message
-    private class func getMessageMapping()->RKEntityMapping{
+    private class func getMessageMapping(isrecipientidonly:Bool)->RKEntityMapping{
         var mapping = _messageMapping
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_from", toKeyPath: "from", withMapping: _userMapping))
         
-        mapping.addPropertyMappingById("User",fromKey: "_recipient",toKeyPath: "to")
+        if(isrecipientidonly){
+            mapping.addPropertyMappingById("User",fromKey: "_recipient",toKeyPath: "to")
+        }else{
+            mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_recipient", toKeyPath: "to", withMapping: _userMapping))
+        }
         return mapping
     }
     //comment

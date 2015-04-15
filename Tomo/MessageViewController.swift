@@ -77,6 +77,14 @@ class MessageViewController: JSQMessagesViewController {
         ApiController.getMessage { (error) -> Void in
             
         }
+        
+        if !Defaults.hasKey("didGetMessageSent") {
+            ApiController.getMessageSent { (error) -> Void in
+                if error == nil {
+                    Defaults["didGetMessageSent"] = true
+                }
+            }
+        }
     }
     
     /*
