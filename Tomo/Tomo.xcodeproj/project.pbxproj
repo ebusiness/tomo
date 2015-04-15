@@ -134,6 +134,7 @@
 		29CA44901AD4DEE4009EB177 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA448F1AD4DEE4009EB177 /* AccountViewController.swift */; };
 		29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA44921AD4EEBB009EB177 /* Tab.storyboard */; };
 		29CA44951AD4F6F1009EB177 /* AccountEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA44941AD4F6F1009EB177 /* AccountEditViewController.swift */; };
+		29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */; };
 		29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
@@ -240,6 +241,7 @@
 		29CA448F1AD4DEE4009EB177 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountViewController.swift; path = Classes/AccountViewController.swift; sourceTree = "<group>"; };
 		29CA44921AD4EEBB009EB177 /* Tab.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Tab.storyboard; path = Classes/Tab.storyboard; sourceTree = "<group>"; };
 		29CA44941AD4F6F1009EB177 /* AccountEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountEditViewController.swift; sourceTree = "<group>"; };
+		29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 			children = (
 				29BE7E221AC55A28008110B4 /* MultilineLabel.swift */,
 				299389421AD3B33800043D91 /* AmazonS3RequestManager */,
+				29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */,
 				29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */,
 				2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */,
 				296040451ACE669900D2A338 /* Alamofire.swift */,
@@ -766,6 +769,7 @@
 				29925BAA1AD6693F00F98BD7 /* Alamofire.swift in Sources */,
 				291ADF991AD24F7B009D8BE3 /* PostDetailHeaderView.swift in Sources */,
 				2987F1E21AD797B600AA39CE /* ChatController.swift in Sources */,
+				29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */,
 				2987F1E41AD79D0500AA39CE /* Chat.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
 				2901351A1AC3A79500BBFE29 /* _User.swift in Sources */,
@@ -951,6 +955,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xinguang Wang (6CY42XZSB6)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1011,6 +1016,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = tomo;
+				PROVISIONING_PROFILE = "2f7e360c-3a9a-42a1-b5e7-b6579ce67a71";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1089,6 +1095,7 @@
 			baseConfigurationReference = F1801CE63ECC013D9C8C9BB6 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1100,6 +1107,7 @@
 				INFOPLIST_FILE = TomoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tomo.app/Tomo";
 			};

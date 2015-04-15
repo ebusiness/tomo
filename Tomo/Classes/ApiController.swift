@@ -283,6 +283,31 @@ extension ApiController {
     }
 }
 
+
+// MARK: - Message
+
+extension ApiController {
+    
+    class func sendMessage(to: [String], subject: String? = "no subject", content: String) {
+        var param = NSMutableDictionary.new()
+        
+        for i in 0..<to.count {
+            param["recipient[\(i)]"] = to[i]
+        }
+        
+        param["subject"] = subject
+        param["content"] = content
+
+//        let myId = DBController.myUser().id!
+        RKObjectManager.sharedManager().postObject(nil, path: "/messages", parameters: param as [NSObject : AnyObject], success: { (_, _) -> Void in
+            }) { (_, error) -> Void in
+//                done(error)
+        }
+    }
+    
+    
+}
+
 // MARK: - Descriptor
 extension ApiController {
     private class func addCommonResponseDescriptor(mapping:RKEntityMapping,method:RKRequestMethod,pathPattern:String?,keyPath:String?,statusCodes:NSIndexSet?) {
@@ -303,6 +328,8 @@ extension ApiController {
         addCommonResponseDescriptor(getPostMapping(false), method: .POST, pathPattern: "/mobile/posts", keyPath: nil, statusCodes: nil)
         //messages
         addCommonResponseDescriptor(getMessageMapping(), method: .GET, pathPattern: "/messages", keyPath: nil, statusCodes: nil)
+        //messages
+//        addCommonResponseDescriptor(getMessageMapping(), method: .POST, pathPattern: "/messages", keyPath: nil, statusCodes: nil)
         //友達一覧
         addCommonResponseDescriptor(usermapping, method: .GET, pathPattern: "/connections/friends", keyPath: nil, statusCodes: nil)
         //記事のコメント
@@ -372,6 +399,8 @@ extension ApiController {
     private class func getMessageMapping()->RKEntityMapping{
         var mapping = _messageMapping
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_from", toKeyPath: "from", withMapping: _userMapping))
+        
+        mapping.addPropertyMappingById("User",fromKey: "_recipient",toKeyPath: "to")
         return mapping
     }
     //comment

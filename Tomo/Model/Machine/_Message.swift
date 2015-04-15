@@ -12,6 +12,7 @@ enum MessageAttributes: String {
 
 enum MessageRelationships: String {
     case from = "from"
+    case to = "to"
 }
 
 @objc
@@ -67,5 +68,35 @@ class _Message: NSManagedObject {
 
     // func validateFrom(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
+    @NSManaged
+    var to: NSOrderedSet
+
 }
 
+extension _Message {
+
+    func addTo(objects: NSOrderedSet) {
+        let mutable = self.to.mutableCopy() as! NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.to = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeTo(objects: NSOrderedSet) {
+        let mutable = self.to.mutableCopy() as! NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.to = mutable.copy() as! NSOrderedSet
+    }
+
+    func addToObject(value: User!) {
+        let mutable = self.to.mutableCopy() as! NSMutableOrderedSet
+        mutable.addObject(value)
+        self.to = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeToObject(value: User!) {
+        let mutable = self.to.mutableCopy() as! NSMutableOrderedSet
+        mutable.removeObject(value)
+        self.to = mutable.copy() as! NSOrderedSet
+    }
+
+}

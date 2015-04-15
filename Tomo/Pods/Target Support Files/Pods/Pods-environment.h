@@ -12,6 +12,12 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking 3
 #define COCOAPODS_VERSION_PATCH_AFNetworking 4
 
+// AZSocketIO
+#define COCOAPODS_POD_AVAILABLE_AZSocketIO
+#define COCOAPODS_VERSION_MAJOR_AZSocketIO 0
+#define COCOAPODS_VERSION_MINOR_AZSocketIO 0
+#define COCOAPODS_VERSION_PATCH_AZSocketIO 5
+
 // CHTCollectionViewWaterfallLayout
 #define COCOAPODS_POD_AVAILABLE_CHTCollectionViewWaterfallLayout
 #define COCOAPODS_VERSION_MAJOR_CHTCollectionViewWaterfallLayout 0
@@ -125,6 +131,12 @@
 #define COCOAPODS_VERSION_MAJOR_SVProgressHUD 1
 #define COCOAPODS_VERSION_MINOR_SVProgressHUD 1
 #define COCOAPODS_VERSION_PATCH_SVProgressHUD 3
+
+// SocketRocket
+#define COCOAPODS_POD_AVAILABLE_SocketRocket
+#define COCOAPODS_VERSION_MAJOR_SocketRocket 0
+#define COCOAPODS_VERSION_MINOR_SocketRocket 3
+#define COCOAPODS_VERSION_PATCH_SocketRocket 1
 
 // TransitionKit
 #define COCOAPODS_POD_AVAILABLE_TransitionKit

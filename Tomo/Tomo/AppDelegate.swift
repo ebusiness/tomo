@@ -24,5 +24,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
+    func application( application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData ) {
+        
+        // <>と" "(空白)を取る
+        var characterSet: NSCharacterSet = NSCharacterSet( charactersInString: "<>" )
+        
+        var deviceTokenString: String = ( deviceToken.description as NSString )
+            .stringByTrimmingCharactersInSet( characterSet )
+            .stringByReplacingOccurrencesOfString( " ", withString: "" ) as String
+
+        ApiController.setDeviceInfo(deviceTokenString, done: { (error) -> Void in
+            println("didRegisterForRemoteNotificationsWithDeviceToken")
+        })
+    }
 }
 

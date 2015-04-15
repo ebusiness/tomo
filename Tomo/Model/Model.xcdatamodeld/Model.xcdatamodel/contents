@@ -44,6 +44,7 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="from" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="messages" inverseEntity="User" syncable="YES"/>
+        <relationship name="to" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="messages_to" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Messages" representedClassName="Messages" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
@@ -86,17 +87,18 @@
         <relationship name="liked_comments" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Comments" inverseName="liked" inverseEntity="Comments" syncable="YES"/>
         <relationship name="liked_posts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" inverseName="liked" inverseEntity="Post" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Message" inverseName="from" inverseEntity="Message" syncable="YES"/>
+        <relationship name="messages_to" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Message" inverseName="to" inverseEntity="Message" syncable="YES"/>
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" inverseName="owner" inverseEntity="Post" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Chat" positionX="-1395" positionY="-126" width="128" height="30"/>
         <element name="Comments" positionX="-1359" positionY="-90" width="128" height="135"/>
         <element name="Devices" positionX="-1368" positionY="-99" width="128" height="105"/>
         <element name="Group" positionX="-551" positionY="-106" width="128" height="165"/>
         <element name="Images" positionX="-1440" positionY="-108" width="128" height="118"/>
-        <element name="Message" positionX="-1595" positionY="161" width="128" height="118"/>
-        <element name="Post" positionX="-857" positionY="234" width="128" height="193"/>
-        <element name="User" positionX="-1217" positionY="-270" width="128" height="343"/>
-        <element name="Chat" positionX="-1395" positionY="-126" width="128" height="30"/>
+        <element name="Message" positionX="-1595" positionY="161" width="128" height="135"/>
         <element name="Messages" positionX="-1386" positionY="-108" width="128" height="150"/>
+        <element name="Post" positionX="-857" positionY="234" width="128" height="193"/>
+        <element name="User" positionX="-1217" positionY="-270" width="128" height="360"/>
     </elements>
 </model>

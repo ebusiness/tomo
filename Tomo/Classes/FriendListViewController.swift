@@ -79,7 +79,7 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
             let groupId = ChatController.startPrivateChat(user1: ChatController.myUser(), user2: friend)
             
             let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: "Message") as! MessageViewController
-            vc.groupId = groupId
+//            vc.groupId = groupId
             //Test
             vc.friend = friend
             navigationController?.pushViewController(vc, animated: true)

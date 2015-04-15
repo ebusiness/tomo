@@ -26,6 +26,7 @@ enum UserRelationships: String {
     case liked_comments = "liked_comments"
     case liked_posts = "liked_posts"
     case messages = "messages"
+    case messages_to = "messages_to"
     case posts = "posts"
 }
 
@@ -137,6 +138,9 @@ class _User: NSManagedObject {
 
     @NSManaged
     var messages: NSOrderedSet
+
+    @NSManaged
+    var messages_to: NSOrderedSet
 
     @NSManaged
     var posts: NSOrderedSet
@@ -335,6 +339,34 @@ extension _User {
         let mutable = self.messages.mutableCopy() as! NSMutableOrderedSet
         mutable.removeObject(value)
         self.messages = mutable.copy() as! NSOrderedSet
+    }
+
+}
+
+extension _User {
+
+    func addMessages_to(objects: NSOrderedSet) {
+        let mutable = self.messages_to.mutableCopy() as! NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.messages_to = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeMessages_to(objects: NSOrderedSet) {
+        let mutable = self.messages_to.mutableCopy() as! NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.messages_to = mutable.copy() as! NSOrderedSet
+    }
+
+    func addMessages_toObject(value: Message!) {
+        let mutable = self.messages_to.mutableCopy() as! NSMutableOrderedSet
+        mutable.addObject(value)
+        self.messages_to = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeMessages_toObject(value: Message!) {
+        let mutable = self.messages_to.mutableCopy() as! NSMutableOrderedSet
+        mutable.removeObject(value)
+        self.messages_to = mutable.copy() as! NSOrderedSet
     }
 
 }

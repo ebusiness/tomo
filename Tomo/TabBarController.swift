@@ -14,6 +14,8 @@ class TabBarController: UITabBarController {
     let tabImageNames = ["tab_share","tab_map","tab_chat","tab_person"]
     let tabImageNamesHL = ["tab_share","tab_map","tab_chat","tab_person"]
     
+    var socket:AZSocketIO!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -23,11 +25,59 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupSocket()
+
+        setupPush()
 //        self.delegate = self
 
        
         
 //        self.navigationItem.hidesBackButton = true
+    }
+
+    
+    func setupSocket() {
+        
+        socket = AZSocketIO(host: "tomo.e-business.co.jp", andPort: "80", secure: false)
+        
+        socket.eventRecievedBlock = { (name, data) -> Void in
+
+            if name == "message-new" {
+                /*
+                let array = data as! NSArray
+                
+                for dic in array {
+                    ChatController.addChat(dic as! NSDictionary)
+                }
+                
+                ChatController.save(done: { () -> Void in
+                    NSNotificationCenter.defaultCenter().postNotificationName("GotNewMessage", object: nil)
+                })*/
+                
+                ApiController.getMessage({ (error) -> Void in
+                    
+                })
+            }
+        }
+        
+        socket.connectWithSuccess({ () -> Void in
+            println("connectWithSuccess")
+            }, andFailure: { (error) -> Void in
+                println(error)
+        })
+        
+    }
+    
+    func setupPush() {
+        var types: UIUserNotificationType = UIUserNotificationType.Badge |
+            UIUserNotificationType.Alert |
+            UIUserNotificationType.Sound
+        
+        var settings: UIUserNotificationSettings = UIUserNotificationSettings( forTypes: types, categories: nil )
+        
+        let application = UIApplication.sharedApplication()
+        application.registerUserNotificationSettings( settings )
+        application.registerForRemoteNotifications()
     }
 
     

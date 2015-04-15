@@ -18,13 +18,27 @@ class DebugViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+//        SIOSocket.socketWithHost("http://tomo.e-business.co.jp", reconnectAutomatically: false, attemptLimit: -1, withDelay: 20, maximumDelay: 100, timeout: 30) { (soc) -> Void in
+//            soc.onConnect = {() -> Void in
+//                println("onConnect")
+//            }
+//            soc.on("no-session", callback: {(args) -> Void in
+//                println("no-session")
+//            })
+//            
+//            soc.on("message", callback: {(args) -> Void in
+//                println(args)
+//            })
+//        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: - Action
+    
     
     @IBAction func close(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
