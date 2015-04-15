@@ -63,6 +63,9 @@
 		2901351B1AC3A79500BBFE29 /* _User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290135191AC3A79500BBFE29 /* _User.swift */; };
 		2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901351C1AC3A90C00BBFE29 /* Constants.swift */; };
 		290144101ADE12990048F3D8 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1E11AD797B600AA39CE /* ChatController.swift */; };
+		290144121ADE3BBD0048F3D8 /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144111ADE3BBD0048F3D8 /* SCLAlertView.swift */; };
+		290144141ADE3C100048F3D8 /* whatsnew.plist in Resources */ = {isa = PBXBuildFile; fileRef = 290144131ADE3C100048F3D8 /* whatsnew.plist */; };
+		290144151ADE3E5D0048F3D8 /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144111ADE3BBD0048F3D8 /* SCLAlertView.swift */; };
 		291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */; };
 		291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF941AD229B3009D8BE3 /* CommentCell.swift */; };
 		291ADF961AD247C4009D8BE3 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
@@ -180,6 +183,8 @@
 		290135161AC3A78E00BBFE29 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		290135191AC3A79500BBFE29 /* _User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _User.swift; sourceTree = "<group>"; };
 		2901351C1AC3A90C00BBFE29 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Classes/Constants.swift; sourceTree = "<group>"; };
+		290144111ADE3BBD0048F3D8 /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
+		290144131ADE3C100048F3D8 /* whatsnew.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = whatsnew.plist; sourceTree = SOURCE_ROOT; };
 		291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailViewController.swift; path = Classes/PostDetailViewController.swift; sourceTree = "<group>"; };
 		291ADF941AD229B3009D8BE3 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentCell.swift; path = Classes/CommentCell.swift; sourceTree = "<group>"; };
 		291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailHeaderView.swift; path = Classes/PostDetailHeaderView.swift; sourceTree = "<group>"; };
@@ -305,6 +310,7 @@
 				2901351C1AC3A90C00BBFE29 /* Constants.swift */,
 				290134FA1AC3A3D200BBFE29 /* Tomo-Bridging-Header.h */,
 				290134D61AC3991C00BBFE29 /* Info.plist */,
+				290144131ADE3C100048F3D8 /* whatsnew.plist */,
 			);
 			name = "Supporting Files";
 			path = Tomo;
@@ -395,6 +401,7 @@
 		296040441ACE669900D2A338 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				290144111ADE3BBD0048F3D8 /* SCLAlertView.swift */,
 				29BE7E221AC55A28008110B4 /* MultilineLabel.swift */,
 				299389421AD3B33800043D91 /* AmazonS3RequestManager */,
 				29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */,
@@ -667,6 +674,7 @@
 				2942CCD71ACD2B75007CDC97 /* NewsfeedCell.xib in Resources */,
 				2987F1E01AD77FE200AA39CE /* Message.storyboard in Resources */,
 				29A1B0061AC533A800775765 /* UserMapping.plist in Resources */,
+				290144141ADE3C100048F3D8 /* whatsnew.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,6 +801,7 @@
 				2987F1E61AD79D0C00AA39CE /* Messages.swift in Sources */,
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
+				290144121ADE3BBD0048F3D8 /* SCLAlertView.swift in Sources */,
 				1712BE2C1ACCE801000A9C47 /* _Group.swift in Sources */,
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
 				29A5D1D91ACBE01700D95B77 /* RegPageView.swift in Sources */,
@@ -851,6 +860,7 @@
 				299389491AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				1712BE391ACE1958000A9C47 /* Images.swift in Sources */,
 				29925BAB1AD6693F00F98BD7 /* Alamofire.swift in Sources */,
+				290144151ADE3E5D0048F3D8 /* SCLAlertView.swift in Sources */,
 				29CA44151AD4C050009EB177 /* AppDelegate.swift in Sources */,
 				1712BE4C1ACE5D12000A9C47 /* _Comments.swift in Sources */,
 				2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */,

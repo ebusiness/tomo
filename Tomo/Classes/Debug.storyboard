@@ -61,14 +61,47 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="SJa-Kb-fKm">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="7If-Tu-lMH">
                             <connections>
                                 <action selector="close:" destination="Eu1-KS-r46" id="bZ8-n0-B67"/>
                             </connections>
                         </barButtonItem>
+                        <view key="titleView" contentMode="scaleToFill" id="Ten-RY-VaT">
+                            <rect key="frame" x="96" y="6" width="128" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xeC-2M-reo">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="33"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="xeC-2M-reo" secondAttribute="trailing" id="Eyf-zj-wtT"/>
+                                <constraint firstItem="xeC-2M-reo" firstAttribute="leading" secondItem="Ten-RY-VaT" secondAttribute="leading" id="LDf-c1-QFt"/>
+                                <constraint firstAttribute="bottom" secondItem="xeC-2M-reo" secondAttribute="bottom" id="OAt-4r-HA1"/>
+                                <constraint firstItem="xeC-2M-reo" firstAttribute="top" secondItem="Ten-RY-VaT" secondAttribute="top" id="Unp-CQ-ib4"/>
+                            </constraints>
+                        </view>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="ImY-Hi-vds">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="rBL-IP-M4O">
+                                <rect key="frame" x="233" y="7" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showInfo:" destination="Eu1-KS-r46" eventType="touchUpInside" id="esl-ZA-IJt"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="GzC-om-Hdh" id="U5p-Jv-9HO"/>
+                        <outlet property="versionLabel" destination="xeC-2M-reo" id="mEA-Yr-pdD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zPD-Z6-reN" userLabel="First Responder" sceneMemberID="firstResponder"/>

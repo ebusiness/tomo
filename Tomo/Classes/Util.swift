@@ -49,6 +49,35 @@ class Util: NSObject {
         return NSArray(contentsOfFile: path!)!
     }
     
+    class func showWhatsnew(checkVersion: Bool? = true) {
+        if checkVersion == true {
+            if !Defaults.hasKey("version") || Defaults["version"].string != UIApplication.versionBuild() {
+                showWhatsnewAlert()
+                Defaults["version"] = UIApplication.versionBuild()
+            }
+        } else {
+            showWhatsnewAlert()
+        }
+    }
+    
+    private class func showWhatsnewAlert() {
+        let array = arrayFromPlist("whatsnew")
+        let subTitle = array.componentsJoinedByString("\n")
+        SCLAlertView().showInfo("变更点", subTitle: subTitle, closeButtonTitle: "OK", duration: 0)
+    }
+    
+    class func setupPush() {
+        var types: UIUserNotificationType = UIUserNotificationType.Badge |
+            UIUserNotificationType.Alert |
+            UIUserNotificationType.Sound
+        
+        var settings: UIUserNotificationSettings = UIUserNotificationSettings( forTypes: types, categories: nil )
+        
+        let application = UIApplication.sharedApplication()
+        application.registerUserNotificationSettings( settings )
+        application.registerForRemoteNotifications()
+    }
+    
     // MARK: - SVProgress
     
     class func showTodo() {

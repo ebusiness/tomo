@@ -27,7 +27,8 @@ class TabBarController: UITabBarController {
         
         setupSocket()
 
-        setupPush()
+
+        Util.setupPush()
 //        self.delegate = self
 
        
@@ -69,19 +70,6 @@ class TabBarController: UITabBarController {
         })
         
     }
-    
-    func setupPush() {
-        var types: UIUserNotificationType = UIUserNotificationType.Badge |
-            UIUserNotificationType.Alert |
-            UIUserNotificationType.Sound
-        
-        var settings: UIUserNotificationSettings = UIUserNotificationSettings( forTypes: types, categories: nil )
-        
-        let application = UIApplication.sharedApplication()
-        application.registerUserNotificationSettings( settings )
-        application.registerForRemoteNotifications()
-    }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

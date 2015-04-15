@@ -11,12 +11,15 @@ import UIKit
 class DebugViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var versionLabel: UILabel!
     
     var titles = ["聊天", "用户帖子一览"]
     var names = ["Friend", "Friend"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        versionLabel.text = UIApplication.versionBuild()
 
 //        SIOSocket.socketWithHost("http://tomo.e-business.co.jp", reconnectAutomatically: false, attemptLimit: -1, withDelay: 20, maximumDelay: 100, timeout: 30) { (soc) -> Void in
 //            soc.onConnect = {() -> Void in
@@ -31,6 +34,12 @@ class DebugViewController: UIViewController {
 //            })
 //        }
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        Util.showWhatsnew()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -44,6 +53,10 @@ class DebugViewController: UIViewController {
         dismissViewControllerAnimated(true, completion: nil)
     }
 
+    @IBAction func showInfo(sender: AnyObject) {
+        Util.showWhatsnew(checkVersion: false)
+    }
+    
     /*
     // MARK: - Navigation
 
