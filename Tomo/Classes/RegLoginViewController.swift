@@ -10,31 +10,31 @@ import UIKit
 
 class RegLoginViewController: BaseViewController {
 
-    @IBOutlet weak var mailTF: UITextField!
+    @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
+    
+    var tfs = [UITextField]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let mailSpacerView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        mailTF.leftViewMode = .Always
-        mailTF.leftView = mailSpacerView
+        tfs = [emailTF,passwordTF]
         
-        let passwordSpacerView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        passwordTF.leftViewMode = .Always
-        passwordTF.leftView = passwordSpacerView
-        
-
+        for tf in tfs {
+            let spacerView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+            tf.leftViewMode = .Always
+            tf.leftView = spacerView
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         if let email = Defaults["email"].string {
-            mailTF.text = email
+            emailTF.text = email
             passwordTF.becomeFirstResponder()
         } else {
-            mailTF.becomeFirstResponder()
+            emailTF.becomeFirstResponder()
         }
     }
     
@@ -47,16 +47,22 @@ class RegLoginViewController: BaseViewController {
     // MARK: - Action
     
     @IBAction func close(sender: AnyObject) {
-        mailTF.resignFirstResponder()
-        passwordTF.resignFirstResponder()
+        for tf in tfs {
+            tf.resignFirstResponder()
+        }
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func login(sender: AnyObject) {
+        if validate() == false {
+            SVProgressHUD.showErrorWithStatus("入力エラー", maskType: .Clear)
+            return
+        }
+        
         SVProgressHUD.showWithMaskType(.Clear)
         
-        ApiController.login(email: mailTF.text, password: passwordTF.text) { (error) -> Void in
+        ApiController.login(email: emailTF.text, password: passwordTF.text) { (error) -> Void in
             assert(NSThread.currentThread().isMainThread, "not main thread")
             
             if let error = error {
@@ -64,10 +70,15 @@ class RegLoginViewController: BaseViewController {
                 return
             }
             
-            Defaults["email"] = self.mailTF.text
+            if let preAccount = Defaults["email"].string where self.emailTF.text != preAccount {
+                DBController.clearDB()
+                DBController.createUser(email: self.emailTF.text, id: Defaults["myId"].string!)
+            }
+            
+            Defaults["email"] = self.emailTF.text
             Defaults["shouldAutoLogin"] = true
             
-            SSKeychain.setPassword(self.passwordTF.text, forService: kTomoService, account: self.mailTF.text)
+            SSKeychain.setPassword(self.passwordTF.text, forService: kTomoService, account: self.emailTF.text)
             
             println("OK")
             SVProgressHUD.dismiss()
@@ -77,20 +88,39 @@ class RegLoginViewController: BaseViewController {
             Util.changeRootViewController(from: self, to: tab)
         }
     }
+    
+    // MARK: - support
+    
+    func validate() -> Bool {
+        for tf in tfs {
+            if tf.text.length == 0 {
+                return false
+            }
+        }
+        
+        if emailTF.text.isEmail() == false {
+            return false
+        }
+        
+        return true
+    }
+    
 }
+
 
 // MARK: - UITextFieldDelegate
 
 extension RegLoginViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if textField == mailTF {
-            passwordTF.becomeFirstResponder()
+        let index = find(tfs, textField)!
+        
+        if index == tfs.count - 1 {
+            login(textField)
+            return true
         }
         
-        if textField == passwordTF {
-            login(textField)
-        }
+        tfs[index+1].becomeFirstResponder()
         
         return true
     }

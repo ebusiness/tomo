@@ -34,10 +34,36 @@ class DBController: NSObject {
         return User.MR_findFirstByAttribute("id", withValue: Defaults["myId"].string!) as! User
     }
     
+    class func createUser(#email: String, id: String) {
+        let user = User.MR_createEntity() as! User
+        user.email = email
+        user.id = id
+        save()
+    }
+    
     // MARK: - Friend
     
     class func friends() -> [User] {
         let me = myUser()
         return me.friends.array as! [User]
+    }
+    
+    class func clearDB() {
+        Comments.MR_truncateAll()
+        Devices.MR_truncateAll()
+        Group.MR_truncateAll()
+        Images.MR_truncateAll()
+        Message.MR_truncateAll()
+        Post.MR_truncateAll()
+        User.MR_truncateAll()
+        
+        save()
+    }
+    
+    
+    class func save(done: (() -> Void)? = nil) {
+        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreWithCompletion { (b, error) -> Void in
+            done?()
+        }
     }
 }

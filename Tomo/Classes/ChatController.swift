@@ -86,12 +86,6 @@ class ChatController: DBController {
         save()
     }
     
-    class func save(done: (() -> Void)? = nil) {
-        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreWithCompletion { (b, error) -> Void in
-            done?()
-        }
-    }
-    
     /*
     class func addChat(dic: NSDictionary) {
         // TODO: if not exist

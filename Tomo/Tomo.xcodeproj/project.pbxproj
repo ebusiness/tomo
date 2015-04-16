@@ -67,6 +67,8 @@
 		290144141ADE3C100048F3D8 /* whatsnew.plist in Resources */ = {isa = PBXBuildFile; fileRef = 290144131ADE3C100048F3D8 /* whatsnew.plist */; };
 		290144151ADE3E5D0048F3D8 /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144111ADE3BBD0048F3D8 /* SCLAlertView.swift */; };
 		290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144161ADF6D890048F3D8 /* MapViewController.swift */; };
+		2901441A1ADF983E0048F3D8 /* RegSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144191ADF983E0048F3D8 /* RegSignUpViewController.swift */; };
+		2901441C1ADFA1AB0048F3D8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901441B1ADFA1AB0048F3D8 /* String.swift */; };
 		291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */; };
 		291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF941AD229B3009D8BE3 /* CommentCell.swift */; };
 		291ADF961AD247C4009D8BE3 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
@@ -187,6 +189,8 @@
 		290144111ADE3BBD0048F3D8 /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
 		290144131ADE3C100048F3D8 /* whatsnew.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = whatsnew.plist; sourceTree = SOURCE_ROOT; };
 		290144161ADF6D890048F3D8 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = Classes/MapViewController.swift; sourceTree = "<group>"; };
+		290144191ADF983E0048F3D8 /* RegSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegSignUpViewController.swift; path = Classes/RegSignUpViewController.swift; sourceTree = "<group>"; };
+		2901441B1ADFA1AB0048F3D8 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailViewController.swift; path = Classes/PostDetailViewController.swift; sourceTree = "<group>"; };
 		291ADF941AD229B3009D8BE3 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentCell.swift; path = Classes/CommentCell.swift; sourceTree = "<group>"; };
 		291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailHeaderView.swift; path = Classes/PostDetailHeaderView.swift; sourceTree = "<group>"; };
@@ -411,6 +415,7 @@
 		296040441ACE669900D2A338 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				2901441B1ADFA1AB0048F3D8 /* String.swift */,
 				290144111ADE3BBD0048F3D8 /* SCLAlertView.swift */,
 				29BE7E221AC55A28008110B4 /* MultilineLabel.swift */,
 				299389421AD3B33800043D91 /* AmazonS3RequestManager */,
@@ -475,6 +480,7 @@
 				29A5D1D81ACBE01700D95B77 /* RegPageView.swift */,
 				29CA44131AD4B9E8009EB177 /* LoadingViewController.swift */,
 				2942CCD01ACCE75A007CDC97 /* BaseViewController.swift */,
+				290144191ADF983E0048F3D8 /* RegSignUpViewController.swift */,
 			);
 			name = login;
 			sourceTree = "<group>";
@@ -789,6 +795,7 @@
 				29925BAA1AD6693F00F98BD7 /* Alamofire.swift in Sources */,
 				291ADF991AD24F7B009D8BE3 /* PostDetailHeaderView.swift in Sources */,
 				2987F1E21AD797B600AA39CE /* ChatController.swift in Sources */,
+				2901441A1ADF983E0048F3D8 /* RegSignUpViewController.swift in Sources */,
 				29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */,
 				2987F1E41AD79D0500AA39CE /* Chat.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
@@ -829,6 +836,7 @@
 				29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */,
 				29A1AFF71AC4113000775765 /* _Post.swift in Sources */,
 				2942CCD51ACD03BF007CDC97 /* NewsfeedCell.swift in Sources */,
+				2901441C1ADFA1AB0048F3D8 /* String.swift in Sources */,
 				2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */,
 				291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */,
 				291ADF9D1AD2654E009D8BE3 /* AddPostViewController.swift in Sources */,
