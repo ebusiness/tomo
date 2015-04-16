@@ -23,23 +23,26 @@ class AccountEditViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        user = DBController.myUser()
+        
         userImage.layer.cornerRadius = userImage.bounds.width / 2
         
-//        sexLabel.text = 
+        idLabel.text = Defaults["email"].string
+
+//        sexLabel.text =
 //        stationLabel.text = 
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let photo_ref = user.photo_ref {
-            userImage.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
-        }
+        updateUI()
         
-        nameLabel.text = user.fullName()
+        ApiController.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
+            if error == nil {
+                self.updateUI()
+            }
+        })
         
-        idLabel.text = Defaults["email"].string
         
 //        if let gender = user.gender {
 //            sexLabel.text = user.genderStr()
@@ -50,6 +53,16 @@ class AccountEditViewController: UITableViewController {
 //        } else {
 //            stationLabel.text = ""
 //        }
+    }
+    
+    func updateUI() {
+        user = DBController.myUser()
+        
+        if let photo_ref = user.photo_ref {
+            userImage.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
+        }
+        
+        nameLabel.text = user.fullName()
     }
     
     override func didReceiveMemoryWarning() {
