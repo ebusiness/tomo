@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="lFe-YQ-9Zz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="lFe-YQ-9Zz">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="18X-hB-eLN">
             <objects>
-                <viewController id="OpP-6Y-mbl" sceneMemberID="viewController">
+                <viewController id="OpP-6Y-mbl" customClass="MapViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cbP-3X-ubl"/>
                         <viewControllerLayoutGuide type="bottom" id="Cpn-4Z-PSd"/>
@@ -17,20 +17,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="地図" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmb-4z-g9f">
-                                <rect key="frame" x="143" y="273.5" width="34" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gr7-Xe-nqZ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="gmb-4z-g9f" secondAttribute="centerY" id="qmP-Na-sc5"/>
-                            <constraint firstAttribute="centerX" secondItem="gmb-4z-g9f" secondAttribute="centerX" id="r87-FY-nX1"/>
+                            <constraint firstItem="gr7-Xe-nqZ" firstAttribute="leading" secondItem="wVk-fz-608" secondAttribute="leading" id="GAx-Fb-FVb"/>
+                            <constraint firstAttribute="trailing" secondItem="gr7-Xe-nqZ" secondAttribute="trailing" id="hPa-pd-lIK"/>
+                            <constraint firstItem="gr7-Xe-nqZ" firstAttribute="top" secondItem="wVk-fz-608" secondAttribute="top" id="hZd-9U-hdG"/>
+                            <constraint firstAttribute="bottom" secondItem="gr7-Xe-nqZ" secondAttribute="bottom" id="iKH-Jj-Qqz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="KKw-VS-iwT"/>
+                    <connections>
+                        <outlet property="webView" destination="gr7-Xe-nqZ" id="2y8-fX-vJf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lyR-37-tdo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -17,6 +17,8 @@ let kAPIBaseURL = NSURL(string: kAPIBaseURLString)
 
 let MaxWidth = 500
 
+let mapPath = kAPIBaseURLString + "/mobile/map"
+
 //let BackgroundSessionUploadIdentifier: String = "com.amazon.example.s3BackgroundTransferSwift.uploadSession"
 //let BackgroundSessionDownloadIdentifier: String = "com.amazon.example.s3BackgroundTransferSwift.downloadSession"
 
