@@ -20,6 +20,7 @@ enum UserAttributes: String {
 
 enum UserRelationships: String {
     case bookmarked_posts = "bookmarked_posts"
+    case confirms = "confirms"
     case devices = "devices"
     case friends = "friends"
     case groups = "groups"
@@ -123,6 +124,9 @@ class _User: NSManagedObject {
     var bookmarked_posts: NSOrderedSet
 
     @NSManaged
+    var confirms: NSOrderedSet
+
+    @NSManaged
     var devices: NSOrderedSet
 
     @NSManaged
@@ -175,6 +179,34 @@ extension _User {
         let mutable = self.bookmarked_posts.mutableCopy() as! NSMutableOrderedSet
         mutable.removeObject(value)
         self.bookmarked_posts = mutable.copy() as! NSOrderedSet
+    }
+
+}
+
+extension _User {
+
+    func addConfirms(objects: NSOrderedSet) {
+        let mutable = self.confirms.mutableCopy() as! NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.confirms = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeConfirms(objects: NSOrderedSet) {
+        let mutable = self.confirms.mutableCopy() as! NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.confirms = mutable.copy() as! NSOrderedSet
+    }
+
+    func addConfirmsObject(value: Notification!) {
+        let mutable = self.confirms.mutableCopy() as! NSMutableOrderedSet
+        mutable.addObject(value)
+        self.confirms = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeConfirmsObject(value: Notification!) {
+        let mutable = self.confirms.mutableCopy() as! NSMutableOrderedSet
+        mutable.removeObject(value)
+        self.confirms = mutable.copy() as! NSOrderedSet
     }
 
 }

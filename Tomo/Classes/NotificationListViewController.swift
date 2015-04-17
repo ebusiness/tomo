@@ -13,7 +13,7 @@ class NotificationListViewController: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var notificationType: NotificationType!
-    var notifications = [UnconfirmedNotification]()
+    var notifications = [Notification]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,9 +69,20 @@ extension NotificationListViewController: UITableViewDataSource, UITableViewDele
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FriendInvitedCell", forIndexPath: indexPath) as! FriendInvitedCell
         cell.friendInvitedNotification = notifications[indexPath.row]
+        cell.delegate = self
         
         return cell
     }
     
+}
+
+extension NotificationListViewController: FriendInvitedCellDelegate {
     
+    func friendInvitedCellAllowed(cell: FriendInvitedCell) {
+        ApiController.approveFriendInvite(cell.friendInvitedNotification.id!, done: { (error) -> Void in
+            if error == nil {
+                self.updateUI()
+            }
+        })
+    }
 }

@@ -61,8 +61,11 @@ class DBController: NSObject {
     
     // MARK: - Notification
     
-    class func unconfirmedNotification(#type: NotificationType) -> [UnconfirmedNotification] {
-        return UnconfirmedNotification.MR_findByAttribute("type", withValue: type.rawValue, andOrderBy: "createDate", ascending: false) as! [UnconfirmedNotification]
+    class func unconfirmedNotification(#type: NotificationType) -> [Notification] {
+        let me = myUser()
+        
+       return Notification.MR_findAllSortedBy("createDate", ascending: false, withPredicate: NSPredicate(format: "type = %@ AND (confirmed.@count = 0 OR (NONE confirmed = %@))", type.rawValue, me)) as! [Notification]
+//        return Notification.MR_findByAttribute("type", withValue: type.rawValue, andOrderBy: "createDate", ascending: false) as! [Notification]
     }
     
     class func save(done: (() -> Void)? = nil) {
@@ -79,7 +82,7 @@ class DBController: NSObject {
         Message.MR_truncateAll()
         Post.MR_truncateAll()
         User.MR_truncateAll()
-        UnconfirmedNotification.MR_truncateAll()
+        Notification.MR_truncateAll()
         
         save()
     }

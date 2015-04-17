@@ -125,14 +125,10 @@
 		29A5D1DB1ACBE03000D95B77 /* RegPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A5D1DA1ACBE03000D95B77 /* RegPageView.xib */; };
 		29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A5D1DC1ACBE85C00D95B77 /* RegPageData.swift */; };
 		29A5D1DF1ACBE9CB00D95B77 /* RegPageData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29A5D1DE1ACBE9CB00D95B77 /* RegPageData.plist */; };
-		29B00A5E1AE09E7E002AF208 /* UnconfirmedNotificationMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29B00A5D1AE09E7E002AF208 /* UnconfirmedNotificationMapping.plist */; };
-		29B00A621AE0A111002AF208 /* UnconfirmedNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B00A611AE0A111002AF208 /* UnconfirmedNotification.swift */; };
+		29B00A5E1AE09E7E002AF208 /* NotificationMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29B00A5D1AE09E7E002AF208 /* NotificationMapping.plist */; };
 		29B00A641AE0A158002AF208 /* NotificationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B00A631AE0A158002AF208 /* NotificationListViewController.swift */; };
 		29B00A661AE0A1E6002AF208 /* Notification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29B00A651AE0A1E6002AF208 /* Notification.storyboard */; };
-		29B00A691AE0A314002AF208 /* _UnconfirmedNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B00A681AE0A314002AF208 /* _UnconfirmedNotification.swift */; };
-		29B00A6A1AE0A65B002AF208 /* UnconfirmedNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B00A611AE0A111002AF208 /* UnconfirmedNotification.swift */; };
-		29B00A6B1AE0A677002AF208 /* UnconfirmedNotificationMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29B00A5D1AE09E7E002AF208 /* UnconfirmedNotificationMapping.plist */; };
-		29B00A6C1AE0A67D002AF208 /* _UnconfirmedNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B00A681AE0A314002AF208 /* _UnconfirmedNotification.swift */; };
+		29B00A6B1AE0A677002AF208 /* NotificationMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29B00A5D1AE09E7E002AF208 /* NotificationMapping.plist */; };
 		29B00A6E1AE0A947002AF208 /* FriendInvitedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B00A6D1AE0A947002AF208 /* FriendInvitedCell.swift */; };
 		29BE7E121AC54224008110B4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
 		29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E1A1AC54663008110B4 /* DBController.swift */; };
@@ -151,6 +147,10 @@
 		29CA44951AD4F6F1009EB177 /* AccountEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA44941AD4F6F1009EB177 /* AccountEditViewController.swift */; };
 		29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */; };
 		29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
+		29DF4CD41AE0EDB7003A4962 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD31AE0EDB7003A4962 /* Notification.swift */; };
+		29DF4CD61AE0EDC4003A4962 /* _Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD51AE0EDC4003A4962 /* _Notification.swift */; };
+		29DF4CD71AE0EFA2003A4962 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD31AE0EDB7003A4962 /* Notification.swift */; };
+		29DF4CD81AE0EFE5003A4962 /* _Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD51AE0EDC4003A4962 /* _Notification.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -248,11 +248,9 @@
 		29A5D1DC1ACBE85C00D95B77 /* RegPageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegPageData.swift; sourceTree = "<group>"; };
 		29A5D1DE1ACBE9CB00D95B77 /* RegPageData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegPageData.plist; path = ../RegPageData.plist; sourceTree = "<group>"; };
 		29A5D1E01ACCCFB400D95B77 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
-		29B00A5D1AE09E7E002AF208 /* UnconfirmedNotificationMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UnconfirmedNotificationMapping.plist; sourceTree = "<group>"; };
-		29B00A611AE0A111002AF208 /* UnconfirmedNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnconfirmedNotification.swift; sourceTree = "<group>"; };
+		29B00A5D1AE09E7E002AF208 /* NotificationMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NotificationMapping.plist; sourceTree = "<group>"; };
 		29B00A631AE0A158002AF208 /* NotificationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationListViewController.swift; path = Classes/NotificationListViewController.swift; sourceTree = "<group>"; };
 		29B00A651AE0A1E6002AF208 /* Notification.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Notification.storyboard; path = Classes/Notification.storyboard; sourceTree = "<group>"; };
-		29B00A681AE0A314002AF208 /* _UnconfirmedNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _UnconfirmedNotification.swift; sourceTree = "<group>"; };
 		29B00A6D1AE0A947002AF208 /* FriendInvitedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendInvitedCell.swift; path = Classes/FriendInvitedCell.swift; sourceTree = "<group>"; };
 		29BE7E111AC54224008110B4 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = ../Classes/Util.swift; sourceTree = "<group>"; };
 		29BE7E1A1AC54663008110B4 /* DBController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBController.swift; path = Classes/DBController.swift; sourceTree = "<group>"; };
@@ -269,6 +267,8 @@
 		29CA44941AD4F6F1009EB177 /* AccountEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountEditViewController.swift; sourceTree = "<group>"; };
 		29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
+		29DF4CD31AE0EDB7003A4962 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		29DF4CD51AE0EDC4003A4962 /* _Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Notification.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		F1801CE63ECC013D9C8C9BB6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -357,7 +357,7 @@
 		290135081AC3A67200BBFE29 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				29B00A611AE0A111002AF208 /* UnconfirmedNotification.swift */,
+				29DF4CD31AE0EDB7003A4962 /* Notification.swift */,
 				2987F1E51AD79D0C00AA39CE /* Messages.swift */,
 				2987F1E31AD79D0500AA39CE /* Chat.swift */,
 				296040421ACE644800D2A338 /* TestData.swift */,
@@ -380,7 +380,7 @@
 		290135091AC3A67200BBFE29 /* Machine */ = {
 			isa = PBXGroup;
 			children = (
-				29B00A681AE0A314002AF208 /* _UnconfirmedNotification.swift */,
+				29DF4CD51AE0EDC4003A4962 /* _Notification.swift */,
 				2987F1E71AD79D1A00AA39CE /* _Chat.swift */,
 				2987F1E81AD79D1A00AA39CE /* _Messages.swift */,
 				1712BE4A1ACE5D0F000A9C47 /* _Comments.swift */,
@@ -551,7 +551,7 @@
 			isa = PBXGroup;
 			children = (
 				29A1AFF91AC414E900775765 /* PostMapping.plist */,
-				29B00A5D1AE09E7E002AF208 /* UnconfirmedNotificationMapping.plist */,
+				29B00A5D1AE09E7E002AF208 /* NotificationMapping.plist */,
 				1712BE3D1ACE4101000A9C47 /* DevicesMapping.plist */,
 				1712BE311ACD0808000A9C47 /* MailSettingMapping.plist */,
 				29A1AFFC1AC527BD00775765 /* GroupMapping.plist */,
@@ -710,7 +710,7 @@
 				291ADF9F1AD26575009D8BE3 /* AddPost.storyboard in Resources */,
 				29A1AFFD1AC527BD00775765 /* GroupMapping.plist in Resources */,
 				2942CCCF1ACCE5EA007CDC97 /* Newsfeed.storyboard in Resources */,
-				29B00A5E1AE09E7E002AF208 /* UnconfirmedNotificationMapping.plist in Resources */,
+				29B00A5E1AE09E7E002AF208 /* NotificationMapping.plist in Resources */,
 				29A5D1DB1ACBE03000D95B77 /* RegPageView.xib in Resources */,
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
 				29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */,
@@ -731,7 +731,7 @@
 				1712BE501ACE60E7000A9C47 /* CommentsMapping.plist in Resources */,
 				29A1AFFE1AC527BD00775765 /* GroupMapping.plist in Resources */,
 				1712BE4E1ACE60DE000A9C47 /* ImagesMapping.plist in Resources */,
-				29B00A6B1AE0A677002AF208 /* UnconfirmedNotificationMapping.plist in Resources */,
+				29B00A6B1AE0A677002AF208 /* NotificationMapping.plist in Resources */,
 				1712BE4D1ACE60D6000A9C47 /* DevicesMapping.plist in Resources */,
 				29A1AFFB1AC414E900775765 /* PostMapping.plist in Resources */,
 				29A1B0071AC533A800775765 /* UserMapping.plist in Resources */,
@@ -847,13 +847,13 @@
 				291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */,
 				290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */,
 				29C1DA7A1AD36659009A02CC /* S3Controller.swift in Sources */,
-				29B00A691AE0A314002AF208 /* _UnconfirmedNotification.swift in Sources */,
 				1712BE381ACE183C000A9C47 /* _Images.swift in Sources */,
 				2987F1E61AD79D0C00AA39CE /* Messages.swift in Sources */,
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				290144121ADE3BBD0048F3D8 /* SCLAlertView.swift in Sources */,
 				1712BE2C1ACCE801000A9C47 /* _Group.swift in Sources */,
+				29DF4CD61AE0EDC4003A4962 /* _Notification.swift in Sources */,
 				29B00A6E1AE0A947002AF208 /* FriendInvitedCell.swift in Sources */,
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
 				29A5D1D91ACBE01700D95B77 /* RegPageView.swift in Sources */,
@@ -866,7 +866,6 @@
 				2993894A1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
 				290134F81AC39F4600BBFE29 /* ApiController.swift in Sources */,
 				29BE7E231AC55A28008110B4 /* MultilineLabel.swift in Sources */,
-				29B00A621AE0A111002AF208 /* UnconfirmedNotification.swift in Sources */,
 				29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */,
 				29A1AFF71AC4113000775765 /* _Post.swift in Sources */,
 				2942CCD51ACD03BF007CDC97 /* NewsfeedCell.swift in Sources */,
@@ -884,6 +883,7 @@
 				29CA44171AD4C9FF009EB177 /* TabBarController.swift in Sources */,
 				2987F1E91AD79D1A00AA39CE /* _Chat.swift in Sources */,
 				29CA44141AD4B9E8009EB177 /* LoadingViewController.swift in Sources */,
+				29DF4CD41AE0EDB7003A4962 /* Notification.swift in Sources */,
 				29A1AFF41AC4112800775765 /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -900,7 +900,6 @@
 				1712BE2F1ACCE810000A9C47 /* Group.swift in Sources */,
 				172EADD11ACC1C910039F42E /* Message.swift in Sources */,
 				290135131AC3A67200BBFE29 /* Model.xcdatamodeld in Sources */,
-				29B00A6A1AE0A65B002AF208 /* UnconfirmedNotification.swift in Sources */,
 				2960404C1ACE68C500D2A338 /* TestDataTests.swift in Sources */,
 				29BE7E1C1AC54663008110B4 /* DBController.swift in Sources */,
 				1712BE3A1ACE195B000A9C47 /* _Images.swift in Sources */,
@@ -913,16 +912,17 @@
 				294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */,
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
 				299389491AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
+				29DF4CD81AE0EFE5003A4962 /* _Notification.swift in Sources */,
 				1712BE391ACE1958000A9C47 /* Images.swift in Sources */,
 				29925BAB1AD6693F00F98BD7 /* Alamofire.swift in Sources */,
 				290144151ADE3E5D0048F3D8 /* SCLAlertView.swift in Sources */,
 				29CA44151AD4C050009EB177 /* AppDelegate.swift in Sources */,
-				29B00A6C1AE0A67D002AF208 /* _UnconfirmedNotification.swift in Sources */,
 				1712BE4C1ACE5D12000A9C47 /* _Comments.swift in Sources */,
 				2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */,
 				1712BE491ACE5D05000A9C47 /* Comments.swift in Sources */,
 				29A1AFF51AC4112800775765 /* Post.swift in Sources */,
 				291ADF961AD247C4009D8BE3 /* Util.swift in Sources */,
+				29DF4CD71AE0EFA2003A4962 /* Notification.swift in Sources */,
 				172EADD01ACC1C850039F42E /* _Message.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

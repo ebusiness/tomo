@@ -8,12 +8,19 @@
 
 import UIKit
 
+@objc protocol FriendInvitedCellDelegate {
+    
+    func friendInvitedCellAllowed(cell: FriendInvitedCell)
+}
+
 class FriendInvitedCell: UITableViewCell {
 
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     
-    var friendInvitedNotification: UnconfirmedNotification! {
+    weak var delegate: FriendInvitedCellDelegate?
+    
+    var friendInvitedNotification: Notification! {
         didSet {
             let user = friendInvitedNotification.from!
             nameLabel.text = user.fullName()
@@ -37,7 +44,10 @@ class FriendInvitedCell: UITableViewCell {
     }
 
     @IBAction func allow(sender: AnyObject) {
+        delegate?.friendInvitedCellAllowed(self)
     }
+    
     @IBAction func disallow(sender: AnyObject) {
+        Util.showTodo()
     }
 }

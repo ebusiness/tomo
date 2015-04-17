@@ -289,6 +289,17 @@ extension ApiController {
         
         
     }
+    
+    class func invite(id: String, done: (NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        param["id"] = id
+        
+        RKObjectManager.sharedManager().patchObject(nil,path:"/connections/invite", parameters: param, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
 }
 
 
@@ -359,6 +370,20 @@ extension ApiController {
                 done(error)
         }
     }
+    
+    class func approveFriendInvite(id: String, done: (NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        param["result"] = "approved"
+        
+        RKObjectManager.sharedManager().patchObject(nil,path:"/notifications/\(id)", parameters: param, success: { (_, _) -> Void in
+//            done(nil)
+            self.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
+                done(error)
+            })
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
 }
 
 // MARK: - Descriptor
@@ -408,8 +433,10 @@ extension ApiController {
         addCommonResponseDescriptor(getCommoentMapping(true), method: .DELETE, pathPattern: "/posts/:id/comments/:cid", keyPath: nil, statusCodes: nil)
         //記事ー＞削除
         addCommonResponseDescriptor(getPostMapping(true), method: .DELETE, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
-        //UnconfirmedNotification
-        addCommonResponseDescriptor(getUnconfirmedNotificationMapping(false), method: .GET, pathPattern: "/notifications/unconfirmed", keyPath: nil, statusCodes: nil)
+        //Notification
+        addCommonResponseDescriptor(getNotificationMapping(false), method: .GET, pathPattern: "/notifications/unconfirmed", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getNotificationMapping(true), method: .PATCH, pathPattern: "/notifications/:id", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(usermapping, method: .PATCH, pathPattern: "/connections/invite", keyPath: nil, statusCodes: nil)
     }
 }
 // MARK: - mapping
@@ -485,9 +512,18 @@ extension ApiController {
     }
     
     //UnconfirmedNotification
-    private class func getUnconfirmedNotificationMapping(isidonly:Bool)->RKEntityMapping{
-        var mapping = _unconfirmedNotificationMapping
-        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_from", toKeyPath: "from", withMapping: _userMapping))
+    private class func getNotificationMapping(isidonly:Bool)->RKEntityMapping{
+        var mapping = _notificationMapping
+        
+        if(isidonly){
+            mapping.addPropertyMappingById("User",fromKey: "_from",toKeyPath: "from")
+        } else {
+            mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_from", toKeyPath: "from", withMapping: _userMapping))
+        }
+
+        mapping.addPropertyMappingById("User",fromKey: "_owner",toKeyPath: "owner")
+        mapping.addPropertyMappingById("User",fromKey: "confirmed",toKeyPath: "confirmed")
+
         return mapping
     }
 }
@@ -517,8 +553,8 @@ extension ApiController {
         var mapping = ApiController.getMapping("Comments", identification: nil,pListName: nil)
         return mapping
     }
-    private class var _unconfirmedNotificationMapping: RKEntityMapping {
-        var mapping = ApiController.getMapping("UnconfirmedNotification", identification: nil,pListName: nil)
+    private class var _notificationMapping: RKEntityMapping {
+        var mapping = ApiController.getMapping("Notification", identification: nil,pListName: nil)
         return mapping
     }
 }
