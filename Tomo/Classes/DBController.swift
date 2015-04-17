@@ -41,6 +41,11 @@ class DBController: NSObject {
         save()
     }
     
+    class func users() -> [User] {
+        let me = myUser()
+        return User.MR_findAllWithPredicate(NSPredicate(format: "self != %@ AND (NOT (self IN %@))", me, me.friends)) as! [User]
+    }
+    
     // MARK: - Friend
     
     class func friends() -> [User] {

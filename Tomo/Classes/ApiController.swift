@@ -253,6 +253,22 @@ extension ApiController {
                 done(error)
         }
     }
+    
+    //陌生人一览
+    class func getUsers(done: (NSError?) -> Void) {
+        //取得情报
+        RKObjectManager.sharedManager().getObjectsAtPath("/connections/discover", parameters: nil, success: { (_, _) -> Void in
+                        done(nil)
+            
+//            //建立关联
+//            self.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
+//                done(error)
+//            })
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    
     // token uuid の登録・編集
     class func setDeviceInfo(token:String,done: (NSError?) -> Void) {
         
@@ -363,6 +379,8 @@ extension ApiController {
 //        addCommonResponseDescriptor(getMessageMapping(), method: .POST, pathPattern: "/messages", keyPath: nil, statusCodes: nil)
         //友達一覧
         addCommonResponseDescriptor(usermapping, method: .GET, pathPattern: "/connections/friends", keyPath: nil, statusCodes: nil)
+        //陌生人一览
+        addCommonResponseDescriptor(usermapping, method: .GET, pathPattern: "/connections/discover", keyPath: nil, statusCodes: nil)
         //記事のコメント
         addCommonResponseDescriptor(getCommoentMapping(false), method: .POST, pathPattern: "/posts/:id/comments", keyPath: nil, statusCodes: nil)
         //記事ー＞いいね 登録・解除

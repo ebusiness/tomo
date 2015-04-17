@@ -15,8 +15,9 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        webView.hidden = true
         let req = NSURLRequest(URL: NSURL(string: mapPath)!)
-        webView.loadRequest(req)
+//        webView.loadRequest(req)
     }
 
     override func didReceiveMemoryWarning() {

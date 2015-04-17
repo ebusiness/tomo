@@ -50,7 +50,6 @@
 		178D649E1ACC0DDF00185368 /* MessageMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 178D649D1ACC0DDF00185368 /* MessageMapping.plist */; };
 		178D64A01ACC10B600185368 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D649F1ACC10B600185368 /* Message.swift */; };
 		178D64A21ACC10BE00185368 /* _Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D64A11ACC10BE00185368 /* _Message.swift */; };
-		222D6DC71A44F8CC6929BFD6 /* (null) in Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (Weak, ); }; };
 		290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
 		290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290134DE1AC3991C00BBFE29 /* Images.xcassets */; };
 		290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134ED1AC3991D00BBFE29 /* TomoTests.swift */; };
@@ -273,7 +272,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				222D6DC71A44F8CC6929BFD6 /* (null) in Frameworks */,
 				92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

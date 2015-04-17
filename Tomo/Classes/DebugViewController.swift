@@ -13,8 +13,8 @@ class DebugViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var versionLabel: UILabel!
     
-    var titles = ["聊天", "用户帖子一览"]
-    var names = ["Friend", "Friend"]
+    var titles = ["好友一览", "陌生人一览", "聊天", "好友帖子一览" ]
+    var names = ["Friend", "Friend", "Friend", "Friend"]
     
     override func viewDidLoad() {
         super.viewDidLoad()

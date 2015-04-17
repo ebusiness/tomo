@@ -9,13 +9,13 @@
 import UIKit
 
 enum NextView: Int {
-    case Chat,Posts
+    case UserDetailFriend, UserDetail, Chat, Posts
 }
 
 class FriendListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    var friends: [User]!
+    var users = [User]()
 
     
     var nextView: NextView!
@@ -26,11 +26,19 @@ class FriendListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        friends = DBController.friends()
+        if nextView == .UserDetail {
+            ApiController.getUsers({ (error) -> Void in
+                self.users = DBController.users()
+                self.tableView.reloadData()
+            })
+            return
+        }
+        
+        users = DBController.friends()
         
         ApiController.getFriends { (error) -> Void in
             if error == nil {
-                self.friends = DBController.friends()
+                self.users = DBController.friends()
                 self.tableView.reloadData()
             }
         }
@@ -62,7 +70,7 @@ class FriendListViewController: UIViewController {
 extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let friend = friends[indexPath.row] as User
+        let friend = users[indexPath.row] as User
         
         let cell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! FriendCell
         
@@ -73,7 +81,7 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let friend = friends[indexPath.row] as User
+        let friend = users[indexPath.row] as User
         
         if nextView == .Chat {
 //            let groupId = ChatController.startPrivateChat(user1: ChatController.myUser(), user2: friend)
@@ -93,6 +101,6 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return friends.count
+        return users.count
     }
 }
