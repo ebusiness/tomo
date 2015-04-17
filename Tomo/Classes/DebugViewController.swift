@@ -8,17 +8,24 @@
 
 import UIKit
 
-class DebugViewController: UIViewController {
+class DebugViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var versionLabel: UILabel!
     
-    var titles = ["好友一览", "陌生人一览", "聊天", "好友帖子一览" ]
-    var names = ["Friend", "Friend", "Friend", "Friend"]
+    var friendTitles = ["好友一览", "陌生人一览", "聊天", "好友帖子一览", "添加好友", "邀请中用户一览" ]
+    var notificationTitles = ["好友请求一览"]
+    
+    var names = ["Friend","Notification"]
+    
+    var sectionTitles = Dictionary<Int, [String]>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        sectionTitles[0] = friendTitles
+        sectionTitles[1] = notificationTitles
+        
         versionLabel.text = UIApplication.versionBuild()
 
 //        SIOSocket.socketWithHost("http://tomo.e-business.co.jp", reconnectAutomatically: false, attemptLimit: -1, withDelay: 20, maximumDelay: 100, timeout: 30) { (soc) -> Void in
@@ -40,7 +47,7 @@ class DebugViewController: UIViewController {
         
         Util.showWhatsnew()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -76,25 +83,38 @@ extension DebugViewController: UICollectionViewDataSource, UICollectionViewDeleg
         return CGSize(width: 80, height: 80)
     }
     
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return names.count
+    }
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DebugCell", forIndexPath: indexPath) as! UICollectionViewCell
         let label = cell.viewWithTag(1) as! UILabel
-        label.text = titles[indexPath.item]
+        
+        label.text = sectionTitles[indexPath.section]![indexPath.item]
         
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let name = names[indexPath.section]
+        
+        let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: name) as! UINavigationController
+        
         if indexPath.section == 0 {
-            let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: names[indexPath.row]) as! UINavigationController
-            
             (vc.topViewController as! FriendListViewController).nextView = NextView(rawValue: indexPath.item)
-            
-            self.presentViewController(vc, animated: true, completion: nil)
         }
+        
+        if indexPath.section == 1 {
+            if indexPath.item == 0 {
+                (vc.topViewController as! NotificationListViewController).notificationType = .FriendInvited
+            }
+        }
+        
+        self.presentViewController(vc, animated: true, completion: nil)
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return titles.count
+        return sectionTitles[section]!.count
     }
 }

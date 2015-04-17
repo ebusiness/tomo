@@ -9,7 +9,7 @@
 import UIKit
 
 enum NextView: Int {
-    case UserDetailFriend, UserDetail, Chat, Posts
+    case UserDetailFriend, UserDetail, Chat, Posts, AddFriend, UserDetailInvited
 }
 
 class FriendListViewController: UIViewController {
@@ -26,11 +26,18 @@ class FriendListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if nextView == .UserDetail {
+        if nextView == .UserDetail || nextView == .AddFriend {
             ApiController.getUsers({ (error) -> Void in
                 self.users = DBController.users()
                 self.tableView.reloadData()
             })
+            return
+        }
+        
+        if nextView == .UserDetailInvited {
+            self.users = DBController.myUser().invited.array as! [User]
+            self.tableView.reloadData()
+            
             return
         }
         
@@ -98,6 +105,11 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
             vc.user = friend
             navigationController?.pushViewController(vc, animated: true)
         }
+        
+        if nextView == .AddFriend {
+            
+        }
+
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

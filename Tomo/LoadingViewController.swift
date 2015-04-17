@@ -26,11 +26,17 @@ class LoadingViewController: BaseViewController {
                 return
             }
             
-            SVProgressHUD.dismiss()
-            
-            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-            
-            Util.changeRootViewController(from: self, to: tab)
+            //get user detail
+            ApiController.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
+                if error == nil{
+                    SVProgressHUD.dismiss()
+                    
+                    let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+                    
+                    Util.changeRootViewController(from: self, to: tab)
+                }
+            })
+
         }
     }
 

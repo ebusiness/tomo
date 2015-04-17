@@ -16,12 +16,22 @@ class FriendCell: UITableViewCell {
     
     var friend: User! {
         didSet {
-            if let photo_ref = friend.photo_ref {
-                friendImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
+            if friend.hasIdOnly {
+                ApiController.getUserInfo(friend.id!, done: { (error) -> Void in
+                    self.updateUI()
+                })
+            } else {
+                updateUI()
             }
-            
-            nameLabel.text = friend.fullName()
         }
+    }
+    
+    func updateUI() {
+        if let photo_ref = friend.photo_ref {
+            friendImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
+        }
+        
+        nameLabel.text = friend.fullName()
     }
     
     override func awakeFromNib() {

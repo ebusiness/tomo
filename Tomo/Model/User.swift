@@ -8,4 +8,8 @@ class User: _User {
         let lName = lastName ?? ""
         return "\(fName) \(lName)"
     }
+    
+    var hasIdOnly: Bool {
+        return createDate == nil
+    }
 }

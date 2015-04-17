@@ -72,7 +72,7 @@ class RegLoginViewController: BaseViewController {
             
             if let preAccount = Defaults["email"].string where self.emailTF.text != preAccount {
                 DBController.clearDB()
-                DBController.createUser(email: self.emailTF.text, id: Defaults["myId"].string!)
+//                DBController.createUser(email: self.emailTF.text, id: Defaults["myId"].string!)
             }
             
             Defaults["email"] = self.emailTF.text
@@ -80,12 +80,16 @@ class RegLoginViewController: BaseViewController {
             
             SSKeychain.setPassword(self.passwordTF.text, forService: kTomoService, account: self.emailTF.text)
             
-            println("OK")
-            SVProgressHUD.dismiss()
-            
-            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-            
-            Util.changeRootViewController(from: self, to: tab)
+            //get user detail
+            ApiController.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
+                if error == nil{
+                    SVProgressHUD.dismiss()
+                    
+                    let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+                    
+                    Util.changeRootViewController(from: self, to: tab)
+                }
+            })
         }
     }
     

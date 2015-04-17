@@ -8,6 +8,10 @@
 
 import UIKit
 
+enum NotificationType: String {
+    case FriendInvited = "friend-invited"
+}
+
 class DBController: NSObject {
    
 //    class var context: NSManagedObjectContext {
@@ -22,10 +26,10 @@ class DBController: NSObject {
     
     class func newsfeeds(user: User? = nil) -> NSFetchedResultsController {
         if let user = user {
-            return Post.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "owner=%@", user), sortedBy: "createDate", ascending: false)
+            return Post.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "owner=%@ AND createDate != nil", user), sortedBy: "createDate", ascending: false)
         }
         
-        return Post.MR_fetchAllGroupedBy(nil, withPredicate: nil, sortedBy: "createDate", ascending: false)
+        return Post.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "createDate != nil"), sortedBy: "createDate", ascending: false)
     }
     
     // MARK: - User
@@ -43,7 +47,7 @@ class DBController: NSObject {
     
     class func users() -> [User] {
         let me = myUser()
-        return User.MR_findAllWithPredicate(NSPredicate(format: "self != %@ AND (NOT (self IN %@))", me, me.friends)) as! [User]
+        return User.MR_findAllWithPredicate(NSPredicate(format: "self != %@ AND (NOT (self IN %@ OR self IN %@))", me, me.friends, me.invited.array)) as! [User]
     }
     
     // MARK: - Friend
@@ -51,6 +55,20 @@ class DBController: NSObject {
     class func friends() -> [User] {
         let me = myUser()
         return me.friends.array as! [User]
+    }
+    
+
+    
+    // MARK: - Notification
+    
+    class func unconfirmedNotification(#type: NotificationType) -> [UnconfirmedNotification] {
+        return UnconfirmedNotification.MR_findByAttribute("type", withValue: type.rawValue, andOrderBy: "createDate", ascending: false) as! [UnconfirmedNotification]
+    }
+    
+    class func save(done: (() -> Void)? = nil) {
+        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreWithCompletion { (b, error) -> Void in
+            done?()
+        }
     }
     
     class func clearDB() {
@@ -61,14 +79,8 @@ class DBController: NSObject {
         Message.MR_truncateAll()
         Post.MR_truncateAll()
         User.MR_truncateAll()
+        UnconfirmedNotification.MR_truncateAll()
         
         save()
-    }
-    
-    
-    class func save(done: (() -> Void)? = nil) {
-        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreWithCompletion { (b, error) -> Void in
-            done?()
-        }
     }
 }

@@ -348,6 +348,19 @@ extension ApiController {
     
 }
 
+// MARK: - Notification
+
+extension ApiController {
+    
+    class func unconfirmedNotification(done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/notifications/unconfirmed", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+}
+
 // MARK: - Descriptor
 extension ApiController {
     private class func addCommonResponseDescriptor(mapping:RKEntityMapping,method:RKRequestMethod,pathPattern:String?,keyPath:String?,statusCodes:NSIndexSet?) {
@@ -395,6 +408,8 @@ extension ApiController {
         addCommonResponseDescriptor(getCommoentMapping(true), method: .DELETE, pathPattern: "/posts/:id/comments/:cid", keyPath: nil, statusCodes: nil)
         //記事ー＞削除
         addCommonResponseDescriptor(getPostMapping(true), method: .DELETE, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
+        //UnconfirmedNotification
+        addCommonResponseDescriptor(getUnconfirmedNotificationMapping(false), method: .GET, pathPattern: "/notifications/unconfirmed", keyPath: nil, statusCodes: nil)
     }
 }
 // MARK: - mapping
@@ -422,6 +437,7 @@ extension ApiController {
     private class func getUserMapping()->RKEntityMapping{
         var mapping = _userMapping
         mapping.addPropertyMappingById("User",fromKey: "friends",toKeyPath: "friends")
+        mapping.addPropertyMappingById("User",fromKey: "invited",toKeyPath: "invited")
         mapping.addPropertyMappingById("Group",fromKey: "groups",toKeyPath: "groups")
         mapping.addPropertyMappingById("Post",fromKey: "posts",toKeyPath: "posts")
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "devices", toKeyPath: "devices", withMapping: _devicesMapping))
@@ -467,6 +483,13 @@ extension ApiController {
         mapping.addPropertyMappingById("User",fromKey: "liked",toKeyPath: "liked")
         return mapping
     }
+    
+    //UnconfirmedNotification
+    private class func getUnconfirmedNotificationMapping(isidonly:Bool)->RKEntityMapping{
+        var mapping = _unconfirmedNotificationMapping
+        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_from", toKeyPath: "from", withMapping: _userMapping))
+        return mapping
+    }
 }
 
 
@@ -492,6 +515,10 @@ extension ApiController {
     }
     private class var _commentsMapping: RKEntityMapping {
         var mapping = ApiController.getMapping("Comments", identification: nil,pListName: nil)
+        return mapping
+    }
+    private class var _unconfirmedNotificationMapping: RKEntityMapping {
+        var mapping = ApiController.getMapping("UnconfirmedNotification", identification: nil,pListName: nil)
         return mapping
     }
 }
