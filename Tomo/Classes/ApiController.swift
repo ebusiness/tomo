@@ -227,6 +227,14 @@ extension ApiController {
         }
     }
     
+    class func getPost(id: String, done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/posts/\(id)", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    
 }
 
 // MARK: - ユーザ情報
@@ -433,6 +441,9 @@ extension ApiController {
         addCommonResponseDescriptor(getCommoentMapping(true), method: .DELETE, pathPattern: "/posts/:id/comments/:cid", keyPath: nil, statusCodes: nil)
         //記事ー＞削除
         addCommonResponseDescriptor(getPostMapping(true), method: .DELETE, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
+        //記事ー＞詳細
+        addCommonResponseDescriptor(getPostMapping(false), method: .GET, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
+        
         //Notification
         addCommonResponseDescriptor(getNotificationMapping(false), method: .GET, pathPattern: "/notifications/unconfirmed", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getNotificationMapping(true), method: .PATCH, pathPattern: "/notifications/:id", keyPath: nil, statusCodes: nil)

@@ -43,7 +43,7 @@ class PostDetailViewController: BaseViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        ApiController.getUserPosts(postId, done: { (error) -> Void in
+        ApiController.getPost(postId, done: { (error) -> Void in
             if error == nil {
                 self.headerView.post = self.post
                 self.tableView.reloadData()
