@@ -321,6 +321,19 @@ extension ApiController {
                 done(error)
         }
     }
+    
+    class func editUserInfo(key: String, value: String, done: (NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        param["key"] = value
+        
+        let id = Defaults["myId"].string!
+        
+        RKObjectManager.sharedManager().patchObject(nil,path:"/users/\(id)", parameters: param, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
 }
 
 

@@ -4,18 +4,27 @@
 import CoreData
 
 enum UserAttributes: String {
-    case bio = "bio"
+    case address = "address"
+    case bioText = "bioText"
+    case birthDay = "birthDay"
     case cover = "cover"
     case cover_ref = "cover_ref"
     case createDate = "createDate"
     case email = "email"
     case firstName = "firstName"
+    case gender = "gender"
     case id = "id"
     case lastName = "lastName"
+    case marriage = "marriage"
+    case nationality = "nationality"
+    case nearestSt = "nearestSt"
     case photo = "photo"
     case photo_ref = "photo_ref"
     case provider = "provider"
+    case telNo = "telNo"
     case type = "type"
+    case webSite = "webSite"
+    case zipCode = "zipCode"
 }
 
 enum UserRelationships: String {
@@ -59,9 +68,19 @@ class _User: NSManagedObject {
     // MARK: - Properties
 
     @NSManaged
-    var bio: String?
+    var address: String?
 
-    // func validateBio(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+    // func validateAddress(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var bioText: String?
+
+    // func validateBioText(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var birthDay: NSDate?
+
+    // func validateBirthDay(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var cover: String?
@@ -89,6 +108,11 @@ class _User: NSManagedObject {
     // func validateFirstName(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
+    var gender: String?
+
+    // func validateGender(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
     var id: String?
 
     // func validateId(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
@@ -97,6 +121,21 @@ class _User: NSManagedObject {
     var lastName: String?
 
     // func validateLastName(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var marriage: String?
+
+    // func validateMarriage(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var nationality: String?
+
+    // func validateNationality(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var nearestSt: String?
+
+    // func validateNearestSt(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var photo: String?
@@ -114,9 +153,24 @@ class _User: NSManagedObject {
     // func validateProvider(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
+    var telNo: String?
+
+    // func validateTelNo(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
     var type: String?
 
     // func validateType(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var webSite: String?
+
+    // func validateWebSite(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var zipCode: String?
+
+    // func validateZipCode(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     // MARK: - Relationships
 

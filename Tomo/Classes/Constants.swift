@@ -11,7 +11,7 @@ import UIKit
 let kTomoService = "jp.co.e-business.tomo"
 
 //let kAPIBaseURLString = "http://new.selink.jp"
-let kAPIBaseURLString = "http://tomo.e-business.co.jp"
+let kAPIBaseURLString = "http://tomo.e-business.co.jp:81"
 
 let kAPIBaseURL = NSURL(string: kAPIBaseURLString)
 

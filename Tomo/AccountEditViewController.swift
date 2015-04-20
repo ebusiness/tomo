@@ -8,22 +8,42 @@
 
 import UIKit
 
+enum EditKey: String {
+    case Name = "名前"
+}
+
 class AccountEditViewController: UITableViewController {
 
     @IBOutlet weak var userImage: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var nameTF: UITextField!
+    
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var sexLabel: UILabel!
     @IBOutlet weak var stationLabel: UILabel!
+    @IBOutlet weak var siteTF: UITextField!
+    @IBOutlet weak var telTF: UITextField!
+    @IBOutlet weak var profileLabelLeft: UILabel!
     
     var user: User!
     var path: String?
+    
+    var editKeyAtIndexPath = Dictionary<NSIndexPath, EditKey>()
+    
+    @IBOutlet weak var birthdayLabel: UILabel!
 //    var nameEditVC: AccountNameEditTableViewController?
 //    var genderSelectVC: GenderSelectViewController?
     
+    @IBOutlet weak var addressTF: UITextField!
+    @IBOutlet weak var profileLabel: UILabel!
+    
+    @IBOutlet weak var bioCell: UITableViewCell!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        user = DBController.myUser()
+        profileLabel.text = user.bioText
+        
+        editKeyAtIndexPath[NSIndexPath(forRow: 1, inSection: 0)] = .Name
         
         userImage.layer.cornerRadius = userImage.bounds.width / 2
         
@@ -43,17 +63,6 @@ class AccountEditViewController: UITableViewController {
                 self.updateUI()
             }
         })
-        
-        
-//        if let gender = user.gender {
-//            sexLabel.text = user.genderStr()
-//        }
-        
-//        if let station = user.stations.firstObject as? Station {
-//            stationLabel.text = station.name
-//        } else {
-//            stationLabel.text = ""
-//        }
     }
     
     func updateUI() {
@@ -65,7 +74,22 @@ class AccountEditViewController: UITableViewController {
             userImage.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
         }
         
-        nameLabel.text = user.fullName()
+        //名前
+        nameTF.text = user.fullName()
+        //誕生日
+        birthdayLabel.text = user.birthDay?.toString()
+        //性別
+        sexLabel.text = user.gender
+        //住所
+        addressTF.text = user.address
+        //駅
+        stationLabel.text = user.nearestSt
+        //個人サイト
+        siteTF.text = user.webSite
+        //Tel
+        telTF.text = user.telNo
+        //自己紹介
+        profileLabel.text = user.bioText
     }
     
     override func didReceiveMemoryWarning() {
@@ -117,6 +141,10 @@ class AccountEditViewController: UITableViewController {
             self.presentViewController(alertController, animated: true, completion: nil)
         }
         
+        if indexPath.section == 0 && indexPath.row == 1 {
+            nameTF.becomeFirstResponder()
+        }
+        
         if indexPath.section == 2 {
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             let logoutAction = UIAlertAction(title: "ログアウト", style: .Destructive, handler: { (action) -> Void in
@@ -138,6 +166,46 @@ class AccountEditViewController: UITableViewController {
             self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 1 && indexPath.row == 6 {
+            return heightForCell(tableView.bounds.width)
+        }
+        
+        return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+    }
+    
+    func heightForCell(width: CGFloat) -> CGFloat {
+        let labelWidth = width - 20 - 15 - CGRectGetMaxX(profileLabelLeft.frame)
+        
+        profileLabel.text = user.bioText
+        
+        let maxSize = CGSize(width: labelWidth, height: .max)
+        return 8 + 8 + profileLabel.sizeThatFits(maxSize).height + 1
+    }
+}
+
+extension AccountEditViewController: UITextFieldDelegate {
+    
+    // When clicking on the field, use this method.
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        
+        
+        // Create a button bar for the number pad
+        let keyboardDoneButtonView = UIToolbar()
+        keyboardDoneButtonView.sizeToFit()
+        
+        // Setup the buttons to be put in the system.
+        let item = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Bordered, target: self, action: Selector("endEditingNow") )
+        var toolbarButtons = [item]
+        
+        //Put the buttons into the ToolBar and display the tool bar
+        keyboardDoneButtonView.setItems(toolbarButtons, animated: false)
+        textField.inputAccessoryView = keyboardDoneButtonView
+        
+        return true
+    }
+    
 }
 
 extension AccountEditViewController: UINavigationControllerDelegate {

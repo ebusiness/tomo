@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bioText</key>
-	<string>bio</string>
+	<string>bioText</string>
 	<key>cover</key>
 	<string>cover</string>
 	<key>cover_ref</key>
@@ -26,5 +26,23 @@
 	<string>type</string>
 	<key>_id</key>
 	<string>id</string>
+	<key>telNo</key>
+	<string>telNo</string>
+	<key>address</key>
+	<string>address</string>
+	<key>zipCode</key>
+	<string>zipCode</string>
+	<key>nearestSt</key>
+	<string>nearestSt</string>
+	<key>nationality</key>
+	<string>nationality</string>
+	<key>birthDay</key>
+	<string>birthDay</string>
+	<key>gender</key>
+	<string>gender</string>
+	<key>marriage</key>
+	<string>marriage</string>
+	<key>webSite</key>
+	<string>webSite</string>
 </dict>
 </plist>
