@@ -21,7 +21,7 @@ class BaseViewController: UIViewController {
         println("メモリー不足")
         
         #if DEBUG
-            SVProgressHUD.showInfoWithStatus("メモリー不足", maskType: .Clear)
+            Util.showInfo("メモリー不足")
         #endif
     }
     

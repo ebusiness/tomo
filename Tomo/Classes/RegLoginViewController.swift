@@ -56,11 +56,10 @@ class RegLoginViewController: BaseViewController {
     
     @IBAction func login(sender: AnyObject) {
         if validate() == false {
-            SVProgressHUD.showErrorWithStatus("入力エラー", maskType: .Clear)
             return
         }
         
-        SVProgressHUD.showWithMaskType(.Clear)
+        Util.showHUD()
         
         ApiController.login(email: emailTF.text, password: passwordTF.text) { (error) -> Void in
             assert(NSThread.currentThread().isMainThread, "not main thread")
@@ -83,7 +82,7 @@ class RegLoginViewController: BaseViewController {
             //get user detail
             ApiController.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
                 if error == nil{
-                    SVProgressHUD.dismiss()
+                    Util.dismissHUD()
                     
                     let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
                     

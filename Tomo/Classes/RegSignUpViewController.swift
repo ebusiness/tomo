@@ -52,7 +52,6 @@ class RegSignUpViewController: BaseViewController {
     
     @IBAction func signUp(sender: AnyObject) {
         if validate() == false {
-            SVProgressHUD.showErrorWithStatus("入力エラー", maskType: .Clear)
             return
         }
         
@@ -60,14 +59,15 @@ class RegSignUpViewController: BaseViewController {
             tf.resignFirstResponder()
         }
         
-        SVProgressHUD.showWithStatus("登録", maskType: .Clear)
+        Util.showMessage("登録")
         
         ApiController.signUp(email: emailTF.text, password: passwordTF.text, firstName: firstNameTF.text, lastName: lastNameTF.text) { (error) -> Void in
             if let error = error {
                 Util.showError(error)
             }
             
-             SVProgressHUD.showWithStatus("ログイン", maskType: .Clear)
+             Util.showMessage("ログイン")
+            
             ApiController.login(email: self.emailTF.text, password: self.passwordTF.text, done: { (error) -> Void in
                 if let error = error {
                     Util.showError(error)
@@ -87,7 +87,7 @@ class RegSignUpViewController: BaseViewController {
                 //get user detail
                 ApiController.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
                     if error == nil{
-                        SVProgressHUD.dismiss()
+                        Util.dismissHUD()
                         
                         let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
                         

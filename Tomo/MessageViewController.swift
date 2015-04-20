@@ -323,11 +323,9 @@ extension MessageViewController: JSQMessagesCollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, didTapAvatarImageView avatarImageView: UIImageView!, atIndexPath indexPath: NSIndexPath!) {
-        SVProgressHUD.showInfoWithStatus("TODO", maskType: .Clear)
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, header headerView: JSQMessagesLoadEarlierHeaderView!, didTapLoadEarlierMessagesButton sender: UIButton!) {
-        SVProgressHUD.showInfoWithStatus("TODO", maskType: .Clear)
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, didTapCellAtIndexPath indexPath: NSIndexPath!, touchLocation: CGPoint) {

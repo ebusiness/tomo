@@ -81,13 +81,32 @@ class Util: NSObject {
     // MARK: - SVProgress
     
     class func showTodo() {
-        SVProgressHUD.showInfoWithStatus("TODO", maskType: .Clear)
+//        SVProgressHUD.showInfoWithStatus("TODO", maskType: .Clear)
     }
     
     class func showError(error: NSError) {
         SVProgressHUD.showErrorWithStatus(error.localizedDescription, maskType: .Clear)
     }
     
+    class func showInfo(title: String, maskType: SVProgressHUDMaskType = .Clear) {
+        SVProgressHUD.showInfoWithStatus(title, maskType: maskType)
+    }
+    
+    class func showSuccess(title: String, maskType: SVProgressHUDMaskType = .None) {
+        SVProgressHUD.showSuccessWithStatus(title)
+    }
+    
+    class func showMessage(title: String, maskType: SVProgressHUDMaskType = .Clear) {
+        SVProgressHUD.showWithStatus(title, maskType: maskType)
+    }
+    
+    class func showHUD(maskType: SVProgressHUDMaskType = .Clear) {
+        SVProgressHUD.showWithMaskType(maskType)
+    }
+    
+    class func dismissHUD() {
+        SVProgressHUD.dismiss()
+    }
     
     class func displayDate(date: NSDate?) -> String {
         let now = NSDate()

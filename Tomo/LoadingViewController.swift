@@ -13,7 +13,7 @@ class LoadingViewController: BaseViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        SVProgressHUD.showWithStatus("ログイン", maskType: .Clear)
+        Util.showMessage("ログイン")
         
         let email = Defaults["email"].string!
         let password = SSKeychain.passwordForService(kTomoService, account: email)
@@ -29,7 +29,7 @@ class LoadingViewController: BaseViewController {
             //get user detail
             ApiController.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
                 if error == nil{
-                    SVProgressHUD.dismiss()
+                    Util.dismissHUD()
                     
                     let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
                     

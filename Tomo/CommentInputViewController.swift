@@ -37,10 +37,11 @@ class CommentInputViewController: BaseViewController {
     // MARK: - Action
     
     @IBAction func send(sender: AnyObject) {
-        SVProgressHUD.show()
+        Util.showHUD()
+        
         ApiController.addComment(postId, content: textView.text) { (error) -> Void in
             println("done")
-            SVProgressHUD.dismiss()
+            Util.dismissHUD()
             
             if let error = error {
                 Util.showError(error)

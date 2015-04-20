@@ -109,7 +109,7 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
         if nextView == .AddFriend {
             ApiController.invite(friend.id!, done: { (error) -> Void in
                 if error == nil {
-                    SVProgressHUD.showSuccessWithStatus("友達追加リクエストを送信しました。")
+                    Util.showSuccess("友達追加リクエストを送信しました。")
                     
                     self.users = DBController.users()
                     self.tableView.reloadData()
