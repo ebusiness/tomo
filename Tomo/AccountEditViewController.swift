@@ -17,6 +17,7 @@ class AccountEditViewController: UITableViewController {
     @IBOutlet weak var stationLabel: UILabel!
     
     var user: User!
+    var path: String?
 //    var nameEditVC: AccountNameEditTableViewController?
 //    var genderSelectVC: GenderSelectViewController?
     
@@ -58,7 +59,9 @@ class AccountEditViewController: UITableViewController {
     func updateUI() {
         user = DBController.myUser()
         
-        if let photo_ref = user.photo_ref {
+        if let path = path {
+            userImage.image = UIImage(contentsOfFile: path)
+        } else if let photo_ref = user.photo_ref {
             userImage.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
         }
         
@@ -87,32 +90,32 @@ class AccountEditViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-//        if indexPath.section == 0 && indexPath.row == 0 {
-//            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-//            let cameraAction = UIAlertAction(title: "写真を撮る", style: .Default, handler: { (action) -> Void in
-//                let picker = UIImagePickerController()
-//                picker.sourceType = .Camera
-//                picker.allowsEditing = true
-//                picker.delegate = self
-//                self.presentViewController(picker, animated: true, completion: nil)
-//            })
-//            let albumAction = UIAlertAction(title: "写真から選択", style: .Default, handler: { (action) -> Void in
-//                let picker = UIImagePickerController()
-//                picker.sourceType = .PhotoLibrary
-//                picker.allowsEditing = true
-//                picker.delegate = self
-//                self.presentViewController(picker, animated: true, completion: nil)
-//            })
-//            let cancelAction = UIAlertAction(title: "キャンセル", style: .Cancel, handler: { (action) -> Void in
-//                
-//            })
-//            
-//            alertController.addAction(cameraAction)
-//            alertController.addAction(albumAction)
-//            alertController.addAction(cancelAction)
-//            
-//            self.presentViewController(alertController, animated: true, completion: nil)
-//        }
+        if indexPath.section == 0 && indexPath.row == 0 {
+            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+            let cameraAction = UIAlertAction(title: "写真を撮る", style: .Default, handler: { (action) -> Void in
+                let picker = UIImagePickerController()
+                picker.sourceType = .Camera
+                picker.allowsEditing = true
+                picker.delegate = self
+                self.presentViewController(picker, animated: true, completion: nil)
+            })
+            let albumAction = UIAlertAction(title: "写真から選択", style: .Default, handler: { (action) -> Void in
+                let picker = UIImagePickerController()
+                picker.sourceType = .PhotoLibrary
+                picker.allowsEditing = true
+                picker.delegate = self
+                self.presentViewController(picker, animated: true, completion: nil)
+            })
+            let cancelAction = UIAlertAction(title: "キャンセル", style: .Cancel, handler: { (action) -> Void in
+                
+            })
+            
+            alertController.addAction(cameraAction)
+            alertController.addAction(albumAction)
+            alertController.addAction(cancelAction)
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
         
         if indexPath.section == 2 {
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
@@ -142,7 +145,33 @@ extension AccountEditViewController: UINavigationControllerDelegate {
     
 }
 
-extension AccountEditViewController: UIImagePickerControllerDelegate {
-    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+// MARK: - UIImagePickerControllerDelegate
+
+extension AccountEditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        let image = image.scaleToFitSize(CGSize(width: AvatarMaxWidth, height: AvatarMaxWidth))
+        
+        let name = NSUUID().UUIDString
+        path = NSTemporaryDirectory() + name
+        
+        let newImage = image.normalizedImage()
+        
+        newImage.saveToPath(path)
+        
+        picker.dismissViewControllerAnimated(false, completion: { () -> Void in
+            let remotePath = Constants.avatarPath(fileName: name)
+            
+            S3Controller.uploadFile(name: name, localPath: self.path!, remotePath: remotePath, done: { (error) -> Void in
+                println(error)
+                println("done")
+                
+                if error == nil {
+                    ApiController.editAvatarName(name, done: { (error) -> Void in
+                        
+                    })
+                }
+            })
+        })
     }
 }

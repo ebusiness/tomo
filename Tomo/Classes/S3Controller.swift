@@ -10,13 +10,13 @@ import UIKit
 
 class S3Controller: NSObject {
 
-    class func uploadFile(#name: String, path: String, done: (NSError?) -> Void) {
+    class func uploadFile(#name: String, localPath: String, remotePath: String, done: (NSError?) -> Void) {
         let amazonS3Manager = AmazonS3RequestManager(bucket: AmazonS3Bucket,
             region: .APNortheast1,
             accessKey: AmazonS3AccessKey,
             secret: AmazonS3Secret)
         
-        amazonS3Manager.putObject(NSURL(fileURLWithPath: path)!, destinationPath: Constants.postPath(fileName: name), done: {(error) in
+        amazonS3Manager.putObject(NSURL(fileURLWithPath: localPath)!, destinationPath: remotePath, done: {(error) in
             done(error)
         })
     }

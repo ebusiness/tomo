@@ -308,6 +308,19 @@ extension ApiController {
                 done(error)
         }
     }
+    
+    class func editAvatarName(name: String, done: (NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        param["photo"] = name
+        
+        let id = Defaults["myId"].string!
+        
+        RKObjectManager.sharedManager().patchObject(nil,path:"/users/\(id)", parameters: param, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
 }
 
 
@@ -407,6 +420,7 @@ extension ApiController {
         addCommonResponseDescriptor(usermapping, method: .POST, pathPattern: "/login", keyPath: nil, statusCodes: nil)
         //UserInfo
         addCommonResponseDescriptor(usermapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(usermapping, method: .PATCH, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
         //newsfeed
         addCommonResponseDescriptor(getPostMapping(false), method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: nil)
         //ユーザの投稿一覧

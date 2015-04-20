@@ -16,6 +16,7 @@ let kAPIBaseURLString = "http://tomo.e-business.co.jp"
 let kAPIBaseURL = NSURL(string: kAPIBaseURLString)
 
 let MaxWidth = 500
+let AvatarMaxWidth = 200
 
 let mapPath = kAPIBaseURLString + "/mobile/map"
 
@@ -30,5 +31,10 @@ class Constants: NSObject {
     class func postPath(#fileName: String) -> String {
         let myId = Defaults["myId"].string!
         return "/users/\(myId)/post/\(fileName)"
+    }
+    
+    class func avatarPath(#fileName: String) -> String {
+        let myId = Defaults["myId"].string!
+        return "/users/\(myId)/photo/\(fileName)"
     }
 }

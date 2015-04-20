@@ -45,7 +45,9 @@ class AddPostViewController: UITableViewController {
     @IBAction func send(sender: AnyObject) {
         let name = NSUUID().UUIDString
         
-        S3Controller.uploadFile(name: name, path: imagePath, done: { (error) -> Void in
+        let remotePath = Constants.postPath(fileName: name)
+        
+        S3Controller.uploadFile(name: name, localPath: imagePath, remotePath: remotePath, done: { (error) -> Void in
             println(error)
             println("done")
             
