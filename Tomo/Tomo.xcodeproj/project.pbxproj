@@ -151,6 +151,7 @@
 		29DF4CD61AE0EDC4003A4962 /* _Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD51AE0EDC4003A4962 /* _Notification.swift */; };
 		29DF4CD71AE0EFA2003A4962 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD31AE0EDB7003A4962 /* Notification.swift */; };
 		29DF4CD81AE0EFE5003A4962 /* _Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD51AE0EDC4003A4962 /* _Notification.swift */; };
+		29ED0C7C1AE48CBC00B51C7E /* Group.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29ED0C7B1AE48CBC00B51C7E /* Group.storyboard */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -269,6 +270,7 @@
 		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
 		29DF4CD31AE0EDB7003A4962 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		29DF4CD51AE0EDC4003A4962 /* _Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Notification.swift; sourceTree = "<group>"; };
+		29ED0C7B1AE48CBC00B51C7E /* Group.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Group.storyboard; path = Classes/Group.storyboard; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		F1801CE63ECC013D9C8C9BB6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -484,6 +486,7 @@
 				295272D71AD6150C00FC7833 /* Friend.storyboard */,
 				2987F1DF1AD77FE200AA39CE /* Message.storyboard */,
 				29B00A651AE0A1E6002AF208 /* Notification.storyboard */,
+				29ED0C7B1AE48CBC00B51C7E /* Group.storyboard */,
 			);
 			name = "xib&storyboard";
 			sourceTree = "<group>";
@@ -714,6 +717,7 @@
 				29A5D1DB1ACBE03000D95B77 /* RegPageView.xib in Resources */,
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
 				29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */,
+				29ED0C7C1AE48CBC00B51C7E /* Group.storyboard in Resources */,
 				29B00A661AE0A1E6002AF208 /* Notification.storyboard in Resources */,
 				178D649E1ACC0DDF00185368 /* MessageMapping.plist in Resources */,
 				29A1AFFA1AC414E900775765 /* PostMapping.plist in Resources */,

@@ -10,9 +10,10 @@ import UIKit
 
 class TabBarController: UITabBarController {
 
-    let storyBoardNames = ["Newsfeed","Map","Chat","Account"]
-    let tabImageNames = ["tab_share","tab_map","tab_chat","tab_person"]
-    let tabImageNamesHL = ["tab_share","tab_map","tab_chat","tab_person"]
+    let storyBoardNames = ["Newsfeed","Chat","Group","Map","Account"]
+    let tabTitles = ["ホーム","トーク","グループ","マップ","設定"]
+    let tabImageNames = ["tab_home","tab_chat","tab_group","tab_map","tab_setting"]
+    let tabImageNamesHL = ["tab_home","tab_chat","tab_group","tab_map","tab_setting"]
     
     var socket:AZSocketIO!
 
@@ -82,8 +83,8 @@ class TabBarController: UITabBarController {
         
         for (i, name) in enumerate(storyBoardNames) {
             let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: name)
-            vc.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: self.tabImageNames[i]), selectedImage: UIImage(named: self.tabImageNamesHL[i]))
-            vc.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
+            vc.tabBarItem = UITabBarItem(title: tabTitles[i], image: UIImage(named: self.tabImageNames[i]), selectedImage: UIImage(named: self.tabImageNamesHL[i]))
+//            vc.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
             viewControllers.append(vc)
         }
         
