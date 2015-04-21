@@ -28,7 +28,7 @@ class NewsfeedViewController: BaseViewController {
         super.viewDidLoad()
 
         if user != nil {
-            self.navigationItem.rightBarButtonItem = nil
+//            self.navigationItem.rightBarButtonItem = nil
             self.navigationItem.leftBarButtonItem = nil
         }
         

@@ -163,8 +163,14 @@ class AccountEditViewController: UITableViewController {
             nameTF.becomeFirstResponder()
         }
         
-        // MARK: - 誕生日
         if indexPath.section == 1 && indexPath.row == 0 {
+            let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
+            vc.user = user
+            navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        // MARK: - 誕生日
+        if indexPath.section == 2 && indexPath.row == 0 {
             ActionSheetDatePicker.showPickerWithTitle("誕生日", datePickerMode: .Date, selectedDate: user.birthDay ?? kBirthdayDefault, minimumDate: kBirthdayMin, maximumDate: kBirthdayMax, doneBlock: { (picker, selectedDate, origin) -> Void in
                 self.user.birthDay = (selectedDate as! NSDate)
                 
@@ -179,7 +185,7 @@ class AccountEditViewController: UITableViewController {
         }
         
         // MARK: - 性別
-        if indexPath.section == 1 && indexPath.row == 1 {
+        if indexPath.section == 2 && indexPath.row == 1 {
             let rows = ["男","女"]
             var initRow = 0
             if let gender = user.gender {
@@ -200,7 +206,7 @@ class AccountEditViewController: UITableViewController {
             }, cancelBlock: nil, origin: view)
         }
         
-        if indexPath.section == 1 {
+        if indexPath.section == 2 {
             if indexPath.row == 2 {
                 addressTF.becomeFirstResponder()
             }
@@ -218,7 +224,7 @@ class AccountEditViewController: UITableViewController {
             }
         }
         
-        if indexPath.section == 2 {
+        if indexPath.section == 3 {
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             let logoutAction = UIAlertAction(title: "ログアウト", style: .Destructive, handler: { (action) -> Void in
                 
@@ -241,7 +247,7 @@ class AccountEditViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 1 && indexPath.row == 6 {
+        if indexPath.section == 2 && indexPath.row == 6 {
             return heightForBioCell(tableView.bounds.width)
         }
         
