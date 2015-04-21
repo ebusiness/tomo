@@ -27,7 +27,7 @@
         <scene sceneID="mF7-hP-MEX">
             <objects>
                 <tableViewController id="5tV-aT-uj8" customClass="AccountEditViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="xkB-U9-BLG">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="xkB-U9-BLG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="692"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
@@ -269,7 +269,7 @@
                                                     <rect key="frame" x="44" y="12" width="256" height="19"/>
                                                     <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57254901960000004" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="5tV-aT-uj8" id="L6m-4W-U92"/>
                                                     </connections>
@@ -311,6 +311,9 @@
                                                 <constraint firstItem="zBA-aE-omB" firstAttribute="leading" secondItem="GdW-z6-EkP" secondAttribute="trailing" constant="15" id="xoY-f9-pIN"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="jPP-Vr-i42" kind="push" identifier="SegueBioEdit" id="U8w-2q-5vv"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -343,7 +346,6 @@
                     <size key="freeformSize" width="320" height="692"/>
                     <connections>
                         <outlet property="addressTF" destination="lMf-tC-LNN" id="KEm-Sm-H7w"/>
-                        <outlet property="bioCell" destination="8mn-cY-K2i" id="v8O-9q-Ake"/>
                         <outlet property="birthdayLabel" destination="pNG-Jb-1ei" id="kbe-Sf-xQR"/>
                         <outlet property="idLabel" destination="803-3c-Sgz" id="OD9-Qd-PI2"/>
                         <outlet property="nameTF" destination="eew-LM-JjE" id="KgN-XG-uoq"/>
@@ -360,63 +362,49 @@
             </objects>
             <point key="canvasLocation" x="833" y="382"/>
         </scene>
-        <!--Text Field Input View Controller-->
-        <scene sceneID="JLj-0k-EMV">
+        <!--Text View Input View Controller-->
+        <scene sceneID="lwb-sv-keH">
             <objects>
-                <tableViewController storyboardIdentifier="TextFieldInputViewController" id="S5Q-oh-LpR" customClass="TextFieldInputViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Bw2-gw-mjY">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                <viewController storyboardIdentifier="TextViewInputViewController" id="jPP-Vr-i42" customClass="TextViewInputViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="E28-tt-1Dr"/>
+                        <viewControllerLayoutGuide type="bottom" id="AU3-or-Qj5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wU2-9L-fVQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="692"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <sections>
-                            <tableViewSection id="V3t-fQ-lPl">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="qZQ-ah-xBT">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qZQ-ah-xBT" id="473-nh-9xu">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ra4-By-gmP">
-                                                    <rect key="frame" x="8" y="8" width="304" height="27"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="ra4-By-gmP" secondAttribute="bottom" constant="8" id="1kL-D1-t9q"/>
-                                                <constraint firstItem="ra4-By-gmP" firstAttribute="top" secondItem="473-nh-9xu" secondAttribute="top" constant="8" id="50H-fJ-z2i"/>
-                                                <constraint firstItem="ra4-By-gmP" firstAttribute="leading" secondItem="473-nh-9xu" secondAttribute="leading" constant="8" id="Bh4-je-SIF"/>
-                                                <constraint firstAttribute="trailing" secondItem="ra4-By-gmP" secondAttribute="trailing" constant="8" id="on5-RE-ra2"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="S5Q-oh-LpR" id="sgw-mc-7K0"/>
-                            <outlet property="delegate" destination="S5Q-oh-LpR" id="G34-6J-ucu"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="iWh-tq-w5H">
-                        <barButtonItem key="leftBarButtonItem" title="キャンセル" id="b0n-EO-Npb">
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TZT-6f-vJ0">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="692"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="AU3-or-Qj5" firstAttribute="top" secondItem="TZT-6f-vJ0" secondAttribute="bottom" id="TYH-eE-q0G"/>
+                            <constraint firstItem="TZT-6f-vJ0" firstAttribute="top" secondItem="wU2-9L-fVQ" secondAttribute="top" id="bIG-Yc-JiM"/>
+                            <constraint firstItem="TZT-6f-vJ0" firstAttribute="leading" secondItem="wU2-9L-fVQ" secondAttribute="leading" id="pGv-ZT-BSQ"/>
+                            <constraint firstAttribute="trailing" secondItem="TZT-6f-vJ0" secondAttribute="trailing" id="xJx-nT-XFZ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Fce-2H-EYf">
+                        <barButtonItem key="rightBarButtonItem" title="保存" id="qiZ-MT-jee">
                             <connections>
-                                <action selector="cancel:" destination="S5Q-oh-LpR" id="7AY-lb-pCS"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="保存" id="8Vl-5P-Ukg">
-                            <connections>
-                                <action selector="save:" destination="S5Q-oh-LpR" id="rEo-8t-PMM"/>
+                                <action selector="send:" destination="jPP-Vr-i42" id="iDA-jw-wJH"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="textField" destination="ra4-By-gmP" id="5au-IX-aDR"/>
+                        <outlet property="bottomSpace" destination="TYH-eE-q0G" id="Oco-qy-Amb"/>
+                        <outlet property="textView" destination="TZT-6f-vJ0" id="E0c-tD-M6x"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NLg-mU-c6n" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6jz-Wo-yq9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1241" y="382"/>
+            <point key="canvasLocation" x="1216" y="382"/>
         </scene>
     </scenes>
     <resources>

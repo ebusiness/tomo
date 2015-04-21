@@ -153,6 +153,7 @@
 		29DF4CD81AE0EFE5003A4962 /* _Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD51AE0EDC4003A4962 /* _Notification.swift */; };
 		29ED0C7C1AE48CBC00B51C7E /* Group.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29ED0C7B1AE48CBC00B51C7E /* Group.storyboard */; };
 		29ED0C7E1AE4AC0900B51C7E /* TextFieldInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29ED0C7D1AE4AC0900B51C7E /* TextFieldInputViewController.swift */; };
+		29ED0C801AE50B0F00B51C7E /* TextViewInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29ED0C7F1AE50B0F00B51C7E /* TextViewInputViewController.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -273,6 +274,7 @@
 		29DF4CD51AE0EDC4003A4962 /* _Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Notification.swift; sourceTree = "<group>"; };
 		29ED0C7B1AE48CBC00B51C7E /* Group.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Group.storyboard; path = Classes/Group.storyboard; sourceTree = "<group>"; };
 		29ED0C7D1AE4AC0900B51C7E /* TextFieldInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextFieldInputViewController.swift; path = Classes/TextFieldInputViewController.swift; sourceTree = "<group>"; };
+		29ED0C7F1AE50B0F00B51C7E /* TextViewInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewInputViewController.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		F1801CE63ECC013D9C8C9BB6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -588,6 +590,7 @@
 		29CA44911AD4DEEA009EB177 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				29ED0C7F1AE50B0F00B51C7E /* TextViewInputViewController.swift */,
 				29CA448F1AD4DEE4009EB177 /* AccountViewController.swift */,
 				29CA44941AD4F6F1009EB177 /* AccountEditViewController.swift */,
 				29ED0C7D1AE4AC0900B51C7E /* TextFieldInputViewController.swift */,
@@ -859,6 +862,7 @@
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				290144121ADE3BBD0048F3D8 /* SCLAlertView.swift in Sources */,
+				29ED0C801AE50B0F00B51C7E /* TextViewInputViewController.swift in Sources */,
 				1712BE2C1ACCE801000A9C47 /* _Group.swift in Sources */,
 				29DF4CD61AE0EDC4003A4962 /* _Notification.swift in Sources */,
 				29B00A6E1AE0A947002AF208 /* FriendInvitedCell.swift in Sources */,

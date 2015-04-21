@@ -8,49 +8,31 @@
 
 import UIKit
 
-enum EditKey: String {
-    case Name = "名前"
-}
-
 class AccountEditViewController: UITableViewController {
 
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var nameTF: UITextField!
-    
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var sexLabel: UILabel!
     @IBOutlet weak var stationLabel: UILabel!
     @IBOutlet weak var siteTF: UITextField!
     @IBOutlet weak var telTF: UITextField!
     @IBOutlet weak var profileLabelLeft: UILabel!
+    @IBOutlet weak var birthdayLabel: UILabel!
+    @IBOutlet weak var addressTF: UITextField!
+    @IBOutlet weak var profileLabel: UILabel!
     
     var user: User!
     var path: String?
     
-    var editKeyAtIndexPath = Dictionary<NSIndexPath, EditKey>()
+    var textViewInputVC: TextViewInputViewController?
     
-    @IBOutlet weak var birthdayLabel: UILabel!
-//    var nameEditVC: AccountNameEditTableViewController?
-//    var genderSelectVC: GenderSelectViewController?
-    
-    @IBOutlet weak var addressTF: UITextField!
-    @IBOutlet weak var profileLabel: UILabel!
-    
-    @IBOutlet weak var bioCell: UITableViewCell!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        user = DBController.myUser()
-        profileLabel.text = user.bioText
-        
-        editKeyAtIndexPath[NSIndexPath(forRow: 1, inSection: 0)] = .Name
         
         userImage.layer.cornerRadius = userImage.bounds.width / 2
         
         idLabel.text = Defaults["email"].string
-
-//        sexLabel.text =
-//        stationLabel.text = 
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -68,6 +50,20 @@ class AccountEditViewController: UITableViewController {
     func updateUI() {
         user = DBController.myUser()
         
+        if let vc = textViewInputVC {
+            tableView.reloadData()
+            
+            DBController.save()
+            
+            ApiController.editUser(user, done: { (error) -> Void in
+                
+            })
+            
+            textViewInputVC = nil
+            
+            return
+        }
+        
         if let path = path {
             userImage.image = UIImage(contentsOfFile: path)
         } else if let photo_ref = user.photo_ref {
@@ -77,7 +73,8 @@ class AccountEditViewController: UITableViewController {
         //名前
         nameTF.text = user.fullName()
         //誕生日
-        birthdayLabel.text = user.birthDay?.toString()
+        birthdayLabel.text = user.birthDay?.toString(dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+        
         //性別
         sexLabel.text = user.gender
         //住所
@@ -92,6 +89,30 @@ class AccountEditViewController: UITableViewController {
         profileLabel.text = user.bioText
     }
     
+    func updateUser() {
+        let fullName = nameTF.text
+        let names = fullName.componentsSeparatedByString(" ")
+        if names.count > 1 {
+            user.firstName = names[0]
+            user.lastName = names[1]
+        } else {
+            user.firstName = fullName
+            user.lastName = ""
+        }
+        
+        user.address = addressTF.text
+        user.nearestSt = stationLabel.text
+        user.webSite = siteTF.text
+        user.telNo = telTF.text
+        user.bioText = profileLabel.text
+        
+        DBController.save()
+        
+        ApiController.editUser(user, done: { (error) -> Void in
+            
+        })
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -100,15 +121,10 @@ class AccountEditViewController: UITableViewController {
     // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "SegueNameEdit" {
-//            nameEditVC = segue.destinationViewController as? AccountNameEditTableViewController
-//            nameEditVC?.user = user
-//        }
-//        
-//        if segue.identifier == "SegueGender" {
-//            let vc = segue.destinationViewController as GenderSelectViewController
-//            vc.user = user
-//        }
+        if segue.identifier == "SegueBioEdit" {
+            textViewInputVC = segue.destinationViewController as? TextViewInputViewController
+            textViewInputVC?.user = user
+        }
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -169,19 +185,19 @@ class AccountEditViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 1 && indexPath.row == 6 {
-            return heightForCell(tableView.bounds.width)
+            return heightForBioCell(tableView.bounds.width)
         }
         
         return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
     }
     
-    func heightForCell(width: CGFloat) -> CGFloat {
+    func heightForBioCell(width: CGFloat) -> CGFloat {
         let labelWidth = width - 20 - 15 - CGRectGetMaxX(profileLabelLeft.frame)
         
         profileLabel.text = user.bioText
         
         let maxSize = CGSize(width: labelWidth, height: .max)
-        return 8 + 8 + profileLabel.sizeThatFits(maxSize).height + 1
+        return max(44, 8 + 8 + profileLabel.sizeThatFits(maxSize).height + 1)
     }
 }
 
@@ -196,14 +212,20 @@ extension AccountEditViewController: UITextFieldDelegate {
         keyboardDoneButtonView.sizeToFit()
         
         // Setup the buttons to be put in the system.
-        let item = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Bordered, target: self, action: Selector("endEditingNow") )
-        var toolbarButtons = [item]
+        
+        let item = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: Selector("endEditingNow"))
+        var toolbarButtons = [UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil), item]
         
         //Put the buttons into the ToolBar and display the tool bar
         keyboardDoneButtonView.setItems(toolbarButtons, animated: false)
         textField.inputAccessoryView = keyboardDoneButtonView
         
         return true
+    }
+    
+    func endEditingNow(){
+        self.view.endEditing(true)
+        updateUser()
     }
     
 }
