@@ -26,6 +26,10 @@ class FriendListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if nextView == nil {
+            nextView = .Chat
+        }
+        
         if nextView == .UserDetail || nextView == .AddFriend {
             ApiController.getUsers({ (error) -> Void in
                 self.users = DBController.users()
@@ -42,6 +46,8 @@ class FriendListViewController: UIViewController {
         }
         
         users = DBController.friends()
+
+        
         
         ApiController.getFriends { (error) -> Void in
             if error == nil {
