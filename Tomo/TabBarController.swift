@@ -40,7 +40,7 @@ class TabBarController: UITabBarController {
     
     func setupSocket() {
         
-        socket = AZSocketIO(host: "tomo.e-business.co.jp", andPort: "81", secure: false)
+        socket = AZSocketIO(host: "tomo.e-business.co.jp", andPort: SocketPort, secure: false)
         
         socket.eventRecievedBlock = { (name, data) -> Void in
 

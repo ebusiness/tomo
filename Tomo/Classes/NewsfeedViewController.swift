@@ -27,10 +27,14 @@ class NewsfeedViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if user != nil {
-//            self.navigationItem.rightBarButtonItem = nil
+        #if DEBUG
+            if user != nil {
+                //            self.navigationItem.rightBarButtonItem = nil
+                self.navigationItem.leftBarButtonItem = nil
+            }
+        #else
             self.navigationItem.leftBarButtonItem = nil
-        }
+        #endif
         
         loadLocalData()
         

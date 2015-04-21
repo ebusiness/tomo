@@ -9,9 +9,15 @@
 import UIKit
 
 let kTomoService = "jp.co.e-business.tomo"
-
-//let kAPIBaseURLString = "http://new.selink.jp"
-let kAPIBaseURLString = "http://tomo.e-business.co.jp:81"
+#if DEBUG
+    let AmazonS3Bucket = "genbatomopics"
+    let kAPIBaseURLString = "http://tomo.e-business.co.jp:81"
+    let SocketPort = "81"
+#else
+    let AmazonS3Bucket = "genbatomopics-test"
+    let kAPIBaseURLString = "http://tomo.e-business.co.jp"
+    let SocketPort = "80"
+#endif
 
 let kAPIBaseURL = NSURL(string: kAPIBaseURLString)
 
@@ -19,10 +25,6 @@ let MaxWidth = 500
 let AvatarMaxWidth = 200
 
 let mapPath = kAPIBaseURLString + "/mobile/map"
-
-//let BackgroundSessionUploadIdentifier: String = "com.amazon.example.s3BackgroundTransferSwift.uploadSession"
-//let BackgroundSessionDownloadIdentifier: String = "com.amazon.example.s3BackgroundTransferSwift.downloadSession"
-
 
 let DefaultAvatarImage = UIImage(named: "avatar")!
 
