@@ -73,7 +73,7 @@ class AccountEditViewController: UITableViewController {
         //名前
         nameTF.text = user.fullName()
         //誕生日
-        birthdayLabel.text = user.birthDay?.toString(dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+        birthdayLabel.text = user.birthDay?.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
         
         //性別
         sexLabel.text = user.gender
@@ -127,6 +127,8 @@ class AccountEditViewController: UITableViewController {
         }
     }
 
+    // MARK: - Table
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
@@ -159,6 +161,61 @@ class AccountEditViewController: UITableViewController {
         
         if indexPath.section == 0 && indexPath.row == 1 {
             nameTF.becomeFirstResponder()
+        }
+        
+        // MARK: - 誕生日
+        if indexPath.section == 1 && indexPath.row == 0 {
+            ActionSheetDatePicker.showPickerWithTitle("誕生日", datePickerMode: .Date, selectedDate: user.birthDay ?? kBirthdayDefault, minimumDate: kBirthdayMin, maximumDate: kBirthdayMax, doneBlock: { (picker, selectedDate, origin) -> Void in
+                self.user.birthDay = (selectedDate as! NSDate)
+                
+                DBController.save()
+                
+                self.birthdayLabel.text = self.user.birthDay?.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
+                
+                ApiController.editUser(self.user, done: { (error) -> Void in
+                    
+                })
+            }, cancelBlock: nil, origin: view)
+        }
+        
+        // MARK: - 性別
+        if indexPath.section == 1 && indexPath.row == 1 {
+            let rows = ["男","女"]
+            var initRow = 0
+            if let gender = user.gender {
+                initRow = find(rows, gender) ?? 0
+            }
+            
+            ActionSheetStringPicker.showPickerWithTitle("性別", rows: rows, initialSelection: initRow, doneBlock: { (picker, index, value) -> Void in
+                self.user.gender = (value as! String)
+                
+                self.sexLabel.text = self.user.gender
+                
+                DBController.save()
+                
+                ApiController.editUser(self.user, done: { (error) -> Void in
+                    
+                })
+                
+            }, cancelBlock: nil, origin: view)
+        }
+        
+        if indexPath.section == 1 {
+            if indexPath.row == 2 {
+                addressTF.becomeFirstResponder()
+            }
+            
+            if indexPath.row == 3 {
+                
+            }
+            
+            if indexPath.row == 4 {
+                siteTF.becomeFirstResponder()
+            }
+            
+            if indexPath.row == 5 {
+                telTF.becomeFirstResponder()
+            }
         }
         
         if indexPath.section == 2 {
@@ -201,6 +258,8 @@ class AccountEditViewController: UITableViewController {
     }
 }
 
+// MARK: - UITextFieldDelegate
+
 extension AccountEditViewController: UITextFieldDelegate {
     
     // When clicking on the field, use this method.
@@ -229,6 +288,8 @@ extension AccountEditViewController: UITextFieldDelegate {
     }
     
 }
+
+// MARK: - UINavigationControllerDelegate
 
 extension AccountEditViewController: UINavigationControllerDelegate {
     
