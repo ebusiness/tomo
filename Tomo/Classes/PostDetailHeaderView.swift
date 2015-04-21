@@ -61,7 +61,7 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
                 postImageViewHeightConstraint.constant = 0
             }
             
-            contentLabel.preferredMaxLayoutWidth = viewWidth
+            contentLabel.preferredMaxLayoutWidth = viewWidth - 2*8
             
             let size = self.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize) as CGSize
             
