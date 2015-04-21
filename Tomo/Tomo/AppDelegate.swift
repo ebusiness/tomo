@@ -50,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func timerUpdate(timer: NSTimer) {
         let application = UIApplication.sharedApplication()
         
+        /*
         #if DEBUG
             println("backgroundTimeRemaining:\(application.backgroundTimeRemaining)")
             
@@ -63,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 didShowDisconnectionWarning = true
             }
         #endif
+        */
         
         if application.backgroundTimeRemaining < 10 {
             self.backgroundTimer?.invalidate()

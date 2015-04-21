@@ -5,7 +5,7 @@
 	<key>name</key>
 	<string>name</string>
 	<key>description</key>
-	<string>depiction</string>
+	<string>detail</string>
 	<key>cover_ref</key>
 	<string>cover_ref</string>
 	<key>_id</key>
@@ -14,5 +14,7 @@
 	<string>cover</string>
 	<key>createDate</key>
 	<string>createDate</string>
+	<key>type</key>
+	<string>type</string>
 </dict>
 </plist>

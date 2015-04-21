@@ -7,13 +7,15 @@ enum GroupAttributes: String {
     case cover = "cover"
     case cover_ref = "cover_ref"
     case createDate = "createDate"
-    case depiction = "depiction"
+    case detail = "detail"
     case id = "id"
     case name = "name"
+    case type = "type"
 }
 
 enum GroupRelationships: String {
     case owner = "owner"
+    case participants = "participants"
     case posts = "posts"
 }
 
@@ -59,9 +61,9 @@ class _Group: NSManagedObject {
     // func validateCreateDate(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
-    var depiction: String?
+    var detail: String?
 
-    // func validateDepiction(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+    // func validateDetail(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var id: String?
@@ -73,6 +75,11 @@ class _Group: NSManagedObject {
 
     // func validateName(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
+    @NSManaged
+    var type: String?
+
+    // func validateType(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
     // MARK: - Relationships
 
     @NSManaged
@@ -81,7 +88,38 @@ class _Group: NSManagedObject {
     // func validateOwner(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
+    var participants: NSOrderedSet
+
+    @NSManaged
     var posts: NSOrderedSet
+
+}
+
+extension _Group {
+
+    func addParticipants(objects: NSOrderedSet) {
+        let mutable = self.participants.mutableCopy() as! NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.participants = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeParticipants(objects: NSOrderedSet) {
+        let mutable = self.participants.mutableCopy() as! NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.participants = mutable.copy() as! NSOrderedSet
+    }
+
+    func addParticipantsObject(value: User!) {
+        let mutable = self.participants.mutableCopy() as! NSMutableOrderedSet
+        mutable.addObject(value)
+        self.participants = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeParticipantsObject(value: User!) {
+        let mutable = self.participants.mutableCopy() as! NSMutableOrderedSet
+        mutable.removeObject(value)
+        self.participants = mutable.copy() as! NSOrderedSet
+    }
 
 }
 

@@ -357,6 +357,18 @@ extension ApiController {
 //    }
 }
 
+// MARK: - Group
+
+extension ApiController {
+    
+    class func getGroups(done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/groups/discover", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+}
 
 // MARK: - Message
 
@@ -496,6 +508,8 @@ extension ApiController {
         addCommonResponseDescriptor(getNotificationMapping(false), method: .GET, pathPattern: "/notifications/unconfirmed", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getNotificationMapping(true), method: .PATCH, pathPattern: "/notifications/:id", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(usermapping, method: .PATCH, pathPattern: "/connections/invite", keyPath: nil, statusCodes: nil)
+        
+        addCommonResponseDescriptor(getGroupMapping(false), method: .GET, pathPattern: "/groups/discover", keyPath: nil, statusCodes: nil)
     }
 }
 // MARK: - mapping
@@ -570,7 +584,7 @@ extension ApiController {
         return mapping
     }
     
-    //UnconfirmedNotification
+    //Notification
     private class func getNotificationMapping(isidonly:Bool)->RKEntityMapping{
         var mapping = _notificationMapping
         
@@ -583,6 +597,16 @@ extension ApiController {
         mapping.addPropertyMappingById("User",fromKey: "_owner",toKeyPath: "owner")
         mapping.addPropertyMappingById("User",fromKey: "confirmed",toKeyPath: "confirmed")
 
+        return mapping
+    }
+    
+    //group
+    private class func getGroupMapping(isidonly:Bool)->RKEntityMapping{
+        var mapping = _groupMapping
+        mapping.addPropertyMappingById("User",fromKey: "_owner",toKeyPath: "owner")
+        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "posts", toKeyPath: "posts", withMapping: _postMapping))
+        mapping.addPropertyMappingById("User",fromKey: "participants",toKeyPath: "participants")
+ 
         return mapping
     }
 }

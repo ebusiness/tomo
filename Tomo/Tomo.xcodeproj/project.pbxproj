@@ -76,6 +76,7 @@
 		291ADF9B1AD24FAE009D8BE3 /* PostDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 291ADF9A1AD24FAE009D8BE3 /* PostDetailHeaderView.xib */; };
 		291ADF9D1AD2654E009D8BE3 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF9C1AD2654E009D8BE3 /* AddPostViewController.swift */; };
 		291ADF9F1AD26575009D8BE3 /* AddPost.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 291ADF9E1AD26575009D8BE3 /* AddPost.storyboard */; };
+		292B9CC51AE6012A00604986 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B9CC41AE6012A00604986 /* GroupListViewController.swift */; };
 		293004561AD6803100FC9100 /* CommentInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293004551AD6803100FC9100 /* CommentInputViewController.swift */; };
 		294185131AD777D500C6E913 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294185121AD777D500C6E913 /* MessageViewController.swift */; };
 		2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */; };
@@ -208,6 +209,7 @@
 		291ADF9A1AD24FAE009D8BE3 /* PostDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostDetailHeaderView.xib; sourceTree = "<group>"; };
 		291ADF9C1AD2654E009D8BE3 /* AddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPostViewController.swift; path = Classes/AddPostViewController.swift; sourceTree = "<group>"; };
 		291ADF9E1AD26575009D8BE3 /* AddPost.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddPost.storyboard; sourceTree = "<group>"; };
+		292B9CC41AE6012A00604986 /* GroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupListViewController.swift; path = Classes/GroupListViewController.swift; sourceTree = "<group>"; };
 		293004551AD6803100FC9100 /* CommentInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentInputViewController.swift; sourceTree = "<group>"; };
 		294185121AD777D500C6E913 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegLoginViewController.swift; path = Classes/RegLoginViewController.swift; sourceTree = "<group>"; };
@@ -408,6 +410,14 @@
 			name = "地図";
 			sourceTree = "<group>";
 		};
+		292B9CC61AE6012E00604986 /* グループ */ = {
+			isa = PBXGroup;
+			children = (
+				292B9CC41AE6012A00604986 /* GroupListViewController.swift */,
+			);
+			name = "グループ";
+			sourceTree = "<group>";
+		};
 		293004571AD685CF00FC9100 /* コメント */ = {
 			isa = PBXGroup;
 			children = (
@@ -531,6 +541,7 @@
 				29CA44911AD4DEEA009EB177 /* Account */,
 				290144181ADF92470048F3D8 /* 地図 */,
 				29B00A671AE0A238002AF208 /* 通知 */,
+				292B9CC61AE6012E00604986 /* グループ */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -832,6 +843,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				292B9CC51AE6012A00604986 /* GroupListViewController.swift in Sources */,
 				29925BAA1AD6693F00F98BD7 /* Alamofire.swift in Sources */,
 				291ADF991AD24F7B009D8BE3 /* PostDetailHeaderView.swift in Sources */,
 				2987F1E21AD797B600AA39CE /* ChatController.swift in Sources */,
