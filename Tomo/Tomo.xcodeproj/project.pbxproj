@@ -77,6 +77,17 @@
 		291ADF9D1AD2654E009D8BE3 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF9C1AD2654E009D8BE3 /* AddPostViewController.swift */; };
 		291ADF9F1AD26575009D8BE3 /* AddPost.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 291ADF9E1AD26575009D8BE3 /* AddPost.storyboard */; };
 		292B9CC51AE6012A00604986 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B9CC41AE6012A00604986 /* GroupListViewController.swift */; };
+		292B9CC81AE61A0D00604986 /* LineMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 292B9CC71AE61A0D00604986 /* LineMapping.plist */; };
+		292B9CCA1AE61A2500604986 /* StationMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 292B9CC91AE61A2500604986 /* StationMapping.plist */; };
+		292B9CCC1AE61ACA00604986 /* StationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B9CCB1AE61ACA00604986 /* StationTableViewController.swift */; };
+		292B9CCF1AE61C3F00604986 /* _Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B9CCD1AE61C3F00604986 /* _Line.swift */; };
+		292B9CD01AE61C3F00604986 /* _Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B9CCE1AE61C3F00604986 /* _Station.swift */; };
+		292B9CD31AE61C4800604986 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B9CD11AE61C4800604986 /* Line.swift */; };
+		292B9CD41AE61C4800604986 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B9CD21AE61C4800604986 /* Station.swift */; };
+		292B9CD51AE6243200604986 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B9CD11AE61C4800604986 /* Line.swift */; };
+		292B9CD61AE6243500604986 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B9CD21AE61C4800604986 /* Station.swift */; };
+		292B9CD71AE6247100604986 /* _Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B9CCD1AE61C3F00604986 /* _Line.swift */; };
+		292B9CD81AE6247400604986 /* _Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B9CCE1AE61C3F00604986 /* _Station.swift */; };
 		293004561AD6803100FC9100 /* CommentInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293004551AD6803100FC9100 /* CommentInputViewController.swift */; };
 		294185131AD777D500C6E913 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294185121AD777D500C6E913 /* MessageViewController.swift */; };
 		2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */; };
@@ -210,6 +221,13 @@
 		291ADF9C1AD2654E009D8BE3 /* AddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPostViewController.swift; path = Classes/AddPostViewController.swift; sourceTree = "<group>"; };
 		291ADF9E1AD26575009D8BE3 /* AddPost.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddPost.storyboard; sourceTree = "<group>"; };
 		292B9CC41AE6012A00604986 /* GroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupListViewController.swift; path = Classes/GroupListViewController.swift; sourceTree = "<group>"; };
+		292B9CC71AE61A0D00604986 /* LineMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LineMapping.plist; sourceTree = "<group>"; };
+		292B9CC91AE61A2500604986 /* StationMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = StationMapping.plist; sourceTree = "<group>"; };
+		292B9CCB1AE61ACA00604986 /* StationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationTableViewController.swift; path = Classes/StationTableViewController.swift; sourceTree = "<group>"; };
+		292B9CCD1AE61C3F00604986 /* _Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Line.swift; sourceTree = "<group>"; };
+		292B9CCE1AE61C3F00604986 /* _Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Station.swift; sourceTree = "<group>"; };
+		292B9CD11AE61C4800604986 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		292B9CD21AE61C4800604986 /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		293004551AD6803100FC9100 /* CommentInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentInputViewController.swift; sourceTree = "<group>"; };
 		294185121AD777D500C6E913 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegLoginViewController.swift; path = Classes/RegLoginViewController.swift; sourceTree = "<group>"; };
@@ -365,6 +383,8 @@
 		290135081AC3A67200BBFE29 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				292B9CD11AE61C4800604986 /* Line.swift */,
+				292B9CD21AE61C4800604986 /* Station.swift */,
 				29DF4CD31AE0EDB7003A4962 /* Notification.swift */,
 				2987F1E51AD79D0C00AA39CE /* Messages.swift */,
 				2987F1E31AD79D0500AA39CE /* Chat.swift */,
@@ -388,6 +408,8 @@
 		290135091AC3A67200BBFE29 /* Machine */ = {
 			isa = PBXGroup;
 			children = (
+				292B9CCD1AE61C3F00604986 /* _Line.swift */,
+				292B9CCE1AE61C3F00604986 /* _Station.swift */,
 				29DF4CD51AE0EDC4003A4962 /* _Notification.swift */,
 				2987F1E71AD79D1A00AA39CE /* _Chat.swift */,
 				2987F1E81AD79D1A00AA39CE /* _Messages.swift */,
@@ -577,6 +599,8 @@
 				29A1B0051AC533A800775765 /* UserMapping.plist */,
 				178D649D1ACC0DDF00185368 /* MessageMapping.plist */,
 				1712BE451ACE57B6000A9C47 /* CommentsMapping.plist */,
+				292B9CC71AE61A0D00604986 /* LineMapping.plist */,
+				292B9CC91AE61A2500604986 /* StationMapping.plist */,
 			);
 			name = Mapping;
 			sourceTree = "<group>";
@@ -601,6 +625,7 @@
 		29CA44911AD4DEEA009EB177 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				292B9CCB1AE61ACA00604986 /* StationTableViewController.swift */,
 				29ED0C7F1AE50B0F00B51C7E /* TextViewInputViewController.swift */,
 				29CA448F1AD4DEE4009EB177 /* AccountViewController.swift */,
 				29CA44941AD4F6F1009EB177 /* AccountEditViewController.swift */,
@@ -720,6 +745,7 @@
 				29CA441A1AD4CA48009EB177 /* Chat.storyboard in Resources */,
 				29A5D1DF1ACBE9CB00D95B77 /* RegPageData.plist in Resources */,
 				29CA441E1AD4CAF0009EB177 /* Account.storyboard in Resources */,
+				292B9CC81AE61A0D00604986 /* LineMapping.plist in Resources */,
 				1712BE461ACE57B6000A9C47 /* CommentsMapping.plist in Resources */,
 				1712BE341ACE17AB000A9C47 /* ImagesMapping.plist in Resources */,
 				29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */,
@@ -733,6 +759,7 @@
 				29B00A5E1AE09E7E002AF208 /* NotificationMapping.plist in Resources */,
 				29A5D1DB1ACBE03000D95B77 /* RegPageView.xib in Resources */,
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
+				292B9CCA1AE61A2500604986 /* StationMapping.plist in Resources */,
 				29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */,
 				29ED0C7C1AE48CBC00B51C7E /* Group.storyboard in Resources */,
 				29B00A661AE0A1E6002AF208 /* Notification.storyboard in Resources */,
@@ -846,6 +873,7 @@
 				292B9CC51AE6012A00604986 /* GroupListViewController.swift in Sources */,
 				29925BAA1AD6693F00F98BD7 /* Alamofire.swift in Sources */,
 				291ADF991AD24F7B009D8BE3 /* PostDetailHeaderView.swift in Sources */,
+				292B9CD01AE61C3F00604986 /* _Station.swift in Sources */,
 				2987F1E21AD797B600AA39CE /* ChatController.swift in Sources */,
 				2901441A1ADF983E0048F3D8 /* RegSignUpViewController.swift in Sources */,
 				29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */,
@@ -861,9 +889,11 @@
 				1712BE2E1ACCE809000A9C47 /* Group.swift in Sources */,
 				294185131AD777D500C6E913 /* MessageViewController.swift in Sources */,
 				295272D41AD60E9300FC7833 /* DebugViewController.swift in Sources */,
+				292B9CD31AE61C4800604986 /* Line.swift in Sources */,
 				293004561AD6803100FC9100 /* CommentInputViewController.swift in Sources */,
 				178D64A01ACC10B600185368 /* Message.swift in Sources */,
 				1712BE4B1ACE5D0F000A9C47 /* _Comments.swift in Sources */,
+				292B9CD41AE61C4800604986 /* Station.swift in Sources */,
 				295272DA1AD6155300FC7833 /* FriendListViewController.swift in Sources */,
 				29B00A641AE0A158002AF208 /* NotificationListViewController.swift in Sources */,
 				291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */,
@@ -896,9 +926,11 @@
 				2901441C1ADFA1AB0048F3D8 /* String.swift in Sources */,
 				2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */,
 				291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */,
+				292B9CCC1AE61ACA00604986 /* StationTableViewController.swift in Sources */,
 				291ADF9D1AD2654E009D8BE3 /* AddPostViewController.swift in Sources */,
 				290135171AC3A78E00BBFE29 /* User.swift in Sources */,
 				29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */,
+				292B9CCF1AE61C3F00604986 /* _Line.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
 				295272D01AD51B2300FC7833 /* S3.swift in Sources */,
 				178D64A21ACC10BE00185368 /* _Message.swift in Sources */,
@@ -925,6 +957,7 @@
 				172EADD11ACC1C910039F42E /* Message.swift in Sources */,
 				290135131AC3A67200BBFE29 /* Model.xcdatamodeld in Sources */,
 				2960404C1ACE68C500D2A338 /* TestDataTests.swift in Sources */,
+				292B9CD51AE6243200604986 /* Line.swift in Sources */,
 				29BE7E1C1AC54663008110B4 /* DBController.swift in Sources */,
 				1712BE3A1ACE195B000A9C47 /* _Images.swift in Sources */,
 				29A1AFF81AC4113000775765 /* _Post.swift in Sources */,
@@ -934,6 +967,7 @@
 				1712BE301ACCE819000A9C47 /* _Group.swift in Sources */,
 				2993894E1AD3B70200043D91 /* SwiftyUserDefaults.swift in Sources */,
 				294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */,
+				292B9CD71AE6247100604986 /* _Line.swift in Sources */,
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
 				299389491AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				29DF4CD81AE0EFE5003A4962 /* _Notification.swift in Sources */,
@@ -944,9 +978,11 @@
 				1712BE4C1ACE5D12000A9C47 /* _Comments.swift in Sources */,
 				2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */,
 				1712BE491ACE5D05000A9C47 /* Comments.swift in Sources */,
+				292B9CD81AE6247400604986 /* _Station.swift in Sources */,
 				29A1AFF51AC4112800775765 /* Post.swift in Sources */,
 				291ADF961AD247C4009D8BE3 /* Util.swift in Sources */,
 				29DF4CD71AE0EFA2003A4962 /* Notification.swift in Sources */,
+				292B9CD61AE6243500604986 /* Station.swift in Sources */,
 				172EADD01ACC1C850039F42E /* _Message.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

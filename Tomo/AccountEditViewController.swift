@@ -125,6 +125,11 @@ class AccountEditViewController: UITableViewController {
             textViewInputVC = segue.destinationViewController as? TextViewInputViewController
             textViewInputVC?.user = user
         }
+        
+        if segue.identifier == "SegueStation" {
+            let vc = segue.destinationViewController as? StationTableViewController
+            vc?.user = user
+        }
     }
 
     // MARK: - Table

@@ -74,6 +74,16 @@ class DBController: NSObject {
         }
     }
     
+    // MARK: - Station
+    
+    class func stations() -> NSFetchedResultsController {
+        return Station.MR_fetchAllGroupedBy(nil, withPredicate: nil, sortedBy: "zipcode", ascending: true)
+    }
+    
+    class func stationByName(name: String) -> Station {
+        return Station.MR_findFirstByAttribute("name", withValue: name) as! Station
+    }
+    
     class func clearDB() {
         Comments.MR_truncateAll()
         Devices.MR_truncateAll()
@@ -83,7 +93,8 @@ class DBController: NSObject {
         Post.MR_truncateAll()
         User.MR_truncateAll()
         Notification.MR_truncateAll()
-        
+        Station.MR_truncateAll()
+        Line.MR_truncateAll()
         save()
     }
 }

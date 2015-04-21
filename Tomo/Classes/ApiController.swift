@@ -370,6 +370,22 @@ extension ApiController {
     }
 }
 
+// MARK: - Station
+
+extension ApiController {
+    
+    class func getStations(done: (NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        param["name"] = "JR山手線"
+        
+        RKObjectManager.sharedManager().getObjectsAtPath("/mobile/stations", parameters: param, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+}
+
 // MARK: - Message
 
 extension ApiController {
@@ -509,7 +525,11 @@ extension ApiController {
         addCommonResponseDescriptor(getNotificationMapping(true), method: .PATCH, pathPattern: "/notifications/:id", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(usermapping, method: .PATCH, pathPattern: "/connections/invite", keyPath: nil, statusCodes: nil)
         
+        //グループ
         addCommonResponseDescriptor(getGroupMapping(false), method: .GET, pathPattern: "/groups/discover", keyPath: nil, statusCodes: nil)
+        
+        //駅
+        addCommonResponseDescriptor(getStationMapping(false), method: .GET, pathPattern: "/mobile/stations", keyPath: nil, statusCodes: nil)
     }
 }
 // MARK: - mapping
@@ -609,6 +629,14 @@ extension ApiController {
  
         return mapping
     }
+    
+    //station
+    private class func getStationMapping(isidonly:Bool)->RKEntityMapping{
+        var mapping = _lineMapping
+        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "stations", toKeyPath: "stations", withMapping: _stationMapping))
+        
+        return mapping
+    }
 }
 
 
@@ -638,6 +666,14 @@ extension ApiController {
     }
     private class var _notificationMapping: RKEntityMapping {
         var mapping = ApiController.getMapping("Notification", identification: nil,pListName: nil)
+        return mapping
+    }
+    private class var _lineMapping: RKEntityMapping {
+        var mapping = ApiController.getMapping("Line", identification: nil,pListName: nil)
+        return mapping
+    }
+    private class var _stationMapping: RKEntityMapping {
+        var mapping = ApiController.getMapping("Station", identification: nil,pListName: nil)
         return mapping
     }
 }
