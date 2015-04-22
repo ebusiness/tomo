@@ -26,6 +26,13 @@ class FriendListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //from search
+        if users.count > 0 {
+            nextView = .AddFriend
+            self.navigationItem.rightBarButtonItem = nil
+            return
+        }
+        
         if nextView == nil {
             nextView = .Chat
         }
@@ -116,9 +123,9 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
             ApiController.invite(friend.id!, done: { (error) -> Void in
                 if error == nil {
                     Util.showSuccess("友達追加リクエストを送信しました。")
-                    
-                    self.users = DBController.users()
-                    self.tableView.reloadData()
+                    //追加要求済み表示
+//                    self.users = DBController.users()
+//                    self.tableView.reloadData()
                 }
             })
         }

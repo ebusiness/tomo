@@ -277,6 +277,17 @@ extension ApiController {
         }
     }
     
+    class func getUsersByStationName(name: String, done: ([User]?, NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        param["nearestSt"] = name
+        
+        RKObjectManager.sharedManager().getObjectsAtPath("/mobile/stations/users", parameters: param, success: { (_, results) -> Void in
+            done((results.array() as? [User]), nil)
+            }) { (_, error) -> Void in
+                done(nil, error)
+        }
+    }
+    
     // token uuid の登録・編集
     class func setDeviceInfo(token:String,done: (NSError?) -> Void) {
         
@@ -530,6 +541,8 @@ extension ApiController {
         
         //駅
         addCommonResponseDescriptor(getStationMapping(false), method: .GET, pathPattern: "/mobile/stations", keyPath: nil, statusCodes: nil)
+        
+        addCommonResponseDescriptor(getUserMapping(), method: .GET, pathPattern: "/mobile/stations/users", keyPath: nil, statusCodes: nil)
     }
 }
 // MARK: - mapping

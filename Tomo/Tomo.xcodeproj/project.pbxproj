@@ -138,6 +138,8 @@
 		29A5D1DB1ACBE03000D95B77 /* RegPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A5D1DA1ACBE03000D95B77 /* RegPageView.xib */; };
 		29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A5D1DC1ACBE85C00D95B77 /* RegPageData.swift */; };
 		29A5D1DF1ACBE9CB00D95B77 /* RegPageData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29A5D1DE1ACBE9CB00D95B77 /* RegPageData.plist */; };
+		29A8FA031AE768E000750A56 /* FriendAddMethodTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A8FA021AE768E000750A56 /* FriendAddMethodTableViewController.swift */; };
+		29A8FA051AE776F200750A56 /* SearchByStationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A8FA041AE776F200750A56 /* SearchByStationViewController.swift */; };
 		29B00A5E1AE09E7E002AF208 /* NotificationMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29B00A5D1AE09E7E002AF208 /* NotificationMapping.plist */; };
 		29B00A641AE0A158002AF208 /* NotificationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B00A631AE0A158002AF208 /* NotificationListViewController.swift */; };
 		29B00A661AE0A1E6002AF208 /* Notification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29B00A651AE0A1E6002AF208 /* Notification.storyboard */; };
@@ -273,6 +275,8 @@
 		29A5D1DC1ACBE85C00D95B77 /* RegPageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegPageData.swift; sourceTree = "<group>"; };
 		29A5D1DE1ACBE9CB00D95B77 /* RegPageData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegPageData.plist; path = ../RegPageData.plist; sourceTree = "<group>"; };
 		29A5D1E01ACCCFB400D95B77 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
+		29A8FA021AE768E000750A56 /* FriendAddMethodTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendAddMethodTableViewController.swift; path = Classes/FriendAddMethodTableViewController.swift; sourceTree = "<group>"; };
+		29A8FA041AE776F200750A56 /* SearchByStationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchByStationViewController.swift; path = Classes/SearchByStationViewController.swift; sourceTree = "<group>"; };
 		29B00A5D1AE09E7E002AF208 /* NotificationMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NotificationMapping.plist; sourceTree = "<group>"; };
 		29B00A631AE0A158002AF208 /* NotificationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationListViewController.swift; path = Classes/NotificationListViewController.swift; sourceTree = "<group>"; };
 		29B00A651AE0A1E6002AF208 /* Notification.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Notification.storyboard; path = Classes/Notification.storyboard; sourceTree = "<group>"; };
@@ -454,18 +458,13 @@
 		294185141AD777E700C6E913 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				294185121AD777D500C6E913 /* MessageViewController.swift */,
-			);
-			name = Chat;
-			sourceTree = "<group>";
-		};
-		2952730B1AD64E6E00FC7833 /* 友達 */ = {
-			isa = PBXGroup;
-			children = (
 				2952730C1AD653F000FC7833 /* FriendCell.swift */,
 				295272D91AD6155300FC7833 /* FriendListViewController.swift */,
+				294185121AD777D500C6E913 /* MessageViewController.swift */,
+				29A8FA021AE768E000750A56 /* FriendAddMethodTableViewController.swift */,
+				29A8FA041AE776F200750A56 /* SearchByStationViewController.swift */,
 			);
-			name = "友達";
+			name = Chat;
 			sourceTree = "<group>";
 		};
 		296040441ACE669900D2A338 /* Vendors */ = {
@@ -561,7 +560,6 @@
 				299389571AD3D13700043D91 /* Newsfeed一覧 */,
 				299389581AD3D15800043D91 /* Post詳細 */,
 				299389551AD3C79000043D91 /* Post追加 */,
-				2952730B1AD64E6E00FC7833 /* 友達 */,
 				299389541AD3C77300043D91 /* login */,
 				29CA44911AD4DEEA009EB177 /* Account */,
 				290144181ADF92470048F3D8 /* 地図 */,
@@ -935,6 +933,7 @@
 				29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */,
 				292B9CCF1AE61C3F00604986 /* _Line.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
+				29A8FA051AE776F200750A56 /* SearchByStationViewController.swift in Sources */,
 				295272D01AD51B2300FC7833 /* S3.swift in Sources */,
 				290177221AE635F8009C7472 /* GroupCell.swift in Sources */,
 				178D64A21ACC10BE00185368 /* _Message.swift in Sources */,
@@ -942,6 +941,7 @@
 				1712BE401ACE4135000A9C47 /* _Devices.swift in Sources */,
 				29CA44171AD4C9FF009EB177 /* TabBarController.swift in Sources */,
 				2987F1E91AD79D1A00AA39CE /* _Chat.swift in Sources */,
+				29A8FA031AE768E000750A56 /* FriendAddMethodTableViewController.swift in Sources */,
 				29CA44141AD4B9E8009EB177 /* LoadingViewController.swift in Sources */,
 				29DF4CD41AE0EDB7003A4962 /* Notification.swift in Sources */,
 				29A1AFF41AC4112800775765 /* Post.swift in Sources */,
