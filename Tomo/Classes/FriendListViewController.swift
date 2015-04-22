@@ -119,7 +119,7 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
             navigationController?.pushViewController(vc, animated: true)
         }
         
-        if nextView == .AddFriend {
+        if nextView == .AddFriend && !DBController.isInvitedUser(friend) {
             ApiController.invite(friend.id!, done: { (error) -> Void in
                 if error == nil {
                     Util.showSuccess("友達追加リクエストを送信しました。")

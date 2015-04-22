@@ -57,7 +57,14 @@ class DBController: NSObject {
         return me.friends.array as! [User]
     }
     
-
+    class func invitedUsers() -> [User] {
+        let me = myUser()
+        return me.invited.array as! [User]
+    }
+    
+    class func isInvitedUser(user: User) -> Bool {
+        return find(invitedUsers(), user) != nil
+    }
     
     // MARK: - Notification
     

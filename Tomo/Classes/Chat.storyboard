@@ -58,17 +58,26 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="追加済み" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dbt-8P-tLc">
+                                                    <rect key="frame" x="260" y="35" width="52" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" red="0.45098039220000002" green="0.45098039220000002" blue="0.45098039220000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="ElG-2I-vr2" firstAttribute="leading" secondItem="rQj-QL-gfV" secondAttribute="trailing" constant="8" id="4zr-aw-WLV"/>
                                                 <constraint firstItem="ElG-2I-vr2" firstAttribute="centerY" secondItem="rQj-QL-gfV" secondAttribute="centerY" id="Gyd-fR-wJg"/>
                                                 <constraint firstItem="rQj-QL-gfV" firstAttribute="leading" secondItem="wAE-bg-0Ok" secondAttribute="leading" constant="8" id="dpf-hq-Bfn"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="rQj-QL-gfV" secondAttribute="bottom" constant="8" id="ehG-bm-4GF"/>
+                                                <constraint firstAttribute="bottom" secondItem="Dbt-8P-tLc" secondAttribute="bottom" constant="8" id="fKO-Ks-G8z"/>
+                                                <constraint firstAttribute="trailing" secondItem="Dbt-8P-tLc" secondAttribute="trailing" constant="8" id="rPJ-La-Vxw"/>
                                                 <constraint firstItem="rQj-QL-gfV" firstAttribute="top" secondItem="wAE-bg-0Ok" secondAttribute="top" constant="8" id="xNn-BV-v2s"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="friendImageView" destination="rQj-QL-gfV" id="IlF-u6-cP1"/>
+                                            <outlet property="invitedLabel" destination="Dbt-8P-tLc" id="bZd-gh-Xh5"/>
                                             <outlet property="nameLabel" destination="ElG-2I-vr2" id="FMZ-lc-K2r"/>
                                         </connections>
                                     </tableViewCell>

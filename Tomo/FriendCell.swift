@@ -14,6 +14,8 @@ class FriendCell: UITableViewCell {
     @IBOutlet weak var friendImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     
+    @IBOutlet weak var invitedLabel: UILabel!
+    
     var friend: User! {
         didSet {
             if friend.hasIdOnly {
@@ -32,6 +34,8 @@ class FriendCell: UITableViewCell {
         }
         
         nameLabel.text = friend.fullName()
+        
+        invitedLabel.hidden = !DBController.isInvitedUser(friend)
     }
     
     override func awakeFromNib() {
