@@ -31,7 +31,7 @@ extension Message: JSQMessageData {
     }
     
     func messageHash() -> UInt {
-        return UInt(hash)
+        return UInt(bitPattern: hash)
     }
     
 }

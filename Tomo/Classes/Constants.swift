@@ -23,6 +23,7 @@ let kAPIBaseURL = NSURL(string: kAPIBaseURLString)
 
 let MaxWidth = 500
 let AvatarMaxWidth = 200
+let GroupImageWidth: CGFloat = 80
 
 let mapPath = kAPIBaseURLString + "/mobile/map"
 

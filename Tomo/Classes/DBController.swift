@@ -68,12 +68,6 @@ class DBController: NSObject {
 //        return Notification.MR_findByAttribute("type", withValue: type.rawValue, andOrderBy: "createDate", ascending: false) as! [Notification]
     }
     
-    class func save(done: (() -> Void)? = nil) {
-        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreWithCompletion { (b, error) -> Void in
-            done?()
-        }
-    }
-    
     // MARK: - Station
     
     class func stations() -> NSFetchedResultsController {
@@ -82,6 +76,20 @@ class DBController: NSObject {
     
     class func stationByName(name: String) -> Station {
         return Station.MR_findFirstByAttribute("name", withValue: name) as! Station
+    }
+    
+    // MARK: - Group
+    
+    class func groups() -> NSFetchedResultsController {
+        return Group.MR_fetchAllGroupedBy(nil, withPredicate: nil, sortedBy: "createDate", ascending: true)
+    }
+    
+    // MARK: - other
+    
+    class func save(done: (() -> Void)? = nil) {
+        NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreWithCompletion { (b, error) -> Void in
+            done?()
+        }
     }
     
     class func clearDB() {

@@ -68,6 +68,7 @@
 		290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144161ADF6D890048F3D8 /* MapViewController.swift */; };
 		2901441A1ADF983E0048F3D8 /* RegSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144191ADF983E0048F3D8 /* RegSignUpViewController.swift */; };
 		2901441C1ADFA1AB0048F3D8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901441B1ADFA1AB0048F3D8 /* String.swift */; };
+		290177221AE635F8009C7472 /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290177211AE635F8009C7472 /* GroupCell.swift */; };
 		291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */; };
 		291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF941AD229B3009D8BE3 /* CommentCell.swift */; };
 		291ADF961AD247C4009D8BE3 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
@@ -214,6 +215,7 @@
 		290144161ADF6D890048F3D8 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = Classes/MapViewController.swift; sourceTree = "<group>"; };
 		290144191ADF983E0048F3D8 /* RegSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegSignUpViewController.swift; path = Classes/RegSignUpViewController.swift; sourceTree = "<group>"; };
 		2901441B1ADFA1AB0048F3D8 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		290177211AE635F8009C7472 /* GroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCell.swift; path = Classes/GroupCell.swift; sourceTree = "<group>"; };
 		291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailViewController.swift; path = Classes/PostDetailViewController.swift; sourceTree = "<group>"; };
 		291ADF941AD229B3009D8BE3 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentCell.swift; path = Classes/CommentCell.swift; sourceTree = "<group>"; };
 		291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailHeaderView.swift; path = Classes/PostDetailHeaderView.swift; sourceTree = "<group>"; };
@@ -436,6 +438,7 @@
 			isa = PBXGroup;
 			children = (
 				292B9CC41AE6012A00604986 /* GroupListViewController.swift */,
+				290177211AE635F8009C7472 /* GroupCell.swift */,
 			);
 			name = "グループ";
 			sourceTree = "<group>";
@@ -933,6 +936,7 @@
 				292B9CCF1AE61C3F00604986 /* _Line.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
 				295272D01AD51B2300FC7833 /* S3.swift in Sources */,
+				290177221AE635F8009C7472 /* GroupCell.swift in Sources */,
 				178D64A21ACC10BE00185368 /* _Message.swift in Sources */,
 				290135121AC3A67200BBFE29 /* Model.xcdatamodeld in Sources */,
 				1712BE401ACE4135000A9C47 /* _Devices.swift in Sources */,

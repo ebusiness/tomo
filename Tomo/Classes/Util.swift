@@ -78,6 +78,10 @@ class Util: NSObject {
         application.registerForRemoteNotifications()
     }
     
+    class func scale() -> CGFloat {
+        return UIScreen.mainScreen().scale
+    }
+    
     // MARK: - SVProgress
     
     class func showTodo() {
