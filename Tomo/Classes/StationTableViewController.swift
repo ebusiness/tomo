@@ -32,15 +32,22 @@ class StationTableViewController: BaseViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let name = user.nearestSt {
-            let station = DBController.stationByName(name)
-            selectedIndex = frc.indexPathForObject(station)
-            
-            tableView.scrollToRowAtIndexPath(selectedIndex!, atScrollPosition: UITableViewScrollPosition.Middle, animated: false)
-        }
+        scrollToMyStation()
         
         ApiController.getStations { (error) -> Void in
-            
+            if self.selectedIndex == nil {
+                self.scrollToMyStation()
+            }
+        }
+    }
+    
+    func scrollToMyStation() {
+        if let name = user.nearestSt {
+            if let station = DBController.stationByName(name) {
+                selectedIndex = frc.indexPathForObject(station)
+                
+                tableView.scrollToRowAtIndexPath(selectedIndex!, atScrollPosition: UITableViewScrollPosition.Middle, animated: false)
+            }
         }
     }
     

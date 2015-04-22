@@ -74,8 +74,8 @@ class DBController: NSObject {
         return Station.MR_fetchAllGroupedBy(nil, withPredicate: nil, sortedBy: "zipcode", ascending: true)
     }
     
-    class func stationByName(name: String) -> Station {
-        return Station.MR_findFirstByAttribute("name", withValue: name) as! Station
+    class func stationByName(name: String) -> Station? {
+        return Station.MR_findFirstByAttribute("name", withValue: name) as? Station
     }
     
     // MARK: - Group
