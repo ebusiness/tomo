@@ -27,6 +27,10 @@ class NewsfeedViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if user?.id != Defaults["myId"].string {
+            self.navigationItem.rightBarButtonItem = nil
+        }
+        
         #if DEBUG
             if user != nil {
                 //            self.navigationItem.rightBarButtonItem = nil

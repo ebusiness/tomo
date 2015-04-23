@@ -21,18 +21,33 @@ class AccountEditViewController: UITableViewController {
     @IBOutlet weak var birthdayLabel: UILabel!
     @IBOutlet weak var addressTF: UITextField!
     @IBOutlet weak var profileLabel: UILabel!
+    @IBOutlet weak var logoutLabel: UILabel!
+    
+    @IBOutlet weak var avatarCell: UITableViewCell!
+    @IBOutlet weak var stationCell: UITableViewCell!
     
     var user: User!
     var path: String?
     
     var textViewInputVC: TextViewInputViewController?
     
+    var readOnlyMode = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         userImage.layer.cornerRadius = userImage.bounds.width / 2
         
-        idLabel.text = Defaults["email"].string
+        if readOnlyMode {
+            if DBController.isInvitedUser(user) || DBController.isFriend(user) {
+                logoutLabel.text = "追加済み"
+            } else {
+                logoutLabel.text = "追加"
+            }
+            
+            avatarCell.accessoryType = .None
+            stationCell.accessoryType = .None
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -40,7 +55,7 @@ class AccountEditViewController: UITableViewController {
         
         updateUI()
         
-        ApiController.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
+        ApiController.getUserInfo(user.id!, done: { (error) -> Void in
             if error == nil {
                 self.updateUI()
             }
@@ -48,7 +63,9 @@ class AccountEditViewController: UITableViewController {
     }
     
     func updateUI() {
-        user = DBController.myUser()
+        if user == nil {
+            user = DBController.myUser()
+        }
         
         if let vc = textViewInputVC {
             tableView.reloadData()
@@ -87,6 +104,7 @@ class AccountEditViewController: UITableViewController {
         telTF.text = user.telNo
         //自己紹介
         profileLabel.text = user.bioText
+        idLabel.text = user.email
     }
     
     func updateUser() {
@@ -132,10 +150,40 @@ class AccountEditViewController: UITableViewController {
         }
     }
 
+    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+        return !readOnlyMode
+    }
+    
     // MARK: - Table
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        if indexPath.section == 1 && indexPath.row == 0 {
+            let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
+            vc.user = user
+            navigationController?.pushViewController(vc, animated: true)
+            return
+        }
+        
+        if readOnlyMode {
+            if indexPath.section != 3 {
+                return
+            }
+            
+            if DBController.isFriend(user) || DBController.isInvitedUser(user) {
+                return
+            }
+            
+            logoutLabel.text = "追加済み"
+            ApiController.invite(user.id!, done: { (error) -> Void in
+                if error == nil {
+                    Util.showSuccess("友達追加リクエストを送信しました。")
+                }
+            })
+            
+            return
+        }
         
         if indexPath.section == 0 && indexPath.row == 0 {
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
@@ -166,12 +214,6 @@ class AccountEditViewController: UITableViewController {
         
         if indexPath.section == 0 && indexPath.row == 1 {
             nameTF.becomeFirstResponder()
-        }
-        
-        if indexPath.section == 1 && indexPath.row == 0 {
-            let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
-            vc.user = user
-            navigationController?.pushViewController(vc, animated: true)
         }
         
         // MARK: - 誕生日
@@ -275,7 +317,9 @@ extension AccountEditViewController: UITextFieldDelegate {
     
     // When clicking on the field, use this method.
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-        
+        if readOnlyMode {
+            return false
+        }
         
         // Create a button bar for the number pad
         let keyboardDoneButtonView = UIToolbar()

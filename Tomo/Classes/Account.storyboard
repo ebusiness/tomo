@@ -26,9 +26,9 @@
         <!--マイプロフィール-->
         <scene sceneID="mF7-hP-MEX">
             <objects>
-                <tableViewController id="5tV-aT-uj8" customClass="AccountEditViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AccountEditViewController" id="5tV-aT-uj8" customClass="AccountEditViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="xkB-U9-BLG">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="692"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="814"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="sectionIndexBackgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -121,7 +121,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3nL-oK-ETA" id="sqz-gC-voY">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="自分の投稿" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Fqu-jV-8q9">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="個人投稿" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Fqu-jV-8q9">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -364,16 +364,19 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="マイプロフィール" id="djp-Ng-32v"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="692"/>
+                    <size key="freeformSize" width="320" height="814"/>
                     <connections>
                         <outlet property="addressTF" destination="lMf-tC-LNN" id="KEm-Sm-H7w"/>
+                        <outlet property="avatarCell" destination="Cba-kL-0f5" id="6ks-hE-gra"/>
                         <outlet property="birthdayLabel" destination="pNG-Jb-1ei" id="kbe-Sf-xQR"/>
                         <outlet property="idLabel" destination="803-3c-Sgz" id="OD9-Qd-PI2"/>
+                        <outlet property="logoutLabel" destination="uem-l2-bBf" id="24H-Ob-ewM"/>
                         <outlet property="nameTF" destination="eew-LM-JjE" id="KgN-XG-uoq"/>
                         <outlet property="profileLabel" destination="zBA-aE-omB" id="hVB-aG-MPR"/>
                         <outlet property="profileLabelLeft" destination="GdW-z6-EkP" id="lOp-jI-RGz"/>
                         <outlet property="sexLabel" destination="Tx3-vY-kZE" id="5jt-Qd-LfA"/>
                         <outlet property="siteTF" destination="1Wx-5h-FK8" id="fIo-cn-ogT"/>
+                        <outlet property="stationCell" destination="DRZ-ux-LZ6" id="wTu-vi-Zab"/>
                         <outlet property="stationLabel" destination="xA6-1H-may" id="Ufm-ha-RRP"/>
                         <outlet property="telTF" destination="2ZF-Ig-x0S" id="D61-Iu-XBe"/>
                         <outlet property="userImage" destination="gxR-CX-QJ3" id="u76-PV-6zx"/>

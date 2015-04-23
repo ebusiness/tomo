@@ -17,24 +17,24 @@ class FriendListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     var friendInvitedNotifications = [Notification]()
-    var invitedUsers = [User]()
     var users = [User]()
     
+    // TODO: delete
     var nextView: NextView!
 
     var fromSearch = false
     
-    func friendAtIndexPath(indexPath: NSIndexPath) -> User {
-        var friend: User
-        
-        if indexPath.section == 1 {
-            friend = invitedUsers[indexPath.row]
-        } else {
-            friend = users[indexPath.row]
-        }
-        
-        return friend
-    }
+//    func friendAtIndexPath(indexPath: NSIndexPath) -> User {
+//        var friend: User
+//        
+//        if indexPath.section == 1 {
+//            friend = invitedUsers[indexPath.row]
+//        } else {
+//            friend = users[indexPath.row]
+//        }
+//        
+//        return friend
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +66,6 @@ class FriendListViewController: UIViewController {
 
     func loadData() {
         users = DBController.friends()
-        invitedUsers = DBController.invitedUsers()
         friendInvitedNotifications = DBController.unconfirmedNotification(type: .FriendInvited)
     }
     
@@ -96,29 +95,24 @@ class FriendListViewController: UIViewController {
 extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return 2
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count: Int
-        
-        switch section {
-        case 0:
-            count = friendInvitedNotifications.count
-        case 1:
-            count = invitedUsers.count
-        case 2:
-            count = users.count
-        default:
-            count = 0
+        if section == 0 && !fromSearch {
+            return 1
         }
         
-        return count
+        if section == 1 {
+            return users.count
+        }
+
+        return 0
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 94
+            return 44
         }
         
         return 60
@@ -126,14 +120,11 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("FriendInvitedCell", forIndexPath: indexPath) as! FriendInvitedCell
-            cell.friendInvitedNotification = friendInvitedNotifications[indexPath.row]
-            cell.delegate = self
-            
+            let cell = tableView.dequeueReusableCellWithIdentifier("NewCell", forIndexPath: indexPath) as! UITableViewCell
             return cell
         }
         
-        let friend = friendAtIndexPath(indexPath)
+        let friend = users[indexPath.row]
         
         let cell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! FriendCell
         
@@ -144,54 +135,37 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
         if indexPath.section == 0 {
-            return
+            performSegueWithIdentifier("SegueNewNotification", sender: nil)
         }
         
-        let friend = friendAtIndexPath(indexPath)
-        
-        if !fromSearch && !DBController.isInvitedUser(friend) {
-            let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: "Message") as! MessageViewController
-
-            vc.friend = friend
+        if indexPath.section == 1 {
+            let friend = users[indexPath.row]
             
-            navigationController?.pushViewController(vc, animated: true)
-        }
-        
-//        if nextView == .Posts {
-//            let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
-//            vc.user = friend
-//            navigationController?.pushViewController(vc, animated: true)
-//        }
-        
-        if fromSearch && !DBController.isInvitedUser(friend) && friend.id != DBController.myUser().id {
-            ApiController.invite(friend.id!, done: { (error) -> Void in
-                if error == nil {
-                    Util.showSuccess("友達追加リクエストを送信しました。")
-                    self.tableView.reloadData()
+            if !fromSearch {
+                let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: "Message") as! MessageViewController
 
-                    
-                    //追加要求済み表示
-//                    self.users = DBController.users()
-//                    self.tableView.reloadData()
-                }
-            })
-        }
-
-    }
-
-}
-
-// MARK: - FriendInvitedCellDelegate
-
-extension FriendListViewController: FriendInvitedCellDelegate {
-    
-    func friendInvitedCellAllowed(cell: FriendInvitedCell) {
-        ApiController.approveFriendInvite(cell.friendInvitedNotification.id!, done: { (error) -> Void in
-            if error == nil {
-                self.loadData()
-                self.tableView.reloadData()
+                vc.friend = friend
+                
+                navigationController?.pushViewController(vc, animated: true)
             }
-        })
+            
+    //        if nextView == .Posts {
+    //            let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
+    //            vc.user = friend
+    //            navigationController?.pushViewController(vc, animated: true)
+    //        }
+            
+            if fromSearch && friend.id != DBController.myUser().id {
+                let vc = Util.createViewControllerWithIdentifier("AccountEditViewController", storyboardName: "Account") as! AccountEditViewController
+                vc.user = friend
+                vc.readOnlyMode = true
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+
     }
+
 }
+

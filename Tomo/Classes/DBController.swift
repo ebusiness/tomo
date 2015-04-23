@@ -66,6 +66,10 @@ class DBController: NSObject {
         return find(invitedUsers(), user) != nil
     }
     
+    class func isFriend(user: User) -> Bool {
+        return find(friends(), user) != nil
+    }
+    
     // MARK: - Notification
     
     class func unconfirmedNotification(#type: NotificationType) -> [Notification] {
