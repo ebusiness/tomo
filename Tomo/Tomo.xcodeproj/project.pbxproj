@@ -117,6 +117,7 @@
 		2987F1E91AD79D1A00AA39CE /* _Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1E71AD79D1A00AA39CE /* _Chat.swift */; };
 		2987F1EA1AD79D1A00AA39CE /* _Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1E81AD79D1A00AA39CE /* _Messages.swift */; };
 		2987F1ED1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1EC1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m */; };
+		298C3B3F1AE89DE60011009D /* StationSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298C3B3E1AE89DE60011009D /* StationSelectViewController.swift */; };
 		29925BAA1AD6693F00F98BD7 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040451ACE669900D2A338 /* Alamofire.swift */; };
 		29925BAB1AD6693F00F98BD7 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040451ACE669900D2A338 /* Alamofire.swift */; };
 		299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299389441AD3B33800043D91 /* AmazonS3RequestManager.swift */; };
@@ -139,7 +140,7 @@
 		29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A5D1DC1ACBE85C00D95B77 /* RegPageData.swift */; };
 		29A5D1DF1ACBE9CB00D95B77 /* RegPageData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29A5D1DE1ACBE9CB00D95B77 /* RegPageData.plist */; };
 		29A8FA031AE768E000750A56 /* FriendAddMethodTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A8FA021AE768E000750A56 /* FriendAddMethodTableViewController.swift */; };
-		29A8FA051AE776F200750A56 /* SearchByStationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A8FA041AE776F200750A56 /* SearchByStationViewController.swift */; };
+		29A8FA051AE776F200750A56 /* SearchInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A8FA041AE776F200750A56 /* SearchInputViewController.swift */; };
 		29B00A5E1AE09E7E002AF208 /* NotificationMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29B00A5D1AE09E7E002AF208 /* NotificationMapping.plist */; };
 		29B00A641AE0A158002AF208 /* NotificationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B00A631AE0A158002AF208 /* NotificationListViewController.swift */; };
 		29B00A661AE0A1E6002AF208 /* Notification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29B00A651AE0A1E6002AF208 /* Notification.storyboard */; };
@@ -261,6 +262,7 @@
 		2987F1E81AD79D1A00AA39CE /* _Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Messages.swift; sourceTree = "<group>"; };
 		2987F1EB1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObjectContext+Tomo.h"; path = "Classes/NSManagedObjectContext+Tomo.h"; sourceTree = SOURCE_ROOT; };
 		2987F1EC1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObjectContext+Tomo.m"; path = "Classes/NSManagedObjectContext+Tomo.m"; sourceTree = SOURCE_ROOT; };
+		298C3B3E1AE89DE60011009D /* StationSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationSelectViewController.swift; path = Classes/StationSelectViewController.swift; sourceTree = "<group>"; };
 		299389431AD3B33800043D91 /* AmazonS3RequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonS3RequestManager.h; sourceTree = "<group>"; };
 		299389441AD3B33800043D91 /* AmazonS3RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestManager.swift; sourceTree = "<group>"; };
 		299389451AD3B33800043D91 /* AmazonS3SignatureHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonS3SignatureHelpers.h; sourceTree = "<group>"; };
@@ -276,7 +278,7 @@
 		29A5D1DE1ACBE9CB00D95B77 /* RegPageData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegPageData.plist; path = ../RegPageData.plist; sourceTree = "<group>"; };
 		29A5D1E01ACCCFB400D95B77 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		29A8FA021AE768E000750A56 /* FriendAddMethodTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendAddMethodTableViewController.swift; path = Classes/FriendAddMethodTableViewController.swift; sourceTree = "<group>"; };
-		29A8FA041AE776F200750A56 /* SearchByStationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchByStationViewController.swift; path = Classes/SearchByStationViewController.swift; sourceTree = "<group>"; };
+		29A8FA041AE776F200750A56 /* SearchInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchInputViewController.swift; path = Classes/SearchInputViewController.swift; sourceTree = "<group>"; };
 		29B00A5D1AE09E7E002AF208 /* NotificationMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NotificationMapping.plist; sourceTree = "<group>"; };
 		29B00A631AE0A158002AF208 /* NotificationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationListViewController.swift; path = Classes/NotificationListViewController.swift; sourceTree = "<group>"; };
 		29B00A651AE0A1E6002AF208 /* Notification.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Notification.storyboard; path = Classes/Notification.storyboard; sourceTree = "<group>"; };
@@ -462,7 +464,8 @@
 				295272D91AD6155300FC7833 /* FriendListViewController.swift */,
 				294185121AD777D500C6E913 /* MessageViewController.swift */,
 				29A8FA021AE768E000750A56 /* FriendAddMethodTableViewController.swift */,
-				29A8FA041AE776F200750A56 /* SearchByStationViewController.swift */,
+				29A8FA041AE776F200750A56 /* SearchInputViewController.swift */,
+				298C3B3E1AE89DE60011009D /* StationSelectViewController.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -893,6 +896,7 @@
 				292B9CD31AE61C4800604986 /* Line.swift in Sources */,
 				293004561AD6803100FC9100 /* CommentInputViewController.swift in Sources */,
 				178D64A01ACC10B600185368 /* Message.swift in Sources */,
+				298C3B3F1AE89DE60011009D /* StationSelectViewController.swift in Sources */,
 				1712BE4B1ACE5D0F000A9C47 /* _Comments.swift in Sources */,
 				292B9CD41AE61C4800604986 /* Station.swift in Sources */,
 				295272DA1AD6155300FC7833 /* FriendListViewController.swift in Sources */,
@@ -933,7 +937,7 @@
 				29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */,
 				292B9CCF1AE61C3F00604986 /* _Line.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
-				29A8FA051AE776F200750A56 /* SearchByStationViewController.swift in Sources */,
+				29A8FA051AE776F200750A56 /* SearchInputViewController.swift in Sources */,
 				295272D01AD51B2300FC7833 /* S3.swift in Sources */,
 				290177221AE635F8009C7472 /* GroupCell.swift in Sources */,
 				178D64A21ACC10BE00185368 /* _Message.swift in Sources */,

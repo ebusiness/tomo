@@ -8,9 +8,27 @@
 
 import UIKit
 
-class SearchByStationViewController: BaseViewController {
+enum SearchType: String {
+    case ID = "Tomo名"
+    case Station = "駅名"
+    
+    static let searchTypes = [ID, Station]
+    
+    func searchKey() -> String {
+        switch self {
+        case .ID:
+            return "email"
+        case .Station:
+            return "nearestSt"
+        }
+    }
+}
+
+class SearchInputViewController: BaseViewController {
 
     @IBOutlet weak var nameTF: UITextField!
+    
+    var searchType: SearchType!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +36,7 @@ class SearchByStationViewController: BaseViewController {
         let spacerView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         nameTF.leftViewMode = .Always
         nameTF.leftView = spacerView
+        nameTF.placeholder = searchType.rawValue
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,7 +54,7 @@ class SearchByStationViewController: BaseViewController {
         if nameTF.text.length > 0 {
             Util.showHUD(maskType: .None)
             
-            ApiController.getUsersByStationName(nameTF.text, done: { (users, error) -> Void in
+            ApiController.getUsers(key: searchType.searchKey(), value: nameTF.text, done: { (users, error) -> Void in
                 if let users = users {
                     if users.count > 0 {
                         let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController

@@ -431,7 +431,7 @@
         <!--Station Table View Controller-->
         <scene sceneID="KRz-GM-3cP">
             <objects>
-                <viewController id="Zs0-Ut-Imd" customClass="StationTableViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StationTableViewController" id="Zs0-Ut-Imd" customClass="StationTableViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DNE-1E-m6v"/>
                         <viewControllerLayoutGuide type="bottom" id="9jx-14-75b"/>
@@ -482,7 +482,63 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eCO-ud-nmP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="882" y="1057"/>
+            <point key="canvasLocation" x="833" y="1086"/>
+        </scene>
+        <!--Station Select View Controller-->
+        <scene sceneID="U5t-1I-4fP">
+            <objects>
+                <viewController storyboardIdentifier="StationSelectViewController" id="ghW-l3-0Nz" customClass="StationSelectViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NpN-wf-1CX"/>
+                        <viewControllerLayoutGuide type="bottom" id="pNf-Zs-S7Y"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fjC-sj-DJm">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="zsO-jS-XBS">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StationCell" textLabel="FD4-Tg-LZr" style="IBUITableViewCellStyleDefault" id="KIZ-Gl-yXX">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KIZ-Gl-yXX" id="J20-9S-vSD">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FD4-Tg-LZr">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="ghW-l3-0Nz" id="Fv5-of-o1U"/>
+                                    <outlet property="delegate" destination="ghW-l3-0Nz" id="dtI-T4-adv"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="zsO-jS-XBS" secondAttribute="bottom" id="6Qh-AB-afu"/>
+                            <constraint firstItem="zsO-jS-XBS" firstAttribute="top" secondItem="fjC-sj-DJm" secondAttribute="top" id="6SY-Ce-pCe"/>
+                            <constraint firstItem="zsO-jS-XBS" firstAttribute="leading" secondItem="fjC-sj-DJm" secondAttribute="leading" id="vFI-gj-APp"/>
+                            <constraint firstAttribute="trailing" secondItem="zsO-jS-XBS" secondAttribute="trailing" id="zay-Bt-zui"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="6eL-m7-Z2d"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="tableView" destination="zsO-jS-XBS" id="FEy-kk-gur"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h4e-ab-Vup" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1176" y="1086"/>
         </scene>
     </scenes>
     <resources>

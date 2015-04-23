@@ -277,9 +277,9 @@ extension ApiController {
         }
     }
     
-    class func getUsersByStationName(name: String, done: ([User]?, NSError?) -> Void) {
+    class func getUsers(#key: String, value: String, done: ([User]?, NSError?) -> Void) {
         var param = Dictionary<String, String>()
-        param["nearestSt"] = name
+        param[key] = value
         
         RKObjectManager.sharedManager().getObjectsAtPath("/mobile/stations/users", parameters: param, success: { (_, results) -> Void in
             done((results.array() as? [User]), nil)
@@ -373,6 +373,22 @@ extension ApiController {
 extension ApiController {
     
     class func getGroups(done: (NSError?) -> Void) {
+        getGroupsJoined { (error) -> Void in
+            self.getGroupsDiscover({ (error) -> Void in
+                done(error)
+            })
+        }
+    }
+    
+    class func getGroupsJoined(done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/groups/joined", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    
+    class func getGroupsDiscover(done: (NSError?) -> Void) {
         RKObjectManager.sharedManager().getObjectsAtPath("/groups/discover", parameters: nil, success: { (_, _) -> Void in
             done(nil)
             }) { (_, error) -> Void in
@@ -538,6 +554,7 @@ extension ApiController {
         
         //グループ
         addCommonResponseDescriptor(getGroupMapping(false), method: .GET, pathPattern: "/groups/discover", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getGroupMapping(false), method: .GET, pathPattern: "/groups/joined", keyPath: nil, statusCodes: nil)
         
         //駅
         addCommonResponseDescriptor(getStationMapping(false), method: .GET, pathPattern: "/mobile/stations", keyPath: nil, statusCodes: nil)
