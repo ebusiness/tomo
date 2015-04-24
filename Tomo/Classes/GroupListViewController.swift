@@ -13,7 +13,6 @@ class GroupListViewController: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var frc: NSFetchedResultsController!
-    var objectChanges = Dictionary<NSFetchedResultsChangeType, [NSIndexPath]>()
     
     func numberOfRowsInSection(section: Int) -> Int {
         return (frc.sections as! [NSFetchedResultsSectionInfo])[section].numberOfObjects
@@ -86,27 +85,23 @@ extension GroupListViewController: UITableViewDataSource, UITableViewDelegate {
 extension GroupListViewController: NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        objectChanges.removeAll(keepCapacity: false)
+        tableView.beginUpdates()
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
-        if objectChanges[type] == nil {
-            objectChanges[type] = [NSIndexPath]()
-        }
-        
         switch type {
         case .Insert:
             if let newIndexPath = newIndexPath {
-                objectChanges[type]!.append(newIndexPath)
+                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
             }
         case .Delete:
             if let indexPath = indexPath {
-                objectChanges[type]!.append(indexPath)
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
         case .Update:
             if let indexPath = indexPath {
-                objectChanges[type]!.append(indexPath)
+                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
             }
         case .Move:
             // TODO:
@@ -115,13 +110,15 @@ extension GroupListViewController: NSFetchedResultsControllerDelegate {
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        let insertedItems = self.objectChanges[.Insert]
-        if let insertedItems = insertedItems where insertedItems.count > 0 {
-            tableView.insertRowsAtIndexPaths(insertedItems, withRowAnimation: UITableViewRowAnimation.Automatic)
-        }
+        tableView.endUpdates()
         
-        if let updatedItems = self.objectChanges[.Update] where updatedItems.count > 0 {
-            tableView.reloadRowsAtIndexPaths(updatedItems, withRowAnimation: .None)
-        }
+//        let insertedItems = self.objectChanges[.Insert]
+//        if let insertedItems = insertedItems where insertedItems.count > 0 {
+//            tableView.insertRowsAtIndexPaths(insertedItems, withRowAnimation: UITableViewRowAnimation.Automatic)
+//        }
+//        
+//        if let updatedItems = self.objectChanges[.Update] where updatedItems.count > 0 {
+//            tableView.reloadRowsAtIndexPaths(updatedItems, withRowAnimation: .None)
+//        }
     }
 }
