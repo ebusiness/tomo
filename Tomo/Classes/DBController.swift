@@ -92,7 +92,11 @@ class DBController: NSObject {
     // MARK: - Group
     
     class func groups() -> NSFetchedResultsController {
-        return Group.MR_fetchAllGroupedBy(nil, withPredicate: nil, sortedBy: "createDate", ascending: true)
+        return Group.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "createDate != nil"), sortedBy: "createDate", ascending: false)
+        
+//        return Group.MR_fetchAllGroupedBy("sectionIdentifier", withPredicate: NSPredicate(format: "createDate != nil"), sortedBy: "createDate", ascending: false)
+        
+//        return Group.MR_fetchAllSortedBy("createDate", ascending: false, withPredicate: NSPredicate(format: "createDate != nil"), groupBy: "sectionIdentifier", delegate: nil)
     }
     
     // MARK: - other

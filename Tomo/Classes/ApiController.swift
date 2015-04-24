@@ -8,6 +8,17 @@
 
 import UIKit
 
+enum GroupType: String {
+    case Public = "public"
+    
+    func str() -> String {
+        switch self {
+        case Public:
+            return "一般公開"
+        }
+    }
+}
+
 private let store = RKObjectManager.sharedManager().managedObjectStore
 
 
@@ -395,6 +406,49 @@ extension ApiController {
                 done(error)
         }
     }
+    
+    class func createGroup(title: String, content: String?, type: GroupType = .Public, localImagePath: String?, done: (String?, NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        param["name"] = title
+        param["description"] = content
+        param["type"] = type.rawValue
+        
+        RKObjectManager.sharedManager().postObject(nil, path: "/groups", parameters: param as [NSObject : AnyObject], success: { (_, mappingResult) -> Void in
+            if let group = mappingResult.firstObject as? Group {
+                done(group.id, nil)
+            }
+            done(nil, nil)
+            }) { (_, error) -> Void in
+                done(nil, error)
+        }
+    }
+
+    class func editGroup(#groupId: String, key: String, value: String, done: (NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        param[key] = value
+        
+        // TODO: type, image
+        
+        RKObjectManager.sharedManager().patchObject(nil, path: "/groups/\(groupId)", parameters: param as [NSObject : AnyObject], success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    
+    class func changeGroupCover(localImagePath: String, groupId: String, done: (NSError?) -> Void) {
+        let fileName = localImagePath.lastPathComponent
+
+        let remotePath = Constants.groupCoverPath(groupId: groupId, fileName: fileName)
+        
+        S3Controller.uploadFile(name: fileName, localPath: localImagePath, remotePath: remotePath, done: { (error) -> Void in
+            if error == nil {
+                self.editGroup(groupId: groupId, key: "cover", value: fileName, done: { (error) -> Void in
+                    
+                })
+            }
+        })
+    }
 }
 
 // MARK: - Station
@@ -555,6 +609,8 @@ extension ApiController {
         //グループ
         addCommonResponseDescriptor(getGroupMapping(false), method: .GET, pathPattern: "/groups/discover", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getGroupMapping(false), method: .GET, pathPattern: "/groups/joined", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getGroupMapping(false), method: .POST, pathPattern: "/groups", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getGroupMapping(false), method: .PATCH, pathPattern: "/groups/:id", keyPath: nil, statusCodes: nil)
         
         //駅
         addCommonResponseDescriptor(getStationMapping(false), method: .GET, pathPattern: "/mobile/stations", keyPath: nil, statusCodes: nil)

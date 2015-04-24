@@ -47,4 +47,8 @@ class Constants: NSObject {
         let myId = Defaults["myId"].string!
         return "/users/\(myId)/photo/\(fileName)"
     }
+    
+    class func groupCoverPath(#groupId: String, fileName: String) -> String {
+        return "/groups/\(groupId)/cover/\(fileName)"
+    }
 }

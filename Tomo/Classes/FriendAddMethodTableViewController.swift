@@ -27,6 +27,8 @@ class FriendAddMethodTableViewController: UITableViewController {
     // MARK: - UITableView
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
         if indexPath.section == 1 {
             if indexPath.row == 0 {
                 let vc = Util.createViewControllerWithIdentifier("StationSelectViewController", storyboardName: "Account") as! StationSelectViewController

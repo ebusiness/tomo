@@ -1,14 +1,25 @@
 @objc(Group)
 class Group: _Group {
-
-    var typeStr: String? {
+    
+    var sectionIdentifier: String {
         get {
-            if type == "public" {
-                return "一般公開"
+            willAccessValueForKey("sectionIdentifier")
+            
+            var res: String = "B"
+            
+            if owner?.id == Defaults["myId"].string {
+                res = "A"
             }
             
-            return nil
+            for user in participants {
+                if user.id == Defaults["myId"].string {
+                    res = "A"
+                    break
+                }
+            }
+            
+            setPrimitiveValue(res, forKey: "sectionIdentifier")
+            return res
         }
     }
-
 }

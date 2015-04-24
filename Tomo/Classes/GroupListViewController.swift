@@ -13,9 +13,10 @@ class GroupListViewController: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var frc: NSFetchedResultsController!
+    var objectChanges = Dictionary<NSFetchedResultsChangeType, [NSIndexPath]>()
     
-    var count: Int {
-        return (frc.sections as! [NSFetchedResultsSectionInfo])[0].numberOfObjects
+    func numberOfRowsInSection(section: Int) -> Int {
+        return (frc.sections as! [NSFetchedResultsSectionInfo])[section].numberOfObjects
     }
     
     override func viewDidLoad() {
@@ -50,9 +51,12 @@ class GroupListViewController: BaseViewController {
 
 extension GroupListViewController: UITableViewDataSource, UITableViewDelegate {
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return frc.sections?.count ?? 0
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return count
-        return 0
+        return numberOfRowsInSection(section)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -81,7 +85,43 @@ extension GroupListViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension GroupListViewController: NSFetchedResultsControllerDelegate {
     
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        objectChanges.removeAll(keepCapacity: false)
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        if objectChanges[type] == nil {
+            objectChanges[type] = [NSIndexPath]()
+        }
+        
+        switch type {
+        case .Insert:
+            if let newIndexPath = newIndexPath {
+                objectChanges[type]!.append(newIndexPath)
+            }
+        case .Delete:
+            if let indexPath = indexPath {
+                objectChanges[type]!.append(indexPath)
+            }
+        case .Update:
+            if let indexPath = indexPath {
+                objectChanges[type]!.append(indexPath)
+            }
+        case .Move:
+            // TODO:
+            println("move")
+        }
+    }
+    
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        tableView.reloadData()
+        let insertedItems = self.objectChanges[.Insert]
+        if let insertedItems = insertedItems where insertedItems.count > 0 {
+            tableView.insertRowsAtIndexPaths(insertedItems, withRowAnimation: UITableViewRowAnimation.Automatic)
+        }
+        
+        if let updatedItems = self.objectChanges[.Update] where updatedItems.count > 0 {
+            tableView.reloadRowsAtIndexPaths(updatedItems, withRowAnimation: .None)
+        }
     }
 }
