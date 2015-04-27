@@ -24,6 +24,6 @@
 
 "load_earlier_messages" = "Load Earlier Messages";
 
-"send" = "Send";
+"send" = "送信";
 
-"new_message" = "New Message";
+"new_message" = "";

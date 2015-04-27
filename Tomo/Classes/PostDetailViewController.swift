@@ -105,4 +105,11 @@ extension PostDetailViewController: PostDetailHeaderViewDelegate {
     func commentBtnTapped() {
         performSegueWithIdentifier("SegueCommentInput", sender: nil)
     }
+    
+    func avatarImageTapped() {
+        let vc = Util.createViewControllerWithIdentifier("AccountEditViewController", storyboardName: "Account") as! AccountEditViewController
+        vc.user = post.owner
+        vc.readOnlyMode = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }

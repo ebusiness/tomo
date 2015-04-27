@@ -10,6 +10,7 @@ import UIKit
 
 @objc protocol PostDetailHeaderViewDelegate {
     func commentBtnTapped()
+    func avatarImageTapped()
 }
 
 class PostDetailHeaderView: UITableViewHeaderFooterView {
@@ -69,7 +70,13 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
         }
     }
 
+    // MARK: - Action
+    
     @IBAction func commentBtnTapped(sender: AnyObject) {
         delegate?.commentBtnTapped()
+    }
+    
+    @IBAction func avatarImageTapped(sender: UITapGestureRecognizer) {
+        delegate?.avatarImageTapped()
     }
 }

@@ -323,6 +323,12 @@ extension MessageViewController: JSQMessagesCollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, didTapAvatarImageView avatarImageView: UIImageView!, atIndexPath indexPath: NSIndexPath!) {
+        let message = frc.objectAtIndexPath(indexPath) as! Message
+        
+        let vc = Util.createViewControllerWithIdentifier("AccountEditViewController", storyboardName: "Account") as! AccountEditViewController
+        vc.user = message.from
+        vc.readOnlyMode = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, header headerView: JSQMessagesLoadEarlierHeaderView!, didTapLoadEarlierMessagesButton sender: UIButton!) {

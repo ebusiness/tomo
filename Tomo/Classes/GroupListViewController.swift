@@ -23,14 +23,16 @@ class GroupListViewController: BaseViewController {
 
         frc = DBController.groups()
         frc.delegate = self
+        
+        navigationItem.rightBarButtonItem = nil
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        ApiController.getGroups { (error) -> Void in
-            
-        }
+//        ApiController.getGroups { (error) -> Void in
+//            
+//        }
     }
     
 

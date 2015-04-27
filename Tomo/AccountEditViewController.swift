@@ -41,6 +41,8 @@ class AccountEditViewController: UITableViewController {
         if readOnlyMode {
             if DBController.isInvitedUser(user) || DBController.isFriend(user) {
                 logoutLabel.text = "追加済み"
+            } else if user.id == Defaults["myId"].string {
+                logoutLabel.text = "本人"
             } else {
                 logoutLabel.text = "追加"
             }
@@ -172,6 +174,10 @@ class AccountEditViewController: UITableViewController {
             }
             
             if DBController.isFriend(user) || DBController.isInvitedUser(user) {
+                return
+            }
+            
+            if user.id == Defaults["myId"].string {
                 return
             }
             
