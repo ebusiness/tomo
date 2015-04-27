@@ -28,7 +28,7 @@ class MessageViewController: JSQMessagesViewController {
     
     var frc: NSFetchedResultsController!
     var count: Int! {
-        return frc.sections![0].numberOfObjects
+        return frc.fetchedObjects?.count ?? 0
     }
     
     override func viewDidLoad() {

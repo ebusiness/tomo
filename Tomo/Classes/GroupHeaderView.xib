@@ -19,7 +19,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J4t-xZ-0wV">
-                    <rect key="frame" x="15" y="34" width="104" height="1"/>
+                    <rect key="frame" x="15" y="33" width="104" height="1"/>
                     <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="Kvs-GV-2zy"/>
@@ -39,7 +39,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IOR-mA-fNh">
-                    <rect key="frame" x="201" y="34" width="104" height="1"/>
+                    <rect key="frame" x="201" y="33" width="104" height="1"/>
                     <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="xQW-XR-23R"/>
@@ -54,17 +54,20 @@
                 <constraint firstItem="Blx-2v-ECl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="DXs-TQ-djq"/>
                 <constraint firstAttribute="centerX" secondItem="6P4-Pc-2UF" secondAttribute="centerX" id="Fbe-QK-bWP"/>
                 <constraint firstItem="Blx-2v-ECl" firstAttribute="centerY" secondItem="6P4-Pc-2UF" secondAttribute="centerY" id="K1k-92-Mb5"/>
-                <constraint firstItem="IOR-mA-fNh" firstAttribute="top" secondItem="NKO-oj-dJ6" secondAttribute="bottom" constant="1" id="Laj-ww-oHI"/>
+                <constraint firstItem="IOR-mA-fNh" firstAttribute="top" secondItem="NKO-oj-dJ6" secondAttribute="bottom" id="Laj-ww-oHI"/>
                 <constraint firstItem="NKO-oj-dJ6" firstAttribute="centerY" secondItem="6P4-Pc-2UF" secondAttribute="centerY" id="Ogj-KG-Spq"/>
                 <constraint firstItem="NKO-oj-dJ6" firstAttribute="trailing" secondItem="IOR-mA-fNh" secondAttribute="trailing" id="Qcb-ov-j2L"/>
                 <constraint firstItem="Blx-2v-ECl" firstAttribute="width" secondItem="J4t-xZ-0wV" secondAttribute="width" id="TGk-Ii-IZn"/>
                 <constraint firstItem="6P4-Pc-2UF" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="22" id="Xw4-WK-6zE"/>
-                <constraint firstItem="J4t-xZ-0wV" firstAttribute="top" secondItem="Blx-2v-ECl" secondAttribute="bottom" constant="1" id="Z8z-Tp-WyL"/>
+                <constraint firstItem="J4t-xZ-0wV" firstAttribute="top" secondItem="Blx-2v-ECl" secondAttribute="bottom" id="Z8z-Tp-WyL"/>
                 <constraint firstItem="NKO-oj-dJ6" firstAttribute="width" secondItem="IOR-mA-fNh" secondAttribute="width" id="cWZ-5r-LQF"/>
                 <constraint firstItem="Blx-2v-ECl" firstAttribute="leading" secondItem="J4t-xZ-0wV" secondAttribute="leading" id="kgO-v8-XsJ"/>
                 <constraint firstItem="6P4-Pc-2UF" firstAttribute="leading" secondItem="Blx-2v-ECl" secondAttribute="trailing" constant="20" id="qCn-mx-GQw"/>
                 <constraint firstItem="Blx-2v-ECl" firstAttribute="trailing" secondItem="J4t-xZ-0wV" secondAttribute="trailing" id="vL3-R4-wWW"/>
             </constraints>
+            <connections>
+                <outlet property="titleLabel" destination="6P4-Pc-2UF" id="GEI-Gx-kre"/>
+            </connections>
             <point key="canvasLocation" x="455" y="393"/>
         </view>
     </objects>

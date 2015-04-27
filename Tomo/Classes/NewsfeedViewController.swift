@@ -18,8 +18,8 @@ class NewsfeedViewController: BaseViewController {
     
     var user: User?
     
-    var count: Int {
-        return (postsFRC.sections as! [NSFetchedResultsSectionInfo])[0].numberOfObjects
+    var count: Int! {
+        return postsFRC.fetchedObjects?.count ?? 0
     }
     
     var objectChanges = Dictionary<NSFetchedResultsChangeType, [NSIndexPath]>()

@@ -23,16 +23,15 @@ class GroupListViewController: BaseViewController {
 
         frc = DBController.groups()
         frc.delegate = self
-        
-        navigationItem.rightBarButtonItem = nil
+        frc.performFetch(nil)
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-//        ApiController.getGroups { (error) -> Void in
-//            
-//        }
+        ApiController.getGroups { (error) -> Void in
+            
+        }
     }
     
 
@@ -60,6 +59,24 @@ extension GroupListViewController: UITableViewDataSource, UITableViewDelegate {
         return numberOfRowsInSection(section)
     }
     
+//    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        let title = frc.sectionIndexTitles[section] as! String
+//        return GroupSection(rawValue: title.toInt()!)?.groupSectionTitle()
+//    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 57
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let title = frc.sectionIndexTitles[section] as! String
+        
+        let headerView = Util.createViewWithNibName("GroupHeaderView") as! GroupHeaderView
+        headerView.groupSection = GroupSection(rawValue: title.toInt()!)
+        
+        return headerView
+    }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 168
     }
@@ -67,11 +84,16 @@ extension GroupListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("GroupCell", forIndexPath: indexPath) as! GroupCell
         
-        let group = frc.objectAtIndexPath(indexPath) as! Group
-        
-        cell.group = group
+        configCell(cell, indexPath: indexPath)
         
         return cell
+    }
+    
+    func configCell(cell: GroupCell?, indexPath: NSIndexPath) {
+        if let cell = cell {
+            let group = frc.objectAtIndexPath(indexPath) as! Group
+            cell.group = group
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -86,41 +108,35 @@ extension GroupListViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension GroupListViewController: NSFetchedResultsControllerDelegate {
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        tableView.beginUpdates()
-    }
-    
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        
-        switch type {
-        case .Insert:
-            if let newIndexPath = newIndexPath {
-                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
-            }
-        case .Delete:
-            if let indexPath = indexPath {
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            }
-        case .Update:
-            if let indexPath = indexPath {
-                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
-            }
-        case .Move:
-            // TODO:
-            println("move")
-        }
-    }
+//    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+//        tableView.beginUpdates()
+//    }
+//    
+//    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+//        
+//        switch type {
+//        case .Insert:
+//            if let newIndexPath = newIndexPath {
+//                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
+//            }
+//        case .Delete:
+//            if let indexPath = indexPath {
+//                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+//            }
+//        case .Update:
+//            if let indexPath = indexPath {
+//                configCell(tableView.cellForRowAtIndexPath(indexPath) as? GroupCell, indexPath: indexPath)
+//            }
+//        case .Move:
+//            if let indexPath = indexPath, newIndexPath = newIndexPath {
+//                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+//                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
+//            }
+//        }
+//    }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        tableView.endUpdates()
-        
-//        let insertedItems = self.objectChanges[.Insert]
-//        if let insertedItems = insertedItems where insertedItems.count > 0 {
-//            tableView.insertRowsAtIndexPaths(insertedItems, withRowAnimation: UITableViewRowAnimation.Automatic)
-//        }
-//        
-//        if let updatedItems = self.objectChanges[.Update] where updatedItems.count > 0 {
-//            tableView.reloadRowsAtIndexPaths(updatedItems, withRowAnimation: .None)
-//        }
+//        tableView.endUpdates()
+        tableView.reloadData()
     }
 }

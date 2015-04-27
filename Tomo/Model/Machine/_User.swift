@@ -33,6 +33,7 @@ enum UserRelationships: String {
     case devices = "devices"
     case friends = "friends"
     case groups = "groups"
+    case inGroups = "inGroups"
     case invited = "invited"
     case liked_comments = "liked_comments"
     case liked_posts = "liked_posts"
@@ -190,6 +191,9 @@ class _User: NSManagedObject {
     var groups: NSOrderedSet
 
     @NSManaged
+    var inGroups: NSOrderedSet
+
+    @NSManaged
     var invited: NSOrderedSet
 
     @NSManaged
@@ -345,6 +349,34 @@ extension _User {
         let mutable = self.groups.mutableCopy() as! NSMutableOrderedSet
         mutable.removeObject(value)
         self.groups = mutable.copy() as! NSOrderedSet
+    }
+
+}
+
+extension _User {
+
+    func addInGroups(objects: NSOrderedSet) {
+        let mutable = self.inGroups.mutableCopy() as! NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.inGroups = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeInGroups(objects: NSOrderedSet) {
+        let mutable = self.inGroups.mutableCopy() as! NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.inGroups = mutable.copy() as! NSOrderedSet
+    }
+
+    func addInGroupsObject(value: Group!) {
+        let mutable = self.inGroups.mutableCopy() as! NSMutableOrderedSet
+        mutable.addObject(value)
+        self.inGroups = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeInGroupsObject(value: Group!) {
+        let mutable = self.inGroups.mutableCopy() as! NSMutableOrderedSet
+        mutable.removeObject(value)
+        self.inGroups = mutable.copy() as! NSOrderedSet
     }
 
 }

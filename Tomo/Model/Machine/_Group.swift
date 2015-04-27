@@ -10,6 +10,7 @@ enum GroupAttributes: String {
     case detail = "detail"
     case id = "id"
     case name = "name"
+    case section = "section"
     case type = "type"
 }
 
@@ -74,6 +75,11 @@ class _Group: NSManagedObject {
     var name: String?
 
     // func validateName(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var section: NSNumber?
+
+    // func validateSection(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var type: String?

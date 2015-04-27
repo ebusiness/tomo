@@ -92,11 +92,20 @@ class DBController: NSObject {
     // MARK: - Group
     
     class func groups() -> NSFetchedResultsController {
-        return Group.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "createDate != nil"), sortedBy: "createDate", ascending: false)
+//        return Group.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "createDate != nil"), sortedBy: "createDate", ascending: false)
         
-//        return Group.MR_fetchAllGroupedBy("sectionIdentifier", withPredicate: NSPredicate(format: "createDate != nil"), sortedBy: "createDate", ascending: false)
+//        return Group.MR_fetchAllGroupedBy("section", withPredicate: NSPredicate(format: "createDate != nil"), sortedBy: "createDate", ascending: false)
         
-//        return Group.MR_fetchAllSortedBy("createDate", ascending: false, withPredicate: NSPredicate(format: "createDate != nil"), groupBy: "sectionIdentifier", delegate: nil)
+//        return Group.MR_fetchAllSortedBy("createDate, section", ascending: false, withPredicate: NSPredicate(format: "createDate != nil"), groupBy: "section", delegate: nil)
+        
+        let fetchRequest = NSFetchRequest(entityName: "Group")
+        let sort1 = NSSortDescriptor(key: "section", ascending: true)
+        let sort2 = NSSortDescriptor(key: "createDate", ascending: false)
+        fetchRequest.sortDescriptors = [sort1, sort2]
+        
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: NSManagedObjectContext.MR_defaultContext(), sectionNameKeyPath: "section", cacheName: "Root")
+        
+        return frc
     }
     
     // MARK: - other

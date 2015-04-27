@@ -19,6 +19,21 @@ enum GroupType: String {
     }
 }
 
+enum GroupSection: Int {
+    case Unknown, MyGroup, Discover
+    
+    func groupSectionTitle() -> String {
+        switch self {
+        case Unknown:
+            return "無し"
+        case MyGroup:
+            return "参加中のグループ"
+        case Discover:
+            return "おすすめのグループ"
+        }
+    }
+}
+
 private let store = RKObjectManager.sharedManager().managedObjectStore
 
 
@@ -389,19 +404,46 @@ extension ApiController {
                 done(error)
             })
         }
+        
+//        RKObjectManager.sharedManager().getObjectsAtPath("/mobile/group", parameters: nil, success: { (_, result) -> Void in
+//            done(nil)
+//            }) { (_, error) -> Void in
+//                done(error)
+//        }
     }
     
     class func getGroupsJoined(done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().getObjectsAtPath("/groups/joined", parameters: nil, success: { (_, _) -> Void in
-            done(nil)
+        RKObjectManager.sharedManager().getObjectsAtPath("/groups/joined", parameters: nil, success: { (_, result) -> Void in
+            if let result = result {
+                for group in (result.array() as! [Group]) {
+                    group.section = GroupSection.MyGroup.rawValue
+                }
+                
+                DBController.save(done: { () -> Void in
+                    done(nil)
+                })
+            } else {
+                done(nil)
+            }
             }) { (_, error) -> Void in
                 done(error)
         }
     }
     
     class func getGroupsDiscover(done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().getObjectsAtPath("/groups/discover", parameters: nil, success: { (_, _) -> Void in
-            done(nil)
+        RKObjectManager.sharedManager().getObjectsAtPath("/groups/discover", parameters: nil, success: { (_, result) -> Void in
+            if let result = result {
+                for group in (result.array() as! [Group]) {
+                    group.section = GroupSection.Discover.rawValue
+                }
+                
+                DBController.save(done: { () -> Void in
+                    done(nil)
+                })
+            } else {
+                done(nil)
+            }
+            
             }) { (_, error) -> Void in
                 done(error)
         }
@@ -611,6 +653,7 @@ extension ApiController {
         addCommonResponseDescriptor(getGroupMapping(false), method: .GET, pathPattern: "/groups/joined", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getGroupMapping(false), method: .POST, pathPattern: "/groups", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getGroupMapping(false), method: .PATCH, pathPattern: "/groups/:id", keyPath: nil, statusCodes: nil)
+//        addCommonResponseDescriptor(getSectionedGroupMapping(), method: .GET, pathPattern: "/mobile/group", keyPath: nil, statusCodes: nil)
         
         //駅
         addCommonResponseDescriptor(getStationMapping(false), method: .GET, pathPattern: "/mobile/stations", keyPath: nil, statusCodes: nil)
@@ -645,6 +688,8 @@ extension ApiController {
         mapping.addPropertyMappingById("User",fromKey: "friends",toKeyPath: "friends")
         mapping.addPropertyMappingById("User",fromKey: "invited",toKeyPath: "invited")
         mapping.addPropertyMappingById("Group",fromKey: "groups",toKeyPath: "groups")
+        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "mygroup", toKeyPath: "mygroup", withMapping: _groupMapping))
+        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "discover", toKeyPath: "discover", withMapping: _groupMapping))
         mapping.addPropertyMappingById("Post",fromKey: "posts",toKeyPath: "posts")
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "devices", toKeyPath: "devices", withMapping: _devicesMapping))
         
@@ -715,6 +760,31 @@ extension ApiController {
  
         return mapping
     }
+    
+//    private class func getSectionedGroupMapping(isidonly:Bool) -> RKEntityMapping {
+//        let mapping = RKEntityMapping(forEntityForName: "Group", inManagedObjectStore: store)
+//        
+//        if let id = identification {
+//            mapping.identificationAttributes = id
+//        }else{
+//            mapping.identificationAttributes = ["id"]
+//        }
+//        
+//        var plistname = entityName + "Mapping"
+//        if let name = pListName {
+//            plistname = name
+//        }
+//        let path = NSBundle.mainBundle().pathForResource(plistname, ofType: "plist")
+//        let Plist = NSDictionary(contentsOfFile: path!)!
+//        mapping.addAttributeMappingsFromDictionary(Plist as [NSObject : AnyObject])
+//        return mapping
+//        var mapping = _groupMapping
+//        mapping.addPropertyMappingById("User",fromKey: "_owner",toKeyPath: "owner")
+//        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "posts", toKeyPath: "posts", withMapping: _postMapping))
+//        mapping.addPropertyMappingById("User",fromKey: "participants",toKeyPath: "participants")
+//        
+//        return mapping
+//    }
     
     //station
     private class func getStationMapping(isidonly:Bool)->RKEntityMapping{

@@ -14,8 +14,8 @@ class StationTableViewController: BaseViewController {
     
     var frc: NSFetchedResultsController!
 
-    var count: Int {
-        return (frc.sections as! [NSFetchedResultsSectionInfo])[0].numberOfObjects
+    var count: Int! {
+        return frc.fetchedObjects?.count ?? 0
     }
     
     var user: User!

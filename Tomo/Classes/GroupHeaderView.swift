@@ -10,12 +10,18 @@ import UIKit
 
 class GroupHeaderView: UITableViewHeaderFooterView {
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        contentView.backgroundColor = UIColor.clearColor()
     }
-    */
+    
+    var groupSection: GroupSection! {
+        didSet {
+            titleLabel.text = groupSection.groupSectionTitle()
+        }
+    }
 
 }
