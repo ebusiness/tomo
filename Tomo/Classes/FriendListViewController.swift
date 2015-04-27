@@ -12,7 +12,7 @@ enum NextView: Int {
     case UserDetailFriend, UserDetail, Chat, Posts, AddFriend, UserDetailInvited
 }
 
-class FriendListViewController: UIViewController {
+class FriendListViewController: BaseViewController {
 
     @IBOutlet weak var tableView: UITableView!
 

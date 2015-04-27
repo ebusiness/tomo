@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MapViewController: UIViewController {
+class MapViewController: BaseViewController {
 
     @IBOutlet weak var webView: UIWebView!
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TextFieldInputViewController: UITableViewController {
+class TextFieldInputViewController: BaseTableViewController {
 
     @IBOutlet weak var textField: UITextField!
     

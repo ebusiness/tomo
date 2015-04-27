@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FriendAddMethodTableViewController: UITableViewController {
+class FriendAddMethodTableViewController: BaseTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

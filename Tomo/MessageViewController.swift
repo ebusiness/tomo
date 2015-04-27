@@ -106,7 +106,12 @@ class MessageViewController: JSQMessagesViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        println("メモリー不足")
+        
+        #if DEBUG
+            Util.showInfo("メモリー不足")
+        #endif
     }
     
     // MARK: - Action
@@ -180,6 +185,7 @@ class MessageViewController: JSQMessagesViewController {
     }
 
     deinit {
+        println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }

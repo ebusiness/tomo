@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AccountViewController: UIViewController {
+class AccountViewController: BaseViewController {
 
     var editVC: AccountEditViewController?
     

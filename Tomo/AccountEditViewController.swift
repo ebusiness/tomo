@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AccountEditViewController: UITableViewController {
+class AccountEditViewController: BaseTableViewController {
 
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var nameTF: UITextField!

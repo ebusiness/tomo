@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddPostViewController: UITableViewController {
+class AddPostViewController: BaseTableViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!

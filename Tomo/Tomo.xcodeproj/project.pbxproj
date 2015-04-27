@@ -173,6 +173,8 @@
 		29DF4CD61AE0EDC4003A4962 /* _Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD51AE0EDC4003A4962 /* _Notification.swift */; };
 		29DF4CD71AE0EFA2003A4962 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD31AE0EDB7003A4962 /* Notification.swift */; };
 		29DF4CD81AE0EFE5003A4962 /* _Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD51AE0EDC4003A4962 /* _Notification.swift */; };
+		29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */; };
+		29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */; };
 		29ED0C7C1AE48CBC00B51C7E /* Group.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29ED0C7B1AE48CBC00B51C7E /* Group.storyboard */; };
 		29ED0C7E1AE4AC0900B51C7E /* TextFieldInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29ED0C7D1AE4AC0900B51C7E /* TextFieldInputViewController.swift */; };
 		29ED0C801AE50B0F00B51C7E /* TextViewInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29ED0C7F1AE50B0F00B51C7E /* TextViewInputViewController.swift */; };
@@ -310,6 +312,8 @@
 		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
 		29DF4CD31AE0EDB7003A4962 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		29DF4CD51AE0EDC4003A4962 /* _Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Notification.swift; sourceTree = "<group>"; };
+		29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SocketController.swift; path = Classes/SocketController.swift; sourceTree = "<group>"; };
+		29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTableViewController.swift; path = Classes/BaseTableViewController.swift; sourceTree = "<group>"; };
 		29ED0C7B1AE48CBC00B51C7E /* Group.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Group.storyboard; path = Classes/Group.storyboard; sourceTree = "<group>"; };
 		29ED0C7D1AE4AC0900B51C7E /* TextFieldInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextFieldInputViewController.swift; path = Classes/TextFieldInputViewController.swift; sourceTree = "<group>"; };
 		29ED0C7F1AE50B0F00B51C7E /* TextViewInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewInputViewController.swift; sourceTree = "<group>"; };
@@ -518,6 +522,7 @@
 				290134F71AC39F4600BBFE29 /* ApiController.swift */,
 				29C1DA781AD36659009A02CC /* S3Controller.swift */,
 				2987F1E11AD797B600AA39CE /* ChatController.swift */,
+				29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -553,7 +558,6 @@
 				2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */,
 				29A5D1D81ACBE01700D95B77 /* RegPageView.swift */,
 				29CA44131AD4B9E8009EB177 /* LoadingViewController.swift */,
-				2942CCD01ACCE75A007CDC97 /* BaseViewController.swift */,
 				290144191ADF983E0048F3D8 /* RegSignUpViewController.swift */,
 			);
 			name = "ログイン";
@@ -562,8 +566,8 @@
 		299389561AD3C7CA00043D91 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				29EA55B31AEDD27D006A1F41 /* Base */,
 				299389541AD3C77300043D91 /* ログイン */,
-				29CA44181AD4CA0B009EB177 /* タブ */,
 				299389571AD3D13700043D91 /* ホーム */,
 				294185141AD777E700C6E913 /* トーク */,
 				292B9CC61AE6012E00604986 /* グループ */,
@@ -615,15 +619,6 @@
 			name = "通知";
 			sourceTree = "<group>";
 		};
-		29CA44181AD4CA0B009EB177 /* タブ */ = {
-			isa = PBXGroup;
-			children = (
-				295272D31AD60E9300FC7833 /* DebugViewController.swift */,
-				29CA44161AD4C9FF009EB177 /* TabBarController.swift */,
-			);
-			name = "タブ";
-			sourceTree = "<group>";
-		};
 		29CA44911AD4DEEA009EB177 /* 設定 */ = {
 			isa = PBXGroup;
 			children = (
@@ -634,6 +629,17 @@
 				29ED0C7D1AE4AC0900B51C7E /* TextFieldInputViewController.swift */,
 			);
 			name = "設定";
+			sourceTree = "<group>";
+		};
+		29EA55B31AEDD27D006A1F41 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				295272D31AD60E9300FC7833 /* DebugViewController.swift */,
+				29CA44161AD4C9FF009EB177 /* TabBarController.swift */,
+				2942CCD01ACCE75A007CDC97 /* BaseViewController.swift */,
+				29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */,
+			);
+			name = Base;
 			sourceTree = "<group>";
 		};
 		B0C026D5F93A7DC22E9DF996 /* Pods */ = {
@@ -886,6 +892,7 @@
 				2901351A1AC3A79500BBFE29 /* _User.swift in Sources */,
 				290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */,
 				1712BE481ACE5A54000A9C47 /* Comments.swift in Sources */,
+				29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */,
 				29CA44951AD4F6F1009EB177 /* AccountEditViewController.swift in Sources */,
 				2942CCD11ACCE75A007CDC97 /* BaseViewController.swift in Sources */,
 				29CA44901AD4DEE4009EB177 /* AccountViewController.swift in Sources */,
@@ -914,6 +921,7 @@
 				29DF4CD61AE0EDC4003A4962 /* _Notification.swift in Sources */,
 				298C3B431AE8B76F0011009D /* NewNotificationListViewController.swift in Sources */,
 				29B00A6E1AE0A947002AF208 /* FriendInvitedCell.swift in Sources */,
+				29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */,
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
 				29A5D1D91ACBE01700D95B77 /* RegPageView.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,

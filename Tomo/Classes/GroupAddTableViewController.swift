@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GroupAddTableViewController: UITableViewController {
+class GroupAddTableViewController: BaseTableViewController {
 
     @IBOutlet weak var titleTF: UITextField!
     @IBOutlet weak var imageView: UIImageView!
