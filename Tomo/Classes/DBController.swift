@@ -102,7 +102,7 @@ class DBController: NSObject {
         let sort1 = NSSortDescriptor(key: "section", ascending: true)
         let sort2 = NSSortDescriptor(key: "createDate", ascending: false)
         fetchRequest.sortDescriptors = [sort1, sort2]
-        fetchRequest.predicate = NSPredicate(format: "createDate != nil")
+        fetchRequest.predicate = NSPredicate(format: "createDate != nil AND section > 0")
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: NSManagedObjectContext.MR_defaultContext(), sectionNameKeyPath: "section", cacheName: nil)
         

@@ -156,5 +156,6 @@ extension GroupListViewController: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         tableView.endUpdates()
+//        tableView.reloadData()
     }
 }

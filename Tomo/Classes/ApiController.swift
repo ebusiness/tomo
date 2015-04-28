@@ -461,8 +461,10 @@ extension ApiController {
                 DBController.save(done: { () -> Void in
                     done(group.id, nil)
                 })
+            } else {
+                done(nil, nil)
             }
-            done(nil, nil)
+            
             }) { (_, error) -> Void in
                 done(nil, error)
         }
@@ -480,8 +482,9 @@ extension ApiController {
                 DBController.save(done: { () -> Void in
                     done(nil)
                 })
+            } else {
+                done(nil)
             }
-            done(nil)
             }) { (_, error) -> Void in
                 done(error)
         }

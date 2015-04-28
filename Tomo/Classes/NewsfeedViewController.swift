@@ -47,7 +47,7 @@ class NewsfeedViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if displayMode == .Detail {
+        if displayMode == .Detail || displayMode == .Group {
             self.navigationItem.rightBarButtonItem = nil
         }
         
