@@ -78,11 +78,9 @@ extension GroupListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 168 - 34 - 12
-        }
+        let group = frc.objectAtIndexPath(indexPath) as! Group
         
-        return 168
+        return GroupCell.height(group: group)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -105,6 +103,10 @@ extension GroupListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let group = frc.objectAtIndexPath(indexPath) as! Group
 
+        let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
+        vc.displayMode = .Group
+        vc.group = group
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

@@ -9,7 +9,7 @@
 import UIKit
 
 enum NewsfeedDisplayMode {
-    case Normal, Account, Detail
+    case Normal, Account, Detail, Group
 }
 
 class NewsfeedViewController: BaseViewController {
@@ -23,11 +23,26 @@ class NewsfeedViewController: BaseViewController {
     var user: User?
     var displayMode = NewsfeedDisplayMode.Normal
     
+    var group: Group?
+    
+    func isHeaderSection(section: Int) -> Bool {
+        return displayMode == .Group && section == 0
+    }
+    
     var count: Int! {
         return frc.fetchedObjects?.count ?? 0
     }
     
     var objectChanges = Dictionary<NSFetchedResultsChangeType, [NSIndexPath]>()
+    
+    func postAtIndexPath(indexPath: NSIndexPath) -> Post {
+        if displayMode != .Group {
+            return frc.objectAtIndexPath(indexPath) as! Post
+        }
+        
+        let realIndexPath = NSIndexPath(forItem: indexPath.item, inSection: indexPath.section - 1)
+        return frc.objectAtIndexPath(realIndexPath) as! Post
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,9 +67,7 @@ class NewsfeedViewController: BaseViewController {
     }
     
     func setupLayout() {
-        let layout = CHTCollectionViewWaterfallLayout()
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        collectionView.collectionViewLayout = layout
+        collectionView.collectionViewLayout = CHTCollectionViewWaterfallLayout()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -117,12 +130,34 @@ class NewsfeedViewController: BaseViewController {
 
 extension NewsfeedViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return displayMode == .Group ? 2 : 1
+    }
+    
+    func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        if isHeaderSection(section) {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
+        
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if isHeaderSection(section) {
+            return 1
+        }
+        
         return count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let post = frc.objectAtIndexPath(indexPath) as! Post
+        if isHeaderSection(indexPath.section) {
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("GroupPostsHeaderCell", forIndexPath: indexPath) as! GroupPostsHeaderCell
+            cell.group = group!
+            return cell
+        }
+        
+        let post = postAtIndexPath(indexPath)
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("NewsfeedCell", forIndexPath: indexPath) as! NewsfeedCell
         
@@ -134,7 +169,7 @@ extension NewsfeedViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let post = frc.objectAtIndexPath(indexPath) as! Post
+        let post = postAtIndexPath(indexPath)
         
         performSegueWithIdentifier("SeguePostDetail", sender: post.id!)
     }
@@ -144,9 +179,20 @@ extension NewsfeedViewController: UICollectionViewDataSource, UICollectionViewDe
 
 extension NewsfeedViewController: CHTCollectionViewDelegateWaterfallLayout {
     
-    func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize {
+    func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, columnCountForSection section: Int) -> Int {
+        if isHeaderSection(section) {
+            return 1
+        }
         
-        let post = frc.objectAtIndexPath(indexPath) as! Post
+        return 2
+    }
+    
+    func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize {
+        if isHeaderSection(indexPath.section) {
+            return CGSize(width: collectionView.bounds.width, height: GroupPostsHeaderCell.height(group: group!))
+        }
+        
+        let post = postAtIndexPath(indexPath)
         
         if cellForHeight == nil {
             cellForHeight = Util.createViewWithNibName("NewsfeedCell") as! NewsfeedCell
@@ -231,4 +277,3 @@ extension NewsfeedViewController: UIImagePickerControllerDelegate, UINavigationC
         })
     }
 }
-
