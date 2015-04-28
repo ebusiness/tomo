@@ -78,6 +78,10 @@ extension GroupListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return 168 - 34 - 12
+        }
+        
         return 168
     }
     
@@ -150,6 +154,5 @@ extension GroupListViewController: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         tableView.endUpdates()
-//        tableView.reloadData()
     }
 }

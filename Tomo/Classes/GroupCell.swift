@@ -15,6 +15,7 @@ class GroupCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var userCountLabel: UILabel!
+    @IBOutlet weak var joinBtn: UIButton!
     
     var group: Group! {
         didSet {
@@ -32,6 +33,8 @@ class GroupCell: UITableViewCell {
             nameLabel.text = group.name
             typeLabel.text = GroupType(rawValue: group.type ?? "")?.str()
             userCountLabel.text = "\(group.participants.count)人のメンバー"
+            
+            joinBtn.hidden = group.section == GroupSection.MyGroup.rawValue
         }
     }
     

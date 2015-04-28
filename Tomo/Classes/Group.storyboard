@@ -97,7 +97,6 @@
                                                         <constraint firstAttribute="trailing" secondItem="fHa-VB-Xrf" secondAttribute="trailing" constant="14" id="Vs8-hW-tEy"/>
                                                         <constraint firstItem="HoM-Qu-CnI" firstAttribute="leading" secondItem="GGy-Is-aPe" secondAttribute="leading" constant="14" id="YqE-kZ-0WO"/>
                                                         <constraint firstItem="fHa-VB-Xrf" firstAttribute="leading" secondItem="GGy-Is-aPe" secondAttribute="leading" constant="14" id="cPh-sO-6Lc"/>
-                                                        <constraint firstAttribute="bottom" secondItem="fHa-VB-Xrf" secondAttribute="bottom" constant="12" id="eZx-TS-yoH"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -112,6 +111,7 @@
                                         <connections>
                                             <outlet property="backView" destination="GGy-Is-aPe" id="1uy-72-hWX"/>
                                             <outlet property="groupImageView" destination="YVz-BO-W4M" id="ukA-8D-o9G"/>
+                                            <outlet property="joinBtn" destination="fHa-VB-Xrf" id="CQK-DS-EST"/>
                                             <outlet property="nameLabel" destination="mdk-Gd-4wN" id="1fh-vc-ayD"/>
                                             <outlet property="typeLabel" destination="ocq-W9-ChI" id="XrL-EF-PiR"/>
                                             <outlet property="userCountLabel" destination="Llf-Qk-hZ4" id="g4o-c9-2um"/>
