@@ -59,5 +59,7 @@ class GroupCell: UITableViewCell {
     // MARK: - Action
     
     @IBAction func joinBtnTapped(sender: AnyObject) {
+        ApiController.joinGroup(group.id!, done: { (error) -> Void in
+        })
     }
 }

@@ -503,6 +503,23 @@ extension ApiController {
             }
         })
     }
+    
+    class func joinGroup(groupId: String, done: (NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        
+        RKObjectManager.sharedManager().patchObject(nil, path: "/groups/\(groupId)/join", parameters: param as [NSObject : AnyObject], success: { (_, mappingResult) -> Void in
+            if let group = mappingResult.firstObject as? Group {
+                group.section = GroupSection.MyGroup.rawValue
+                DBController.save(done: { () -> Void in
+                    done(nil)
+                })
+            } else {
+                done(nil)
+            }
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
 }
 
 // MARK: - Station
@@ -665,6 +682,7 @@ extension ApiController {
         addCommonResponseDescriptor(getGroupMapping(false), method: .GET, pathPattern: "/groups/joined", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getGroupMapping(false), method: .POST, pathPattern: "/groups", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getGroupMapping(false), method: .PATCH, pathPattern: "/groups/:id", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getGroupMapping(false), method: .PATCH, pathPattern: "/groups/:id/join", keyPath: nil, statusCodes: nil)
 //        addCommonResponseDescriptor(getSectionedGroupMapping(), method: .GET, pathPattern: "/mobile/group", keyPath: nil, statusCodes: nil)
         
         //駅

@@ -154,6 +154,8 @@ extension NewsfeedViewController: UICollectionViewDataSource, UICollectionViewDe
         if isHeaderSection(indexPath.section) {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("GroupPostsHeaderCell", forIndexPath: indexPath) as! GroupPostsHeaderCell
             cell.group = group!
+            cell.delegate = self
+            
             return cell
         }
         
@@ -169,6 +171,10 @@ extension NewsfeedViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if isHeaderSection(indexPath.section) {
+            return
+        }
+        
         let post = postAtIndexPath(indexPath)
         
         performSegueWithIdentifier("SeguePostDetail", sender: post.id!)
@@ -252,6 +258,18 @@ extension NewsfeedViewController: NSFetchedResultsControllerDelegate {
             }
         }, completion: nil)
     }
+}
+
+// MARK: - 
+
+extension NewsfeedViewController: GroupPostsHeaderCellDelegate {
+    
+    func joinBtnTapped() {
+        ApiController.joinGroup(group!.id!, done: { (error) -> Void in
+            self.collectionView.reloadData()
+        })
+    }
+    
 }
 
 // MARK: - UIImagePickerControllerDelegate

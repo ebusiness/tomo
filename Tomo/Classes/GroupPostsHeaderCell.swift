@@ -8,6 +8,10 @@
 
 import UIKit
 
+@objc protocol GroupPostsHeaderCellDelegate {
+    func joinBtnTapped()
+}
+
 class GroupPostsHeaderCell: UICollectionViewCell {
     
     @IBOutlet weak var backView: UIView!
@@ -16,6 +20,8 @@ class GroupPostsHeaderCell: UICollectionViewCell {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var userCountLabel: UILabel!
     @IBOutlet weak var joinBtn: UIButton!
+    
+    var delegate: GroupPostsHeaderCellDelegate?
     
     var group: Group! {
         didSet {
@@ -59,6 +65,7 @@ class GroupPostsHeaderCell: UICollectionViewCell {
     // MARK: - Action
     
     @IBAction func joinBtnTapped(sender: AnyObject) {
+        delegate?.joinBtnTapped()
     }
     
 }
