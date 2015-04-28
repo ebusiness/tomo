@@ -24,7 +24,7 @@ class DBController: NSObject {
         return Post.MR_findFirstByAttribute("id", withValue: postId) as! Post
     }
     
-    class func newsfeeds(user: User? = nil) -> NSFetchedResultsController {
+    class func newsfeeds(user: User?) -> NSFetchedResultsController {
         if let user = user {
             return Post.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "owner=%@ AND createDate != nil", user), sortedBy: "createDate", ascending: false)
         }
@@ -102,8 +102,9 @@ class DBController: NSObject {
         let sort1 = NSSortDescriptor(key: "section", ascending: true)
         let sort2 = NSSortDescriptor(key: "createDate", ascending: false)
         fetchRequest.sortDescriptors = [sort1, sort2]
+        fetchRequest.predicate = NSPredicate(format: "createDate != nil")
         
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: NSManagedObjectContext.MR_defaultContext(), sectionNameKeyPath: "section", cacheName: "Root")
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: NSManagedObjectContext.MR_defaultContext(), sectionNameKeyPath: "section", cacheName: nil)
         
         return frc
     }

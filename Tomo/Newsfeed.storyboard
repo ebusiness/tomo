@@ -36,8 +36,8 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZrA-dX-J4y">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="e3A-oM-bdZ">
-                                    <size key="itemSize" width="145" height="357"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iTx-cU-p7H">
+                                    <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -57,11 +57,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="uKo-2v-h3N">
-                        <barButtonItem key="leftBarButtonItem" title="機能一覧" id="u1b-jn-j74">
-                            <connections>
-                                <action selector="debug:" destination="pQ2-07-Tsh" id="eKQ-lU-4Hr"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="camera" id="dct-t8-x0i">
                             <connections>
                                 <action selector="addPostBtnTapped:" destination="pQ2-07-Tsh" id="qTU-aL-mnm"/>

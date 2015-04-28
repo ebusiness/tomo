@@ -457,7 +457,10 @@ extension ApiController {
         
         RKObjectManager.sharedManager().postObject(nil, path: "/groups", parameters: param as [NSObject : AnyObject], success: { (_, mappingResult) -> Void in
             if let group = mappingResult.firstObject as? Group {
-                done(group.id, nil)
+                group.section = GroupSection.MyGroup.rawValue
+                DBController.save(done: { () -> Void in
+                    done(group.id, nil)
+                })
             }
             done(nil, nil)
             }) { (_, error) -> Void in
@@ -471,7 +474,13 @@ extension ApiController {
         
         // TODO: type, image
         
-        RKObjectManager.sharedManager().patchObject(nil, path: "/groups/\(groupId)", parameters: param as [NSObject : AnyObject], success: { (_, _) -> Void in
+        RKObjectManager.sharedManager().patchObject(nil, path: "/groups/\(groupId)", parameters: param as [NSObject : AnyObject], success: { (_, mappingResult) -> Void in
+            if let group = mappingResult.firstObject as? Group {
+                group.section = GroupSection.MyGroup.rawValue
+                DBController.save(done: { () -> Void in
+                    done(nil)
+                })
+            }
             done(nil)
             }) { (_, error) -> Void in
                 done(error)

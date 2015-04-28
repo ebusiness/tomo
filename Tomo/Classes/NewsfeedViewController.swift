@@ -8,18 +8,23 @@
 
 import UIKit
 
+enum NewsfeedDisplayMode {
+    case Normal, Account, Detail
+}
+
 class NewsfeedViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
 
     var cellForHeight: NewsfeedCell!
     
-    var postsFRC: NSFetchedResultsController!
+    var frc: NSFetchedResultsController!
     
     var user: User?
+    var displayMode = NewsfeedDisplayMode.Normal
     
     var count: Int! {
-        return postsFRC.fetchedObjects?.count ?? 0
+        return frc.fetchedObjects?.count ?? 0
     }
     
     var objectChanges = Dictionary<NSFetchedResultsChangeType, [NSIndexPath]>()
@@ -27,18 +32,9 @@ class NewsfeedViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if user?.id != Defaults["myId"].string {
+        if displayMode == .Detail {
             self.navigationItem.rightBarButtonItem = nil
         }
-        
-        #if DEBUG
-            if user != nil {
-                //            self.navigationItem.rightBarButtonItem = nil
-                self.navigationItem.leftBarButtonItem = nil
-            }
-        #else
-            self.navigationItem.leftBarButtonItem = nil
-        #endif
         
         loadLocalData()
         
@@ -51,8 +47,8 @@ class NewsfeedViewController: BaseViewController {
     }
     
     func loadLocalData() {
-        postsFRC = DBController.newsfeeds(user: user)
-        postsFRC.delegate = self
+        frc = DBController.newsfeeds(user)
+        frc.delegate = self
     }
     
     func setupLayout() {
@@ -73,11 +69,6 @@ class NewsfeedViewController: BaseViewController {
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     // MARK: - Notification
     
     func becomeActive() {
@@ -94,13 +85,6 @@ class NewsfeedViewController: BaseViewController {
     }
     
     // MARK: - Action
-    
-    @IBAction func debug(sender: AnyObject) {
-        let debug = Util.createViewControllerWithIdentifier(nil, storyboardName: "Debug")
-        debug.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-        
-        presentViewController(debug, animated: true, completion: nil)
-    }
     
     @IBAction func addPostBtnTapped(sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
@@ -138,7 +122,7 @@ extension NewsfeedViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let post = postsFRC.objectAtIndexPath(indexPath) as! Post
+        let post = frc.objectAtIndexPath(indexPath) as! Post
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("NewsfeedCell", forIndexPath: indexPath) as! NewsfeedCell
         
@@ -150,7 +134,7 @@ extension NewsfeedViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let post = postsFRC.objectAtIndexPath(indexPath) as! Post
+        let post = frc.objectAtIndexPath(indexPath) as! Post
         
         performSegueWithIdentifier("SeguePostDetail", sender: post.id!)
     }
@@ -162,7 +146,7 @@ extension NewsfeedViewController: CHTCollectionViewDelegateWaterfallLayout {
     
     func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize {
         
-        let post = postsFRC.objectAtIndexPath(indexPath) as! Post
+        let post = frc.objectAtIndexPath(indexPath) as! Post
         
         if cellForHeight == nil {
             cellForHeight = Util.createViewWithNibName("NewsfeedCell") as! NewsfeedCell

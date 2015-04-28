@@ -108,35 +108,48 @@ extension GroupListViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension GroupListViewController: NSFetchedResultsControllerDelegate {
     
-//    func controllerWillChangeContent(controller: NSFetchedResultsController) {
-//        tableView.beginUpdates()
-//    }
-//    
-//    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-//        
-//        switch type {
-//        case .Insert:
-//            if let newIndexPath = newIndexPath {
-//                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
-//            }
-//        case .Delete:
-//            if let indexPath = indexPath {
-//                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//            }
-//        case .Update:
-//            if let indexPath = indexPath {
-//                configCell(tableView.cellForRowAtIndexPath(indexPath) as? GroupCell, indexPath: indexPath)
-//            }
-//        case .Move:
-//            if let indexPath = indexPath, newIndexPath = newIndexPath {
-//                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
-//            }
-//        }
-//    }
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        tableView.beginUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        switch type {
+        case .Insert:
+            tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+        case .Delete:
+            tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+        case .Move:
+            println("move")
+        case .Update:
+            println("update")
+        }
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        switch type {
+        case .Insert:
+            if let newIndexPath = newIndexPath {
+                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
+            }
+        case .Delete:
+            if let indexPath = indexPath {
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            }
+        case .Update:
+            if let indexPath = indexPath {
+                configCell(tableView.cellForRowAtIndexPath(indexPath) as? GroupCell, indexPath: indexPath)
+            }
+        case .Move:
+            if let indexPath = indexPath, newIndexPath = newIndexPath {
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
+            }
+        }
+    }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-//        tableView.endUpdates()
-        tableView.reloadData()
+        tableView.endUpdates()
+//        tableView.reloadData()
     }
 }
