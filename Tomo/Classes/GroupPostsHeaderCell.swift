@@ -12,6 +12,7 @@ import UIKit
     
     func joinBtnTapped()
     func didTapMemberListOfGroupPostsHeaderCell(cell: GroupPostsHeaderCell)
+    
 }
 
 class GroupPostsHeaderCell: UICollectionViewCell {
@@ -23,7 +24,7 @@ class GroupPostsHeaderCell: UICollectionViewCell {
     @IBOutlet weak var userCountLabel: UILabel!
     @IBOutlet weak var joinBtn: UIButton!
     
-    var delegate: GroupPostsHeaderCellDelegate?
+    weak var delegate: GroupPostsHeaderCellDelegate?
     
     var group: Group! {
         didSet {
@@ -66,11 +67,6 @@ class GroupPostsHeaderCell: UICollectionViewCell {
         backView.layer.shadowOpacity = 1.0
         backView.layer.shadowRadius = 0.0
     }
-    
-//    override func layoutSubviews() {
-//        contentView.frame = bounds
-//        super.layoutSubviews()
-//    }
     
     // MARK: - Action
     

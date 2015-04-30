@@ -91,7 +91,8 @@
                                                                 <constraint firstItem="jQu-jG-0qb" firstAttribute="leading" secondItem="dQl-Ti-QFk" secondAttribute="trailing" constant="12" id="Jqq-TY-QO5"/>
                                                                 <constraint firstAttribute="height" constant="80" id="R4s-mx-bIW"/>
                                                                 <constraint firstAttribute="trailing" secondItem="zPk-Ig-bek" secondAttribute="trailing" constant="12" id="RZj-y1-S1p"/>
-                                                                <constraint firstItem="zPk-Ig-bek" firstAttribute="top" secondItem="pqL-l1-Clx" secondAttribute="top" constant="18" id="ilT-9F-sce"/>
+                                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="jQu-jG-0qb" secondAttribute="bottom" constant="10" id="bfj-tC-NQI"/>
+                                                                <constraint firstItem="zPk-Ig-bek" firstAttribute="top" secondItem="pqL-l1-Clx" secondAttribute="top" priority="250" constant="18" id="ilT-9F-sce"/>
                                                                 <constraint firstItem="zPk-Ig-bek" firstAttribute="leading" secondItem="dQl-Ti-QFk" secondAttribute="trailing" constant="12" id="qbP-x4-8rj"/>
                                                                 <constraint firstItem="dQl-Ti-QFk" firstAttribute="top" secondItem="pqL-l1-Clx" secondAttribute="top" id="v1B-sl-jAf"/>
                                                             </constraints>
@@ -118,7 +119,6 @@
                                                         <constraint firstAttribute="trailing" secondItem="pqL-l1-Clx" secondAttribute="trailing" constant="14" id="Dpp-UW-H9D"/>
                                                         <constraint firstItem="ETj-k3-0oR" firstAttribute="top" secondItem="pqL-l1-Clx" secondAttribute="bottom" constant="14" id="OYv-4W-MFX"/>
                                                         <constraint firstItem="ETj-k3-0oR" firstAttribute="leading" secondItem="l2a-A1-TuZ" secondAttribute="leading" constant="14" id="Xl9-Sk-yFe"/>
-                                                        <constraint firstAttribute="bottom" secondItem="ETj-k3-0oR" secondAttribute="bottom" constant="19" id="sul-Xa-qs6"/>
                                                         <constraint firstItem="pqL-l1-Clx" firstAttribute="top" secondItem="l2a-A1-TuZ" secondAttribute="top" constant="14" id="z0T-Vw-OBl"/>
                                                     </constraints>
                                                 </view>

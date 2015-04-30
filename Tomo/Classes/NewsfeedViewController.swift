@@ -158,8 +158,13 @@ extension NewsfeedViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if isHeaderSection(indexPath.section) {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("GroupPostsHeaderCell", forIndexPath: indexPath) as! GroupPostsHeaderCell
+            
+            cell.contentView.frame = cell.bounds
+            cell.contentView.autoresizingMask = .FlexibleHeight | .FlexibleWidth
+//            cell.contentView.autoresizingMask = UIViewAutoresizing.FlexibleBottomMargin | UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleTopMargin | UIViewAutoresizing.FlexibleWidth
             cell.group = group!
             cell.delegate = self
+            
             
             return cell
         }
