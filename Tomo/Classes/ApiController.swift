@@ -98,6 +98,27 @@ extension ApiController {
         }
     }
     
+    class func loginWithOpenid(#openid: String, token: String, type: String, done: (NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        param["openid"] = openid
+        param["access_token"] = token
+        param["type"] = type
+        
+        RKObjectManager.sharedManager().postObject(nil, path: "/mobile/user/openid", parameters: param, success: { (_, result) -> Void in
+            if let obj = result.firstObject as? User {
+                //no email in db
+                Defaults["myId"] = obj.id
+                
+                done(nil)
+            } else {
+                println(result.firstObject)
+            }
+            
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    
     class func getUserInfo(id: String, done: (NSError?) -> Void) {
         RKObjectManager.sharedManager().getObject(nil, path: "/users/\(id)", parameters: nil, success: { (_,result) -> Void in
             done(nil)
@@ -693,11 +714,11 @@ extension ApiController {
         addCommonResponseDescriptor(usermapping, method: .PATCH, pathPattern: "/connections/invite", keyPath: nil, statusCodes: nil)
         
         //グループ
-        addCommonResponseDescriptor(getGroupMapping(false), method: .GET, pathPattern: "/groups/discover", keyPath: nil, statusCodes: nil)
-        addCommonResponseDescriptor(getGroupMapping(false), method: .GET, pathPattern: "/groups/joined", keyPath: nil, statusCodes: nil)
-        addCommonResponseDescriptor(getGroupMapping(false), method: .POST, pathPattern: "/groups", keyPath: nil, statusCodes: nil)
-        addCommonResponseDescriptor(getGroupMapping(false), method: .PATCH, pathPattern: "/groups/:id", keyPath: nil, statusCodes: nil)
-        addCommonResponseDescriptor(getGroupMapping(false), method: .PATCH, pathPattern: "/groups/:id/join", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getGroupMapping(false,false), method: .GET, pathPattern: "/groups/discover", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getGroupMapping(false,false), method: .GET, pathPattern: "/groups/joined", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getGroupMapping(false,true), method: .POST, pathPattern: "/groups", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getGroupMapping(false,true), method: .PATCH, pathPattern: "/groups/:id", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getGroupMapping(false,true), method: .PATCH, pathPattern: "/groups/:id/join", keyPath: nil, statusCodes: nil)
 //        addCommonResponseDescriptor(getSectionedGroupMapping(), method: .GET, pathPattern: "/mobile/group", keyPath: nil, statusCodes: nil)
         
         //駅
@@ -797,9 +818,14 @@ extension ApiController {
     }
     
     //group
-    private class func getGroupMapping(isidonly:Bool)->RKEntityMapping{
+    private class func getGroupMapping(isUserIdonly:Bool,_ isStationIdonly:Bool)->RKEntityMapping{
         var mapping = _groupMapping
         mapping.addPropertyMappingById("User",fromKey: "_owner",toKeyPath: "owner")
+        if(isStationIdonly){
+            mapping.addPropertyMappingById("Station",fromKey: "station",toKeyPath: "station")
+        }else{
+            mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "station", toKeyPath: "station", withMapping: _stationMapping))
+        }
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "posts", toKeyPath: "posts", withMapping: _postMapping))
         mapping.addPropertyMappingById("User",fromKey: "participants",toKeyPath: "participants")
  

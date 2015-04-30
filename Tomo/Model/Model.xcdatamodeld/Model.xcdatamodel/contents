@@ -33,6 +33,7 @@
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" syncable="YES"/>
         <relationship name="participants" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="inGroups" inverseEntity="User" syncable="YES"/>
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" syncable="YES"/>
+        <relationship name="station" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Station" syncable="YES"/>
     </entity>
     <entity name="Images" representedClassName="Images" syncable="YES">
         <attribute name="height" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -132,7 +133,7 @@
         <element name="Chat" positionX="-1395" positionY="-126" width="128" height="30"/>
         <element name="Comments" positionX="-1359" positionY="-90" width="128" height="135"/>
         <element name="Devices" positionX="-1368" positionY="-99" width="128" height="105"/>
-        <element name="Group" positionX="-551" positionY="-106" width="128" height="210"/>
+        <element name="Group" positionX="-551" positionY="-106" width="128" height="225"/>
         <element name="Images" positionX="-1440" positionY="-108" width="128" height="118"/>
         <element name="Line" positionX="-1386" positionY="-117" width="128" height="90"/>
         <element name="Message" positionX="-1595" positionY="161" width="128" height="135"/>

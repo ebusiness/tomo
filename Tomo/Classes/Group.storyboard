@@ -10,7 +10,7 @@
         <!--Group List View Controller-->
         <scene sceneID="efk-ss-T9X">
             <objects>
-                <viewController id="dOm-1X-Ypv" customClass="GroupListViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GroupListViewController" id="dOm-1X-Ypv" customClass="GroupListViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0zu-hk-hmh"/>
                         <viewControllerLayoutGuide type="bottom" id="iEN-KB-ikd"/>

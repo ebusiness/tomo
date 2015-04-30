@@ -18,6 +18,7 @@ enum GroupRelationships: String {
     case owner = "owner"
     case participants = "participants"
     case posts = "posts"
+    case station = "station"
 }
 
 @objc
@@ -98,6 +99,11 @@ class _Group: NSManagedObject {
 
     @NSManaged
     var posts: NSOrderedSet
+
+    @NSManaged
+    var station: Station?
+
+    // func validateStation(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
 }
 
