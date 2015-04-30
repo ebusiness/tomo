@@ -9,7 +9,9 @@
 import UIKit
 
 @objc protocol GroupPostsHeaderCellDelegate {
+    
     func joinBtnTapped()
+    func didTapMemberListOfGroupPostsHeaderCell(cell: GroupPostsHeaderCell)
 }
 
 class GroupPostsHeaderCell: UICollectionViewCell {
@@ -40,6 +42,9 @@ class GroupPostsHeaderCell: UICollectionViewCell {
             typeLabel.text = GroupType(rawValue: group.type ?? "")?.str()
             userCountLabel.text = "\(group.participants.count)人のメンバー"
             
+            let ges = UITapGestureRecognizer(target: self, action: Selector("memberListTapped:"))
+            userCountLabel.addGestureRecognizer(ges)
+            
             joinBtn.hidden = group.section == GroupSection.MyGroup.rawValue
         }
     }
@@ -62,10 +67,28 @@ class GroupPostsHeaderCell: UICollectionViewCell {
         backView.layer.shadowRadius = 0.0
     }
     
+//    override func layoutSubviews() {
+//        contentView.frame = bounds
+//        super.layoutSubviews()
+//    }
+    
     // MARK: - Action
+    
+    @IBAction func memberListTapped(sender: UITapGestureRecognizer) {
+        delegate?.didTapMemberListOfGroupPostsHeaderCell(cellOfView(sender.view!))
+    }
     
     @IBAction func joinBtnTapped(sender: AnyObject) {
         delegate?.joinBtnTapped()
     }
     
+    func cellOfView(view: UIView) -> GroupPostsHeaderCell {
+        var v = view
+        
+        while !(v is GroupPostsHeaderCell) {
+            v = v.superview!
+        }
+        
+        return v as! GroupPostsHeaderCell
+    }
 }

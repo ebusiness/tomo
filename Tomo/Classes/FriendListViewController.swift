@@ -8,8 +8,8 @@
 
 import UIKit
 
-enum NextView: Int {
-    case UserDetailFriend, UserDetail, Chat, Posts, AddFriend, UserDetailInvited
+enum FriendListDisplayMode {
+    case Chat, List
 }
 
 class FriendListViewController: BaseViewController {
@@ -18,39 +18,21 @@ class FriendListViewController: BaseViewController {
 
     var friendInvitedNotifications = [Notification]()
     var users = [User]()
-    
-    // TODO: delete
-    var nextView: NextView!
 
-    var fromSearch = false
-    
-//    func friendAtIndexPath(indexPath: NSIndexPath) -> User {
-//        var friend: User
-//        
-//        if indexPath.section == 1 {
-//            friend = invitedUsers[indexPath.row]
-//        } else {
-//            friend = users[indexPath.row]
-//        }
-//        
-//        return friend
-//    }
+    var displayMode = FriendListDisplayMode.Chat
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //from search
-        if users.count > 0 {
-            fromSearch = true
+        if displayMode != .Chat {
             self.navigationItem.rightBarButtonItem = nil
-            return
         }
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if !fromSearch {
+        if displayMode == .Chat {
             loadData()
             
             ApiController.unconfirmedNotification { (error) -> Void in
@@ -68,28 +50,6 @@ class FriendListViewController: BaseViewController {
         users = DBController.friends()
         friendInvitedNotifications = DBController.unconfirmedNotification(type: .FriendInvited)
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    // MARK: - Action
-    
-    @IBAction func close(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
@@ -99,7 +59,7 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 && !fromSearch {
+        if section == 0 && displayMode == .Chat {
             return 1
         }
         
@@ -143,21 +103,15 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
         if indexPath.section == 1 {
             let friend = users[indexPath.row]
             
-            if !fromSearch {
+            if displayMode == .Chat {
                 let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: "Message") as! MessageViewController
 
                 vc.friend = friend
                 
                 navigationController?.pushViewController(vc, animated: true)
             }
-            
-    //        if nextView == .Posts {
-    //            let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
-    //            vc.user = friend
-    //            navigationController?.pushViewController(vc, animated: true)
-    //        }
-            
-            if fromSearch && friend.id != DBController.myUser().id {
+
+            if displayMode == .List {
                 let vc = Util.createViewControllerWithIdentifier("AccountEditViewController", storyboardName: "Account") as! AccountEditViewController
                 vc.user = friend
                 vc.readOnlyMode = true

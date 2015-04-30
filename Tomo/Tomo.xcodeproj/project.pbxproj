@@ -102,7 +102,6 @@
 		295272CE1AD50F8D00FC7833 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 295272CC1AD50F8D00FC7833 /* Main.storyboard */; };
 		295272D01AD51B2300FC7833 /* S3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295272CF1AD51B2300FC7833 /* S3.swift */; };
 		295272D21AD60D9300FC7833 /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 295272D11AD60D9300FC7833 /* Debug.storyboard */; };
-		295272D41AD60E9300FC7833 /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295272D31AD60E9300FC7833 /* DebugViewController.swift */; };
 		295272D81AD6150C00FC7833 /* Friend.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 295272D71AD6150C00FC7833 /* Friend.storyboard */; };
 		295272DA1AD6155300FC7833 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295272D91AD6155300FC7833 /* FriendListViewController.swift */; };
 		2952730D1AD653F000FC7833 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2952730C1AD653F000FC7833 /* FriendCell.swift */; };
@@ -902,7 +901,6 @@
 				2960404F1ACE75C500D2A338 /* AFDateExtension.swift in Sources */,
 				1712BE2E1ACCE809000A9C47 /* Group.swift in Sources */,
 				294185131AD777D500C6E913 /* MessageViewController.swift in Sources */,
-				295272D41AD60E9300FC7833 /* DebugViewController.swift in Sources */,
 				292B9CD31AE61C4800604986 /* Line.swift in Sources */,
 				293004561AD6803100FC9100 /* CommentInputViewController.swift in Sources */,
 				178D64A01ACC10B600185368 /* Message.swift in Sources */,

@@ -53,14 +53,16 @@
                                                                     <color key="textColor" red="0.72941176470588232" green="0.72941176470588232" blue="0.72941176470588232" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Llf-Qk-hZ4">
+                                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Llf-Qk-hZ4">
                                                                     <rect key="frame" x="135" y="44" width="31" height="15"/>
+                                                                    <gestureRecognizers/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <color key="textColor" red="0.72941176470000002" green="0.72941176470000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <gestureRecognizers/>
                                                             <constraints>
                                                                 <constraint firstItem="YVz-BO-W4M" firstAttribute="leading" secondItem="HoM-Qu-CnI" secondAttribute="leading" id="FPe-V9-1AT"/>
                                                                 <constraint firstItem="ocq-W9-ChI" firstAttribute="leading" secondItem="YVz-BO-W4M" secondAttribute="trailing" constant="12" id="JhL-rm-8rO"/>
@@ -108,6 +110,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="GGy-Is-aPe" secondAttribute="bottom" constant="7" id="qSR-Pl-a90"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <gestureRecognizers/>
                                         <connections>
                                             <outlet property="backView" destination="GGy-Is-aPe" id="1uy-72-hWX"/>
                                             <outlet property="groupImageView" destination="YVz-BO-W4M" id="ukA-8D-o9G"/>
@@ -168,7 +171,7 @@
         <!--Group Add Table View Controller-->
         <scene sceneID="r6R-sn-qaT">
             <objects>
-                <tableViewController id="tmf-0L-tCw" customClass="GroupAddTableViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="GroupAddTableViewController" id="tmf-0L-tCw" customClass="GroupAddTableViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="GWp-VK-HaP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

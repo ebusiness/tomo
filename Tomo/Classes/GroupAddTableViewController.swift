@@ -17,19 +17,38 @@ class GroupAddTableViewController: BaseTableViewController {
     var content: String?
     var imagePath: String?
     
+    var group: Group?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.rightBarButtonItem?.enabled = false
+        if let group = group {
+            self.navigationItem.rightBarButtonItem?.title = "保存"
+            
+            titleTF.text = group.name
+            textView.text = group.detail
+            
+            if let imagePath = group.cover_ref {
+                imageView.sd_setImageWithURL(NSURL(string: imagePath))
+            }
+            
+            textView.textColor = UIColor.blackColor()
+        } else {
+            self.navigationItem.rightBarButtonItem?.enabled = false
+        }
     }
 
     // MARK: - Action
     
     @IBAction func cancel(sender: AnyObject) {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
     }
 
     @IBAction func addImageTapped(sender: UITapGestureRecognizer) {
+        if group != nil {
+            return
+        }
+        
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         let cameraAction = UIAlertAction(title: "写真を撮る", style: .Default, handler: { (action) -> Void in
             let picker = UIImagePickerController()
@@ -57,15 +76,31 @@ class GroupAddTableViewController: BaseTableViewController {
     }
     
     @IBAction func send(sender: AnyObject) {
-        ApiController.createGroup(titleTF.text, content: content, type: .Public, localImagePath: imagePath, done: { (groupId, error) -> Void in
-            if let groupId = groupId, imagePath = self.imagePath {
-                ApiController.changeGroupCover(imagePath, groupId: groupId, done: { (error) -> Void in
-                    
-                })
-            }
-        })
+
+        if let group = group {
+            var para = Dictionary<String, String>()
+            
+            para["name"] = titleTF.text
+            para["description"] = textView.text
+            
+            Util.showHUD(maskType: .Clear)
+            
+            ApiController.editGroup(groupId: group.id!, param: para, done: { (error) -> Void in
+                Util.dismissHUD()
+                self.navigationController?.popViewControllerAnimated(true)
+            })
+        } else {
         
-        navigationController?.popViewControllerAnimated(true)
+            ApiController.createGroup(titleTF.text, content: content, type: .Public, localImagePath: imagePath, done: { (groupId, error) -> Void in
+                if let groupId = groupId, imagePath = self.imagePath {
+                    ApiController.changeGroupCover(imagePath, groupId: groupId, done: { (error) -> Void in
+                        
+                    })
+                }
+            })
+        
+            navigationController?.popViewControllerAnimated(true)
+        }
     }
 }
 
@@ -74,7 +109,7 @@ class GroupAddTableViewController: BaseTableViewController {
 extension GroupAddTableViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(textView: UITextView) {
-        if content == nil || content!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
+        if group == nil && (content == nil || content!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0) {
             textView.text = nil
             textView.textColor = UIColor.blackColor()
         }

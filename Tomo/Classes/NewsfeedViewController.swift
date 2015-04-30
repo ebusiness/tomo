@@ -73,6 +73,11 @@ class NewsfeedViewController: BaseViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        //refresh group title
+        if displayMode == .Group && !isMovingToParentViewController() {
+            collectionView.reloadSections(NSIndexSet(index: 0))
+        }
+        
         loadRemoteData()
     }
     
@@ -172,6 +177,11 @@ extension NewsfeedViewController: UICollectionViewDataSource, UICollectionViewDe
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if isHeaderSection(indexPath.section) {
+            if group?.owner?.id == Defaults["myId"].string {
+                let vc = Util.createViewControllerWithIdentifier("GroupAddTableViewController", storyboardName: "Group") as! GroupAddTableViewController
+                vc.group = group!
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
             return
         }
         
@@ -260,16 +270,22 @@ extension NewsfeedViewController: NSFetchedResultsControllerDelegate {
     }
 }
 
-// MARK: - 
+// MARK: - GroupPostsHeaderCellDelegate
 
 extension NewsfeedViewController: GroupPostsHeaderCellDelegate {
     
     func joinBtnTapped() {
         ApiController.joinGroup(group!.id!, done: { (error) -> Void in
-            self.collectionView.reloadData()
+            self.collectionView.reloadSections(NSIndexSet(index: 0))
         })
     }
     
+    func didTapMemberListOfGroupPostsHeaderCell(cell: GroupPostsHeaderCell) {
+        let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController
+        vc.displayMode = .List
+        vc.users = cell.group.participants.array as! [User]
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 // MARK: - UIImagePickerControllerDelegate

@@ -95,6 +95,7 @@ extension GroupListViewController: UITableViewDataSource, UITableViewDelegate {
         if let cell = cell {
             let group = frc.objectAtIndexPath(indexPath) as! Group
             cell.group = group
+            cell.delegate = self
         }
     }
     
@@ -158,4 +159,17 @@ extension GroupListViewController: NSFetchedResultsControllerDelegate {
         tableView.endUpdates()
 //        tableView.reloadData()
     }
+}
+
+// MARK: - GroupCellDelegate
+
+extension GroupListViewController: GroupCellDelegate {
+    
+    func didTapMemberListOfGroupCell(cell: GroupCell) {
+        let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController
+        vc.displayMode = .List
+        vc.users = cell.group.participants.array as! [User]
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }

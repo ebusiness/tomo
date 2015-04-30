@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="mio-7p-z6M">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="mio-7p-z6M">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -74,7 +74,7 @@
                                                                     <color key="textColor" red="0.72941176470000002" green="0.72941176470000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s8n-tn-hiV">
+                                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s8n-tn-hiV">
                                                                     <rect key="frame" x="135" y="44" width="31" height="15"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <color key="textColor" red="0.72941176470000002" green="0.72941176470000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -127,11 +127,12 @@
                                         </view>
                                         <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="l2a-A1-TuZ" secondAttribute="trailing" id="OgL-eN-5at"/>
-                                            <constraint firstAttribute="bottom" secondItem="l2a-A1-TuZ" secondAttribute="bottom" constant="7" id="brH-8I-MCR"/>
-                                            <constraint firstItem="l2a-A1-TuZ" firstAttribute="top" secondItem="t8y-sl-yLg" secondAttribute="top" id="ia2-3d-rfD"/>
-                                            <constraint firstItem="l2a-A1-TuZ" firstAttribute="leading" secondItem="t8y-sl-yLg" secondAttribute="leading" id="zy9-MU-dal"/>
+                                            <constraint firstItem="l2a-A1-TuZ" firstAttribute="top" secondItem="t8y-sl-yLg" secondAttribute="top" id="JCe-k0-WDx"/>
+                                            <constraint firstAttribute="trailing" secondItem="l2a-A1-TuZ" secondAttribute="trailing" id="ZQb-jO-z54"/>
+                                            <constraint firstAttribute="bottom" secondItem="l2a-A1-TuZ" secondAttribute="bottom" constant="7" id="fUT-88-cqe"/>
+                                            <constraint firstItem="l2a-A1-TuZ" firstAttribute="leading" secondItem="t8y-sl-yLg" secondAttribute="leading" id="oRY-Of-pTT"/>
                                         </constraints>
+                                        <size key="customSize" width="320" height="168"/>
                                         <connections>
                                             <outlet property="backView" destination="l2a-A1-TuZ" id="you-6c-xA8"/>
                                             <outlet property="groupImageView" destination="dQl-Ti-QFk" id="dtJ-wU-lDd"/>

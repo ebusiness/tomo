@@ -490,6 +490,21 @@ extension ApiController {
         }
     }
     
+    class func editGroup(#groupId: String, param: Dictionary<String, String>, done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().patchObject(nil, path: "/groups/\(groupId)", parameters: param as [NSObject : AnyObject], success: { (_, mappingResult) -> Void in
+            if let group = mappingResult.firstObject as? Group {
+                group.section = GroupSection.MyGroup.rawValue
+                DBController.save(done: { () -> Void in
+                    done(nil)
+                })
+            } else {
+                done(nil)
+            }
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    
     class func changeGroupCover(localImagePath: String, groupId: String, done: (NSError?) -> Void) {
         let fileName = localImagePath.lastPathComponent
 

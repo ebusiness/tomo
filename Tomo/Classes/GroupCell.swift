@@ -8,6 +8,11 @@
 
 import UIKit
 
+@objc protocol GroupCellDelegate {
+    
+    func didTapMemberListOfGroupCell(cell: GroupCell)
+}
+
 class GroupCell: UITableViewCell {
 
     @IBOutlet weak var backView: UIView!
@@ -16,6 +21,8 @@ class GroupCell: UITableViewCell {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var userCountLabel: UILabel!
     @IBOutlet weak var joinBtn: UIButton!
+    
+    weak var delegate: GroupCellDelegate?
     
     var group: Group! {
         didSet {
@@ -54,12 +61,29 @@ class GroupCell: UITableViewCell {
         backView.layer.shadowOffset = CGSize(width: 0, height: 3)
         backView.layer.shadowOpacity = 1.0
         backView.layer.shadowRadius = 0.0
+        
+        let ges = UITapGestureRecognizer(target: self, action: Selector("memberListTapped:"))
+        userCountLabel.addGestureRecognizer(ges)
     }
 
     // MARK: - Action
     
+    @IBAction func memberListTapped(sender: UITapGestureRecognizer) {
+        delegate?.didTapMemberListOfGroupCell(cellOfView(sender.view!))
+    }
+        
     @IBAction func joinBtnTapped(sender: AnyObject) {
         ApiController.joinGroup(group.id!, done: { (error) -> Void in
         })
+    }
+    
+    func cellOfView(view: UIView) -> GroupCell {
+        var v = view
+        
+        while !(v is GroupCell) {
+            v = v.superview!
+        }
+        
+        return v as! GroupCell
     }
 }
