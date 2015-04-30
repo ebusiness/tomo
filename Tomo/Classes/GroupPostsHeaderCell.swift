@@ -61,6 +61,10 @@ class GroupPostsHeaderCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        //fix autolayout error
+        contentView.frame = bounds
+        contentView.autoresizingMask = .FlexibleHeight | .FlexibleWidth
+        
         backView.layer.cornerRadius = 3.0
         backView.layer.shadowColor = UIColor(hexString: "#DADADA").CGColor
         backView.layer.shadowOffset = CGSize(width: 0, height: 3)
