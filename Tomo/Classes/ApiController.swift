@@ -415,6 +415,18 @@ extension ApiController {
 //    }
 }
 
+// MARK: - 駅情報
+extension ApiController {
+    
+    class func getGroups(param: Dictionary<String, String>, done: (NSError?) -> Void) {
+        
+        RKObjectManager.sharedManager().getObjectsAtPath("/mobile/stations/groups", parameters: param, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+}
 // MARK: - Group
 
 extension ApiController {
@@ -719,7 +731,8 @@ extension ApiController {
         addCommonResponseDescriptor(getGroupMapping(false,true), method: .POST, pathPattern: "/groups", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getGroupMapping(false,true), method: .PATCH, pathPattern: "/groups/:id", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getGroupMapping(false,true), method: .PATCH, pathPattern: "/groups/:id/join", keyPath: nil, statusCodes: nil)
-//        addCommonResponseDescriptor(getSectionedGroupMapping(), method: .GET, pathPattern: "/mobile/group", keyPath: nil, statusCodes: nil)
+        //        addCommonResponseDescriptor(getSectionedGroupMapping(), method: .GET, pathPattern: "/mobile/group", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getGroupMapping(false,false), method: .GET, pathPattern: "/mobile/stations/groups", keyPath: nil, statusCodes: nil)
         
         //駅
         addCommonResponseDescriptor(getStationMapping(false), method: .GET, pathPattern: "/mobile/stations", keyPath: nil, statusCodes: nil)

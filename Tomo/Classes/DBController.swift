@@ -91,7 +91,7 @@ class DBController: NSObject {
     
     // MARK: - Group
     
-    class func groups() -> NSFetchedResultsController {
+    class func groups(station:String) -> NSFetchedResultsController {
 //        return Group.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "createDate != nil"), sortedBy: "createDate", ascending: false)
         
 //        return Group.MR_fetchAllGroupedBy("section", withPredicate: NSPredicate(format: "createDate != nil"), sortedBy: "createDate", ascending: false)
@@ -102,10 +102,13 @@ class DBController: NSObject {
         let sort1 = NSSortDescriptor(key: "section", ascending: true)
         let sort2 = NSSortDescriptor(key: "createDate", ascending: false)
         fetchRequest.sortDescriptors = [sort1, sort2]
-        fetchRequest.predicate = NSPredicate(format: "createDate != nil AND section > 0")
+        if (station.isEmpty){
+            fetchRequest.predicate = NSPredicate(format: "createDate != nil AND section > 0 ")
+        }else{
+            fetchRequest.predicate = NSPredicate(format: "createDate != nil AND section > 0 && station.id = %@",station)
+        }
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: NSManagedObjectContext.MR_defaultContext(), sectionNameKeyPath: "section", cacheName: nil)
-        
         return frc
     }
     

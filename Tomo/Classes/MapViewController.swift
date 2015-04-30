@@ -50,23 +50,35 @@ class MapViewController: BaseViewController,UIWebViewDelegate {
     
     func scheme(url:NSURL){
         if let host = url.host {
+            
+            let param = urlComponentsToDict(url);
+            
             switch host {
             case"groups":
-                let comp: NSURLComponents? = NSURLComponents(URL: url, resolvingAgainstBaseURL: true)
-                for (var i=0; i < comp?.queryItems?.count; i++) {
-                    let item = comp?.queryItems?[i] as! NSURLQueryItem
-                    println("name=\(item.name), value=\(item.value)")
-                }
-                
                 let vc = Util.createViewControllerWithIdentifier("GroupListViewController", storyboardName: "Group") as! GroupListViewController
-
-                navigationController?.pushViewController(vc, animated: true)
-                
+                vc.station = param["station._id"]!;
+                ApiController.getGroups(param, done: { (error) -> Void in
+                     self.navigationController?.pushViewController(vc, animated: true)
+                })
                 break;
             default:
                 break;
             }
         }
+    }
+    
+    func urlComponentsToDict(url:NSURL) -> Dictionary<String, String> {
+        
+        let comp: NSURLComponents? = NSURLComponents(URL: url, resolvingAgainstBaseURL: true)
+        
+        var dict:Dictionary<String, String> = Dictionary<String, String>()
+        
+        for (var i=0; i < comp?.queryItems?.count; i++) {
+            let item = comp?.queryItems?[i] as! NSURLQueryItem
+            dict[item.name] = item.value
+        }
+        
+        return dict
     }
 
 }

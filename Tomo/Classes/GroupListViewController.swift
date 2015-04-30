@@ -7,12 +7,12 @@
 //
 
 import UIKit
-
 class GroupListViewController: BaseViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
     var frc: NSFetchedResultsController!
+    var station:String = "";
     
     func numberOfRowsInSection(section: Int) -> Int {
         return (frc.sections as! [NSFetchedResultsSectionInfo])[section].numberOfObjects
@@ -21,7 +21,7 @@ class GroupListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        frc = DBController.groups()
+        frc = DBController.groups(station)
         frc.delegate = self
         frc.performFetch(nil)
     }
