@@ -75,7 +75,7 @@
     </entity>
     <entity name="Openids" representedClassName="Openids" syncable="YES">
         <attribute name="access_token" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="expirationDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="expirationDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="openid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="refresh_token" optional="YES" attributeType="String" syncable="YES"/>

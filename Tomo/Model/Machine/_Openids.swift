@@ -44,7 +44,7 @@ class _Openids: NSManagedObject {
     // func validateAccess_token(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
-    var expirationDate: String?
+    var expirationDate: NSDate?
 
     // func validateExpirationDate(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
