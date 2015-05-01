@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
         <!--Reg Sign Up View Controller-->
@@ -463,19 +463,27 @@
                                                     <action selector="login:" destination="4Wm-m0-0bg" eventType="touchUpInside" id="Q1z-Vf-8b5"/>
                                                 </connections>
                                             </button>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l33-gD-nPo">
-                                                <rect key="frame" x="10" y="163" width="165" height="30"/>
-                                                <state key="normal" title="パスワードを忘れた場合">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l33-gD-nPo">
+                                                <rect key="frame" x="50" y="163" width="73" height="47"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <state key="normal" title="QQ" image="icon_qq">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="login_qq:" destination="4Wm-m0-0bg" eventType="touchUpInside" id="J9Y-ej-Ksl"/>
+                                                </connections>
                                             </button>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tw4-Hq-pdx">
-                                                <rect key="frame" x="220" y="163" width="90" height="30"/>
-                                                <state key="normal" title="メンバー登録">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tw4-Hq-pdx">
+                                                <rect key="frame" x="167" y="163" width="103" height="47"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <state key="normal" title="WeChat" image="icon_wx">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="login_wechat:" destination="4Wm-m0-0bg" eventType="touchUpInside" id="Pjf-ce-SqQ"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -484,7 +492,7 @@
                                             <constraint firstItem="hPu-le-qKh" firstAttribute="trailing" secondItem="C21-6s-cOa" secondAttribute="trailing" id="7rZ-x1-nyf"/>
                                             <constraint firstItem="uue-KQ-Ogo" firstAttribute="leading" secondItem="bKx-08-sMz" secondAttribute="leading" constant="10" id="BI2-kz-xsK"/>
                                             <constraint firstAttribute="trailing" secondItem="p3F-B8-Hdy" secondAttribute="trailing" constant="10" id="Blb-Q4-uFi"/>
-                                            <constraint firstAttribute="trailing" secondItem="Tw4-Hq-pdx" secondAttribute="trailing" constant="10" id="Gyy-9A-UOM"/>
+                                            <constraint firstAttribute="trailing" secondItem="Tw4-Hq-pdx" secondAttribute="trailing" constant="50" id="Gyy-9A-UOM"/>
                                             <constraint firstItem="p3F-B8-Hdy" firstAttribute="leading" secondItem="bKx-08-sMz" secondAttribute="leading" constant="10" id="H3c-gA-e3D"/>
                                             <constraint firstItem="Tw4-Hq-pdx" firstAttribute="top" secondItem="hPu-le-qKh" secondAttribute="bottom" constant="15" id="Qtw-XQ-6Vf"/>
                                             <constraint firstItem="p3F-B8-Hdy" firstAttribute="top" secondItem="bKx-08-sMz" secondAttribute="top" id="fwZ-V2-Rdc"/>
@@ -492,7 +500,7 @@
                                             <constraint firstItem="p3F-B8-Hdy" firstAttribute="leading" secondItem="C21-6s-cOa" secondAttribute="leading" id="kug-Op-nJb"/>
                                             <constraint firstItem="p3F-B8-Hdy" firstAttribute="trailing" secondItem="C21-6s-cOa" secondAttribute="trailing" id="lQs-n1-hoe"/>
                                             <constraint firstItem="hPu-le-qKh" firstAttribute="leading" secondItem="C21-6s-cOa" secondAttribute="leading" id="ofO-mp-REl"/>
-                                            <constraint firstItem="l33-gD-nPo" firstAttribute="leading" secondItem="bKx-08-sMz" secondAttribute="leading" constant="10" id="rEy-ag-K0b"/>
+                                            <constraint firstItem="l33-gD-nPo" firstAttribute="leading" secondItem="bKx-08-sMz" secondAttribute="leading" constant="50" id="rEy-ag-K0b"/>
                                             <constraint firstAttribute="trailing" secondItem="uue-KQ-Ogo" secondAttribute="trailing" constant="10" id="v4Q-lj-9c2"/>
                                             <constraint firstItem="uue-KQ-Ogo" firstAttribute="top" secondItem="p3F-B8-Hdy" secondAttribute="bottom" id="vt2-1X-5TC"/>
                                             <constraint firstItem="C21-6s-cOa" firstAttribute="top" secondItem="p3F-B8-Hdy" secondAttribute="bottom" constant="1" id="xz6-Yh-DSc"/>
@@ -566,6 +574,8 @@
         <image name="btn_footer_bg_blue" width="10" height="40"/>
         <image name="btn_footer_bg_gray" width="10" height="40"/>
         <image name="ico_reg_close" width="18" height="18"/>
+        <image name="icon_qq" width="49" height="47"/>
+        <image name="icon_wx" width="49" height="47"/>
         <image name="img_reg_login" width="360" height="572"/>
         <image name="launch" width="320" height="568"/>
     </resources>

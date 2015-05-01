@@ -91,7 +91,11 @@ class RegLoginViewController: BaseViewController {
             })
         }
     }
+    @IBAction func login_qq(sender: AnyObject) {
+    }
     
+    @IBAction func login_wechat(sender: AnyObject) {
+    }
     // MARK: - support
     
     func validate() -> Bool {

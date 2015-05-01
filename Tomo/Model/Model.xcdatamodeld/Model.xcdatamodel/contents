@@ -73,6 +73,14 @@
         <relationship name="owner" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" syncable="YES"/>
         <relationship name="targetPost" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Post" syncable="YES"/>
     </entity>
+    <entity name="Openids" representedClassName="Openids" syncable="YES">
+        <attribute name="access_token" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="expirationDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="openid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="refresh_token" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Post" representedClassName="Post" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -142,5 +150,6 @@
         <element name="Post" positionX="-857" positionY="234" width="128" height="195"/>
         <element name="Station" positionX="-1395" positionY="-126" width="128" height="150"/>
         <element name="User" positionX="-1217" positionY="-270" width="128" height="540"/>
+        <element name="Openids" positionX="-1395" positionY="-126" width="128" height="135"/>
     </elements>
 </model>

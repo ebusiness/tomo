@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>openid</key>
+	<string>openid</string>
+	<key>access_token</key>
+	<string>access_token</string>
+	<key>refresh_token</key>
+	<string>refresh_token</string>
+	<key>expirationDate</key>
+	<string>expirationDate</string>
+	<key>type</key>
+	<string>type</string>
+	<key>_id</key>
+	<string>id</string>
+</dict>
+</plist>

@@ -52,6 +52,11 @@
 		178D64A21ACC10BE00185368 /* _Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D64A11ACC10BE00185368 /* _Message.swift */; };
 		17B993011AF353D000204E97 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B993001AF353D000204E97 /* amrFileCodec.m */; };
 		17B993081AF3540D00204E97 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17B993071AF3540D00204E97 /* libopencore-amrnb.a */; };
+		17B993111AF36A4400204E97 /* OpenidsMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 17B993101AF36A4400204E97 /* OpenidsMapping.plist */; };
+		17B993131AF36CB200204E97 /* Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993121AF36CB200204E97 /* Openids.swift */; };
+		17B993151AF36CBB00204E97 /* _Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993141AF36CBB00204E97 /* _Openids.swift */; };
+		17B993161AF36CBE00204E97 /* _Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993141AF36CBB00204E97 /* _Openids.swift */; };
+		17B993171AF36CC100204E97 /* Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993121AF36CB200204E97 /* Openids.swift */; };
 		290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
 		290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290134DE1AC3991C00BBFE29 /* Images.xcassets */; };
 		290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134ED1AC3991D00BBFE29 /* TomoTests.swift */; };
@@ -215,6 +220,9 @@
 		17B993041AF353F600204E97 /* interf_dec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interf_dec.h; path = "opencore-amr/include/opencore-amrnb/interf_dec.h"; sourceTree = "<group>"; };
 		17B993051AF353F600204E97 /* interf_enc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interf_enc.h; path = "opencore-amr/include/opencore-amrnb/interf_enc.h"; sourceTree = "<group>"; };
 		17B993071AF3540D00204E97 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libopencore-amrnb.a"; path = "opencore-amr/lib/libopencore-amrnb.a"; sourceTree = "<group>"; };
+		17B993101AF36A4400204E97 /* OpenidsMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OpenidsMapping.plist; sourceTree = "<group>"; };
+		17B993121AF36CB200204E97 /* Openids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Openids.swift; sourceTree = "<group>"; };
+		17B993141AF36CBB00204E97 /* _Openids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Openids.swift; sourceTree = "<group>"; };
 		290134D21AC3991C00BBFE29 /* tomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		290134D61AC3991C00BBFE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		290134D71AC3991C00BBFE29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -387,6 +395,13 @@
 			name = lib;
 			sourceTree = "<group>";
 		};
+		17B993091AF3644A00204E97 /* SNS */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = SNS;
+			sourceTree = "<group>";
+		};
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
@@ -450,6 +465,7 @@
 		290135081AC3A67200BBFE29 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				17B993121AF36CB200204E97 /* Openids.swift */,
 				292B9CD11AE61C4800604986 /* Line.swift */,
 				292B9CD21AE61C4800604986 /* Station.swift */,
 				29DF4CD31AE0EDB7003A4962 /* Notification.swift */,
@@ -475,6 +491,7 @@
 		290135091AC3A67200BBFE29 /* Machine */ = {
 			isa = PBXGroup;
 			children = (
+				17B993141AF36CBB00204E97 /* _Openids.swift */,
 				292B9CCD1AE61C3F00604986 /* _Line.swift */,
 				292B9CCE1AE61C3F00604986 /* _Station.swift */,
 				29DF4CD51AE0EDC4003A4962 /* _Notification.swift */,
@@ -565,6 +582,7 @@
 		299389521AD3C6FB00043D91 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				17B993091AF3644A00204E97 /* SNS */,
 				29BE7E1A1AC54663008110B4 /* DBController.swift */,
 				290134F71AC39F4600BBFE29 /* ApiController.swift */,
 				29C1DA781AD36659009A02CC /* S3Controller.swift */,
@@ -642,6 +660,7 @@
 		29A1AFF21AC40FFC00775765 /* Mapping */ = {
 			isa = PBXGroup;
 			children = (
+				17B993101AF36A4400204E97 /* OpenidsMapping.plist */,
 				29A1AFF91AC414E900775765 /* PostMapping.plist */,
 				29B00A5D1AE09E7E002AF208 /* NotificationMapping.plist */,
 				1712BE3D1ACE4101000A9C47 /* DevicesMapping.plist */,
@@ -806,6 +825,7 @@
 				29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */,
 				1712BE3E1ACE4101000A9C47 /* DevicesMapping.plist in Resources */,
 				1712BE321ACD0808000A9C47 /* MailSettingMapping.plist in Resources */,
+				17B993111AF36A4400204E97 /* OpenidsMapping.plist in Resources */,
 				291ADF9B1AD24FAE009D8BE3 /* PostDetailHeaderView.xib in Resources */,
 				295272D81AD6150C00FC7833 /* Friend.storyboard in Resources */,
 				291ADF9F1AD26575009D8BE3 /* AddPost.storyboard in Resources */,
@@ -971,6 +991,7 @@
 				29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */,
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
 				29A5D1D91ACBE01700D95B77 /* RegPageView.swift in Sources */,
+				17B993131AF36CB200204E97 /* Openids.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				2952730D1AD653F000FC7833 /* FriendCell.swift in Sources */,
 				2987F1ED1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m in Sources */,
@@ -993,6 +1014,7 @@
 				29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */,
 				292B9CCF1AE61C3F00604986 /* _Line.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
+				17B993151AF36CBB00204E97 /* _Openids.swift in Sources */,
 				298C3B451AE8EF2F0011009D /* GroupAddTableViewController.swift in Sources */,
 				29A8FA051AE776F200750A56 /* SearchInputViewController.swift in Sources */,
 				295272D01AD51B2300FC7833 /* S3.swift in Sources */,
@@ -1016,6 +1038,7 @@
 			files = (
 				291ADF971AD24892009D8BE3 /* AFDateExtension.swift in Sources */,
 				296040411ACE476B00D2A338 /* ApiController.swift in Sources */,
+				17B993171AF36CC100204E97 /* Openids.swift in Sources */,
 				290135181AC3A78E00BBFE29 /* User.swift in Sources */,
 				1712BE441ACE4143000A9C47 /* _Devices.swift in Sources */,
 				2901351B1AC3A79500BBFE29 /* _User.swift in Sources */,
@@ -1043,6 +1066,7 @@
 				29925BAB1AD6693F00F98BD7 /* Alamofire.swift in Sources */,
 				290144151ADE3E5D0048F3D8 /* SCLAlertView.swift in Sources */,
 				29CA44151AD4C050009EB177 /* AppDelegate.swift in Sources */,
+				17B993161AF36CBE00204E97 /* _Openids.swift in Sources */,
 				1712BE4C1ACE5D12000A9C47 /* _Comments.swift in Sources */,
 				2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */,
 				1712BE491ACE5D05000A9C47 /* Comments.swift in Sources */,
