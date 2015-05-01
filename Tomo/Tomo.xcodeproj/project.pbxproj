@@ -50,6 +50,8 @@
 		178D649E1ACC0DDF00185368 /* MessageMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 178D649D1ACC0DDF00185368 /* MessageMapping.plist */; };
 		178D64A01ACC10B600185368 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D649F1ACC10B600185368 /* Message.swift */; };
 		178D64A21ACC10BE00185368 /* _Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D64A11ACC10BE00185368 /* _Message.swift */; };
+		17B993011AF353D000204E97 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B993001AF353D000204E97 /* amrFileCodec.m */; };
+		17B993081AF3540D00204E97 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17B993071AF3540D00204E97 /* libopencore-amrnb.a */; };
 		290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
 		290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290134DE1AC3991C00BBFE29 /* Images.xcassets */; };
 		290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134ED1AC3991D00BBFE29 /* TomoTests.swift */; };
@@ -208,6 +210,11 @@
 		178D649D1ACC0DDF00185368 /* MessageMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MessageMapping.plist; sourceTree = "<group>"; };
 		178D649F1ACC10B600185368 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		178D64A11ACC10BE00185368 /* _Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Message.swift; sourceTree = "<group>"; };
+		17B992FF1AF353D000204E97 /* amrFileCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = amrFileCodec.h; path = "opencore-amr/amrFileCodec.h"; sourceTree = "<group>"; };
+		17B993001AF353D000204E97 /* amrFileCodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = amrFileCodec.m; path = "opencore-amr/amrFileCodec.m"; sourceTree = "<group>"; };
+		17B993041AF353F600204E97 /* interf_dec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interf_dec.h; path = "opencore-amr/include/opencore-amrnb/interf_dec.h"; sourceTree = "<group>"; };
+		17B993051AF353F600204E97 /* interf_enc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interf_enc.h; path = "opencore-amr/include/opencore-amrnb/interf_enc.h"; sourceTree = "<group>"; };
+		17B993071AF3540D00204E97 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libopencore-amrnb.a"; path = "opencore-amr/lib/libopencore-amrnb.a"; sourceTree = "<group>"; };
 		290134D21AC3991C00BBFE29 /* tomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		290134D61AC3991C00BBFE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		290134D71AC3991C00BBFE29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -329,6 +336,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */,
+				17B993081AF3540D00204E97 /* libopencore-amrnb.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +351,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		17B992FE1AF353C200204E97 /* opencore-amr */ = {
+			isa = PBXGroup;
+			children = (
+				17B993061AF353FF00204E97 /* lib */,
+				17B993021AF353D500204E97 /* include */,
+				17B992FF1AF353D000204E97 /* amrFileCodec.h */,
+				17B993001AF353D000204E97 /* amrFileCodec.m */,
+			);
+			name = "opencore-amr";
+			sourceTree = "<group>";
+		};
+		17B993021AF353D500204E97 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				17B993031AF353EE00204E97 /* opencore-amrnb */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		17B993031AF353EE00204E97 /* opencore-amrnb */ = {
+			isa = PBXGroup;
+			children = (
+				17B993041AF353F600204E97 /* interf_dec.h */,
+				17B993051AF353F600204E97 /* interf_enc.h */,
+			);
+			name = "opencore-amrnb";
+			sourceTree = "<group>";
+		};
+		17B993061AF353FF00204E97 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				17B993071AF3540D00204E97 /* libopencore-amrnb.a */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
@@ -492,6 +536,7 @@
 		296040441ACE669900D2A338 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				17B992FE1AF353C200204E97 /* opencore-amr */,
 				2901441B1ADFA1AB0048F3D8 /* String.swift */,
 				290144111ADE3BBD0048F3D8 /* SCLAlertView.swift */,
 				29BE7E221AC55A28008110B4 /* MultilineLabel.swift */,
@@ -892,6 +937,7 @@
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
 				297163B81AEA2422005EA9C0 /* GroupHeaderView.swift in Sources */,
 				2901351A1AC3A79500BBFE29 /* _User.swift in Sources */,
+				17B993011AF353D000204E97 /* amrFileCodec.m in Sources */,
 				290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */,
 				1712BE481ACE5A54000A9C47 /* Comments.swift in Sources */,
 				29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */,
@@ -1113,6 +1159,10 @@
 				INFOPLIST_FILE = Tomo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vendors/opencore-amr/lib",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1186,6 +1236,10 @@
 				INFOPLIST_FILE = Tomo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vendors/opencore-amr/lib",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
