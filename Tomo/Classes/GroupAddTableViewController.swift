@@ -45,9 +45,9 @@ class GroupAddTableViewController: BaseTableViewController {
     }
 
     @IBAction func addImageTapped(sender: UITapGestureRecognizer) {
-        if group != nil {
-            return
-        }
+//        if group != nil {
+//            return
+//        }
         
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         let cameraAction = UIAlertAction(title: "写真を撮る", style: .Default, handler: { (action) -> Void in

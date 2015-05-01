@@ -26,7 +26,10 @@ class MapViewController: BaseViewController,UIWebViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
+    
+    override func viewWillDisappear(animated: Bool) {
+        Util.dismissHUD()
+    }
     /*
     // MARK: - Navigation
 
@@ -41,32 +44,16 @@ class MapViewController: BaseViewController,UIWebViewDelegate {
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if let url = request.URL {
             if url.scheme == "genbatomo" {
-                scheme(url)
+                schemeResolve(url)
                 return false;
             }
         }
         return true;
     }
-    
-    func scheme(url:NSURL){
-        if let host = url.host {
-            
-            let param = urlComponentsToDict(url);
-            
-            switch host {
-            case"groups":
-                let vc = Util.createViewControllerWithIdentifier("GroupListViewController", storyboardName: "Group") as! GroupListViewController
-                vc.station = param["station._id"]!;
-                ApiController.getGroups(param, done: { (error) -> Void in
-                     self.navigationController?.pushViewController(vc, animated: true)
-                })
-                break;
-            default:
-                break;
-            }
-        }
-    }
-    
+}
+// MARK: - Common
+extension MapViewController {
+    // MARK: - query param
     func urlComponentsToDict(url:NSURL) -> Dictionary<String, String> {
         
         let comp: NSURLComponents? = NSURLComponents(URL: url, resolvingAgainstBaseURL: true)
@@ -77,8 +64,69 @@ class MapViewController: BaseViewController,UIWebViewDelegate {
             let item = comp?.queryItems?[i] as! NSURLQueryItem
             dict[item.name] = item.value
         }
-        
         return dict
     }
+    
+    func schemeResolve(url:NSURL){
+        if let host = url.host {
+            
+            let param = urlComponentsToDict(url);
+            
+            switch host {
+            case"groups":
+                self.hostGroups(param);
+                break;
+            case"users":
+                self.hostUsers(param);
+                break;
+            case"posts":
+                self.hostPosts(param);
+                break;
+            case"posts1":
+                self.hostPosts(param);
+                break;
+            default:
+                break;
+            }
+        }
+    }
+    
+}
 
+// MARK: - Action
+extension MapViewController {
+    // group
+    func hostGroups(param:Dictionary<String, String>){
+        let vc = Util.createViewControllerWithIdentifier("GroupListViewController", storyboardName: "Group") as! GroupListViewController
+        vc.station = param["station._id"]!;
+        Util.showHUD(maskType: .None)
+        ApiController.getGroups(param, done: { (error) -> Void in
+            self.navigationController?.pushViewController(vc, animated: true)
+        })
+    }
+    // users
+    func hostUsers(param:Dictionary<String, String>){
+
+        Util.showHUD(maskType: .None)
+        var searchKey = SearchType.Station.searchKey();
+        
+        ApiController.getUsers(key: searchKey, value: param[searchKey]!, done: { (users, error) -> Void in
+            if let users = users {
+                if users.count > 0 {
+                    let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController
+                    vc.displayMode = .List
+                    vc.users = users
+                    self.navigationController?.pushViewController(vc, animated: true)
+                    return
+                }
+            }
+            
+            Util.showInfo("見つかりませんでした。")
+        })
+    }
+    // posts
+    func hostPosts(param:Dictionary<String, String>){
+        let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
