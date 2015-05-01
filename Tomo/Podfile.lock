@@ -5,11 +5,13 @@ PODS:
     - AFNetworking (~> 1.x)
     - SocketRocket (~> 0.x)
   - CHTCollectionViewWaterfallLayout (0.8)
+  - DXYTencentOpenAPI (2.3)
   - ISO8601DateFormatterValueTransformer (0.6.0):
     - RKValueTransformers (~> 1.1.0)
   - JSQMessagesViewController (7.0.0):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
+  - libWeChatSDK (1.5)
   - MagicalRecord (2.2):
     - MagicalRecord/Core (= 2.2)
   - MagicalRecord/Core (2.2)
@@ -48,9 +50,11 @@ PODS:
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0
-  - AZSocketIO
+  - AZSocketIO (= 0.0.5)
   - CHTCollectionViewWaterfallLayout
-  - JSQMessagesViewController
+  - DXYTencentOpenAPI (~> 2.3)
+  - JSQMessagesViewController (= 7.0.0)
+  - libWeChatSDK (~> 1.5)
   - MagicalRecord
   - NYXImagesKit
   - RestKit
@@ -65,9 +69,11 @@ SPEC CHECKSUMS:
   AFNetworking: cf8e418e16f0c9c7e5c3150d019a3c679d015018
   AZSocketIO: 0d9604933c1509fa2f6d755f8a4df235fe3eac6c
   CHTCollectionViewWaterfallLayout: 058823cc65c9d84e059b0a85eede517550da0334
+  DXYTencentOpenAPI: 84e315d64bcf44ecc38e292017192e941870fed7
   ISO8601DateFormatterValueTransformer: 3ac3a721381697cab4e792d8049ce2f2e9ad3036
   JSQMessagesViewController: 9fd7e9ac96e9fc91f2deca86928e2cc916aeebaa
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
+  libWeChatSDK: 507641cfe6344f9fed4dfb5596d856d4e5953486
   MagicalRecord: f8a56bb87ab6552f20c4bb8681a1958a197ea3cd
   NYXImagesKit: 8163e3335a40eaa173ca5bbbf81fafb57d3947eb
   RestKit: 1987b5efef289c6b27bd980714d6ca48d3871b78
@@ -81,4 +87,4 @@ SPEC CHECKSUMS:
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
   UIColor-HexString: f8a5612bd6772fed8db58ee594b42a0b2831750e
 
-COCOAPODS: 0.36.3
+COCOAPODS: 0.36.4

@@ -30,6 +30,12 @@
 #define COCOAPODS_VERSION_MINOR_CHTCollectionViewWaterfallLayout 8
 #define COCOAPODS_VERSION_PATCH_CHTCollectionViewWaterfallLayout 0
 
+// DXYTencentOpenAPI
+#define COCOAPODS_POD_AVAILABLE_DXYTencentOpenAPI
+#define COCOAPODS_VERSION_MAJOR_DXYTencentOpenAPI 2
+#define COCOAPODS_VERSION_MINOR_DXYTencentOpenAPI 3
+#define COCOAPODS_VERSION_PATCH_DXYTencentOpenAPI 0
+
 // ISO8601DateFormatterValueTransformer
 #define COCOAPODS_POD_AVAILABLE_ISO8601DateFormatterValueTransformer
 #define COCOAPODS_VERSION_MAJOR_ISO8601DateFormatterValueTransformer 0
@@ -161,4 +167,10 @@
 #define COCOAPODS_VERSION_MAJOR_UIColor_HexString 1
 #define COCOAPODS_VERSION_MINOR_UIColor_HexString 1
 #define COCOAPODS_VERSION_PATCH_UIColor_HexString 0
+
+// libWeChatSDK
+#define COCOAPODS_POD_AVAILABLE_libWeChatSDK
+#define COCOAPODS_VERSION_MAJOR_libWeChatSDK 1
+#define COCOAPODS_VERSION_MINOR_libWeChatSDK 5
+#define COCOAPODS_VERSION_PATCH_libWeChatSDK 0
 
