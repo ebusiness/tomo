@@ -32,23 +32,46 @@ class FriendListViewController: BaseViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("updateBadgeNumber"), name: kNotificationGotNewMessage, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
         if displayMode == .Chat {
-            loadData()
+            updateBadgeNumber()
             
             ApiController.unconfirmedNotification { (error) -> Void in
                 ApiController.getFriends { (error) -> Void in
-//                    if error == nil {
-                        self.loadData()
-                        self.tableView.reloadData()
-//                    }
+                    ApiController.getMessage({ (error) -> Void in
+                        self.updateBadgeNumber()
+                    })
+                    
+                    self.updateBadgeNumber()
                 }
             }
         }
     }
 
-    func loadData() {
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    // MARK: - Notification
+    
+    func updateBadgeNumber() {
         users = DBController.friends()
         friendInvitedNotifications = DBController.unconfirmedNotification(type: .FriendInvited)
+        tableView.reloadData()
+        
+        (navigationController?.tabBarController as? TabBarController)?.updateBadgeNumber()
+    }
+    
+    func becomeActive() {
+        if displayMode == .Chat {
+            ApiController.getMessage({ (error) -> Void in
+                self.updateBadgeNumber()
+            })
+        }
     }
 }
 
@@ -75,6 +98,10 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
             return 44
         }
         
+        if displayMode == .Chat {
+            return 70
+        }
+        
         return 60
     }
     
@@ -85,6 +112,13 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         let friend = users[indexPath.row]
+        
+        if displayMode == .Chat {
+            let cell = tableView.dequeueReusableCellWithIdentifier("RecentlyFriendCell", forIndexPath: indexPath) as! RecentlyFriendCell
+            cell.unreadCount = DBController.unreadCount(friend)
+            cell.friend = friend
+            return cell
+        }
         
         let cell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! FriendCell
         
@@ -104,6 +138,12 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
             let friend = users[indexPath.row]
             
             if displayMode == .Chat {
+                DBController.makeAllMessageRead(friend)
+                if let cell = tableView.cellForRowAtIndexPath(indexPath) as? RecentlyFriendCell {
+                    cell.clearBadge()
+                }
+                (self.navigationController?.tabBarController as? TabBarController)?.updateBadgeNumber()
+                
                 let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: "Message") as! MessageViewController
 
                 vc.friend = friend

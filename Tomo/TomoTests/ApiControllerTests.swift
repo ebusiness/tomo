@@ -341,22 +341,22 @@ class ApiControllerTests: XCTestCase {
             println(error)
         })
     }
-    func testGetMessageUnread() {
-        let expect = expectationWithDescription("api")
-        
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
-            XCTAssertNil(error, "")
-            
-            ApiController.getMessageUnread({ (error) -> Void in
-                XCTAssertNil(error, "should success")
-                expect.fulfill()
-            })
-        }
-        
-        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
-            println(error)
-        })
-    }
+//    func testGetMessageUnread() {
+//        let expect = expectationWithDescription("api")
+//        
+//        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+//            XCTAssertNil(error, "")
+//            
+//            ApiController.getMessageUnread({ (error) -> Void in
+//                XCTAssertNil(error, "should success")
+//                expect.fulfill()
+//            })
+//        }
+//        
+//        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
+//            println(error)
+//        })
+//    }
     
     func testLoginWithOpenid() {
         let expect = expectationWithDescription("api")
@@ -389,5 +389,17 @@ class ApiControllerTests: XCTestCase {
             println(error)
         })
     }
+    
+//    func testGetMessageUnreadCount() {
+//        let expect = expectationWithDescription("api")
+//        
+//        ApiController.getMessageUnreadCount { (error) -> Void in
+//            
+//        }
+//        
+//        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
+//            println(error)
+//        })
+//    }
 }
 

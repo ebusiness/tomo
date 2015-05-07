@@ -88,9 +88,35 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
 
+        updateBadgeNumber()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("updateBadgeNumber"), name: kNotificationGotNewMessage, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
         SocketController.start()
 
         Util.setupPush()
+    }
+    
+    // MARK: - Notification
+    
+    func updateBadgeNumber() {
+        let count = DBController.unreadCountTotal()
+        if count > 0 {
+            if let vc = viewControllers?[1] as? UIViewController {
+                vc.tabBarItem.badgeValue = String(count)
+            }
+        } else {
+            if let vc = viewControllers?[1] as? UIViewController {
+                vc.tabBarItem.badgeValue = nil
+            }
+        }
+    }
+    
+    func becomeActive() {
+        ApiController.getMessage({ (error) -> Void in
+            self.updateBadgeNumber()
+        })
     }
     
     override func didReceiveMemoryWarning() {
@@ -106,5 +132,7 @@ class TabBarController: UITabBarController {
     deinit {
         println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
         SocketController.stop()
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }

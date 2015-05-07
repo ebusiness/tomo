@@ -7,11 +7,13 @@ enum MessageAttributes: String {
     case content = "content"
     case createDate = "createDate"
     case id = "id"
+    case isRead = "isRead"
     case subject = "subject"
 }
 
 enum MessageRelationships: String {
     case from = "from"
+    case opened = "opened"
     case to = "to"
 }
 
@@ -57,6 +59,11 @@ class _Message: NSManagedObject {
     // func validateId(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
+    var isRead: NSNumber?
+
+    // func validateIsRead(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
     var subject: String?
 
     // func validateSubject(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
@@ -69,7 +76,38 @@ class _Message: NSManagedObject {
     // func validateFrom(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
+    var opened: NSOrderedSet
+
+    @NSManaged
     var to: NSOrderedSet
+
+}
+
+extension _Message {
+
+    func addOpened(objects: NSOrderedSet) {
+        let mutable = self.opened.mutableCopy() as! NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.opened = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeOpened(objects: NSOrderedSet) {
+        let mutable = self.opened.mutableCopy() as! NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.opened = mutable.copy() as! NSOrderedSet
+    }
+
+    func addOpenedObject(value: User!) {
+        let mutable = self.opened.mutableCopy() as! NSMutableOrderedSet
+        mutable.addObject(value)
+        self.opened = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeOpenedObject(value: User!) {
+        let mutable = self.opened.mutableCopy() as! NSMutableOrderedSet
+        mutable.removeObject(value)
+        self.opened = mutable.copy() as! NSOrderedSet
+    }
 
 }
 

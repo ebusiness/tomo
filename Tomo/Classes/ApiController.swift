@@ -608,20 +608,42 @@ extension ApiController {
     }
     
     class func getMessage(done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().getObjectsAtPath("/messages", parameters: nil, success: { (_, _) -> Void in
-            done(nil)
+        RKObjectManager.sharedManager().getObjectsAtPath("/messages", parameters: nil, success: { (_, mappingResult) -> Void in
+            if Defaults["didGetMessage"].bool == true {
+                done(nil)
+            } else {
+                if let array = mappingResult.array() as? [Message] {
+                    for message in array {
+                        message.isRead = true
+                    }
+                    
+                    DBController.save(done: { () -> Void in
+                        Defaults["didGetMessage"] = true
+                        done(nil)
+                    })
+                }
+            }
+            
             }) { (_, error) -> Void in
                 done(error)
         }
     }
     
-    class func getMessageUnread(done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().getObjectsAtPath("/messages/unread", parameters: nil, success: { (_, _) -> Void in
-            done(nil)
-            }) { (_, error) -> Void in
-                done(error)
-        }
-    }
+//    class func getMessageUnreadCount(done: (NSError?) -> Void) {
+//        RKObjectManager.sharedManager().getObjectsAtPath("/messages/unread/count", parameters: nil, success: { (_, _) -> Void in
+//            done(nil)
+//            }) { (_, error) -> Void in
+//                done(error)
+//        }
+//    }
+//    
+//    class func getMessageUnread(done: (NSError?) -> Void) {
+//        RKObjectManager.sharedManager().getObjectsAtPath("/messages/unread", parameters: nil, success: { (_, _) -> Void in
+//            done(nil)
+//            }) { (_, error) -> Void in
+//                done(error)
+//        }
+//    }
     
     class func getMessageSent(done: (NSError?) -> Void) {
         RKObjectManager.sharedManager().getObjectsAtPath("/messages/sent", parameters: nil, success: { (_, _) -> Void in
@@ -794,7 +816,7 @@ extension ApiController {
     private class func getMessageMapping(isrecipientidonly:Bool)->RKEntityMapping{
         var mapping = _messageMapping
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_from", toKeyPath: "from", withMapping: _userMapping))
-        
+        mapping.addPropertyMappingById("User",fromKey: "opened",toKeyPath: "opened")
         if(isrecipientidonly){
             mapping.addPropertyMappingById("User",fromKey: "_recipient",toKeyPath: "to")
         }else{

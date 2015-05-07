@@ -34,6 +34,8 @@ class SocketController {
                 
                 ApiController.getMessage({ (error) -> Void in
                     if error == nil {
+                        //post notification
+                        NSNotificationCenter.defaultCenter().postNotificationName(kNotificationGotNewMessage, object: nil)
                         Util.showGotMessageLocalNotification()
                     }
                 })

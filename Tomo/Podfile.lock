@@ -8,6 +8,7 @@ PODS:
   - DXYTencentOpenAPI (2.3)
   - ISO8601DateFormatterValueTransformer (0.6.0):
     - RKValueTransformers (~> 1.1.0)
+  - JSBadgeView (1.4)
   - JSQMessagesViewController (7.0.0):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
@@ -53,6 +54,7 @@ DEPENDENCIES:
   - AZSocketIO (= 0.0.5)
   - CHTCollectionViewWaterfallLayout
   - DXYTencentOpenAPI (~> 2.3)
+  - JSBadgeView
   - JSQMessagesViewController (= 7.0.0)
   - libWeChatSDK (~> 1.5)
   - MagicalRecord
@@ -71,6 +73,7 @@ SPEC CHECKSUMS:
   CHTCollectionViewWaterfallLayout: 058823cc65c9d84e059b0a85eede517550da0334
   DXYTencentOpenAPI: 84e315d64bcf44ecc38e292017192e941870fed7
   ISO8601DateFormatterValueTransformer: 3ac3a721381697cab4e792d8049ce2f2e9ad3036
+  JSBadgeView: 3bcf5042339628825797438ceeb76ca59c0285ef
   JSQMessagesViewController: 9fd7e9ac96e9fc91f2deca86928e2cc916aeebaa
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   libWeChatSDK: 507641cfe6344f9fed4dfb5596d856d4e5953486
@@ -87,4 +90,4 @@ SPEC CHECKSUMS:
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
   UIColor-HexString: f8a5612bd6772fed8db58ee594b42a0b2831750e
 
-COCOAPODS: 0.36.4
+COCOAPODS: 0.37.1

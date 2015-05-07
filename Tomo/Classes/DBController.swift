@@ -54,7 +54,14 @@ class DBController: NSObject {
     
     class func friends() -> [User] {
         let me = myUser()
-        return me.friends.array as! [User]
+        var friends = me.friends.array as! [User]
+        friends.sort({if let date1 = $0.createDate, let date2 = $1.createDate {
+            return date1.timeIntervalSinceNow > date2.timeIntervalSinceNow
+            }
+            
+            return false
+        })
+        return friends
     }
     
     class func invitedUsers() -> [User] {
@@ -110,6 +117,29 @@ class DBController: NSObject {
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: NSManagedObjectContext.MR_defaultContext(), sectionNameKeyPath: "section", cacheName: nil)
         return frc
+    }
+    
+    // MARK: - Message
+    
+    class func lastMessage(user: User) -> Message? {
+        return Message.MR_findFirstWithPredicate(NSPredicate(format: "from=%@ OR (to.@count = 1 AND ANY to.id=%@)", user, user.id!), sortedBy: "createDate", ascending: false) as? Message
+    }
+    
+    class func unreadCount(user: User) -> Int {
+        return Int(bitPattern: Message.MR_countOfEntitiesWithPredicate(NSPredicate(format: "from=%@ AND isRead=NO", user)))
+    }
+    
+    class func unreadCountTotal() -> Int {
+        return Int(bitPattern: Message.MR_countOfEntitiesWithPredicate(NSPredicate(format: "from!=%@ AND isRead=NO", myUser())))
+    }
+    
+    class func makeAllMessageRead(user: User) {
+        let messages = Message.MR_findAllWithPredicate(NSPredicate(format: "from=%@", user)) as! [Message]
+        for message in messages {
+            message.isRead = true
+        }
+        
+        save()
     }
     
     // MARK: - other

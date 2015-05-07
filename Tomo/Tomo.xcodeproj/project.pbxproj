@@ -123,9 +123,7 @@
 		2987F1E01AD77FE200AA39CE /* Message.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2987F1DF1AD77FE200AA39CE /* Message.storyboard */; };
 		2987F1E21AD797B600AA39CE /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1E11AD797B600AA39CE /* ChatController.swift */; };
 		2987F1E41AD79D0500AA39CE /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1E31AD79D0500AA39CE /* Chat.swift */; };
-		2987F1E61AD79D0C00AA39CE /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1E51AD79D0C00AA39CE /* Messages.swift */; };
 		2987F1E91AD79D1A00AA39CE /* _Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1E71AD79D1A00AA39CE /* _Chat.swift */; };
-		2987F1EA1AD79D1A00AA39CE /* _Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1E81AD79D1A00AA39CE /* _Messages.swift */; };
 		2987F1ED1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1EC1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m */; };
 		298C3B3F1AE89DE60011009D /* StationSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298C3B3E1AE89DE60011009D /* StationSelectViewController.swift */; };
 		298C3B431AE8B76F0011009D /* NewNotificationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298C3B421AE8B76F0011009D /* NewNotificationListViewController.swift */; };
@@ -175,6 +173,7 @@
 		29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA44921AD4EEBB009EB177 /* Tab.storyboard */; };
 		29CA44951AD4F6F1009EB177 /* AccountEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA44941AD4F6F1009EB177 /* AccountEditViewController.swift */; };
 		29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */; };
+		29CF85311AFB15B50043577E /* RecentlyFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CF85301AFB15B50043577E /* RecentlyFriendCell.swift */; };
 		29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
 		29DF4CD41AE0EDB7003A4962 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD31AE0EDB7003A4962 /* Notification.swift */; };
 		29DF4CD61AE0EDC4003A4962 /* _Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD51AE0EDC4003A4962 /* _Notification.swift */; };
@@ -282,9 +281,7 @@
 		2987F1DF1AD77FE200AA39CE /* Message.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Message.storyboard; path = Classes/Message.storyboard; sourceTree = "<group>"; };
 		2987F1E11AD797B600AA39CE /* ChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatController.swift; path = Classes/ChatController.swift; sourceTree = "<group>"; };
 		2987F1E31AD79D0500AA39CE /* Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
-		2987F1E51AD79D0C00AA39CE /* Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		2987F1E71AD79D1A00AA39CE /* _Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Chat.swift; sourceTree = "<group>"; };
-		2987F1E81AD79D1A00AA39CE /* _Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Messages.swift; sourceTree = "<group>"; };
 		2987F1EB1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObjectContext+Tomo.h"; path = "Classes/NSManagedObjectContext+Tomo.h"; sourceTree = SOURCE_ROOT; };
 		2987F1EC1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObjectContext+Tomo.m"; path = "Classes/NSManagedObjectContext+Tomo.m"; sourceTree = SOURCE_ROOT; };
 		298C3B3E1AE89DE60011009D /* StationSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationSelectViewController.swift; path = Classes/StationSelectViewController.swift; sourceTree = "<group>"; };
@@ -325,6 +322,7 @@
 		29CA44921AD4EEBB009EB177 /* Tab.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Tab.storyboard; path = Classes/Tab.storyboard; sourceTree = "<group>"; };
 		29CA44941AD4F6F1009EB177 /* AccountEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountEditViewController.swift; sourceTree = "<group>"; };
 		29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		29CF85301AFB15B50043577E /* RecentlyFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentlyFriendCell.swift; sourceTree = "<group>"; };
 		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
 		29DF4CD31AE0EDB7003A4962 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		29DF4CD51AE0EDC4003A4962 /* _Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Notification.swift; sourceTree = "<group>"; };
@@ -469,7 +467,6 @@
 				292B9CD11AE61C4800604986 /* Line.swift */,
 				292B9CD21AE61C4800604986 /* Station.swift */,
 				29DF4CD31AE0EDB7003A4962 /* Notification.swift */,
-				2987F1E51AD79D0C00AA39CE /* Messages.swift */,
 				2987F1E31AD79D0500AA39CE /* Chat.swift */,
 				296040421ACE644800D2A338 /* TestData.swift */,
 				1712BE471ACE5A54000A9C47 /* Comments.swift */,
@@ -496,7 +493,6 @@
 				292B9CCE1AE61C3F00604986 /* _Station.swift */,
 				29DF4CD51AE0EDC4003A4962 /* _Notification.swift */,
 				2987F1E71AD79D1A00AA39CE /* _Chat.swift */,
-				2987F1E81AD79D1A00AA39CE /* _Messages.swift */,
 				1712BE4A1ACE5D0F000A9C47 /* _Comments.swift */,
 				1712BE3F1ACE4135000A9C47 /* _Devices.swift */,
 				1712BE371ACE183C000A9C47 /* _Images.swift */,
@@ -539,6 +535,7 @@
 		294185141AD777E700C6E913 /* トーク */ = {
 			isa = PBXGroup;
 			children = (
+				29CF85301AFB15B50043577E /* RecentlyFriendCell.swift */,
 				2952730C1AD653F000FC7833 /* FriendCell.swift */,
 				295272D91AD6155300FC7833 /* FriendListViewController.swift */,
 				294185121AD777D500C6E913 /* MessageViewController.swift */,
@@ -967,6 +964,7 @@
 				2960404F1ACE75C500D2A338 /* AFDateExtension.swift in Sources */,
 				1712BE2E1ACCE809000A9C47 /* Group.swift in Sources */,
 				294185131AD777D500C6E913 /* MessageViewController.swift in Sources */,
+				29CF85311AFB15B50043577E /* RecentlyFriendCell.swift in Sources */,
 				292B9CD31AE61C4800604986 /* Line.swift in Sources */,
 				293004561AD6803100FC9100 /* CommentInputViewController.swift in Sources */,
 				178D64A01ACC10B600185368 /* Message.swift in Sources */,
@@ -979,7 +977,6 @@
 				290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */,
 				29C1DA7A1AD36659009A02CC /* S3Controller.swift in Sources */,
 				1712BE381ACE183C000A9C47 /* _Images.swift in Sources */,
-				2987F1E61AD79D0C00AA39CE /* Messages.swift in Sources */,
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				290144121ADE3BBD0048F3D8 /* SCLAlertView.swift in Sources */,
@@ -995,7 +992,6 @@
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				2952730D1AD653F000FC7833 /* FriendCell.swift in Sources */,
 				2987F1ED1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m in Sources */,
-				2987F1EA1AD79D1A00AA39CE /* _Messages.swift in Sources */,
 				2942CCD31ACCF761007CDC97 /* NewsfeedViewController.swift in Sources */,
 				1712BE421ACE413C000A9C47 /* Devices.swift in Sources */,
 				29ED0C7E1AE4AC0900B51C7E /* TextFieldInputViewController.swift in Sources */,

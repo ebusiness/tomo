@@ -36,6 +36,8 @@ let kBirthdayMin = NSDate(fromString: "1940/01/01", format: DateFormat.Custom("y
 //max
 let kBirthdayMax = NSDate()
 
+let kNotificationGotNewMessage = "kNotificationGotNewMessage"
+
 class Constants: NSObject {
    
     class func postPath(#fileName: String) -> String {
