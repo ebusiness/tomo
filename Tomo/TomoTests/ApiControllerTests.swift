@@ -358,20 +358,20 @@ class ApiControllerTests: XCTestCase {
 //        })
 //    }
     
-    func testLoginWithOpenid() {
-        let expect = expectationWithDescription("api")
-        
-        ApiController.loginWithOpenid(openid: "oav4fuKv_KZEY7UBnwxUhLWp_vIc", token: "OezXcEiiBSKSxW0eoylIeN_aoySMxUoDtAcOfOKgsZ8QxkSuLJDlq5_6YMgJ3X7t1OrHdD5pOi_PCrGZmueRypE5rx0pZLo2-LEhbW6cA0uHas2UmIQnkjEk4pNV3uh0jvG9SJHnTY52CSHY1H5MOQ", type: "wx") { (error) -> Void in
-            
-            XCTAssertNil(error, "should success")
-            expect.fulfill()
-        }
-        
-        
-        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
-            println(error)
-        })
-    }
+//    func testLoginWithOpenid() {
+//        let expect = expectationWithDescription("api")
+//        
+//        ApiController.loginWithOpenid(openid: "oav4fuKv_KZEY7UBnwxUhLWp_vIc", token: "OezXcEiiBSKSxW0eoylIeN_aoySMxUoDtAcOfOKgsZ8QxkSuLJDlq5_6YMgJ3X7t1OrHdD5pOi_PCrGZmueRypE5rx0pZLo2-LEhbW6cA0uHas2UmIQnkjEk4pNV3uh0jvG9SJHnTY52CSHY1H5MOQ", type: "wx") { (error) -> Void in
+//            
+//            XCTAssertNil(error, "should success")
+//            expect.fulfill()
+//        }
+//        
+//        
+//        waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
+//            println(error)
+//        })
+//    }
     
     func testReadMessage() {
         let expect = expectationWithDescription("api")

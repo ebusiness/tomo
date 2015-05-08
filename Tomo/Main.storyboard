@@ -8,7 +8,7 @@
         <!--Reg Sign Up View Controller-->
         <scene sceneID="QjP-jf-Adc">
             <objects>
-                <viewController id="a31-BC-2bM" customClass="RegSignUpViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegSignUpViewController" id="a31-BC-2bM" customClass="RegSignUpViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9Qy-cR-4rx"/>
                         <viewControllerLayoutGuide type="bottom" id="aFN-X4-gJM"/>
@@ -533,6 +533,7 @@
                     <connections>
                         <outlet property="emailTF" destination="p3F-B8-Hdy" id="FuS-KE-MDh"/>
                         <outlet property="passwordTF" destination="C21-6s-cOa" id="aGr-06-yrg"/>
+                        <segue destination="a31-BC-2bM" kind="modal" identifier="regist" id="XUH-Bv-cHv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FjU-jE-KOx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -584,4 +585,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="XUH-Bv-cHv"/>
+    </inferredMetricsTieBreakers>
 </document>

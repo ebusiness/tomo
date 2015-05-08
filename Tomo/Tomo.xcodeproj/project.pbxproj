@@ -47,6 +47,9 @@
 		1712BE501ACE60E7000A9C47 /* CommentsMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1712BE451ACE57B6000A9C47 /* CommentsMapping.plist */; };
 		172EADD01ACC1C850039F42E /* _Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D64A11ACC10BE00185368 /* _Message.swift */; };
 		172EADD11ACC1C910039F42E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D649F1ACC10B600185368 /* Message.swift */; };
+		17455E521AFAF6590079F648 /* OpenidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993181AF3712C00204E97 /* OpenidController.swift */; };
+		17455E531AFAF65B0079F648 /* OpenidQQController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993191AF3712C00204E97 /* OpenidQQController.swift */; };
+		17455E541AFAF65E0079F648 /* OpenidWXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B9931A1AF3712C00204E97 /* OpenidWXController.swift */; };
 		178D649E1ACC0DDF00185368 /* MessageMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 178D649D1ACC0DDF00185368 /* MessageMapping.plist */; };
 		178D64A01ACC10B600185368 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D649F1ACC10B600185368 /* Message.swift */; };
 		178D64A21ACC10BE00185368 /* _Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D64A11ACC10BE00185368 /* _Message.swift */; };
@@ -57,6 +60,9 @@
 		17B993151AF36CBB00204E97 /* _Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993141AF36CBB00204E97 /* _Openids.swift */; };
 		17B993161AF36CBE00204E97 /* _Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993141AF36CBB00204E97 /* _Openids.swift */; };
 		17B993171AF36CC100204E97 /* Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993121AF36CB200204E97 /* Openids.swift */; };
+		17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993181AF3712C00204E97 /* OpenidController.swift */; };
+		17B9931C1AF3712C00204E97 /* OpenidQQController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993191AF3712C00204E97 /* OpenidQQController.swift */; };
+		17B9931D1AF3712C00204E97 /* OpenidWXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B9931A1AF3712C00204E97 /* OpenidWXController.swift */; };
 		290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
 		290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290134DE1AC3991C00BBFE29 /* Images.xcassets */; };
 		290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134ED1AC3991D00BBFE29 /* TomoTests.swift */; };
@@ -220,6 +226,9 @@
 		17B993101AF36A4400204E97 /* OpenidsMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OpenidsMapping.plist; sourceTree = "<group>"; };
 		17B993121AF36CB200204E97 /* Openids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Openids.swift; sourceTree = "<group>"; };
 		17B993141AF36CBB00204E97 /* _Openids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Openids.swift; sourceTree = "<group>"; };
+		17B993181AF3712C00204E97 /* OpenidController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidController.swift; path = Classes/OpenidController.swift; sourceTree = "<group>"; };
+		17B993191AF3712C00204E97 /* OpenidQQController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidQQController.swift; path = Classes/OpenidQQController.swift; sourceTree = "<group>"; };
+		17B9931A1AF3712C00204E97 /* OpenidWXController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidWXController.swift; path = Classes/OpenidWXController.swift; sourceTree = "<group>"; };
 		290134D21AC3991C00BBFE29 /* tomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		290134D61AC3991C00BBFE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		290134D71AC3991C00BBFE29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -391,11 +400,14 @@
 			name = lib;
 			sourceTree = "<group>";
 		};
-		17B993091AF3644A00204E97 /* SNS */ = {
+		17B993091AF3644A00204E97 /* Openid */ = {
 			isa = PBXGroup;
 			children = (
+				17B993181AF3712C00204E97 /* OpenidController.swift */,
+				17B993191AF3712C00204E97 /* OpenidQQController.swift */,
+				17B9931A1AF3712C00204E97 /* OpenidWXController.swift */,
 			);
-			name = SNS;
+			name = Openid;
 			sourceTree = "<group>";
 		};
 		290134C91AC3991C00BBFE29 = {
@@ -577,7 +589,7 @@
 		299389521AD3C6FB00043D91 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				17B993091AF3644A00204E97 /* SNS */,
+				17B993091AF3644A00204E97 /* Openid */,
 				29BE7E1A1AC54663008110B4 /* DBController.swift */,
 				290134F71AC39F4600BBFE29 /* ApiController.swift */,
 				29C1DA781AD36659009A02CC /* S3Controller.swift */,
@@ -959,6 +971,7 @@
 				29CA44951AD4F6F1009EB177 /* AccountEditViewController.swift in Sources */,
 				2942CCD11ACCE75A007CDC97 /* BaseViewController.swift in Sources */,
 				29CA44901AD4DEE4009EB177 /* AccountViewController.swift in Sources */,
+				17B9931C1AF3712C00204E97 /* OpenidQQController.swift in Sources */,
 				2960404F1ACE75C500D2A338 /* AFDateExtension.swift in Sources */,
 				1712BE2E1ACCE809000A9C47 /* Group.swift in Sources */,
 				294185131AD777D500C6E913 /* MessageViewController.swift in Sources */,
@@ -978,6 +991,7 @@
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				29ED0C801AE50B0F00B51C7E /* TextViewInputViewController.swift in Sources */,
+				17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */,
 				1712BE2C1ACCE801000A9C47 /* _Group.swift in Sources */,
 				29DF4CD61AE0EDC4003A4962 /* _Notification.swift in Sources */,
 				298C3B431AE8B76F0011009D /* NewNotificationListViewController.swift in Sources */,
@@ -1002,6 +1016,7 @@
 				2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */,
 				291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */,
 				292B9CCC1AE61ACA00604986 /* StationTableViewController.swift in Sources */,
+				17B9931D1AF3712C00204E97 /* OpenidWXController.swift in Sources */,
 				291ADF9D1AD2654E009D8BE3 /* AddPostViewController.swift in Sources */,
 				290135171AC3A78E00BBFE29 /* User.swift in Sources */,
 				29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */,
@@ -1041,6 +1056,7 @@
 				2960404C1ACE68C500D2A338 /* TestDataTests.swift in Sources */,
 				292B9CD51AE6243200604986 /* Line.swift in Sources */,
 				29BE7E1C1AC54663008110B4 /* DBController.swift in Sources */,
+				17455E531AFAF65B0079F648 /* OpenidQQController.swift in Sources */,
 				1712BE3A1ACE195B000A9C47 /* _Images.swift in Sources */,
 				29A1AFF81AC4113000775765 /* _Post.swift in Sources */,
 				290144101ADE12990048F3D8 /* ChatController.swift in Sources */,
@@ -1052,6 +1068,7 @@
 				2993894E1AD3B70200043D91 /* SwiftyUserDefaults.swift in Sources */,
 				294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */,
 				292B9CD71AE6247100604986 /* _Line.swift in Sources */,
+				17455E541AFAF65E0079F648 /* OpenidWXController.swift in Sources */,
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
 				299389491AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				29DF4CD81AE0EFE5003A4962 /* _Notification.swift in Sources */,
@@ -1063,6 +1080,7 @@
 				2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */,
 				1712BE491ACE5D05000A9C47 /* Comments.swift in Sources */,
 				292B9CD81AE6247400604986 /* _Station.swift in Sources */,
+				17455E521AFAF6590079F648 /* OpenidController.swift in Sources */,
 				29A1AFF51AC4112800775765 /* Post.swift in Sources */,
 				291ADF961AD247C4009D8BE3 /* Util.swift in Sources */,
 				29DF4CD71AE0EFA2003A4962 /* Notification.swift in Sources */,

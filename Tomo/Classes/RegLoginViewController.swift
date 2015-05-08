@@ -95,7 +95,42 @@ class RegLoginViewController: BaseViewController {
     }
     
     @IBAction func login_wechat(sender: AnyObject) {
+        
+        Util.showHUD()
+        OpenidController.instance.wxCheckAuth({ (result) -> () in
+            
+            Util.dismissHUD()
+            self.loginCheck(result)
+            
+        }, failure: { (errCode, errMessage) -> () in
+            
+            Util.showInfo(errMessage)
+            println(errCode)
+            println(errMessage)
+            
+        })
     }
+    func loginCheck(result: Dictionary<String, AnyObject>){
+        if let uid = result["_id"] as? String {
+            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+            
+            Util.changeRootViewController(from: self, to: tab)
+        }else{
+            self.performSegueWithIdentifier("regist",sender: result)
+        }
+        
+
+    }
+    
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let view = segue.destinationViewController as? RegSignUpViewController{
+            view.openidInfo = sender as? Dictionary<String, AnyObject>
+            println(sender);
+        }
+        
+    }
+
     // MARK: - support
     
     func validate() -> Bool {

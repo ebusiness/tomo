@@ -98,24 +98,12 @@ extension ApiController {
         }
     }
     
-    class func loginWithOpenid(#openid: String, token: String, type: String, done: (NSError?) -> Void) {
-        var param = Dictionary<String, String>()
-        param["openid"] = openid
-        param["access_token"] = token
-        param["type"] = type
-        
-        RKObjectManager.sharedManager().postObject(nil, path: "/mobile/user/openid", parameters: param, success: { (_, result) -> Void in
-            if let obj = result.firstObject as? User {
-                //no email in db
-                Defaults["myId"] = obj.id
-                
-                done(nil)
-            } else {
-                println(result.firstObject)
-            }
+    class func addOpenid(param : Dictionary<String, AnyObject>, done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().patchObject(nil, path: "/mobile/user/openid", parameters: param, success: { (_, result) -> Void in
+            done(nil)
             
-            }) { (_, error) -> Void in
-                done(error)
+        }) { (_, error) -> Void in
+            done(error)
         }
     }
     
@@ -702,6 +690,8 @@ extension ApiController {
         let msgmapping = getMessageMapping(true)
         //login
         addCommonResponseDescriptor(usermapping, method: .POST, pathPattern: "/login", keyPath: nil, statusCodes: nil)
+        //openid
+        addCommonResponseDescriptor(_openidsMapping, method: .PATCH, pathPattern: "/mobile/user/openid", keyPath: nil, statusCodes: nil)
         //UserInfo
         addCommonResponseDescriptor(usermapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(usermapping, method: .PATCH, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
@@ -937,6 +927,9 @@ extension ApiController {
     private class var _stationMapping: RKEntityMapping {
         var mapping = ApiController.getMapping("Station", identification: nil,pListName: nil)
         return mapping
+    }
+    private class var _openidsMapping: RKEntityMapping {
+        return ApiController.getMapping("Openids", identification: nil,pListName: nil)
     }
 }
 

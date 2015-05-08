@@ -15,6 +15,8 @@ class RegSignUpViewController: BaseViewController {
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     
+    var openidInfo:Dictionary<String, AnyObject>?
+    
     var tfs = [UITextField]()
 
     override func viewDidLoad() {
@@ -84,6 +86,11 @@ class RegSignUpViewController: BaseViewController {
                 
                 SSKeychain.setPassword(self.passwordTF.text, forService: kTomoService, account: self.emailTF.text)
                 
+                if let openid = self.openidInfo {
+                    ApiController.addOpenid(openid, done: { (error) -> Void in
+                        println(error)
+                    })
+                }
                 //get user detail
                 ApiController.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
                     if error == nil{
