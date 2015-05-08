@@ -25,21 +25,35 @@ extension OpenidController {
     func qqCheckAuth(success:snsSuccessHandler,failure:snsFailureHandler?){
         self.whenSuccess = success;
         self.whenfailure = failure;
-        
-//        SVProgressHUD.showWithMaskType(.Black);
-        let accessToken = _tencentOAuth?.accessToken
-        if (accessToken != nil && "" != accessToken)
-        {
-            _tencentOAuth?.getUserInfo()
-        }else
-        {
-            self.qqSendAuth()
+        self.qqCheckToken();
+    }
+    
+    private func qqCheckToken(){// サーバ側のチェック
+        if let accessToken = _tencentOAuth?.accessToken{
+            if ( "" != accessToken )
+            {
+                //_tencentOAuth?.getUserInfo()
+                if let openid = _tencentOAuth?.openId {
+                    self.checkToken(openid: openid, token: accessToken, type: .QQ, done: { (statusCode,openidinfo) -> Void in
+                        
+                        if statusCode == 401 {//token 失效 或token,openid信息不全
+                            self.qqSendAuth()
+                        }else if statusCode == 404 {//用户不存在 注册
+                            //self.getUserInfo()////授权OK 认证成功(access_token 2小时内有效 在有效期)
+                            self.whenSuccess?(res: openidinfo)
+                        }
+                    })
+                }
+                return;
+            }
         }
+        self.qqSendAuth()
     }
     private func qqSendAuth(){
         let _permissions = [
             kOPEN_PERMISSION_GET_USER_INFO,
             kOPEN_PERMISSION_GET_SIMPLE_USER_INFO,
+            kOPEN_PERMISSION_GET_OTHER_INFO,
         ];
         _tencentOAuth?.authorize(_permissions, inSafari: false)
     }
@@ -106,7 +120,8 @@ extension OpenidController: TencentSessionDelegate {
         if (accessToken != nil && "" != accessToken)
         {
             self.saveQQ()
-            _tencentOAuth?.getUserInfo()
+            self.qqCheckToken();
+            //_tencentOAuth?.getUserInfo()
         }
         else
         {
