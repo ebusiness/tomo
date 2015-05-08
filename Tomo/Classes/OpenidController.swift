@@ -22,13 +22,13 @@ enum OpenIDRequestType {
     }
 }
 
-
 class OpenidController: NSObject {
     
     typealias snsSuccessHandler = (res: Dictionary<String, AnyObject>) -> ()
     typealias snsFailureHandler = (errCode:Int32,errMessage:String) -> ()
     var whenSuccess:snsSuccessHandler!
     var whenfailure:snsFailureHandler!
+    var _isBinding :Bool = false;
     //インスタンス
     class var instance : OpenidController {
         struct Static {
@@ -67,6 +67,21 @@ extension OpenidController{
         return nil
     }
     
+    //binding OpenidInfo
+    func binding(type:OpenIDRequestType,openid:AnyObject!,access_token:AnyObject!,refresh_token:AnyObject?,expirationDate:AnyObject?){
+        assert(NSThread.currentThread().isMainThread, "not main thread")
+        
+        var param = Dictionary<String, AnyObject>();
+        param["openid"] = openid
+        param["access_token"] = access_token
+        param["refresh_token"] = refresh_token
+        param["expirationDate"] = expirationDate
+        param["type"] = type.toString()
+        
+        ApiController.addOpenid(param, done: { (error) -> Void in
+            self.whenSuccess?(res: param)
+        })
+    }
     func checkToken(#openid: String, token: String, type: OpenIDRequestType, done: (Int?,Dictionary<String, AnyObject>) -> Void) {
         var param = Dictionary<String, String>()
         param["openid"] = openid
@@ -82,9 +97,15 @@ extension OpenidController{
                     let result = JSON as! Dictionary<String, AnyObject>;
                     Defaults["myId"] = result["id"]
                     self.whenSuccess?(res: result)
+                    
+                    if type == .QQ {
+                        self.saveQQ()
+                    }else if type == .WeChat{
+                        
+                    }
                 }
         }
-
+        
         
     }
     /////////////////////////////////////////////////////////

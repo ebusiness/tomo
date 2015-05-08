@@ -24,6 +24,7 @@ extension OpenidController {
     func wxCheckAuth(success:snsSuccessHandler,failure:snsFailureHandler?){
         self.whenSuccess = success;
         self.whenfailure = failure;
+        _isBinding = false;
     
         if(!WXApi.isWXAppInstalled()){
             Util.showInfo("WeiChatはインストールされていません")
@@ -120,15 +121,19 @@ extension OpenidController {
     }
     private func wxCheckToken(){// サーバ側のチェック
         if let wxconfig = self.getWxConfig(){
-            self.checkToken(openid: wxconfig.openid!, token: wxconfig.access_token!, type: .WeChat, done: { (statusCode,openidinfo) -> Void in
-                
-                if statusCode == 401 {//token 失效 或token,openid信息不全
-                    self.refreshToken()//刷新access_token 延长access_token 有效期
-                }else if statusCode == 404 {//用户不存在 注册
-                    //self.getUserInfo()////授权OK 认证成功(access_token 2小时内有效 在有效期)
-                    self.whenSuccess?(res: openidinfo)
-                }
-            })
+            if _isBinding {
+                self.binding(.WeChat, openid: wxconfig.openid!, access_token: wxconfig.access_token!, refresh_token: wxconfig.refresh_token, expirationDate: nil)
+            }else {
+                self.checkToken(openid: wxconfig.openid!, token: wxconfig.access_token!, type: .WeChat, done: { (statusCode,openidinfo) -> Void in
+                    
+                    if statusCode == 401 {//token 失效 或token,openid信息不全
+                        self.refreshToken()//刷新access_token 延长access_token 有效期
+                    }else if statusCode == 404 {//用户不存在 注册
+                        //self.getUserInfo()////授权OK 认证成功(access_token 2小时内有效 在有效期)
+                        self.whenSuccess?(res: openidinfo)
+                    }
+                })
+            }
             
 //            let wx_url_auth = "https://api.weixin.qq.com/sns/auth"
 //            Manager.sharedInstance.request(.GET, wx_url_auth, parameters: params, encoding: ParameterEncoding.URL)
@@ -243,6 +248,22 @@ extension OpenidController: WXApiDelegate {
         }
     }
     
+}
+
+//binding
+extension OpenidController {
+    func wxBinding(success:snsSuccessHandler,failure:snsFailureHandler?){
+        
+        self.whenSuccess = success;
+        self.whenfailure = failure;
+        _isBinding = true;
+        
+        if(!WXApi.isWXAppInstalled()){
+            Util.showInfo("WeiChatはインストールされていません")
+            return;
+        }
+        self.wxCheckToken()
+    }
 }
 
 //setCoreData

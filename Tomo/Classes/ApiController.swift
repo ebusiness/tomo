@@ -100,8 +100,16 @@ extension ApiController {
     
     class func addOpenid(param : Dictionary<String, AnyObject>, done: (NSError?) -> Void) {
         RKObjectManager.sharedManager().patchObject(nil, path: "/mobile/user/openid", parameters: param, success: { (_, result) -> Void in
+            
             done(nil)
             
+        }) { (_, error) -> Void in
+            done(error)
+        }
+    }
+    class func getOpenids(done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/mobile/user/openidinfo", parameters: nil, success: { (_, result) -> Void in
+            done(nil)
         }) { (_, error) -> Void in
             done(error)
         }
@@ -692,6 +700,8 @@ extension ApiController {
         addCommonResponseDescriptor(usermapping, method: .POST, pathPattern: "/login", keyPath: nil, statusCodes: nil)
         //openid
         addCommonResponseDescriptor(_openidsMapping, method: .PATCH, pathPattern: "/mobile/user/openid", keyPath: nil, statusCodes: nil)
+        //openidInfo
+        addCommonResponseDescriptor(_openidsMapping, method: .GET, pathPattern: "/mobile/user/openidinfo", keyPath: nil, statusCodes: nil)
         //UserInfo
         addCommonResponseDescriptor(usermapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(usermapping, method: .PATCH, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)

@@ -63,6 +63,8 @@
 		17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993181AF3712C00204E97 /* OpenidController.swift */; };
 		17B9931C1AF3712C00204E97 /* OpenidQQController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993191AF3712C00204E97 /* OpenidQQController.swift */; };
 		17B9931D1AF3712C00204E97 /* OpenidWXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B9931A1AF3712C00204E97 /* OpenidWXController.swift */; };
+		17EE9A2D1AFC7FE200372134 /* OpenidSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EE9A2C1AFC7FE200372134 /* OpenidSwitch.swift */; };
+		17EE9A2E1AFC815B00372134 /* OpenidSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EE9A2C1AFC7FE200372134 /* OpenidSwitch.swift */; };
 		290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
 		290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290134DE1AC3991C00BBFE29 /* Images.xcassets */; };
 		290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134ED1AC3991D00BBFE29 /* TomoTests.swift */; };
@@ -228,6 +230,7 @@
 		17B993181AF3712C00204E97 /* OpenidController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidController.swift; path = Classes/OpenidController.swift; sourceTree = "<group>"; };
 		17B993191AF3712C00204E97 /* OpenidQQController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidQQController.swift; path = Classes/OpenidQQController.swift; sourceTree = "<group>"; };
 		17B9931A1AF3712C00204E97 /* OpenidWXController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidWXController.swift; path = Classes/OpenidWXController.swift; sourceTree = "<group>"; };
+		17EE9A2C1AFC7FE200372134 /* OpenidSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidSwitch.swift; path = Classes/OpenidSwitch.swift; sourceTree = "<group>"; };
 		290134D21AC3991C00BBFE29 /* tomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		290134D61AC3991C00BBFE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		290134D71AC3991C00BBFE29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -694,6 +697,7 @@
 		29CA44911AD4DEEA009EB177 /* 設定 */ = {
 			isa = PBXGroup;
 			children = (
+				17EE9A2C1AFC7FE200372134 /* OpenidSwitch.swift */,
 				296D8BB71AFC5A4A0058D400 /* AccountEditViewController.swift */,
 				296D8BB81AFC5A4A0058D400 /* TextViewInputViewController.swift */,
 				292B9CCB1AE61ACA00604986 /* StationTableViewController.swift */,
@@ -975,6 +979,7 @@
 				296D8BAB1AFC59F10058D400 /* BaseViewController.swift in Sources */,
 				292B9CD31AE61C4800604986 /* Line.swift in Sources */,
 				178D64A01ACC10B600185368 /* Message.swift in Sources */,
+				17EE9A2D1AFC7FE200372134 /* OpenidSwitch.swift in Sources */,
 				298C3B3F1AE89DE60011009D /* StationSelectViewController.swift in Sources */,
 				1712BE4B1ACE5D0F000A9C47 /* _Comments.swift in Sources */,
 				292B9CD41AE61C4800604986 /* Station.swift in Sources */,
@@ -1066,6 +1071,7 @@
 				2993894E1AD3B70200043D91 /* SwiftyUserDefaults.swift in Sources */,
 				294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */,
 				292B9CD71AE6247100604986 /* _Line.swift in Sources */,
+				17EE9A2E1AFC815B00372134 /* OpenidSwitch.swift in Sources */,
 				17455E541AFAF65E0079F648 /* OpenidWXController.swift in Sources */,
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
 				299389491AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,

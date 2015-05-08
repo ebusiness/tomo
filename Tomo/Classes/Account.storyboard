@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="aFd-Rm-MQX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="aFd-Rm-MQX">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -41,7 +42,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="プロフィール写真" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zRa-VE-h7D">
-                                                    <rect key="frame" x="20" y="30" width="136" height="20.5"/>
+                                                    <rect key="frame" x="20" y="30" width="136" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -362,7 +363,13 @@
                             <outlet property="delegate" destination="5tV-aT-uj8" id="gg2-dH-Wxk"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="マイプロフィール" id="djp-Ng-32v"/>
+                    <navigationItem key="navigationItem" title="マイプロフィール" id="djp-Ng-32v">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="NOt-sM-CYk">
+                            <connections>
+                                <segue destination="8gi-D3-eQJ" kind="push" id="WRR-89-q57"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="814"/>
                     <connections>
@@ -542,6 +549,79 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h4e-ab-Vup" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1176" y="1086"/>
+        </scene>
+        <!--Openid-->
+        <scene sceneID="Y4f-Hc-bb4">
+            <objects>
+                <tableViewController id="8gi-D3-eQJ" userLabel="Openid" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="ZDu-c2-PP2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="sectionIndexBackgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection id="r1M-J2-RHo">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="ukB-Bx-2Ov">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ukB-Bx-2Ov" id="1Yx-gb-76b">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QQ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ahr-XC-y8o" userLabel="QQ">
+                                                    <rect key="frame" x="15" y="11" width="26" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" restorationIdentifier="openid_qq" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="FLd-9k-D84" customClass="OpenidSwitch" customModule="tomo" customModuleProvider="target">
+                                                    <rect key="frame" x="263" y="6" width="51" height="31"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ahr-XC-y8o" firstAttribute="leading" secondItem="1Yx-gb-76b" secondAttribute="leading" constant="15" id="BuQ-45-f3j"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="FLd-9k-D84" secondAttribute="trailing" id="LBJ-co-nVV"/>
+                                                <constraint firstAttribute="centerY" secondItem="FLd-9k-D84" secondAttribute="centerY" id="ZKs-9G-hfn"/>
+                                                <constraint firstAttribute="centerY" secondItem="ahr-XC-y8o" secondAttribute="centerY" id="g97-YI-R6R"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="MlH-40-fJo">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MlH-40-fJo" id="Kv6-3z-Rv4">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wechat" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ob-SB-vt6" userLabel="QQ">
+                                                    <rect key="frame" x="15" y="11" width="58" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" restorationIdentifier="openid_wechat" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="jkv-0s-agY" customClass="OpenidSwitch" customModule="tomo" customModuleProvider="target">
+                                                    <rect key="frame" x="263" y="6" width="51" height="31"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="8Ob-SB-vt6" firstAttribute="leading" secondItem="Kv6-3z-Rv4" secondAttribute="leading" constant="15" id="QD4-EE-ztH"/>
+                                                <constraint firstAttribute="centerY" secondItem="jkv-0s-agY" secondAttribute="centerY" id="Vsu-ie-9Rk"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="jkv-0s-agY" secondAttribute="trailing" id="mGW-vl-oP5"/>
+                                                <constraint firstAttribute="centerY" secondItem="8Ob-SB-vt6" secondAttribute="centerY" id="tXa-CB-QQ9"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="8gi-D3-eQJ" id="Cw9-p4-0AQ"/>
+                            <outlet property="delegate" destination="8gi-D3-eQJ" id="5Q2-UY-nOe"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="マイプロフィール" id="Ebm-8A-Rao" userLabel="Openid"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tw8-p4-jQW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="882" y="-230"/>
         </scene>
     </scenes>
     <resources>

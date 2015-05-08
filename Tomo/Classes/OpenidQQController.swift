@@ -25,17 +25,19 @@ extension OpenidController {
     func qqCheckAuth(success:snsSuccessHandler,failure:snsFailureHandler?){
         self.whenSuccess = success;
         self.whenfailure = failure;
+        _isBinding = false;
         self.qqCheckToken();
     }
     
     private func qqCheckToken(){// サーバ側のチェック
-        if let accessToken = _tencentOAuth?.accessToken{
-            if ( "" != accessToken )
+        if let accessToken = _tencentOAuth?.accessToken,openid = _tencentOAuth?.openId{
+            if ( "" != accessToken && "" != openid)
             {
-                //_tencentOAuth?.getUserInfo()
-                if let openid = _tencentOAuth?.openId {
+                if _isBinding {
+                    self.binding(.QQ,openid:_tencentOAuth?.openId!, access_token: _tencentOAuth?.accessToken!, refresh_token: nil, expirationDate: _tencentOAuth?.expirationDate)
+                }else {
+                    //_tencentOAuth?.getUserInfo()
                     self.checkToken(openid: openid, token: accessToken, type: .QQ, done: { (statusCode,openidinfo) -> Void in
-                        
                         if statusCode == 401 {//token 失效 或token,openid信息不全
                             self.qqSendAuth()
                         }else if statusCode == 404 {//用户不存在 注册
@@ -49,6 +51,7 @@ extension OpenidController {
         }
         self.qqSendAuth()
     }
+    
     private func qqSendAuth(){
         let _permissions = [
             kOPEN_PERMISSION_GET_USER_INFO,
@@ -59,7 +62,7 @@ extension OpenidController {
     }
     
     //save QQ OpenidInfo
-    private func saveQQ(){
+    func saveQQ(){
         
         let accessToken = _tencentOAuth?.accessToken
         if (accessToken != nil && "" != accessToken){
@@ -69,17 +72,25 @@ extension OpenidController {
             openids.openid = _tencentOAuth?.openId
             openids.access_token = _tencentOAuth?.accessToken
             openids.expirationDate =  _tencentOAuth?.expirationDate
-            
             openids.type = OpenIDRequestType.QQ.toString()
             DBController.save(done: { () -> Void in
                 println("saved")
             })
         }
     }
-    
 }
 
 
+//binding
+extension OpenidController {
+    func qqBinding(success:snsSuccessHandler,failure:snsFailureHandler?){
+        self.whenSuccess = success;
+        self.whenfailure = failure;
+        
+        _isBinding = true;
+        self.qqSendAuth()
+    }
+}
 
 //Share
 extension OpenidController {
@@ -119,7 +130,6 @@ extension OpenidController: TencentSessionDelegate {
         let accessToken = _tencentOAuth?.accessToken
         if (accessToken != nil && "" != accessToken)
         {
-            self.saveQQ()
             self.qqCheckToken();
             //_tencentOAuth?.getUserInfo()
         }

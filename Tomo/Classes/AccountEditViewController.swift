@@ -46,7 +46,7 @@ class AccountEditViewController: BaseTableViewController {
             } else {
                 logoutLabel.text = "追加"
             }
-            
+            self.navigationItem.rightBarButtonItem = nil;
             avatarCell.accessoryType = .None
             stationCell.accessoryType = .None
         }
