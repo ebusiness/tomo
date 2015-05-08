@@ -92,10 +92,7 @@ class RegLoginViewController: BaseViewController {
         }
     }
     @IBAction func login_qq(sender: AnyObject) {
-        Util.showHUD()
         OpenidController.instance.qqCheckAuth({ (result) -> () in
-            
-            Util.dismissHUD()
             self.loginCheck(result)
             
             }, failure: { (errCode, errMessage) -> () in
@@ -108,11 +105,7 @@ class RegLoginViewController: BaseViewController {
     }
     
     @IBAction func login_wechat(sender: AnyObject) {
-        
-        Util.showHUD()
         OpenidController.instance.wxCheckAuth({ (result) -> () in
-            
-            Util.dismissHUD()
             self.loginCheck(result)
             
         }, failure: { (errCode, errMessage) -> () in
@@ -124,10 +117,23 @@ class RegLoginViewController: BaseViewController {
         })
     }
     func loginCheck(result: Dictionary<String, AnyObject>){
+        for tf in tfs {
+            tf.resignFirstResponder()
+        }
         if let uid = result["_id"] as? String {
-            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-            
-            Util.changeRootViewController(from: self, to: tab)
+            ApiController.getUserInfo(uid, done: { (error) -> Void in
+                if let err = error{
+                    Util.showError(err)
+                } else {
+                    if let user = DBController.myUser() {//auto login
+                        Defaults["email"] = user.email
+                        Defaults["shouldAutoLogin"] = true
+                    }
+                    let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+                    
+                    Util.changeRootViewController(from: self, to: tab)
+                }
+            })
         }else{
             self.performSegueWithIdentifier("regist",sender: result)
         }
