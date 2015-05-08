@@ -92,6 +92,19 @@ class RegLoginViewController: BaseViewController {
         }
     }
     @IBAction func login_qq(sender: AnyObject) {
+        Util.showHUD()
+        OpenidController.instance.qqCheckAuth({ (result) -> () in
+            
+            Util.dismissHUD()
+            self.loginCheck(result)
+            
+            }, failure: { (errCode, errMessage) -> () in
+                
+                Util.showInfo(errMessage)
+                println(errCode)
+                println(errMessage)
+                
+        })
     }
     
     @IBAction func login_wechat(sender: AnyObject) {
