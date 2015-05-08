@@ -151,6 +151,7 @@ class DBController: NSObject {
     }
     
     class func clearDB() {
+        self.clearDBForLogout()
         Comments.MR_truncateAll()
         Devices.MR_truncateAll()
         Group.MR_truncateAll()
@@ -161,6 +162,12 @@ class DBController: NSObject {
         Notification.MR_truncateAll()
         Station.MR_truncateAll()
         Line.MR_truncateAll()
+        save()
+    }
+    
+    class func clearDBForLogout() {
+        Openids.MR_truncateAll()
+        OpenidController.instance.registQQ()
         save()
     }
 }

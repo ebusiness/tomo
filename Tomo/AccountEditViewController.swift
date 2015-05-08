@@ -285,6 +285,7 @@ class AccountEditViewController: BaseTableViewController {
             let logoutAction = UIAlertAction(title: "ログアウト", style: .Destructive, handler: { (action) -> Void in
                 
                 Defaults["shouldAutoLogin"] = false
+                DBController.clearDBForLogout();
                 
                 let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
                 
