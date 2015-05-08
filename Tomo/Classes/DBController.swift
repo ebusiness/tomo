@@ -34,8 +34,12 @@ class DBController: NSObject {
     
     // MARK: - User
     
-    class func myUser() -> User {
-        return User.MR_findFirstByAttribute("id", withValue: Defaults["myId"].string!) as! User
+    class func myUser() -> User? {
+        if let myId = Defaults["myId"].string {
+            return User.MR_findFirstByAttribute("id", withValue: myId) as? User
+        }
+        
+        return nil
     }
     
     class func createUser(#email: String, id: String) {
@@ -46,27 +50,36 @@ class DBController: NSObject {
     }
     
     class func users() -> [User] {
-        let me = myUser()
-        return User.MR_findAllWithPredicate(NSPredicate(format: "self != %@ AND (NOT (self IN %@ OR self IN %@))", me, me.friends, me.invited.array)) as! [User]
+        if let me = myUser() {
+            return User.MR_findAllWithPredicate(NSPredicate(format: "self != %@ AND (NOT (self IN %@ OR self IN %@))", me, me.friends, me.invited.array)) as! [User]
+        }
+        
+        return [User]()
     }
     
     // MARK: - Friend
     
     class func friends() -> [User] {
-        let me = myUser()
-        var friends = me.friends.array as! [User]
-        friends.sort({if let date1 = $0.createDate, let date2 = $1.createDate {
-            return date1.timeIntervalSinceNow > date2.timeIntervalSinceNow
-            }
-            
-            return false
-        })
-        return friends
+        if let me = myUser() {
+            var friends = me.friends.array as! [User]
+            friends.sort({if let date1 = $0.createDate, let date2 = $1.createDate {
+                return date1.timeIntervalSinceNow > date2.timeIntervalSinceNow
+                }
+                
+                return false
+            })
+            return friends
+        }
+        
+        return [User]()
     }
     
     class func invitedUsers() -> [User] {
-        let me = myUser()
-        return me.invited.array as! [User]
+        if let me = myUser() {
+            return me.invited.array as! [User]
+        }
+        
+        return [User]()
     }
     
     class func isInvitedUser(user: User) -> Bool {
@@ -80,10 +93,12 @@ class DBController: NSObject {
     // MARK: - Notification
     
     class func unconfirmedNotification(#type: NotificationType) -> [Notification] {
-        let me = myUser()
+        if let me = myUser() {
         
-       return Notification.MR_findAllSortedBy("createDate", ascending: false, withPredicate: NSPredicate(format: "type = %@ AND (confirmed.@count = 0 OR (NONE confirmed = %@))", type.rawValue, me)) as! [Notification]
-//        return Notification.MR_findByAttribute("type", withValue: type.rawValue, andOrderBy: "createDate", ascending: false) as! [Notification]
+           return Notification.MR_findAllSortedBy("createDate", ascending: false, withPredicate: NSPredicate(format: "type = %@ AND (confirmed.@count = 0 OR (NONE confirmed = %@))", type.rawValue, me)) as! [Notification]
+        }
+        
+        return [Notification]()
     }
     
     // MARK: - Station
@@ -130,7 +145,11 @@ class DBController: NSObject {
     }
     
     class func unreadCountTotal() -> Int {
-        return Int(bitPattern: Message.MR_countOfEntitiesWithPredicate(NSPredicate(format: "from!=%@ AND isRead=NO", myUser())))
+        if let me = myUser() {
+            return Int(bitPattern: Message.MR_countOfEntitiesWithPredicate(NSPredicate(format: "from!=%@ AND isRead=NO", me)))
+        }
+        
+        return 0
     }
     
     class func makeAllMessageRead(user: User) {
