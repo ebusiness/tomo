@@ -61,21 +61,25 @@ class Util: NSObject {
     }
     
     private class func showWhatsnewAlert() {
-        let array = arrayFromPlist("whatsnew")
-        let subTitle = array.componentsJoinedByString("\n")
-        SCLAlertView().showInfo("变更点", subTitle: subTitle, closeButtonTitle: "OK", duration: 0)
+//        let array = arrayFromPlist("whatsnew")
+//        let subTitle = array.componentsJoinedByString("\n")
+//        SCLAlertView().showInfo("变更点", subTitle: subTitle, closeButtonTitle: "OK", duration: 0)
     }
     
     class func setupPush() {
-        var types: UIUserNotificationType = UIUserNotificationType.Badge |
-            UIUserNotificationType.Alert |
-            UIUserNotificationType.Sound
-        
-        var settings: UIUserNotificationSettings = UIUserNotificationSettings( forTypes: types, categories: nil )
-        
-        let application = UIApplication.sharedApplication()
-        application.registerUserNotificationSettings( settings )
-        application.registerForRemoteNotifications()
+        if iOS8() {
+            var types: UIUserNotificationType = UIUserNotificationType.Badge |
+                UIUserNotificationType.Alert |
+                UIUserNotificationType.Sound
+            
+            var settings: UIUserNotificationSettings = UIUserNotificationSettings( forTypes: types, categories: nil )
+            
+            let application = UIApplication.sharedApplication()
+            application.registerUserNotificationSettings( settings )
+            application.registerForRemoteNotifications()
+        } else {
+            UIApplication.sharedApplication().registerForRemoteNotificationTypes(.Alert | .Badge | .Sound);
+        }
     }
     
     class func scale() -> CGFloat {
@@ -142,6 +146,19 @@ class Util: NSObject {
 //            notification.userInfo = ["kNotificationFriendAccountName" : message.fromStr()]
             
             UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+        }
+    }
+    
+    class func iOS8() -> Bool {
+        return systemVersionGreaterThanOrEqualTo("8.0.0")
+    }
+    
+    class func systemVersionGreaterThanOrEqualTo(verison: String) -> Bool {
+        switch UIDevice.currentDevice().systemVersion.compare(verison, options: NSStringCompareOptions.NumericSearch) {
+        case .OrderedSame, .OrderedDescending:
+            return true
+        case .OrderedAscending:
+            return false
         }
     }
 }

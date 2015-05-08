@@ -30,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(application: UIApplication) {
+        application.applicationIconBadgeNumber = DBController.unreadCountTotal()
+        
         backgroundTask = application.beginBackgroundTaskWithExpirationHandler { () -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if self.backgroundTimer != nil {

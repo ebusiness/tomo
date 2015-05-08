@@ -88,6 +88,7 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
 
+        //local
         updateBadgeNumber()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("updateBadgeNumber"), name: kNotificationGotNewMessage, object: nil)
@@ -96,6 +97,11 @@ class TabBarController: UITabBarController {
         SocketController.start()
 
         Util.setupPush()
+        
+        //update
+        ApiController.getMessage { (error) -> Void in
+            self.updateBadgeNumber()
+        }
     }
     
     // MARK: - Notification
