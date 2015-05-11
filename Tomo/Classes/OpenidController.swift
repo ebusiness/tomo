@@ -79,7 +79,7 @@ extension OpenidController{
         param["type"] = type.toString()
         
         ApiController.addOpenid(param, done: { (error) -> Void in
-            self.whenSuccess?(res: param)
+            self.showSuccess(param)
         })
     }
     func checkToken(#openid: String, token: String, type: OpenIDRequestType, done: (Int?,Dictionary<String, AnyObject>) -> Void) {
@@ -96,7 +96,7 @@ extension OpenidController{
                 if(res?.statusCode == 200 ){
                     let result = JSON as! Dictionary<String, AnyObject>;
                     Defaults["myId"] = result["id"]
-                    self.whenSuccess?(res: result)
+                    self.showSuccess(result)
                     
                     if type == .QQ {
                         self.saveQQ()
@@ -114,5 +114,9 @@ extension OpenidController{
     func showError(errCode:Int32,errMessage:String){
         Util.showInfo(errMessage)
         self.whenfailure?(errCode:errCode,errMessage:errMessage)
+    }
+    func showSuccess(result: Dictionary<String, AnyObject>){
+        Util.dismissHUD()
+        self.whenSuccess?(res: result)
     }
 }

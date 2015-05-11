@@ -30,6 +30,7 @@ extension OpenidController {
     }
     
     private func qqCheckToken(){// サーバ側のチェック
+        Util.showHUD()
         if let accessToken = _tencentOAuth?.accessToken,openid = _tencentOAuth?.openId{
             if ( "" != accessToken && "" != openid)
             {
@@ -42,7 +43,7 @@ extension OpenidController {
                             self.qqSendAuth()
                         }else if statusCode == 404 {//用户不存在 注册
                             //self.getUserInfo()////授权OK 认证成功(access_token 2小时内有效 在有效期)
-                            self.whenSuccess?(res: openidinfo)
+                            self.showSuccess(openidinfo)
                         }
                     })
                 }
@@ -180,7 +181,7 @@ extension OpenidController: TencentSessionDelegate {
             self.qqSendAuth()
         }else{
             assert(NSThread.currentThread().isMainThread, "not main thread")
-            self.whenSuccess?(res: res)
+            self.showSuccess(res)
         }
     }
 }

@@ -51,6 +51,7 @@ extension OpenidController {
     
     //获取access_token
     private func getAccessToken(code:String){
+        Util.showHUD()
         let wx_url_access_token = "https://api.weixin.qq.com/sns/oauth2/access_token"
         let params = ["appid": wxAppid, "secret": wxAppSecret, "code": code,"grant_type":"authorization_code"]
     
@@ -101,7 +102,7 @@ extension OpenidController {
                     let result = JSON as! Dictionary<String, AnyObject>;
                     if(!contains(result.keys, "errcode")){
                         assert(NSThread.currentThread().isMainThread, "not main thread")
-                        self.whenSuccess?(res: result)
+                        self.showSuccess(result)
                     }else{
                         let errcode = result["errcode"] as! Int;
                         let errmsg = result["errmsg"] as! String;
@@ -130,7 +131,7 @@ extension OpenidController {
                         self.refreshToken()//刷新access_token 延长access_token 有效期
                     }else if statusCode == 404 {//用户不存在 注册
                         //self.getUserInfo()////授权OK 认证成功(access_token 2小时内有效 在有效期)
-                        self.whenSuccess?(res: openidinfo)
+                        self.showSuccess(openidinfo)
                     }
                 })
             }
