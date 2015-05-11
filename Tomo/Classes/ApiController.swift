@@ -332,15 +332,16 @@ extension ApiController {
     }
     
     // token uuid の登録・編集
-    class func setDeviceInfo(token:String,done: (NSError?) -> Void) {
-        
-        
-        
+    class func setDeviceInfo(token:String?,done: (NSError?) -> Void) {
         var param = Dictionary<String, String>();
         param["name"] = UIDevice.currentDevice().name
-        param["uuid"] = UIDevice.currentDevice().identifierForVendor.UUIDString; 
-        if "" != token {//"" の場合,変更しない
-            param["token"] = token
+        
+        if let t = token {
+            param["token"] = token;
+            SSKeychain.setPassword(token, forService: kTomoService, account: kTomoPushToken)
+        }else{
+            param["token"] = SSKeychain.passwordForService(kTomoService, account: kTomoPushToken)
+            param["remove"] = "1"
         }
         
         RKObjectManager.sharedManager().postObject(nil, path: "/mobile/user/device", parameters: param, success: { (_, _) -> Void in
@@ -348,8 +349,6 @@ extension ApiController {
             }) { (_, error) -> Void in
                 done(error)
         }
-        
-        
     }
     
     class func invite(id: String, done: (NSError?) -> Void) {

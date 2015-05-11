@@ -9,6 +9,7 @@
 import UIKit
 
 let kTomoService = "jp.co.e-business.tomo"
+let kTomoPushToken = "token.push.tomo"
 #if DEBUG
     let AmazonS3Bucket = "genbatomopics"
     let kAPIBaseURLString = "http://tomo.e-business.co.jp:81"

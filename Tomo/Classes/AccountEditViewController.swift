@@ -286,6 +286,10 @@ class AccountEditViewController: BaseTableViewController {
                 
                 Defaults["shouldAutoLogin"] = false
                 DBController.clearDBForLogout();
+                //remove device 
+                ApiController.setDeviceInfo(nil, done: { (error) -> Void in
+                    
+                })
                 
                 let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
                 
