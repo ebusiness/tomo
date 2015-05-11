@@ -616,7 +616,7 @@
                             <outlet property="delegate" destination="8gi-D3-eQJ" id="5Q2-UY-nOe"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="マイプロフィール" id="Ebm-8A-Rao" userLabel="Openid"/>
+                    <navigationItem key="navigationItem" title="Openid" id="Ebm-8A-Rao" userLabel="Openid"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tw8-p4-jQW" userLabel="First Responder" sceneMemberID="firstResponder"/>

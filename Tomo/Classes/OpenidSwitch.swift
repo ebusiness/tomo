@@ -12,6 +12,11 @@ class OpenidSwitch: UISwitch {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        self.becomeActive()
+    }
+    func becomeActive(){
         ApiController.getOpenids { (error) -> Void in
             self.checkToken();
         }
@@ -45,24 +50,14 @@ class OpenidSwitch: UISwitch {
                 return;
             }
         }
+        self.openidoff()
+    }
+    func openidoff(){
+        self.setOn(false, animated: true)
+        self.enabled = true
         self.addTarget(self, action: Selector("switchFlipped"), forControlEvents: UIControlEvents.ValueChanged)
     }
-    
     func openidon(){
-        
-        
-//        var param = Dictionary<String, AnyObject>();
-//        param["openid"] = _tencentOAuth?.openId
-//        param["access_token"] = _tencentOAuth?.accessToken
-//        //param["refresh_token"] =
-//        param["expirationDate"] = _tencentOAuth?.expirationDate
-//        param["type"] = OpenIDRequestType.QQ.toString()
-//        
-//        ApiController.addOpenid(param, done: { (error) -> Void in
-//            println(error)
-//        })
-        
-        
         self.setOn(true, animated: true)
         self.enabled = false
         self.removeTarget(self, action: Selector("switchFlipped"), forControlEvents: UIControlEvents.ValueChanged)
