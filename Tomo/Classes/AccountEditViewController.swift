@@ -156,7 +156,7 @@ class AccountEditViewController: BaseTableViewController {
         return !readOnlyMode
     }
     
-    // MARK: - Table
+    // MARK: - TableViewDelegate
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -284,12 +284,7 @@ class AccountEditViewController: BaseTableViewController {
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             let logoutAction = UIAlertAction(title: "ログアウト", style: .Destructive, handler: { (action) -> Void in
                 
-                Defaults["shouldAutoLogin"] = false
                 DBController.clearDBForLogout();
-                //remove device 
-                ApiController.setDeviceInfo(nil, done: { (error) -> Void in
-                    
-                })
                 
                 let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
                 

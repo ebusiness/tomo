@@ -235,6 +235,9 @@ class DBController: NSObject {
         Notification.MR_truncateAll()
         Station.MR_truncateAll()
         Line.MR_truncateAll()
+        
+        Defaults.remove("didGetMessageSent")
+        
         save()
     }
     
@@ -242,5 +245,12 @@ class DBController: NSObject {
         Openids.MR_truncateAll()
         OpenidController.instance.registQQ()
         save()
+        
+        Defaults["shouldAutoLogin"] = false
+        
+        //remove device
+        ApiController.setDeviceInfo(nil, done: { (error) -> Void in
+            
+        })
     }
 }
