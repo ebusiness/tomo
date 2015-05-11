@@ -30,6 +30,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="section" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Message" inverseName="group" inverseEntity="Message" syncable="YES"/>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" syncable="YES"/>
         <relationship name="participants" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="inGroups" inverseEntity="User" syncable="YES"/>
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" syncable="YES"/>
@@ -54,6 +55,7 @@
         <attribute name="isRead" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="from" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="messages" inverseEntity="User" syncable="YES"/>
+        <relationship name="group" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="messages" inverseEntity="Group" syncable="YES"/>
         <relationship name="opened" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" syncable="YES"/>
         <relationship name="to" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="messages_to" inverseEntity="User" syncable="YES"/>
     </entity>
@@ -134,10 +136,10 @@
         <element name="Chat" positionX="-1395" positionY="-126" width="128" height="30"/>
         <element name="Comments" positionX="-1359" positionY="-90" width="128" height="135"/>
         <element name="Devices" positionX="-1368" positionY="-99" width="128" height="105"/>
-        <element name="Group" positionX="-551" positionY="-106" width="128" height="225"/>
+        <element name="Group" positionX="-551" positionY="-106" width="128" height="240"/>
         <element name="Images" positionX="-1440" positionY="-108" width="128" height="118"/>
         <element name="Line" positionX="-1386" positionY="-117" width="128" height="90"/>
-        <element name="Message" positionX="-1595" positionY="161" width="128" height="165"/>
+        <element name="Message" positionX="-1595" positionY="161" width="128" height="180"/>
         <element name="Notification" positionX="-1395" positionY="-126" width="128" height="150"/>
         <element name="Openids" positionX="-1395" positionY="-126" width="128" height="135"/>
         <element name="Post" positionX="-857" positionY="234" width="128" height="195"/>

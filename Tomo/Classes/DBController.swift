@@ -136,8 +136,45 @@ class DBController: NSObject {
     
     // MARK: - Message
     
+    class func createMessage(user: User, text: String) {
+        let message = Message.MR_createEntity() as! Message
+        message.to = NSOrderedSet(array: [user])
+        message.content = text
+        message.subject = "no subject"
+        message.from = myUser()
+        message.createDate = NSDate()
+        
+        save()
+    }
+    
+    class func createMessageGroup(group: Group, text: String) {
+        let message = Message.MR_createEntity() as! Message
+        
+//        var to = [User]()
+//        
+//        for user in group.participants.array as! [User] {
+//            if user.id != myUser()?.id {
+//                to.append(user)
+//            }
+//        }
+        
+//        message.to = NSOrderedSet(array: to)
+        message.group = group
+        message.content = text
+        message.subject = "no subject"
+        message.from = myUser()
+        message.createDate = NSDate()
+        
+        save()
+    }
+    
     class func lastMessage(user: User) -> Message? {
         return Message.MR_findFirstWithPredicate(NSPredicate(format: "from=%@ OR (to.@count = 1 AND ANY to.id=%@)", user, user.id!), sortedBy: "createDate", ascending: false) as? Message
+    }
+    
+    //for local notification
+    class func latestMessage() -> Message {
+        return Message.MR_findFirstOrderedByAttribute("createDate", ascending: false) as! Message
     }
     
     class func unreadCount(user: User) -> Int {
@@ -153,12 +190,29 @@ class DBController: NSObject {
     }
     
     class func makeAllMessageRead(user: User) {
-        let messages = Message.MR_findAllWithPredicate(NSPredicate(format: "from=%@", user)) as! [Message]
+        let messages = Message.MR_findAllWithPredicate(NSPredicate(format: "from=%@ AND group = NULL", user)) as! [Message]
         for message in messages {
             message.isRead = true
         }
         
         save()
+    }
+    
+    class func makeAllMessageGroupRead(group: Group) {
+        let messages = Message.MR_findAllWithPredicate(NSPredicate(format: "group = %@", group)) as! [Message]
+        for message in messages {
+            message.isRead = true
+        }
+        
+        save()
+    }
+    
+    class func messageWithUser(user: User) -> NSFetchedResultsController {
+        return Message.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "group = NULL AND (from=%@ OR ANY to.id=%@)", user, user.id!), sortedBy: "createDate", ascending: true)
+    }
+    
+    class func messageWithGroup(group: Group) -> NSFetchedResultsController {
+        return Message.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "group = %@", group), sortedBy: "createDate", ascending: true)
     }
     
     // MARK: - other

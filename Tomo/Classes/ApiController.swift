@@ -585,11 +585,15 @@ extension ApiController {
 
 extension ApiController {
     
-    class func sendMessage(to: [String], subject: String? = "no subject", content: String) {
+    class func sendMessage(group: Group?, to: [String]?, subject: String? = "no subject", content: String) {
         var param = NSMutableDictionary.new()
         
-        for i in 0..<to.count {
-            param["recipient[\(i)]"] = to[i]
+        if let group = group {
+            param["group"] = group.id
+        } else {
+            for i in 0..<to!.count {
+                param["recipient[\(i)]"] = to![i]
+            }
         }
         
         param["subject"] = subject
@@ -821,6 +825,7 @@ extension ApiController {
         }else{
             mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_recipient", toKeyPath: "to", withMapping: _userMapping))
         }
+        mapping.addPropertyMappingById("Group", fromKey: "group", toKeyPath: "group")
         return mapping
     }
     //comment

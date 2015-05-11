@@ -140,7 +140,7 @@ class Util: NSObject {
             notification.soundName = UILocalNotificationDefaultSoundName
             notification.applicationIconBadgeNumber = 1
             
-            let message = ChatController.latestMessage()
+            let message = DBController.latestMessage()
             notification.alertBody = message.from!.fullName() + " : " + message.content!
             
 //            notification.userInfo = ["kNotificationFriendAccountName" : message.fromStr()]

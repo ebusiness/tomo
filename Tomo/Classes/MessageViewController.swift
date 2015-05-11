@@ -71,7 +71,7 @@ class MessageViewController: JSQMessagesViewController {
         initialized = true
         */
         
-        frc = ChatController.messageWithUser(friend)
+        frc = DBController.messageWithUser(friend)
         frc.delegate = self
         
         ApiController.getMessage { (error) -> Void in
@@ -167,19 +167,13 @@ class MessageViewController: JSQMessagesViewController {
     }
     
     func sendMessage(text: String) {
-//        ChatController.createChat(groupId, text: text)
-//        ChatController.updateMessage(groupId, text: text)
-
         messageSend = true
 
-        ChatController.createMessage(friend, text: text)
+        DBController.createMessage(friend, text: text)
         
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
-//        loadMessages()
         
-//        finishSendingMessage()
-        
-         ApiController.sendMessage([friend.id!], content: text)
+         ApiController.sendMessage(nil, to: [friend.id!], content: text)
     }
     
     // MARK: - Navigation

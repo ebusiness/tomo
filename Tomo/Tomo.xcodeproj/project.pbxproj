@@ -76,7 +76,6 @@
 		2901351A1AC3A79500BBFE29 /* _User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290135191AC3A79500BBFE29 /* _User.swift */; };
 		2901351B1AC3A79500BBFE29 /* _User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290135191AC3A79500BBFE29 /* _User.swift */; };
 		2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901351C1AC3A90C00BBFE29 /* Constants.swift */; };
-		290144101ADE12990048F3D8 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1E11AD797B600AA39CE /* ChatController.swift */; };
 		290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144161ADF6D890048F3D8 /* MapViewController.swift */; };
 		2901441A1ADF983E0048F3D8 /* RegSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144191ADF983E0048F3D8 /* RegSignUpViewController.swift */; };
 		2901441C1ADFA1AB0048F3D8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901441B1ADFA1AB0048F3D8 /* String.swift */; };
@@ -129,12 +128,12 @@
 		296D8BC81AFC5A680058D400 /* RegPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 296D8BC11AFC5A680058D400 /* RegPageView.xib */; };
 		296D8BCA1AFC5A7F0058D400 /* RegPageData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 296D8BC91AFC5A7F0058D400 /* RegPageData.plist */; };
 		296D8BCC1AFC5A890058D400 /* whatsnew.plist in Resources */ = {isa = PBXBuildFile; fileRef = 296D8BCB1AFC5A890058D400 /* whatsnew.plist */; };
+		296D8BCE1B004C6B0058D400 /* MessageGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BCD1B004C6B0058D400 /* MessageGroupViewController.swift */; };
 		297163B31AEA0F06005EA9C0 /* S3Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA781AD36659009A02CC /* S3Controller.swift */; };
 		297163B41AEA11CC005EA9C0 /* S3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295272CF1AD51B2300FC7833 /* S3.swift */; };
 		297163B61AEA23BF005EA9C0 /* GroupHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 297163B51AEA23BF005EA9C0 /* GroupHeaderView.xib */; };
 		297163B81AEA2422005EA9C0 /* GroupHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297163B71AEA2422005EA9C0 /* GroupHeaderView.swift */; };
 		2987F1E01AD77FE200AA39CE /* Message.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2987F1DF1AD77FE200AA39CE /* Message.storyboard */; };
-		2987F1E21AD797B600AA39CE /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1E11AD797B600AA39CE /* ChatController.swift */; };
 		2987F1E41AD79D0500AA39CE /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1E31AD79D0500AA39CE /* Chat.swift */; };
 		2987F1E91AD79D1A00AA39CE /* _Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1E71AD79D1A00AA39CE /* _Chat.swift */; };
 		2987F1ED1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1EC1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m */; };
@@ -292,10 +291,10 @@
 		296D8BC11AFC5A680058D400 /* RegPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RegPageView.xib; path = Classes/RegPageView.xib; sourceTree = "<group>"; };
 		296D8BC91AFC5A7F0058D400 /* RegPageData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegPageData.plist; path = Classes/RegPageData.plist; sourceTree = SOURCE_ROOT; };
 		296D8BCB1AFC5A890058D400 /* whatsnew.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = whatsnew.plist; path = Classes/whatsnew.plist; sourceTree = SOURCE_ROOT; };
+		296D8BCD1B004C6B0058D400 /* MessageGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageGroupViewController.swift; path = Classes/MessageGroupViewController.swift; sourceTree = "<group>"; };
 		297163B51AEA23BF005EA9C0 /* GroupHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupHeaderView.xib; path = Classes/GroupHeaderView.xib; sourceTree = "<group>"; };
 		297163B71AEA2422005EA9C0 /* GroupHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupHeaderView.swift; path = Classes/GroupHeaderView.swift; sourceTree = "<group>"; };
 		2987F1DF1AD77FE200AA39CE /* Message.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Message.storyboard; path = Classes/Message.storyboard; sourceTree = "<group>"; };
-		2987F1E11AD797B600AA39CE /* ChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatController.swift; path = Classes/ChatController.swift; sourceTree = "<group>"; };
 		2987F1E31AD79D0500AA39CE /* Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		2987F1E71AD79D1A00AA39CE /* _Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Chat.swift; sourceTree = "<group>"; };
 		2987F1EB1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObjectContext+Tomo.h"; path = "Classes/NSManagedObjectContext+Tomo.h"; sourceTree = SOURCE_ROOT; };
@@ -549,6 +548,7 @@
 			children = (
 				296D8BAF1AFC5A250058D400 /* FriendCell.swift */,
 				296D8BB01AFC5A250058D400 /* MessageViewController.swift */,
+				296D8BCD1B004C6B0058D400 /* MessageGroupViewController.swift */,
 				296D8BB11AFC5A250058D400 /* RecentlyFriendCell.swift */,
 				295272D91AD6155300FC7833 /* FriendListViewController.swift */,
 				29A8FA021AE768E000750A56 /* FriendAddMethodTableViewController.swift */,
@@ -595,7 +595,6 @@
 				29BE7E1A1AC54663008110B4 /* DBController.swift */,
 				290134F71AC39F4600BBFE29 /* ApiController.swift */,
 				29C1DA781AD36659009A02CC /* S3Controller.swift */,
-				2987F1E11AD797B600AA39CE /* ChatController.swift */,
 				29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */,
 			);
 			name = Controller;
@@ -961,7 +960,6 @@
 				29925BAA1AD6693F00F98BD7 /* Alamofire.swift in Sources */,
 				291ADF991AD24F7B009D8BE3 /* PostDetailHeaderView.swift in Sources */,
 				292B9CD01AE61C3F00604986 /* _Station.swift in Sources */,
-				2987F1E21AD797B600AA39CE /* ChatController.swift in Sources */,
 				2901441A1ADF983E0048F3D8 /* RegSignUpViewController.swift in Sources */,
 				29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */,
 				2987F1E41AD79D0500AA39CE /* Chat.swift in Sources */,
@@ -988,6 +986,7 @@
 				291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */,
 				290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */,
 				29C1DA7A1AD36659009A02CC /* S3Controller.swift in Sources */,
+				296D8BCE1B004C6B0058D400 /* MessageGroupViewController.swift in Sources */,
 				1712BE381ACE183C000A9C47 /* _Images.swift in Sources */,
 				296D8BAE1AFC5A020058D400 /* LoadingViewController.swift in Sources */,
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
@@ -1062,7 +1061,6 @@
 				17455E531AFAF65B0079F648 /* OpenidQQController.swift in Sources */,
 				1712BE3A1ACE195B000A9C47 /* _Images.swift in Sources */,
 				29A1AFF81AC4113000775765 /* _Post.swift in Sources */,
-				290144101ADE12990048F3D8 /* ChatController.swift in Sources */,
 				1712BE431ACE4140000A9C47 /* Devices.swift in Sources */,
 				2993894B1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
 				297163B31AEA0F06005EA9C0 /* S3Controller.swift in Sources */,

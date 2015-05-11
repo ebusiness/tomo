@@ -13,6 +13,7 @@ enum MessageAttributes: String {
 
 enum MessageRelationships: String {
     case from = "from"
+    case group = "group"
     case opened = "opened"
     case to = "to"
 }
@@ -74,6 +75,11 @@ class _Message: NSManagedObject {
     var from: User?
 
     // func validateFrom(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var group: Group?
+
+    // func validateGroup(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var opened: NSOrderedSet

@@ -15,6 +15,7 @@ enum GroupAttributes: String {
 }
 
 enum GroupRelationships: String {
+    case messages = "messages"
     case owner = "owner"
     case participants = "participants"
     case posts = "posts"
@@ -90,6 +91,9 @@ class _Group: NSManagedObject {
     // MARK: - Relationships
 
     @NSManaged
+    var messages: NSOrderedSet
+
+    @NSManaged
     var owner: User?
 
     // func validateOwner(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
@@ -104,6 +108,34 @@ class _Group: NSManagedObject {
     var station: Station?
 
     // func validateStation(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+}
+
+extension _Group {
+
+    func addMessages(objects: NSOrderedSet) {
+        let mutable = self.messages.mutableCopy() as! NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.messages = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeMessages(objects: NSOrderedSet) {
+        let mutable = self.messages.mutableCopy() as! NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.messages = mutable.copy() as! NSOrderedSet
+    }
+
+    func addMessagesObject(value: Message!) {
+        let mutable = self.messages.mutableCopy() as! NSMutableOrderedSet
+        mutable.addObject(value)
+        self.messages = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeMessagesObject(value: Message!) {
+        let mutable = self.messages.mutableCopy() as! NSMutableOrderedSet
+        mutable.removeObject(value)
+        self.messages = mutable.copy() as! NSOrderedSet
+    }
 
 }
 

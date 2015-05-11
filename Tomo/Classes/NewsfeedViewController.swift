@@ -48,7 +48,11 @@ class NewsfeedViewController: BaseViewController {
         super.viewDidLoad()
 
         if displayMode == .Detail || displayMode == .Group {
-            self.navigationItem.rightBarButtonItem = nil
+            navigationItem.rightBarButtonItem = nil
+        }
+        
+        if displayMode == .Group {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "チャット", style: .Plain, target: self, action: Selector("groupChat"))
         }
         
         loadLocalData()
@@ -129,6 +133,12 @@ class NewsfeedViewController: BaseViewController {
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
+    func groupChat() {
+        let vc = Util.createViewControllerWithIdentifier("MessageGroupViewController", storyboardName: "Message") as! MessageGroupViewController
+        vc.group = group
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 // MARK: - UICollectionView
