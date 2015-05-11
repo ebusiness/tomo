@@ -17,6 +17,7 @@ class MapViewController: BaseViewController,UIWebViewDelegate {
 
 //        webView.hidden = true
         let req = NSURLRequest(URL: NSURL(string: mapPath)!)
+        Util.showHUD()
         webView.loadRequest(req)
         webView.delegate = self
     }
@@ -49,6 +50,10 @@ class MapViewController: BaseViewController,UIWebViewDelegate {
             }
         }
         return true;
+    }
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        Util.dismissHUD()
     }
 }
 // MARK: - Common
