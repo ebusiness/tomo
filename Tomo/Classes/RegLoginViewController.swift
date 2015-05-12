@@ -97,7 +97,6 @@ class RegLoginViewController: BaseViewController {
             
             }, failure: { (errCode, errMessage) -> () in
                 
-                Util.showInfo(errMessage)
                 println(errCode)
                 println(errMessage)
                 
@@ -110,7 +109,6 @@ class RegLoginViewController: BaseViewController {
             
         }, failure: { (errCode, errMessage) -> () in
             
-            Util.showInfo(errMessage)
             println(errCode)
             println(errMessage)
             

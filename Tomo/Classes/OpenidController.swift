@@ -25,7 +25,7 @@ enum OpenIDRequestType {
 class OpenidController: NSObject {
     
     typealias snsSuccessHandler = (res: Dictionary<String, AnyObject>) -> ()
-    typealias snsFailureHandler = (errCode:Int32,errMessage:String) -> ()
+    typealias snsFailureHandler = (errCode:Int32,errMessage:String?) -> ()
     var whenSuccess:snsSuccessHandler!
     var whenfailure:snsFailureHandler!
     var _isBinding :Bool = false;
@@ -111,8 +111,10 @@ extension OpenidController{
     /////////////////////////////////////////////////////////
     ///////エラーを表示する/////////////////////////////////////
     /////////////////////////////////////////////////////////
-    func showError(errCode:Int32,errMessage:String){
-        Util.showInfo(errMessage)
+    func showError(errCode:Int32,errMessage:String?){
+        if let msg = errMessage {
+            Util.showInfo(msg)
+        }
         self.whenfailure?(errCode:errCode,errMessage:errMessage)
     }
     func showSuccess(result: Dictionary<String, AnyObject>){
