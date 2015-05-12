@@ -477,11 +477,12 @@ extension ApiController {
         }
     }
     
-    class func createGroup(title: String, content: String?, type: GroupType = .Public, localImagePath: String?, done: (String?, NSError?) -> Void) {
+    class func createGroup(title: String, content: String?, type: GroupType = .Public, localImagePath: String?, stationId: String?, done: (String?, NSError?) -> Void) {
         var param = Dictionary<String, String>()
         param["name"] = title
         param["description"] = content
         param["type"] = type.rawValue
+        param["station"] = stationId
         
         RKObjectManager.sharedManager().postObject(nil, path: "/groups", parameters: param as [NSObject : AnyObject], success: { (_, mappingResult) -> Void in
             if let group = mappingResult.firstObject as? Group {

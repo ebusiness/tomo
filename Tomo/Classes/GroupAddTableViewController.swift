@@ -13,15 +13,20 @@ class GroupAddTableViewController: BaseTableViewController {
     @IBOutlet weak var titleTF: UITextField!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var stationLabel: UILabel!
     
     var content: String?
     var imagePath: String?
     
     var group: Group?
     
+    var stationTableViewController: StationTableViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        stationLabel.text = DBController.myUser()?.nearestSt
+        
         if let group = group {
             self.navigationItem.rightBarButtonItem?.title = "保存"
             
@@ -35,6 +40,27 @@ class GroupAddTableViewController: BaseTableViewController {
             textView.textColor = UIColor.blackColor()
         } else {
             self.navigationItem.rightBarButtonItem?.enabled = false
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let stationTableViewController = stationTableViewController, station = stationTableViewController.selectedStation {
+            stationLabel.text = station.name
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        if indexPath.section == 1 {
+            if stationTableViewController == nil {
+                stationTableViewController = Util.createViewControllerWithIdentifier("StationTableViewController", storyboardName: "Account") as? StationTableViewController
+                stationTableViewController?.selectedStation = DBController.myStation()
+            }
+        
+            navigationController?.pushViewController(stationTableViewController!, animated: true)
         }
     }
 
@@ -91,7 +117,7 @@ class GroupAddTableViewController: BaseTableViewController {
             })
         } else {
         
-            ApiController.createGroup(titleTF.text, content: content, type: .Public, localImagePath: imagePath, done: { (groupId, error) -> Void in
+            ApiController.createGroup(titleTF.text, content: content, type: .Public, localImagePath: imagePath, stationId: stationTableViewController?.selectedStation?.id, done: { (groupId, error) -> Void in
                 if let groupId = groupId, imagePath = self.imagePath {
                     ApiController.changeGroupCover(imagePath, groupId: groupId, done: { (error) -> Void in
                         

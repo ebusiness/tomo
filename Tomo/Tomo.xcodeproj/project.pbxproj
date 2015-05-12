@@ -147,6 +147,7 @@
 		2993894A1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */; };
 		2993894B1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */; };
 		2993894E1AD3B70200043D91 /* SwiftyUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */; };
+		2994AF911B019AA100656C39 /* GCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994AF901B019AA100656C39 /* GCD.swift */; };
 		299567911AEF2FAE00F168AA /* GroupPostsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299567901AEF2FAE00F168AA /* GroupPostsHeaderCell.swift */; };
 		29A1AFF41AC4112800775765 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1AFF31AC4112800775765 /* Post.swift */; };
 		29A1AFF51AC4112800775765 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A1AFF31AC4112800775765 /* Post.swift */; };
@@ -306,6 +307,7 @@
 		299389441AD3B33800043D91 /* AmazonS3RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestManager.swift; sourceTree = "<group>"; };
 		299389451AD3B33800043D91 /* AmazonS3SignatureHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonS3SignatureHelpers.h; sourceTree = "<group>"; };
 		299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonS3SignatureHelpers.m; sourceTree = "<group>"; };
+		2994AF901B019AA100656C39 /* GCD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCD.swift; sourceTree = "<group>"; };
 		299567901AEF2FAE00F168AA /* GroupPostsHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupPostsHeaderCell.swift; path = Classes/GroupPostsHeaderCell.swift; sourceTree = "<group>"; };
 		29A1AFF31AC4112800775765 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		29A1AFF61AC4113000775765 /* _Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Post.swift; sourceTree = "<group>"; };
@@ -562,6 +564,7 @@
 		296040441ACE669900D2A338 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				2994AF901B019AA100656C39 /* GCD.swift */,
 				17B992FE1AF353C200204E97 /* opencore-amr */,
 				2901441B1ADFA1AB0048F3D8 /* String.swift */,
 				290144111ADE3BBD0048F3D8 /* SCLAlertView.swift */,
@@ -970,6 +973,7 @@
 				290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */,
 				1712BE481ACE5A54000A9C47 /* Comments.swift in Sources */,
 				29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */,
+				2994AF911B019AA100656C39 /* GCD.swift in Sources */,
 				29CA44901AD4DEE4009EB177 /* AccountViewController.swift in Sources */,
 				17B9931C1AF3712C00204E97 /* OpenidQQController.swift in Sources */,
 				2960404F1ACE75C500D2A338 /* AFDateExtension.swift in Sources */,

@@ -242,9 +242,6 @@
                                                 <constraint firstItem="z2Q-Mr-Fx0" firstAttribute="leading" secondItem="2qe-rU-QQ7" secondAttribute="leading" constant="15" id="lBp-pS-DwP"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="Zs0-Ut-Imd" kind="push" identifier="SegueStation" id="pqR-ED-j82"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="0Qw-W8-Yd9">
                                         <autoresizingMask key="autoresizingMask"/>

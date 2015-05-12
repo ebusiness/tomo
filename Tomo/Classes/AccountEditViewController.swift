@@ -30,6 +30,7 @@ class AccountEditViewController: BaseTableViewController {
     var path: String?
     
     var textViewInputVC: TextViewInputViewController?
+    var stationTableViewController: StationTableViewController?
     
     var readOnlyMode = false
     
@@ -81,6 +82,15 @@ class AccountEditViewController: BaseTableViewController {
             textViewInputVC = nil
             
             return
+        }
+        
+        if let stationTableViewController = stationTableViewController, station = stationTableViewController.selectedStation {
+            user.nearestSt = station.name
+            
+            DBController.save()
+            ApiController.editUser(user, done: { (error) -> Void in
+                
+            })
         }
         
         if let path = path {
@@ -144,11 +154,6 @@ class AccountEditViewController: BaseTableViewController {
         if segue.identifier == "SegueBioEdit" {
             textViewInputVC = segue.destinationViewController as? TextViewInputViewController
             textViewInputVC?.user = user
-        }
-        
-        if segue.identifier == "SegueStation" {
-            let vc = segue.destinationViewController as? StationTableViewController
-            vc?.user = user
         }
     }
 
@@ -268,7 +273,12 @@ class AccountEditViewController: BaseTableViewController {
             }
             
             if indexPath.row == 3 {
+                if stationTableViewController == nil {
+                    stationTableViewController = storyboard?.instantiateViewControllerWithIdentifier("StationTableViewController") as? StationTableViewController
+                    stationTableViewController?.selectedStation = DBController.myStation()
+                }
                 
+                navigationController?.pushViewController(stationTableViewController!, animated: true)
             }
             
             if indexPath.row == 4 {

@@ -88,6 +88,9 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
 
+        ApiController.getStations { (error) -> Void in
+        }
+        
         //local
         updateBadgeNumber()
         

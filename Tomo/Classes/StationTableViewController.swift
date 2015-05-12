@@ -18,53 +18,37 @@ class StationTableViewController: BaseViewController {
         return frc.fetchedObjects?.count ?? 0
     }
     
-    var user: User!
-    
-    var selectedIndex: NSIndexPath?
+    var selectedStation: Station?
+
+    var selectedIndex: NSIndexPath? {
+        get {
+            if let selectedStation = selectedStation {
+                return frc.indexPathForObject(selectedStation)
+            }
+            
+            return nil
+        }
+        
+        set(newValue) {
+            if let newValue = newValue {
+                selectedStation = frc.objectAtIndexPath(newValue) as? Station
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         frc = DBController.stations()
         frc.delegate = self
-    }
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
         
-        scrollToMyStation()
-        
-        ApiController.getStations { (error) -> Void in
-            if self.selectedIndex == nil {
-                self.scrollToMyStation()
-            }
-        }
+        scrollToSelectStation()
     }
     
-    func scrollToMyStation() {
-        if let name = user.nearestSt {
-            if let station = DBController.stationByName(name) {
-                selectedIndex = frc.indexPathForObject(station)
-                
-                tableView.scrollToRowAtIndexPath(selectedIndex!, atScrollPosition: UITableViewScrollPosition.Middle, animated: false)
-            }
+    func scrollToSelectStation() {
+        if let selectedStation = selectedStation, selectedIndex = selectedIndex {
+            tableView.scrollToRowAtIndexPath(selectedIndex, atScrollPosition: UITableViewScrollPosition.Middle, animated: false)
         }
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        if let selectedIndex = selectedIndex {
-            let station = frc.objectAtIndexPath(selectedIndex) as! Station
-            user.nearestSt = station.name
-        } else {
-            user.nearestSt = nil
-        }
-        
-        DBController.save()
-        ApiController.editUser(user, done: { (error) -> Void in
-            
-        })
     }
 
 }
@@ -106,6 +90,10 @@ extension StationTableViewController: UITableViewDataSource, UITableViewDelegate
         selectedIndex = indexPath
         let cell = tableView.cellForRowAtIndexPath(indexPath) as UITableViewCell?
         cell?.accessoryType = .Checkmark
+        
+        gcd.async(.Main, delay: 0.4) { () -> () in
+            self.navigationController?.popViewControllerAnimated(true)
+        }
     }
 }
 

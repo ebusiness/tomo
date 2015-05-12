@@ -103,12 +103,20 @@ class DBController: NSObject {
     
     // MARK: - Station
     
+    class func myStation() -> Station? {
+        return stationByName(myUser()?.nearestSt)
+    }
+    
     class func stations() -> NSFetchedResultsController {
         return Station.MR_fetchAllGroupedBy(nil, withPredicate: nil, sortedBy: "zipcode", ascending: true)
     }
     
-    class func stationByName(name: String) -> Station? {
-        return Station.MR_findFirstByAttribute("name", withValue: name) as? Station
+    class func stationByName(name: String?) -> Station? {
+        if let name = name {
+            return Station.MR_findFirstByAttribute("name", withValue: name) as? Station
+        }
+        
+        return nil
     }
     
     // MARK: - Group
