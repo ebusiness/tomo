@@ -243,14 +243,16 @@ class DBController: NSObject {
     
     class func clearDBForLogout() {
         Openids.MR_truncateAll()
-        OpenidController.instance.registQQ()
-        save()
+        save { () -> Void in
+            OpenidController.instance.registQQ()
+        }
+        
         
         Defaults["shouldAutoLogin"] = false
         
         //remove device
         ApiController.setDeviceInfo(nil, done: { (error) -> Void in
-            
+            Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/logout", parameters: nil, encoding: ParameterEncoding.URL)
         })
     }
 }

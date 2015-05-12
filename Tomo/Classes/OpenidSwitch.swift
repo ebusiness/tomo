@@ -16,6 +16,11 @@ class OpenidSwitch: UISwitch {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
         self.becomeActive()
     }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     func becomeActive(){
         ApiController.getOpenids { (error) -> Void in
             self.checkToken();
