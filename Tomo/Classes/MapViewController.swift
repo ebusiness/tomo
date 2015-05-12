@@ -17,7 +17,7 @@ class MapViewController: BaseViewController,UIWebViewDelegate {
 
 //        webView.hidden = true
         let req = NSURLRequest(URL: NSURL(string: mapPath)!)
-        Util.showHUD()
+        Util.showHUD(maskType: .None)
         webView.loadRequest(req)
         webView.delegate = self
     }
