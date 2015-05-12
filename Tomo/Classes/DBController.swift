@@ -177,21 +177,21 @@ class DBController: NSObject {
     }
     
     class func lastMessage(user: User) -> Message? {
-        return Message.MR_findFirstWithPredicate(NSPredicate(format: "from=%@ OR (to.@count = 1 AND ANY to.id=%@)", user, user.id!), sortedBy: "createDate", ascending: false) as? Message
+        return Message.MR_findFirstWithPredicate(NSPredicate(format: "group = NULL AND (from=%@ OR ANY to.id=%@)", user, user.id!), sortedBy: "createDate", ascending: false) as? Message
     }
     
     //for local notification
-    class func latestMessage() -> Message {
-        return Message.MR_findFirstOrderedByAttribute("createDate", ascending: false) as! Message
+    class func latestMessage() -> Message? {
+        return Message.MR_findFirstWithPredicate(NSPredicate(format: "group = NULL"), sortedBy: "createDate", ascending: false) as? Message
     }
     
     class func unreadCount(user: User) -> Int {
-        return Int(bitPattern: Message.MR_countOfEntitiesWithPredicate(NSPredicate(format: "from=%@ AND isRead=NO", user)))
+        return Int(bitPattern: Message.MR_countOfEntitiesWithPredicate(NSPredicate(format: "group = NULL AND from=%@ AND isRead=NO", user)))
     }
     
     class func unreadCountTotal() -> Int {
         if let me = myUser() {
-            return Int(bitPattern: Message.MR_countOfEntitiesWithPredicate(NSPredicate(format: "from!=%@ AND isRead=NO", me)))
+            return Int(bitPattern: Message.MR_countOfEntitiesWithPredicate(NSPredicate(format: "group = NULL AND from!=%@ AND isRead=NO", me)))
         }
         
         return 0

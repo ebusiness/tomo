@@ -140,12 +140,13 @@ class Util: NSObject {
             notification.soundName = UILocalNotificationDefaultSoundName
             notification.applicationIconBadgeNumber = 1
             
-            let message = DBController.latestMessage()
-            notification.alertBody = message.from!.fullName() + " : " + message.content!
+            if let message = DBController.latestMessage() {
+                notification.alertBody = message.from!.fullName() + " : " + message.content!
             
 //            notification.userInfo = ["kNotificationFriendAccountName" : message.fromStr()]
             
-            UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+                UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+            }
         }
     }
     
