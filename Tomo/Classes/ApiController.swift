@@ -564,6 +564,36 @@ extension ApiController {
                 done(error)
         }
     }
+    //退出
+    class func leaveGroup(groupId: String, done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().patchObject(nil, path: "/mobile/groups/\(groupId)/leave", parameters: nil, success: { (_, mappingResult) -> Void in
+            if let group = mappingResult.firstObject as? Group {
+                group.section = GroupSection.Discover.rawValue
+                DBController.save(done: { () -> Void in
+                    done(nil)
+                })
+            } else {
+                done(nil)
+            }
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
+    //通知
+    class func announceGroup(groupId: String,onoff: String, done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().patchObject(nil, path: "/mobile/groups/\(groupId)/announce/\(onoff)", parameters: nil, success: { (_, mappingResult) -> Void in
+            if let group = mappingResult.firstObject as? Group {
+                group.section = GroupSection.MyGroup.rawValue
+                DBController.save(done: { () -> Void in
+                    done(nil)
+                })
+            } else {
+                done(nil)
+            }
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
 }
 
 // MARK: - Station
@@ -757,6 +787,8 @@ extension ApiController {
         addCommonResponseDescriptor(getGroupMapping(false,true), method: .POST, pathPattern: "/groups", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getGroupMapping(false,true), method: .PATCH, pathPattern: "/groups/:id", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getGroupMapping(false,true), method: .PATCH, pathPattern: "/groups/:id/join", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getGroupMapping(true,true), method: .PATCH, pathPattern: "/mobile/groups/:id/leave", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getGroupMapping(true,true), method: .PATCH, pathPattern: "/mobile/groups/:gid/announce/:onoff", keyPath: nil, statusCodes: nil)
         //        addCommonResponseDescriptor(getSectionedGroupMapping(), method: .GET, pathPattern: "/mobile/group", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getGroupMapping(false,false), method: .GET, pathPattern: "/mobile/stations/groups", keyPath: nil, statusCodes: nil)
         
@@ -868,6 +900,7 @@ extension ApiController {
         }
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "posts", toKeyPath: "posts", withMapping: _postMapping))
         mapping.addPropertyMappingById("User",fromKey: "participants",toKeyPath: "participants")
+        mapping.addPropertyMappingById("User",fromKey: "announcelist",toKeyPath: "announcelist")
  
         return mapping
     }

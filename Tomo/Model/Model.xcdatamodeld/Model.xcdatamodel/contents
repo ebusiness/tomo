@@ -27,9 +27,11 @@
         <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="detail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="logicDelete" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="section" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="announcelist" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="inGroups_announce" inverseEntity="User" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Message" inverseName="group" inverseEntity="Message" syncable="YES"/>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" syncable="YES"/>
         <relationship name="participants" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="inGroups" inverseEntity="User" syncable="YES"/>
@@ -125,6 +127,7 @@
         <relationship name="friends" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="friends" inverseEntity="User" syncable="YES"/>
         <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Group" syncable="YES"/>
         <relationship name="inGroups" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Group" inverseName="participants" inverseEntity="Group" syncable="YES"/>
+        <relationship name="inGroups_announce" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Group" inverseName="announcelist" inverseEntity="Group" syncable="YES"/>
         <relationship name="invited" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" syncable="YES"/>
         <relationship name="liked_comments" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Comments" inverseName="liked" inverseEntity="Comments" syncable="YES"/>
         <relationship name="liked_posts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" inverseName="liked" inverseEntity="Post" syncable="YES"/>
@@ -136,7 +139,7 @@
         <element name="Chat" positionX="-1395" positionY="-126" width="128" height="30"/>
         <element name="Comments" positionX="-1359" positionY="-90" width="128" height="135"/>
         <element name="Devices" positionX="-1368" positionY="-99" width="128" height="105"/>
-        <element name="Group" positionX="-551" positionY="-106" width="128" height="240"/>
+        <element name="Group" positionX="-551" positionY="-106" width="128" height="270"/>
         <element name="Images" positionX="-1440" positionY="-108" width="128" height="118"/>
         <element name="Line" positionX="-1386" positionY="-117" width="128" height="90"/>
         <element name="Message" positionX="-1595" positionY="161" width="128" height="180"/>
@@ -144,6 +147,6 @@
         <element name="Openids" positionX="-1395" positionY="-126" width="128" height="135"/>
         <element name="Post" positionX="-857" positionY="234" width="128" height="195"/>
         <element name="Station" positionX="-1395" positionY="-126" width="128" height="150"/>
-        <element name="User" positionX="-1217" positionY="-270" width="128" height="540"/>
+        <element name="User" positionX="-1217" positionY="-270" width="128" height="555"/>
     </elements>
 </model>

@@ -16,5 +16,7 @@
 	<string>createDate</string>
 	<key>type</key>
 	<string>type</string>
+	<key>logicDelete</key>
+	<string>logicDelete</string>
 </dict>
 </plist>

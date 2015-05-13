@@ -9,12 +9,14 @@ enum GroupAttributes: String {
     case createDate = "createDate"
     case detail = "detail"
     case id = "id"
+    case logicDelete = "logicDelete"
     case name = "name"
     case section = "section"
     case type = "type"
 }
 
 enum GroupRelationships: String {
+    case announcelist = "announcelist"
     case messages = "messages"
     case owner = "owner"
     case participants = "participants"
@@ -74,6 +76,11 @@ class _Group: NSManagedObject {
     // func validateId(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
+    var logicDelete: NSNumber?
+
+    // func validateLogicDelete(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
     var name: String?
 
     // func validateName(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
@@ -89,6 +96,9 @@ class _Group: NSManagedObject {
     // func validateType(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     // MARK: - Relationships
+
+    @NSManaged
+    var announcelist: NSOrderedSet
 
     @NSManaged
     var messages: NSOrderedSet
@@ -108,6 +118,34 @@ class _Group: NSManagedObject {
     var station: Station?
 
     // func validateStation(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+}
+
+extension _Group {
+
+    func addAnnouncelist(objects: NSOrderedSet) {
+        let mutable = self.announcelist.mutableCopy() as! NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.announcelist = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeAnnouncelist(objects: NSOrderedSet) {
+        let mutable = self.announcelist.mutableCopy() as! NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.announcelist = mutable.copy() as! NSOrderedSet
+    }
+
+    func addAnnouncelistObject(value: User!) {
+        let mutable = self.announcelist.mutableCopy() as! NSMutableOrderedSet
+        mutable.addObject(value)
+        self.announcelist = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeAnnouncelistObject(value: User!) {
+        let mutable = self.announcelist.mutableCopy() as! NSMutableOrderedSet
+        mutable.removeObject(value)
+        self.announcelist = mutable.copy() as! NSOrderedSet
+    }
 
 }
 
