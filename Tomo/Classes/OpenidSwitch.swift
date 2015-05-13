@@ -59,12 +59,12 @@ class OpenidSwitch: UISwitch {
     }
     func openidoff(){
         self.setOn(false, animated: true)
-        self.enabled = true
+        self.userInteractionEnabled = true
         self.addTarget(self, action: Selector("switchFlipped"), forControlEvents: UIControlEvents.ValueChanged)
     }
     func openidon(){
         self.setOn(true, animated: true)
-        self.enabled = false
+        self.userInteractionEnabled = false
         self.removeTarget(self, action: Selector("switchFlipped"), forControlEvents: UIControlEvents.ValueChanged)
     }
 }
