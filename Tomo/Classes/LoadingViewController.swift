@@ -18,7 +18,7 @@ class LoadingViewController: BaseViewController {
         let email = Defaults["email"].string!
         let password = SSKeychain.passwordForService(kTomoService, account: email)
         
-        ApiController.login(email: email, password: password) { (error) -> Void in
+        ApiController.login(tomoid: email, password: password) { (error) -> Void in
             assert(NSThread.currentThread().isMainThread, "not main thread")
             
             if let error = error {

@@ -108,6 +108,20 @@ extension OpenidController{
         
         
     }
+    
+    func getUserInfo(type: String,done: (Dictionary<String, AnyObject>?) -> Void){
+        switch type{
+        case OpenIDRequestType.QQ.toString():
+            self.getQQUserInfo(done);
+            break;
+        case OpenIDRequestType.WeChat.toString():
+            self.getWechatUserInfo(done);
+            break;
+        default:
+            break;
+        }
+
+    }
     /////////////////////////////////////////////////////////
     ///////エラーを表示する/////////////////////////////////////
     /////////////////////////////////////////////////////////

@@ -93,7 +93,7 @@ extension OpenidController {
     /////////////////////////////////////////////////////////
     ///////获取用户个人信息（UnionID机制）///////////////////////
     /////////////////////////////////////////////////////////
-    private func getUserInfo(){
+    func getWechatUserInfo(done: (Dictionary<String, AnyObject>?) -> Void){
         let wx_url_userinfo = "https://api.weixin.qq.com/sns/userinfo"
         if let wxconfig = self.getWxConfig(){
             let params = ["access_token": wxconfig.access_token!, "openid": wxconfig.openid!]
@@ -102,11 +102,11 @@ extension OpenidController {
                     let result = JSON as! Dictionary<String, AnyObject>;
                     if(!contains(result.keys, "errcode")){
                         assert(NSThread.currentThread().isMainThread, "not main thread")
-                        self.showSuccess(result)
+                        done(result)
                     }else{
-                        let errcode = result["errcode"] as! Int;
-                        let errmsg = result["errmsg"] as! String;
-                        self.showError(Int32(errcode), errMessage: errmsg + __FUNCTION__)
+                        done(nil)
+//                        let errcode = result["errcode"] as! Int;
+//                        let errmsg = result["errmsg"] as! String;
                     }
             }
         }

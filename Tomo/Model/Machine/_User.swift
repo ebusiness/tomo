@@ -22,6 +22,7 @@ enum UserAttributes: String {
     case photo_ref = "photo_ref"
     case provider = "provider"
     case telNo = "telNo"
+    case tomoid = "tomoid"
     case type = "type"
     case webSite = "webSite"
     case zipCode = "zipCode"
@@ -158,6 +159,11 @@ class _User: NSManagedObject {
     var telNo: String?
 
     // func validateTelNo(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var tomoid: String?
+
+    // func validateTomoid(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var type: String?

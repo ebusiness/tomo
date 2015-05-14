@@ -49,7 +49,7 @@ class ApiControllerTests: XCTestCase {
     func testLogin() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             expect.fulfill()
@@ -76,7 +76,7 @@ class ApiControllerTests: XCTestCase {
     func testGetUserInfo() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             ApiController.getUserInfo("5387053ade9ace7c4c00010f", done: { (error) -> Void in
@@ -110,7 +110,7 @@ class ApiControllerTests: XCTestCase {
     func testGetUserPosts() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             println("logined")
             ApiController.getUserPosts("5387053ade9ace7c4c00010f", done: { (error) -> Void in
@@ -127,7 +127,7 @@ class ApiControllerTests: XCTestCase {
     func testCreatePosts() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             var param = Dictionary<String, String>();
             param["content"] = "記事コンテンツ";
@@ -151,7 +151,7 @@ class ApiControllerTests: XCTestCase {
     func testGetFriends() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678")  { (error) -> Void in
             XCTAssertNil(error, "")
             
             ApiController.getFriends({ (error) -> Void in
@@ -167,7 +167,7 @@ class ApiControllerTests: XCTestCase {
     func testCreateComment() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             var param = Dictionary<String, String>();
@@ -188,7 +188,7 @@ class ApiControllerTests: XCTestCase {
     func testPostLike() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             let postid = "5523a697fc7c94126d3184b9"
@@ -205,7 +205,7 @@ class ApiControllerTests: XCTestCase {
     func testPostBookmark() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             let postid = "5523a697fc7c94126d3184b9"
@@ -222,7 +222,7 @@ class ApiControllerTests: XCTestCase {
     func testPostEdit() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             let postid = "5523a697fc7c94126d3184b9"
@@ -240,7 +240,7 @@ class ApiControllerTests: XCTestCase {
     func testPostCommentAble() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             let postid = "5523a697fc7c94126d3184b9"
@@ -258,7 +258,7 @@ class ApiControllerTests: XCTestCase {
     func testCommentEdit() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             let postid = "5523a697fc7c94126d3184b9"
@@ -277,7 +277,7 @@ class ApiControllerTests: XCTestCase {
     func testPostDel() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             let postid = "5523abcd454c85990f1fb0b3"
@@ -294,7 +294,7 @@ class ApiControllerTests: XCTestCase {
     func testCommentDel() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             let postid = "5523a697fc7c94126d3184b9"
@@ -312,7 +312,7 @@ class ApiControllerTests: XCTestCase {
     func testSetDeviceInfo() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             let token = "てst"//"" の場合はtokenを変更しない
             ApiController.setDeviceInfo(token, done: { (error) -> Void in
@@ -328,7 +328,7 @@ class ApiControllerTests: XCTestCase {
     func testGetMessage() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             ApiController.getMessage({ (error) -> Void in
@@ -376,7 +376,7 @@ class ApiControllerTests: XCTestCase {
     func testReadMessage() {
         let expect = expectationWithDescription("api")
         
-        ApiController.login(email: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
+        ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             
             ApiController.readMessage("552ce7054dc3f737080cd558", done:{ (error) -> Void in

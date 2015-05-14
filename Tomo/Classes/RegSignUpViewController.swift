@@ -70,37 +70,30 @@ class RegSignUpViewController: BaseViewController {
             
              Util.showMessage("ログイン")
             
-            ApiController.login(email: self.emailTF.text, password: self.passwordTF.text, done: { (error) -> Void in
-                if let error = error {
-                    Util.showError(error)
-                    return
-                }
-                
-                if let preAccount = Defaults["email"].string where self.emailTF.text != preAccount {
-                    DBController.clearDB()
-//                    DBController.createUser(email: self.emailTF.text, id: Defaults["myId"].string!)
-                }
-                
-                Defaults["email"] = self.emailTF.text
-                Defaults["shouldAutoLogin"] = true
-                
-                SSKeychain.setPassword(self.passwordTF.text, forService: kTomoService, account: self.emailTF.text)
-                
-                if let openid = self.openidInfo {
-                    ApiController.addOpenid(openid, done: { (error) -> Void in
-                        println(error)
-                    })
-                }
-                //get user detail
-                ApiController.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
-                    if error == nil{
-                        Util.dismissHUD()
-                        
-                        let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-                        
-                        Util.changeRootViewController(from: self, to: tab)
-                    }
+            if let preAccount = Defaults["email"].string where self.emailTF.text != preAccount {
+                DBController.clearDB()
+                //                    DBController.createUser(email: self.emailTF.text, id: Defaults["myId"].string!)
+            }
+            
+            Defaults["email"] = self.emailTF.text
+            Defaults["shouldAutoLogin"] = true
+            
+            SSKeychain.setPassword(self.passwordTF.text, forService: kTomoService, account: self.emailTF.text)
+            
+            if let openid = self.openidInfo {
+                ApiController.addOpenid(openid, done: { (error) -> Void in
+                    println(error)
                 })
+            }
+            //get user detail
+            ApiController.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
+                if error == nil{
+                    Util.dismissHUD()
+                    
+                    let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+                    
+                    Util.changeRootViewController(from: self, to: tab)
+                }
             })
         }
     }

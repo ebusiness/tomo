@@ -70,6 +70,7 @@ extension ApiController {
     class func signUp(#email: String, password: String, firstName: String, lastName: String, done: (NSError?) -> Void) {
         RKObjectManager.sharedManager().postObject(nil, path: "/mobile/user/regist", parameters: ["email" : email, "password" : password, "firstName" : firstName, "lastName" : lastName], success: { (_, result) -> Void in
             println(result)
+            Defaults["myId"] = (result.firstObject as! User).id
             done(nil)
             }) { (_, error) -> Void in
                 done(error)
@@ -80,13 +81,13 @@ extension ApiController {
         
     }
     
-    class func login(#email: String, password: String, done: (NSError?) -> Void) {
+    class func login(#tomoid: String, password: String, done: (NSError?) -> Void) {
         #if AutoLogin
             var email = "zhangzhihua.dev@gmail.com"
             var password = "12345678"
         #endif
         
-        RKObjectManager.sharedManager().postObject(nil, path: "/login", parameters: ["email" : email, "password" : password], success: { (_, result) -> Void in
+        RKObjectManager.sharedManager().postObject(nil, path: "/login", parameters: ["tomoid" : tomoid, "password" : password], success: { (_, result) -> Void in
             
             //no email in db
             Defaults["myId"] = (result.firstObject as! User).id
@@ -747,6 +748,7 @@ extension ApiController {
         let msgmapping = getMessageMapping(true)
         //login
         addCommonResponseDescriptor(usermapping, method: .POST, pathPattern: "/login", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(usermapping, method: .POST, pathPattern: "/mobile/user/regist", keyPath: nil, statusCodes: nil)
         //openid
         addCommonResponseDescriptor(_openidsMapping, method: .PATCH, pathPattern: "/mobile/user/openid", keyPath: nil, statusCodes: nil)
         //openidInfo

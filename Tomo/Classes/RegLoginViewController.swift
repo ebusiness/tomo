@@ -61,11 +61,12 @@ class RegLoginViewController: BaseViewController {
         
         Util.showHUD()
         
-        ApiController.login(email: emailTF.text, password: passwordTF.text) { (error) -> Void in
+        ApiController.login(tomoid: emailTF.text, password: passwordTF.text) { (error) -> Void in
             assert(NSThread.currentThread().isMainThread, "not main thread")
             
             if let error = error {
-                Util.showError(error)
+                //Util.showError(error)
+                Util.showInfo("ユーザIDとパースワードを確かめて、もう一度ご入力ください。", maskType: .Clear)
                 return
             }
             
@@ -133,21 +134,54 @@ class RegLoginViewController: BaseViewController {
                 }
             })
         }else{
-            self.performSegueWithIdentifier("regist",sender: result)
+            Util.showMessage("登録")
+            let password = NSUUID().UUIDString
+            var tomoid = NSUUID().UUIDString
+            if let openid = result["openid"] as? String ,type = result["type"] as? String {
+                tomoid = openid + "@" + type
+                OpenidController.instance.getUserInfo(type, done: { (openidInfo) -> Void in
+                    var nickname = tomoid
+                    if let oinfo = openidInfo{
+                        nickname = oinfo["nickname"] as! String
+                    }
+                    
+                    
+                    ApiController.signUp(email: tomoid, password: password, firstName: nickname, lastName: type) { (error) -> Void in
+                        if let error = error {
+                            Util.showError(error)
+                        }
+                        
+                        Util.showMessage("ログイン")
+                        
+                        if let preAccount = Defaults["email"].string where tomoid != preAccount {
+                            DBController.clearDB()
+                        }
+                        
+                        Defaults["email"] = tomoid
+                        Defaults["shouldAutoLogin"] = true
+                        
+                        SSKeychain.setPassword(password, forService: kTomoService, account: tomoid)
+                        
+                        ApiController.addOpenid(result, done: { (error) -> Void in
+                            println(error)
+                        })
+                        //get user detail
+                        ApiController.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
+                            if error == nil{
+                                Util.dismissHUD()
+                                
+                                let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+                                
+                                Util.changeRootViewController(from: self, to: tab)
+                            }
+                        })
+                    }
+                })
+            }
         }
         
 
     }
-    
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let view = segue.destinationViewController as? RegSignUpViewController{
-            view.openidInfo = sender as? Dictionary<String, AnyObject>
-            println(sender);
-        }
-        
-    }
-
     // MARK: - support
     
     func validate() -> Bool {
@@ -157,9 +191,9 @@ class RegLoginViewController: BaseViewController {
             }
         }
         
-        if emailTF.text.isEmail() == false {
-            return false
-        }
+//        if emailTF.text.isEmail() == false {
+//            return false
+//        }
         
         return true
     }

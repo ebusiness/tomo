@@ -166,18 +166,6 @@
                                                 </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="メールアドレス" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PBH-SV-Hjr">
-                                                <rect key="frame" x="10" y="90" width="300" height="44"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="44" id="88O-8v-Shs"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="a31-BC-2bM" id="hYN-w9-7oj"/>
-                                                </connections>
-                                            </textField>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="95I-3E-znj">
                                                 <rect key="frame" x="10" y="89" width="300" height="1"/>
                                                 <color key="backgroundColor" red="0.84946547269999995" green="0.84946547269999995" blue="0.84946547269999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -202,6 +190,18 @@
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="a31-BC-2bM" id="0ev-US-g2x"/>
+                                                </connections>
+                                            </textField>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Tomo ID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PBH-SV-Hjr">
+                                                <rect key="frame" x="10" y="91" width="300" height="44"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="88O-8v-Shs"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="a31-BC-2bM" id="hYN-w9-7oj"/>
                                                 </connections>
                                             </textField>
                                         </subviews>
@@ -418,7 +418,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKx-08-sMz">
                                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="メールアドレス" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="p3F-B8-Hdy">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Tomo ID" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="p3F-B8-Hdy">
                                                 <rect key="frame" x="10" y="0.0" width="300" height="44"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -533,7 +533,6 @@
                     <connections>
                         <outlet property="emailTF" destination="p3F-B8-Hdy" id="FuS-KE-MDh"/>
                         <outlet property="passwordTF" destination="C21-6s-cOa" id="aGr-06-yrg"/>
-                        <segue destination="a31-BC-2bM" kind="modal" identifier="regist" id="XUH-Bv-cHv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FjU-jE-KOx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -585,7 +584,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="XUH-Bv-cHv"/>
-    </inferredMetricsTieBreakers>
 </document>

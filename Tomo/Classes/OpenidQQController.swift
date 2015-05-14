@@ -9,6 +9,8 @@
 //QQ
 private let appid = "1103821830"
 private var _tencentOAuth :TencentOAuth?
+private typealias OpenidUserInfoAction = (Dictionary<String, AnyObject>?) -> Void
+private var _done: OpenidUserInfoAction?
 //WeiChatHelper
 extension OpenidController {
     
@@ -90,6 +92,10 @@ extension OpenidController {
         
         _isBinding = true;
         self.qqSendAuth()
+    }
+    func getQQUserInfo(done: (Dictionary<String, AnyObject>?) -> Void){
+        _done = done;
+        _tencentOAuth?.getUserInfo()
     }
 }
 
@@ -177,11 +183,10 @@ extension OpenidController: TencentSessionDelegate {
         let ret = res["ret"] as! Int;
         if(0 != ret ){// -23 token is invalid
             _tencentOAuth?.accessToken = "";
-            //SettingHelper.instance.set("qq_accessToken", value: "")
-            self.qqSendAuth()
+            _done?(nil);
         }else{
             assert(NSThread.currentThread().isMainThread, "not main thread")
-            self.showSuccess(res)
+            _done?(res)
         }
     }
 }
