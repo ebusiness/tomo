@@ -9,7 +9,7 @@
 import UIKit
 
 enum NewsfeedDisplayMode {
-    case Normal, Account, Detail, Group
+    case Normal, Account, Detail, Group, Station
 }
 
 class NewsfeedViewController: BaseViewController {
@@ -19,45 +19,74 @@ class NewsfeedViewController: BaseViewController {
     var cellForHeight: NewsfeedCell!
     
     var frc: NSFetchedResultsController!
+    var posts = [Post]()
     
     var user: User?
     var displayMode = NewsfeedDisplayMode.Normal
     
     var group: Group?
+    var stationId: String?
     
     func isHeaderSection(section: Int) -> Bool {
         return displayMode == .Group && section == 0
     }
     
     var count: Int! {
-        return frc.fetchedObjects?.count ?? 0
+        switch displayMode {
+        case .Group, .Station:
+            return posts.count
+        default:
+            return frc.fetchedObjects?.count ?? 0
+        }
     }
     
     var objectChanges = Dictionary<NSFetchedResultsChangeType, [NSIndexPath]>()
     
     func postAtIndexPath(indexPath: NSIndexPath) -> Post {
-        if displayMode != .Group {
+        switch displayMode {
+        case .Group, .Station:
+            return posts[indexPath.row]
+        default:
             return frc.objectAtIndexPath(indexPath) as! Post
         }
-        
-        let realIndexPath = NSIndexPath(forItem: indexPath.item, inSection: indexPath.section - 1)
-        return frc.objectAtIndexPath(realIndexPath) as! Post
+    }
+    
+    func rightBarButtonItem() -> UIBarButtonItem? {
+        switch displayMode {
+        case .Normal, .Account:
+            return UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: Selector("addPostBtnTapped:"))
+        case .Group:
+            if let group = group where group.participants.count > 1 {
+                return UIBarButtonItem(title: "チャット", style: .Plain, target: self, action: Selector("groupChat"))
+            }
+            return nil
+        default:
+            return nil
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if displayMode == .Detail || displayMode == .Group {
-            navigationItem.rightBarButtonItem = nil
-        }
+        navigationItem.rightBarButtonItem = rightBarButtonItem()
         
-        if displayMode == .Group {
-            if let group = group where group.participants.count > 1 {
-                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "チャット", style: .Plain, target: self, action: Selector("groupChat"))
-            }
+        if displayMode == .Normal {
+            loadLocalData()
+        } else if displayMode == .Group {
+            ApiController.getPostOfGroup(group!.id!, done: { (posts, error) -> Void in
+                if posts != nil {
+                    self.posts = posts!
+                    self.collectionView.reloadData()
+                }
+            })
+        } else if displayMode == .Station {
+            ApiController.getPostOfStation(self.stationId!, done: { (posts, error) -> Void in
+                if posts != nil {
+                    self.posts = posts!
+                    self.collectionView.reloadData()
+                }
+            })
         }
-        
-        loadLocalData()
         
         collectionView.registerNib(UINib(nibName: "NewsfeedCell", bundle: nil), forCellWithReuseIdentifier: "NewsfeedCell")
         
@@ -82,9 +111,9 @@ class NewsfeedViewController: BaseViewController {
         //refresh group title
         if displayMode == .Group && !isMovingToParentViewController() {
             collectionView.reloadSections(NSIndexSet(index: 0))
+        } else if displayMode == .Normal {
+            loadRemoteData()
         }
-        
-        loadRemoteData()
     }
     
     func loadRemoteData() {
@@ -96,7 +125,9 @@ class NewsfeedViewController: BaseViewController {
     // MARK: - Notification
     
     func becomeActive() {
-        loadRemoteData()
+        if displayMode == .Normal {
+            self.loadRemoteData()
+        }
     }
     
     // MARK: - Navigation

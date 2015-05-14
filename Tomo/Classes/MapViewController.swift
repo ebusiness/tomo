@@ -132,6 +132,8 @@ extension MapViewController {
     // posts
     func hostPosts(param:Dictionary<String, String>){
         let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
+        vc.displayMode = .Station
+        vc.stationId = param["station._id"]
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

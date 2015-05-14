@@ -62,6 +62,8 @@ class ApiController: NSObject {
         addResponseDescriptor()
         
         AFNetworkActivityIndicatorManager.sharedManager().enabled = true
+        
+//        cache = RKEntityCache(managedObjectContext: store.persistentStoreManagedObjectContext)
     }
 }
 // MARK: - Action
@@ -158,11 +160,11 @@ extension ApiController {
         }
         
         if let groupId = groupId {
-            param["groupId"] = groupId
+            param["group"] = groupId
         }
         
         if let stationId = stationId {
-            param["stationId"] = stationId
+            param["station"] = stationId
         }
         
         createPosts(param, done: done)
@@ -287,6 +289,21 @@ extension ApiController {
         }
     }
     
+    class func getPostOfGroup(groupId: String, done: ([Post]?, NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/groups/\(groupId)/posts", parameters: nil, success: { (_, results) -> Void in
+            done((results.array() as? [Post]), nil)
+            }) { (_, error) -> Void in
+                done(nil, error)
+        }
+    }
+    
+    class func getPostOfStation(stationId: String, done: ([Post]?, NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/mobile/stations/posts", parameters: ["station._id" : stationId], success: { (_, results) -> Void in
+            done((results.array() as? [Post]), nil)
+            }) { (_, error) -> Void in
+                done(nil, error)
+        }
+    }
 }
 
 // MARK: - ユーザ情報
@@ -800,6 +817,8 @@ extension ApiController {
         addCommonResponseDescriptor(getPostMapping(true), method: .DELETE, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
         //記事ー＞詳細
         addCommonResponseDescriptor(getPostMapping(false), method: .GET, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getPostMapping(false), method: .GET, pathPattern: "/groups/:id/posts", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getPostMapping(false), method: .GET, pathPattern: "/mobile/stations/posts", keyPath: nil, statusCodes: nil)
         
         //Notification
         addCommonResponseDescriptor(getNotificationMapping(false), method: .GET, pathPattern: "/notifications/unconfirmed", keyPath: nil, statusCodes: nil)
@@ -869,7 +888,8 @@ extension ApiController {
         }
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "comments", toKeyPath: "comments", withMapping: getCommoentMapping(false)))
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "images_mobile", toKeyPath: "imagesmobile", withMapping: _imagesMapping))
-        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "group", toKeyPath: "group", withMapping: _groupMapping))
+//        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "group", toKeyPath: "group", withMapping: _groupMapping))
+        mapping.addPropertyMappingById("Group",fromKey: "group",toKeyPath: "group")
         
         return mapping
     }
@@ -923,7 +943,8 @@ extension ApiController {
         }else{
             mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "station", toKeyPath: "station", withMapping: _stationMapping))
         }
-        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "posts", toKeyPath: "posts", withMapping: _postMapping))
+//        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "posts", toKeyPath: "posts", withMapping: _postMapping))
+        mapping.addPropertyMappingById("Post",fromKey: "posts",toKeyPath: "posts")
         mapping.addPropertyMappingById("User",fromKey: "participants",toKeyPath: "participants")
         mapping.addPropertyMappingById("User",fromKey: "announcelist",toKeyPath: "announcelist")
  

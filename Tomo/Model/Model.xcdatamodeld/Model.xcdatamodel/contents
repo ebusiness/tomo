@@ -35,7 +35,7 @@
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Message" inverseName="group" inverseEntity="Message" syncable="YES"/>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" syncable="YES"/>
         <relationship name="participants" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="inGroups" inverseEntity="User" syncable="YES"/>
-        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" syncable="YES"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" inverseName="group" inverseEntity="Post" syncable="YES"/>
         <relationship name="station" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Station" syncable="YES"/>
     </entity>
     <entity name="Images" representedClassName="Images" syncable="YES">
@@ -85,7 +85,7 @@
         <attribute name="logicDelete" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="bookmarked" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="bookmarked_posts" inverseEntity="User" syncable="YES"/>
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Comments" syncable="YES"/>
-        <relationship name="group" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" syncable="YES"/>
+        <relationship name="group" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="posts" inverseEntity="Group" syncable="YES"/>
         <relationship name="imagesmobile" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Images" syncable="YES"/>
         <relationship name="liked" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="liked_posts" inverseEntity="User" syncable="YES"/>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="posts" inverseEntity="User" syncable="YES"/>

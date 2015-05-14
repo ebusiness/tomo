@@ -4,6 +4,8 @@
 
 #import "CoreData+MagicalRecord.h"
 #import "RestKit.h"
+#import "RKEntityCache.h"
+
 #import "AFNetworking.h"
 #import "SVProgressHUD.h"
 #import "CHTCollectionViewWaterfallLayout.h"
