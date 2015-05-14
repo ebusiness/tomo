@@ -52,7 +52,9 @@ class NewsfeedViewController: BaseViewController {
         }
         
         if displayMode == .Group {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "チャット", style: .Plain, target: self, action: Selector("groupChat"))
+            if let group = group where group.participants.count > 1 {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "チャット", style: .Plain, target: self, action: Selector("groupChat"))
+            }
         }
         
         loadLocalData()
