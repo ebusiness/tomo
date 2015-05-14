@@ -116,7 +116,7 @@ class AccountEditViewController: BaseTableViewController {
         telTF.text = user.telNo
         //自己紹介
         profileLabel.text = user.bioText
-        idLabel.text = user.email
+        idLabel.text = user.tomoid
     }
     
     func updateUser() {
