@@ -22,7 +22,11 @@ class LoadingViewController: BaseViewController {
             assert(NSThread.currentThread().isMainThread, "not main thread")
             
             if let error = error {
-                Util.showError(error)
+                Defaults["shouldAutoLogin"] = false
+//                Util.showError(error)
+//                Util.showInfo("ユーザIDとパースワードを確かめて、もう一度ご入力ください。", maskType: .Clear)
+                let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
+                Util.changeRootViewController(from: self, to: main)
                 return
             }
             
