@@ -114,7 +114,7 @@ class ApiControllerTests: XCTestCase {
         ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             println("logined")
-            ApiController.getPostsOfUser("5387053ade9ace7c4c00010f", done: { (error) -> Void in
+            ApiController.getPostOfUser("5387053ade9ace7c4c00010f", done: { (posts, error) -> Void in
                 XCTAssertNil(error, "should success")
                 expect.fulfill()
             })
