@@ -23,6 +23,16 @@ class AddPostViewController: BaseTableViewController {
     
     var content: String?
     
+    var selectedIndexPath = NSIndexPath(forRow: 0, inSection: 1)
+    let groupIndexPath = NSIndexPath(forRow: 1, inSection: 1)
+    let stationIndexPath = NSIndexPath(forRow: 2, inSection: 1)
+    
+    var groupListVC: GroupListViewController?
+    var stationListVC: StationTableViewController?
+    
+    var selectedGroup: Group?
+    var selectedStation: Station?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,13 +40,91 @@ class AddPostViewController: BaseTableViewController {
         
         self.navigationItem.rightBarButtonItem?.enabled = false
     }
+    
+    func setTitleOfCellAtIndexPath(indexPath: NSIndexPath, title: String?) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! RadioButtonCell
+        cell.titleLabel.text = title
+    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let groupListVC = groupListVC, selectedGroup = groupListVC.selectedGroup {
+            checkRowAtIndexPath(groupIndexPath)
+            setTitleOfCellAtIndexPath(groupIndexPath, title: selectedGroup.name)
+            setTitleOfCellAtIndexPath(stationIndexPath, title: nil)
+            
+            self.selectedGroup = selectedGroup
+            self.selectedStation = nil
+            
+            self.groupListVC = nil
+            
+            return
+        }
+        
+        if let stationListVC = stationListVC, selectedStation = stationListVC.selectedStation {
+            checkRowAtIndexPath(stationIndexPath)
+            setTitleOfCellAtIndexPath(stationIndexPath, title: selectedStation.name)
+            setTitleOfCellAtIndexPath(groupIndexPath, title: nil)
+            
+            self.selectedStation = selectedStation
+            self.selectedGroup = nil
+            
+            self.stationListVC = nil
+            
+            return
+        }
+        
+        setTitleOfCellAtIndexPath(groupIndexPath, title: nil)
+        setTitleOfCellAtIndexPath(stationIndexPath, title: nil)
     }
     
-    // MARK: - 
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                checkRowAtIndexPath(indexPath)
+                
+                setTitleOfCellAtIndexPath(groupIndexPath, title: nil)
+                setTitleOfCellAtIndexPath(stationIndexPath, title: nil)
+                
+                selectedGroup = nil
+                selectedStation = nil
+            }
+            
+            //group
+            if indexPath.row == 1 {
+                groupListVC = Util.createViewControllerWithIdentifier("GroupListViewController", storyboardName: "Group") as? GroupListViewController
+                groupListVC!.showMyGroupOnly = true
+                groupListVC!.selectedGroup = selectedGroup
+                
+                navigationController?.pushViewController(groupListVC!, animated: true)
+            }
+            
+            //station
+            if indexPath.row == 2 {
+                stationListVC = Util.createViewControllerWithIdentifier("StationTableViewController", storyboardName: "Account") as? StationTableViewController
+                stationListVC?.selectedStation = selectedStation
+                
+                navigationController?.pushViewController(stationListVC!, animated: true)
+            }
+        }
+    }
+    
+    func checkRowAtIndexPath(indexPath: NSIndexPath) {
+        if indexPath == selectedIndexPath {
+            return
+        }
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! RadioButtonCell
+        cell.check()
+        
+        let preSelectedCell = tableView.cellForRowAtIndexPath(selectedIndexPath) as! RadioButtonCell
+        preSelectedCell.unCheck()
+        
+        selectedIndexPath = indexPath
+    }
+    
+    // MARK: - Action
     
     @IBAction func cancel(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -52,7 +140,7 @@ class AddPostViewController: BaseTableViewController {
             println("done")
             
             if error == nil {
-                ApiController.addPost([name], sizes: [self.image.size], content: self.textView.text, done: { (error) -> Void in
+                ApiController.addPost([name], sizes: [self.image.size], content: self.textView.text, groupId: self.selectedGroup?.id, stationId: self.selectedStation?.id, done: { (error) -> Void in
                     println(error)
                 })
             }

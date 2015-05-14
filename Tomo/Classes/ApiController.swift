@@ -147,7 +147,7 @@ extension ApiController {
     }
 
     
-    class func addPost(imageNames: [String], sizes: [CGSize], content: String, done: (NSError?) -> Void) {
+    class func addPost(imageNames: [String], sizes: [CGSize], content: String, groupId: String?, stationId: String?, done: (NSError?) -> Void) {
         var param = Dictionary<String, String>()
         param["content"] = content
         
@@ -155,6 +155,14 @@ extension ApiController {
             param["images[\(i)][name]"] = imageNames[i]
             param["images[\(i)][size][width]"] = "\(sizes[i].width)"
             param["images[\(i)][size][height]"] = "\(sizes[i].height)"
+        }
+        
+        if let groupId = groupId {
+            param["groupId"] = groupId
+        }
+        
+        if let stationId = stationId {
+            param["stationId"] = stationId
         }
         
         createPosts(param, done: done)

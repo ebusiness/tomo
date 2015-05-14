@@ -121,22 +121,26 @@ class DBController: NSObject {
     
     // MARK: - Group
     
-    class func groups(station:String) -> NSFetchedResultsController {
-//        return Group.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "createDate != nil"), sortedBy: "createDate", ascending: false)
-        
-//        return Group.MR_fetchAllGroupedBy("section", withPredicate: NSPredicate(format: "createDate != nil"), sortedBy: "createDate", ascending: false)
-        
-//        return Group.MR_fetchAllSortedBy("createDate, section", ascending: false, withPredicate: NSPredicate(format: "createDate != nil"), groupBy: "section", delegate: nil)
-        
+    class func groups(station: String?, onlyMe: Bool = false) -> NSFetchedResultsController {
         let fetchRequest = NSFetchRequest(entityName: "Group")
         let sort1 = NSSortDescriptor(key: "section", ascending: true)
         let sort2 = NSSortDescriptor(key: "createDate", ascending: false)
         fetchRequest.sortDescriptors = [sort1, sort2]
-        if (station.isEmpty){
-            fetchRequest.predicate = NSPredicate(format: "createDate != nil AND section > 0 ")
-        }else{
-            fetchRequest.predicate = NSPredicate(format: "createDate != nil AND section > 0 && station.id = %@",station)
+        if let station = station {
+            fetchRequest.predicate = NSPredicate(format: "createDate != nil && station.id = %@",station)
+        } else{
+            fetchRequest.predicate = NSPredicate(format: "createDate != nil")
         }
+        
+        var filterPredicate: NSPredicate
+        
+        if onlyMe {
+            filterPredicate = NSPredicate(format: "section = 1")
+        } else {
+            filterPredicate = NSPredicate(format: "section > 0")
+        }
+        
+        fetchRequest.predicate = NSCompoundPredicate(type: NSCompoundPredicateType.AndPredicateType, subpredicates: [fetchRequest.predicate!, filterPredicate])
         
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: NSManagedObjectContext.MR_defaultContext(), sectionNameKeyPath: "section", cacheName: nil)
         return frc

@@ -12,7 +12,10 @@ class GroupListViewController: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var frc: NSFetchedResultsController!
-    var station:String = "";
+    var station: String?
+    var showMyGroupOnly = false
+    
+    var selectedGroup: Group?
     
     func numberOfRowsInSection(section: Int) -> Int {
         return (frc.sections as! [NSFetchedResultsSectionInfo])[section].numberOfObjects
@@ -21,7 +24,11 @@ class GroupListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        frc = DBController.groups(station)
+        if showMyGroupOnly {
+            navigationItem.rightBarButtonItem = nil
+        }
+        
+        frc = DBController.groups(station, onlyMe: showMyGroupOnly)
         frc.delegate = self
         frc.performFetch(nil)
     }
@@ -65,10 +72,14 @@ extension GroupListViewController: UITableViewDataSource, UITableViewDelegate {
 //    }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 57
+        return showMyGroupOnly ? 0 : 57
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if showMyGroupOnly {
+            return nil
+        }
+        
         let title = frc.sectionIndexTitles[section] as! String
         
         let headerView = Util.createViewWithNibName("GroupHeaderView") as! GroupHeaderView
@@ -104,6 +115,14 @@ extension GroupListViewController: UITableViewDataSource, UITableViewDelegate {
         
         let group = frc.objectAtIndexPath(indexPath) as! Group
 
+        if showMyGroupOnly {
+            selectedGroup = group
+            gcd.async(.Main, delay: 0.3, closure: { () -> () in
+                self.navigationController?.popViewControllerAnimated(true)
+            })
+            return
+        }
+        
         let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
         vc.displayMode = .Group
         vc.group = group

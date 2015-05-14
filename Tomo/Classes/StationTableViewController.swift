@@ -91,7 +91,7 @@ extension StationTableViewController: UITableViewDataSource, UITableViewDelegate
         let cell = tableView.cellForRowAtIndexPath(indexPath) as UITableViewCell?
         cell?.accessoryType = .Checkmark
         
-        gcd.async(.Main, delay: 0.4) { () -> () in
+        gcd.async(.Main, delay: 0.3) { () -> () in
             self.navigationController?.popViewControllerAnimated(true)
         }
     }

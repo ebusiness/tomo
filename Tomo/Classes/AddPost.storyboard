@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="o1N-iP-JXF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="o1N-iP-JXF">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -28,15 +28,15 @@
         <!--Add Post View Controller-->
         <scene sceneID="dvQ-up-OLv">
             <objects>
-                <tableViewController id="7rE-vt-rUs" customClass="AddPostViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="AdE-nN-wS0">
+                <tableViewController clearsSelectionOnViewWillAppear="NO" id="7rE-vt-rUs" customClass="AddPostViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="AdE-nN-wS0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection id="1Vj-oh-wmr">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="136" id="27S-od-7R5">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="136" id="27S-od-7R5">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="27S-od-7R5" id="Sbv-eA-yXV">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -83,7 +83,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="52" id="Mwg-uU-Hx1">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="52" id="Mwg-uU-Hx1">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mwg-uU-Hx1" id="AZY-vz-HCm">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -114,7 +114,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="52" id="704-Se-ra8">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="52" id="704-Se-ra8">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="704-Se-ra8" id="jCs-zn-xQ3">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -152,6 +152,155 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="TCe-Bu-cPs">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="52" id="wzP-rs-kdp" customClass="RadioButtonCell" customModule="tomo" customModuleProvider="target">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wzP-rs-kdp" id="uNX-NQ-3Qe">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="grC-4V-jRd">
+                                                    <rect key="frame" x="8" y="0.0" width="304" height="44"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_radio_button_on_black_24dp" translatesAutoresizingMaskIntoConstraints="NO" id="cpM-uj-WrK">
+                                                            <rect key="frame" x="8" y="7" width="30" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="30" id="5dk-WX-TpH"/>
+                                                                <constraint firstAttribute="width" constant="30" id="N0h-OA-BK4"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公開" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="te5-ub-L4E">
+                                                            <rect key="frame" x="46" y="11" width="34" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstItem="cpM-uj-WrK" firstAttribute="centerY" secondItem="te5-ub-L4E" secondAttribute="centerY" id="1gl-rl-Zhg"/>
+                                                        <constraint firstAttribute="centerY" secondItem="cpM-uj-WrK" secondAttribute="centerY" id="9Bz-cc-Q4I"/>
+                                                        <constraint firstItem="te5-ub-L4E" firstAttribute="leading" secondItem="cpM-uj-WrK" secondAttribute="trailing" constant="8" id="PVB-al-DGU"/>
+                                                        <constraint firstItem="cpM-uj-WrK" firstAttribute="leading" secondItem="grC-4V-jRd" secondAttribute="leading" constant="8" id="wHY-aN-Pw5"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="grC-4V-jRd" secondAttribute="bottom" constant="8" id="44K-Pk-5Iz"/>
+                                                <constraint firstItem="grC-4V-jRd" firstAttribute="top" secondItem="uNX-NQ-3Qe" secondAttribute="top" id="SZw-4W-twQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="grC-4V-jRd" secondAttribute="trailing" constant="8" id="df3-wl-xrl"/>
+                                                <constraint firstItem="grC-4V-jRd" firstAttribute="leading" secondItem="uNX-NQ-3Qe" secondAttribute="leading" constant="8" id="mIb-lt-nIW"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="buttonImageView" destination="cpM-uj-WrK" id="1Hz-QU-pgx"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="52" id="rbF-0F-tCT" customClass="RadioButtonCell" customModule="tomo" customModuleProvider="target">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rbF-0F-tCT" id="Hz5-we-GR6">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zbM-mG-jmG">
+                                                    <rect key="frame" x="8" y="0.0" width="304" height="44"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_radio_button_off_black_24dp" translatesAutoresizingMaskIntoConstraints="NO" id="ofv-Qw-ilm">
+                                                            <rect key="frame" x="8" y="7" width="30" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="30" id="AbY-di-Za5"/>
+                                                                <constraint firstAttribute="height" constant="30" id="WIc-zf-1Z7"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="組" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kee-38-coT">
+                                                            <rect key="frame" x="46" y="11" width="17" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="未指定" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oqo-b0-kXd">
+                                                            <rect key="frame" x="245" y="11" width="51" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstItem="ofv-Qw-ilm" firstAttribute="centerY" secondItem="Kee-38-coT" secondAttribute="centerY" id="0kM-8x-J6e"/>
+                                                        <constraint firstItem="Oqo-b0-kXd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Kee-38-coT" secondAttribute="trailing" constant="8" id="7F6-FR-lpP"/>
+                                                        <constraint firstItem="Kee-38-coT" firstAttribute="leading" secondItem="ofv-Qw-ilm" secondAttribute="trailing" constant="8" id="CxD-EC-ls2"/>
+                                                        <constraint firstItem="Oqo-b0-kXd" firstAttribute="centerY" secondItem="Kee-38-coT" secondAttribute="centerY" id="Ptv-pi-5sR"/>
+                                                        <constraint firstItem="ofv-Qw-ilm" firstAttribute="leading" secondItem="zbM-mG-jmG" secondAttribute="leading" constant="8" id="dgy-7I-JSw"/>
+                                                        <constraint firstAttribute="centerY" secondItem="ofv-Qw-ilm" secondAttribute="centerY" id="iMp-sZ-w0T"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Oqo-b0-kXd" secondAttribute="trailing" constant="8" id="kVz-qX-80z"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="zbM-mG-jmG" firstAttribute="leading" secondItem="Hz5-we-GR6" secondAttribute="leading" constant="8" id="Mkt-fs-gRB"/>
+                                                <constraint firstItem="zbM-mG-jmG" firstAttribute="top" secondItem="Hz5-we-GR6" secondAttribute="top" id="Wsh-8b-qyi"/>
+                                                <constraint firstAttribute="bottom" secondItem="zbM-mG-jmG" secondAttribute="bottom" constant="8" id="iz2-jE-Mln"/>
+                                                <constraint firstAttribute="trailing" secondItem="zbM-mG-jmG" secondAttribute="trailing" constant="8" id="pSZ-bh-iRy"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="buttonImageView" destination="ofv-Qw-ilm" id="dQP-c6-jR2"/>
+                                            <outlet property="titleLabel" destination="Oqo-b0-kXd" id="zgT-BJ-Mca"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="52" id="W6Y-SS-POT" customClass="RadioButtonCell" customModule="tomo" customModuleProvider="target">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="W6Y-SS-POT" id="ArA-qa-9z2">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KSY-x2-RC9">
+                                                    <rect key="frame" x="8" y="0.0" width="304" height="44"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_radio_button_off_black_24dp" translatesAutoresizingMaskIntoConstraints="NO" id="2NG-Xe-pxg">
+                                                            <rect key="frame" x="8" y="4" width="36" height="36"/>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="駅" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vx4-wh-v7V">
+                                                            <rect key="frame" x="52" y="11" width="17" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="未指定" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MKI-xG-RAQ">
+                                                            <rect key="frame" x="245" y="11" width="51" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstItem="vx4-wh-v7V" firstAttribute="leading" secondItem="2NG-Xe-pxg" secondAttribute="trailing" constant="8" id="3Xu-TE-sBY"/>
+                                                        <constraint firstAttribute="centerY" secondItem="2NG-Xe-pxg" secondAttribute="centerY" id="3qz-dc-crV"/>
+                                                        <constraint firstItem="2NG-Xe-pxg" firstAttribute="leading" secondItem="KSY-x2-RC9" secondAttribute="leading" constant="8" id="VNn-Rl-CwP"/>
+                                                        <constraint firstItem="MKI-xG-RAQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vx4-wh-v7V" secondAttribute="trailing" constant="8" id="cJf-is-nsa"/>
+                                                        <constraint firstItem="vx4-wh-v7V" firstAttribute="centerY" secondItem="2NG-Xe-pxg" secondAttribute="centerY" id="dtS-f8-K7t"/>
+                                                        <constraint firstItem="vx4-wh-v7V" firstAttribute="centerY" secondItem="MKI-xG-RAQ" secondAttribute="centerY" id="vZL-AC-reH"/>
+                                                        <constraint firstAttribute="trailing" secondItem="MKI-xG-RAQ" secondAttribute="trailing" constant="8" id="xfv-5k-P0i"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="KSY-x2-RC9" secondAttribute="bottom" constant="8" id="D34-0x-pFU"/>
+                                                <constraint firstItem="KSY-x2-RC9" firstAttribute="leading" secondItem="ArA-qa-9z2" secondAttribute="leading" constant="8" id="PVs-B2-qmE"/>
+                                                <constraint firstItem="KSY-x2-RC9" firstAttribute="top" secondItem="ArA-qa-9z2" secondAttribute="top" id="i0u-7v-a0S"/>
+                                                <constraint firstAttribute="trailing" secondItem="KSY-x2-RC9" secondAttribute="trailing" constant="8" id="ifO-hw-Od4"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="buttonImageView" destination="2NG-Xe-pxg" id="wuL-d6-onf"/>
+                                            <outlet property="titleLabel" destination="MKI-xG-RAQ" id="u2H-3Z-Udj"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="7rE-vt-rUs" id="fcg-iR-Ou9"/>
@@ -180,6 +329,10 @@
             <point key="canvasLocation" x="575" y="365"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ic_radio_button_off_black_24dp" width="36" height="36"/>
+        <image name="ic_radio_button_on_black_24dp" width="36" height="36"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
