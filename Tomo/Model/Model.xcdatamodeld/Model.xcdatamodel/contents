@@ -83,6 +83,7 @@
         <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="logicDelete" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="newsfeed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="bookmarked" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="bookmarked_posts" inverseEntity="User" syncable="YES"/>
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Comments" syncable="YES"/>
         <relationship name="group" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="posts" inverseEntity="Group" syncable="YES"/>
@@ -146,7 +147,7 @@
         <element name="Message" positionX="-1595" positionY="161" width="128" height="180"/>
         <element name="Notification" positionX="-1395" positionY="-126" width="128" height="150"/>
         <element name="Openids" positionX="-1395" positionY="-126" width="128" height="135"/>
-        <element name="Post" positionX="-857" positionY="234" width="128" height="195"/>
+        <element name="Post" positionX="-857" positionY="234" width="128" height="210"/>
         <element name="Station" positionX="-1395" positionY="-126" width="128" height="150"/>
         <element name="User" positionX="-1217" positionY="-270" width="128" height="570"/>
     </elements>

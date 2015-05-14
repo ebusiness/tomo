@@ -9,7 +9,7 @@
 import UIKit
 
 enum NewsfeedDisplayMode {
-    case Normal, Account, Detail, Group, Station
+    case Newsfeed, Account, User, Group, Station
 }
 
 class NewsfeedViewController: BaseViewController {
@@ -22,7 +22,7 @@ class NewsfeedViewController: BaseViewController {
     var posts = [Post]()
     
     var user: User?
-    var displayMode = NewsfeedDisplayMode.Normal
+    var displayMode = NewsfeedDisplayMode.Newsfeed
     
     var group: Group?
     var stationId: String?
@@ -33,10 +33,10 @@ class NewsfeedViewController: BaseViewController {
     
     var count: Int! {
         switch displayMode {
-        case .Group, .Station:
-            return posts.count
-        default:
+        case .Newsfeed:
             return frc.fetchedObjects?.count ?? 0
+        default:
+            return posts.count
         }
     }
     
@@ -44,16 +44,16 @@ class NewsfeedViewController: BaseViewController {
     
     func postAtIndexPath(indexPath: NSIndexPath) -> Post {
         switch displayMode {
-        case .Group, .Station:
-            return posts[indexPath.row]
-        default:
+        case .Newsfeed:
             return frc.objectAtIndexPath(indexPath) as! Post
+        default:
+            return posts[indexPath.row]
         }
     }
     
     func rightBarButtonItem() -> UIBarButtonItem? {
         switch displayMode {
-        case .Normal, .Account:
+        case .Newsfeed, .Account:
             return UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: Selector("addPostBtnTapped:"))
         case .Group:
             if let group = group where group.participants.count > 1 {
@@ -70,23 +70,7 @@ class NewsfeedViewController: BaseViewController {
 
         navigationItem.rightBarButtonItem = rightBarButtonItem()
         
-        if displayMode == .Normal {
-            loadLocalData()
-        } else if displayMode == .Group {
-            ApiController.getPostOfGroup(group!.id!, done: { (posts, error) -> Void in
-                if posts != nil {
-                    self.posts = posts!
-                    self.collectionView.reloadData()
-                }
-            })
-        } else if displayMode == .Station {
-            ApiController.getPostOfStation(self.stationId!, done: { (posts, error) -> Void in
-                if posts != nil {
-                    self.posts = posts!
-                    self.collectionView.reloadData()
-                }
-            })
-        }
+        loadLocalDataOrRemote()
         
         collectionView.registerNib(UINib(nibName: "NewsfeedCell", bundle: nil), forCellWithReuseIdentifier: "NewsfeedCell")
         
@@ -96,9 +80,33 @@ class NewsfeedViewController: BaseViewController {
 
     }
     
-    func loadLocalData() {
-        frc = DBController.newsfeeds(user)
-        frc.delegate = self
+    func loadLocalDataOrRemote() {
+        switch displayMode {
+        case .Newsfeed:
+            frc = DBController.newsfeeds()
+            frc.delegate = self
+        case .Account, .User:
+            ApiController.getPostOfUser(user!.id!, done: { (posts, error) -> Void in
+                if posts != nil {
+                    self.posts = posts!
+                    self.collectionView.reloadData()
+                }
+            })
+        case .Group:
+            ApiController.getPostOfGroup(group!.id!, done: { (posts, error) -> Void in
+                if posts != nil {
+                    self.posts = posts!
+                    self.collectionView.reloadData()
+                }
+            })
+        case .Station:
+            ApiController.getPostOfStation(self.stationId!, done: { (posts, error) -> Void in
+                if posts != nil {
+                    self.posts = posts!
+                    self.collectionView.reloadData()
+                }
+            })
+        }
     }
     
     func setupLayout() {
@@ -111,13 +119,13 @@ class NewsfeedViewController: BaseViewController {
         //refresh group title
         if displayMode == .Group && !isMovingToParentViewController() {
             collectionView.reloadSections(NSIndexSet(index: 0))
-        } else if displayMode == .Normal {
+        } else if displayMode == .Newsfeed {
             loadRemoteData()
         }
     }
     
     func loadRemoteData() {
-        ApiController.getNewsfeed(user: user) { (error) -> Void in
+        ApiController.getNewsfeed() { (error) -> Void in
             
         }
     }
@@ -125,7 +133,7 @@ class NewsfeedViewController: BaseViewController {
     // MARK: - Notification
     
     func becomeActive() {
-        if displayMode == .Normal {
+        if displayMode == .Newsfeed {
             self.loadRemoteData()
         }
     }

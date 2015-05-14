@@ -8,6 +8,7 @@ enum PostAttributes: String {
     case createDate = "createDate"
     case id = "id"
     case logicDelete = "logicDelete"
+    case newsfeed = "newsfeed"
 }
 
 enum PostRelationships: String {
@@ -64,6 +65,11 @@ class _Post: NSManagedObject {
     var logicDelete: NSNumber?
 
     // func validateLogicDelete(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var newsfeed: NSNumber?
+
+    // func validateNewsfeed(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     // MARK: - Relationships
 

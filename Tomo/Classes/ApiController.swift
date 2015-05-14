@@ -135,18 +135,36 @@ extension ApiController {
 // MARK: - Post
 extension ApiController {
 
-    class func getNewsfeed(user: User? = nil, done: (NSError?) -> Void) {
-        if let user = user {
-            getUserPosts(user.id!, done: done)
-            return
-        }
-        
-        RKObjectManager.sharedManager().getObjectsAtPath("/newsfeed", parameters: nil, success: { (_, _) -> Void in
-            done(nil)
+    class func getNewsfeed(done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/newsfeed", parameters: nil, success: { (_, results) -> Void in
+            if let results = results {
+                for post in (results.array() as! [Post]) {
+                    post.newsfeed = true
+                }
+                
+                DBController.save(done: { () -> Void in
+                    done(nil)
+                })
+            } else {
+                done(nil)
+            }
             }) { (_, error) -> Void in
                 done(error)
         }
     }
+    
+//    class func getNewsfeed(user: User? = nil, done: (NSError?) -> Void) {
+//        if let user = user {
+//            getUserPosts(user.id!, done: done)
+//            return
+//        }
+//        
+//        RKObjectManager.sharedManager().getObjectsAtPath("/newsfeed", parameters: nil, success: { (_, _) -> Void in
+//            done(nil)
+//            }) { (_, error) -> Void in
+//                done(error)
+//        }
+//    }
 
     
     class func addPost(imageNames: [String], sizes: [CGSize], content: String, groupId: String?, stationId: String?, done: (NSError?) -> Void) {
@@ -183,8 +201,19 @@ extension ApiController {
         }
         
         */
-        RKObjectManager.sharedManager().postObject(nil, path: "/mobile/posts", parameters: param as [NSObject : AnyObject], success: { (_, _) -> Void in
-            done(nil)
+        RKObjectManager.sharedManager().postObject(nil, path: "/mobile/posts", parameters: param as [NSObject : AnyObject], success: { (_, results) -> Void in
+            if let results = results {
+                for post in (results.array() as! [Post]) {
+                    post.newsfeed = true
+                }
+                
+                DBController.save(done: { () -> Void in
+                    done(nil)
+                })
+            } else {
+                done(nil)
+            }
+
             }) { (_, error) -> Void in
                 done(error)
         }
@@ -304,18 +333,19 @@ extension ApiController {
                 done(nil, error)
         }
     }
+    
+    //ユーザの投稿一覧
+    class func getPostOfUser(id: String, done: ([Post]?, NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/users/\(id)/posts", parameters: nil, success: { (_, results) -> Void in
+            done((results.array() as? [Post]), nil)
+            }) { (_, error) -> Void in
+                done(nil, error)
+        }
+    }
 }
 
 // MARK: - ユーザ情報
 extension ApiController {
-    //ユーザの投稿一覧
-    class func getUserPosts(id: String, done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().getObjectsAtPath("/users/\(id)/posts", parameters: nil, success: { (_, _) -> Void in
-            done(nil)
-            }) { (_, error) -> Void in
-                done(error)
-        }
-    }
     // 友達一覧
     class func getFriends(done: (NSError?) -> Void) {
         //取得情报

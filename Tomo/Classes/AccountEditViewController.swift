@@ -170,7 +170,7 @@ class AccountEditViewController: BaseTableViewController {
             let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
             vc.user = user
             if readOnlyMode {
-                vc.displayMode = .Detail
+                vc.displayMode = .User
             }
             navigationController?.pushViewController(vc, animated: true)
             return

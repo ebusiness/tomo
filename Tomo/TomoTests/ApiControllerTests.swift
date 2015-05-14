@@ -107,13 +107,14 @@ class ApiControllerTests: XCTestCase {
 //        })
 //    }
     
+
     func testGetUserPosts() {
         let expect = expectationWithDescription("api")
         
         ApiController.login(tomoid: "wangxinguang@e-business.co.jp", password: "12345678") { (error) -> Void in
             XCTAssertNil(error, "")
             println("logined")
-            ApiController.getUserPosts("5387053ade9ace7c4c00010f", done: { (error) -> Void in
+            ApiController.getPostsOfUser("5387053ade9ace7c4c00010f", done: { (error) -> Void in
                 XCTAssertNil(error, "should success")
                 expect.fulfill()
             })
@@ -123,6 +124,7 @@ class ApiControllerTests: XCTestCase {
             println(error)
         })
     }
+
     
     func testCreatePosts() {
         let expect = expectationWithDescription("api")
