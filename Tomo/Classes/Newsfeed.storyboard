@@ -331,6 +331,32 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Mov-ui-5DD">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mov-ui-5DD" id="0wG-fE-9xe">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="お気に入り" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbX-Po-K5k">
+                                                    <rect key="frame" x="15" y="11" width="85" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wth-Wb-ng6">
+                                                    <rect key="frame" x="251" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="stickySwitchValueChanged:" destination="pum-io-B0j" eventType="valueChanged" id="M37-0G-i59"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="jbX-Po-K5k" secondAttribute="centerY" id="DYl-eN-0N7"/>
+                                                <constraint firstAttribute="centerY" secondItem="wth-Wb-ng6" secondAttribute="centerY" id="LTe-aZ-rKD"/>
+                                                <constraint firstAttribute="trailing" secondItem="wth-Wb-ng6" secondAttribute="trailing" constant="20" id="S08-MD-lUk"/>
+                                                <constraint firstItem="jbX-Po-K5k" firstAttribute="leading" secondItem="0wG-fE-9xe" secondAttribute="leading" constant="15" id="jrk-TK-l7t"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="zPg-4s-llq">
@@ -370,6 +396,7 @@
                     <navigationItem key="navigationItem" id="Ue8-Vy-wTC"/>
                     <connections>
                         <outlet property="notificationSwitch" destination="V4J-Lv-wda" id="2M3-Pd-ypI"/>
+                        <outlet property="stickySwitch" destination="wth-Wb-ng6" id="oMb-e9-AA6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dBU-If-PeS" userLabel="First Responder" sceneMemberID="firstResponder"/>

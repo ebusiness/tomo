@@ -22,6 +22,7 @@ enum GroupRelationships: String {
     case participants = "participants"
     case posts = "posts"
     case station = "station"
+    case stickylist = "stickylist"
 }
 
 @objc
@@ -118,6 +119,9 @@ class _Group: NSManagedObject {
     var station: Station?
 
     // func validateStation(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var stickylist: NSOrderedSet
 
 }
 
@@ -229,6 +233,34 @@ extension _Group {
         let mutable = self.posts.mutableCopy() as! NSMutableOrderedSet
         mutable.removeObject(value)
         self.posts = mutable.copy() as! NSOrderedSet
+    }
+
+}
+
+extension _Group {
+
+    func addStickylist(objects: NSOrderedSet) {
+        let mutable = self.stickylist.mutableCopy() as! NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.stickylist = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeStickylist(objects: NSOrderedSet) {
+        let mutable = self.stickylist.mutableCopy() as! NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.stickylist = mutable.copy() as! NSOrderedSet
+    }
+
+    func addStickylistObject(value: User!) {
+        let mutable = self.stickylist.mutableCopy() as! NSMutableOrderedSet
+        mutable.addObject(value)
+        self.stickylist = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeStickylistObject(value: User!) {
+        let mutable = self.stickylist.mutableCopy() as! NSMutableOrderedSet
+        mutable.removeObject(value)
+        self.stickylist = mutable.copy() as! NSOrderedSet
     }
 
 }

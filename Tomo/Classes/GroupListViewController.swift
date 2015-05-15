@@ -59,7 +59,12 @@ class GroupListViewController: BaseViewController {
 extension GroupListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return frc.sections?.count ?? 0
+        if let sections = frc.sections {
+            return sections.count
+        }
+        
+        return 0
+//        return frc.sections?.count ?? 0
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -89,9 +94,10 @@ extension GroupListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let group = frc.objectAtIndexPath(indexPath) as! Group
-        
-        return GroupCell.height(group: group)
+        if let group = frc.objectAtIndexPath(indexPath) as? Group {
+            return GroupCell.height(group: group)
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

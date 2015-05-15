@@ -124,8 +124,20 @@ class DBController: NSObject {
     class func groups(station: String?, onlyMe: Bool = false) -> NSFetchedResultsController {
         let fetchRequest = NSFetchRequest(entityName: "Group")
         let sort1 = NSSortDescriptor(key: "section", ascending: true)
-        let sort2 = NSSortDescriptor(key: "createDate", ascending: false)
-        fetchRequest.sortDescriptors = [sort1, sort2]
+        let sort2 = NSSortDescriptor(key: "stickylist", ascending: false) { (listA, listB) -> NSComparisonResult in
+            if listA.containsObject(self.myUser()) && !listB.containsObject(self.myUser()) {
+                return NSComparisonResult.OrderedDescending
+            }
+            
+            if !listA.containsObject(self.myUser()) && listB.containsObject(self.myUser()) {
+                return NSComparisonResult.OrderedAscending
+            }
+            
+            return NSComparisonResult.OrderedSame
+        }
+        
+        let sort3 = NSSortDescriptor(key: "createDate", ascending: false)
+        fetchRequest.sortDescriptors = [sort1, sort2, sort3]
         if let station = station {
             fetchRequest.predicate = NSPredicate(format: "createDate != nil && station.id = %@",station)
         } else{

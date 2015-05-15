@@ -36,6 +36,7 @@ enum UserRelationships: String {
     case groups = "groups"
     case inGroups = "inGroups"
     case inGroups_announce = "inGroups_announce"
+    case inGroups_sticky = "inGroups_sticky"
     case invited = "invited"
     case liked_comments = "liked_comments"
     case liked_posts = "liked_posts"
@@ -202,6 +203,9 @@ class _User: NSManagedObject {
 
     @NSManaged
     var inGroups_announce: NSOrderedSet
+
+    @NSManaged
+    var inGroups_sticky: NSOrderedSet
 
     @NSManaged
     var invited: NSOrderedSet
@@ -415,6 +419,34 @@ extension _User {
         let mutable = self.inGroups_announce.mutableCopy() as! NSMutableOrderedSet
         mutable.removeObject(value)
         self.inGroups_announce = mutable.copy() as! NSOrderedSet
+    }
+
+}
+
+extension _User {
+
+    func addInGroups_sticky(objects: NSOrderedSet) {
+        let mutable = self.inGroups_sticky.mutableCopy() as! NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.inGroups_sticky = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeInGroups_sticky(objects: NSOrderedSet) {
+        let mutable = self.inGroups_sticky.mutableCopy() as! NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.inGroups_sticky = mutable.copy() as! NSOrderedSet
+    }
+
+    func addInGroups_stickyObject(value: Group!) {
+        let mutable = self.inGroups_sticky.mutableCopy() as! NSMutableOrderedSet
+        mutable.addObject(value)
+        self.inGroups_sticky = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeInGroups_stickyObject(value: Group!) {
+        let mutable = self.inGroups_sticky.mutableCopy() as! NSMutableOrderedSet
+        mutable.removeObject(value)
+        self.inGroups_sticky = mutable.copy() as! NSOrderedSet
     }
 
 }

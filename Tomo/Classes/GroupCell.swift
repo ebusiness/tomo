@@ -21,6 +21,7 @@ class GroupCell: UITableViewCell {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var userCountLabel: UILabel!
     @IBOutlet weak var joinBtn: UIButton!
+    @IBOutlet weak var stickyImageView: UIImageView!
     
     weak var delegate: GroupCellDelegate?
     
@@ -42,6 +43,8 @@ class GroupCell: UITableViewCell {
             userCountLabel.text = "\(group.participants.count)人のメンバー"
             
             joinBtn.hidden = group.section == GroupSection.MyGroup.rawValue
+            
+            stickyImageView.hidden = !group.isSticky
         }
     }
     

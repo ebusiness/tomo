@@ -11,12 +11,15 @@ import UIKit
 class GroupSettingViewController: BaseTableViewController {
 
     @IBOutlet weak var notificationSwitch: UISwitch!
+    @IBOutlet weak var stickySwitch: UISwitch!
     
     var group: Group!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        notificationSwitch.setOn(group.shouldNotification, animated: false)
+        stickySwitch.setOn(group.isSticky, animated: false)
     }
 
     @IBAction func switchValueChanged(sender: UISwitch) {
@@ -28,6 +31,11 @@ class GroupSettingViewController: BaseTableViewController {
     @IBAction func leaveGroupBtnTapped(sender: AnyObject) {
         ApiController.leaveGroup(group.id!, done: { (error) -> Void in
             self.navigationController?.popViewControllerAnimated(true)
+        })
+    }
+    
+    @IBAction func stickySwitchValueChanged(sender: UISwitch) {
+        ApiController.stickyGroup(group.id!, onoff: sender.on ? "1" : "0", done: { (error) -> Void in
         })
     }
 }

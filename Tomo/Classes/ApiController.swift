@@ -985,7 +985,8 @@ extension ApiController {
         mapping.addPropertyMappingById("Post",fromKey: "posts",toKeyPath: "posts")
         mapping.addPropertyMappingById("User",fromKey: "participants",toKeyPath: "participants")
         mapping.addPropertyMappingById("User",fromKey: "announcelist",toKeyPath: "announcelist")
- 
+         mapping.addPropertyMappingById("User",fromKey: "stickylist",toKeyPath: "stickylist")
+        
         return mapping
     }
     

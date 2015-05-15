@@ -60,11 +60,19 @@
                                                                     <color key="textColor" red="0.72941176470000002" green="0.72941176470000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_star_black_24dp" translatesAutoresizingMaskIntoConstraints="NO" id="q5d-Wn-aMs">
+                                                                    <rect key="frame" x="241" y="0.0" width="25" height="25"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="25" id="huc-zm-ICf"/>
+                                                                        <constraint firstAttribute="height" constant="25" id="yCn-3q-ADs"/>
+                                                                    </constraints>
+                                                                </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <gestureRecognizers/>
                                                             <constraints>
                                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ocq-W9-ChI" secondAttribute="bottom" constant="10" id="4B7-cb-hgT"/>
+                                                                <constraint firstAttribute="trailing" secondItem="q5d-Wn-aMs" secondAttribute="trailing" id="AKW-Dv-tNS"/>
                                                                 <constraint firstItem="YVz-BO-W4M" firstAttribute="leading" secondItem="HoM-Qu-CnI" secondAttribute="leading" id="FPe-V9-1AT"/>
                                                                 <constraint firstItem="ocq-W9-ChI" firstAttribute="leading" secondItem="YVz-BO-W4M" secondAttribute="trailing" constant="12" id="JhL-rm-8rO"/>
                                                                 <constraint firstItem="ocq-W9-ChI" firstAttribute="centerY" secondItem="Llf-Qk-hZ4" secondAttribute="centerY" id="Lqv-cS-6dh"/>
@@ -72,6 +80,7 @@
                                                                 <constraint firstItem="ocq-W9-ChI" firstAttribute="top" secondItem="mdk-Gd-4wN" secondAttribute="bottom" constant="4" id="R1g-VF-mBg"/>
                                                                 <constraint firstAttribute="trailing" secondItem="mdk-Gd-4wN" secondAttribute="trailing" constant="12" id="YmL-sh-mSZ"/>
                                                                 <constraint firstAttribute="height" constant="80" id="d2R-iW-v4p"/>
+                                                                <constraint firstItem="q5d-Wn-aMs" firstAttribute="top" secondItem="HoM-Qu-CnI" secondAttribute="top" id="kYO-It-G8M"/>
                                                                 <constraint firstItem="mdk-Gd-4wN" firstAttribute="leading" secondItem="YVz-BO-W4M" secondAttribute="trailing" constant="12" id="luu-o6-hXu"/>
                                                                 <constraint firstItem="mdk-Gd-4wN" firstAttribute="top" secondItem="HoM-Qu-CnI" secondAttribute="top" priority="250" constant="18" id="nj3-FR-9lZ"/>
                                                                 <constraint firstItem="YVz-BO-W4M" firstAttribute="top" secondItem="HoM-Qu-CnI" secondAttribute="top" id="op8-b7-cEy"/>
@@ -117,6 +126,7 @@
                                             <outlet property="groupImageView" destination="YVz-BO-W4M" id="ukA-8D-o9G"/>
                                             <outlet property="joinBtn" destination="fHa-VB-Xrf" id="CQK-DS-EST"/>
                                             <outlet property="nameLabel" destination="mdk-Gd-4wN" id="1fh-vc-ayD"/>
+                                            <outlet property="stickyImageView" destination="q5d-Wn-aMs" id="8dG-DM-MVI"/>
                                             <outlet property="typeLabel" destination="ocq-W9-ChI" id="XrL-EF-PiR"/>
                                             <outlet property="userCountLabel" destination="Llf-Qk-hZ4" id="g4o-c9-2um"/>
                                         </connections>
@@ -345,6 +355,7 @@
     <resources>
         <image name="btn_32_white,6,6," width="6" height="34"/>
         <image name="ic_add_black_48dp" width="24" height="24"/>
+        <image name="ic_star_black_24dp" width="36" height="36"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
