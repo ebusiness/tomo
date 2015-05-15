@@ -9,6 +9,7 @@ enum GroupAttributes: String {
     case createDate = "createDate"
     case detail = "detail"
     case id = "id"
+    case isSticky = "isSticky"
     case logicDelete = "logicDelete"
     case name = "name"
     case section = "section"
@@ -75,6 +76,11 @@ class _Group: NSManagedObject {
     var id: String?
 
     // func validateId(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var isSticky: NSNumber?
+
+    // func validateIsSticky(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var logicDelete: NSNumber?

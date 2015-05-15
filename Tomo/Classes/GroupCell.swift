@@ -44,7 +44,7 @@ class GroupCell: UITableViewCell {
             
             joinBtn.hidden = group.section == GroupSection.MyGroup.rawValue
             
-            stickyImageView.hidden = !group.isSticky
+            stickyImageView.hidden = !(group.isSticky?.boolValue ?? true)
         }
     }
     

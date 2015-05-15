@@ -30,7 +30,12 @@ class GroupListViewController: BaseViewController {
         
         frc = DBController.groups(station, onlyMe: showMyGroupOnly)
         frc.delegate = self
-        frc.performFetch(nil)
+        
+        var error: NSError?
+        
+        if !frc.performFetch(&error) {
+            println("!frc.performFetch(&error)")
+        }
     }
 
     override func viewWillAppear(animated: Bool) {

@@ -509,6 +509,7 @@ extension ApiController {
             if let result = result {
                 for group in (result.array() as! [Group]) {
                     group.section = GroupSection.MyGroup.rawValue
+                    group.setSticky()
                 }
                 
                 DBController.save(done: { () -> Void in
@@ -527,6 +528,7 @@ extension ApiController {
             if let result = result {
                 for group in (result.array() as! [Group]) {
                     group.section = GroupSection.Discover.rawValue
+                    group.setSticky()
                 }
                 
                 DBController.save(done: { () -> Void in
@@ -618,6 +620,7 @@ extension ApiController {
         RKObjectManager.sharedManager().patchObject(nil, path: "/groups/\(groupId)/join", parameters: param as [NSObject : AnyObject], success: { (_, mappingResult) -> Void in
             if let group = mappingResult.firstObject as? Group {
                 group.section = GroupSection.MyGroup.rawValue
+                group.setSticky()
                 DBController.save(done: { () -> Void in
                     done(nil)
                 })
@@ -633,6 +636,7 @@ extension ApiController {
         RKObjectManager.sharedManager().patchObject(nil, path: "/mobile/groups/\(groupId)/leave", parameters: nil, success: { (_, mappingResult) -> Void in
             if let group = mappingResult.firstObject as? Group {
                 group.section = GroupSection.Discover.rawValue
+                group.setSticky()
                 DBController.save(done: { () -> Void in
                     done(nil)
                 })
@@ -648,6 +652,7 @@ extension ApiController {
         RKObjectManager.sharedManager().patchObject(nil, path: "/mobile/groups/\(groupId)/announce/\(onoff)", parameters: nil, success: { (_, mappingResult) -> Void in
             if let group = mappingResult.firstObject as? Group {
                 group.section = GroupSection.MyGroup.rawValue
+                group.setSticky()
                 DBController.save(done: { () -> Void in
                     done(nil)
                 })
@@ -663,6 +668,7 @@ extension ApiController {
         RKObjectManager.sharedManager().patchObject(nil, path: "/mobile/groups/\(groupId)/sticky/\(onoff)", parameters: nil, success: { (_, mappingResult) -> Void in
             if let group = mappingResult.firstObject as? Group {
                 group.section = GroupSection.MyGroup.rawValue
+                group.setSticky()
                 DBController.save(done: { () -> Void in
                     done(nil)
                 })

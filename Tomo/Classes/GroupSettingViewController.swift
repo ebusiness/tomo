@@ -19,7 +19,7 @@ class GroupSettingViewController: BaseTableViewController {
         super.viewDidLoad()
 
         notificationSwitch.setOn(group.shouldNotification, animated: false)
-        stickySwitch.setOn(group.isSticky, animated: false)
+        stickySwitch.setOn(group.isSticky?.boolValue ?? false, animated: false)
     }
 
     @IBAction func switchValueChanged(sender: UISwitch) {

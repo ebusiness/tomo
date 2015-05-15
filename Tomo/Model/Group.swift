@@ -13,15 +13,38 @@ class Group: _Group {
         }
     }
     
-    var isSticky: Bool {
-        get {
-            for user in stickylist.array as! [User] {
-                if user.id == Defaults["myId"].string {
-                    return true
-                }
+    func setSticky() {
+        for user in stickylist.array as! [User] {
+            if user.id == Defaults["myId"].string {
+                isSticky = true
+                return
             }
-            
-            return false
         }
+        
+        isSticky = false
     }
+    
+//    override func willSave() {
+//        super.willSave()
+//        for user in stickylist.array as! [User] {
+//            if user.id == Defaults["myId"].string {
+//                isSticky = true
+//                return
+//            }
+//        }
+//        
+//        isSticky = false
+//    }
+    
+//    var isSticky: Bool {
+//        get {
+//            for user in stickylist.array as! [User] {
+//                if user.id == Defaults["myId"].string {
+//                    return true
+//                }
+//            }
+//            
+//            return false
+//        }
+//    }
 }
