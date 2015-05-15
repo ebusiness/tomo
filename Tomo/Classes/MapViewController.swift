@@ -87,9 +87,6 @@ extension MapViewController {
             case"posts":
                 self.hostPosts(param);
                 break;
-            case"posts1":
-                self.hostPosts(param);
-                break;
             default:
                 break;
             }
@@ -133,7 +130,7 @@ extension MapViewController {
     func hostPosts(param:Dictionary<String, String>){
         let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
         vc.displayMode = .Station
-        vc.stationId = param["station._id"]
+        vc.stationCondition = param
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

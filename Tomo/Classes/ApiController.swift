@@ -326,8 +326,8 @@ extension ApiController {
         }
     }
     
-    class func getPostOfStation(stationId: String, done: ([Post]?, NSError?) -> Void) {
-        RKObjectManager.sharedManager().getObjectsAtPath("/mobile/stations/posts", parameters: ["station._id" : stationId], success: { (_, results) -> Void in
+    class func getPostOfStation(condition: Dictionary<String, String>, done: ([Post]?, NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/mobile/stations/posts", parameters: condition, success: { (_, results) -> Void in
             done((results.array() as? [Post]), nil)
             }) { (_, error) -> Void in
                 done(nil, error)

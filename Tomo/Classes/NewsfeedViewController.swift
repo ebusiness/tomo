@@ -25,7 +25,7 @@ class NewsfeedViewController: BaseViewController {
     var displayMode = NewsfeedDisplayMode.Newsfeed
     
     var group: Group?
-    var stationId: String?
+    var stationCondition: Dictionary<String, String>?
     
     func isHeaderSection(section: Int) -> Bool {
         return displayMode == .Group && section == 0
@@ -100,7 +100,7 @@ class NewsfeedViewController: BaseViewController {
                 }
             })
         case .Station:
-            ApiController.getPostOfStation(self.stationId!, done: { (posts, error) -> Void in
+            ApiController.getPostOfStation(self.stationCondition!, done: { (posts, error) -> Void in
                 if posts != nil {
                     self.posts = posts!
                     self.collectionView.reloadData()
