@@ -77,6 +77,7 @@ class RegLoginViewController: BaseViewController {
             
             Defaults["email"] = self.emailTF.text
             Defaults["shouldAutoLogin"] = true
+            Defaults["shouldTypeLoginInfo"] = false;
             
             SSKeychain.setPassword(self.passwordTF.text, forService: kTomoService, account: self.emailTF.text)
             
@@ -116,6 +117,11 @@ class RegLoginViewController: BaseViewController {
         })
     }
     func loginCheck(result: Dictionary<String, AnyObject>){
+        Util.showMessage("ログイン")
+//        if Defaults["shouldTypeLoginInfo"].bool == true {
+//            Util.showInfo("Tomoid、またパスワードが変更されましたため、ご入力ください。")
+//            return;
+//        }
         for tf in tfs {
             tf.resignFirstResponder()
         }
@@ -124,17 +130,16 @@ class RegLoginViewController: BaseViewController {
                 if let err = error{
                     Util.showError(err)
                 } else {
+                    Util.dismissHUD()
                     if let user = DBController.myUser() {//auto login
-                        Defaults["email"] = user.email
+                        Defaults["email"] = user.tomoid
                         Defaults["shouldAutoLogin"] = true
                     }
                     let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-                    
                     Util.changeRootViewController(from: self, to: tab)
                 }
             })
         }else{
-            Util.showMessage("登録")
             let password = NSUUID().UUIDString
             var tomoid = NSUUID().UUIDString
             if let openid = result["openid"] as? String ,type = result["type"] as? String {
@@ -150,8 +155,6 @@ class RegLoginViewController: BaseViewController {
                         if let error = error {
                             Util.showError(error)
                         }
-                        
-                        Util.showMessage("ログイン")
                         
                         if let preAccount = Defaults["email"].string where tomoid != preAccount {
                             DBController.clearDB()

@@ -96,8 +96,15 @@ extension ApiController {
             
             done(nil)
 
-        }) { (_, error) -> Void in
-            done(error)
+        }) { (res, error) -> Void in
+//            println(res.HTTPRequestOperation.response.statusCode )
+//            done(error)
+            if let response = res.HTTPRequestOperation.response {
+                var err:NSError = NSError(domain: error.domain, code: response.statusCode, userInfo: error.userInfo);
+                done(err)
+            }else{
+                done(error)
+            }
         }
     }
     

@@ -22,9 +22,14 @@ class LoadingViewController: BaseViewController {
             assert(NSThread.currentThread().isMainThread, "not main thread")
             
             if let error = error {
-                Defaults["shouldAutoLogin"] = false
-//                Util.showError(error)
-//                Util.showInfo("ユーザIDとパースワードを確かめて、もう一度ご入力ください。", maskType: .Clear)
+                if error.code == 400{
+                    //missing tomoid or password
+                }else if error.code == 401 {
+                    Defaults["shouldTypeLoginInfo"] = true;
+                    Defaults["shouldAutoLogin"] = false
+                }else{
+                    Util.showError(error)
+                }
                 let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
                 Util.changeRootViewController(from: self, to: main)
                 return

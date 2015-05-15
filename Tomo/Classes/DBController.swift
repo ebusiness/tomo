@@ -259,7 +259,7 @@ class DBController: NSObject {
             OpenidController.instance.registQQ()
         }
         
-        
+        Defaults["email"] = ""
         Defaults["shouldAutoLogin"] = false
         
         //remove device
