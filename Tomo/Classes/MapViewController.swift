@@ -116,7 +116,7 @@ extension MapViewController {
             if let users = users {
                 if users.count > 0 {
                     let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController
-                    vc.displayMode = .List
+                    vc.displayMode = .SearchResult
                     vc.users = users
                     self.navigationController?.pushViewController(vc, animated: true)
                     return

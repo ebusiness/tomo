@@ -24,27 +24,8 @@ class Group: _Group {
         isSticky = false
     }
     
-//    override func willSave() {
-//        super.willSave()
-//        for user in stickylist.array as! [User] {
-//            if user.id == Defaults["myId"].string {
-//                isSticky = true
-//                return
-//            }
-//        }
-//        
-//        isSticky = false
-//    }
+    func isMyGroup() -> Bool {
+        return owner?.id == Defaults["myId"].string
+    }
     
-//    var isSticky: Bool {
-//        get {
-//            for user in stickylist.array as! [User] {
-//                if user.id == Defaults["myId"].string {
-//                    return true
-//                }
-//            }
-//            
-//            return false
-//        }
-//    }
 }

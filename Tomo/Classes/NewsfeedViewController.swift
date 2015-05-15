@@ -398,8 +398,9 @@ extension NewsfeedViewController: GroupPostsHeaderCellDelegate {
     
     func didTapMemberListOfGroupPostsHeaderCell(cell: GroupPostsHeaderCell) {
         let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController
-        vc.displayMode = .List
+        vc.displayMode = .GroupMember
         vc.users = cell.group.participants.array as! [User]
+        vc.group = cell.group
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

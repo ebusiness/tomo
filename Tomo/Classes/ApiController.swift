@@ -679,6 +679,29 @@ extension ApiController {
                 done(error)
         }
     }
+    
+    //删除
+    class func expelGroup(groupId: String,userIds: [String], done: (NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        
+        for i in 0..<userIds.count {
+            param["expeled[\(i)]"] = userIds[i]
+        }
+        
+        RKObjectManager.sharedManager().patchObject(nil, path: "/groups/\(groupId)/expel", parameters: param, success: { (_, mappingResult) -> Void in
+            if let group = mappingResult.firstObject as? Group {
+                group.section = GroupSection.MyGroup.rawValue
+                group.setSticky()
+                DBController.save(done: { () -> Void in
+                    done(nil)
+                })
+            } else {
+                done(nil)
+            }
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
 }
 
 // MARK: - Station
@@ -879,6 +902,7 @@ extension ApiController {
         addCommonResponseDescriptor(getGroupMapping(true,true), method: .PATCH, pathPattern: "/mobile/groups/:gid/:sub/:onoff", keyPath: nil, statusCodes: nil)
         //        addCommonResponseDescriptor(getSectionedGroupMapping(), method: .GET, pathPattern: "/mobile/group", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getGroupMapping(false,false), method: .GET, pathPattern: "/mobile/stations/groups", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getGroupMapping(true,true), method: .PATCH, pathPattern: "/groups/:id/expel", keyPath: nil, statusCodes: nil)
         
         //駅
         addCommonResponseDescriptor(getStationMapping(false), method: .GET, pathPattern: "/mobile/stations", keyPath: nil, statusCodes: nil)

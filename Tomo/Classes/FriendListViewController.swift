@@ -9,7 +9,7 @@
 import UIKit
 
 enum FriendListDisplayMode {
-    case Chat, List
+    case Chat, SearchResult, GroupMember
 }
 
 class FriendListViewController: BaseViewController {
@@ -19,13 +19,26 @@ class FriendListViewController: BaseViewController {
     var friendInvitedNotifications = [Notification]()
     var users = [User]()
 
+    var group: Group!
+    
     var displayMode = FriendListDisplayMode.Chat
+    
+    var deletedIds = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if displayMode != .Chat {
-            self.navigationItem.rightBarButtonItem = nil
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem()
+    }
+    
+    func rightBarButtonItem() -> UIBarButtonItem? {
+        switch displayMode {
+        case .Chat:
+            return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector())
+        case .SearchResult:
+            return nil
+        case .GroupMember:
+            return group.isMyGroup() ? editButtonItem() : nil
         }
     }
     
@@ -53,7 +66,29 @@ class FriendListViewController: BaseViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
+        if deletedIds.count > 0 {
+            //api
+            ApiController.expelGroup(group.id!, userIds: deletedIds, done: { (error) -> Void in
+                self.deletedIds.removeAll(keepCapacity: false)
+            })
+        }
+        
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    // MARK: - Action
+    
+    override func setEditing(editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        
+        tableView.setEditing(editing, animated: animated)
+        
+//        if !editing && deletedIds.count > 0 {
+//            //api
+//            ApiController.expelGroup(group.id!, userIds: deletedIds, done: { (error) -> Void in
+//                self.deletedIds.removeAll(keepCapacity: false)
+//            })
+//        }
     }
     
     // MARK: - Notification
@@ -151,7 +186,7 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
                 navigationController?.pushViewController(vc, animated: true)
             }
 
-            if displayMode == .List {
+            if displayMode == .SearchResult {
                 let vc = Util.createViewControllerWithIdentifier("AccountEditViewController", storyboardName: "Account") as! AccountEditViewController
                 vc.user = friend
                 vc.readOnlyMode = true
@@ -159,6 +194,20 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
             }
         }
 
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        let user = users[indexPath.row]
+        return user.id != Defaults["myId"].string
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            deletedIds.append(users[indexPath.row].id!)
+            
+            users.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        }
     }
 
 }
