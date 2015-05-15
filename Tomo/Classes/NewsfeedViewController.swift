@@ -133,10 +133,15 @@ class NewsfeedViewController: BaseViewController {
         
         //refresh group title
         if displayMode == .Group && !isMovingToParentViewController() {
-            collectionView.reloadSections(NSIndexSet(index: 0))
+            reloadHeaderSection()
         } else if displayMode == .Newsfeed {
             loadRemoteData()
         }
+    }
+    
+    func reloadHeaderSection() {
+        self.collectionView.reloadSections(NSIndexSet(index: 0))
+        navigationItem.rightBarButtonItem = rightBarButtonItem()
     }
     
     func loadRemoteData() {
@@ -387,7 +392,7 @@ extension NewsfeedViewController: GroupPostsHeaderCellDelegate {
     
     func joinBtnTapped() {
         ApiController.joinGroup(group!.id!, done: { (error) -> Void in
-            self.collectionView.reloadSections(NSIndexSet(index: 0))
+            self.reloadHeaderSection()
         })
     }
     

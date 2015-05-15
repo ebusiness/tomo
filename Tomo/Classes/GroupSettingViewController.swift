@@ -25,4 +25,9 @@ class GroupSettingViewController: BaseTableViewController {
         }
     }
     
+    @IBAction func leaveGroupBtnTapped(sender: AnyObject) {
+        ApiController.leaveGroup(group.id!, done: { (error) -> Void in
+            self.navigationController?.popViewControllerAnimated(true)
+        })
+    }
 }

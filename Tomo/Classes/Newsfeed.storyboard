@@ -301,7 +301,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="p8E-C6-47b">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection id="KoK-UH-gUo">
                                 <cells>
@@ -313,7 +313,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PkL-qh-dLg">
                                                     <rect key="frame" x="15" y="11" width="34" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V4J-Lv-wda">
@@ -328,6 +328,34 @@
                                                 <constraint firstItem="PkL-qh-dLg" firstAttribute="leading" secondItem="G5M-Zd-ZEh" secondAttribute="leading" constant="15" id="FO1-DK-a9j"/>
                                                 <constraint firstAttribute="centerY" secondItem="V4J-Lv-wda" secondAttribute="centerY" id="JkN-To-3en"/>
                                                 <constraint firstAttribute="centerY" secondItem="PkL-qh-dLg" secondAttribute="centerY" id="dKy-qs-uya"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="zPg-4s-llq">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="SV0-8Y-ikN">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SV0-8Y-ikN" id="Zd5-ex-nkd">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AZe-at-lvN">
+                                                    <rect key="frame" x="1" y="1" width="318" height="41"/>
+                                                    <state key="normal" title="退出">
+                                                        <color key="titleColor" red="1" green="0.20000000000000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="leaveGroupBtnTapped:" destination="pum-io-B0j" eventType="touchUpInside" id="3ta-AO-bDX"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="AZe-at-lvN" secondAttribute="trailing" constant="1" id="ASb-xs-Znc"/>
+                                                <constraint firstItem="AZe-at-lvN" firstAttribute="top" secondItem="Zd5-ex-nkd" secondAttribute="top" constant="1" id="LNZ-8J-cxk"/>
+                                                <constraint firstItem="AZe-at-lvN" firstAttribute="leading" secondItem="Zd5-ex-nkd" secondAttribute="leading" constant="1" id="VNI-9U-mkm"/>
+                                                <constraint firstAttribute="bottom" secondItem="AZe-at-lvN" secondAttribute="bottom" constant="1" id="azj-1b-dm8"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
