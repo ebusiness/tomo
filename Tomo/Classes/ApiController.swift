@@ -342,6 +342,7 @@ extension ApiController {
                 done(nil, error)
         }
     }
+    
 }
 
 // MARK: - ユーザ情報
@@ -844,7 +845,7 @@ extension ApiController {
         //記事のコメントー＞削除
         addCommonResponseDescriptor(getCommoentMapping(true), method: .DELETE, pathPattern: "/posts/:id/comments/:cid", keyPath: nil, statusCodes: nil)
         //記事ー＞削除
-        addCommonResponseDescriptor(getPostMapping(true), method: .DELETE, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
+//        addCommonResponseDescriptor(getPostMapping(true), method: .DELETE, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
         //記事ー＞詳細
         addCommonResponseDescriptor(getPostMapping(false), method: .GET, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getPostMapping(false), method: .GET, pathPattern: "/groups/:id/posts", keyPath: nil, statusCodes: nil)

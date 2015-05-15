@@ -27,13 +27,15 @@ class NewsfeedViewController: BaseViewController {
     var group: Group?
     var stationCondition: Dictionary<String, String>?
     
+    var postForDelete: Post?
+    
     func isHeaderSection(section: Int) -> Bool {
         return displayMode == .Group && section == 0
     }
     
     var count: Int! {
         switch displayMode {
-        case .Newsfeed:
+        case .Newsfeed, .Account:
             return frc.fetchedObjects?.count ?? 0
         default:
             return posts.count
@@ -44,7 +46,7 @@ class NewsfeedViewController: BaseViewController {
     
     func postAtIndexPath(indexPath: NSIndexPath) -> Post {
         switch displayMode {
-        case .Newsfeed:
+        case .Newsfeed, .Account:
             return frc.objectAtIndexPath(indexPath) as! Post
         default:
             return posts[indexPath.row]
@@ -72,6 +74,13 @@ class NewsfeedViewController: BaseViewController {
         
         loadLocalDataOrRemote()
         
+        if displayMode == .Account {
+            let lpgr = UILongPressGestureRecognizer(target: self, action: Selector("handleLongPress:"))
+            lpgr.minimumPressDuration = 1
+            lpgr.delegate = self
+            collectionView.addGestureRecognizer(lpgr)
+        }
+        
         collectionView.registerNib(UINib(nibName: "NewsfeedCell", bundle: nil), forCellWithReuseIdentifier: "NewsfeedCell")
         
         setupLayout()
@@ -85,7 +94,13 @@ class NewsfeedViewController: BaseViewController {
         case .Newsfeed:
             frc = DBController.newsfeeds()
             frc.delegate = self
-        case .Account, .User:
+        case .Account:
+            frc = DBController.myPosts()
+            frc.delegate = self
+            
+            ApiController.getPostOfUser(user!.id!, done: { (posts, error) -> Void in
+            })
+        case .User:
             ApiController.getPostOfUser(user!.id!, done: { (posts, error) -> Void in
                 if posts != nil {
                     self.posts = posts!
@@ -179,6 +194,39 @@ class NewsfeedViewController: BaseViewController {
         vc.group = group
         
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func handleLongPress(ges: UILongPressGestureRecognizer) {
+        if ges.state == .Cancelled {
+            return
+        }
+        
+        let point = ges.locationInView(collectionView)
+        if let indexPath = collectionView.indexPathForItemAtPoint(point) {
+            postForDelete = frc.objectAtIndexPath(indexPath) as? Post
+            
+            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+            let delAction = UIAlertAction(title: "削除", style: .Destructive, handler: { (action) -> Void in
+                if let post = self.postForDelete {
+                    post.MR_deleteEntity()
+                    DBController.save()
+                    
+                    //call api
+                    ApiController.postDelete(post.id!, done: { (_) -> Void in
+                        
+                    })
+                }
+            })
+
+            let cancelAction = UIAlertAction(title: "キャンセル", style: .Cancel, handler: { (action) -> Void in
+                
+            })
+            
+            alertController.addAction(delAction)
+            alertController.addAction(cancelAction)
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
 }
 
@@ -318,6 +366,12 @@ extension NewsfeedViewController: NSFetchedResultsControllerDelegate {
             if insertedItems?.count > 0 {
                 self.collectionView.insertItemsAtIndexPaths(insertedItems!)
             }
+            
+            let deleteItems = self.objectChanges[.Delete]
+            if deleteItems?.count > 0 {
+                self.collectionView.deleteItemsAtIndexPaths(deleteItems!)
+            }
+            
         }, completion: nil)
     }
 }
@@ -362,4 +416,11 @@ extension NewsfeedViewController: UIImagePickerControllerDelegate, UINavigationC
             self.presentViewController(vcNavi, animated: true, completion: nil)
         })
     }
+}
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension NewsfeedViewController: UIGestureRecognizerDelegate {
+    
+    
 }

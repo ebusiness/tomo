@@ -169,6 +169,8 @@ class AccountEditViewController: BaseTableViewController {
         if indexPath.section == 1 && indexPath.row == 0 {
             let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
             vc.user = user
+            vc.displayMode = .Account
+            
             if readOnlyMode {
                 vc.displayMode = .User
             }
