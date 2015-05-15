@@ -23,6 +23,7 @@ class GroupPostsHeaderCell: UICollectionViewCell {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var userCountLabel: UILabel!
     @IBOutlet weak var joinBtn: UIButton!
+    @IBOutlet weak var settingBtn: UIButton!
     
     weak var delegate: GroupPostsHeaderCellDelegate?
     
@@ -47,6 +48,8 @@ class GroupPostsHeaderCell: UICollectionViewCell {
             userCountLabel.addGestureRecognizer(ges)
             
             joinBtn.hidden = group.section == GroupSection.MyGroup.rawValue
+            
+            settingBtn.hidden = group.section != GroupSection.MyGroup.rawValue
         }
     }
     
@@ -80,6 +83,10 @@ class GroupPostsHeaderCell: UICollectionViewCell {
     
     @IBAction func joinBtnTapped(sender: AnyObject) {
         delegate?.joinBtnTapped()
+    }
+    
+    @IBAction func settingBtnTapped(sender: AnyObject) {
+        
     }
     
     func cellOfView(view: UIView) -> GroupPostsHeaderCell {

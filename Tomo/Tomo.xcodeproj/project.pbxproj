@@ -134,6 +134,7 @@
 		297163B41AEA11CC005EA9C0 /* S3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295272CF1AD51B2300FC7833 /* S3.swift */; };
 		297163B61AEA23BF005EA9C0 /* GroupHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 297163B51AEA23BF005EA9C0 /* GroupHeaderView.xib */; };
 		297163B81AEA2422005EA9C0 /* GroupHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297163B71AEA2422005EA9C0 /* GroupHeaderView.swift */; };
+		2978F5651B05C08000236EA3 /* GroupSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2978F5641B05C08000236EA3 /* GroupSettingViewController.swift */; };
 		2987F1E01AD77FE200AA39CE /* Message.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2987F1DF1AD77FE200AA39CE /* Message.storyboard */; };
 		2987F1E41AD79D0500AA39CE /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1E31AD79D0500AA39CE /* Chat.swift */; };
 		2987F1E91AD79D1A00AA39CE /* _Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1E71AD79D1A00AA39CE /* _Chat.swift */; };
@@ -297,6 +298,7 @@
 		296D8BCD1B004C6B0058D400 /* MessageGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageGroupViewController.swift; path = Classes/MessageGroupViewController.swift; sourceTree = "<group>"; };
 		297163B51AEA23BF005EA9C0 /* GroupHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupHeaderView.xib; path = Classes/GroupHeaderView.xib; sourceTree = "<group>"; };
 		297163B71AEA2422005EA9C0 /* GroupHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupHeaderView.swift; path = Classes/GroupHeaderView.swift; sourceTree = "<group>"; };
+		2978F5641B05C08000236EA3 /* GroupSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupSettingViewController.swift; path = Classes/GroupSettingViewController.swift; sourceTree = "<group>"; };
 		2987F1DF1AD77FE200AA39CE /* Message.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Message.storyboard; path = Classes/Message.storyboard; sourceTree = "<group>"; };
 		2987F1E31AD79D0500AA39CE /* Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		2987F1E71AD79D1A00AA39CE /* _Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Chat.swift; sourceTree = "<group>"; };
@@ -535,6 +537,7 @@
 				298C3B441AE8EF2F0011009D /* GroupAddTableViewController.swift */,
 				297163B71AEA2422005EA9C0 /* GroupHeaderView.swift */,
 				299567901AEF2FAE00F168AA /* GroupPostsHeaderCell.swift */,
+				2978F5641B05C08000236EA3 /* GroupSettingViewController.swift */,
 			);
 			name = "グループ";
 			sourceTree = "<group>";
@@ -1006,6 +1009,7 @@
 				29B00A6E1AE0A947002AF208 /* FriendInvitedCell.swift in Sources */,
 				29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */,
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
+				2978F5651B05C08000236EA3 /* GroupSettingViewController.swift in Sources */,
 				29A5D1D91ACBE01700D95B77 /* RegPageView.swift in Sources */,
 				17B993131AF36CB200204E97 /* Openids.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,

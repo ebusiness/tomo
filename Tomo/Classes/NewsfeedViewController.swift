@@ -160,6 +160,11 @@ class NewsfeedViewController: BaseViewController {
             let vc = segue.destinationViewController as! PostDetailViewController
             vc.postId = sender as! String
         }
+        
+        if segue.identifier == "SegueGroupSetting" {
+            let vc = segue.destinationViewController as! GroupSettingViewController
+            vc.group = group
+        }
     }
     
     // MARK: - Action

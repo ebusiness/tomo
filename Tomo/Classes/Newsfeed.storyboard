@@ -80,12 +80,28 @@
                                                                     <color key="textColor" red="0.72941176470000002" green="0.72941176470000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kX8-Oc-h2N">
+                                                                    <rect key="frame" x="259" y="47" width="25" height="25"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="25" id="0R1-vr-gfb"/>
+                                                                        <constraint firstAttribute="height" constant="25" id="O5M-2J-BqB"/>
+                                                                    </constraints>
+                                                                    <state key="normal" image="tab_setting">
+                                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="settingBtnTapped:" destination="t8y-sl-yLg" eventType="touchUpInside" id="Zdz-QJ-9Ki"/>
+                                                                        <segue destination="pum-io-B0j" kind="push" identifier="SegueGroupSetting" id="tle-3X-FEY"/>
+                                                                    </connections>
+                                                                </button>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
                                                                 <constraint firstItem="s8n-tn-hiV" firstAttribute="leading" secondItem="jQu-jG-0qb" secondAttribute="trailing" constant="12" id="0BF-Jy-e4m"/>
                                                                 <constraint firstItem="jQu-jG-0qb" firstAttribute="centerY" secondItem="s8n-tn-hiV" secondAttribute="centerY" id="4NW-As-IfY"/>
+                                                                <constraint firstAttribute="trailing" secondItem="kX8-Oc-h2N" secondAttribute="trailing" constant="8" id="6d5-qK-vV6"/>
                                                                 <constraint firstItem="jQu-jG-0qb" firstAttribute="top" secondItem="zPk-Ig-bek" secondAttribute="bottom" constant="4" id="CX1-6o-ZAo"/>
+                                                                <constraint firstAttribute="bottom" secondItem="kX8-Oc-h2N" secondAttribute="bottom" constant="8" id="Dov-4f-vBJ"/>
                                                                 <constraint firstAttribute="bottom" secondItem="dQl-Ti-QFk" secondAttribute="bottom" id="Ehe-vb-P9f"/>
                                                                 <constraint firstItem="dQl-Ti-QFk" firstAttribute="leading" secondItem="pqL-l1-Clx" secondAttribute="leading" id="Iz1-RQ-B84"/>
                                                                 <constraint firstItem="jQu-jG-0qb" firstAttribute="leading" secondItem="dQl-Ti-QFk" secondAttribute="trailing" constant="12" id="Jqq-TY-QO5"/>
@@ -138,6 +154,7 @@
                                             <outlet property="groupImageView" destination="dQl-Ti-QFk" id="dtJ-wU-lDd"/>
                                             <outlet property="joinBtn" destination="ETj-k3-0oR" id="AfQ-wn-e5n"/>
                                             <outlet property="nameLabel" destination="zPk-Ig-bek" id="lqw-cD-Z7v"/>
+                                            <outlet property="settingBtn" destination="kX8-Oc-h2N" id="pB8-3y-mWG"/>
                                             <outlet property="typeLabel" destination="jQu-jG-0qb" id="Y7M-yW-Dko"/>
                                             <outlet property="userCountLabel" destination="s8n-tn-hiV" id="b7A-sH-bio"/>
                                         </connections>
@@ -277,6 +294,60 @@
             </objects>
             <point key="canvasLocation" x="1039" y="172"/>
         </scene>
+        <!--Group Setting View Controller-->
+        <scene sceneID="CdQ-mQ-Npz">
+            <objects>
+                <tableViewController id="pum-io-B0j" customClass="GroupSettingViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="p8E-C6-47b">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="KoK-UH-gUo">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="9tM-0U-CBD">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9tM-0U-CBD" id="G5M-Zd-ZEh">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="通知" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PkL-qh-dLg">
+                                                    <rect key="frame" x="15" y="11" width="34" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V4J-Lv-wda">
+                                                    <rect key="frame" x="251" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="switchValueChanged:" destination="pum-io-B0j" eventType="valueChanged" id="XuN-NS-Duw"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="V4J-Lv-wda" secondAttribute="trailing" constant="20" id="Bjq-WC-w25"/>
+                                                <constraint firstItem="PkL-qh-dLg" firstAttribute="leading" secondItem="G5M-Zd-ZEh" secondAttribute="leading" constant="15" id="FO1-DK-a9j"/>
+                                                <constraint firstAttribute="centerY" secondItem="V4J-Lv-wda" secondAttribute="centerY" id="JkN-To-3en"/>
+                                                <constraint firstAttribute="centerY" secondItem="PkL-qh-dLg" secondAttribute="centerY" id="dKy-qs-uya"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="pum-io-B0j" id="HWs-rn-beB"/>
+                            <outlet property="delegate" destination="pum-io-B0j" id="bX3-Km-PjA"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Ue8-Vy-wTC"/>
+                    <connections>
+                        <outlet property="notificationSwitch" destination="V4J-Lv-wda" id="2M3-Pd-ypI"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dBU-If-PeS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="675" y="826"/>
+        </scene>
         <!--Comment Input View Controller-->
         <scene sceneID="IZd-Lg-nFj">
             <objects>
@@ -324,6 +395,7 @@
     </scenes>
     <resources>
         <image name="btn_32_white,6,6," width="6" height="34"/>
+        <image name="tab_setting" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
