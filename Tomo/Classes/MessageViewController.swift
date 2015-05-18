@@ -107,7 +107,9 @@ class MessageViewController: JSQMessagesViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        DBController.makeAllMessageRead(friend)
+        if friend != nil {
+            DBController.makeAllMessageRead(friend)
+        }
     }
     
     override func didReceiveMemoryWarning() {

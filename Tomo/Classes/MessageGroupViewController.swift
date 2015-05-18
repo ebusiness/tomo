@@ -19,6 +19,8 @@ class MessageGroupViewController: MessageViewController {
     }
 
     override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
         DBController.makeAllMessageGroupRead(group)
     }
     
