@@ -186,7 +186,7 @@
                     <navigationItem key="navigationItem" id="MGn-Yk-czp">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="jgR-H7-cTG">
                             <connections>
-                                <segue destination="IXA-2R-K43" kind="push" id="klR-Ev-cLW"/>
+                                <segue destination="IXA-2R-K43" kind="push" identifier="SegueAddFriend" id="klR-Ev-cLW"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

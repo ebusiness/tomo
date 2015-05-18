@@ -19,7 +19,7 @@ class FriendListViewController: BaseViewController {
     var friendInvitedNotifications = [Notification]()
     var users = [User]()
 
-    var group: Group!
+    var group: Group?
     
     var displayMode = FriendListDisplayMode.Chat
     
@@ -34,11 +34,11 @@ class FriendListViewController: BaseViewController {
     func rightBarButtonItem() -> UIBarButtonItem? {
         switch displayMode {
         case .Chat:
-            return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector())
+            return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector("addFriend"))
         case .SearchResult:
             return nil
         case .GroupMember:
-            return group.isMyGroup() ? editButtonItem() : nil
+            return group!.isMyGroup() ? editButtonItem() : nil
         }
     }
     
@@ -68,7 +68,7 @@ class FriendListViewController: BaseViewController {
         
         if deletedIds.count > 0 {
             //api
-            ApiController.expelGroup(group.id!, userIds: deletedIds, done: { (error) -> Void in
+            ApiController.expelGroup(group!.id!, userIds: deletedIds, done: { (error) -> Void in
                 self.deletedIds.removeAll(keepCapacity: false)
             })
         }
@@ -77,6 +77,10 @@ class FriendListViewController: BaseViewController {
     }
     
     // MARK: - Action
+    
+    func addFriend() {
+        performSegueWithIdentifier("SegueAddFriend", sender: nil)
+    }
     
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
@@ -172,7 +176,8 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
         if indexPath.section == 1 {
             let friend = users[indexPath.row]
             
-            if displayMode == .Chat {
+            switch displayMode {
+            case .Chat:
                 DBController.makeAllMessageRead(friend)
                 if let cell = tableView.cellForRowAtIndexPath(indexPath) as? RecentlyFriendCell {
                     cell.clearBadge()
@@ -180,13 +185,12 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
                 (self.navigationController?.tabBarController as? TabBarController)?.updateBadgeNumber()
                 
                 let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: "Message") as! MessageViewController
-
+                
                 vc.friend = friend
                 
                 navigationController?.pushViewController(vc, animated: true)
-            }
-
-            if displayMode == .SearchResult {
+            
+            case .SearchResult, .GroupMember:
                 let vc = Util.createViewControllerWithIdentifier("AccountEditViewController", storyboardName: "Account") as! AccountEditViewController
                 vc.user = friend
                 vc.readOnlyMode = true
@@ -197,6 +201,14 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if let group = group {
+            if !group.isMyGroup() {
+                return false
+            }
+        } else {
+            return false
+        }
+        
         let user = users[indexPath.row]
         return user.id != Defaults["myId"].string
     }
