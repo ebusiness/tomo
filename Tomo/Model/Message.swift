@@ -23,6 +23,10 @@ extension Message: JSQMessageData {
     }
     
     func isMediaMessage() -> Bool {
+        if let content = content where content.hasPrefix(imageMessagePrefix) {
+            return true
+        }
+    
         return false
     }
     
@@ -34,4 +38,10 @@ extension Message: JSQMessageData {
         return UInt(bitPattern: hash)
     }
     
+//    func media() -> JSQMessageMediaData! {
+//        if let content = content {
+//            content.substringFromIndex(content.rangeOfString(<#aString: String#>, options: <#NSStringCompareOptions#>, range: <#Range<String.Index>?#>, locale: <#NSLocale?#>))
+//        }
+//        JSQPhotoMediaItem(image: <#UIImage!#>)
+//    }
 }

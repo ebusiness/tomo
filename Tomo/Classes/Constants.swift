@@ -39,6 +39,8 @@ let kBirthdayMax = NSDate()
 
 let kNotificationGotNewMessage = "kNotificationGotNewMessage"
 
+let imageMessagePrefix = "[画像]"
+
 class Constants: NSObject {
    
     class func postPath(#fileName: String) -> String {
@@ -53,5 +55,13 @@ class Constants: NSObject {
     
     class func groupCoverPath(#groupId: String, fileName: String) -> String {
         return "/groups/\(groupId)/cover/\(fileName)"
+    }
+    
+    class func messageImagePath(#fileName: String) -> String {
+        return "/messages/images/\(fileName)"
+    }
+    
+    class func imageMessage(#fileName: String) -> String {
+        return "\(imageMessagePrefix)\(fileName)"
     }
 }

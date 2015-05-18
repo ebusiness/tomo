@@ -129,7 +129,15 @@ class MessageViewController: JSQMessagesViewController {
 //        loadMessages()
 //    }
     
-    func sendImage() {
+    // MARK: - Notification
+    
+//    func gotNewMessage() {
+//        loadMessages()
+//    }
+    
+    // MARK: - JSQMessagesViewController method overrides
+    
+    override func didPressAccessoryButton(sender: UIButton!) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         let cameraAction = UIAlertAction(title: "写真を撮る", style: .Default, handler: { (action) -> Void in
             let picker = UIImagePickerController()
@@ -156,14 +164,6 @@ class MessageViewController: JSQMessagesViewController {
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
-    // MARK: - Notification
-    
-//    func gotNewMessage() {
-//        loadMessages()
-//    }
-    
-    // MARK: - JSQMessagesViewController method overrides
-    
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
         sendMessage(text)
     }
@@ -175,7 +175,7 @@ class MessageViewController: JSQMessagesViewController {
         
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
         
-         ApiController.sendMessage(nil, to: [friend.id!], content: text)
+        ApiController.sendMessage(nil, to: [friend.id!], content: text)
     }
     
     // MARK: - Navigation
@@ -370,6 +370,50 @@ extension MessageViewController: NSFetchedResultsControllerDelegate {
 
 extension MessageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        
+        if picker.sourceType == .Camera {
+            let orgImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+            UIImageWriteToSavedPhotosAlbum(orgImage, nil, nil, nil)
+            
+            var editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
+            
+            let name = NSUUID().UUIDString
+            let path = NSTemporaryDirectory() + name
+            
+            editedImage = editedImage.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
+            
+            editedImage.saveToPath(path)
+            
+            sendMessage(Constants.imageMessage(fileName: name))
+            
+            S3Controller.uploadFile(name: name, localPath: path, remotePath: Constants.messageImagePath(fileName: name), done: { (error) -> Void in
+                println("done")
+                println(error)
+            })
+        }
     }
+    
+//    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+//        if picker.sourceType == .Camera {
+//            
+//        }
+//        let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
+//        
+//        let name = NSUUID().UUIDString
+//        let path = NSTemporaryDirectory() + name
+//        
+//        let newImage = image.normalizedImage()
+//        
+//        newImage.saveToPath(path)
+//        
+//        picker.dismissViewControllerAnimated(false, completion: { () -> Void in
+//            let vcNavi = Util.createViewControllerWithIdentifier(nil, storyboardName: "AddPost") as! UINavigationController
+//            
+//            let vc = vcNavi.topViewController as! AddPostViewController
+//            vc.imagePath = path
+//            self.presentViewController(vcNavi, animated: true, completion: nil)
+//        })
+//    }
 }

@@ -184,12 +184,11 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
                 }
                 (self.navigationController?.tabBarController as? TabBarController)?.updateBadgeNumber()
                 
-                let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: "Message") as! MessageViewController
+                let vc = MessageViewController()
                 
                 vc.friend = friend
-                
+
                 navigationController?.pushViewController(vc, animated: true)
-            
             case .SearchResult, .GroupMember:
                 let vc = Util.createViewControllerWithIdentifier("AccountEditViewController", storyboardName: "Account") as! AccountEditViewController
                 vc.user = friend
