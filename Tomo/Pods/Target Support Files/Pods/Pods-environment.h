@@ -36,6 +36,12 @@
 #define COCOAPODS_VERSION_MINOR_DXYTencentOpenAPI 3
 #define COCOAPODS_VERSION_PATCH_DXYTencentOpenAPI 0
 
+// FCFileManager
+#define COCOAPODS_POD_AVAILABLE_FCFileManager
+#define COCOAPODS_VERSION_MAJOR_FCFileManager 1
+#define COCOAPODS_VERSION_MINOR_FCFileManager 0
+#define COCOAPODS_VERSION_PATCH_FCFileManager 7
+
 // ISO8601DateFormatterValueTransformer
 #define COCOAPODS_POD_AVAILABLE_ISO8601DateFormatterValueTransformer
 #define COCOAPODS_VERSION_MAJOR_ISO8601DateFormatterValueTransformer 0

@@ -78,8 +78,32 @@
 		2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901351C1AC3A90C00BBFE29 /* Constants.swift */; };
 		290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144161ADF6D890048F3D8 /* MapViewController.swift */; };
 		2901441A1ADF983E0048F3D8 /* RegSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144191ADF983E0048F3D8 /* RegSignUpViewController.swift */; };
-		2901441C1ADFA1AB0048F3D8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901441B1ADFA1AB0048F3D8 /* String.swift */; };
 		290177221AE635F8009C7472 /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290177211AE635F8009C7472 /* GroupCell.swift */; };
+		2908430B1B09C9140037A6CD /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290842FC1B09C9140037A6CD /* Array.swift */; };
+		2908430C1B09C9140037A6CD /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290842FD1B09C9140037A6CD /* Bool.swift */; };
+		2908430D1B09C9140037A6CD /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290842FE1B09C9140037A6CD /* Character.swift */; };
+		2908430E1B09C9140037A6CD /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290842FF1B09C9140037A6CD /* Dictionary.swift */; };
+		2908430F1B09C9140037A6CD /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290843001B09C9140037A6CD /* Double.swift */; };
+		290843101B09C9140037A6CD /* ExSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290843021B09C9140037A6CD /* ExSwift.swift */; };
+		290843111B09C9140037A6CD /* Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290843031B09C9140037A6CD /* Float.swift */; };
+		290843121B09C9140037A6CD /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 290843041B09C9140037A6CD /* Info.plist */; };
+		290843131B09C9140037A6CD /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290843051B09C9140037A6CD /* Int.swift */; };
+		290843141B09C9140037A6CD /* NSArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290843061B09C9140037A6CD /* NSArray.swift */; };
+		290843161B09C9140037A6CD /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290843081B09C9140037A6CD /* Range.swift */; };
+		290843171B09C9140037A6CD /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290843091B09C9140037A6CD /* Sequence.swift */; };
+		290843181B09C9140037A6CD /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2908430A1B09C9140037A6CD /* String.swift */; };
+		290843191B09CA310037A6CD /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290842FC1B09C9140037A6CD /* Array.swift */; };
+		2908431A1B09CA340037A6CD /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290842FD1B09C9140037A6CD /* Bool.swift */; };
+		2908431B1B09CA370037A6CD /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290842FE1B09C9140037A6CD /* Character.swift */; };
+		2908431C1B09CA390037A6CD /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290842FF1B09C9140037A6CD /* Dictionary.swift */; };
+		2908431D1B09CA3C0037A6CD /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290843001B09C9140037A6CD /* Double.swift */; };
+		2908431E1B09CA400037A6CD /* ExSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290843021B09C9140037A6CD /* ExSwift.swift */; };
+		2908431F1B09CA420037A6CD /* Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290843031B09C9140037A6CD /* Float.swift */; };
+		290843201B09CA450037A6CD /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290843051B09C9140037A6CD /* Int.swift */; };
+		290843211B09CA470037A6CD /* NSArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290843061B09C9140037A6CD /* NSArray.swift */; };
+		290843221B09CA4B0037A6CD /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290843081B09C9140037A6CD /* Range.swift */; };
+		290843231B09CA4D0037A6CD /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290843091B09C9140037A6CD /* Sequence.swift */; };
+		290843241B09CA4F0037A6CD /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2908430A1B09C9140037A6CD /* String.swift */; };
 		291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */; };
 		291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF941AD229B3009D8BE3 /* CommentCell.swift */; };
 		291ADF961AD247C4009D8BE3 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
@@ -106,6 +130,7 @@
 		295272D01AD51B2300FC7833 /* S3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295272CF1AD51B2300FC7833 /* S3.swift */; };
 		295272D21AD60D9300FC7833 /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 295272D11AD60D9300FC7833 /* Debug.storyboard */; };
 		295272DA1AD6155300FC7833 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295272D91AD6155300FC7833 /* FriendListViewController.swift */; };
+		295721FA1B09EE470041A108 /* GCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994AF901B019AA100656C39 /* GCD.swift */; };
 		296040401ACE46E000D2A338 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901351C1AC3A90C00BBFE29 /* Constants.swift */; };
 		296040411ACE476B00D2A338 /* ApiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134F71AC39F4600BBFE29 /* ApiController.swift */; };
 		2960404C1ACE68C500D2A338 /* TestDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404B1ACE68C500D2A338 /* TestDataTests.swift */; };
@@ -249,6 +274,21 @@
 		290144191ADF983E0048F3D8 /* RegSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegSignUpViewController.swift; path = Classes/RegSignUpViewController.swift; sourceTree = "<group>"; };
 		2901441B1ADFA1AB0048F3D8 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		290177211AE635F8009C7472 /* GroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCell.swift; path = Classes/GroupCell.swift; sourceTree = "<group>"; };
+		290842FC1B09C9140037A6CD /* Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		290842FD1B09C9140037A6CD /* Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bool.swift; sourceTree = "<group>"; };
+		290842FE1B09C9140037A6CD /* Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		290842FF1B09C9140037A6CD /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
+		290843001B09C9140037A6CD /* Double.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		290843011B09C9140037A6CD /* ExSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExSwift.h; sourceTree = "<group>"; };
+		290843021B09C9140037A6CD /* ExSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExSwift.swift; sourceTree = "<group>"; };
+		290843031B09C9140037A6CD /* Float.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Float.swift; sourceTree = "<group>"; };
+		290843041B09C9140037A6CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		290843051B09C9140037A6CD /* Int.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
+		290843061B09C9140037A6CD /* NSArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSArray.swift; sourceTree = "<group>"; };
+		290843071B09C9140037A6CD /* NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDate.swift; sourceTree = "<group>"; };
+		290843081B09C9140037A6CD /* Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Range.swift; sourceTree = "<group>"; };
+		290843091B09C9140037A6CD /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
+		2908430A1B09C9140037A6CD /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailViewController.swift; path = Classes/PostDetailViewController.swift; sourceTree = "<group>"; };
 		291ADF941AD229B3009D8BE3 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentCell.swift; path = Classes/CommentCell.swift; sourceTree = "<group>"; };
 		291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailHeaderView.swift; path = Classes/PostDetailHeaderView.swift; sourceTree = "<group>"; };
@@ -525,6 +565,29 @@
 			name = "マップ";
 			sourceTree = "<group>";
 		};
+		290842FB1B09C9140037A6CD /* ExSwift */ = {
+			isa = PBXGroup;
+			children = (
+				290842FC1B09C9140037A6CD /* Array.swift */,
+				290842FD1B09C9140037A6CD /* Bool.swift */,
+				290842FE1B09C9140037A6CD /* Character.swift */,
+				290842FF1B09C9140037A6CD /* Dictionary.swift */,
+				290843001B09C9140037A6CD /* Double.swift */,
+				290843011B09C9140037A6CD /* ExSwift.h */,
+				290843021B09C9140037A6CD /* ExSwift.swift */,
+				290843031B09C9140037A6CD /* Float.swift */,
+				290843041B09C9140037A6CD /* Info.plist */,
+				290843051B09C9140037A6CD /* Int.swift */,
+				290843061B09C9140037A6CD /* NSArray.swift */,
+				290843071B09C9140037A6CD /* NSDate.swift */,
+				290843081B09C9140037A6CD /* Range.swift */,
+				290843091B09C9140037A6CD /* Sequence.swift */,
+				2908430A1B09C9140037A6CD /* String.swift */,
+			);
+			name = ExSwift;
+			path = ExSwift/ExSwift;
+			sourceTree = "<group>";
+		};
 		292B9CC61AE6012E00604986 /* グループ */ = {
 			isa = PBXGroup;
 			children = (
@@ -565,6 +628,7 @@
 		296040441ACE669900D2A338 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				290842FB1B09C9140037A6CD /* ExSwift */,
 				2994AF901B019AA100656C39 /* GCD.swift */,
 				17B992FE1AF353C200204E97 /* opencore-amr */,
 				2901441B1ADFA1AB0048F3D8 /* String.swift */,
@@ -855,6 +919,7 @@
 				178D649E1ACC0DDF00185368 /* MessageMapping.plist in Resources */,
 				29A1AFFA1AC414E900775765 /* PostMapping.plist in Resources */,
 				29A1B0061AC533A800775765 /* UserMapping.plist in Resources */,
+				290843121B09C9140037A6CD /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -958,9 +1023,11 @@
 			files = (
 				292B9CC51AE6012A00604986 /* GroupListViewController.swift in Sources */,
 				296D8BB31AFC5A250058D400 /* MessageViewController.swift in Sources */,
+				290843131B09C9140037A6CD /* Int.swift in Sources */,
 				29925BAA1AD6693F00F98BD7 /* Alamofire.swift in Sources */,
 				291ADF991AD24F7B009D8BE3 /* PostDetailHeaderView.swift in Sources */,
 				292B9CD01AE61C3F00604986 /* _Station.swift in Sources */,
+				290843101B09C9140037A6CD /* ExSwift.swift in Sources */,
 				2901441A1ADF983E0048F3D8 /* RegSignUpViewController.swift in Sources */,
 				29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */,
 				2987F1E41AD79D0500AA39CE /* Chat.swift in Sources */,
@@ -983,20 +1050,24 @@
 				298C3B3F1AE89DE60011009D /* StationSelectViewController.swift in Sources */,
 				1712BE4B1ACE5D0F000A9C47 /* _Comments.swift in Sources */,
 				292B9CD41AE61C4800604986 /* Station.swift in Sources */,
+				2908430D1B09C9140037A6CD /* Character.swift in Sources */,
 				295272DA1AD6155300FC7833 /* FriendListViewController.swift in Sources */,
 				296D8BB21AFC5A250058D400 /* FriendCell.swift in Sources */,
 				291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */,
 				290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */,
 				29C1DA7A1AD36659009A02CC /* S3Controller.swift in Sources */,
 				296D8BCE1B004C6B0058D400 /* MessageGroupViewController.swift in Sources */,
+				2908430F1B09C9140037A6CD /* Double.swift in Sources */,
 				1712BE381ACE183C000A9C47 /* _Images.swift in Sources */,
 				296D8BAE1AFC5A020058D400 /* LoadingViewController.swift in Sources */,
 				294EF0B01B01D54500A94A3F /* RadioButtonCell.swift in Sources */,
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
+				290843181B09C9140037A6CD /* String.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */,
 				1712BE2C1ACCE801000A9C47 /* _Group.swift in Sources */,
 				29DF4CD61AE0EDC4003A4962 /* _Notification.swift in Sources */,
+				2908430C1B09C9140037A6CD /* Bool.swift in Sources */,
 				298C3B431AE8B76F0011009D /* NewNotificationListViewController.swift in Sources */,
 				29B00A6E1AE0A947002AF208 /* FriendInvitedCell.swift in Sources */,
 				29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */,
@@ -1005,6 +1076,7 @@
 				29A5D1D91ACBE01700D95B77 /* RegPageView.swift in Sources */,
 				17B993131AF36CB200204E97 /* Openids.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
+				290843161B09C9140037A6CD /* Range.swift in Sources */,
 				2987F1ED1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m in Sources */,
 				2942CCD31ACCF761007CDC97 /* NewsfeedViewController.swift in Sources */,
 				1712BE421ACE413C000A9C47 /* Devices.swift in Sources */,
@@ -1016,24 +1088,28 @@
 				29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */,
 				29A1AFF71AC4113000775765 /* _Post.swift in Sources */,
 				2942CCD51ACD03BF007CDC97 /* NewsfeedCell.swift in Sources */,
-				2901441C1ADFA1AB0048F3D8 /* String.swift in Sources */,
+				2908430B1B09C9140037A6CD /* Array.swift in Sources */,
 				2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */,
 				291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */,
 				292B9CCC1AE61ACA00604986 /* StationTableViewController.swift in Sources */,
 				17B9931D1AF3712C00204E97 /* OpenidWXController.swift in Sources */,
 				291ADF9D1AD2654E009D8BE3 /* AddPostViewController.swift in Sources */,
+				290843141B09C9140037A6CD /* NSArray.swift in Sources */,
 				290135171AC3A78E00BBFE29 /* User.swift in Sources */,
 				29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */,
 				292B9CCF1AE61C3F00604986 /* _Line.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
 				17B993151AF36CBB00204E97 /* _Openids.swift in Sources */,
+				290843111B09C9140037A6CD /* Float.swift in Sources */,
 				298C3B451AE8EF2F0011009D /* GroupAddTableViewController.swift in Sources */,
 				29A8FA051AE776F200750A56 /* SearchInputViewController.swift in Sources */,
+				290843171B09C9140037A6CD /* Sequence.swift in Sources */,
 				295272D01AD51B2300FC7833 /* S3.swift in Sources */,
 				290177221AE635F8009C7472 /* GroupCell.swift in Sources */,
 				299567911AEF2FAE00F168AA /* GroupPostsHeaderCell.swift in Sources */,
 				296D8BBA1AFC5A4A0058D400 /* TextViewInputViewController.swift in Sources */,
 				178D64A21ACC10BE00185368 /* _Message.swift in Sources */,
+				2908430E1B09C9140037A6CD /* Dictionary.swift in Sources */,
 				290135121AC3A67200BBFE29 /* Model.xcdatamodeld in Sources */,
 				1712BE401ACE4135000A9C47 /* _Devices.swift in Sources */,
 				2987F1E91AD79D1A00AA39CE /* _Chat.swift in Sources */,
@@ -1050,8 +1126,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				290843211B09CA470037A6CD /* NSArray.swift in Sources */,
 				291ADF971AD24892009D8BE3 /* AFDateExtension.swift in Sources */,
 				296040411ACE476B00D2A338 /* ApiController.swift in Sources */,
+				2908431E1B09CA400037A6CD /* ExSwift.swift in Sources */,
 				17B993171AF36CC100204E97 /* Openids.swift in Sources */,
 				290135181AC3A78E00BBFE29 /* User.swift in Sources */,
 				1712BE441ACE4143000A9C47 /* _Devices.swift in Sources */,
@@ -1063,10 +1141,13 @@
 				292B9CD51AE6243200604986 /* Line.swift in Sources */,
 				29BE7E1C1AC54663008110B4 /* DBController.swift in Sources */,
 				17455E531AFAF65B0079F648 /* OpenidQQController.swift in Sources */,
+				290843221B09CA4B0037A6CD /* Range.swift in Sources */,
+				290843231B09CA4D0037A6CD /* Sequence.swift in Sources */,
 				1712BE3A1ACE195B000A9C47 /* _Images.swift in Sources */,
 				29A1AFF81AC4113000775765 /* _Post.swift in Sources */,
 				1712BE431ACE4140000A9C47 /* Devices.swift in Sources */,
 				2993894B1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
+				290843191B09CA310037A6CD /* Array.swift in Sources */,
 				297163B31AEA0F06005EA9C0 /* S3Controller.swift in Sources */,
 				297163B41AEA11CC005EA9C0 /* S3.swift in Sources */,
 				1712BE301ACCE819000A9C47 /* _Group.swift in Sources */,
@@ -1075,7 +1156,9 @@
 				292B9CD71AE6247100604986 /* _Line.swift in Sources */,
 				17EE9A2E1AFC815B00372134 /* OpenidSwitch.swift in Sources */,
 				17455E541AFAF65E0079F648 /* OpenidWXController.swift in Sources */,
+				290843241B09CA4F0037A6CD /* String.swift in Sources */,
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
+				2908431B1B09CA370037A6CD /* Character.swift in Sources */,
 				299389491AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				29DF4CD81AE0EFE5003A4962 /* _Notification.swift in Sources */,
 				1712BE391ACE1958000A9C47 /* Images.swift in Sources */,
@@ -1083,13 +1166,19 @@
 				29CA44151AD4C050009EB177 /* AppDelegate.swift in Sources */,
 				17B993161AF36CBE00204E97 /* _Openids.swift in Sources */,
 				1712BE4C1ACE5D12000A9C47 /* _Comments.swift in Sources */,
+				295721FA1B09EE470041A108 /* GCD.swift in Sources */,
+				2908431D1B09CA3C0037A6CD /* Double.swift in Sources */,
+				2908431C1B09CA390037A6CD /* Dictionary.swift in Sources */,
 				2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */,
 				1712BE491ACE5D05000A9C47 /* Comments.swift in Sources */,
 				292B9CD81AE6247400604986 /* _Station.swift in Sources */,
+				2908431A1B09CA340037A6CD /* Bool.swift in Sources */,
 				17455E521AFAF6590079F648 /* OpenidController.swift in Sources */,
 				29A1AFF51AC4112800775765 /* Post.swift in Sources */,
 				291ADF961AD247C4009D8BE3 /* Util.swift in Sources */,
+				2908431F1B09CA420037A6CD /* Float.swift in Sources */,
 				29DF4CD71AE0EFA2003A4962 /* Notification.swift in Sources */,
+				290843201B09CA450037A6CD /* Int.swift in Sources */,
 				292B9CD61AE6243500604986 /* Station.swift in Sources */,
 				172EADD01ACC1C850039F42E /* _Message.swift in Sources */,
 			);

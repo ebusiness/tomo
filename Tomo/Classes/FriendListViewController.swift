@@ -185,6 +185,7 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
                 (self.navigationController?.tabBarController as? TabBarController)?.updateBadgeNumber()
                 
                 let vc = MessageViewController()
+                vc.hidesBottomBarWhenPushed = true
                 
                 vc.friend = friend
 

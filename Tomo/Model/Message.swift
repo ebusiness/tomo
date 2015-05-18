@@ -38,10 +38,27 @@ extension Message: JSQMessageData {
         return UInt(bitPattern: hash)
     }
     
-//    func media() -> JSQMessageMediaData! {
-//        if let content = content {
-//            content.substringFromIndex(content.rangeOfString(<#aString: String#>, options: <#NSStringCompareOptions#>, range: <#Range<String.Index>?#>, locale: <#NSLocale?#>))
-//        }
-//        JSQPhotoMediaItem(image: <#UIImage!#>)
-//    }
+    func media() -> JSQMessageMediaData! {
+        if let content = content {
+            let name = content.substringFromIndex(advance(content.startIndex, imageMessagePrefix.length))
+            if FCFileManager.existsItemAtPath(name) {
+                let item = JSQPhotoMediaItem(image: UIImage(contentsOfFile: FCFileManager.urlForItemAtPath(name).path!))
+                item.appliesMediaViewMaskAsOutgoing = from?.id == Defaults["myId"].string
+                return item
+            } else {
+                download(.GET, Constants.imageFullPath(fileName: name), { (tempUrl, res) -> (NSURL) in
+                    gcd.async(.Main, closure: { () -> () in
+                        NSNotificationCenter.defaultCenter().postNotificationName("NotificationDownloadMediaDone", object: nil)
+                    })
+                    return FCFileManager.urlForItemAtPath(name)
+                })
+                
+                let item = JSQPhotoMediaItem(image: nil)
+                item.appliesMediaViewMaskAsOutgoing = from?.id == Defaults["myId"].string
+                return item
+            }
+        }
+        
+        return nil
+    }
 }

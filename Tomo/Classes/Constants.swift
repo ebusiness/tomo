@@ -20,6 +20,8 @@ let kTomoPushToken = "token.push.tomo"
     let SocketPort = "80"
 #endif
 
+let kS3BasePath = "https://s3-ap-northeast-1.amazonaws.com"
+
 let kAPIBaseURL = NSURL(string: kAPIBaseURLString)
 
 let MaxWidth = 500
@@ -63,5 +65,9 @@ class Constants: NSObject {
     
     class func imageMessage(#fileName: String) -> String {
         return "\(imageMessagePrefix)\(fileName)"
+    }
+    
+    class func imageFullPath(#fileName: String) -> String {
+        return kS3BasePath.stringByAppendingPathComponent(AmazonS3Bucket).stringByAppendingPathComponent(messageImagePath(fileName: fileName))
     }
 }

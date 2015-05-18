@@ -33,7 +33,7 @@ class MessageViewController: JSQMessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.senderId = me.id
         self.senderDisplayName = me.fullName()
         
@@ -104,12 +104,20 @@ class MessageViewController: JSQMessagesViewController {
     }
     */
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("downloadMediaDone"), name: "NotificationDownloadMediaDone", object: nil)
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
         if friend != nil {
             DBController.makeAllMessageRead(friend)
         }
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     override func didReceiveMemoryWarning() {
@@ -131,9 +139,9 @@ class MessageViewController: JSQMessagesViewController {
     
     // MARK: - Notification
     
-//    func gotNewMessage() {
-//        loadMessages()
-//    }
+    func downloadMediaDone() {
+        collectionView.reloadData()
+    }
     
     // MARK: - JSQMessagesViewController method overrides
     
@@ -203,12 +211,16 @@ extension MessageViewController: UICollectionViewDataSource {
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath) as! JSQMessagesCollectionViewCell
-        if outgoing(frc.objectAtIndexPath(indexPath) as! Message) {
-            cell.textView.textColor = UIColor.blackColor()
-        } else {
-            cell.textView.textColor = UIColor.whiteColor()
-        }
         
+        let message = frc.objectAtIndexPath(indexPath) as! Message
+        
+        if !message.isMediaMessage() {
+            if outgoing(message) {
+                cell.textView.textColor = UIColor.blackColor()
+            } else {
+                cell.textView.textColor = UIColor.whiteColor()
+            }
+        }
         return cell
     }
     
@@ -376,23 +388,24 @@ extension MessageViewController: UIImagePickerControllerDelegate, UINavigationCo
         if picker.sourceType == .Camera {
             let orgImage = info[UIImagePickerControllerOriginalImage] as! UIImage
             UIImageWriteToSavedPhotosAlbum(orgImage, nil, nil, nil)
-            
-            var editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
-            
-            let name = NSUUID().UUIDString
-            let path = NSTemporaryDirectory() + name
-            
-            editedImage = editedImage.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
-            
-            editedImage.saveToPath(path)
-            
-            sendMessage(Constants.imageMessage(fileName: name))
-            
-            S3Controller.uploadFile(name: name, localPath: path, remotePath: Constants.messageImagePath(fileName: name), done: { (error) -> Void in
-                println("done")
-                println(error)
-            })
         }
+        
+        var editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
+        
+        let name = NSUUID().UUIDString
+        let url = FCFileManager.urlForItemAtPath(name)
+        
+        editedImage = editedImage.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
+        
+        editedImage.saveToURL(url)
+        
+        sendMessage(Constants.imageMessage(fileName: name))
+        
+        S3Controller.uploadFile(name: name, localPath: url.path!, remotePath: Constants.messageImagePath(fileName: name), done: { (error) -> Void in
+            println("done")
+            println(error)
+        })
+
     }
     
 //    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {

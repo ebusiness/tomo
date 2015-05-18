@@ -19,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        window?.backgroundColor = UIColor.whiteColor()
+        
         ApiController.setup()
         
         if Defaults["email"].string != nil && Defaults["shouldAutoLogin"].bool == true {

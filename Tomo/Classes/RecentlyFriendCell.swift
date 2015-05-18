@@ -49,7 +49,12 @@ class RecentlyFriendCell: UITableViewCell {
         }
         
         if let message = DBController.lastMessage(friend) {
-            messageLabel.text = message.content
+            if message.isMediaMessage() {
+                messageLabel.text = imageMessagePrefix
+            } else {
+                messageLabel.text = message.content
+            }
+            
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateStyle = .ShortStyle
             if let date = message.createDate {

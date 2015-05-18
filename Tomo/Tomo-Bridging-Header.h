@@ -30,3 +30,6 @@
 #include "amrFileCodec.h"
 
 #import "JSBadgeView.h"
+
+#import "FCFileManager.h"
+#import "JSQPhotoMediaItem.h"

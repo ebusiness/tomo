@@ -200,7 +200,9 @@ class NewsfeedViewController: BaseViewController {
     }
     
     func groupChat() {
-        let vc = Util.createViewControllerWithIdentifier("MessageGroupViewController", storyboardName: "Message") as! MessageGroupViewController
+        let vc = MessageGroupViewController()
+        vc.hidesBottomBarWhenPushed = true
+        
         vc.group = group
         
         navigationController?.pushViewController(vc, animated: true)
