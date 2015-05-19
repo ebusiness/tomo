@@ -63,7 +63,13 @@ class DBController: NSObject {
         if let me = myUser() {
             var friends = me.friends.array as! [User]
             friends.sort({if let date1 = $0.createDate, let date2 = $1.createDate {
-                return date1.timeIntervalSinceNow > date2.timeIntervalSinceNow
+                let message1 = self.lastMessage($0)
+                let message2 = self.lastMessage($1)
+                if message1 == nil && message2 == nil {
+                    return date1.timeIntervalSinceNow > date2.timeIntervalSinceNow
+                }
+                
+                return message1?.createDate?.timeIntervalSinceNow > message2?.createDate?.timeIntervalSinceNow
                 }
                 
                 return false
