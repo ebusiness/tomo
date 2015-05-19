@@ -100,6 +100,8 @@ extension PostDetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+// MARK: - PostDetailHeaderViewDelegate
+
 extension PostDetailViewController: PostDetailHeaderViewDelegate {
     
     func commentBtnTapped() {
@@ -111,5 +113,32 @@ extension PostDetailViewController: PostDetailHeaderViewDelegate {
         vc.user = post.owner
         vc.readOnlyMode = true
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func imageViewTapped(imageView: UIImageView) {
+        showGalleryView(imageView)
+    }
+    
+    func showGalleryView(imageView: UIImageView) {
+        if let image = imageView.image {
+            let item = MHGalleryItem(image: image)
+            let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.ImageViewerNavigationBarShown)
+            gallery.galleryItems = [item]
+            gallery.presentingFromImageView = imageView
+            
+            gallery.UICustomization.useCustomBackButtonImageOnImageViewer = false
+            gallery.UICustomization.showOverView = false
+            gallery.UICustomization.showMHShareViewInsteadOfActivityViewController = false
+            
+            gallery.finishedCallback = { (currentIndex, image, transition, viewMode) -> Void in
+                gcd.async(.Main, closure: { () -> () in
+                    gallery.dismissViewControllerAnimated(true, dismissImageView: imageView, completion: { () -> Void in
+                    })
+                    
+                })
+            }
+            
+            presentMHGalleryController(gallery, animated: true, completion: nil)
+        }
     }
 }

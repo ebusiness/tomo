@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -51,11 +51,15 @@
                                 <constraint firstAttribute="centerY" secondItem="UOA-DK-Knx" secondAttribute="centerY" id="qQU-Ab-sl0"/>
                             </constraints>
                         </view>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VoW-oC-DGu">
+                        <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VoW-oC-DGu">
                             <rect key="frame" x="0.0" y="48" width="320" height="126"/>
+                            <gestureRecognizers/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="126" id="UjQ-hg-yzF"/>
                             </constraints>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="lO7-5m-gsq" appends="YES" id="ZfA-SX-RjA"/>
+                            </connections>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="88D-br-Mma">
                             <rect key="frame" x="8" y="182" width="304" height="20"/>
@@ -163,6 +167,11 @@
         <tapGestureRecognizer id="I6H-fl-bZo">
             <connections>
                 <action selector="avatarImageTapped:" destination="fB2-YK-11i" id="Zpl-XF-bYH"/>
+            </connections>
+        </tapGestureRecognizer>
+        <tapGestureRecognizer id="lO7-5m-gsq">
+            <connections>
+                <action selector="postImageViewTapped:" destination="fB2-YK-11i" id="NWg-Uh-G31"/>
             </connections>
         </tapGestureRecognizer>
     </objects>

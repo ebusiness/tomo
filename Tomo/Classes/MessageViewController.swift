@@ -384,16 +384,15 @@ extension MessageViewController: JSQMessagesCollectionViewDelegateFlowLayout {
                     gallery.UICustomization.showOverView = false
                     gallery.UICustomization.showMHShareViewInsteadOfActivityViewController = false
                     
-                    gallery.finishedCallback = { (currentIndex, image, transition, viewMode) -> Void in
-                        let cell = self.collectionView.cellForItemAtIndexPath(self.selectedIndexPath!) as!JSQMessagesCollectionViewCell
+                    gallery.finishedCallback = { [weak self] (currentIndex, image, transition, viewMode) -> Void in
+                        let cell = self!.collectionView.cellForItemAtIndexPath(self!.selectedIndexPath!) as!JSQMessagesCollectionViewCell
                         let imageView = cell.mediaView as! UIImageView
                         gcd.async(.Main, closure: { () -> () in
-                            gallery.dismissViewControllerAnimated(true, dismissImageView: imageView, completion: { () -> Void in
-                                self.automaticallyScrollsToMostRecentMessage = true
+                            gallery.dismissViewControllerAnimated(true, dismissImageView: imageView, completion: { [weak self] () -> Void in
+                                self!.automaticallyScrollsToMostRecentMessage = true
                             })
 
                         })
-                        
                     }
                     
                     self.automaticallyScrollsToMostRecentMessage = false
