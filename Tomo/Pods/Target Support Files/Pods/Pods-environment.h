@@ -66,6 +66,12 @@
 #define COCOAPODS_VERSION_MINOR_JSQSystemSoundPlayer 0
 #define COCOAPODS_VERSION_PATCH_JSQSystemSoundPlayer 1
 
+// MHVideoPhotoGallery
+#define COCOAPODS_POD_AVAILABLE_MHVideoPhotoGallery
+#define COCOAPODS_VERSION_MAJOR_MHVideoPhotoGallery 1
+#define COCOAPODS_VERSION_MINOR_MHVideoPhotoGallery 6
+#define COCOAPODS_VERSION_PATCH_MHVideoPhotoGallery 7
+
 // MagicalRecord
 #define COCOAPODS_POD_AVAILABLE_MagicalRecord
 #define COCOAPODS_VERSION_MAJOR_MagicalRecord 2
