@@ -21,7 +21,7 @@
             </objects>
             <point key="canvasLocation" x="315.19999999999999" y="169.45333333333332"/>
         </scene>
-        <!--Newsfeed View Controller-->
+        <!--現場Tomo-->
         <scene sceneID="6pv-4Q-PNE">
             <objects>
                 <viewController storyboardIdentifier="NewsfeedViewController" id="pQ2-07-Tsh" customClass="NewsfeedViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -173,7 +173,7 @@
                             <constraint firstItem="ZrA-dX-J4y" firstAttribute="leading" secondItem="szZ-nY-57x" secondAttribute="leading" id="nyn-9f-OPr"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="uKo-2v-h3N">
+                    <navigationItem key="navigationItem" title="現場Tomo" id="uKo-2v-h3N">
                         <barButtonItem key="rightBarButtonItem" systemItem="camera" id="dct-t8-x0i">
                             <connections>
                                 <action selector="addPostBtnTapped:" destination="pQ2-07-Tsh" id="qTU-aL-mnm"/>
