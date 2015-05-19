@@ -31,6 +31,8 @@ class MessageViewController: JSQMessagesViewController {
         return frc.fetchedObjects?.count ?? 0
     }
     
+    var selectedIndexPath: NSIndexPath?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -359,6 +361,47 @@ extension MessageViewController: JSQMessagesCollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAtIndexPath indexPath: NSIndexPath!) {
+        let message = frc.objectAtIndexPath(indexPath) as! Message
+        if message.isMediaMessage() {
+            showGalleryView(indexPath, message: message)
+        }
+    }
+    
+    func showGalleryView(indexPath: NSIndexPath, message: Message) {
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as? JSQMessagesCollectionViewCell
+        if let cell = cell {
+            let imageView = cell.mediaView as! UIImageView
+            
+            if message.media() is JSQPhotoMediaItem {
+                let item = message.media() as! JSQPhotoMediaItem
+                if let image = item.image {
+                    let item = MHGalleryItem(image: image)
+                    let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.ImageViewerNavigationBarShown)
+                    gallery.galleryItems = [item]
+                    gallery.presentingFromImageView = imageView
+                    
+                    gallery.UICustomization.useCustomBackButtonImageOnImageViewer = false
+                    gallery.UICustomization.showOverView = false
+                    gallery.UICustomization.showMHShareViewInsteadOfActivityViewController = false
+                    
+                    gallery.finishedCallback = { (currentIndex, image, transition, viewMode) -> Void in
+                        let cell = self.collectionView.cellForItemAtIndexPath(self.selectedIndexPath!) as!JSQMessagesCollectionViewCell
+                        let imageView = cell.mediaView as! UIImageView
+                        gcd.async(.Main, closure: { () -> () in
+                            gallery.dismissViewControllerAnimated(true, dismissImageView: imageView, completion: { () -> Void in
+                                self.automaticallyScrollsToMostRecentMessage = true
+                            })
+
+                        })
+                        
+                    }
+                    
+                    self.automaticallyScrollsToMostRecentMessage = false
+                    selectedIndexPath = indexPath
+                    presentMHGalleryController(gallery, animated: true, completion: nil)
+                }
+            }
+        }
     }
 }
 
