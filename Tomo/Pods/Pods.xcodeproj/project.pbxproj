@@ -4701,15 +4701,9 @@
 			baseConfigurationReference = 547CC8089F5502B05CC7BF95 /* Pods-JSBadgeView-Private.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-
-				GCC_PREFIX_HEADER = "Target Support Files/Pods-JSBadgeView/Pods-JSBadgeView-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-
 				GCC_PREFIX_HEADER = "Target Support Files/Pods-MZAppearance/Pods-MZAppearance-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
-
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4948,7 +4942,7 @@
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/Pods-MZFormSheetController/Pods-MZFormSheetController-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -5274,15 +5268,9 @@
 			baseConfigurationReference = 6AB957D452DA34081650DD14 /* Pods-UIColor-HexString-Private.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-
-				GCC_PREFIX_HEADER = "Target Support Files/Pods-UIColor-HexString/Pods-UIColor-HexString-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-
 				GCC_PREFIX_HEADER = "Target Support Files/Pods-MZAppearance/Pods-MZAppearance-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5394,15 +5382,9 @@
 			baseConfigurationReference = 9B5A290B8E9CA994FC426F2F /* Pods-SSKeychain-Private.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-
-				GCC_PREFIX_HEADER = "Target Support Files/Pods-SSKeychain/Pods-SSKeychain-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-
 				GCC_PREFIX_HEADER = "Target Support Files/Pods-MZFormSheetController/Pods-MZFormSheetController-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
