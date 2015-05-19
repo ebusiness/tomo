@@ -1120,11 +1120,8 @@
 				299567911AEF2FAE00F168AA /* GroupPostsHeaderCell.swift in Sources */,
 				296D8BBA1AFC5A4A0058D400 /* TextViewInputViewController.swift in Sources */,
 				178D64A21ACC10BE00185368 /* _Message.swift in Sources */,
-
 				2908430E1B09C9140037A6CD /* Dictionary.swift in Sources */,
-
 				D0ACAE5C1B0AE0CA00AA9907 /* ShareViewController.swift in Sources */,
-
 				290135121AC3A67200BBFE29 /* Model.xcdatamodeld in Sources */,
 				1712BE401ACE4135000A9C47 /* _Devices.swift in Sources */,
 				2987F1E91AD79D1A00AA39CE /* _Chat.swift in Sources */,
