@@ -12,6 +12,7 @@ import UIKit
     func commentBtnTapped()
     func avatarImageTapped()
     func imageViewTapped(imageView: UIImageView)
+    func shareBtnTapped()
 }
 
 class PostDetailHeaderView: UITableViewHeaderFooterView {
@@ -85,4 +86,7 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
         delegate?.imageViewTapped(postImageView)
     }
     
+    @IBAction func shareBtnTapped(sender: AnyObject) {
+        delegate?.shareBtnTapped()
+    }
 }

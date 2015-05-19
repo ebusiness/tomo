@@ -110,11 +110,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //////////////////////////////////////////////////////
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
         //SDK_QQhelper.getCallbakc(url)
-        return WXApi.handleOpenURL(url, delegate: OpenidController.instance)||TencentOAuth.HandleOpenURL(url);
+        return OpenidController.instance.handleOpenURL(url)
     }
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
         //SDK_QQhelper.getCallbakc(url)
-        return WXApi.handleOpenURL(url, delegate: OpenidController.instance)||TencentOAuth.HandleOpenURL(url);
+        return OpenidController.instance.handleOpenURL(url)
     }
 }
 

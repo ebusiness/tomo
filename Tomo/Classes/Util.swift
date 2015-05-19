@@ -163,7 +163,32 @@ class Util: NSObject {
         }
     }
 }
-
+extension Util {
+    //RGB To Color
+    class func UIColorFromRGB(rgbValue: UInt,alpha:CGFloat) -> UIColor {
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: alpha
+        )
+    }
+    
+    //重绘纯色图片
+    class func coloredImage(image: UIImage, color:UIColor) -> UIImage! {
+        let rect = CGRect(origin: CGPointZero, size: image.size)
+        UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
+        let context = UIGraphicsGetCurrentContext()
+        image.drawInRect(rect)
+        //CGContextSetRGBFillColor(context, red, green, blue, alpha)
+        CGContextSetFillColorWithColor(context, color.CGColor)
+        CGContextSetBlendMode(context, kCGBlendModeSourceAtop)
+        CGContextFillRect(context, rect)
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result
+    }
+}
 extension UIApplication {
     
     class func appVersion() -> String {

@@ -136,3 +136,9 @@ extension OpenidController{
         self.whenSuccess?(res: result)
     }
 }
+
+extension OpenidController{
+    func handleOpenURL(url:NSURL)->Bool{
+        return WXApi.handleOpenURL(url, delegate: OpenidController.instance)||TencentOAuth.HandleOpenURL(url);
+    }
+}

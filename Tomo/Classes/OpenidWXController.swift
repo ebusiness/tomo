@@ -167,23 +167,24 @@ extension OpenidController {
     WXSceneTimeline = 1,        /**< 朋友圈      */
     WXSceneFavorite = 2,        /**< 收藏       */
     */
-    func wxShare(scence:Int32,title:String,description:String){
+    func wxShare(scence:Int32,img:UIImage,description:String,messageAction:String = "action",extInfo:String = "info"){
         let message = WXMediaMessage()
-        message.title = title //"現場TOMO　招待"
+        message.title = "現場TOMO"
         message.description = description //"招待メッセージ。。。。。。。。。。。"
-        message.setThumbImage(UIImage(named: "icon_logo"))
+        message.setThumbImage(img)
         
-
+        
         message.messageExt = "附加消息：Come from 現場TOMO" //点击之后 返回到程序之后用
-        message.messageAction = "<action>dotaliTest</action>" //点击之后 返回到程序之后用
+        message.messageAction = "<action>dotaliTest</action>" //点击之后 返回到程序之后用//"<action>\(messageAction)</action>"
         
         let ext = WXAppExtendObject()
         ext.extInfo = "<xml>附带信息附带信息附带信息</xml>" //点击之后 返回到程序之后用
+        ext.url = "http://weixin.qq.com"
         //ext.url = url  //设定了也无效 未安装APP的时候 会打开 微信开发者中心中 设定的 URL 如果没有设定 会打开 weixin.qq.com
         // 由于还没有上线 暂时设定为 案件通 的下载地址
         
         
-        let buffer: [UInt8] = [0x00, 0xff]
+        let buffer:[UInt8] = [0x00, 0xff]
         let data = NSData(bytes: buffer, length: buffer.count)
         
         ext.fileData = data;
@@ -194,11 +195,9 @@ extension OpenidController {
         let req = SendMessageToWXReq()
         req.bText = false;
         req.message = message
-        
         req.scene = scence
         
         WXApi.sendReq(req)
-        
     }
 }
 

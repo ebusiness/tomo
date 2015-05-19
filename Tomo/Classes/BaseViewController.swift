@@ -36,3 +36,25 @@ class BaseViewController: UIViewController {
     }
     
 }
+extension BaseViewController {
+    //ActionSheet
+    func showActionSheet(vc: UIViewController,style:MZFormSheetTransitionStyle = MZFormSheetTransitionStyle.DropDown){
+        let formSheet = MZFormSheetController(viewController: vc)
+        //formSheet.presentedFormSheetSize = CGSizeMake(300, 298);
+        formSheet.transitionStyle = style;
+        formSheet.shadowRadius = 2.0;
+        formSheet.shadowOpacity = 0.3;
+        formSheet.shouldDismissOnBackgroundViewTap = true;
+        formSheet.shouldCenterVertically = true;
+        formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppears.MoveToTopInset;
+        formSheet.landscapeTopInset = 50;
+        formSheet.portraitTopInset = 100;
+        
+        formSheet.shouldDismissOnBackgroundViewTap = true;
+        
+        
+        self.mz_presentFormSheetController(formSheet, animated: true) { (s) -> Void in
+            
+        }
+    }
+}
