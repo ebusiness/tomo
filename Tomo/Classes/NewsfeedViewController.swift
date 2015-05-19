@@ -67,10 +67,26 @@ class NewsfeedViewController: BaseViewController {
         }
     }
     
+    func navigationBarTitle() -> String? {
+        switch displayMode {
+        case .Newsfeed:
+            return "現場Tomo"
+        case .Group:
+            return group?.name
+        case .Account:
+            return "個人投稿"
+        case .User:
+            return user?.fullName()
+        case .Station:
+            return "投稿一覧"
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationItem.rightBarButtonItem = rightBarButtonItem()
+        navigationItem.title = navigationBarTitle()
         
         loadLocalDataOrRemote()
         
