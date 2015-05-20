@@ -28,7 +28,8 @@ class FriendListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.rightBarButtonItem = rightBarButtonItem()
+        navigationItem.rightBarButtonItem = rightBarButtonItem()
+        navigationItem.title = navigationBarTitle()
     }
     
     func rightBarButtonItem() -> UIBarButtonItem? {
@@ -39,6 +40,17 @@ class FriendListViewController: BaseViewController {
             return nil
         case .GroupMember:
             return group!.isMyGroup() ? editButtonItem() : nil
+        }
+    }
+    
+    func navigationBarTitle() -> String? {
+        switch displayMode {
+        case .Chat:
+            return "トーク"
+        case .SearchResult:
+            return "ユーザー"
+        case .GroupMember:
+            return "メンバー"
         }
     }
     

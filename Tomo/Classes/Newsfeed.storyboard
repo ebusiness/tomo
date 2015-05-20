@@ -294,7 +294,7 @@
             </objects>
             <point key="canvasLocation" x="1039" y="172"/>
         </scene>
-        <!--Group Setting View Controller-->
+        <!--グループ設定-->
         <scene sceneID="CdQ-mQ-Npz">
             <objects>
                 <tableViewController id="pum-io-B0j" customClass="GroupSettingViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -393,7 +393,7 @@
                             <outlet property="delegate" destination="pum-io-B0j" id="bX3-Km-PjA"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Ue8-Vy-wTC"/>
+                    <navigationItem key="navigationItem" title="グループ設定" id="Ue8-Vy-wTC"/>
                     <connections>
                         <outlet property="notificationSwitch" destination="V4J-Lv-wda" id="2M3-Pd-ypI"/>
                         <outlet property="stickySwitch" destination="wth-Wb-ng6" id="oMb-e9-AA6"/>
@@ -403,7 +403,7 @@
             </objects>
             <point key="canvasLocation" x="675" y="826"/>
         </scene>
-        <!--Comment Input View Controller-->
+        <!--コメント-->
         <scene sceneID="IZd-Lg-nFj">
             <objects>
                 <viewController storyboardIdentifier="ReportInputViewController" id="U6t-qj-mPT" customClass="CommentInputViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -431,7 +431,7 @@
                             <constraint firstItem="hgA-ru-dxU" firstAttribute="leading" secondItem="giO-gO-rg1" secondAttribute="leading" id="fuh-Mu-MN2"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="4xo-Yd-zPf">
+                    <navigationItem key="navigationItem" title="コメント" id="4xo-Yd-zPf">
                         <barButtonItem key="rightBarButtonItem" title="送信" id="iRs-oq-JfB">
                             <connections>
                                 <action selector="send:" destination="U6t-qj-mPT" id="dBS-zZ-yo6"/>

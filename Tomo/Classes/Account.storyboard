@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="aFd-Rm-MQX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="aFd-Rm-MQX">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -24,7 +24,7 @@
             </objects>
             <point key="canvasLocation" x="141" y="382"/>
         </scene>
-        <!--マイプロフィール-->
+        <!--設定-->
         <scene sceneID="mF7-hP-MEX">
             <objects>
                 <tableViewController storyboardIdentifier="AccountEditViewController" id="5tV-aT-uj8" customClass="AccountEditViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -360,7 +360,7 @@
                             <outlet property="delegate" destination="5tV-aT-uj8" id="gg2-dH-Wxk"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="マイプロフィール" id="djp-Ng-32v">
+                    <navigationItem key="navigationItem" title="設定" id="djp-Ng-32v">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="NOt-sM-CYk">
                             <connections>
                                 <segue destination="8gi-D3-eQJ" kind="push" id="WRR-89-q57"/>
@@ -435,7 +435,7 @@
             </objects>
             <point key="canvasLocation" x="882" y="382"/>
         </scene>
-        <!--Station Table View Controller-->
+        <!--駅-->
         <scene sceneID="KRz-GM-3cP">
             <objects>
                 <viewController storyboardIdentifier="StationTableViewController" id="Zs0-Ut-Imd" customClass="StationTableViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -481,7 +481,7 @@
                             <constraint firstAttribute="trailing" secondItem="z5N-kI-r2D" secondAttribute="trailing" id="bWe-wv-TlD"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="uBY-ss-YSQ"/>
+                    <navigationItem key="navigationItem" title="駅" id="uBY-ss-YSQ"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="tableView" destination="z5N-kI-r2D" id="YAG-L9-ccW"/>
@@ -491,7 +491,7 @@
             </objects>
             <point key="canvasLocation" x="833" y="1086"/>
         </scene>
-        <!--Station Select View Controller-->
+        <!--駅-->
         <scene sceneID="U5t-1I-4fP">
             <objects>
                 <viewController storyboardIdentifier="StationSelectViewController" id="ghW-l3-0Nz" customClass="StationSelectViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -537,7 +537,7 @@
                             <constraint firstAttribute="trailing" secondItem="zsO-jS-XBS" secondAttribute="trailing" id="zay-Bt-zui"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="6eL-m7-Z2d"/>
+                    <navigationItem key="navigationItem" title="駅" id="6eL-m7-Z2d"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="tableView" destination="zsO-jS-XBS" id="FEy-kk-gur"/>
