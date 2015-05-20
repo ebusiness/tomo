@@ -10,6 +10,7 @@ enum GroupAttributes: String {
     case detail = "detail"
     case id = "id"
     case isSticky = "isSticky"
+    case lastPostDate = "lastPostDate"
     case logicDelete = "logicDelete"
     case name = "name"
     case section = "section"
@@ -18,6 +19,7 @@ enum GroupAttributes: String {
 
 enum GroupRelationships: String {
     case announcelist = "announcelist"
+    case lastPost = "lastPost"
     case messages = "messages"
     case owner = "owner"
     case participants = "participants"
@@ -83,6 +85,11 @@ class _Group: NSManagedObject {
     // func validateIsSticky(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
+    var lastPostDate: NSDate?
+
+    // func validateLastPostDate(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
     var logicDelete: NSNumber?
 
     // func validateLogicDelete(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
@@ -106,6 +113,11 @@ class _Group: NSManagedObject {
 
     @NSManaged
     var announcelist: NSOrderedSet
+
+    @NSManaged
+    var lastPost: Post?
+
+    // func validateLastPost(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var messages: NSOrderedSet

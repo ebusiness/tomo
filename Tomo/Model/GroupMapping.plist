@@ -18,5 +18,11 @@
 	<string>type</string>
 	<key>logicDelete</key>
 	<string>logicDelete</string>
+	<key>section</key>
+	<string>section</string>
+	<key>isSticky</key>
+	<string>isSticky</string>
+	<key>lastPostDate</key>
+	<string>lastPostDate</string>
 </dict>
 </plist>
