@@ -30,6 +30,8 @@ class PostDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "詳細"
+        
         headerView = Util.createViewWithNibName("PostDetailHeaderView") as! PostDetailHeaderView
         
         headerView.viewWidth = view.bounds.width

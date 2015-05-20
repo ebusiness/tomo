@@ -24,6 +24,8 @@ class GroupListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.title = "グループ"
+        
         if showMyGroupOnly {
             navigationItem.rightBarButtonItem = nil
         }

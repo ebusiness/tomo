@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="AM0-J6-0RI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="AM0-J6-0RI">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -179,7 +179,7 @@
             </objects>
             <point key="canvasLocation" x="292" y="497"/>
         </scene>
-        <!--Group Add Table View Controller-->
+        <!--新規グループ-->
         <scene sceneID="r6R-sn-qaT">
             <objects>
                 <tableViewController storyboardIdentifier="GroupAddTableViewController" id="tmf-0L-tCw" customClass="GroupAddTableViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -323,7 +323,7 @@
                             <outlet property="delegate" destination="tmf-0L-tCw" id="ptH-ic-9I4"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="U11-b6-XMb">
+                    <navigationItem key="navigationItem" title="新規グループ" id="U11-b6-XMb">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="qFn-4J-C0j">
                             <connections>
                                 <action selector="cancel:" destination="tmf-0L-tCw" id="l1e-I5-yj4"/>
