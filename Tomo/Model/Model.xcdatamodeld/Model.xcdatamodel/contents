@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Chat" representedClassName="Chat" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="groupId" optional="YES" attributeType="String" syncable="YES"/>
@@ -28,15 +28,17 @@
         <attribute name="detail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isSticky" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="lastPostDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="logicDelete" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="section" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="announcelist" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="inGroups_announce" inverseEntity="User" syncable="YES"/>
+        <relationship name="lastPost" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Post" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Message" inverseName="group" inverseEntity="Message" syncable="YES"/>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" syncable="YES"/>
         <relationship name="participants" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="inGroups" inverseEntity="User" syncable="YES"/>
-        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" inverseName="group" inverseEntity="Post" syncable="YES"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" syncable="YES"/>
         <relationship name="station" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Station" syncable="YES"/>
         <relationship name="stickylist" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="inGroups_sticky" inverseEntity="User" syncable="YES"/>
     </entity>
@@ -88,7 +90,7 @@
         <attribute name="newsfeed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="bookmarked" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="bookmarked_posts" inverseEntity="User" syncable="YES"/>
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Comments" syncable="YES"/>
-        <relationship name="group" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="posts" inverseEntity="Group" syncable="YES"/>
+        <relationship name="group" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" syncable="YES"/>
         <relationship name="imagesmobile" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Images" syncable="YES"/>
         <relationship name="liked" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="liked_posts" inverseEntity="User" syncable="YES"/>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="posts" inverseEntity="User" syncable="YES"/>
@@ -144,7 +146,7 @@
         <element name="Chat" positionX="-1395" positionY="-126" width="128" height="30"/>
         <element name="Comments" positionX="-1359" positionY="-90" width="128" height="135"/>
         <element name="Devices" positionX="-1368" positionY="-99" width="128" height="105"/>
-        <element name="Group" positionX="-551" positionY="-106" width="128" height="300"/>
+        <element name="Group" positionX="-551" positionY="-106" width="128" height="330"/>
         <element name="Images" positionX="-1440" positionY="-108" width="128" height="118"/>
         <element name="Line" positionX="-1386" positionY="-117" width="128" height="90"/>
         <element name="Message" positionX="-1595" positionY="161" width="128" height="180"/>

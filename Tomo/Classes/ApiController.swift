@@ -491,52 +491,30 @@ extension ApiController {
 extension ApiController {
     
     class func getGroups(done: (NSError?) -> Void) {
-        getGroupsJoined { (error) -> Void in
-            self.getGroupsDiscover({ (error) -> Void in
-                done(error)
-            })
-        }
-        
-//        RKObjectManager.sharedManager().getObjectsAtPath("/mobile/group", parameters: nil, success: { (_, result) -> Void in
-//            done(nil)
-//            }) { (_, error) -> Void in
+//        getGroupsJoined { (error) -> Void in
+//            self.getGroupsDiscover({ (error) -> Void in
 //                done(error)
+//            })
 //        }
+        
+        RKObjectManager.sharedManager().getObjectsAtPath("/mobile/group", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
     }
     
     class func getGroupsJoined(done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().getObjectsAtPath("/groups/joined", parameters: nil, success: { (_, result) -> Void in
-            if let result = result {
-                for group in (result.array() as! [Group]) {
-                    group.section = GroupSection.MyGroup.rawValue
-                    group.setSticky()
-                }
-                
-                DBController.save(done: { () -> Void in
-                    done(nil)
-                })
-            } else {
-                done(nil)
-            }
+        RKObjectManager.sharedManager().getObjectsAtPath("/groups/joined", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
             }) { (_, error) -> Void in
                 done(error)
         }
     }
     
     class func getGroupsDiscover(done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().getObjectsAtPath("/groups/discover", parameters: nil, success: { (_, result) -> Void in
-            if let result = result {
-                for group in (result.array() as! [Group]) {
-                    group.section = GroupSection.Discover.rawValue
-                    group.setSticky()
-                }
-                
-                DBController.save(done: { () -> Void in
-                    done(nil)
-                })
-            } else {
-                done(nil)
-            }
+        RKObjectManager.sharedManager().getObjectsAtPath("/groups/discover", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
             
             }) { (_, error) -> Void in
                 done(error)
@@ -550,15 +528,8 @@ extension ApiController {
         param["type"] = type.rawValue
         param["station"] = stationId
         
-        RKObjectManager.sharedManager().postObject(nil, path: "/groups", parameters: param as [NSObject : AnyObject], success: { (_, mappingResult) -> Void in
-            if let group = mappingResult.firstObject as? Group {
-                group.section = GroupSection.MyGroup.rawValue
-                DBController.save(done: { () -> Void in
-                    done(group.id, nil)
-                })
-            } else {
-                done(nil, nil)
-            }
+        RKObjectManager.sharedManager().postObject(nil, path: "/groups", parameters: param as [NSObject : AnyObject], success: { (_, _) -> Void in
+            done(nil, nil)
             
             }) { (_, error) -> Void in
                 done(nil, error)
@@ -571,30 +542,16 @@ extension ApiController {
         
         // TODO: type, image
         
-        RKObjectManager.sharedManager().patchObject(nil, path: "/groups/\(groupId)", parameters: param as [NSObject : AnyObject], success: { (_, mappingResult) -> Void in
-            if let group = mappingResult.firstObject as? Group {
-                group.section = GroupSection.MyGroup.rawValue
-                DBController.save(done: { () -> Void in
-                    done(nil)
-                })
-            } else {
-                done(nil)
-            }
+        RKObjectManager.sharedManager().patchObject(nil, path: "/groups/\(groupId)", parameters: param as [NSObject : AnyObject], success: { (_, _) -> Void in
+            done(nil)
             }) { (_, error) -> Void in
                 done(error)
         }
     }
     
     class func editGroup(#groupId: String, param: Dictionary<String, String>, done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().patchObject(nil, path: "/groups/\(groupId)", parameters: param as [NSObject : AnyObject], success: { (_, mappingResult) -> Void in
-            if let group = mappingResult.firstObject as? Group {
-                group.section = GroupSection.MyGroup.rawValue
-                DBController.save(done: { () -> Void in
-                    done(nil)
-                })
-            } else {
-                done(nil)
-            }
+        RKObjectManager.sharedManager().patchObject(nil, path: "/groups/\(groupId)", parameters: param as [NSObject : AnyObject], success: { (_, _) -> Void in
+            done(nil)
             }) { (_, error) -> Void in
                 done(error)
         }
@@ -618,63 +575,31 @@ extension ApiController {
         var param = Dictionary<String, String>()
         
         RKObjectManager.sharedManager().patchObject(nil, path: "/groups/\(groupId)/join", parameters: param as [NSObject : AnyObject], success: { (_, mappingResult) -> Void in
-            if let group = mappingResult.firstObject as? Group {
-                group.section = GroupSection.MyGroup.rawValue
-                group.setSticky()
-                DBController.save(done: { () -> Void in
-                    done(nil)
-                })
-            } else {
-                done(nil)
-            }
+            done(nil)
             }) { (_, error) -> Void in
                 done(error)
         }
     }
     //退出
     class func leaveGroup(groupId: String, done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().patchObject(nil, path: "/mobile/groups/\(groupId)/leave", parameters: nil, success: { (_, mappingResult) -> Void in
-            if let group = mappingResult.firstObject as? Group {
-                group.section = GroupSection.Discover.rawValue
-                group.setSticky()
-                DBController.save(done: { () -> Void in
-                    done(nil)
-                })
-            } else {
-                done(nil)
-            }
+        RKObjectManager.sharedManager().patchObject(nil, path: "/mobile/groups/\(groupId)/leave", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
             }) { (_, error) -> Void in
                 done(error)
         }
     }
     //通知
     class func announceGroup(groupId: String,onoff: String, done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().patchObject(nil, path: "/mobile/groups/\(groupId)/announce/\(onoff)", parameters: nil, success: { (_, mappingResult) -> Void in
-            if let group = mappingResult.firstObject as? Group {
-                group.section = GroupSection.MyGroup.rawValue
-                group.setSticky()
-                DBController.save(done: { () -> Void in
-                    done(nil)
-                })
-            } else {
-                done(nil)
-            }
+        RKObjectManager.sharedManager().patchObject(nil, path: "/mobile/groups/\(groupId)/announce/\(onoff)", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
             }) { (_, error) -> Void in
                 done(error)
         }
     }
     //置顶
     class func stickyGroup(groupId: String,onoff: String, done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().patchObject(nil, path: "/mobile/groups/\(groupId)/sticky/\(onoff)", parameters: nil, success: { (_, mappingResult) -> Void in
-            if let group = mappingResult.firstObject as? Group {
-                group.section = GroupSection.MyGroup.rawValue
-                group.setSticky()
-                DBController.save(done: { () -> Void in
-                    done(nil)
-                })
-            } else {
-                done(nil)
-            }
+        RKObjectManager.sharedManager().patchObject(nil, path: "/mobile/groups/\(groupId)/sticky/\(onoff)", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
             }) { (_, error) -> Void in
                 done(error)
         }
@@ -688,16 +613,8 @@ extension ApiController {
             param["expeled[\(i)]"] = userIds[i]
         }
         
-        RKObjectManager.sharedManager().patchObject(nil, path: "/groups/\(groupId)/expel", parameters: param, success: { (_, mappingResult) -> Void in
-            if let group = mappingResult.firstObject as? Group {
-                group.section = GroupSection.MyGroup.rawValue
-                group.setSticky()
-                DBController.save(done: { () -> Void in
-                    done(nil)
-                })
-            } else {
-                done(nil)
-            }
+        RKObjectManager.sharedManager().patchObject(nil, path: "/groups/\(groupId)/expel", parameters: param, success: { (_, _) -> Void in
+            done(nil)
             }) { (_, error) -> Void in
                 done(error)
         }
@@ -884,7 +801,7 @@ extension ApiController {
 //        addCommonResponseDescriptor(getPostMapping(true), method: .DELETE, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
         //記事ー＞詳細
         addCommonResponseDescriptor(getPostMapping(false), method: .GET, pathPattern: "/posts/:id", keyPath: nil, statusCodes: nil)
-        addCommonResponseDescriptor(getPostMapping(false), method: .GET, pathPattern: "/groups/:id/posts", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getPostMapping(false, groupIdOnly: true), method: .GET, pathPattern: "/groups/:id/posts", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getPostMapping(false), method: .GET, pathPattern: "/mobile/stations/posts", keyPath: nil, statusCodes: nil)
         
         //Notification
@@ -893,6 +810,7 @@ extension ApiController {
         addCommonResponseDescriptor(usermapping, method: .PATCH, pathPattern: "/connections/invite", keyPath: nil, statusCodes: nil)
         
         //グループ
+        addCommonResponseDescriptor(getGroupMapping(false,false), method: .GET, pathPattern: "/mobile/group", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getGroupMapping(false,false), method: .GET, pathPattern: "/groups/discover", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getGroupMapping(false,false), method: .GET, pathPattern: "/groups/joined", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(getGroupMapping(false,true), method: .POST, pathPattern: "/groups", keyPath: nil, statusCodes: nil)
@@ -945,7 +863,7 @@ extension ApiController {
         return mapping
     }
     //post
-    private class func getPostMapping(isusers:Bool)->RKEntityMapping{
+    private class func getPostMapping(isusers:Bool, groupIdOnly: Bool = false)->RKEntityMapping{
         var mapping = _postMapping
         mapping.addPropertyMappingById("User",fromKey: "bookmarked",toKeyPath: "bookmarked")
         mapping.addPropertyMappingById("User",fromKey: "liked",toKeyPath: "liked")
@@ -956,8 +874,11 @@ extension ApiController {
         }
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "comments", toKeyPath: "comments", withMapping: getCommoentMapping(false)))
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "images_mobile", toKeyPath: "imagesmobile", withMapping: _imagesMapping))
-//        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "group", toKeyPath: "group", withMapping: _groupMapping))
-        mapping.addPropertyMappingById("Group",fromKey: "group",toKeyPath: "group")
+        if groupIdOnly {
+            mapping.addPropertyMappingById("Group",fromKey: "group",toKeyPath: "group")
+        } else {
+            mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "group", toKeyPath: "group", withMapping: _groupMapping))
+        }
         
         return mapping
     }
@@ -1012,6 +933,7 @@ extension ApiController {
             mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "station", toKeyPath: "station", withMapping: _stationMapping))
         }
 //        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "posts", toKeyPath: "posts", withMapping: _postMapping))
+        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "lastPost", toKeyPath: "lastPost", withMapping: _postMapping))
         mapping.addPropertyMappingById("Post",fromKey: "posts",toKeyPath: "posts")
         mapping.addPropertyMappingById("User",fromKey: "participants",toKeyPath: "participants")
         mapping.addPropertyMappingById("User",fromKey: "announcelist",toKeyPath: "announcelist")
