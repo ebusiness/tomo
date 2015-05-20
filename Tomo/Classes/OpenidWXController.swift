@@ -167,26 +167,26 @@ extension OpenidController {
     WXSceneTimeline = 1,        /**< 朋友圈      */
     WXSceneFavorite = 2,        /**< 收藏       */
     */
-    func wxShare(scence:Int32,img:UIImage,description:String,messageAction:String = "action",extInfo:String = "info"){
+    func wxShare(scence:Int32,img:UIImage,description:String,extInfo:String = "info"){
+  
         let message = WXMediaMessage()
-        message.title = "現場TOMO"
-        message.description = description //"招待メッセージ。。。。。。。。。。。"
-        message.setThumbImage(img)
+        
+        let (image,title,desc) = self.fixShareMessage(img,description)
+        
+        message.setThumbImage(image)
+        message.title = title
+        message.description = desc
         
         
-        message.messageExt = "附加消息：Come from 現場TOMO" //点击之后 返回到程序之后用
-        message.messageAction = "<action>dotaliTest</action>" //点击之后 返回到程序之后用//"<action>\(messageAction)</action>"
+        message.messageExt = "附加消息：Come from 現場TOMO" //返回到程序之后用
+        message.mediaTagName = "WECHAT_TAG_JUMP_APP";
+        //message.messageAction = "<action>\(messageAction)</action>" //不能返回  ..返回到程序之后用
         
         let ext = WXAppExtendObject()
-        ext.extInfo = "<xml>附带信息附带信息附带信息</xml>" //点击之后 返回到程序之后用
-        ext.url = "http://weixin.qq.com"
-        //ext.url = url  //设定了也无效 未安装APP的时候 会打开 微信开发者中心中 设定的 URL 如果没有设定 会打开 weixin.qq.com
-        // 由于还没有上线 暂时设定为 案件通 的下载地址
-        
-        
+        ext.extInfo = "<xml>\(extInfo)</xml>" //返回到程序之后用
+        ext.url = "http://weixin.qq.com";//不设置 不能发朋友圈 设置了也没有作用  未安装APP的时候 会打开 微信开发者中心中 设定的 URL 如果没有设定 会打开 weixin.qq.com
         let buffer:[UInt8] = [0x00, 0xff]
         let data = NSData(bytes: buffer, length: buffer.count)
-        
         ext.fileData = data;
         
         message.mediaObject = ext;

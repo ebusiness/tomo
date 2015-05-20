@@ -122,6 +122,15 @@ extension OpenidController{
         }
 
     }
+    func fixShareMessage(img:UIImage,_ description:String)->(UIImage,String?,String?){
+        let desc = description.length > 128 ? description[0..<128] :description
+        
+        return (
+            img.scaleToFitSize(CGSize(width: 100, height: 100)),
+            desc,
+            "@現場TOMO"
+        )
+    }
     /////////////////////////////////////////////////////////
     ///////エラーを表示する/////////////////////////////////////
     /////////////////////////////////////////////////////////
@@ -139,6 +148,7 @@ extension OpenidController{
 
 extension OpenidController{
     func handleOpenURL(url:NSURL)->Bool{
+        println(url)
         return WXApi.handleOpenURL(url, delegate: OpenidController.instance)||TencentOAuth.HandleOpenURL(url);
     }
 }

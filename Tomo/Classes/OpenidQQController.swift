@@ -109,15 +109,17 @@ extension OpenidController {
     */
     func qqShare(scence:Int32,img:UIImage,description:String,url:String?){
         
-        let data = UIImagePNGRepresentation(img)
         var uri:NSURL
         if let u = url {
             uri = NSURL(string: u)!
         }else{
-            uri = NSURL(string: "genbatomo://")!
+            uri = NSURL(string: "genbatomo://main")!
         }
-        let title = "現場TOMO"
-        let newsObj = QQApiNewsObject(URL: uri, title: title, description: description, previewImageData: data, targetContentType: QQApiURLTargetTypeNews)
+        
+        let (image,title,desc) = self.fixShareMessage(img,description)
+        let data = UIImagePNGRepresentation(image)
+        
+        let newsObj = QQApiNewsObject(URL: uri, title: title, description: desc, previewImageData: data, targetContentType: QQApiURLTargetTypeNews)
     
         let req = SendMessageToQQReq(content: newsObj)
         
