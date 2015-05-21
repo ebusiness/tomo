@@ -217,6 +217,8 @@
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		D0ACAE571B0AD98400AA9907 /* ActionSheet.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */; };
 		D0ACAE5C1B0AE0CA00AA9907 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */; };
+		D0D8BCA91B0C76EE00DE7B3F /* AlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8BCA81B0C76EE00DE7B3F /* AlertTableViewController.swift */; };
+		D0D8BCAE1B0D70E600DE7B3F /* AlertConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8BCAD1B0D70E600DE7B3F /* AlertConfirmViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -384,7 +386,9 @@
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ActionSheet.storyboard; sourceTree = "<group>"; };
-		D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = Classes/ShareViewController.swift; sourceTree = "<group>"; };
+		D0D8BCA81B0C76EE00DE7B3F /* AlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertTableViewController.swift; path = Classes/AlertTableViewController.swift; sourceTree = "<group>"; };
+		D0D8BCAD1B0D70E600DE7B3F /* AlertConfirmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertConfirmViewController.swift; path = Classes/AlertConfirmViewController.swift; sourceTree = "<group>"; };
 		F1801CE63ECC013D9C8C9BB6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -799,6 +803,8 @@
 		D0ACAE5A1B0AE0A600AA9907 /* ActionSheet */ = {
 			isa = PBXGroup;
 			children = (
+				D0D8BCAD1B0D70E600DE7B3F /* AlertConfirmViewController.swift */,
+				D0D8BCA81B0C76EE00DE7B3F /* AlertTableViewController.swift */,
 				D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */,
 			);
 			name = ActionSheet;
@@ -1070,6 +1076,7 @@
 				296D8BCE1B004C6B0058D400 /* MessageGroupViewController.swift in Sources */,
 				2908430F1B09C9140037A6CD /* Double.swift in Sources */,
 				1712BE381ACE183C000A9C47 /* _Images.swift in Sources */,
+				D0D8BCA91B0C76EE00DE7B3F /* AlertTableViewController.swift in Sources */,
 				296D8BAE1AFC5A020058D400 /* LoadingViewController.swift in Sources */,
 				294EF0B01B01D54500A94A3F /* RadioButtonCell.swift in Sources */,
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
@@ -1088,6 +1095,7 @@
 				17B993131AF36CB200204E97 /* Openids.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				290843161B09C9140037A6CD /* Range.swift in Sources */,
+				D0D8BCAE1B0D70E600DE7B3F /* AlertConfirmViewController.swift in Sources */,
 				2987F1ED1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m in Sources */,
 				2942CCD31ACCF761007CDC97 /* NewsfeedViewController.swift in Sources */,
 				1712BE421ACE413C000A9C47 /* Devices.swift in Sources */,

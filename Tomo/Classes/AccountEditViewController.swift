@@ -202,30 +202,24 @@ class AccountEditViewController: BaseTableViewController {
         }
         
         if indexPath.section == 0 && indexPath.row == 0 {
-            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-            let cameraAction = UIAlertAction(title: "写真を撮る", style: .Default, handler: { (action) -> Void in
+            
+            let atvc = Util.createViewControllerWithIdentifier("AlertTableView", storyboardName: "ActionSheet") as! AlertTableViewController
+            
+            let cameraAction = AlertTableViewController.tappenDic(title: "写真を撮る",tappen: { (sender) -> () in
                 let picker = UIImagePickerController()
                 picker.sourceType = .Camera
                 picker.allowsEditing = true
                 picker.delegate = self
                 self.presentViewController(picker, animated: true, completion: nil)
             })
-            let albumAction = UIAlertAction(title: "写真から選択", style: .Default, handler: { (action) -> Void in
+            let albumAction = AlertTableViewController.tappenDic(title: "写真から選択",tappen: { (sender) -> () in
                 let picker = UIImagePickerController()
                 picker.sourceType = .PhotoLibrary
                 picker.allowsEditing = true
                 picker.delegate = self
                 self.presentViewController(picker, animated: true, completion: nil)
             })
-            let cancelAction = UIAlertAction(title: "キャンセル", style: .Cancel, handler: { (action) -> Void in
-                
-            })
-            
-            alertController.addAction(cameraAction)
-            alertController.addAction(albumAction)
-            alertController.addAction(cancelAction)
-            
-            self.presentViewController(alertController, animated: true, completion: nil)
+            atvc.show(self, data: [cameraAction,albumAction])
         }
         
         if indexPath.section == 0 && indexPath.row == 1 {
@@ -293,24 +287,16 @@ class AccountEditViewController: BaseTableViewController {
         }
         
         if indexPath.section == 3 {
-            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-            let logoutAction = UIAlertAction(title: "ログアウト", style: .Destructive, handler: { (action) -> Void in
-                
+            
+            let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
+            
+            acvc.show(self, content: "ログアウトしますか。", action: { () -> () in                
                 DBController.clearDBForLogout();
                 
                 let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
                 
                 Util.changeRootViewController(from: self, to: main)
             })
-
-            let cancelAction = UIAlertAction(title: "キャンセル", style: .Cancel, handler: { (action) -> Void in
-                
-            })
-            
-            alertController.addAction(logoutAction)
-            alertController.addAction(cancelAction)
-            
-            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     

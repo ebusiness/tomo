@@ -8,6 +8,7 @@
 
 import UIKit
 
+//Util
 class Util: NSObject {
     
     class func createViewControllerWithIdentifier(id: String?, storyboardName: String) -> UIViewController {
@@ -188,6 +189,26 @@ extension Util {
         UIGraphicsEndImageContext()
         return result
     }
+    
+    //ActionSheet
+    class func showActionSheet(parentvc:UIViewController,vc: UIViewController,style:MZFormSheetTransitionStyle = MZFormSheetTransitionStyle.DropDown){
+        let formSheet = MZFormSheetController(viewController: vc)
+        //formSheet.presentedFormSheetSize = CGSizeMake(300, 298);
+        formSheet.transitionStyle = style;
+        formSheet.shadowRadius = 2.0;
+        formSheet.shadowOpacity = 0.3;
+        formSheet.shouldDismissOnBackgroundViewTap = true;
+        formSheet.shouldCenterVertically = true;
+        formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppears.MoveToTopInset;
+        formSheet.landscapeTopInset = 50;
+        formSheet.portraitTopInset = 100;
+        
+        formSheet.shouldDismissOnBackgroundViewTap = true;
+        parentvc.mz_presentFormSheetController(formSheet, animated: true) { (s) -> Void in
+            
+        }
+    }
+
 }
 extension UIApplication {
     

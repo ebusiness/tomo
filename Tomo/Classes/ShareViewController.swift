@@ -23,8 +23,8 @@ class ShareViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let rowCount = CGFloat(ceil(CDouble(icons.count) / 4) * CDouble(cellwidth))
-        var h:CGFloat = 21 + 10 + 10 + 10 + 10 + 44 + 20 + rowCount
+        let rowCount = CGFloat(ceil(CDouble(icons.count) / 4))
+        var h:CGFloat = 21 + 10 + 10 + 44 + 20 + rowCount * (cellwidth + 10)
         
         self.formSheetController.presentedFormSheetSize = CGSizeMake(300, h);
         
