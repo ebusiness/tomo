@@ -8,6 +8,14 @@
 
 import UIKit
 
+enum SocketEvent:String{
+    case Announcement = "new-announcement"
+    case Message = "message-new"
+    case FriendApproved = "friend-approved"
+    case FriendDeclined = "friend-declined"
+    
+}
+
 class SocketController {
     
     private static let instance = SocketController()
