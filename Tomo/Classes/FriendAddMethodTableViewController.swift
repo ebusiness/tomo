@@ -31,7 +31,7 @@ class FriendAddMethodTableViewController: BaseTableViewController {
         
         if indexPath.section == 1 {
             if indexPath.row == 0 {
-                let vc = Util.createViewControllerWithIdentifier("StationSelectViewController", storyboardName: "Account") as! StationSelectViewController
+                let vc = Util.createViewControllerWithIdentifier("StationSelectViewController", storyboardName: "Setting") as! StationSelectViewController
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }

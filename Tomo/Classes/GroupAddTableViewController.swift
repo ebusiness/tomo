@@ -56,7 +56,7 @@ class GroupAddTableViewController: BaseTableViewController {
         
         if indexPath.section == 1 {
             if stationTableViewController == nil {
-                stationTableViewController = Util.createViewControllerWithIdentifier("StationTableViewController", storyboardName: "Account") as? StationTableViewController
+                stationTableViewController = Util.createViewControllerWithIdentifier("StationTableViewController", storyboardName: "Setting") as? StationTableViewController
                 stationTableViewController?.selectedStation = DBController.myStation()
             }
         

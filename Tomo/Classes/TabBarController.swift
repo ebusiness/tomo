@@ -9,9 +9,9 @@
 import UIKit
 
 enum TabItem: Int {
-    case Home, Chat, Group, Map, Account
+    case Home, Chat, Group, Map, Setting
     
-    static let items = [Home, Chat, Group, Map, Account]
+    static let items = [Home, Chat, Group, Map, Setting]
     
     func storyBoardName() -> String {
         switch self {
@@ -23,8 +23,8 @@ enum TabItem: Int {
             return "Group"
         case .Map:
             return "Map"
-        case .Account:
-            return "Account"
+        case .Setting:
+            return "Setting"
         }
     }
     
@@ -40,7 +40,7 @@ enum TabItem: Int {
             imageName = "tab_group"
         case .Map:
             imageName = "tab_map"
-        case .Account:
+        case .Setting:
             imageName = "tab_setting"
         }
         
@@ -57,7 +57,7 @@ enum TabItem: Int {
             return "グループ"
         case .Map:
             return "マップ"
-        case .Account:
+        case .Setting:
             return "設定"
         }
     }
@@ -95,6 +95,7 @@ class TabBarController: UITabBarController {
         updateBadgeNumber()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("updateBadgeNumber"), name: kNotificationGotNewMessage, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("updateBadgeNumber"), name: kNotificationGotNewAnnouncement, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
         
         SocketController.start()
@@ -117,6 +118,17 @@ class TabBarController: UITabBarController {
             }
         } else {
             if let vc = viewControllers?[1] as? UIViewController {
+                vc.tabBarItem.badgeValue = nil
+            }
+        }
+        
+        let unreadAnnouncementsCount = DBController.unreadAnnouncementsCount()
+        if unreadAnnouncementsCount > 0 {
+            if let vc = viewControllers?[4] as? UIViewController {
+                vc.tabBarItem.badgeValue = String(unreadAnnouncementsCount)
+            }
+        } else {
+            if let vc = viewControllers?[4] as? UIViewController {
                 vc.tabBarItem.badgeValue = nil
             }
         }

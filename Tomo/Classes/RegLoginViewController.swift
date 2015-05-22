@@ -82,7 +82,7 @@ class RegLoginViewController: BaseViewController {
             SSKeychain.setPassword(self.passwordTF.text, forService: kTomoService, account: self.emailTF.text)
             
             //get user detail
-            ApiController.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
+            ApiController.getMyInfo({ (error) -> Void in
                 if error == nil{
                     Util.dismissHUD()
                     
@@ -126,7 +126,7 @@ class RegLoginViewController: BaseViewController {
             tf.resignFirstResponder()
         }
         if let uid = result["_id"] as? String {
-            ApiController.getUserInfo(uid, done: { (error) -> Void in
+            ApiController.getMyInfo({ (error) -> Void in
                 if let err = error{
                     Util.showError(err)
                 } else {
@@ -169,7 +169,7 @@ class RegLoginViewController: BaseViewController {
                             println(error)
                         })
                         //get user detail
-                        ApiController.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
+                        ApiController.getMyInfo({ (error) -> Void in
                             if error == nil{
                                 Util.dismissHUD()
                                 

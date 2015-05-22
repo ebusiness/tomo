@@ -8,13 +8,15 @@
 
 import UIKit
 
-enum SocketEvent:String{
+enum SocketEvent: String {
     case Announcement = "new-announcement"
     case Message = "message-new"
     case FriendApproved = "friend-approved"
     case FriendDeclined = "friend-declined"
-    
 }
+
+let kNotificationGotNewMessage = "kNotificationGotNewMessage"
+let kNotificationGotNewAnnouncement = "kNotificationGotNewAnnouncement"
 
 class SocketController {
     
@@ -27,26 +29,8 @@ class SocketController {
     
     private func setup() {
         socket.eventRecievedBlock = { (name, data) -> Void in
-            
-            if name == "message-new" {
-                /*
-                let array = data as! NSArray
-                
-                for dic in array {
-                ChatController.addChat(dic as! NSDictionary)
-                }
-                
-                ChatController.save(done: { () -> Void in
-                NSNotificationCenter.defaultCenter().postNotificationName("GotNewMessage", object: nil)
-                })*/
-                
-                ApiController.getMessage({ (error) -> Void in
-                    if error == nil {
-                        //post notification
-                        NSNotificationCenter.defaultCenter().postNotificationName(kNotificationGotNewMessage, object: nil)
-                        Util.showGotMessageLocalNotification()
-                    }
-                })
+            if let event = SocketEvent(rawValue: name) {
+                self.dealWithEvent(event)
             }
         }
         
@@ -63,5 +47,30 @@ class SocketController {
     
     class func stop() {
         instance.socket.disconnect()
+    }
+    
+    private func dealWithEvent(event: SocketEvent) {
+        switch event {
+        case .Announcement:
+            ApiController.getAnnouncements({ (error) -> Void in
+                if error == nil {
+                    //post notification
+                    NSNotificationCenter.defaultCenter().postNotificationName(kNotificationGotNewAnnouncement, object: nil)
+                    Util.showLocalNotificationGotSocketEvent(event)
+                }
+            })
+            
+        case .Message:
+            ApiController.getMessage({ (error) -> Void in
+                if error == nil {
+                    //post notification
+                    NSNotificationCenter.defaultCenter().postNotificationName(kNotificationGotNewMessage, object: nil)
+                    Util.showLocalNotificationGotSocketEvent(event)
+                }
+            })
+            
+        default:
+            println("todo")
+        }
     }
 }

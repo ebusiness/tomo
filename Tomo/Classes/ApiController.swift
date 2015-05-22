@@ -125,6 +125,22 @@ extension ApiController {
         }
     }
     
+    class func getMyInfo(done: (NSError?) -> Void) {
+        if let id = Defaults["myId"].string {
+            RKObjectManager.sharedManager().getObject(nil, path: "/users/\(id)", parameters: nil, success: { (_,result) -> Void in
+                
+                self.getAnnouncements({ (error) -> Void in
+                    if error == nil {
+                        done(nil)
+                    }
+                })
+                
+                }) { (_, error) -> Void in
+                    done(error)
+            }
+        }
+    }
+    
     class func getUserInfo(id: String, done: (NSError?) -> Void) {
         RKObjectManager.sharedManager().getObject(nil, path: "/users/\(id)", parameters: nil, success: { (_,result) -> Void in
             done(nil)
@@ -716,6 +732,14 @@ extension ApiController {
         }
     }
     
+    // MARK: - announcements
+    
+    class func getAnnouncements(done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager().getObjectsAtPath("/announcements", parameters: nil, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, _) -> Void in
+        }
+    }
     
 }
 
@@ -826,6 +850,8 @@ extension ApiController {
         addCommonResponseDescriptor(getStationMapping(false), method: .GET, pathPattern: "/mobile/stations", keyPath: nil, statusCodes: nil)
         
         addCommonResponseDescriptor(getUserMapping(), method: .GET, pathPattern: "/mobile/stations/users", keyPath: nil, statusCodes: nil)
+        
+        addCommonResponseDescriptor(_announcementsMapping, method: .GET, pathPattern: "/announcements", keyPath: nil, statusCodes: nil)
     }
 }
 // MARK: - mapping
@@ -974,6 +1000,7 @@ extension ApiController {
         
         return mapping
     }
+
 }
 
 
@@ -1015,6 +1042,10 @@ extension ApiController {
     }
     private class var _openidsMapping: RKEntityMapping {
         return ApiController.getMapping("Openids", identification: nil,pListName: nil)
+    }
+    
+    private class var _announcementsMapping: RKEntityMapping {
+        return ApiController.getMapping("Announcements", identification: nil,pListName: nil)
     }
 }
 

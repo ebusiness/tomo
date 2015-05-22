@@ -248,6 +248,24 @@ class DBController: NSObject {
         return Message.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "group = %@", group), sortedBy: "createDate", ascending: true)
     }
     
+    // MARK: - Announcements
+    
+    class func allAnnouncements() -> NSFetchedResultsController {
+        return Announcements.MR_fetchAllGroupedBy(nil, withPredicate: nil, sortedBy: "createDate", ascending: false)
+    }
+    
+    class func unreadAnnouncementsCount() -> Int {
+       return Int(bitPattern: Announcements.MR_countOfEntitiesWithPredicate(NSPredicate(format: "isRead = NULL")))
+    }
+    
+    class func makeAllAnnouncementsRead() {
+        for announcement in (Announcements.MR_findAll() as! [Announcements]) {
+            announcement.isRead = true
+        }
+        
+        save()
+    }
+    
     // MARK: - other
     
     class func save(done: (() -> Void)? = nil) {
@@ -268,6 +286,7 @@ class DBController: NSObject {
         Notification.MR_truncateAll()
         Station.MR_truncateAll()
         Line.MR_truncateAll()
+        Announcements.MR_truncateAll()
         
         Defaults.remove("didGetMessageSent")
         
