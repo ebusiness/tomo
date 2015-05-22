@@ -203,7 +203,7 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
 
                 navigationController?.pushViewController(vc, animated: true)
             case .SearchResult, .GroupMember:
-                let vc = Util.createViewControllerWithIdentifier("AccountEditViewController", storyboardName: "Account") as! AccountEditViewController
+                let vc = Util.createViewControllerWithIdentifier("AccountEditViewController", storyboardName: "Setting") as! AccountEditViewController
                 vc.user = friend
                 vc.readOnlyMode = true
                 self.navigationController?.pushViewController(vc, animated: true)

@@ -166,20 +166,8 @@ class AccountEditViewController: BaseTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        if indexPath.section == 1 && indexPath.row == 0 {
-            let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
-            vc.user = user
-            vc.displayMode = .Account
-            
-            if readOnlyMode {
-                vc.displayMode = .User
-            }
-            navigationController?.pushViewController(vc, animated: true)
-            return
-        }
-        
         if readOnlyMode {
-            if indexPath.section != 3 {
+            if indexPath.section != 2 {
                 return
             }
             
@@ -227,7 +215,7 @@ class AccountEditViewController: BaseTableViewController {
         }
         
         // MARK: - 誕生日
-        if indexPath.section == 2 && indexPath.row == 0 {
+        if indexPath.section == 1 && indexPath.row == 0 {
             ActionSheetDatePicker.showPickerWithTitle("誕生日", datePickerMode: .Date, selectedDate: user.birthDay ?? kBirthdayDefault, minimumDate: kBirthdayMin, maximumDate: kBirthdayMax, doneBlock: { (picker, selectedDate, origin) -> Void in
                 self.user.birthDay = (selectedDate as! NSDate)
                 
@@ -242,7 +230,7 @@ class AccountEditViewController: BaseTableViewController {
         }
         
         // MARK: - 性別
-        if indexPath.section == 2 && indexPath.row == 1 {
+        if indexPath.section == 1 && indexPath.row == 1 {
             let rows = ["男","女"]
             var initRow = 0
             if let gender = user.gender {
@@ -263,7 +251,7 @@ class AccountEditViewController: BaseTableViewController {
             }, cancelBlock: nil, origin: view)
         }
         
-        if indexPath.section == 2 {
+        if indexPath.section == 1 {
             if indexPath.row == 2 {
                 addressTF.becomeFirstResponder()
             }
@@ -285,23 +273,11 @@ class AccountEditViewController: BaseTableViewController {
                 telTF.becomeFirstResponder()
             }
         }
-        
-        if indexPath.section == 3 {
-            
-            let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
-            
-            acvc.show(self, content: "ログアウトしますか。", action: { () -> () in                
-                DBController.clearDBForLogout();
-                
-                let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
-                
-                Util.changeRootViewController(from: self, to: main)
-            })
-        }
+
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 2 && indexPath.row == 6 {
+        if indexPath.section == 1 && indexPath.row == 6 {
             return heightForBioCell(tableView.bounds.width)
         }
         

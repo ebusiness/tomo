@@ -39,8 +39,6 @@ let kBirthdayMin = NSDate(fromString: "1940/01/01", format: DateFormat.Custom("y
 //max
 let kBirthdayMax = NSDate()
 
-let kNotificationGotNewMessage = "kNotificationGotNewMessage"
-
 let imageMessagePrefix = "[画像]"
 
 class Constants: NSObject {

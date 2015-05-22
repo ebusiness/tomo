@@ -86,7 +86,7 @@ class RegSignUpViewController: BaseViewController {
                 })
             }
             //get user detail
-            ApiController.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
+            ApiController.getMyInfo({ (error) -> Void in
                 if error == nil{
                     Util.dismissHUD()
                     

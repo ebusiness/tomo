@@ -135,19 +135,27 @@ class Util: NSObject {
         return ""
     }
     
-    class func showGotMessageLocalNotification() {
+    class func showLocalNotificationGotSocketEvent(event: SocketEvent) {
         if UIApplication.sharedApplication().applicationState == .Background {
             let notification = UILocalNotification()
             notification.soundName = UILocalNotificationDefaultSoundName
             notification.applicationIconBadgeNumber = 1
             
-            if let message = DBController.latestMessage() {
-                notification.alertBody = message.from!.fullName() + " : " + message.content!
-            
-//            notification.userInfo = ["kNotificationFriendAccountName" : message.fromStr()]
-            
-                UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+            switch event {
+                
+            case .Message:
+                if let message = DBController.latestMessage() {
+                    notification.alertBody = message.from!.fullName() + " : " + message.content!
+                }
+                
+            case .Announcement:
+                notification.alertBody = "現場TOMOからのお知らせ"
+                
+            default:
+                println("todo")
             }
+            
+            UIApplication.sharedApplication().presentLocalNotificationNow(notification)
         }
     }
     

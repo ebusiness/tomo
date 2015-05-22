@@ -110,7 +110,7 @@ extension PostDetailViewController: PostDetailHeaderViewDelegate {
     }
     
     func avatarImageTapped() {
-        let vc = Util.createViewControllerWithIdentifier("AccountEditViewController", storyboardName: "Account") as! AccountEditViewController
+        let vc = Util.createViewControllerWithIdentifier("AccountEditViewController", storyboardName: "Setting") as! AccountEditViewController
         vc.user = post.owner
         vc.readOnlyMode = true
         self.navigationController?.pushViewController(vc, animated: true)
