@@ -147,6 +147,7 @@ extension PostDetailViewController: PostDetailHeaderViewDelegate {
         let share = Util.createViewControllerWithIdentifier("share", storyboardName: "ActionSheet") as! ShareViewController
         share.share_description = self.post.content!
         share.share_image = headerView.postImageView.image
+        share.share_url = kAPIBaseURLString + "/mobile/share/post/" + self.post.id!;
         Util.showActionSheet(self, vc: share)
     }
 }

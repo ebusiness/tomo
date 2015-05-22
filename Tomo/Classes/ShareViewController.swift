@@ -65,10 +65,10 @@ extension ShareViewController: UICollectionViewDataSource, UICollectionViewDeleg
             OpenidController.instance.qqShare(1, img: self.share_image, description: self.share_description, url: self.share_url)
             break;
         case 2:
-            OpenidController.instance.wxShare(0, img: self.share_image, description: self.share_description)
+            OpenidController.instance.wxShare(0, img: self.share_image, description: self.share_description, url: self.share_url)
             break;
         case 3:
-            OpenidController.instance.wxShare(1, img: self.share_image, description: self.share_description)
+            OpenidController.instance.wxShare(1, img: self.share_image, description: self.share_description, url: self.share_url)
             break;
         default:
             break;

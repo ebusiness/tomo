@@ -167,15 +167,23 @@ extension OpenidController {
     WXSceneTimeline = 1,        /**< 朋友圈      */
     WXSceneFavorite = 2,        /**< 收藏       */
     */
+    //share url
+    func wxShare(scence:Int32,img:UIImage,description:String,url:String?){
+        
+        let message = self.wxGetRequestMesage(img, description: description)
+        
+        message.mediaTagName = "WECHAT_TAG_JUMP_SHOWRANK";
+        
+        let ext = WXWebpageObject()
+        ext.webpageUrl = url
+        message.mediaObject = ext;
+        
+        self.wxSendReq(message, scence: scence)
+    }
+    //share app
     func wxShare(scence:Int32,img:UIImage,description:String,extInfo:String = "info"){
   
-        let message = WXMediaMessage()
-        
-        let (image,title,desc) = self.fixShareMessage(img,description)
-        
-        message.setThumbImage(image)
-        message.title = title
-        message.description = desc
+        let message = self.wxGetRequestMesage(img, description: description)
         
         
         message.messageExt = "附加消息：Come from 現場TOMO" //返回到程序之后用
@@ -191,7 +199,23 @@ extension OpenidController {
         
         message.mediaObject = ext;
         
+        self.wxSendReq(message, scence: scence)
+    }
+    //get message
+    private func wxGetRequestMesage(img:UIImage,description:String)->WXMediaMessage{
         
+        let message = WXMediaMessage()
+        
+        let (image,title,desc) = self.fixShareMessage(img,description)
+        
+        message.setThumbImage(image)
+        message.title = title
+        message.description = desc
+
+        return message
+    }
+    //send request
+    private func wxSendReq(message:WXMediaMessage,scence:Int32){
         let req = SendMessageToWXReq()
         req.bText = false;
         req.message = message
