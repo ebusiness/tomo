@@ -84,7 +84,7 @@ class SettingViewController: BaseTableViewController {
         if cell == logoutCell {
             let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
             
-            acvc.show(self, content: "ログアウトしますか。", action: { () -> () in
+            acvc.show(self, content: "ログアウトしますか？", action: { () -> () in
                 DBController.clearDBForLogout();
                 
                 let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")

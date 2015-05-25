@@ -25,11 +25,11 @@ class DBController: NSObject {
     }
     
     class func newsfeeds() -> NSFetchedResultsController {
-        return Post.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "createDate != nil AND newsfeed = 1"), sortedBy: "createDate", ascending: false)
+        return Post.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "createDate != nil AND newsfeed = 1 AND logicDelete != 1"), sortedBy: "createDate", ascending: false)
     }
     
     class func myPosts() -> NSFetchedResultsController {
-        return Post.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "owner = %@ AND createDate != nil", myUser()!), sortedBy: "createDate", ascending: false)
+        return Post.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "owner = %@ AND createDate != nil AND logicDelete != 1", myUser()!), sortedBy: "createDate", ascending: false)
     }
     
     // MARK: - User

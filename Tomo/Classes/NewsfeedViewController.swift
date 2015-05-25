@@ -220,27 +220,27 @@ class NewsfeedViewController: BaseViewController {
     }
     
     func handleLongPress(ges: UILongPressGestureRecognizer) {
-        if ges.state != .Began {
-            return
-        }
-        
-        let point = ges.locationInView(collectionView)
-        if let indexPath = collectionView.indexPathForItemAtPoint(point) {
-            postForDelete = frc.objectAtIndexPath(indexPath) as? Post
-            let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
-            
-            acvc.show(self, content: "削除しますか。", action: { () -> () in
-                if let post = self.postForDelete {
-                    post.MR_deleteEntity()
-                    DBController.save()
-                    
-                    //call api
-                    ApiController.postDelete(post.id!, done: { (_) -> Void in
-                        
-                    })
-                }
-            })
-        }
+//        if ges.state != .Began {
+//            return
+//        }
+//        
+//        let point = ges.locationInView(collectionView)
+//        if let indexPath = collectionView.indexPathForItemAtPoint(point) {
+//            postForDelete = frc.objectAtIndexPath(indexPath) as? Post
+//            let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
+//            
+//            acvc.show(self, content: "削除しますか。", action: { () -> () in
+//                if let post = self.postForDelete {
+//                    post.MR_deleteEntity()
+//                    DBController.save()
+//                    
+//                    //call api
+//                    ApiController.postDelete(post.id!, done: { (_) -> Void in
+//                        
+//                    })
+//                }
+//            })
+//        }
     }
 }
 

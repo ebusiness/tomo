@@ -13,6 +13,7 @@ import UIKit
     func avatarImageTapped()
     func imageViewTapped(imageView: UIImageView)
     func shareBtnTapped()
+    func deleteBtnTapped()
 }
 
 class PostDetailHeaderView: UITableViewHeaderFooterView {
@@ -23,6 +24,7 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var commentsCount: UILabel!
+    @IBOutlet weak var deleteBtn: UIButton!
     
     @IBOutlet weak var postImageViewHeightConstraint: NSLayoutConstraint!
 
@@ -53,6 +55,8 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
             contentLabel.text = post.content
             
             commentsCount.text = "\(post.comments.count)条评论"
+            
+            deleteBtn.hidden = !post.isMyPost
         }
     }
 
@@ -88,5 +92,9 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
     
     @IBAction func shareBtnTapped(sender: AnyObject) {
         delegate?.shareBtnTapped()
+    }
+    
+    @IBAction func deleteBtnTapped(sender: UIButton) {
+        delegate?.deleteBtnTapped()
     }
 }

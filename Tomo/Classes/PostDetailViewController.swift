@@ -8,6 +8,8 @@
 
 import UIKit
 
+let PostDeletedString = "この投稿が削除されました。"
+
 class PostDetailViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
@@ -44,19 +46,32 @@ class PostDetailViewController: BaseViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("postWasDeleted:"), name: SVProgressHUDDidDisappearNotification, object: nil)
+        
         ApiController.getPost(postId, done: { (error) -> Void in
             if error == nil {
                 self.headerView.post = self.post
                 self.tableView.reloadData()
+            } else {
+                Util.showInfo(PostDeletedString)
+                self.post.delete()
             }
         })
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
+    // MARK: - Notification
+    
+    func postWasDeleted(noti: NSNotification) {
+        if let userinfo = noti.userInfo where (userinfo[SVProgressHUDStatusUserInfoKey] as? String) == PostDeletedString {
+            navigationController?.popViewControllerAnimated(true)
+        }
+    }
     
     // MARK: - Navigation
 
@@ -149,5 +164,17 @@ extension PostDetailViewController: PostDetailHeaderViewDelegate {
         share.share_image = headerView.postImageView.image
         share.share_url = kAPIBaseURLString + "/mobile/share/post/" + self.post.id!;
         Util.showActionSheet(self, vc: share)
+    }
+    
+    func deleteBtnTapped() {
+        let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
+        
+        acvc.show(self, content: "削除しますか？", action: { () -> () in
+            ApiController.postDelete(self.post.id!, done: { (error) -> Void in
+            })
+            
+            self.post.delete()
+            self.navigationController?.popViewControllerAnimated(true)
+        })
     }
 }

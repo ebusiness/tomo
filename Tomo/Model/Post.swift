@@ -25,4 +25,16 @@ class Post: _Post {
     var imagePath: String? {
         return image?.name
     }
+    
+    var isMyPost: Bool {
+        get {
+            return owner?.id == Defaults["myId"].string
+        }
+    }
+    
+    func delete() {
+        MR_deleteEntity()
+        
+        managedObjectContext?.MR_saveToPersistentStoreWithCompletion(nil)
+    }
 }

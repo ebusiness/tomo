@@ -128,6 +128,15 @@
                                 <constraint firstAttribute="height" constant="1" id="QIt-YM-aY8"/>
                             </constraints>
                         </view>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QJa-nD-5ou">
+                            <rect key="frame" x="86" y="8" width="46" height="30"/>
+                            <state key="normal" title="削除">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="deleteBtnTapped:" destination="fB2-YK-11i" eventType="touchUpInside" id="7fF-iC-wtv"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
                         <constraint firstItem="bav-iR-aSm" firstAttribute="centerY" secondItem="Mi6-56-oNk" secondAttribute="centerY" id="2s3-By-PsZ"/>
@@ -161,6 +170,7 @@
                 <outlet property="avatarImageView" destination="E6m-yw-cDE" id="kzf-cx-IV2"/>
                 <outlet property="commentsCount" destination="bav-iR-aSm" id="v63-ho-HOh"/>
                 <outlet property="contentLabel" destination="88D-br-Mma" id="fil-HU-OF4"/>
+                <outlet property="deleteBtn" destination="QJa-nD-5ou" id="EFz-C8-YLC"/>
                 <outlet property="postImageView" destination="VoW-oC-DGu" id="uMA-za-u1C"/>
                 <outlet property="postImageViewHeightConstraint" destination="UjQ-hg-yzF" id="dkT-6A-SAA"/>
                 <outlet property="timeLabel" destination="02w-fz-fUa" id="lx9-uw-NGw"/>
