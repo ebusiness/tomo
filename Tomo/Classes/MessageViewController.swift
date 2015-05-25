@@ -32,16 +32,22 @@ class MessageViewController: JSQMessagesViewController {
     }
     
     var selectedIndexPath: NSIndexPath?
-    
+        var icon_speaker_normal:UIImage!
+    var icon_speaker_highlighted:UIImage!
+    var icon_keyboard_normal:UIImage!
+    var icon_keyboard_highlighted:UIImage!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setAccessoryButtonImageView()
+
         self.senderId = me.id
         self.senderDisplayName = me.fullName()
         
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("gotNewMessage"), name: "GotNewMessage", object: nil)
         
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "接收", style: .Done, target: self, action: Selector("receiveMessage"))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: Selector("mediaMessageBtnTapped"))
         
         avatarImageBlank = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(named: "avatar"), diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
         
@@ -83,9 +89,9 @@ class MessageViewController: JSQMessagesViewController {
         if !Defaults.hasKey("didGetMessageSent") {
             self.messageSend = true
             ApiController.getMessageSent { (error) -> Void in
-                if error == nil {
+//                if error == nil {
                     Defaults["didGetMessageSent"] = true
-                }
+//                }
             }
         }
     }
@@ -119,6 +125,8 @@ class MessageViewController: JSQMessagesViewController {
             DBController.makeAllMessageRead(friend)
         }
         
+        VoiceController.instance.stopPlayer()
+        
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
@@ -132,26 +140,17 @@ class MessageViewController: JSQMessagesViewController {
         #endif
     }
     
-    // MARK: - Action
-    
-//    func receiveMessage() {
-//        ChatController.createChatFrom(user: friend, groupId: groupId)
-//        loadMessages()
-//    }
-    
     // MARK: - Notification
     
     func downloadMediaDone() {
         collectionView.reloadData()
     }
     
-    // MARK: - JSQMessagesViewController method overrides
+    // MARK: - Action
     
-    override func didPressAccessoryButton(sender: UIButton!) {
-        
-        
+    func mediaMessageBtnTapped() {
         let atvc = Util.createViewControllerWithIdentifier("AlertTableView", storyboardName: "ActionSheet") as! AlertTableViewController
-        
+
         let cameraAction = AlertTableViewController.tappenDic(title: "写真を撮る",tappen: { (sender) -> () in
             let picker = UIImagePickerController()
             picker.sourceType = .Camera
@@ -357,8 +356,27 @@ extension MessageViewController: JSQMessagesCollectionViewDelegateFlowLayout {
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAtIndexPath indexPath: NSIndexPath!) {
         let message = frc.objectAtIndexPath(indexPath) as! Message
-        if message.isMediaMessage() {
-            showGalleryView(indexPath, message: message)
+        if let content = message.content {
+            if MediaMessage.mediaMessage(content) == .Image {
+                showGalleryView(indexPath, message: message)
+            }
+            
+            if MediaMessage.mediaMessage(content) == .Voice {
+                if let fileName = MediaMessage.fileNameOfMessage(content) {
+                    if FCFileManager.existsItemAtPath(fileName) {
+                        VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(fileName).path!)
+                    } else {
+                        Util.showHUD()
+                        download(.GET, MediaMessage.fullPath(content), { (tempUrl, res) -> (NSURL) in
+                            gcd.async(.Main, closure: { () -> () in
+                                Util.dismissHUD()
+                                VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(fileName).path!)
+                            })
+                            return FCFileManager.urlForItemAtPath(fileName)
+                        })
+                    }
+                }
+            }
         }
     }
     
@@ -436,9 +454,9 @@ extension MessageViewController: UIImagePickerControllerDelegate, UINavigationCo
         
         editedImage.saveToURL(url)
         
-        sendMessage(Constants.imageMessage(fileName: name))
+        sendMessage(MediaMessage.mediaMessageStr(fileName: name, type: .Image))
         
-        S3Controller.uploadFile(name: name, localPath: url.path!, remotePath: Constants.messageImagePath(fileName: name), done: { (error) -> Void in
+        S3Controller.uploadFile(name: name, localPath: url.path!, remotePath: MediaMessage.remotePath(fileName: name, type: .Image), done: { (error) -> Void in
             println("done")
             println(error)
         })

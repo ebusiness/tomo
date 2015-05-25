@@ -36,3 +36,5 @@
 #import "MHGallery.h"
 
 #import "MZFormSheetController.h"
+
+#import "JSQVoiceMediaItem.h"

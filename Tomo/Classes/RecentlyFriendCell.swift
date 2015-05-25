@@ -50,7 +50,7 @@ class RecentlyFriendCell: UITableViewCell {
         
         if let message = DBController.lastMessage(friend) {
             if message.isMediaMessage() {
-                messageLabel.text = imageMessagePrefix
+                messageLabel.text = MediaMessage.messagePrefix(message.content!)
             } else {
                 messageLabel.text = message.content
             }

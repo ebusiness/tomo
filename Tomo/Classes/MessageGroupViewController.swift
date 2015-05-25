@@ -35,9 +35,9 @@ class MessageGroupViewController: MessageViewController {
         if !Defaults.hasKey("didGetMessageSent") {
             self.messageSend = true
             ApiController.getMessageSent { (error) -> Void in
-                if error == nil {
+//                if error == nil {
                     Defaults["didGetMessageSent"] = true
-                }
+//                }
             }
         }
     }

@@ -39,7 +39,79 @@ let kBirthdayMin = NSDate(fromString: "1940/01/01", format: DateFormat.Custom("y
 //max
 let kBirthdayMax = NSDate()
 
-let imageMessagePrefix = "[画像]"
+enum MediaMessage: Int {
+    case Image, Voice, Video
+    
+    static let medias = [Image, Voice, Video]
+    
+    static func isMediaMessage(str: String) -> Bool {
+        for media in medias {
+            if str.hasPrefix(media.messagePrefix) {
+                return true
+            }
+        }
+        return false
+    }
+    
+    static func mediaMessage(str: String) -> MediaMessage? {
+        for media in medias {
+            if str.hasPrefix(media.messagePrefix) {
+                return media
+            }
+        }
+        
+        return nil
+    }
+    
+    static func fileNameOfMessage(str: String) -> String? {
+        for media in medias {
+            if str.hasPrefix(media.messagePrefix) {
+                return str.substringFromIndex(advance(str.startIndex, media.messagePrefix.length))
+            }
+        }
+        return nil
+    }
+    
+    static func messagePrefix(str: String) -> String? {
+        return mediaMessage(str)?.messagePrefix
+    }
+    
+    var messagePrefix: String {
+        get {
+            switch self {
+            case .Image:
+                return "[画像]"
+            case .Voice:
+                return "[音声]"
+            case .Video:
+                return "[動画]"
+            }
+        }
+    }
+    
+    static func remotePath(#fileName: String, type: MediaMessage) -> String {
+        switch type {
+        case .Image:
+            return "/messages/images/\(fileName)"
+        case .Voice:
+            return "/messages/voices/\(fileName)"
+        case .Video:
+            return "/messages/videos/\(fileName)"
+        }
+    }
+    
+    static func mediaMessageStr(#fileName: String, type: MediaMessage) -> String {
+        return "\(type.messagePrefix)\(fileName)"
+    }
+    
+    static func fullPath(str: String) -> String {
+        return kS3BasePath.stringByAppendingPathComponent(AmazonS3Bucket).stringByAppendingPathComponent(remotePath(fileName: fileNameOfMessage(str)!, type: mediaMessage(str)!))
+    }
+    
+    static func fullPath(#fileName: String, type: MediaMessage) -> String {
+        return kS3BasePath.stringByAppendingPathComponent(AmazonS3Bucket).stringByAppendingPathComponent(remotePath(fileName: fileName, type: type))
+    }
+}
 
 class Constants: NSObject {
    
@@ -56,16 +128,5 @@ class Constants: NSObject {
     class func groupCoverPath(#groupId: String, fileName: String) -> String {
         return "/groups/\(groupId)/cover/\(fileName)"
     }
-    
-    class func messageImagePath(#fileName: String) -> String {
-        return "/messages/images/\(fileName)"
-    }
-    
-    class func imageMessage(#fileName: String) -> String {
-        return "\(imageMessagePrefix)\(fileName)"
-    }
-    
-    class func imageFullPath(#fileName: String) -> String {
-        return kS3BasePath.stringByAppendingPathComponent(AmazonS3Bucket).stringByAppendingPathComponent(messageImagePath(fileName: fileName))
-    }
+
 }

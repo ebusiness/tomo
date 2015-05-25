@@ -23,7 +23,7 @@ extension Message: JSQMessageData {
     }
     
     func isMediaMessage() -> Bool {
-        if let content = content where content.hasPrefix(imageMessagePrefix) {
+        if let content = content where MediaMessage.isMediaMessage(content) {
             return true
         }
     
@@ -39,21 +39,39 @@ extension Message: JSQMessageData {
     }
     
     func media() -> JSQMessageMediaData! {
-        if let content = content {
-            let name = content.substringFromIndex(advance(content.startIndex, imageMessagePrefix.length))
+        if let content = content, name = MediaMessage.fileNameOfMessage(content) {
             if FCFileManager.existsItemAtPath(name) {
-                let item = JSQPhotoMediaItem(image: UIImage(contentsOfFile: FCFileManager.urlForItemAtPath(name).path!))
+                var item: JSQMediaItem!
+                
+                if MediaMessage.mediaMessage(content) == .Image {
+                    item = JSQPhotoMediaItem(image: UIImage(contentsOfFile: FCFileManager.urlForItemAtPath(name).path!))
+                } else if MediaMessage.mediaMessage(content) == .Voice {
+                    let imageName = from?.id == Defaults["myId"].string ? "SenderVoiceNodePlaying" : "ReceiverVoiceNodePlaying"
+                    item = JSQVoiceMediaItem(voice: NSData(contentsOfFile: FCFileManager.urlForItemAtPath(name).path!), image: UIImage(named: imageName))
+                }
+                
                 item.appliesMediaViewMaskAsOutgoing = from?.id == Defaults["myId"].string
+
                 return item
             } else {
-                download(.GET, Constants.imageFullPath(fileName: name), { (tempUrl, res) -> (NSURL) in
-                    gcd.async(.Main, closure: { () -> () in
-                        NSNotificationCenter.defaultCenter().postNotificationName("NotificationDownloadMediaDone", object: nil)
+                //do not download voice and video
+                if MediaMessage.mediaMessage(content) == .Image {
+                    download(.GET, MediaMessage.fullPath(content), { (tempUrl, res) -> (NSURL) in
+                        gcd.async(.Main, closure: { () -> () in
+                            NSNotificationCenter.defaultCenter().postNotificationName("NotificationDownloadMediaDone", object: nil)
+                        })
+                        return FCFileManager.urlForItemAtPath(name)
                     })
-                    return FCFileManager.urlForItemAtPath(name)
-                })
+                }
                 
-                let item = JSQPhotoMediaItem(image: nil)
+                var item: JSQMediaItem!
+                if MediaMessage.mediaMessage(content) == .Image {
+                    item = JSQPhotoMediaItem(image: nil)
+                } else if MediaMessage.mediaMessage(content) == .Voice {
+                    let imageName = from?.id == Defaults["myId"].string ? "SenderVoiceNodePlaying" : "ReceiverVoiceNodePlaying"
+                    item = JSQVoiceMediaItem(voice: nil, image: UIImage(named: imageName))
+                }
+                
                 item.appliesMediaViewMaskAsOutgoing = from?.id == Defaults["myId"].string
                 return item
             }
