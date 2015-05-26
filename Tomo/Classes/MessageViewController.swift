@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 class MessageViewController: JSQMessagesViewController {
     
@@ -151,17 +152,20 @@ class MessageViewController: JSQMessagesViewController {
     func mediaMessageBtnTapped() {
         let atvc = Util.createViewControllerWithIdentifier("AlertTableView", storyboardName: "ActionSheet") as! AlertTableViewController
 
-        let cameraAction = AlertTableViewController.tappenDic(title: "写真を撮る",tappen: { (sender) -> () in
+        let cameraAction = AlertTableViewController.tappenDic(title: "写真/ビデオを撮る",tappen: { (sender) -> () in
             let picker = UIImagePickerController()
             picker.sourceType = .Camera
-            picker.allowsEditing = true
+//            picker.allowsEditing = true
             picker.delegate = self
+            picker.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(.Camera)!
+            picker.videoMaximumDuration = 10
             self.presentViewController(picker, animated: true, completion: nil)
         })
-        let albumAction = AlertTableViewController.tappenDic(title: "写真から選択",tappen: { (sender) -> () in
+        let albumAction = AlertTableViewController.tappenDic(title: "写真/ビデオ ライブラリー",tappen: { (sender) -> () in
             let picker = UIImagePickerController()
             picker.sourceType = .PhotoLibrary
-            picker.allowsEditing = true
+//            picker.allowsEditing = true
+            picker.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(.Camera)!
             picker.delegate = self
             self.presentViewController(picker, animated: true, completion: nil)
         })
@@ -357,7 +361,7 @@ extension MessageViewController: JSQMessagesCollectionViewDelegateFlowLayout {
     override func collectionView(collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAtIndexPath indexPath: NSIndexPath!) {
         let message = frc.objectAtIndexPath(indexPath) as! Message
         if let content = message.content {
-            if MediaMessage.mediaMessage(content) == .Image {
+            if MediaMessage.mediaMessage(content) == .Image || MediaMessage.mediaMessage(content) == .Video {
                 showGalleryView(indexPath, message: message)
             }
             
@@ -384,35 +388,40 @@ extension MessageViewController: JSQMessagesCollectionViewDelegateFlowLayout {
         let cell = collectionView.cellForItemAtIndexPath(indexPath) as? JSQMessagesCollectionViewCell
         if let cell = cell {
             let imageView = cell.mediaView as! UIImageView
+            var galleryItem: MHGalleryItem!
+            let item = message.media() as! JSQMediaItem
             
-            if message.media() is JSQPhotoMediaItem {
-                let item = message.media() as! JSQPhotoMediaItem
-                if let image = item.image {
-                    let item = MHGalleryItem(image: image)
-                    let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.ImageViewerNavigationBarShown)
-                    gallery.galleryItems = [item]
-                    gallery.presentingFromImageView = imageView
-                    
-                    gallery.UICustomization.useCustomBackButtonImageOnImageViewer = false
-                    gallery.UICustomization.showOverView = false
-                    gallery.UICustomization.showMHShareViewInsteadOfActivityViewController = false
-                    
-                    gallery.finishedCallback = { [weak self] (currentIndex, image, transition, viewMode) -> Void in
-                        let cell = self!.collectionView.cellForItemAtIndexPath(self!.selectedIndexPath!) as!JSQMessagesCollectionViewCell
-                        let imageView = cell.mediaView as! UIImageView
-                        gcd.async(.Main, closure: { () -> () in
-                            gallery.dismissViewControllerAnimated(true, dismissImageView: imageView, completion: { [weak self] () -> Void in
-                                self!.automaticallyScrollsToMostRecentMessage = true
-                            })
-
-                        })
-                    }
-                    
-                    self.automaticallyScrollsToMostRecentMessage = false
-                    selectedIndexPath = indexPath
-                    presentMHGalleryController(gallery, animated: true, completion: nil)
-                }
+            if item is JSQPhotoMediaItem {
+                galleryItem = MHGalleryItem(image: (item as! JSQPhotoMediaItem).image)
+            } else if item is TomoVideoMediaItem {
+                let videoPath = MediaMessage.fullPath(message.content!)
+                galleryItem = MHGalleryItem(URL: videoPath, galleryType: .Video)
+                galleryItem.image = SDImageCache.sharedImageCache().imageFromDiskCacheForKey(videoPath)
             }
+            
+            let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.ImageViewerNavigationBarShown)
+            gallery.galleryItems = [galleryItem]
+            gallery.presentingFromImageView = imageView
+            
+            gallery.UICustomization.useCustomBackButtonImageOnImageViewer = false
+            gallery.UICustomization.showOverView = false
+            gallery.UICustomization.showMHShareViewInsteadOfActivityViewController = false
+            
+            gallery.finishedCallback = { [weak self] (currentIndex, image, transition, viewMode) -> Void in
+                let cell = self!.collectionView.cellForItemAtIndexPath(self!.selectedIndexPath!) as!JSQMessagesCollectionViewCell
+                let imageView = cell.mediaView as! UIImageView
+                gcd.async(.Main, closure: { () -> () in
+                    gallery.dismissViewControllerAnimated(true, dismissImageView: imageView, completion: { [weak self] () -> Void in
+                        self!.automaticallyScrollsToMostRecentMessage = true
+                        self!.collectionView.reloadItemsAtIndexPaths([self!.selectedIndexPath!])
+                        })
+                    
+                })
+            }
+            
+            self.automaticallyScrollsToMostRecentMessage = false
+            selectedIndexPath = indexPath
+            presentMHGalleryController(gallery, animated: true, completion: nil)
         }
     }
 }
@@ -440,27 +449,56 @@ extension MessageViewController: UIImagePickerControllerDelegate, UINavigationCo
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         picker.dismissViewControllerAnimated(true, completion: nil)
         
-        if picker.sourceType == .Camera {
-            let orgImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-            UIImageWriteToSavedPhotosAlbum(orgImage, nil, nil, nil)
+        let mediaType = info["UIImagePickerControllerMediaType"] as! String
+
+        var name: String!
+        var localURL: NSURL!
+        var remotePath: String!
+        
+        if mediaType == kUTTypeMovie as! String {
+            name = NSUUID().UUIDString + ".MP4"
+            
+            let url = info[UIImagePickerControllerMediaURL] as? NSURL
+
+            if picker.sourceType == .Camera {
+                if let path = url?.path {
+                    UISaveVideoAtPathToSavedPhotosAlbum(path, self, nil, nil)
+                }
+            }
+            
+            localURL = FCFileManager.urlForItemAtPath(name)
+            FCFileManager.copyItemAtPath(url?.path, toPath: localURL.path)
+            
+            remotePath = MediaMessage.remotePath(fileName: name, type: .Video)
+        } else {
+            name = NSUUID().UUIDString
+            
+            if picker.sourceType == .Camera {
+                let orgImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+                UIImageWriteToSavedPhotosAlbum(orgImage, nil, nil, nil)
+            }
+            
+            var editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
+            
+            localURL = FCFileManager.urlForItemAtPath(name)
+            
+            editedImage = editedImage.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
+            
+            editedImage.saveToURL(localURL)
+            
+            remotePath = MediaMessage.remotePath(fileName: name, type: .Image)
         }
         
-        var editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
+        if mediaType == kUTTypeMovie as! String {
+            sendMessage(MediaMessage.mediaMessageStr(fileName: name, type: .Video))
+        } else {
+            sendMessage(MediaMessage.mediaMessageStr(fileName: name, type: .Image))
+        }
         
-        let name = NSUUID().UUIDString
-        let url = FCFileManager.urlForItemAtPath(name)
-        
-        editedImage = editedImage.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
-        
-        editedImage.saveToURL(url)
-        
-        sendMessage(MediaMessage.mediaMessageStr(fileName: name, type: .Image))
-        
-        S3Controller.uploadFile(name: name, localPath: url.path!, remotePath: MediaMessage.remotePath(fileName: name, type: .Image), done: { (error) -> Void in
+        S3Controller.uploadFile(name: name, localPath: localURL.path!, remotePath: remotePath, done: { (error) -> Void in
             println("done")
             println(error)
         })
-
     }
     
 //    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {

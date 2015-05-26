@@ -48,6 +48,8 @@ extension Message: JSQMessageData {
                 } else if MediaMessage.mediaMessage(content) == .Voice {
                     let imageName = from?.id == Defaults["myId"].string ? "SenderVoiceNodePlaying" : "ReceiverVoiceNodePlaying"
                     item = JSQVoiceMediaItem(voice: NSData(contentsOfFile: FCFileManager.urlForItemAtPath(name).path!), image: UIImage(named: imageName))
+                } else if MediaMessage.mediaMessage(content) == .Video {
+                    item = TomoVideoMediaItem(fileURL: FCFileManager.urlForItemAtPath(name), isReadyToPlay: true)
                 }
                 
                 item.appliesMediaViewMaskAsOutgoing = from?.id == Defaults["myId"].string
@@ -70,6 +72,8 @@ extension Message: JSQMessageData {
                 } else if MediaMessage.mediaMessage(content) == .Voice {
                     let imageName = from?.id == Defaults["myId"].string ? "SenderVoiceNodePlaying" : "ReceiverVoiceNodePlaying"
                     item = JSQVoiceMediaItem(voice: nil, image: UIImage(named: imageName))
+                } else if MediaMessage.mediaMessage(content) == .Video {
+                    item = TomoVideoMediaItem(fileURL: FCFileManager.urlForItemAtPath(name), isReadyToPlay: true)
                 }
                 
                 item.appliesMediaViewMaskAsOutgoing = from?.id == Defaults["myId"].string

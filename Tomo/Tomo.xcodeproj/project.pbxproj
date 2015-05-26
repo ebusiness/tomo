@@ -219,6 +219,8 @@
 		29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA44921AD4EEBB009EB177 /* Tab.storyboard */; };
 		29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */; };
 		29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
+		29DCEFE91B14519300A7C7AF /* TomoVideoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */; };
+		29DCEFEA1B1459F200A7C7AF /* TomoVideoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */; };
 		29DF4CD41AE0EDB7003A4962 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD31AE0EDB7003A4962 /* Notification.swift */; };
 		29DF4CD61AE0EDC4003A4962 /* _Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD51AE0EDC4003A4962 /* _Notification.swift */; };
 		29DF4CD71AE0EFA2003A4962 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF4CD31AE0EDB7003A4962 /* Notification.swift */; };
@@ -402,6 +404,7 @@
 		29CA44921AD4EEBB009EB177 /* Tab.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Tab.storyboard; path = Classes/Tab.storyboard; sourceTree = "<group>"; };
 		29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
+		29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TomoVideoMediaItem.swift; sourceTree = "<group>"; };
 		29DF4CD31AE0EDB7003A4962 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		29DF4CD51AE0EDC4003A4962 /* _Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Notification.swift; sourceTree = "<group>"; };
 		29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SocketController.swift; path = Classes/SocketController.swift; sourceTree = "<group>"; };
@@ -663,6 +666,7 @@
 		296040441ACE669900D2A338 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */,
 				293EB4231B132B06006BAF27 /* JSQVoiceMediaItem.h */,
 				293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */,
 				290842FB1B09C9140037A6CD /* ExSwift */,
@@ -1091,6 +1095,7 @@
 				293EB4251B132B06006BAF27 /* JSQVoiceMediaItem.m in Sources */,
 				297163B81AEA2422005EA9C0 /* GroupHeaderView.swift in Sources */,
 				2901351A1AC3A79500BBFE29 /* _User.swift in Sources */,
+				29DCEFE91B14519300A7C7AF /* TomoVideoMediaItem.swift in Sources */,
 				17B993011AF353D000204E97 /* amrFileCodec.m in Sources */,
 				290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */,
 				295466E41B0C7FA300AAD608 /* _Announcements.swift in Sources */,
@@ -1251,6 +1256,7 @@
 				290843201B09CA450037A6CD /* Int.swift in Sources */,
 				292B9CD61AE6243500604986 /* Station.swift in Sources */,
 				172EADD01ACC1C850039F42E /* _Message.swift in Sources */,
+				29DCEFEA1B1459F200A7C7AF /* TomoVideoMediaItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
