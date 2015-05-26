@@ -20,8 +20,11 @@ extension MessageViewController {
         let icon_speaker = UIImage(named: "icon_speaker")!
         let icon_keyboard = UIImage(named: "icon_keyboard")!
         
-        self.icon_speaker_normal = icon_speaker.jsq_imageMaskedWithColor(UIColor.lightGrayColor())
-        self.icon_speaker_highlighted = icon_speaker.jsq_imageMaskedWithColor(UIColor.darkGrayColor())
+//        self.icon_speaker_normal = icon_speaker.jsq_imageMaskedWithColor(UIColor.lightGrayColor())
+//        self.icon_speaker_highlighted = icon_speaker.jsq_imageMaskedWithColor(UIColor.darkGrayColor())
+        self.icon_speaker_normal = UIImage.jsq_defaultAccessoryImage().jsq_imageMaskedWithColor(UIColor.lightGrayColor())
+        self.icon_speaker_highlighted = UIImage.jsq_defaultAccessoryImage().jsq_imageMaskedWithColor(UIColor.darkGrayColor())
+        
         self.icon_keyboard_normal = icon_keyboard.jsq_imageMaskedWithColor(UIColor.lightGrayColor())
         self.icon_keyboard_highlighted = icon_keyboard.jsq_imageMaskedWithColor(UIColor.darkGrayColor())
         
@@ -41,24 +44,69 @@ extension MessageViewController {
     // on Press
     //
     override func didPressAccessoryButton(sender: UIButton!) {
-        if btn_voice == nil {
-            setVoiceButton()
-        }
-        if btn_voice?.tag == 0{
-            btn_voice?.tag = 1
-            self.changeAccessoryButtonImage(1)
-            self.inputToolbar!.contentView.addSubview(btn_voice!)
-            textView_text = self.inputToolbar!.contentView.textView.text
-            self.inputToolbar!.contentView.textView.text = ""
-            self.inputToolbar!.contentView.textView.resignFirstResponder()
-        }else{
+        //録音モード
+        if btn_voice?.tag == 1 {
             btn_voice?.tag = 0
             self.changeAccessoryButtonImage(0)
             self.inputToolbar!.contentView.textView.text = textView_text
             textView_text = ""
             btn_voice?.removeFromSuperview()
             self.inputToolbar!.contentView.textView.becomeFirstResponder()
+            return
         }
+        
+        let atvc = Util.createViewControllerWithIdentifier("AlertTableView", storyboardName: "ActionSheet") as! AlertTableViewController
+        
+        let cameraAction = AlertTableViewController.tappenDic(title: "写真/ビデオを撮る",tappen: { (sender) -> () in
+            let picker = UIImagePickerController()
+            picker.sourceType = .Camera
+            //            picker.allowsEditing = true
+            picker.delegate = self
+            picker.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(.Camera)!
+            picker.videoMaximumDuration = 10
+            self.presentViewController(picker, animated: true, completion: nil)
+        })
+        let albumAction = AlertTableViewController.tappenDic(title: "写真/ビデオ ライブラリー",tappen: { (sender) -> () in
+            let picker = UIImagePickerController()
+            picker.sourceType = .PhotoLibrary
+            //            picker.allowsEditing = true
+            picker.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(.PhotoLibrary)!
+            picker.delegate = self
+            self.presentViewController(picker, animated: true, completion: nil)
+        })
+        let voiceAction = AlertTableViewController.tappenDic(title: "音声",tappen: { (sender) -> () in
+            if btn_voice == nil {
+                self.setVoiceButton()
+            }
+            if btn_voice?.tag == 0{
+                btn_voice?.tag = 1
+                self.changeAccessoryButtonImage(1)
+                self.inputToolbar!.contentView.addSubview(btn_voice!)
+                textView_text = self.inputToolbar!.contentView.textView.text
+                self.inputToolbar!.contentView.textView.text = ""
+                self.inputToolbar!.contentView.textView.resignFirstResponder()
+            }
+        })
+        atvc.show(self, data: [cameraAction,albumAction, voiceAction])
+//
+//        if btn_voice == nil {
+//            setVoiceButton()
+//        }
+//        if btn_voice?.tag == 0{
+//            btn_voice?.tag = 1
+//            self.changeAccessoryButtonImage(1)
+//            self.inputToolbar!.contentView.addSubview(btn_voice!)
+//            textView_text = self.inputToolbar!.contentView.textView.text
+//            self.inputToolbar!.contentView.textView.text = ""
+//            self.inputToolbar!.contentView.textView.resignFirstResponder()
+//        }else{
+//            btn_voice?.tag = 0
+//            self.changeAccessoryButtonImage(0)
+//            self.inputToolbar!.contentView.textView.text = textView_text
+//            textView_text = ""
+//            btn_voice?.removeFromSuperview()
+//            self.inputToolbar!.contentView.textView.becomeFirstResponder()
+//        }
     }
     //
     // hold on button

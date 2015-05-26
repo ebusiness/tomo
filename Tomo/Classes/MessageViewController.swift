@@ -48,7 +48,7 @@ class MessageViewController: JSQMessagesViewController {
         
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("gotNewMessage"), name: "GotNewMessage", object: nil)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: Selector("mediaMessageBtnTapped"))
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: Selector("mediaMessageBtnTapped"))
         
         avatarImageBlank = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(named: "avatar"), diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
         
@@ -472,17 +472,17 @@ extension MessageViewController: UIImagePickerControllerDelegate, UINavigationCo
             remotePath = MediaMessage.remotePath(fileName: name, type: .Video)
         } else {
             name = NSUUID().UUIDString
-            
+            let orgImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+
             if picker.sourceType == .Camera {
-                let orgImage = info[UIImagePickerControllerOriginalImage] as! UIImage
                 UIImageWriteToSavedPhotosAlbum(orgImage, nil, nil, nil)
             }
             
-            var editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
+//            var editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
             
             localURL = FCFileManager.urlForItemAtPath(name)
             
-            editedImage = editedImage.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
+            var editedImage = orgImage.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
             
             editedImage.saveToURL(localURL)
             
