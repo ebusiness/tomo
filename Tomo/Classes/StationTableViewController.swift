@@ -8,48 +8,69 @@
 
 import UIKit
 
-class StationTableViewController: BaseViewController {
-
-    @IBOutlet weak var tableView: UITableView!
+class StationTableViewController: BaseTableViewController {
     
-    var frc: NSFetchedResultsController!
-
-    var count: Int! {
-        return frc.fetchedObjects?.count ?? 0
-    }
-    
+    var stations = [Station]()
     var selectedStation: Station?
 
-    var selectedIndex: NSIndexPath? {
-        get {
-            if let selectedStation = selectedStation {
-                return frc.indexPathForObject(selectedStation)
-            }
-            
-            return nil
-        }
-        
-        set(newValue) {
-            if let newValue = newValue {
-                selectedStation = frc.objectAtIndexPath(newValue) as? Station
-            }
-        }
-    }
+    var resultVC: StationResultsTableViewController!
+    var searchController: UISearchController!
+    
+//    var selectedIndex: NSIndexPath? {
+//        get {
+//            if let selectedStation = selectedStation {
+//                return frc.indexPathForObject(selectedStation)
+//            }
+//            
+//            return nil
+//        }
+//        
+//        set(newValue) {
+//            if let newValue = newValue {
+//                selectedStation = frc.objectAtIndexPath(newValue) as? Station
+//            }
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        frc = DBController.stations()
-        frc.delegate = self
+        resultVC = StationResultsTableViewController()
+        searchController = UISearchController(searchResultsController: resultVC)
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.sizeToFit()
+        tableView.tableHeaderView = searchController.searchBar
         
-        scrollToSelectStation()
+        resultVC.tableView.delegate = self
+        
+        searchController.delegate = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+        
+        definesPresentationContext = true
+        
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "StationCell")
+//        frc = DBController.stations()
+//        frc.delegate = self
+//        
+//        scrollToSelectStation()
     }
     
-    func scrollToSelectStation() {
-        if let selectedStation = selectedStation, selectedIndex = selectedIndex {
-            tableView.scrollToRowAtIndexPath(selectedIndex, atScrollPosition: UITableViewScrollPosition.Middle, animated: false)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        ApiController.getStationsHot { (result, error) -> Void in
+            if let result = result {
+                self.stations = result
+                self.tableView.reloadData()
+            }
         }
     }
+//    func scrollToSelectStation() {
+//        if let selectedStation = selectedStation, selectedIndex = selectedIndex {
+//            tableView.scrollToRowAtIndexPath(selectedIndex, atScrollPosition: UITableViewScrollPosition.Middle, animated: false)
+//        }
+//    }
 
 }
 
@@ -57,37 +78,31 @@ class StationTableViewController: BaseViewController {
 
 extension StationTableViewController: UITableViewDataSource, UITableViewDelegate {
   
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return count
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return stations.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("StationCell", forIndexPath: indexPath) as! UITableViewCell
         
-        let station = frc.objectAtIndexPath(indexPath) as! Station
+        let station = stations[indexPath.row]
         
         cell.textLabel?.text = station.name
         
-        if selectedIndex == indexPath {
-            cell.accessoryType = .Checkmark
-        } else {
-            cell.accessoryType = .None
-        }
+//        if selectedIndex == indexPath {
+//            cell.accessoryType = .Checkmark
+//        } else {
+//            cell.accessoryType = .None
+//        }
         
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let station = frc.objectAtIndexPath(indexPath) as! Station
-        
-        if let selectedIndex = selectedIndex {
-            let cell = tableView.cellForRowAtIndexPath(selectedIndex) as UITableViewCell?
-            cell?.accessoryType = .None
-        }
-        
-        selectedIndex = indexPath
+        selectedStation = tableView == self.tableView ? stations[indexPath.row] : resultVC.stations[indexPath.row]
+
         let cell = tableView.cellForRowAtIndexPath(indexPath) as UITableViewCell?
         cell?.accessoryType = .Checkmark
         
@@ -97,12 +112,36 @@ extension StationTableViewController: UITableViewDataSource, UITableViewDelegate
     }
 }
 
-// MARK: - NSFetchedResultsControllerDelegate
+// MARK: - UISearchBarDelegate
 
-extension StationTableViewController: NSFetchedResultsControllerDelegate {
+extension StationTableViewController: UISearchBarDelegate {
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        tableView.reloadData()
+    
+}
+
+// MARK: - UISearchControllerDelegate
+
+extension StationTableViewController: UISearchControllerDelegate {
+    
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension StationTableViewController: UISearchResultsUpdating {
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        var searchText = searchController.searchBar.text
+        searchText = searchText.trimmed()
+        
+        if searchText.length > 0 {
+            ApiController.getStations(name: ".*\(searchText).*", done: { (result, error) -> Void in
+                if let result = result {
+                    self.resultVC.stations = result
+                    self.resultVC.tableView.reloadData()
+                }
+            })
+        }
     }
 }
+
 

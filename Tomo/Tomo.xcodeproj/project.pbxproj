@@ -128,6 +128,7 @@
 		2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */; };
 		2942CCD31ACCF761007CDC97 /* NewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCD21ACCF761007CDC97 /* NewsfeedViewController.swift */; };
 		2942CCD51ACD03BF007CDC97 /* NewsfeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCD41ACD03BF007CDC97 /* NewsfeedCell.swift */; };
+		29446DC11B156C960062CA7F /* StationResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29446DC01B156C960062CA7F /* StationResultsTableViewController.swift */; };
 		294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BA32E1AC3D79100089204 /* ApiControllerTests.swift */; };
 		294EF0B01B01D54500A94A3F /* RadioButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294EF0AF1B01D54500A94A3F /* RadioButtonCell.swift */; };
 		295272D01AD51B2300FC7833 /* S3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295272CF1AD51B2300FC7833 /* S3.swift */; };
@@ -327,6 +328,7 @@
 		2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegLoginViewController.swift; path = Classes/RegLoginViewController.swift; sourceTree = "<group>"; };
 		2942CCD21ACCF761007CDC97 /* NewsfeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsfeedViewController.swift; path = Classes/NewsfeedViewController.swift; sourceTree = "<group>"; };
 		2942CCD41ACD03BF007CDC97 /* NewsfeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsfeedCell.swift; path = Classes/NewsfeedCell.swift; sourceTree = "<group>"; };
+		29446DC01B156C960062CA7F /* StationResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationResultsTableViewController.swift; path = Classes/StationResultsTableViewController.swift; sourceTree = "<group>"; };
 		294BA32E1AC3D79100089204 /* ApiControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiControllerTests.swift; sourceTree = "<group>"; };
 		294EF0AF1B01D54500A94A3F /* RadioButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RadioButtonCell.swift; path = Classes/RadioButtonCell.swift; sourceTree = "<group>"; };
 		295272CF1AD51B2300FC7833 /* S3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3.swift; path = ../../../S3.swift; sourceTree = "<group>"; };
@@ -816,6 +818,7 @@
 				295466EE1B0DBD5F00AAD608 /* AnnouncementsViewController.swift */,
 				29341A871B0EF86000CB45A2 /* AnnouncementCell.swift */,
 				29341A8A1B0F04EC00CB45A2 /* WebViewController.swift */,
+				29446DC01B156C960062CA7F /* StationResultsTableViewController.swift */,
 			);
 			name = "設定";
 			sourceTree = "<group>";
@@ -1140,6 +1143,7 @@
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
 				2978F5651B05C08000236EA3 /* GroupSettingViewController.swift in Sources */,
 				29A5D1D91ACBE01700D95B77 /* RegPageView.swift in Sources */,
+				29446DC11B156C960062CA7F /* StationResultsTableViewController.swift in Sources */,
 				17B993131AF36CB200204E97 /* Openids.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				290843161B09C9140037A6CD /* Range.swift in Sources */,

@@ -641,14 +641,23 @@ extension ApiController {
 
 extension ApiController {
     
-    class func getStations(done: (NSError?) -> Void) {
-        var param = Dictionary<String, String>()
-        param["name"] = "JR山手線"
+    class func getStationsHot(done: (result: [Station]?, NSError?) -> Void) {
+        getStations(name: nil, done: done)
+    }
+    
+    class func getStations(#name: String?, done: (result: [Station]?, NSError?) -> Void) {
+        var param: Dictionary<String, String>?
+
+        if let name = name {
+            param = ["name" : name]
+        } else {
+            param = nil
+        }
         
-        RKObjectManager.sharedManager().getObjectsAtPath("/mobile/stations", parameters: param, success: { (_, _) -> Void in
-            done(nil)
+        RKObjectManager.sharedManager().getObjectsAtPath("/mobile/stations", parameters: param, success: { (_,mappingResult) -> Void in
+            done(result: mappingResult.array() as? [Station], nil)
             }) { (_, error) -> Void in
-                done(error)
+                done(result: nil, error)
         }
     }
 }
@@ -995,8 +1004,8 @@ extension ApiController {
     
     //station
     private class func getStationMapping(isidonly:Bool)->RKEntityMapping{
-        var mapping = _lineMapping
-        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "stations", toKeyPath: "stations", withMapping: _stationMapping))
+        var mapping = _stationMapping
+//        mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "stations", toKeyPath: "stations", withMapping: _stationMapping))
         
         return mapping
     }

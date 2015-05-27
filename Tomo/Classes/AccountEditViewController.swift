@@ -257,10 +257,8 @@ class AccountEditViewController: BaseTableViewController {
             }
             
             if indexPath.row == 3 {
-                if stationTableViewController == nil {
-                    stationTableViewController = storyboard?.instantiateViewControllerWithIdentifier("StationTableViewController") as? StationTableViewController
-                    stationTableViewController?.selectedStation = DBController.myStation()
-                }
+                stationTableViewController = StationTableViewController()
+                stationTableViewController?.selectedStation = DBController.myStation()
                 
                 navigationController?.pushViewController(stationTableViewController!, animated: true)
             }

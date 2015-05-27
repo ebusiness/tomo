@@ -102,7 +102,7 @@ class AddPostViewController: BaseTableViewController {
             
             //station
             if indexPath.row == 2 {
-                stationListVC = Util.createViewControllerWithIdentifier("StationTableViewController", storyboardName: "Setting") as? StationTableViewController
+                stationListVC = StationTableViewController()
                 stationListVC?.selectedStation = selectedStation
                 
                 navigationController?.pushViewController(stationListVC!, animated: true)

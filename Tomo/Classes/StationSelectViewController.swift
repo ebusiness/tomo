@@ -17,8 +17,8 @@ class StationSelectViewController: StationTableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        ApiController.getStations { (error) -> Void in
-        }
+//        ApiController.getStations { (error) -> Void in
+//        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -28,9 +28,9 @@ class StationSelectViewController: StationTableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("StationCell", forIndexPath: indexPath) as! UITableViewCell
         
-        let station = frc.objectAtIndexPath(indexPath) as! Station
-        
-        cell.textLabel?.text = station.name
+//        let station = frc.objectAtIndexPath(indexPath) as! Station
+//        
+//        cell.textLabel?.text = station.name
         
         return cell
     }
@@ -38,23 +38,23 @@ class StationSelectViewController: StationTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let station = frc.objectAtIndexPath(indexPath) as! Station
-        
-        Util.showHUD(maskType: .None)
-        
-        ApiController.getUsers(key: SearchType.Station.searchKey(), value: station.name!, done: { (users, error) -> Void in
-            if let users = users {
-                if users.count > 0 {
-                    let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController
-                    vc.displayMode = .SearchResult
-                    vc.users = users
-                    self.navigationController?.pushViewController(vc, animated: true)
-                    return
-                }
-            }
-            
-            Util.showInfo("見つかりませんでした。")
-        })
+//        let station = frc.objectAtIndexPath(indexPath) as! Station
+//        
+//        Util.showHUD(maskType: .None)
+//        
+//        ApiController.getUsers(key: SearchType.Station.searchKey(), value: station.name!, done: { (users, error) -> Void in
+//            if let users = users {
+//                if users.count > 0 {
+//                    let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController
+//                    vc.displayMode = .SearchResult
+//                    vc.users = users
+//                    self.navigationController?.pushViewController(vc, animated: true)
+//                    return
+//                }
+//            }
+//            
+//            Util.showInfo("見つかりませんでした。")
+//        })
 
     }
     
