@@ -467,6 +467,10 @@ extension ApiController {
         param["birthDay"] = user.birthDay?.toString(format: DateFormat.Custom("yyyy/MM/dd"))
         param["gender"] = user.gender
         
+        if user.stations.count > 0 {
+            param["stations[\(0)]"] = (user.stations.array.first as? Station)?.id
+        }
+        
         let id = user.id!
 
         RKObjectManager.sharedManager().patchObject(nil,path:"/users/\(id)", parameters: param, success: { (_, _) -> Void in
@@ -796,7 +800,7 @@ extension ApiController {
         //openidInfo
         addCommonResponseDescriptor(_openidsMapping, method: .GET, pathPattern: "/mobile/user/openidinfo", keyPath: nil, statusCodes: nil)
         //UserInfo
-        addCommonResponseDescriptor(usermapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getUserMapping(stationIdOnly: false), method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(usermapping, method: .PATCH, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
         //newsfeed
         addCommonResponseDescriptor(getPostMapping(false), method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: nil)
@@ -885,7 +889,7 @@ extension ApiController {
         return mapping
     }
     //user
-    private class func getUserMapping()->RKEntityMapping{
+    private class func getUserMapping(stationIdOnly: Bool = true)->RKEntityMapping{
         var mapping = _userMapping
         mapping.addPropertyMappingById("User",fromKey: "friends",toKeyPath: "friends")
         mapping.addPropertyMappingById("User",fromKey: "invited",toKeyPath: "invited")
@@ -894,7 +898,11 @@ extension ApiController {
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "discover", toKeyPath: "discover", withMapping: _groupMapping))
         mapping.addPropertyMappingById("Post",fromKey: "posts",toKeyPath: "posts")
         mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "devices", toKeyPath: "devices", withMapping: _devicesMapping))
-        
+        if stationIdOnly {
+            mapping.addPropertyMappingById("Station",fromKey: "stations",toKeyPath: "stations")
+        } else {
+            mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "stations", toKeyPath: "stations", withMapping: _stationMapping))
+        }
         return mapping
     }
     //post

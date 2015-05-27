@@ -12,30 +12,24 @@ class StationResultsTableViewController: BaseTableViewController {
 
     var stations = [Station]()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "StationCell")
-    }
-    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return stations.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("StationCell", forIndexPath: indexPath) as! UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier("StationCell") as? UITableViewCell
+        if cell == nil {
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "StationCell")
+        }
         
         let station = stations[indexPath.row]
         
-        cell.textLabel?.text = station.name
+        cell!.textLabel?.text = station.name
+        cell!.detailTextLabel?.text = station.pref_name
         
-        //        if selectedIndex == indexPath {
-        //            cell.accessoryType = .Checkmark
-        //        } else {
-        //            cell.accessoryType = .None
-        //        }
+        cell!.detailTextLabel?.textColor = UIColor.lightGrayColor()
         
-        return cell
+        return cell!
     }
 
 }

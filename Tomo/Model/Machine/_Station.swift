@@ -9,6 +9,8 @@ enum StationAttributes: String {
     case lat = "lat"
     case lon = "lon"
     case name = "name"
+    case pref = "pref"
+    case pref_name = "pref_name"
     case zipcode = "zipcode"
 }
 
@@ -66,6 +68,16 @@ class _Station: NSManagedObject {
     var name: String?
 
     // func validateName(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var pref: String?
+
+    // func validatePref(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var pref_name: String?
+
+    // func validatePref_name(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var zipcode: String?

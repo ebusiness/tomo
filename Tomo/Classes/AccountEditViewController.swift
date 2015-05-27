@@ -87,6 +87,8 @@ class AccountEditViewController: BaseTableViewController {
         if let stationTableViewController = stationTableViewController, station = stationTableViewController.selectedStation {
             user.nearestSt = station.name
             
+            user.stations = NSOrderedSet(array: [station])
+            
             DBController.save()
             ApiController.editUser(user, done: { (error) -> Void in
                 

@@ -110,6 +110,8 @@
         <attribute name="lat" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lon" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pref" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pref_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zipcode" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="line" optional="YES" maxCount="1" deletionRule="Nullify" ordered="YES" destinationEntity="Line" inverseName="stations" inverseEntity="Line" syncable="YES"/>
     </entity>
@@ -150,6 +152,7 @@
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Message" inverseName="from" inverseEntity="Message" syncable="YES"/>
         <relationship name="messages_to" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Message" inverseName="to" inverseEntity="Message" syncable="YES"/>
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" inverseName="owner" inverseEntity="Post" syncable="YES"/>
+        <relationship name="stations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Station" syncable="YES"/>
     </entity>
     <elements>
         <element name="Announcements" positionX="-1395" positionY="-126" width="128" height="150"/>
@@ -163,7 +166,7 @@
         <element name="Notification" positionX="-1395" positionY="-126" width="128" height="150"/>
         <element name="Openids" positionX="-1395" positionY="-126" width="128" height="135"/>
         <element name="Post" positionX="-857" positionY="234" width="128" height="210"/>
-        <element name="Station" positionX="-1395" positionY="-126" width="128" height="150"/>
-        <element name="User" positionX="-1217" positionY="-270" width="128" height="30"/>
+        <element name="Station" positionX="-1395" positionY="-126" width="128" height="180"/>
+        <element name="User" positionX="-1217" positionY="-270" width="128" height="600"/>
     </elements>
 </model>

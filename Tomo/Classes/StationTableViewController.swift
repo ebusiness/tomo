@@ -8,7 +8,13 @@
 
 import UIKit
 
+enum StationTableDisplayMode {
+    case Account, SearchCondition, SelectionOnly
+}
+
 class StationTableViewController: BaseTableViewController {
+    
+    var displayMode = StationTableDisplayMode.Account
     
     var stations = [Station]()
     var selectedStation: Station?
@@ -16,24 +22,12 @@ class StationTableViewController: BaseTableViewController {
     var resultVC: StationResultsTableViewController!
     var searchController: UISearchController!
     
-//    var selectedIndex: NSIndexPath? {
-//        get {
-//            if let selectedStation = selectedStation {
-//                return frc.indexPathForObject(selectedStation)
-//            }
-//            
-//            return nil
-//        }
-//        
-//        set(newValue) {
-//            if let newValue = newValue {
-//                selectedStation = frc.objectAtIndexPath(newValue) as? Station
-//            }
-//        }
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if displayMode == .SelectionOnly {
+            return
+        }
         
         resultVC = StationResultsTableViewController()
         searchController = UISearchController(searchResultsController: resultVC)
@@ -48,16 +42,14 @@ class StationTableViewController: BaseTableViewController {
         searchController.searchBar.delegate = self
         
         definesPresentationContext = true
-        
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "StationCell")
-//        frc = DBController.stations()
-//        frc.delegate = self
-//        
-//        scrollToSelectStation()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if displayMode == .SelectionOnly {
+            return
+        }
         
         ApiController.getStationsHot { (result, error) -> Void in
             if let result = result {
@@ -66,12 +58,7 @@ class StationTableViewController: BaseTableViewController {
             }
         }
     }
-//    func scrollToSelectStation() {
-//        if let selectedStation = selectedStation, selectedIndex = selectedIndex {
-//            tableView.scrollToRowAtIndexPath(selectedIndex, atScrollPosition: UITableViewScrollPosition.Middle, animated: false)
-//        }
-//    }
-
+    
 }
 
 // MARK: - UITableView
@@ -83,19 +70,19 @@ extension StationTableViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("StationCell", forIndexPath: indexPath) as! UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier("StationCell") as? UITableViewCell
+        if cell == nil {
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "StationCell")
+        }
         
         let station = stations[indexPath.row]
         
-        cell.textLabel?.text = station.name
+        cell!.textLabel?.text = station.name
+        cell!.detailTextLabel?.text = station.pref_name
         
-//        if selectedIndex == indexPath {
-//            cell.accessoryType = .Checkmark
-//        } else {
-//            cell.accessoryType = .None
-//        }
+        cell!.detailTextLabel?.textColor = UIColor.lightGrayColor()
         
-        return cell
+        return cell!
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -103,11 +90,34 @@ extension StationTableViewController: UITableViewDataSource, UITableViewDelegate
         
         selectedStation = tableView == self.tableView ? stations[indexPath.row] : resultVC.stations[indexPath.row]
 
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as UITableViewCell?
-        cell?.accessoryType = .Checkmark
+        if displayMode == .Account || displayMode == .SelectionOnly {
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as UITableViewCell?
+            cell?.accessoryType = .Checkmark
+            
+            gcd.async(.Main, delay: 0.3) { () -> () in
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+        }
         
-        gcd.async(.Main, delay: 0.3) { () -> () in
-            self.navigationController?.popViewControllerAnimated(true)
+        if displayMode == .SearchCondition {
+            Util.showHUD(maskType: .None)
+    
+            ApiController.getUsers(key: SearchType.Station.searchKey(), value: selectedStation!.name!, done: { (users, error) -> Void in
+                if let users = users {
+                    if users.count > 0 {
+                        let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController
+                        vc.displayMode = .SearchResult
+                        vc.users = users
+                        
+                        Util.dismissHUD()
+                        
+                        self.navigationController?.pushViewController(vc, animated: true)
+                        return
+                    }
+                }
+                
+                Util.showInfo("見つかりませんでした。")
+            })
         }
     }
 }

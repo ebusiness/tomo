@@ -14,5 +14,9 @@
 	<string>lat</string>
 	<key>_id</key>
 	<string>id</string>
+	<key>pref</key>
+	<string>pref</string>
+	<key>pref_name</key>
+	<string>pref_name</string>
 </dict>
 </plist>

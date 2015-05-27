@@ -107,9 +107,9 @@ class RegSignUpViewController: BaseViewController {
             }
         }
         
-        if emailTF.text.isEmail() == false {
-            return false
-        }
+//        if emailTF.text.isEmail() == false {
+//            return false
+//        }
         
         return true
     }
