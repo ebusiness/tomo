@@ -246,6 +246,58 @@
             </objects>
             <point key="canvasLocation" x="1087" y="445"/>
         </scene>
+        <!--AlertOK View Controller-->
+        <scene sceneID="SEK-lV-Xnh">
+            <objects>
+                <viewController storyboardIdentifier="AlertView" id="uZS-W4-8fc" customClass="AlertOKViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dLQ-67-p4p"/>
+                        <viewControllerLayoutGuide type="bottom" id="dcB-Wy-F4O"/>
+                    </layoutGuides>
+                    <view key="view" alpha="0.89999997615814209" contentMode="scaleToFill" id="Ung-cO-aLA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11Z-bW-KLd">
+                                <rect key="frame" x="10" y="30" width="300" height="444"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QLd-xK-WT7">
+                                <rect key="frame" x="16" y="504" width="294" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="ybp-73-bHo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="はい" backgroundImage="btn_footer_bg_blue">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="confirmTappen:" destination="uZS-W4-8fc" eventType="touchUpInside" id="x93-HM-4UQ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QLd-xK-WT7" firstAttribute="top" secondItem="11Z-bW-KLd" secondAttribute="bottom" constant="30" id="21Z-jb-oug"/>
+                            <constraint firstItem="11Z-bW-KLd" firstAttribute="leading" secondItem="QLd-xK-WT7" secondAttribute="leading" constant="-6" id="G7d-kH-baV"/>
+                            <constraint firstAttribute="trailing" secondItem="11Z-bW-KLd" secondAttribute="trailing" constant="10" id="ipA-Ea-tTP"/>
+                            <constraint firstItem="11Z-bW-KLd" firstAttribute="trailing" secondItem="QLd-xK-WT7" secondAttribute="trailing" id="kVH-rM-Cmo"/>
+                            <constraint firstItem="dcB-Wy-F4O" firstAttribute="top" secondItem="QLd-xK-WT7" secondAttribute="bottom" constant="20" id="ko0-c6-22A"/>
+                            <constraint firstItem="11Z-bW-KLd" firstAttribute="top" secondItem="Ung-cO-aLA" secondAttribute="top" constant="30" id="mjk-jp-DsW"/>
+                            <constraint firstItem="11Z-bW-KLd" firstAttribute="leading" secondItem="Ung-cO-aLA" secondAttribute="leading" constant="10" id="zGM-fA-Ys9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="content" destination="11Z-bW-KLd" id="S44-ik-BjM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3gf-tJ-FXp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1448" y="445"/>
+        </scene>
     </scenes>
     <resources>
         <image name="btn_footer_bg_blue" width="10" height="40"/>

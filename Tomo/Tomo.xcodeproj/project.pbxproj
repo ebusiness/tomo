@@ -236,6 +236,7 @@
 		D0ACAE5C1B0AE0CA00AA9907 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */; };
 		D0D8BCA91B0C76EE00DE7B3F /* AlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8BCA81B0C76EE00DE7B3F /* AlertTableViewController.swift */; };
 		D0D8BCAE1B0D70E600DE7B3F /* AlertConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8BCAD1B0D70E600DE7B3F /* AlertConfirmViewController.swift */; };
+		D0DC4AB81B15C01A00AA4022 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DC4AB71B15C01A00AA4022 /* AlertViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -418,6 +419,7 @@
 		D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = Classes/ShareViewController.swift; sourceTree = "<group>"; };
 		D0D8BCA81B0C76EE00DE7B3F /* AlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertTableViewController.swift; path = Classes/AlertTableViewController.swift; sourceTree = "<group>"; };
 		D0D8BCAD1B0D70E600DE7B3F /* AlertConfirmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertConfirmViewController.swift; path = Classes/AlertConfirmViewController.swift; sourceTree = "<group>"; };
+		D0DC4AB71B15C01A00AA4022 /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertViewController.swift; path = Classes/AlertViewController.swift; sourceTree = "<group>"; };
 		F1801CE63ECC013D9C8C9BB6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -844,6 +846,7 @@
 		D0ACAE5A1B0AE0A600AA9907 /* ActionSheet */ = {
 			isa = PBXGroup;
 			children = (
+				D0DC4AB71B15C01A00AA4022 /* AlertViewController.swift */,
 				D0D8BCAD1B0D70E600DE7B3F /* AlertConfirmViewController.swift */,
 				D0D8BCA81B0C76EE00DE7B3F /* AlertTableViewController.swift */,
 				D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */,
@@ -1122,6 +1125,7 @@
 				295466EF1B0DBD5F00AAD608 /* AnnouncementsViewController.swift in Sources */,
 				296D8BCE1B004C6B0058D400 /* MessageGroupViewController.swift in Sources */,
 				2908430F1B09C9140037A6CD /* Double.swift in Sources */,
+				D0DC4AB81B15C01A00AA4022 /* AlertViewController.swift in Sources */,
 				1712BE381ACE183C000A9C47 /* _Images.swift in Sources */,
 				D0D8BCA91B0C76EE00DE7B3F /* AlertTableViewController.swift in Sources */,
 				296D8BAE1AFC5A020058D400 /* LoadingViewController.swift in Sources */,
