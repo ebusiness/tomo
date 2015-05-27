@@ -128,6 +128,7 @@
 		2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */; };
 		2942CCD31ACCF761007CDC97 /* NewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCD21ACCF761007CDC97 /* NewsfeedViewController.swift */; };
 		2942CCD51ACD03BF007CDC97 /* NewsfeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCD41ACD03BF007CDC97 /* NewsfeedCell.swift */; };
+		2942F1501B15C24500E7FBDC /* JSQVoiceMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */; };
 		29446DC11B156C960062CA7F /* StationResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29446DC01B156C960062CA7F /* StationResultsTableViewController.swift */; };
 		294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BA32E1AC3D79100089204 /* ApiControllerTests.swift */; };
 		294EF0B01B01D54500A94A3F /* RadioButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294EF0AF1B01D54500A94A3F /* RadioButtonCell.swift */; };
@@ -1231,6 +1232,7 @@
 				17455E541AFAF65E0079F648 /* OpenidWXController.swift in Sources */,
 				290843241B09CA4F0037A6CD /* String.swift in Sources */,
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
+				2942F1501B15C24500E7FBDC /* JSQVoiceMediaItem.m in Sources */,
 				2908431B1B09CA370037A6CD /* Character.swift in Sources */,
 				299389491AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				29DF4CD81AE0EFE5003A4962 /* _Notification.swift in Sources */,

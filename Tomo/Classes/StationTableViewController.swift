@@ -82,6 +82,8 @@ extension StationTableViewController: UITableViewDataSource, UITableViewDelegate
         
         cell!.detailTextLabel?.textColor = UIColor.lightGrayColor()
         
+        cell!.imageView!.image = UIImage(named: "hot-icon")
+        
         return cell!
     }
     
