@@ -111,7 +111,7 @@ class AccountEditViewController: BaseTableViewController {
         //住所
         addressTF.text = user.address
         //駅
-        stationLabel.text = user.nearestSt
+        stationLabel.text = (user.stations.array.last as? Station)?.name
         //個人サイト
         siteTF.text = user.webSite
         //Tel
