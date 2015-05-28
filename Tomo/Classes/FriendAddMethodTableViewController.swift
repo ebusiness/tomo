@@ -32,7 +32,7 @@ class FriendAddMethodTableViewController: BaseTableViewController {
         if indexPath.section == 1 {
             if indexPath.row == 0 {
                 let vc = StationTableViewController()
-                vc.displayMode = .SearchCondition
+                vc.displayMode = .FriendAddSelect
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }

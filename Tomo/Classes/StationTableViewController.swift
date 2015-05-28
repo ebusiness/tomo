@@ -9,7 +9,10 @@
 import UIKit
 
 enum StationTableDisplayMode {
-    case Account, SearchCondition, SelectionOnly
+    case Account //account edit
+    case FriendAddSelect //search condition of friend add, go to FriendList after click
+    case MyStationOnly //used by adding new post, no searchbar, back after click
+    case SingleSelection //userd by adding new group, back after click
 }
 
 class StationTableViewController: BaseTableViewController {
@@ -17,15 +20,23 @@ class StationTableViewController: BaseTableViewController {
     var displayMode = StationTableDisplayMode.Account
     
     var stations = [Station]()
-    var selectedStation: Station?
+    var hotStations = [Station]()
+    var myStations = [Station]()
+    var selectedStations = [Station]()
 
+    var selectedStation: Station?
+    
     var resultVC: StationResultsTableViewController!
     var searchController: UISearchController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if displayMode == .SelectionOnly {
+        myStations = DBController.myStations()
+        selectedStations = myStations
+        
+        if displayMode == .MyStationOnly {
+            stations = myStations
             return
         }
         
@@ -47,18 +58,27 @@ class StationTableViewController: BaseTableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if displayMode == .SelectionOnly {
+        if displayMode == .MyStationOnly {
             return
         }
         
         ApiController.getStationsHot { (result, error) -> Void in
             if let result = result {
-                self.stations = result
-                self.tableView.reloadData()
+                self.hotStations = result
+                self.updateUI()
             }
         }
     }
+ 
+    private func mergeStations() {
+        stations = selectedStations.union(myStations)
+        stations = stations.union(hotStations)
+    }
     
+    private func updateUI() {
+        mergeStations()
+        tableView.reloadData()
+    }
 }
 
 // MARK: - UITableView
@@ -81,8 +101,20 @@ extension StationTableViewController: UITableViewDataSource, UITableViewDelegate
         cell!.detailTextLabel?.text = station.pref_name
         
         cell!.detailTextLabel?.textColor = UIColor.lightGrayColor()
+
+        if displayMode == .Account {
+            if selectedStations.contains(station) {
+                cell!.accessoryType = .Checkmark
+            } else {
+                cell!.accessoryType = .None
+            }
+        }
         
-        cell!.imageView!.image = UIImage(named: "hot-icon")
+        if hotStations.contains(station) {
+            cell!.imageView!.image = UIImage(named: "hot-icon")
+        } else {
+            cell!.imageView!.image = nil
+        }
         
         return cell!
     }
@@ -91,9 +123,9 @@ extension StationTableViewController: UITableViewDataSource, UITableViewDelegate
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         selectedStation = tableView == self.tableView ? stations[indexPath.row] : resultVC.stations[indexPath.row]
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as UITableViewCell?
 
-        if displayMode == .Account || displayMode == .SelectionOnly {
-            let cell = tableView.cellForRowAtIndexPath(indexPath) as UITableViewCell?
+        if displayMode == .MyStationOnly || displayMode == .SingleSelection {
             cell?.accessoryType = .Checkmark
             
             gcd.async(.Main, delay: 0.3) { () -> () in
@@ -101,7 +133,7 @@ extension StationTableViewController: UITableViewDataSource, UITableViewDelegate
             }
         }
         
-        if displayMode == .SearchCondition {
+        if displayMode == .FriendAddSelect {
             Util.showHUD(maskType: .None)
     
             ApiController.getUsers(key: SearchType.Station.searchKey(), value: selectedStation!.name!, done: { (users, error) -> Void in
@@ -121,6 +153,20 @@ extension StationTableViewController: UITableViewDataSource, UITableViewDelegate
                 Util.showInfo("見つかりませんでした。")
             })
         }
+        
+        if displayMode == .Account {
+            if selectedStations.contains(selectedStation!) {
+                cell!.accessoryType = .None
+                selectedStations.remove(selectedStation!)
+            } else {
+                cell!.accessoryType = .Checkmark
+                selectedStations.insert(selectedStation!, atIndex: 0)
+            }
+            
+            if tableView != self.tableView {
+                searchController.active = false
+            }
+        }
     }
 }
 
@@ -128,12 +174,15 @@ extension StationTableViewController: UITableViewDataSource, UITableViewDelegate
 
 extension StationTableViewController: UISearchBarDelegate {
     
-    
 }
 
 // MARK: - UISearchControllerDelegate
 
 extension StationTableViewController: UISearchControllerDelegate {
+    
+    func didDismissSearchController(searchController: UISearchController) {
+        updateUI()
+    }
     
 }
 
@@ -149,6 +198,7 @@ extension StationTableViewController: UISearchResultsUpdating {
             ApiController.getStations(name: ".*\(searchText).*", done: { (result, error) -> Void in
                 if let result = result {
                     self.resultVC.stations = result
+                    self.resultVC.selectedStations = self.selectedStations
                     self.resultVC.tableView.reloadData()
                 }
             })

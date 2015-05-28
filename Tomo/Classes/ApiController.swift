@@ -467,8 +467,12 @@ extension ApiController {
         param["birthDay"] = user.birthDay?.toString(format: DateFormat.Custom("yyyy/MM/dd"))
         param["gender"] = user.gender
         
-        if user.stations.count > 0 {
-            param["stations[\(0)]"] = (user.stations.array.first as? Station)?.id
+        if user.stations.count == 0 {
+            param["stations"] = ""
+        }
+        
+        (user.stations.array as! [Station]).each { (i, station) -> () in
+            param["stations[\(i)]"] = station.id
         }
         
         let id = user.id!

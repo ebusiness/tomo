@@ -55,10 +55,8 @@ class GroupAddTableViewController: BaseTableViewController {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         if indexPath.section == 1 {
-            if stationTableViewController == nil {
-                stationTableViewController = StationTableViewController()
-                stationTableViewController?.selectedStation = DBController.myStation()
-            }
+            stationTableViewController = StationTableViewController()
+            stationTableViewController?.displayMode = .SingleSelection
         
             navigationController?.pushViewController(stationTableViewController!, animated: true)
         }

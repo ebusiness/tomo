@@ -103,8 +103,7 @@ class AddPostViewController: BaseTableViewController {
             //station
             if indexPath.row == 2 {
                 stationListVC = StationTableViewController()
-                stationListVC?.stations = DBController.myUser()?.stations.array as! [Station]
-                stationListVC?.displayMode = .SelectionOnly
+                stationListVC?.displayMode = .MyStationOnly
                 
                 navigationController?.pushViewController(stationListVC!, animated: true)
             }

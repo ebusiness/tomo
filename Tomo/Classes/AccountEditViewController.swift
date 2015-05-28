@@ -84,10 +84,10 @@ class AccountEditViewController: BaseTableViewController {
             return
         }
         
-        if let stationTableViewController = stationTableViewController, station = stationTableViewController.selectedStation {
-            user.nearestSt = station.name
+        if let stationTableViewController = stationTableViewController {
+//            user.nearestSt = station.name
             
-            user.stations = NSOrderedSet(array: [station])
+            user.stations = NSOrderedSet(array: stationTableViewController.selectedStations)
             
             DBController.save()
             ApiController.editUser(user, done: { (error) -> Void in
@@ -260,7 +260,7 @@ class AccountEditViewController: BaseTableViewController {
             
             if indexPath.row == 3 {
                 stationTableViewController = StationTableViewController()
-                stationTableViewController?.selectedStation = DBController.myStation()
+//                stationTableViewController?.selectedStation = DBController.myStation()
                 
                 navigationController?.pushViewController(stationTableViewController!, animated: true)
             }

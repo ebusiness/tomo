@@ -11,6 +11,7 @@ import UIKit
 class StationResultsTableViewController: BaseTableViewController {
 
     var stations = [Station]()
+    var selectedStations = [Station]()
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return stations.count
@@ -28,6 +29,8 @@ class StationResultsTableViewController: BaseTableViewController {
         cell!.detailTextLabel?.text = station.pref_name
         
         cell!.detailTextLabel?.textColor = UIColor.lightGrayColor()
+        
+        cell!.accessoryType = selectedStations.contains(station) ? .Checkmark : .None
         
         return cell!
     }

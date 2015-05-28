@@ -109,8 +109,9 @@ class DBController: NSObject {
     
     // MARK: - Station
     
-    class func myStation() -> Station? {
-        return stationByName(myUser()?.nearestSt)
+    class func myStations() -> [Station] {
+//        return stationByName(myUser()?.nearestSt)
+        return myUser()?.stations.array as! [Station]
     }
     
     class func stations() -> NSFetchedResultsController {
