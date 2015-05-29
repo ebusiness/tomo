@@ -103,9 +103,17 @@ class GroupAddTableViewController: BaseTableViewController {
             Util.showHUD(maskType: .Clear)
             
             ApiController.editGroup(groupId: group.id!, param: para, done: { (error) -> Void in
-                Util.dismissHUD()
-                self.navigationController?.popViewControllerAnimated(true)
+                if let path = self.imagePath {
+                    ApiController.changeGroupCover(path, groupId: group.id!, done: { (error) -> Void in
+                        Util.dismissHUD()
+                        self.navigationController?.popViewControllerAnimated(true)
+                    })
+                } else {
+                    Util.dismissHUD()
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
             })
+
         } else {
         
             ApiController.createGroup(titleTF.text, content: content, type: .Public, localImagePath: imagePath, stationId: stationTableViewController?.selectedStation?.id, done: { (groupId, error) -> Void in

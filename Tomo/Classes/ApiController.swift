@@ -553,8 +553,8 @@ extension ApiController {
         param["type"] = type.rawValue
         param["station"] = stationId
         
-        RKObjectManager.sharedManager().postObject(nil, path: "/groups", parameters: param as [NSObject : AnyObject], success: { (_, _) -> Void in
-            done(nil, nil)
+        RKObjectManager.sharedManager().postObject(nil, path: "/groups", parameters: param as [NSObject : AnyObject], success: { (_, result) -> Void in
+            done((result.firstObject as? Group)?.id, nil)
             
             }) { (_, error) -> Void in
                 done(nil, error)
@@ -564,8 +564,6 @@ extension ApiController {
     class func editGroup(#groupId: String, key: String, value: String, done: (NSError?) -> Void) {
         var param = Dictionary<String, String>()
         param[key] = value
-        
-        // TODO: type, image
         
         RKObjectManager.sharedManager().patchObject(nil, path: "/groups/\(groupId)", parameters: param as [NSObject : AnyObject], success: { (_, _) -> Void in
             done(nil)
@@ -590,7 +588,7 @@ extension ApiController {
         S3Controller.uploadFile(name: fileName, localPath: localImagePath, remotePath: remotePath, done: { (error) -> Void in
             if error == nil {
                 self.editGroup(groupId: groupId, key: "cover", value: fileName, done: { (error) -> Void in
-                    
+                    done(error)
                 })
             }
         })
