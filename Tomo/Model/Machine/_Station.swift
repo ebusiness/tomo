@@ -16,6 +16,7 @@ enum StationAttributes: String {
 
 enum StationRelationships: String {
     case line = "line"
+    case user = "user"
 }
 
 @objc
@@ -91,5 +92,35 @@ class _Station: NSManagedObject {
 
     // func validateLine(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
+    @NSManaged
+    var user: NSOrderedSet
+
 }
 
+extension _Station {
+
+    func addUser(objects: NSOrderedSet) {
+        let mutable = self.user.mutableCopy() as! NSMutableOrderedSet
+        mutable.unionOrderedSet(objects)
+        self.user = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeUser(objects: NSOrderedSet) {
+        let mutable = self.user.mutableCopy() as! NSMutableOrderedSet
+        mutable.minusOrderedSet(objects)
+        self.user = mutable.copy() as! NSOrderedSet
+    }
+
+    func addUserObject(value: User!) {
+        let mutable = self.user.mutableCopy() as! NSMutableOrderedSet
+        mutable.addObject(value)
+        self.user = mutable.copy() as! NSOrderedSet
+    }
+
+    func removeUserObject(value: User!) {
+        let mutable = self.user.mutableCopy() as! NSMutableOrderedSet
+        mutable.removeObject(value)
+        self.user = mutable.copy() as! NSOrderedSet
+    }
+
+}

@@ -468,7 +468,8 @@ extension ApiController {
         param["gender"] = user.gender
         
         if user.stations.count == 0 {
-            param["stations"] = ""
+            param["stations"] = "[]"
+//            param["stations[0]"] = nil
         }
         
         (user.stations.array as! [Station]).each { (i, station) -> () in

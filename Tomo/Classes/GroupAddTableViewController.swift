@@ -25,7 +25,7 @@ class GroupAddTableViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        stationLabel.text = DBController.myUser()?.nearestSt
+        stationLabel.text = DBController.myStations().first?.name
         
         if let group = group {
             self.navigationItem.rightBarButtonItem?.title = "保存"
