@@ -413,8 +413,10 @@ extension NewsfeedViewController: GroupPostsHeaderCellDelegate {
 
 extension NewsfeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
-        let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+        let orgImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        
+        let image = orgImage.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
         
         let name = NSUUID().UUIDString
         let path = NSTemporaryDirectory() + name

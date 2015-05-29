@@ -52,9 +52,6 @@ class MessageGroupViewController: MessageViewController {
         ApiController.sendMessage(group, to: nil, content: text)
     }
     
-    override func didPressAccessoryButton(sender: UIButton!) {
-    }
-    
     /*
     // MARK: - Navigation
 

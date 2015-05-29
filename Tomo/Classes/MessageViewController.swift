@@ -483,6 +483,7 @@ extension MessageViewController: UIImagePickerControllerDelegate, UINavigationCo
             localURL = FCFileManager.urlForItemAtPath(name)
             
             var editedImage = orgImage.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
+            editedImage = editedImage.normalizedImage()
             
             editedImage.saveToURL(localURL)
             
