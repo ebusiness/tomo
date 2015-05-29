@@ -117,6 +117,7 @@ class MessageViewController: JSQMessagesViewController {
         super.viewWillAppear(animated)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("downloadMediaDone"), name: "NotificationDownloadMediaDone", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("gotNewMessage"), name: kNotificationGotNewMessage, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -142,6 +143,10 @@ class MessageViewController: JSQMessagesViewController {
     }
     
     // MARK: - Notification
+    
+    func gotNewMessage() {
+        DBController.makeAllMessageRead(friend)
+    }
     
     func downloadMediaDone() {
         collectionView.reloadData()

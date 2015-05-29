@@ -136,7 +136,7 @@ extension StationTableViewController: UITableViewDataSource, UITableViewDelegate
         if displayMode == .FriendAddSelect {
             Util.showHUD(maskType: .None)
     
-            ApiController.getUsers(key: SearchType.Station.searchKey(), value: selectedStation!.name!, done: { (users, error) -> Void in
+            ApiController.getUsers(key: SearchType.Station.searchKey(), value: selectedStation!.id!, done: { (users, error) -> Void in
                 if let users = users {
                     if users.count > 0 {
                         let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController

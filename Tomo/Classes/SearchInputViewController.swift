@@ -19,7 +19,7 @@ enum SearchType: String {
         case .ID:
             return "email"
         case .Station:
-            return "nearestSt"
+            return "stations"
         }
     }
 }
