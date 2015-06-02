@@ -190,7 +190,7 @@ extension ApiController {
 //    }
 
     
-    class func addPost(imageNames: [String], sizes: [CGSize], content: String, groupId: String?, stationId: String?, done: (NSError?) -> Void) {
+    class func addPost(imageNames: [String], sizes: [CGSize], content: String, groupId: String?, stationId: String?, location: CLLocation?, done: (NSError?) -> Void) {
         var param = Dictionary<String, String>()
         param["content"] = content
         
@@ -206,6 +206,11 @@ extension ApiController {
         
         if let stationId = stationId {
             param["station"] = stationId
+        }
+        
+        if let location = location {
+            param["latitude"] = String(stringInterpolationSegment: location.coordinate.latitude);
+            param["longitude"] = String(stringInterpolationSegment: location.coordinate.longitude);
         }
         
         createPosts(param, done: done)

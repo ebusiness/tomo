@@ -238,6 +238,7 @@
 		D0D8BCAE1B0D70E600DE7B3F /* AlertConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8BCAD1B0D70E600DE7B3F /* AlertConfirmViewController.swift */; };
 		D0DC4AB81B15C01A00AA4022 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DC4AB71B15C01A00AA4022 /* AlertViewController.swift */; };
 		D0F9C0F41B1D88FD00594A9D /* OneShotLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F9C0F31B1D88FD00594A9D /* OneShotLocationManager.swift */; };
+		D0F9C0F71B1D8BD200594A9D /* CommonSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F9C0F61B1D8BD200594A9D /* CommonSwitch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -422,6 +423,7 @@
 		D0D8BCAD1B0D70E600DE7B3F /* AlertConfirmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertConfirmViewController.swift; path = Classes/AlertConfirmViewController.swift; sourceTree = "<group>"; };
 		D0DC4AB71B15C01A00AA4022 /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertViewController.swift; path = Classes/AlertViewController.swift; sourceTree = "<group>"; };
 		D0F9C0F31B1D88FD00594A9D /* OneShotLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OneShotLocationManager.swift; path = OneShotLocationManager/OneShotLocationManager.swift; sourceTree = "<group>"; };
+		D0F9C0F61B1D8BD200594A9D /* CommonSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommonSwitch.swift; path = Classes/CommonSwitch.swift; sourceTree = "<group>"; };
 		F1801CE63ECC013D9C8C9BB6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -495,6 +497,7 @@
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
+				D0F9C0F51B1D8B9A00594A9D /* View */,
 				299389561AD3C7CA00043D91 /* ViewController */,
 				299389521AD3C6FB00043D91 /* Controller */,
 				299389531AD3C71500043D91 /* xib&storyboard */,
@@ -865,6 +868,14 @@
 			name = OneShotLocationManager;
 			sourceTree = "<group>";
 		};
+		D0F9C0F51B1D8B9A00594A9D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D0F9C0F61B1D8BD200594A9D /* CommonSwitch.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		D4F3CDABDCA581BFF7D35DBA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1159,6 +1170,7 @@
 				29446DC11B156C960062CA7F /* StationResultsTableViewController.swift in Sources */,
 				17B993131AF36CB200204E97 /* Openids.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
+				D0F9C0F71B1D8BD200594A9D /* CommonSwitch.swift in Sources */,
 				290843161B09C9140037A6CD /* Range.swift in Sources */,
 				D0D8BCAE1B0D70E600DE7B3F /* AlertConfirmViewController.swift in Sources */,
 				2987F1ED1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m in Sources */,

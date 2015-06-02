@@ -45,13 +45,13 @@
                                                     <rect key="frame" x="8" y="8" width="304" height="120"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O1k-1o-9WV">
-                                                            <rect key="frame" x="0.0" y="0.0" width="101.5" height="120"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="102" height="120"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" secondItem="O1k-1o-9WV" secondAttribute="width" multiplier="1:1" priority="999" id="4mr-Tu-Z6W"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="記事を書く" translatesAutoresizingMaskIntoConstraints="NO" id="aBO-HB-vZU">
-                                                            <rect key="frame" x="101" y="0.0" width="202.5" height="120"/>
+                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="記事を書く" translatesAutoresizingMaskIntoConstraints="NO" id="aBO-HB-vZU">
+                                                            <rect key="frame" x="101" y="0.0" width="203" height="120"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -91,8 +91,8 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TyA-AM-iqi">
                                                     <rect key="frame" x="8" y="0.0" width="304" height="44"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="タグ付けする" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="puG-5N-klG">
-                                                            <rect key="frame" x="8" y="12.5" width="102" height="20.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="タグ付けする" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="puG-5N-klG">
+                                                            <rect key="frame" x="8" y="13" width="102" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -122,14 +122,14 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cRn-5X-nJR">
                                                     <rect key="frame" x="8" y="0.0" width="304" height="44"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="位置情報" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3f8-t9-ZQF">
-                                                            <rect key="frame" x="8" y="12.5" width="68" height="20.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="位置情報" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3f8-t9-ZQF">
+                                                            <rect key="frame" x="8" y="13" width="68" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h8L-QQ-wKc">
-                                                            <rect key="frame" x="247" y="6.5" width="51" height="31"/>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h8L-QQ-wKc" customClass="CommonSwitch" customModule="tomo" customModuleProvider="target">
+                                                            <rect key="frame" x="247" y="7" width="51" height="31"/>
                                                         </switch>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -325,6 +325,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="imageView" destination="O1k-1o-9WV" id="blK-dc-4zU"/>
+                        <outlet property="switch_location" destination="h8L-QQ-wKc" id="CiF-sM-I2t"/>
                         <outlet property="textView" destination="aBO-HB-vZU" id="twM-aA-edX"/>
                     </connections>
                 </tableViewController>

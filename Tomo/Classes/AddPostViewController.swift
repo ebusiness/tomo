@@ -12,6 +12,10 @@ class AddPostViewController: BaseTableViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var switch_location: CommonSwitch!
+    
+    var manager: OneShotLocationManager?
+    var location: CLLocation?
     
     var image: UIImage! {
         get {
@@ -35,9 +39,8 @@ class AddPostViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         imageView.image = image
-        
+        self.setLocationSwitch()
         self.navigationItem.rightBarButtonItem?.enabled = false
     }
     
@@ -140,7 +143,7 @@ class AddPostViewController: BaseTableViewController {
             println("done")
             
             if error == nil {
-                ApiController.addPost([name], sizes: [self.image.size], content: self.textView.text, groupId: self.selectedGroup?.id, stationId: self.selectedStation?.id, done: { (error) -> Void in
+                ApiController.addPost([name], sizes: [self.image.size], content: self.textView.text, groupId: self.selectedGroup?.id, stationId: self.selectedStation?.id,location: self.location, done: { (error) -> Void in
                     println(error)
                 })
             }
@@ -177,6 +180,37 @@ extension AddPostViewController: UITextViewDelegate {
             self.navigationItem.rightBarButtonItem?.enabled = true
         } else {
             self.navigationItem.rightBarButtonItem?.enabled = false
+        }
+    }
+}
+
+extension AddPostViewController {
+    // MARK: - Switch
+    func setLocationSwitch(){
+        self.setLocationManager()//default on
+        //switch on
+        switch_location.whenOn = { () -> () in
+            self.setLocationManager()
+        }
+        //switch off
+        switch_location.whenOff = { () -> () in
+            self.location = nil
+        }
+    }
+    // MARK: - OneShotLocationManager
+    func setLocationManager(){
+        manager = OneShotLocationManager()//ios8
+//        self.navigationItem.rightBarButtonItem?.enabled = false
+        manager!.fetchWithCompletion {loc, error in
+        // fetch location or an error
+            if let loc = loc {
+                println(loc)
+                self.location = loc
+//                self.navigationItem.rightBarButtonItem?.enabled = true
+            } else if let err = error {
+                println(err.localizedDescription)
+            }
+            self.manager = nil
         }
     }
 }
