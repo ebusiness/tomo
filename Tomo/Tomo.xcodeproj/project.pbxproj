@@ -1500,6 +1500,7 @@
 					"\"UIKit\"",
 				);
 				PRODUCT_NAME = tomo;
+				PROVISIONING_PROFILE = "74e14230-e2f6-4cf2-b159-fce97c38ee39";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
