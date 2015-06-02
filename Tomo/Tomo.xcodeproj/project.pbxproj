@@ -237,6 +237,7 @@
 		D0D8BCA91B0C76EE00DE7B3F /* AlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8BCA81B0C76EE00DE7B3F /* AlertTableViewController.swift */; };
 		D0D8BCAE1B0D70E600DE7B3F /* AlertConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8BCAD1B0D70E600DE7B3F /* AlertConfirmViewController.swift */; };
 		D0DC4AB81B15C01A00AA4022 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DC4AB71B15C01A00AA4022 /* AlertViewController.swift */; };
+		D0F9C0F41B1D88FD00594A9D /* OneShotLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F9C0F31B1D88FD00594A9D /* OneShotLocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -420,6 +421,7 @@
 		D0D8BCA81B0C76EE00DE7B3F /* AlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertTableViewController.swift; path = Classes/AlertTableViewController.swift; sourceTree = "<group>"; };
 		D0D8BCAD1B0D70E600DE7B3F /* AlertConfirmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertConfirmViewController.swift; path = Classes/AlertConfirmViewController.swift; sourceTree = "<group>"; };
 		D0DC4AB71B15C01A00AA4022 /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertViewController.swift; path = Classes/AlertViewController.swift; sourceTree = "<group>"; };
+		D0F9C0F31B1D88FD00594A9D /* OneShotLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OneShotLocationManager.swift; path = OneShotLocationManager/OneShotLocationManager.swift; sourceTree = "<group>"; };
 		F1801CE63ECC013D9C8C9BB6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -668,6 +670,7 @@
 		296040441ACE669900D2A338 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				D0F9C0F21B1D88F300594A9D /* OneShotLocationManager */,
 				29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */,
 				293EB4231B132B06006BAF27 /* JSQVoiceMediaItem.h */,
 				293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */,
@@ -852,6 +855,14 @@
 				D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */,
 			);
 			name = ActionSheet;
+			sourceTree = "<group>";
+		};
+		D0F9C0F21B1D88F300594A9D /* OneShotLocationManager */ = {
+			isa = PBXGroup;
+			children = (
+				D0F9C0F31B1D88FD00594A9D /* OneShotLocationManager.swift */,
+			);
+			name = OneShotLocationManager;
 			sourceTree = "<group>";
 		};
 		D4F3CDABDCA581BFF7D35DBA /* Frameworks */ = {
@@ -1096,6 +1107,7 @@
 				29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */,
 				2987F1E41AD79D0500AA39CE /* Chat.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
+				D0F9C0F41B1D88FD00594A9D /* OneShotLocationManager.swift in Sources */,
 				293EB4251B132B06006BAF27 /* JSQVoiceMediaItem.m in Sources */,
 				297163B81AEA2422005EA9C0 /* GroupHeaderView.swift in Sources */,
 				2901351A1AC3A79500BBFE29 /* _User.swift in Sources */,

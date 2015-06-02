@@ -1,3 +1,6 @@
 [submodule "Tomo/Vendors/ExSwift"]
 	path = Tomo/Vendors/ExSwift
 	url = https://github.com/pNre/ExSwift.git
+[submodule "Tomo/Vendors/OneShotLocationManager"]
+	path = Tomo/Vendors/OneShotLocationManager
+	url = https://github.com/icanzilb/OneShotLocationManager
