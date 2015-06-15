@@ -4,3 +4,6 @@
 [submodule "Tomo/Vendors/OneShotLocationManager"]
 	path = Tomo/Vendors/OneShotLocationManager
 	url = https://github.com/icanzilb/OneShotLocationManager
+[submodule "Tomo/Vendors/TransitioningDelegate"]
+	path = Tomo/Vendors/TransitioningDelegate
+	url = https://github.com/starboychina/TransitioningDelegate.git
