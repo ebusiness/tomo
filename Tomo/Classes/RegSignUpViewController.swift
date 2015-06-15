@@ -88,11 +88,7 @@ class RegSignUpViewController: BaseViewController {
             //get user detail
             ApiController.getMyInfo({ (error) -> Void in
                 if error == nil{
-                    Util.dismissHUD()
-                    
-                    let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-                    
-                    Util.changeRootViewController(from: self, to: tab)
+                    RegLoginViewController.changeRootToTab(self)
                 }
             })
         }

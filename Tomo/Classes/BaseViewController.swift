@@ -13,6 +13,16 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
+        
+        if let setting_tag = Defaults["setting_tag"].string where setting_tag == "set" {
+        }else{
+            let tagSetting = Util.createViewControllerWithIdentifier("TagSettingController", storyboardName: "Setting") as! TagSettingController
+            tagSetting.submitHandler = {()->() in
+                Defaults["setting_tag"] = "set"
+            }
+            self.presentViewController(tagSetting, animated: true, completion: nil)
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {

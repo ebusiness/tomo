@@ -84,11 +84,7 @@ class RegLoginViewController: BaseViewController {
             //get user detail
             ApiController.getMyInfo({ (error) -> Void in
                 if error == nil{
-                    Util.dismissHUD()
-                    
-                    let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-                    
-                    Util.changeRootViewController(from: self, to: tab)
+                    RegLoginViewController.changeRootToTab(self)
                 }
             })
         }
@@ -130,13 +126,11 @@ class RegLoginViewController: BaseViewController {
                 if let err = error{
                     Util.showError(err)
                 } else {
-                    Util.dismissHUD()
                     if let user = DBController.myUser() {//auto login
                         Defaults["email"] = user.tomoid
                         Defaults["shouldAutoLogin"] = true
                     }
-                    let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-                    Util.changeRootViewController(from: self, to: tab)
+                    RegLoginViewController.changeRootToTab(self)
                 }
             })
         }else{
@@ -171,11 +165,8 @@ class RegLoginViewController: BaseViewController {
                         //get user detail
                         ApiController.getMyInfo({ (error) -> Void in
                             if error == nil{
-                                Util.dismissHUD()
+                                RegLoginViewController.changeRootToTab(self)
                                 
-                                let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-                                
-                                Util.changeRootViewController(from: self, to: tab)
                             }
                         })
                     }
@@ -199,6 +190,12 @@ class RegLoginViewController: BaseViewController {
 //        }
         
         return true
+    }
+    
+    class func changeRootToTab(from:UIViewController){
+        Util.dismissHUD()
+        let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+        Util.changeRootViewController(from: from, to: tab)
     }
     
 }

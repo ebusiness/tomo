@@ -303,6 +303,7 @@ class DBController: NSObject {
         Defaults["email"] = ""
         Defaults["shouldAutoLogin"] = false
         Defaults.remove("didGetMessage")
+        Defaults["setting_tag"] = ""
         
         //remove device
         ApiController.setDeviceInfo(nil, done: { (error) -> Void in
