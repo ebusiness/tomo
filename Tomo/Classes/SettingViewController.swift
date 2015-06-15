@@ -79,9 +79,7 @@ class SettingViewController: BaseTableViewController {
             vc.displayMode = .Account
 
             navigationController?.pushViewController(vc, animated: true)
-        }
-        
-        if cell == logoutCell {
+        }else if cell == logoutCell {
             let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
             
             acvc.show(self, content: "ログアウトしますか？", action: { () -> () in
