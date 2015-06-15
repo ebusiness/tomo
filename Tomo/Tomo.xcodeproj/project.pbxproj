@@ -234,6 +234,8 @@
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		D01EB7B51B2EB4D6002D04A4 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01EB7B41B2EB4D6002D04A4 /* TransitionManager.swift */; };
 		D01EB7B71B2EB505002D04A4 /* TagSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01EB7B61B2EB505002D04A4 /* TagSettingController.swift */; };
+		D01EB7EF1B2EEACB002D04A4 /* BubbleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01EB7EE1B2EEACB002D04A4 /* BubbleTransition.swift */; };
+		D01EB7F11B2EEB43002D04A4 /* TagListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01EB7F01B2EEB43002D04A4 /* TagListController.swift */; };
 		D0ACAE571B0AD98400AA9907 /* ActionSheet.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */; };
 		D0ACAE5C1B0AE0CA00AA9907 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */; };
 		D0D8BCA91B0C76EE00DE7B3F /* AlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8BCA81B0C76EE00DE7B3F /* AlertTableViewController.swift */; };
@@ -421,6 +423,8 @@
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D01EB7B41B2EB4D6002D04A4 /* TransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransitionManager.swift; path = TransitioningDelegate/TransitionManager.swift; sourceTree = "<group>"; };
 		D01EB7B61B2EB505002D04A4 /* TagSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagSettingController.swift; path = Classes/TagSettingController.swift; sourceTree = "<group>"; };
+		D01EB7EE1B2EEACB002D04A4 /* BubbleTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BubbleTransition.swift; path = TransitioningDelegate/BubbleTransition.swift; sourceTree = "<group>"; };
+		D01EB7F01B2EEB43002D04A4 /* TagListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagListController.swift; path = Classes/TagListController.swift; sourceTree = "<group>"; };
 		D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ActionSheet.storyboard; sourceTree = "<group>"; };
 		D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = Classes/ShareViewController.swift; sourceTree = "<group>"; };
 		D0D8BCA81B0C76EE00DE7B3F /* AlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertTableViewController.swift; path = Classes/AlertTableViewController.swift; sourceTree = "<group>"; };
@@ -820,6 +824,7 @@
 		29CA44911AD4DEEA009EB177 /* 設定 */ = {
 			isa = PBXGroup;
 			children = (
+				D01EB7F01B2EEB43002D04A4 /* TagListController.swift */,
 				17EE9A2C1AFC7FE200372134 /* OpenidSwitch.swift */,
 				296D8BB71AFC5A4A0058D400 /* AccountEditViewController.swift */,
 				296D8BB81AFC5A4A0058D400 /* TextViewInputViewController.swift */,
@@ -858,6 +863,7 @@
 		D01EB7B31B2EB4B7002D04A4 /* TransitioningDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				D01EB7EE1B2EEACB002D04A4 /* BubbleTransition.swift */,
 				D01EB7B41B2EB4D6002D04A4 /* TransitionManager.swift */,
 			);
 			name = TransitioningDelegate;
@@ -1149,6 +1155,7 @@
 				2960404F1ACE75C500D2A338 /* AFDateExtension.swift in Sources */,
 				1712BE2E1ACCE809000A9C47 /* Group.swift in Sources */,
 				296D8BAB1AFC59F10058D400 /* BaseViewController.swift in Sources */,
+				D01EB7EF1B2EEACB002D04A4 /* BubbleTransition.swift in Sources */,
 				292B9CD31AE61C4800604986 /* Line.swift in Sources */,
 				178D64A01ACC10B600185368 /* Message.swift in Sources */,
 				17EE9A2D1AFC7FE200372134 /* OpenidSwitch.swift in Sources */,
@@ -1166,6 +1173,7 @@
 				D0DC4AB81B15C01A00AA4022 /* AlertViewController.swift in Sources */,
 				1712BE381ACE183C000A9C47 /* _Images.swift in Sources */,
 				D0D8BCA91B0C76EE00DE7B3F /* AlertTableViewController.swift in Sources */,
+				D01EB7F11B2EEB43002D04A4 /* TagListController.swift in Sources */,
 				D01EB7B71B2EB505002D04A4 /* TagSettingController.swift in Sources */,
 				296D8BAE1AFC5A020058D400 /* LoadingViewController.swift in Sources */,
 				294EF0B01B01D54500A94A3F /* RadioButtonCell.swift in Sources */,
