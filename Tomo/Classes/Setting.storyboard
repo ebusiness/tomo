@@ -48,7 +48,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u16-5e-9bE">
-                                                    <rect key="frame" x="90" y="20" width="42" height="20.5"/>
+                                                    <rect key="frame" x="90" y="20" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -83,8 +83,8 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6yK-rT-dlZ" id="VfY-0X-zab">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="システム公告" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fH-9L-z1H">
-                                                    <rect key="frame" x="15" y="11.5" width="102" height="20.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="システム公告" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fH-9L-z1H">
+                                                    <rect key="frame" x="15" y="12" width="102" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -196,14 +196,14 @@
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a4n-fY-yW5">
-                                                    <rect key="frame" x="246.5" y="6" width="30.5" height="14.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a4n-fY-yW5">
+                                                    <rect key="frame" x="247" y="6" width="31" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hHA-Ee-sla">
-                                                    <rect key="frame" x="10" y="6" width="37.5" height="18"/>
+                                                    <rect key="frame" x="10" y="6" width="38" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -348,7 +348,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="JRu-VC-aa4">
+                            <tableViewSection headerTitle="基本情報" id="JRu-VC-aa4">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Rg0-3j-DVP">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -437,8 +437,8 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DRZ-ux-LZ6" id="2qe-rU-QQ7">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="現場駅" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z2Q-Mr-Fx0" userLabel="駅">
-                                                    <rect key="frame" x="15" y="11" width="51" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="現場" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z2Q-Mr-Fx0" userLabel="駅">
+                                                    <rect key="frame" x="15" y="11" width="34" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -585,19 +585,28 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="814"/>
                     <connections>
+                        <outlet property="addressCell" destination="kji-xC-hUU" id="75H-WI-Kwr"/>
                         <outlet property="addressTF" destination="lMf-tC-LNN" id="KEm-Sm-H7w"/>
                         <outlet property="avatarCell" destination="Cba-kL-0f5" id="6ks-hE-gra"/>
+                        <outlet property="birthdayCell" destination="Rg0-3j-DVP" id="Ccr-az-Ymp"/>
                         <outlet property="birthdayLabel" destination="pNG-Jb-1ei" id="kbe-Sf-xQR"/>
                         <outlet property="idLabel" destination="803-3c-Sgz" id="OD9-Qd-PI2"/>
+                        <outlet property="introductionCell" destination="8mn-cY-K2i" id="Y4G-RK-aOv"/>
                         <outlet property="logoutLabel" destination="uem-l2-bBf" id="24H-Ob-ewM"/>
+                        <outlet property="nameCell" destination="asy-6q-2bO" id="NfF-9X-EO1"/>
                         <outlet property="nameTF" destination="eew-LM-JjE" id="KgN-XG-uoq"/>
                         <outlet property="profileLabel" destination="zBA-aE-omB" id="hVB-aG-MPR"/>
                         <outlet property="profileLabelLeft" destination="GdW-z6-EkP" id="lOp-jI-RGz"/>
+                        <outlet property="sexCell" destination="5KB-QS-5nd" id="hh4-tk-QLm"/>
                         <outlet property="sexLabel" destination="Tx3-vY-kZE" id="5jt-Qd-LfA"/>
+                        <outlet property="siteCell" destination="0Qw-W8-Yd9" id="Wwb-MS-Gtf"/>
                         <outlet property="siteTF" destination="1Wx-5h-FK8" id="fIo-cn-ogT"/>
                         <outlet property="stationCell" destination="DRZ-ux-LZ6" id="wTu-vi-Zab"/>
                         <outlet property="stationLabel" destination="xA6-1H-may" id="Ufm-ha-RRP"/>
+                        <outlet property="statusCell" destination="uhI-qM-h0V" id="GQX-ns-Gsq"/>
+                        <outlet property="telCell" destination="EDj-3T-vrz" id="pq6-Yh-mPE"/>
                         <outlet property="telTF" destination="2ZF-Ig-x0S" id="D61-Iu-XBe"/>
+                        <outlet property="tomoIDCell" destination="P8Y-4f-Yfl" id="3KC-lv-N8b"/>
                         <outlet property="userImage" destination="gxR-CX-QJ3" id="u76-PV-6zx"/>
                     </connections>
                 </tableViewController>
@@ -687,6 +696,7 @@
         <!--Openid-->
         <scene sceneID="Y4f-Hc-bb4">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tw8-p4-jQW" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="8gi-D3-eQJ" userLabel="Openid" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="ZDu-c2-PP2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -753,7 +763,6 @@
                     <navigationItem key="navigationItem" title="Openid" id="Ebm-8A-Rao" userLabel="Openid"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Tw8-p4-jQW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="882" y="-230"/>
         </scene>

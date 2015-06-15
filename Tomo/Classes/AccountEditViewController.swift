@@ -24,8 +24,17 @@ class AccountEditViewController: BaseTableViewController {
     @IBOutlet weak var logoutLabel: UILabel!
     
     @IBOutlet weak var avatarCell: UITableViewCell!
+    @IBOutlet weak var nameCell: UITableViewCell!
+    @IBOutlet weak var tomoIDCell: UITableViewCell!
+    @IBOutlet weak var birthdayCell: UITableViewCell!
+    @IBOutlet weak var sexCell: UITableViewCell!
+    @IBOutlet weak var addressCell: UITableViewCell!
+    @IBOutlet weak var siteCell: UITableViewCell!
+    @IBOutlet weak var telCell: UITableViewCell!
+    @IBOutlet weak var introductionCell: UITableViewCell!
     @IBOutlet weak var stationCell: UITableViewCell!
-    
+    @IBOutlet weak var statusCell: UITableViewCell!
+
     var user: User!
     var path: String?
     
@@ -38,12 +47,14 @@ class AccountEditViewController: BaseTableViewController {
         super.viewDidLoad()
         
         userImage.layer.cornerRadius = userImage.bounds.width / 2
-        
+        statusCell.hidden = true
         if readOnlyMode {
+            statusCell.hidden = false
             if DBController.isInvitedUser(user) || DBController.isFriend(user) {
                 logoutLabel.text = "追加済み"
             } else if user.id == Defaults["myId"].string {
                 logoutLabel.text = "本人"
+                statusCell.hidden = true
             } else {
                 logoutLabel.text = "追加"
             }
@@ -168,112 +179,29 @@ class AccountEditViewController: BaseTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        if readOnlyMode {
-            if indexPath.section != 2 {
-                return
-            }
-            
-            if DBController.isFriend(user) || DBController.isInvitedUser(user) {
-                return
-            }
-            
-            if user.id == Defaults["myId"].string {
-                return
-            }
-            
-            logoutLabel.text = "追加済み"
-            ApiController.invite(user.id!, done: { (error) -> Void in
-                if error == nil {
-                    Util.showSuccess("友達追加リクエストを送信しました。")
-                }
-            })
-            
-            return
-        }
-        
-        if indexPath.section == 0 && indexPath.row == 0 {
-            
-            let atvc = Util.createViewControllerWithIdentifier("AlertTableView", storyboardName: "ActionSheet") as! AlertTableViewController
-            
-            let cameraAction = AlertTableViewController.tappenDic(title: "写真を撮る",tappen: { (sender) -> () in
-                let picker = UIImagePickerController()
-                picker.sourceType = .Camera
-                picker.allowsEditing = true
-                picker.delegate = self
-                self.presentViewController(picker, animated: true, completion: nil)
-            })
-            let albumAction = AlertTableViewController.tappenDic(title: "写真から選択",tappen: { (sender) -> () in
-                let picker = UIImagePickerController()
-                picker.sourceType = .PhotoLibrary
-                picker.allowsEditing = true
-                picker.delegate = self
-                self.presentViewController(picker, animated: true, completion: nil)
-            })
-            atvc.show(self, data: [cameraAction,albumAction])
-        }
-        
-        if indexPath.section == 0 && indexPath.row == 1 {
-            nameTF.becomeFirstResponder()
-        }
-        
-        // MARK: - 誕生日
-        if indexPath.section == 1 && indexPath.row == 0 {
-            ActionSheetDatePicker.showPickerWithTitle("誕生日", datePickerMode: .Date, selectedDate: user.birthDay ?? kBirthdayDefault, minimumDate: kBirthdayMin, maximumDate: kBirthdayMax, doneBlock: { (picker, selectedDate, origin) -> Void in
-                self.user.birthDay = (selectedDate as! NSDate)
-                
-                DBController.save()
-                
-                self.birthdayLabel.text = self.user.birthDay?.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
-                
-                ApiController.editUser(self.user, done: { (error) -> Void in
-                    
-                })
-            }, cancelBlock: nil, origin: view)
-        }
-        
-        // MARK: - 性別
-        if indexPath.section == 1 && indexPath.row == 1 {
-            let rows = ["男","女"]
-            var initRow = 0
-            if let gender = user.gender {
-                initRow = find(rows, gender) ?? 0
-            }
-            
-            ActionSheetStringPicker.showPickerWithTitle("性別", rows: rows, initialSelection: initRow, doneBlock: { (picker, index, value) -> Void in
-                self.user.gender = (value as! String)
-                
-                self.sexLabel.text = self.user.gender
-                
-                DBController.save()
-                
-                ApiController.editUser(self.user, done: { (error) -> Void in
-                    
-                })
-                
-            }, cancelBlock: nil, origin: view)
-        }
-        
-        if indexPath.section == 1 {
-            if indexPath.row == 2 {
-                addressTF.becomeFirstResponder()
-            }
-            
-            if indexPath.row == 3 {
-                stationTableViewController = StationTableViewController()
-//                stationTableViewController?.selectedStation = DBController.myStation()
-                
-                navigationController?.pushViewController(stationTableViewController!, animated: true)
-            }
-            
-            if indexPath.row == 4 {
-                siteTF.becomeFirstResponder()
-            }
-            
-            if indexPath.row == 5 {
-                telTF.becomeFirstResponder()
-            }
-        }
-
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        //　ステータス
+        if cell == statusCell { self.didSelectStatusCell() }
+        //　プロファイル写真
+        else if cell == avatarCell { self.didSelectAvatarCell() }
+        //　名前
+        else if cell == nameCell {  self.didSelectNameCell() }
+        //　tomoID
+        else if cell == tomoIDCell { self.didSelectTomoIDCell() }
+        //　誕生日
+        else if cell == birthdayCell { self.didSelectBirthdayCell() }
+        //　性別
+        else if cell == sexCell { self.didSelectSexCell() }
+        //　住所
+        else if cell == addressCell { self.didSelectAddressCell() }
+        //　現場
+        else if cell == stationCell { self.didSelectStationCell() }
+        //　個人サイト
+        else if cell == siteCell { self.didSelectSiteCell() }
+        //　Tel
+        else if cell == telCell { self.didSelectTelCell() }
+        //　自己紹介
+        else if cell == introductionCell { self.didSelectIntroductionCell() }
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -363,4 +291,110 @@ extension AccountEditViewController: UIImagePickerControllerDelegate, UINavigati
             })
         })
     }
+}
+
+// MARK: - didSelectRowAtIndexPath
+
+extension AccountEditViewController {
+    //　プロファイル写真
+    func didSelectAvatarCell(){
+        let atvc = Util.createViewControllerWithIdentifier("AlertTableView", storyboardName: "ActionSheet") as! AlertTableViewController
+        
+        let cameraAction = AlertTableViewController.tappenDic(title: "写真を撮る",tappen: { (sender) -> () in
+            let picker = UIImagePickerController()
+            picker.sourceType = .Camera
+            picker.allowsEditing = true
+            picker.delegate = self
+            self.presentViewController(picker, animated: true, completion: nil)
+        })
+        let albumAction = AlertTableViewController.tappenDic(title: "写真から選択",tappen: { (sender) -> () in
+            let picker = UIImagePickerController()
+            picker.sourceType = .PhotoLibrary
+            picker.allowsEditing = true
+            picker.delegate = self
+            self.presentViewController(picker, animated: true, completion: nil)
+        })
+        atvc.show(self, data: [cameraAction,albumAction])
+    }
+    //　名前
+    func didSelectNameCell() { nameTF.becomeFirstResponder() }
+    //　tomoID
+    func didSelectTomoIDCell() {  }
+    //　誕生日
+    func didSelectBirthdayCell() {
+        ActionSheetDatePicker.showPickerWithTitle("誕生日", datePickerMode: .Date, selectedDate: user.birthDay ?? kBirthdayDefault, minimumDate: kBirthdayMin, maximumDate: kBirthdayMax, doneBlock: { (picker, selectedDate, origin) -> Void in
+            self.user.birthDay = (selectedDate as! NSDate)
+            
+            DBController.save()
+            
+            self.birthdayLabel.text = self.user.birthDay?.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
+            
+            ApiController.editUser(self.user, done: { (error) -> Void in
+                
+            })
+            }, cancelBlock: nil, origin: view)
+    }
+    //　性別
+    func didSelectSexCell() {
+        let rows = ["男","女"]
+        var initRow = 0
+        if let gender = user.gender {
+            initRow = find(rows, gender) ?? 0
+        }
+        
+        ActionSheetStringPicker.showPickerWithTitle("性別", rows: rows, initialSelection: initRow, doneBlock: { (picker, index, value) -> Void in
+            self.user.gender = (value as! String)
+            
+            self.sexLabel.text = self.user.gender
+            
+            DBController.save()
+            
+            ApiController.editUser(self.user, done: { (error) -> Void in
+                
+            })
+            
+            }, cancelBlock: nil, origin: view)
+ }
+    //　住所
+    func didSelectAddressCell() {
+        addressTF.becomeFirstResponder()
+    }
+    //　現場
+    func didSelectStationCell() {
+        stationTableViewController = StationTableViewController()
+        //                stationTableViewController?.selectedStation = DBController.myStation()
+        
+        navigationController?.pushViewController(stationTableViewController!, animated: true)
+    }
+    //　個人サイト
+    func didSelectSiteCell() {
+        siteTF.becomeFirstResponder()
+    }
+    //　Tel
+    func didSelectTelCell() {
+        telTF.becomeFirstResponder()
+    }
+    //　自己紹介
+    func didSelectIntroductionCell() {  }
+    //　ステータス
+    func didSelectStatusCell(){
+        if readOnlyMode{
+            
+            if DBController.isFriend(user) || DBController.isInvitedUser(user) {
+                return
+            }
+            
+            if user.id == Defaults["myId"].string {
+                return
+            }
+            
+            logoutLabel.text = "追加済み"
+            ApiController.invite(user.id!, done: { (error) -> Void in
+                if error == nil {
+                    Util.showSuccess("友達追加リクエストを送信しました。")
+                }
+            })
+        }
+    }
+    
 }

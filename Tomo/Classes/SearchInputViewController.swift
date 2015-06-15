@@ -17,7 +17,7 @@ enum SearchType: String {
     func searchKey() -> String {
         switch self {
         case .ID:
-            return "email"
+            return "tomoid"
         case .Station:
             return "stations"
         }
@@ -58,6 +58,7 @@ class SearchInputViewController: BaseViewController {
                 if let users = users {
                     if users.count > 0 {
                         let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController
+                        vc.displayMode = .SearchResult
                         vc.users = users
                         self.navigationController?.pushViewController(vc, animated: true)
                         return
