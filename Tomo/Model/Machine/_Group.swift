@@ -26,6 +26,7 @@ enum GroupRelationships: String {
     case posts = "posts"
     case station = "station"
     case stickylist = "stickylist"
+    case tags = "tags"
 }
 
 @objc
@@ -140,6 +141,9 @@ class _Group: NSManagedObject {
 
     @NSManaged
     var stickylist: NSOrderedSet
+
+    @NSManaged
+    var tags: NSSet
 
 }
 
@@ -279,6 +283,34 @@ extension _Group {
         let mutable = self.stickylist.mutableCopy() as! NSMutableOrderedSet
         mutable.removeObject(value)
         self.stickylist = mutable.copy() as! NSOrderedSet
+    }
+
+}
+
+extension _Group {
+
+    func addTags(objects: NSSet) {
+        let mutable = self.tags.mutableCopy() as! NSMutableSet
+        mutable.unionSet(objects as Set<NSObject>)
+        self.tags = mutable.copy() as! NSSet
+    }
+
+    func removeTags(objects: NSSet) {
+        let mutable = self.tags.mutableCopy() as! NSMutableSet
+        mutable.minusSet(objects as Set<NSObject>)
+        self.tags = mutable.copy() as! NSSet
+    }
+
+    func addTagsObject(value: Tag!) {
+        let mutable = self.tags.mutableCopy() as! NSMutableSet
+        mutable.addObject(value)
+        self.tags = mutable.copy() as! NSSet
+    }
+
+    func removeTagsObject(value: Tag!) {
+        let mutable = self.tags.mutableCopy() as! NSMutableSet
+        mutable.removeObject(value)
+        self.tags = mutable.copy() as! NSSet
     }
 
 }

@@ -18,6 +18,7 @@ enum PostRelationships: String {
     case imagesmobile = "imagesmobile"
     case liked = "liked"
     case owner = "owner"
+    case tags = "tags"
 }
 
 @objc
@@ -94,6 +95,9 @@ class _Post: NSManagedObject {
     var owner: User?
 
     // func validateOwner(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var tags: NSSet
 
 }
 
@@ -205,6 +209,34 @@ extension _Post {
         let mutable = self.liked.mutableCopy() as! NSMutableOrderedSet
         mutable.removeObject(value)
         self.liked = mutable.copy() as! NSOrderedSet
+    }
+
+}
+
+extension _Post {
+
+    func addTags(objects: NSSet) {
+        let mutable = self.tags.mutableCopy() as! NSMutableSet
+        mutable.unionSet(objects as Set<NSObject>)
+        self.tags = mutable.copy() as! NSSet
+    }
+
+    func removeTags(objects: NSSet) {
+        let mutable = self.tags.mutableCopy() as! NSMutableSet
+        mutable.minusSet(objects as Set<NSObject>)
+        self.tags = mutable.copy() as! NSSet
+    }
+
+    func addTagsObject(value: Tag!) {
+        let mutable = self.tags.mutableCopy() as! NSMutableSet
+        mutable.addObject(value)
+        self.tags = mutable.copy() as! NSSet
+    }
+
+    func removeTagsObject(value: Tag!) {
+        let mutable = self.tags.mutableCopy() as! NSMutableSet
+        mutable.removeObject(value)
+        self.tags = mutable.copy() as! NSSet
     }
 
 }

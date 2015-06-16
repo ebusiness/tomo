@@ -44,6 +44,7 @@ enum UserRelationships: String {
     case messages_to = "messages_to"
     case posts = "posts"
     case stations = "stations"
+    case tags = "tags"
 }
 
 @objc
@@ -228,6 +229,9 @@ class _User: NSManagedObject {
 
     @NSManaged
     var stations: NSOrderedSet
+
+    @NSManaged
+    var tags: NSSet
 
 }
 
@@ -647,6 +651,34 @@ extension _User {
         let mutable = self.stations.mutableCopy() as! NSMutableOrderedSet
         mutable.removeObject(value)
         self.stations = mutable.copy() as! NSOrderedSet
+    }
+
+}
+
+extension _User {
+
+    func addTags(objects: NSSet) {
+        let mutable = self.tags.mutableCopy() as! NSMutableSet
+        mutable.unionSet(objects as Set<NSObject>)
+        self.tags = mutable.copy() as! NSSet
+    }
+
+    func removeTags(objects: NSSet) {
+        let mutable = self.tags.mutableCopy() as! NSMutableSet
+        mutable.minusSet(objects as Set<NSObject>)
+        self.tags = mutable.copy() as! NSSet
+    }
+
+    func addTagsObject(value: Tag!) {
+        let mutable = self.tags.mutableCopy() as! NSMutableSet
+        mutable.addObject(value)
+        self.tags = mutable.copy() as! NSSet
+    }
+
+    func removeTagsObject(value: Tag!) {
+        let mutable = self.tags.mutableCopy() as! NSMutableSet
+        mutable.removeObject(value)
+        self.tags = mutable.copy() as! NSSet
     }
 
 }

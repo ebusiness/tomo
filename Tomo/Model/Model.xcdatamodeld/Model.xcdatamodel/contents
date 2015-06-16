@@ -50,6 +50,7 @@
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" syncable="YES"/>
         <relationship name="station" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Station" syncable="YES"/>
         <relationship name="stickylist" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="inGroups_sticky" inverseEntity="User" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="groups" inverseEntity="Tag" syncable="YES"/>
     </entity>
     <entity name="Images" representedClassName="Images" syncable="YES">
         <attribute name="height" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -103,6 +104,7 @@
         <relationship name="imagesmobile" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Images" syncable="YES"/>
         <relationship name="liked" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="liked_posts" inverseEntity="User" syncable="YES"/>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="posts" inverseEntity="User" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="posts" inverseEntity="Tag" syncable="YES"/>
     </entity>
     <entity name="Station" representedClassName="Station" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
@@ -115,6 +117,18 @@
         <attribute name="zipcode" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="line" optional="YES" maxCount="1" deletionRule="Nullify" ordered="YES" destinationEntity="Line" inverseName="stations" inverseEntity="Line" syncable="YES"/>
         <relationship name="user" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="User" inverseName="stations" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Tag" representedClassName="Tag" syncable="YES">
+        <attribute name="count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="logicDelete" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wikis" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="tags" inverseEntity="Group" syncable="YES"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Post" inverseName="tags" inverseEntity="Post" syncable="YES"/>
+        <relationship name="users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="tags" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
@@ -154,20 +168,22 @@
         <relationship name="messages_to" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Message" inverseName="to" inverseEntity="Message" syncable="YES"/>
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" inverseName="owner" inverseEntity="Post" syncable="YES"/>
         <relationship name="stations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Station" inverseName="user" inverseEntity="Station" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="users" inverseEntity="Tag" syncable="YES"/>
     </entity>
     <elements>
         <element name="Announcements" positionX="-1395" positionY="-126" width="128" height="150"/>
         <element name="Chat" positionX="-1395" positionY="-126" width="128" height="30"/>
         <element name="Comments" positionX="-1359" positionY="-90" width="128" height="135"/>
         <element name="Devices" positionX="-1368" positionY="-99" width="128" height="105"/>
-        <element name="Group" positionX="-551" positionY="-106" width="128" height="330"/>
+        <element name="Group" positionX="-551" positionY="-106" width="128" height="345"/>
         <element name="Images" positionX="-1440" positionY="-108" width="128" height="118"/>
         <element name="Line" positionX="-1386" positionY="-117" width="128" height="90"/>
         <element name="Message" positionX="-1595" positionY="161" width="128" height="180"/>
         <element name="Notification" positionX="-1395" positionY="-126" width="128" height="150"/>
         <element name="Openids" positionX="-1395" positionY="-126" width="128" height="135"/>
-        <element name="Post" positionX="-857" positionY="234" width="128" height="210"/>
+        <element name="Post" positionX="-857" positionY="234" width="128" height="225"/>
         <element name="Station" positionX="-1395" positionY="-126" width="128" height="195"/>
-        <element name="User" positionX="-1217" positionY="-270" width="128" height="600"/>
+        <element name="User" positionX="-1217" positionY="-270" width="128" height="615"/>
+        <element name="Tag" positionX="-1395" positionY="-126" width="128" height="195"/>
     </elements>
 </model>
