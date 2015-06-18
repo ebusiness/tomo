@@ -61,10 +61,6 @@ class TagListController: UIViewController {
         //closeButton.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_4))//园
     }
     
-    @IBAction func closeAction(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     @IBAction func saveAction(sender: AnyObject) {
         ApiController.editUserTags(self.tagtype, tags: self.getTags(isSelectedOnly: true), done: { (error) -> Void in
 
