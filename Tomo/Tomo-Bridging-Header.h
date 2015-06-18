@@ -39,3 +39,4 @@
 
 #import "JSQVoiceMediaItem.h"
 #import "AMTagListView.h"
+#import "MCSwipeTableViewCell.h"
