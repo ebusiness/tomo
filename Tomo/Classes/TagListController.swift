@@ -60,14 +60,14 @@ class TagListController: UIViewController {
         self.didLoad();
         //closeButton.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_4))//园
     }
-    
+    //保存
     @IBAction func saveAction(sender: AnyObject) {
         ApiController.editUserTags(self.tagtype, tags: self.getTags(isSelectedOnly: true), done: { (error) -> Void in
 
         })
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
+    //検索へ
     @IBAction func tappenSearchBtn(sender: AnyObject) {
         tagSearchViewController.resultVC.delegate = self
         tagSearchViewController.tagtype = self.tagtype
@@ -97,9 +97,13 @@ extension TagListController {
     func addMyTags(){
         if let usertags = usertags {
             var tags = self.getTags()
-            for tag in usertags{
-                if tag.type == self.tagtype && nil == tags.indexOf(tag.name) {
-                    self.addMyTag(tag.name)
+            for usertag in usertags{
+                if let usertag = usertag as? Tag,
+                    tag_name = usertag.name
+                   where usertag.type == self.tagtype &&
+                        tags.indexOf(tag_name) == nil{
+                            
+                    self.addMyTag(tag_name)
                 }
             }
         }
@@ -170,16 +174,13 @@ extension TagListController {
 // MARK: - TagSearchResultsDelegate
 
 extension TagListController: TagSearchResultsDelegate {
+    //タグ検索結果ー＞タグを選択する場合
     func whenTagDidSelected(tagView: AMTagView) {
         var tagviews = self.tagListView.tags
         self.tagListView.removeAllTags()
         self.addMyTag(tagView.tagText())
         self.addMyTags()
         self.addHotTags()
-//        for tagview in tagviews {
-//            self.tagListView.addTagView(tagview as! AMTagView)
-//        }
-        //println(tagView.tagText())
         tagSearchViewController.dismissViewControllerAnimated(true, completion: nil)
     }
 }

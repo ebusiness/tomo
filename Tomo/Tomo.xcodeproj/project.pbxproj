@@ -839,7 +839,7 @@
 		29CA44911AD4DEEA009EB177 /* 設定 */ = {
 			isa = PBXGroup;
 			children = (
-				D01EB7F01B2EEB43002D04A4 /* TagListController.swift */,
+				D069D1871B32C83C005A4240 /* タグ */,
 				17EE9A2C1AFC7FE200372134 /* OpenidSwitch.swift */,
 				296D8BB71AFC5A4A0058D400 /* AccountEditViewController.swift */,
 				296D8BB81AFC5A4A0058D400 /* TextViewInputViewController.swift */,
@@ -850,9 +850,6 @@
 				29341A871B0EF86000CB45A2 /* AnnouncementCell.swift */,
 				29341A8A1B0F04EC00CB45A2 /* WebViewController.swift */,
 				29446DC01B156C960062CA7F /* StationResultsTableViewController.swift */,
-				D01EB7B61B2EB505002D04A4 /* TagSettingController.swift */,
-				D0BD83F31B3122350040F503 /* TagSearchController.swift */,
-				D0BD83F51B317BDD0040F503 /* TagSearchResultsViewController.swift */,
 			);
 			name = "設定";
 			sourceTree = "<group>";
@@ -884,6 +881,17 @@
 				D01EB7B41B2EB4D6002D04A4 /* TransitionManager.swift */,
 			);
 			name = TransitioningDelegate;
+			sourceTree = "<group>";
+		};
+		D069D1871B32C83C005A4240 /* タグ */ = {
+			isa = PBXGroup;
+			children = (
+				D01EB7B61B2EB505002D04A4 /* TagSettingController.swift */,
+				D01EB7F01B2EEB43002D04A4 /* TagListController.swift */,
+				D0BD83F31B3122350040F503 /* TagSearchController.swift */,
+				D0BD83F51B317BDD0040F503 /* TagSearchResultsViewController.swift */,
+			);
+			name = "タグ";
 			sourceTree = "<group>";
 		};
 		D0ACAE5A1B0AE0A600AA9907 /* ActionSheet */ = {

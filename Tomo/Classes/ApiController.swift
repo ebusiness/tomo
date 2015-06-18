@@ -391,17 +391,12 @@ extension ApiController {
     }
     
     //陌生人一览
-    class func getUsers(done: (NSError?) -> Void) {
+    class func getUsers(done: ([User]?,NSError?) -> Void) {
         //取得情报
-        RKObjectManager.sharedManager().getObjectsAtPath("/connections/discover", parameters: nil, success: { (_, _) -> Void in
-                        done(nil)
-            
-//            //建立关联
-//            self.getUserInfo(Defaults["myId"].string!, done: { (error) -> Void in
-//                done(error)
-//            })
+        RKObjectManager.sharedManager().getObjectsAtPath("/connections/discover", parameters: nil, success: { (_, results) -> Void in
+            done((results.array() as? [User]), nil)
             }) { (_, error) -> Void in
-                done(error)
+                done(nil, error)
         }
     }
     

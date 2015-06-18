@@ -19,6 +19,14 @@ class BaseViewController: UIViewController {
             let tagSetting = Util.createViewControllerWithIdentifier("TagSettingController", storyboardName: "Setting") as! TagSettingController
             tagSetting.submitHandler = {()->() in
                 Defaults["setting_tag"] = "set"
+                ApiController.getUsers({ (users, error) -> Void in
+                    if let users = users {
+                        let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController
+                        vc.displayMode = .SearchResult
+                        vc.users = users
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                })
             }
             self.presentViewController(tagSetting, animated: true, completion: nil)
         }

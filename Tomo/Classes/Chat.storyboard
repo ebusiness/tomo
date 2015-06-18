@@ -247,6 +247,24 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="QDE-R4-X9i">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="o9M-2c-gV2" style="IBUITableViewCellStyleDefault" id="u80-aO-chX">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u80-aO-chX" id="Zwb-aH-Wiu">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="知り合いかも" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="o9M-2c-gV2">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="IXA-2R-K43" id="cm1-st-8pu"/>
@@ -254,6 +272,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="追加" id="AqL-DA-2CN"/>
+                    <connections>
+                        <outlet property="discoverCell" destination="u80-aO-chX" id="Tgt-x4-gjI"/>
+                        <outlet property="stationCell" destination="BhO-5D-XLz" id="eXU-0z-PAU"/>
+                        <outlet property="tomoidCell" destination="0uh-fb-rLJ" id="P9k-2S-io1"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pNZ-aA-QBV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
