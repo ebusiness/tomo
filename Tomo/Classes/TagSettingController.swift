@@ -30,15 +30,18 @@ class TagSettingController: UIViewController,UIViewControllerTransitioningDelega
     
     var center :CGPoint!
     @IBAction func tappedBtn(sender: AnyObject) {
-        center = (sender as! UIButton).superview?.center
+        center = (sender as! UIButton).superview?.center        
         self.performSegueWithIdentifier("taglist", sender: sender)
     }
     
     let transition = BubbleTransition()
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let controller = segue.destinationViewController as? UIViewController {
+        if let controller = segue.destinationViewController as? TagListController {
             controller.transitioningDelegate = self
             controller.modalPresentationStyle = .Custom
+            if let tag = sender?.tag {
+                controller.sendertag = tag
+            }
         }
     }
     
@@ -47,14 +50,14 @@ class TagSettingController: UIViewController,UIViewControllerTransitioningDelega
     override func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.transitionMode = .Present
         transition.startingPoint = center
-        transition.bubbleColor = self.view.backgroundColor!
+        transition.bubbleColor = UIColor.whiteColor()// self.view.backgroundColor!
         return transition
     }
     
     override func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.transitionMode = .Dismiss
         transition.startingPoint = center
-        transition.bubbleColor = self.view.backgroundColor!
+        transition.bubbleColor = UIColor.whiteColor()// self.view.backgroundColor!
         return transition
     }
 }

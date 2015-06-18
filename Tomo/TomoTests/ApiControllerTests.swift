@@ -89,6 +89,22 @@ class ApiControllerTests: XCTestCase {
             println(error)
         })
     }
+    func testsetUserTags() {
+        let expect = expectationWithDescription("api")
+        
+        ApiController.login(tomoid: "hikaru", password: "12345678") { (error) -> Void in
+            XCTAssertNil(error, "")
+            
+            ApiController.editUserTags("test", tags: ["tag3","tag4"], done: { (error) -> Void in
+                XCTAssertNil(error, "")
+                expect.fulfill()
+            })
+        }
+        
+        waitForExpectationsWithTimeout(11115, handler: { (error) -> Void in
+            println(error)
+        })
+    }
     
 //    func testGetNewsfeed() {
 //        let expect = expectationWithDescription("api")

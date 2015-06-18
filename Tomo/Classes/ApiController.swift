@@ -501,7 +501,36 @@ extension ApiController {
 //            }) { (_, error) -> Void in
 //                done(error)
 //        }
-//    }
+    //    }
+    //UserTag
+//    addCommonResponseDescriptor(getUserMapping(stationIdOnly: true,tagIdOnly:false), method: .POST, pathPattern: "/mobile/user/tag", keyPath: nil, statusCodes: nil)
+    
+    
+    class func editUserTags(type: String,tags:[String], done: (NSError?) -> Void) {
+        var param = Dictionary<String, AnyObject>()
+        param["type"] = type
+        param["tags"] = tags
+        
+        RKObjectManager.sharedManager().postObject(nil,path:"/mobile/user/tag", parameters: param, success: { (_, _) -> Void in
+            done(nil)
+            }) { (res, error) -> Void in
+                done(error)
+        }
+    }
+    
+    class func getTags(type: String,name:String?, done: (result: [Tag]?, NSError?) -> Void) {
+        var param = Dictionary<String, AnyObject>()
+        param["type"] = type
+        if name != nil {
+            param["name"] = name
+        }
+        
+        RKObjectManager.sharedManager().getObject(nil,path:"/tags", parameters: param, success: { (_,mappingResult) -> Void in
+            done(result: mappingResult.array() as? [Tag], nil)
+            }) { (res, error) -> Void in
+                done(result: nil,error)
+        }
+    }
 }
 
 // MARK: - 駅情報
@@ -809,6 +838,8 @@ extension ApiController {
         addCommonResponseDescriptor(_openidsMapping, method: .GET, pathPattern: "/mobile/user/openidinfo", keyPath: nil, statusCodes: nil)
         //UserInfo
         addCommonResponseDescriptor(getUserMapping(stationIdOnly: false), method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
+        //UserTag
+        addCommonResponseDescriptor(getUserMapping(stationIdOnly: true,tagIdOnly:false), method: .POST, pathPattern: "/mobile/user/tag", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(usermapping, method: .PATCH, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
         //newsfeed
         addCommonResponseDescriptor(getPostMapping(false), method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: nil)
@@ -873,6 +904,8 @@ extension ApiController {
         addCommonResponseDescriptor(getUserMapping(), method: .GET, pathPattern: "/mobile/stations/users", keyPath: nil, statusCodes: nil)
         
         addCommonResponseDescriptor(_announcementsMapping, method: .GET, pathPattern: "/announcements", keyPath: nil, statusCodes: nil)
+        //tags
+        addCommonResponseDescriptor(_tagMapping, method: .GET, pathPattern: "/tags", keyPath: nil, statusCodes: nil)
     }
 }
 // MARK: - mapping
@@ -897,7 +930,7 @@ extension ApiController {
         return mapping
     }
     //user
-    private class func getUserMapping(stationIdOnly: Bool = true)->RKEntityMapping{
+    private class func getUserMapping(stationIdOnly: Bool = true,tagIdOnly: Bool = true)->RKEntityMapping{
         var mapping = _userMapping
         mapping.addPropertyMappingById("User",fromKey: "friends",toKeyPath: "friends")
         mapping.addPropertyMappingById("User",fromKey: "invited",toKeyPath: "invited")
@@ -910,6 +943,11 @@ extension ApiController {
             mapping.addPropertyMappingById("Station",fromKey: "stations",toKeyPath: "stations")
         } else {
             mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "stations", toKeyPath: "stations", withMapping: _stationMapping))
+        }
+        if tagIdOnly {
+            mapping.addPropertyMappingById("Tag",fromKey: "tags",toKeyPath: "tags")
+        } else {
+            mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "tags", toKeyPath: "tags", withMapping: _tagMapping))
         }
         return mapping
     }
@@ -1063,6 +1101,10 @@ extension ApiController {
     }
     private class var _stationMapping: RKEntityMapping {
         var mapping = ApiController.getMapping("Station", identification: nil,pListName: nil)
+        return mapping
+    }
+    private class var _tagMapping: RKEntityMapping {
+        var mapping = ApiController.getMapping("Tag", identification: nil,pListName: nil)
         return mapping
     }
     private class var _openidsMapping: RKEntityMapping {
