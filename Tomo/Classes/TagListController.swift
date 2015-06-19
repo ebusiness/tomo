@@ -16,6 +16,7 @@ class TagListController: UIViewController {
     @IBOutlet weak var tagListView: AMTagListView!
     
     var tagSearchViewController = TagSearchController()
+    var tag_added:[String] = []
     
     let usertags = DBController.myUser()?.tags
     var hotTags:[Tag] = []
@@ -132,6 +133,12 @@ extension TagListController {
         }
 
     }
+    //検索したタグ
+    func addSearchTags(){
+        for tag in tag_added{
+            self.addMyTag(tag)
+        }
+    }
     //画面に表示しているタグを取得
     func getTags(isSelectedOnly:Bool = false) -> [String] {
         var tags:[String] = []
@@ -191,7 +198,13 @@ extension TagListController: TagSearchResultsDelegate {
     func whenTagDidSelected(tagView: AMTagView) {
         var tagviews = self.tagListView.tags
         self.tagListView.removeAllTags()
-        self.addMyTag(tagView.tagText())
+        
+        if let index = tag_added.indexOf(tagView.tagText()) {
+            //追加済み
+        }else{
+            tag_added.append(tagView.tagText())
+        }
+        self.addSearchTags()
         self.addMyTags()
         self.addHotTags()
         tagSearchViewController.dismissViewControllerAnimated(true, completion: nil)
