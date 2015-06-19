@@ -8,13 +8,18 @@
 
 import UIKit
 
-class FriendCell: UITableViewCell {
+class FriendCell: MCSwipeTableViewCell {
     
 //    @IBOutlet weak var checkImageView: UIImageView!
     @IBOutlet weak var friendImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     
     @IBOutlet weak var invitedLabel: UILabel!
+    
+    var text_state1 = ""
+    var text_state2 = ""
+    var text_state3 = ""
+    var text_state4 = ""
     
     var friend: User! {
         didSet {
@@ -42,6 +47,39 @@ class FriendCell: UITableViewCell {
         super.awakeFromNib()
         
         friendImageView.layer.cornerRadius = friendImageView.bounds.width / 2
+        
+        self.setSwipe(.State1, completionBlock: { (cell, state, model) -> Void in
+            
+        })
+        self.setSwipe(.State2, completionBlock: { (cell, state, model) -> Void in
+            
+        })
+        self.setSwipe(.State3, completionBlock: { (cell, state, model) -> Void in
+            
+        })
+        self.setSwipe(.State4, completionBlock: { (cell, state, model) -> Void in
+            
+        })
+    }
+    
+    func setSwipe(state: MCSwipeTableViewCellState, completionBlock: MCSwipeCompletionBlock!) {
+        var backgroundColor = UIColor.grayColor()
+        
+        let image = Util.coloredImage(UIImage(named: "ic_add_black_48dp")!, color: UIColor.whiteColor())
+        let imageView = UIImageView(image: image)
+        imageView.contentMode =  .Center
+        
+        var sss =  ( String )(state.rawValue ?? 0)
+        
+        if state == .State1 || state == .State2 {
+            
+            backgroundColor = UIColor.greenColor()
+        }else if  state == .State3 || state == .State4 {
+            
+            backgroundColor = UIColor.redColor()
+        }
+        self.setSwipeGestureWithView(imageView, color: backgroundColor, mode: .Switch, state: state, completionBlock: completionBlock)
+        
     }
 
 //    func setChecked(checked: Bool) {

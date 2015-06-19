@@ -182,6 +182,8 @@ class AccountEditViewController: BaseTableViewController {
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         //　ステータス
         if cell == statusCell { self.didSelectStatusCell() }
+        //　編集モード、あるいは本人ではない場合　以下の編集処理をしない
+        else if readOnlyMode || user.id != Defaults["myId"].string { return }
         //　プロファイル写真
         else if cell == avatarCell { self.didSelectAvatarCell() }
         //　名前

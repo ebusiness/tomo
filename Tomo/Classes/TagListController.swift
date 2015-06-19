@@ -148,6 +148,19 @@ extension TagListController {
     }
     //tag on click
     func tapHander(tagview:AMTagView){
+        if self.sendertag == 1 || self.sendertag == 2 {
+            var tagviews = self.tagListView.tags
+            for view in tagviews {
+                if let view = view as? AMTagView{
+                    if view == tagview {
+                        continue
+                    }
+                    view.tag = 0
+                    view.tagColor = tagColor_normal
+                    view.innerTagColor = innerTagColor_normal
+                }
+            }
+        }
         if(tagview.tag == 0){
             tagview.tag = 1
             tagview.innerTagColor = innerTagColor_highlight
