@@ -187,6 +187,7 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
                     ApiController.connectionsBreakUsers(self.users[indexPath.row].id!, done: { (error) -> Void in
                         self.users.removeAtIndex(indexPath.row)
                         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                        tableView.reloadData()
                     })
                     
                 })
@@ -223,8 +224,11 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.setHandler(withLeft, withRight: withRight, handler:  { (cell, state, mode) -> () in
             
             if state == .State3 ||  state == .State4 {
-                self.users.removeAtIndex(indexPath.row)
+                if let cell = cell as? FriendCell {
+                    self.users.remove(cell.friend)
+                }
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                tableView.reloadData()
                 //                let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
                 //
                 //                acvc.show(self, content: "削除しますか？", action: { () -> () in
