@@ -16,10 +16,10 @@ class FriendCell: MCSwipeTableViewCell {
     
     @IBOutlet weak var invitedLabel: UILabel!
     
-    var text_state1 = ""
-    var text_state2 = ""
-    var text_state3 = ""
-    var text_state4 = ""
+    @IBOutlet weak var tagListView: AMTagListView!
+    
+    
+    var successHandler: ((cell:FriendCell, state:MCSwipeTableViewCellState, mode:MCSwipeTableViewCellMode)->())?
     
     var friend: User! {
         didSet {
@@ -41,6 +41,7 @@ class FriendCell: MCSwipeTableViewCell {
         nameLabel.text = friend.fullName()
         
         invitedLabel.hidden = !DBController.isInvitedUser(friend)
+        
     }
     
     override func awakeFromNib() {
@@ -48,28 +49,43 @@ class FriendCell: MCSwipeTableViewCell {
         
         friendImageView.layer.cornerRadius = friendImageView.bounds.width / 2
         
-        self.setSwipe(.State1, completionBlock: { (cell, state, model) -> Void in
+        
+        if let tagListView = self.tagListView {
+            tagListView.tagListDelegate = self
             
-        })
-        self.setSwipe(.State2, completionBlock: { (cell, state, model) -> Void in
+            self.defaultColor = Util.UIColorFromRGB(0xEAEAEA, alpha: 1)
             
-        })
-        self.setSwipe(.State3, completionBlock: { (cell, state, model) -> Void in
-            
-        })
-        self.setSwipe(.State4, completionBlock: { (cell, state, model) -> Void in
-            
-        })
+            self.setSwipe(.State1)
+            self.setSwipe(.State2)
+            self.setSwipe(.State3)
+            self.setSwipe(.State4)
+        }
+    }
+    func setSwopeON(withLeft:Bool,withRight:Bool = false){
+        self.modeForState1 = .None
+        self.modeForState2 = .None
+        self.modeForState3 = .None
+        self.modeForState4 = .None
+        
+        if withLeft {
+            self.modeForState1 = .Switch
+            self.modeForState2 = .Switch
+        }
+        if withRight {
+            self.modeForState3 = .Switch
+            self.modeForState4 = .Switch
+        }
     }
     
-    func setSwipe(state: MCSwipeTableViewCellState, completionBlock: MCSwipeCompletionBlock!) {
-        var backgroundColor = UIColor.grayColor()
+    func setSwipe(state: MCSwipeTableViewCellState) {
+        var backgroundColor:UIColor!
         
         let image = Util.coloredImage(UIImage(named: "ic_add_black_48dp")!, color: UIColor.whiteColor())
         let imageView = UIImageView(image: image)
         imageView.contentMode =  .Center
         
-        var sss =  ( String )(state.rawValue ?? 0)
+//        let uilabel = UILabel(frame: CGRectMake(0, 0, 30, 30))
+//        uilabel.text = "sssss"
         
         if state == .State1 || state == .State2 {
             
@@ -78,7 +94,11 @@ class FriendCell: MCSwipeTableViewCell {
             
             backgroundColor = UIColor.redColor()
         }
-        self.setSwipeGestureWithView(imageView, color: backgroundColor, mode: .Switch, state: state, completionBlock: completionBlock)
+        self.setSwipeGestureWithView(imageView, color: backgroundColor, mode: .Switch, state: state, completionBlock: { (cell, state, model) -> Void in
+            if let cell = cell as? FriendCell {
+                self.successHandler?(cell: cell, state: state, mode: model)
+            }
+        })
         
     }
 
@@ -88,4 +108,29 @@ class FriendCell: MCSwipeTableViewCell {
 //        checkImageView.image = UIImage(named: imageName)
 //    }
 
+}
+
+extension FriendCell {
+    //タグを追加する
+    func addTag(tag: Tag){
+        if let name = tag.name where !name.isEmpty {
+            tagUIController.serTagView(.small)
+            self.tagListView.addTag(name)
+        }
+    }
+    func addTags(array: [AnyObject]!){
+        tagListView.hidden = array.count == 0 && self.tagListView.tags.count == 0
+        if !tagListView.hidden {
+            tagUIController.serTagView(.small)
+        }
+        self.tagListView.addTags(array)
+    }
+}
+
+
+extension FriendCell : AMTagListDelegate {
+    //タグ表示数
+    func tagList(tagListView: AMTagListView!, shouldAddTagWithText text: String!, resultingContentSize size: CGSize) -> Bool {
+        return tagListView.tags.count < 4
+    }
 }

@@ -392,8 +392,10 @@ extension ApiController {
     
     //陌生人一览
     class func getUsers(done: ([User]?,NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        param["withtag"] = "1"
         //取得情报
-        RKObjectManager.sharedManager().getObjectsAtPath("/connections/discover", parameters: nil, success: { (_, results) -> Void in
+        RKObjectManager.sharedManager().getObjectsAtPath("/connections/discover", parameters: param, success: { (_, results) -> Void in
             done((results.array() as? [User]), nil)
             }) { (_, error) -> Void in
                 done(nil, error)
@@ -853,9 +855,9 @@ extension ApiController {
         //messages
 //        addCommonResponseDescriptor(getMessageMapping(), method: .POST, pathPattern: "/messages", keyPath: nil, statusCodes: nil)
         //友達一覧
-        addCommonResponseDescriptor(usermapping, method: .GET, pathPattern: "/connections/friends", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getUserMapping(stationIdOnly: true,tagIdOnly:false), method: .GET, pathPattern: "/connections/friends", keyPath: nil, statusCodes: nil)
         //陌生人一览
-        addCommonResponseDescriptor(usermapping, method: .GET, pathPattern: "/connections/discover", keyPath: nil, statusCodes: nil)
+        addCommonResponseDescriptor(getUserMapping(stationIdOnly: true,tagIdOnly:false), method: .GET, pathPattern: "/connections/discover", keyPath: nil, statusCodes: nil)
         //記事のコメント
         addCommonResponseDescriptor(getCommoentMapping(false), method: .POST, pathPattern: "/posts/:id/comments", keyPath: nil, statusCodes: nil)
         //記事ー＞いいね 登録・解除

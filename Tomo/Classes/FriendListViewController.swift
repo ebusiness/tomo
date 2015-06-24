@@ -149,6 +149,10 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
             return 44
         }
         
+        if displayMode == .SearchResult || displayMode == .GroupMember{
+            let friend = users[indexPath.row]
+            return friend.tags.count > 0 ? 77 : 60
+        }
         if displayMode == .Chat {
             return 70
         }
@@ -162,22 +166,64 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         }
         
-        let friend = users[indexPath.row]
-        
         if displayMode == .Chat {
+            let friend = users[indexPath.row]
             let cell = tableView.dequeueReusableCellWithIdentifier("RecentlyFriendCell", forIndexPath: indexPath) as! RecentlyFriendCell
             cell.unreadCount = DBController.unreadCount(friend)
             cell.friend = friend
             return cell
         }
+        return self.getFirendCell(tableView, cellForRowAtIndexPath: indexPath)
+    }
+    
+    func getFirendCell(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         
+        
+        let friend = users[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! FriendCell
         
         cell.friend = friend
+        if friend.tags.count > 0 {
+            for friendtag in friend.tags {
+                if let friendtag = friendtag as? Tag {
+                    cell.addTag(friendtag)
+                }
+            }
+        }
         
+        let myfirend = DBController.friends()
+        if myfirend.contains(friend) || !cell.invitedLabel.hidden {
+            cell.setSwopeON(false)
+        }else if displayMode == .GroupMember {
+            cell.setSwopeON(true)
+        }
+        
+        cell.successHandler = { (cell, state, model) -> Void in
+            if state == .State3 ||  state == .State4 {
+                self.users.removeAtIndex(indexPath.row)
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+//                let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
+//                
+//                acvc.show(self, content: "削除しますか？", action: { () -> () in
+//                    
+//                    
+//                })
+            }else if state == .State1 ||  state == .State2 {
+                
+                ApiController.invite(self.users[indexPath.row].id!, done: { (error) -> Void in
+                    if error == nil {
+                        cell.backgroundColor = Util.UIColorFromRGB(0x40B868, alpha: 0.5)
+                        cell.invitedLabel.hidden = false
+                        cell.setSwopeON(false)
+                        Util.showSuccess("友達追加リクエストを送信しました。")
+                    }
+                })
+            }
+            //println(state.rawValue )
+        }
         return cell
+
     }
-    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         

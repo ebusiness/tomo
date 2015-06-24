@@ -21,12 +21,6 @@ class TagListController: UIViewController {
     let usertags = DBController.myUser()?.tags
     var hotTags:[Tag] = []
     
-    let tagColor_normal = UIColor(red:0.12, green:0.55, blue:0.84, alpha:1)
-    let innerTagColor_normal =  UIColor(white: 1, alpha: 0.3)
-    
-    let tagColor_highlight = UIColor.blueColor()
-    let innerTagColor_highlight =  UIColor.redColor()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -80,11 +74,8 @@ class TagListController: UIViewController {
 //データの初期化
 extension TagListController {
     func didLoad(){
-        AMTagView.appearance().tagLength = 10
-        AMTagView.appearance().textPadding = 14
-        AMTagView.appearance().textFont = UIFont(name: "Futura", size: 14)
-        AMTagView.appearance().tagColor = tagColor_normal
-        AMTagView.appearance().innerTagColor = innerTagColor_normal
+        
+        tagUIController.serTagView(.normal)
         
         self.addMyTags()
         
@@ -162,24 +153,11 @@ extension TagListController {
                     if view == tagview {
                         continue
                     }
-                    view.tag = 0
-                    view.tagColor = tagColor_normal
-                    view.innerTagColor = innerTagColor_normal
+                    view.selected(false)
                 }
             }
         }
-        if(tagview.tag == 0){
-            tagview.tag = 1
-            tagview.innerTagColor = innerTagColor_highlight
-            tagview.tagColor = tagColor_highlight
-        }else{
-            tagview.tag = 0
-            tagview.tagColor = tagColor_normal
-            tagview.innerTagColor = innerTagColor_normal
-        }
-//        let txt = tagview.tagText()
-//        tagview.tag = 1
-//        println(txt)
+        tagview.changeStatus()
     }
     //自分のタグ
     func addMyTag(text:String){

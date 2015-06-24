@@ -41,14 +41,14 @@ class FriendAddMethodTableViewController: BaseTableViewController {
         }else if cell == discoverCell {
             Util.showHUD()
             ApiController.getUsers({ (users, error) -> Void in
-                Util.dismissHUD()
                 if let users = users {
+                    Util.dismissHUD()
                     let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController
                     vc.displayMode = .SearchResult
                     vc.users = users
                     self.navigationController?.pushViewController(vc, animated: true)
                 }else{
-                    //没有匹配的人.....
+                    Util.showInfo("見つかりませんでした")
                 }
             })
         }
