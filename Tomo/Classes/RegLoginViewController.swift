@@ -30,7 +30,7 @@ class RegLoginViewController: BaseViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let email = Defaults["email"].string {
+        if let email = Defaults["email"].string where !email.isEmpty {
             emailTF.text = email
             passwordTF.becomeFirstResponder()
         } else {
