@@ -167,15 +167,34 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         if displayMode == .Chat {
-            let friend = users[indexPath.row]
-            let cell = tableView.dequeueReusableCellWithIdentifier("RecentlyFriendCell", forIndexPath: indexPath) as! RecentlyFriendCell
-            cell.unreadCount = DBController.unreadCount(friend)
-            cell.friend = friend
-            return cell
+            return self.getRecentlyFriendCell(tableView, cellForRowAtIndexPath: indexPath)
         }
         return self.getFirendCell(tableView, cellForRowAtIndexPath: indexPath)
     }
-    
+    //chat
+    func getRecentlyFriendCell(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+        
+        let friend = users[indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("RecentlyFriendCell", forIndexPath: indexPath) as! RecentlyFriendCell
+        cell.unreadCount = DBController.unreadCount(friend)
+        cell.friend = friend
+        
+        cell.setHandler(false, withRight: true, handler: { (cell, state, mode) -> () in
+            if state == .State3 ||  state == .State4 {
+                let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
+                
+                acvc.show(self, content: "友達を解除しますか？", action: { () -> () in
+                    ApiController.connectionsBreakUsers(self.users[indexPath.row].id!, done: { (error) -> Void in
+                        self.users.removeAtIndex(indexPath.row)
+                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                    })
+                    
+                })
+            }
+        })
+        return cell
+    }
+    //user list
     func getFirendCell(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         
         
@@ -191,27 +210,31 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
             }
         }
         
+        var withLeft = true
+        var withRight = true
+        
         let myfirend = DBController.friends()
         if myfirend.contains(friend) || !cell.invitedLabel.hidden || friend.id == DBController.myUser()?.id{
-            cell.setSwopeON(false)
+            withLeft = false
         }else if displayMode == .GroupMember {
-            cell.setSwopeON(true)
+            withRight = false
         }
         
-        cell.successHandler = { (cell, state, model) -> Void in
+        cell.setHandler(withLeft, withRight: withRight, handler:  { (cell, state, mode) -> () in
+            
             if state == .State3 ||  state == .State4 {
                 self.users.removeAtIndex(indexPath.row)
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//                let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
-//                
-//                acvc.show(self, content: "削除しますか？", action: { () -> () in
-//                    
-//                    
-//                })
+                //                let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
+                //
+                //                acvc.show(self, content: "削除しますか？", action: { () -> () in
+                //
+                //
+                //                })
             }else if state == .State1 ||  state == .State2 {
                 
                 ApiController.invite(self.users[indexPath.row].id!, done: { (error) -> Void in
-                    if error == nil {
+                    if let cell = cell as? FriendCell where error == nil {
                         cell.backgroundColor = Util.UIColorFromRGB(0x40B868, alpha: 0.5)
                         cell.invitedLabel.hidden = false
                         cell.setSwopeON(false)
@@ -220,7 +243,8 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
                 })
             }
             //println(state.rawValue )
-        }
+        })
+        
         return cell
 
     }

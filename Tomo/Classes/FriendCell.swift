@@ -13,13 +13,8 @@ class FriendCell: MCSwipeTableViewCell {
 //    @IBOutlet weak var checkImageView: UIImageView!
     @IBOutlet weak var friendImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    
     @IBOutlet weak var invitedLabel: UILabel!
-    
     @IBOutlet weak var tagListView: AMTagListView!
-    
-    
-    var successHandler: ((cell:FriendCell, state:MCSwipeTableViewCellState, mode:MCSwipeTableViewCellMode)->())?
     
     var friend: User! {
         didSet {
@@ -54,52 +49,7 @@ class FriendCell: MCSwipeTableViewCell {
             tagListView.tagListDelegate = self
             
             self.defaultColor = Util.UIColorFromRGB(0xEAEAEA, alpha: 1)
-            
-            self.setSwipe(.State1)
-            self.setSwipe(.State2)
-            self.setSwipe(.State3)
-            self.setSwipe(.State4)
         }
-    }
-    func setSwopeON(withLeft:Bool,withRight:Bool = false){
-        self.modeForState1 = .None
-        self.modeForState2 = .None
-        self.modeForState3 = .None
-        self.modeForState4 = .None
-        
-        if withLeft {
-            self.modeForState1 = .Switch
-            self.modeForState2 = .Switch
-        }
-        if withRight {
-            self.modeForState3 = .Switch
-            self.modeForState4 = .Switch
-        }
-    }
-    
-    func setSwipe(state: MCSwipeTableViewCellState) {
-        var backgroundColor:UIColor!
-        
-        let image = Util.coloredImage(UIImage(named: "ic_add_black_48dp")!, color: UIColor.whiteColor())
-        let imageView = UIImageView(image: image)
-        imageView.contentMode =  .Center
-        
-//        let uilabel = UILabel(frame: CGRectMake(0, 0, 30, 30))
-//        uilabel.text = "sssss"
-        
-        if state == .State1 || state == .State2 {
-            
-            backgroundColor = UIColor.greenColor()
-        }else if  state == .State3 || state == .State4 {
-            
-            backgroundColor = UIColor.redColor()
-        }
-        self.setSwipeGestureWithView(imageView, color: backgroundColor, mode: .Switch, state: state, completionBlock: { (cell, state, model) -> Void in
-            if let cell = cell as? FriendCell {
-                self.successHandler?(cell: cell, state: state, mode: model)
-            }
-        })
-        
     }
 
 //    func setChecked(checked: Bool) {

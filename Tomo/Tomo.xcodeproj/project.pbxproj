@@ -237,6 +237,7 @@
 		D01EB7EF1B2EEACB002D04A4 /* BubbleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01EB7EE1B2EEACB002D04A4 /* BubbleTransition.swift */; };
 		D01EB7F11B2EEB43002D04A4 /* TagListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01EB7F01B2EEB43002D04A4 /* TagListController.swift */; };
 		D06CF9AE1B382A7D00BF24B6 /* tagUIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06CF9AD1B382A7D00BF24B6 /* tagUIController.swift */; };
+		D07C99631B3ABD29008EB420 /* TableViewCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C99621B3ABD29008EB420 /* TableViewCellController.swift */; };
 		D0ACAE571B0AD98400AA9907 /* ActionSheet.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */; };
 		D0ACAE5C1B0AE0CA00AA9907 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */; };
 		D0BD83F41B3122350040F503 /* TagSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD83F31B3122350040F503 /* TagSearchController.swift */; };
@@ -434,6 +435,7 @@
 		D01EB7EE1B2EEACB002D04A4 /* BubbleTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BubbleTransition.swift; path = TransitioningDelegate/BubbleTransition.swift; sourceTree = "<group>"; };
 		D01EB7F01B2EEB43002D04A4 /* TagListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagListController.swift; path = Classes/TagListController.swift; sourceTree = "<group>"; };
 		D06CF9AD1B382A7D00BF24B6 /* tagUIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = tagUIController.swift; path = Classes/tagUIController.swift; sourceTree = "<group>"; };
+		D07C99621B3ABD29008EB420 /* TableViewCellController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCellController.swift; path = Classes/TableViewCellController.swift; sourceTree = "<group>"; };
 		D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ActionSheet.storyboard; sourceTree = "<group>"; };
 		D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = Classes/ShareViewController.swift; sourceTree = "<group>"; };
 		D0BD83F31B3122350040F503 /* TagSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagSearchController.swift; path = Classes/TagSearchController.swift; sourceTree = "<group>"; };
@@ -901,6 +903,7 @@
 			isa = PBXGroup;
 			children = (
 				D06CF9AD1B382A7D00BF24B6 /* tagUIController.swift */,
+				D07C99621B3ABD29008EB420 /* TableViewCellController.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1218,6 +1221,7 @@
 				296D8BAE1AFC5A020058D400 /* LoadingViewController.swift in Sources */,
 				294EF0B01B01D54500A94A3F /* RadioButtonCell.swift in Sources */,
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
+				D07C99631B3ABD29008EB420 /* TableViewCellController.swift in Sources */,
 				290843181B09C9140037A6CD /* String.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */,

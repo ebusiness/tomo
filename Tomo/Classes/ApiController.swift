@@ -528,6 +528,17 @@ extension ApiController {
                 done(result: nil,error)
         }
     }
+    //
+    class func connectionsBreakUsers(id: String,done: (NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        param["id"] = id
+        //取得情报
+        RKObjectManager.sharedManager().patchObject(nil,path:"/connections/break", parameters: param, success: { (_, results) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
 }
 
 // MARK: - 駅情報
@@ -837,6 +848,8 @@ extension ApiController {
         addCommonResponseDescriptor(getUserMapping(stationIdOnly: false), method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
         //UserTag
         addCommonResponseDescriptor(getUserMapping(stationIdOnly: true,tagIdOnly:false), method: .POST, pathPattern: "/mobile/user/tag", keyPath: nil, statusCodes: nil)
+        //delete friend
+        addCommonResponseDescriptor(usermapping, method: .PATCH, pathPattern: "/connections/break", keyPath: nil, statusCodes: nil)
         addCommonResponseDescriptor(usermapping, method: .PATCH, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
         //newsfeed
         addCommonResponseDescriptor(getPostMapping(false), method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: nil)

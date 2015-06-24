@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecentlyFriendCell: UITableViewCell {
+class RecentlyFriendCell: MCSwipeTableViewCell {
 
     @IBOutlet weak var membersCountLabel: UILabel!
     @IBOutlet weak var friendImageView: UIImageView!
@@ -17,6 +17,8 @@ class RecentlyFriendCell: UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     
     @IBOutlet weak var badgeBackView: UIView!
+    
+    var handler: SuccessHandler?
     
     var badgeView: JSBadgeView!
     
