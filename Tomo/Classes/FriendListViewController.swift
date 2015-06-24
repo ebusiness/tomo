@@ -192,7 +192,7 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         let myfirend = DBController.friends()
-        if myfirend.contains(friend) || !cell.invitedLabel.hidden {
+        if myfirend.contains(friend) || !cell.invitedLabel.hidden || friend.id == DBController.myUser()?.id{
             cell.setSwopeON(false)
         }else if displayMode == .GroupMember {
             cell.setSwopeON(true)
