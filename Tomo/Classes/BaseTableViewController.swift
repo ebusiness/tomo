@@ -17,8 +17,13 @@ class BaseTableViewController: UITableViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        self.shyNavBarManager.scrollView = self.tableView;
-        navigationController?.hidesBarsWhenKeyboardAppears = true
+        if let navbar = navigationController?.navigationBar  {
+            if let headerView = self.tableView.tableHeaderView as? UISearchBar{
+                
+            }else{
+                self.shyNavBarManager.scrollView = self.tableView;
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {

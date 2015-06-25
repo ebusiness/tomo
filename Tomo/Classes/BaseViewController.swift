@@ -35,13 +35,14 @@ class BaseViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        for v in self.view.subviews {
-            if let v = v as? UIScrollView {
-                self.shyNavBarManager.scrollView = v
-                break
+        if let navbar = navigationController?.navigationBar {
+            for v in self.view.subviews {
+                if let v = v as? UIScrollView {
+                    self.shyNavBarManager.scrollView = v
+                    break
+                }
             }
         }
-        navigationController?.hidesBarsWhenKeyboardAppears = true
     }
 
     override func didReceiveMemoryWarning() {
