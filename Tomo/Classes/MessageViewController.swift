@@ -45,6 +45,9 @@ class MessageViewController: JSQMessagesViewController {
 
         self.senderId = me.id
         self.senderDisplayName = me.fullName()
+        if let friend = friend {
+            navigationItem.title = friend.fullName()
+        }
         
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("gotNewMessage"), name: "GotNewMessage", object: nil)
         

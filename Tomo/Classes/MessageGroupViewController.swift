@@ -14,7 +14,10 @@ class MessageGroupViewController: MessageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        if let group = group , name = group.name{
+            navigationItem.title = "\(name)(\(group.participants.count)人)"
+        }
         // Do any additional setup after loading the view.
     }
 
