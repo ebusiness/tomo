@@ -17,8 +17,7 @@ class BaseTableViewController: UITableViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
-        navigationController?.hidesBarsOnSwipe = true
+        self.shyNavBarManager.scrollView = self.tableView;
         navigationController?.hidesBarsWhenKeyboardAppears = true
     }
     

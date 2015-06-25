@@ -41,3 +41,4 @@
 #import "AMTagListView.h"
 #import "MCSwipeTableViewCell.h"
 #import "UIView+DCAnimationKit.h"
+#import "TLYShyNavBarManager.h"
