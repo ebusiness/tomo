@@ -242,6 +242,7 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
                 
                 ApiController.invite(friend.id!, done: { (error) -> Void in
                     if let cell = cell as? FriendCell where error == nil {
+                        cell.shake(nil)
                         cell.invitedLabel.hidden = false
                         cell.setSwopeON(false)
                         Util.showSuccess("友達追加リクエストを送信しました。")

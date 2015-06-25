@@ -36,6 +36,12 @@
 #define COCOAPODS_VERSION_MINOR_CHTCollectionViewWaterfallLayout 8
 #define COCOAPODS_VERSION_PATCH_CHTCollectionViewWaterfallLayout 0
 
+// DCAnimationKit
+#define COCOAPODS_POD_AVAILABLE_DCAnimationKit
+#define COCOAPODS_VERSION_MAJOR_DCAnimationKit 0
+#define COCOAPODS_VERSION_MINOR_DCAnimationKit 0
+#define COCOAPODS_VERSION_PATCH_DCAnimationKit 6
+
 // DXYTencentOpenAPI
 #define COCOAPODS_POD_AVAILABLE_DXYTencentOpenAPI
 #define COCOAPODS_VERSION_MAJOR_DXYTencentOpenAPI 2

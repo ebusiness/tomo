@@ -6,6 +6,7 @@ PODS:
     - AFNetworking (~> 1.x)
     - SocketRocket (~> 0.x)
   - CHTCollectionViewWaterfallLayout (0.8)
+  - DCAnimationKit (0.0.6)
   - DXYTencentOpenAPI (2.3)
   - FCFileManager (1.0.7)
   - ISO8601DateFormatterValueTransformer (0.6.0):
@@ -65,6 +66,7 @@ DEPENDENCIES:
   - AMTagListView (~> 0.6)
   - AZSocketIO (= 0.0.5)
   - CHTCollectionViewWaterfallLayout
+  - DCAnimationKit
   - DXYTencentOpenAPI (~> 2.3)
   - FCFileManager
   - JSBadgeView
@@ -88,6 +90,7 @@ SPEC CHECKSUMS:
   AMTagListView: 3f95751a6bae491553800447d4f5deba033ca7da
   AZSocketIO: 0d9604933c1509fa2f6d755f8a4df235fe3eac6c
   CHTCollectionViewWaterfallLayout: 058823cc65c9d84e059b0a85eede517550da0334
+  DCAnimationKit: 7133bef877ce1aa113dcfeea1380ca67f91f7608
   DXYTencentOpenAPI: 84e315d64bcf44ecc38e292017192e941870fed7
   FCFileManager: fd77211e8448b0e9713d51d4f75769d9dc4ceb58
   ISO8601DateFormatterValueTransformer: 3ac3a721381697cab4e792d8049ce2f2e9ad3036
