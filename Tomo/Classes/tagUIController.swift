@@ -12,30 +12,29 @@ class tagUIController {
     enum tagSize: Int {
         case small,normal
     }
-    class var tagColor_normal:UIColor { return  UIColor(red:0.12, green:0.55, blue:0.84, alpha:1) }
-    class var innerTagColor_normal:UIColor { return   UIColor(white: 1, alpha: 0.3) }
-    class var tagColor_highlight:UIColor { return  UIColor.blueColor() }
-    class var innerTagColor_highlight:UIColor { return UIColor.redColor() }
+    class var color_normal:UIColor { return Util.UIColorFromRGB(0x475477, alpha: 0.7) }
+    class var color_selected:UIColor { return Util.UIColorFromRGB(0x8FA8EE, alpha: 1) }
+    class var color_unselected:UIColor { return UIColor.whiteColor()}
     
     class func serTagView(size:tagSize){
-        switch size {
-        case .small:
-            AMTagView.appearance().tagLength = 5
-            AMTagView.appearance().textPadding = 9
-            AMTagView.appearance().radius = 2
-            AMTagView.appearance().textFont = UIFont(name: "Futura", size: 10)
-            break
-        case .normal:
-            AMTagView.appearance().tagLength = 10
-            AMTagView.appearance().textPadding = 14
-            AMTagView.appearance().radius = 4
-            AMTagView.appearance().textFont = UIFont(name: "Futura", size: 14)
-            break
-        default:
-            break
-        }
-        AMTagView.appearance().tagColor = tagColor_normal
-        AMTagView.appearance().innerTagColor = innerTagColor_normal
+        AMTagView.appearance().textColor = color_normal
+        AMTagView.appearance().tagColor = color_normal
+        AMTagView.appearance().innerTagColor = color_unselected
+        AMTagView.appearance().tagLength = 0
+        AMTagView.appearance().textPadding = 7
+        AMTagView.appearance().innerTagPadding = 1
+        AMTagView.appearance().radius = 2
+        var fontSize:CGFloat = size == .small ? 10 : 12
+//        switch size {
+//        case .small:
+//            fontSize = 10
+//            break
+//        case .normal:
+//            break
+//        default:
+//            break
+//        }
+        AMTagView.appearance().textFont = UIFont(name: "Helvetica", size: fontSize)
     }
 }
 
@@ -43,12 +42,12 @@ extension AMTagView{
     func selected(isSelected:Bool){
         if isSelected {
             self.tag = 1
-            self.innerTagColor = tagUIController.innerTagColor_highlight
-            self.tagColor = tagUIController.tagColor_highlight
+            self.tagColor = tagUIController.color_selected
+            self.innerTagColor = UIColor.clearColor()
         }else{
             self.tag = 0
-            self.tagColor = tagUIController.tagColor_normal
-            self.innerTagColor = tagUIController.innerTagColor_normal
+            self.tagColor = tagUIController.color_normal
+            self.innerTagColor = tagUIController.color_unselected
         }
     }
     func changeStatus(){
