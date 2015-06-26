@@ -8,8 +8,6 @@
 
 import UIKit
 
-let kBasePath = "http://lorempixel.com"
-
 class NewsfeedCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
@@ -72,11 +70,7 @@ class NewsfeedCell: UICollectionViewCell {
                 }
                 }, usingActivityIndicatorStyle: .Gray)
         }
-}
-
-//    func imagePath() -> String {
-//        return kBasePath + "/\(Int(imageSize.width))" + "/\(Int(imageSize.height))"
-//    }
+    }
 
     func sizeOfCell(cellWidth: CGFloat) -> CGSize {
         if let imageSize = post.imageSize {

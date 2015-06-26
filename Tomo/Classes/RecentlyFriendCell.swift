@@ -65,38 +65,6 @@ class RecentlyFriendCell: MCSwipeTableViewCell {
         }
     }
     
-//    var friend: XMPPMessageArchiving_Contact_CoreDataObject! {
-//        didSet {
-//            
-//            if !friend.isGroupChat() {
-//                membersCountLabel.hidden = true
-//            } else {
-//                friendNameLabel.text = "グループ名"
-////                membersCountLabel.hidden = false
-//                membersCountLabel.text = "\(XMPPManager.countOfRoom(friend.bareJidStr))"
-//            }
-//            
-//            if friend.mostRecentMessageBody.messageType() != .Text {
-//                self.messageLabel.text = friend.mostRecentMessageBody.messageType().rawValue
-//            } else {
-//                self.messageLabel.text = friend.mostRecentMessageBody
-//            }
-//            
-//            let dateFormatter = NSDateFormatter()
-//            dateFormatter.dateStyle = .ShortStyle
-//            self.timeLabel.text = dateFormatter.stringFromDate(friend.mostRecentMessageTimestamp)
-//            
-//            if let friend = Friend.MR_findFirstByAttribute("jidStr", withValue: friend.bareJidStr) as? Friend {
-//                if friend.unreadMessagesValue > 0 {
-//                    badgeView.hidden = false
-//                    badgeView.badgeText = String(friend.unreadMessagesValue)
-//                } else {
-//                    badgeView.hidden = true
-//                }
-//            }
-//        }
-//    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
 

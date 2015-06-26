@@ -26,23 +26,9 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
     private override init() {
         super.init()
         self.path_wav = "\(paths[0])/recorder.wav"//"\(paths[0])/recorder\(NSDate.timeIntervalSinceReferenceDate() * 1000.0).wav"
-//        self.path_amr = "\(paths[0])/recorder.amr"//"\(paths[0])/recorder\(NSDate.timeIntervalSinceReferenceDate() * 1000.0).amr"
     }
     
     private func setup(){
-        /*
-        NSDictionary *recordSetting = [NSDictionary dictionaryWithObjectsAndKeys:
-        [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
-        //[NSNumber numberWithFloat:44100.0], AVSampleRateKey,
-        [NSNumber numberWithFloat:8000.00], AVSampleRateKey,
-        [NSNumber numberWithInt:1], AVNumberOfChannelsKey,
-        //  [NSData dataWithBytes:&channelLayout length:sizeof(AudioChannelLayout)], AVChannelLayoutKey,
-        [NSNumber numberWithInt:16], AVLinearPCMBitDepthKey,
-        [NSNumber numberWithBool:NO], AVLinearPCMIsNonInterleaved,
-        [NSNumber numberWithBool:NO],AVLinearPCMIsFloatKey,
-        [NSNumber numberWithBool:NO], AVLinearPCMIsBigEndianKey,
-        nil];
-        */
         var recordSettings =
         [
             AVFormatIDKey: kAudioFormatLinearPCM,
