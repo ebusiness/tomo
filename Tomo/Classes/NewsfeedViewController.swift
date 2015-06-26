@@ -196,16 +196,10 @@ class NewsfeedViewController: BaseViewController {
         let atvc = Util.createViewControllerWithIdentifier("AlertTableView", storyboardName: "ActionSheet") as! AlertTableViewController
         
         let cameraAction = AlertTableViewController.tappenDic(title: "写真を撮る",tappen: { (sender) -> () in
-            let picker = UIImagePickerController()
-            picker.sourceType = .Camera
-            picker.delegate = self
-            self.presentViewController(picker, animated: true, completion: nil)
+            DBCameraController.openCamera(self, delegate: self)
         })
         let albumAction = AlertTableViewController.tappenDic(title: "写真から選択",tappen: { (sender) -> () in
-            let picker = UIImagePickerController()
-            picker.sourceType = .PhotoLibrary
-            picker.delegate = self
-            self.presentViewController(picker, animated: true, completion: nil)
+            DBCameraController.openLibrary(self, delegate: self)
         })
         atvc.show(self, data: [cameraAction,albumAction])
     }
@@ -411,28 +405,8 @@ extension NewsfeedViewController: GroupPostsHeaderCellDelegate {
 
 // MARK: - UIImagePickerControllerDelegate
 
-extension NewsfeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension NewsfeedViewController: UINavigationControllerDelegate {
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-        let orgImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        
-        let image = orgImage.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
-        
-        let name = NSUUID().UUIDString
-        let path = NSTemporaryDirectory() + name
-        
-        let newImage = image.normalizedImage()
-
-        newImage.saveToPath(path)
-        
-        picker.dismissViewControllerAnimated(false, completion: { () -> Void in
-            let vcNavi = Util.createViewControllerWithIdentifier(nil, storyboardName: "AddPost") as! UINavigationController
-            
-            let vc = vcNavi.topViewController as! AddPostViewController
-            vc.imagePath = path
-            self.presentViewController(vcNavi, animated: true, completion: nil)
-        })
-    }
 }
 
 // MARK: - UIGestureRecognizerDelegate
@@ -440,4 +414,31 @@ extension NewsfeedViewController: UIImagePickerControllerDelegate, UINavigationC
 extension NewsfeedViewController: UIGestureRecognizerDelegate {
     
     
+}
+
+// MARK: - DBCameraViewControllerDelegate
+
+extension NewsfeedViewController: DBCameraViewControllerDelegate {
+    func camera(cameraViewController: AnyObject!, didFinishWithImage image: UIImage!, withMetadata metadata: [NSObject : AnyObject]!) {
+        let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
+        
+        let name = NSUUID().UUIDString
+        let path = NSTemporaryDirectory() + name
+        
+        let newImage = image.normalizedImage()
+        
+        newImage.saveToPath(path)
+        
+        self.presentedViewController?.dismissViewControllerAnimated(false, completion: { () -> Void in
+            let vcNavi = Util.createViewControllerWithIdentifier(nil, storyboardName: "AddPost") as! UINavigationController
+            
+            let vc = vcNavi.topViewController as! AddPostViewController
+            vc.imagePath = path
+            self.presentViewController(vcNavi, animated: true, completion: nil)
+        })
+    }
+    func dismissCamera(cameraViewController: AnyObject!) {
+        self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+        cameraViewController.restoreFullScreenMode()
+    }
 }

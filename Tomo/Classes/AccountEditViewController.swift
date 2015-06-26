@@ -264,11 +264,10 @@ extension AccountEditViewController: UINavigationControllerDelegate {
     
 }
 
-// MARK: - UIImagePickerControllerDelegate
+// MARK: - DBCameraViewControllerDelegate
 
-extension AccountEditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+extension AccountEditViewController: DBCameraViewControllerDelegate {
+    func camera(cameraViewController: AnyObject!, didFinishWithImage image: UIImage!, withMetadata metadata: [NSObject : AnyObject]!) {
         let image = image.scaleToFitSize(CGSize(width: AvatarMaxWidth, height: AvatarMaxWidth))
         
         let name = NSUUID().UUIDString
@@ -278,7 +277,7 @@ extension AccountEditViewController: UIImagePickerControllerDelegate, UINavigati
         
         newImage.saveToPath(path)
         
-        picker.dismissViewControllerAnimated(false, completion: { () -> Void in
+        self.presentedViewController?.dismissViewControllerAnimated(false, completion: { () -> Void in
             let remotePath = Constants.avatarPath(fileName: name)
             
             S3Controller.uploadFile(name: name, localPath: self.path!, remotePath: remotePath, done: { (error) -> Void in
@@ -293,6 +292,10 @@ extension AccountEditViewController: UIImagePickerControllerDelegate, UINavigati
             })
         })
     }
+    func dismissCamera(cameraViewController: AnyObject!) {
+        self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+        cameraViewController.restoreFullScreenMode()
+    }
 }
 
 // MARK: - didSelectRowAtIndexPath
@@ -301,20 +304,12 @@ extension AccountEditViewController {
     //　プロファイル写真
     func didSelectAvatarCell(){
         let atvc = Util.createViewControllerWithIdentifier("AlertTableView", storyboardName: "ActionSheet") as! AlertTableViewController
-        
+
         let cameraAction = AlertTableViewController.tappenDic(title: "写真を撮る",tappen: { (sender) -> () in
-            let picker = UIImagePickerController()
-            picker.sourceType = .Camera
-            picker.allowsEditing = true
-            picker.delegate = self
-            self.presentViewController(picker, animated: true, completion: nil)
+            DBCameraController.openCamera(self, delegate: self,isQuad: true)
         })
         let albumAction = AlertTableViewController.tappenDic(title: "写真から選択",tappen: { (sender) -> () in
-            let picker = UIImagePickerController()
-            picker.sourceType = .PhotoLibrary
-            picker.allowsEditing = true
-            picker.delegate = self
-            self.presentViewController(picker, animated: true, completion: nil)
+            DBCameraController.openLibrary(self, delegate: self,isQuad: true)
         })
         atvc.show(self, data: [cameraAction,albumAction])
     }

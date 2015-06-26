@@ -76,18 +76,10 @@ class GroupAddTableViewController: BaseTableViewController {
         let atvc = Util.createViewControllerWithIdentifier("AlertTableView", storyboardName: "ActionSheet") as! AlertTableViewController
         
         let cameraAction = AlertTableViewController.tappenDic(title: "写真を撮る",tappen: { (sender) -> () in
-            let picker = UIImagePickerController()
-            picker.sourceType = .Camera
-            picker.allowsEditing = true
-            picker.delegate = self
-            self.presentViewController(picker, animated: true, completion: nil)
+            DBCameraController.openCamera(self, delegate: self,isQuad: true)
         })
         let albumAction = AlertTableViewController.tappenDic(title: "写真から選択",tappen: { (sender) -> () in
-            let picker = UIImagePickerController()
-            picker.sourceType = .PhotoLibrary
-            picker.allowsEditing = true
-            picker.delegate = self
-            self.presentViewController(picker, animated: true, completion: nil)
+            DBCameraController.openLibrary(self, delegate: self,isQuad: true)
         })
         atvc.show(self, data: [cameraAction,albumAction])
     }
@@ -167,11 +159,17 @@ extension GroupAddTableViewController: UITextFieldDelegate {
 
 }
 
-// MARK: - UIImagePickerControllerDelegate
 
-extension GroupAddTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+// MARK: - UINavigationControllerDelegate
+
+extension GroupAddTableViewController: UINavigationControllerDelegate {
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+    
+}
+// MARK: - DBCameraViewControllerDelegate
+
+extension GroupAddTableViewController: DBCameraViewControllerDelegate {
+    func camera(cameraViewController: AnyObject!, didFinishWithImage image: UIImage!, withMetadata metadata: [NSObject : AnyObject]!) {
         let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
         
         let name = NSUUID().UUIDString
@@ -181,8 +179,13 @@ extension GroupAddTableViewController: UIImagePickerControllerDelegate, UINaviga
         
         newImage.saveToPath(imagePath)
         
-        picker.dismissViewControllerAnimated(true, completion: { () -> Void in
+        cameraViewController.restoreFullScreenMode()
+        self.presentedViewController?.dismissViewControllerAnimated(true, completion: { () -> Void in
             self.imageView.image = newImage
         })
+    }
+    func dismissCamera(cameraViewController: AnyObject!) {
+        self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+        cameraViewController.restoreFullScreenMode()
     }
 }
