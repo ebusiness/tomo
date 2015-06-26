@@ -42,3 +42,6 @@
 #import "MCSwipeTableViewCell.h"
 #import "UIView+DCAnimationKit.h"
 #import "TLYShyNavBarManager.h"
+#import "DBCameraViewController.h"
+#import "DBCameraContainerViewController.h"
+#import "DBCameraLibraryViewController.h"

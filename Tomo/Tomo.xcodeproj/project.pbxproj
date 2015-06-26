@@ -232,6 +232,7 @@
 		29ED0C7E1AE4AC0900B51C7E /* TextFieldInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29ED0C7D1AE4AC0900B51C7E /* TextFieldInputViewController.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
+		D00E0FD61B3D3B4D00AEB521 /* DBCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00E0FD51B3D3B4D00AEB521 /* DBCameraController.swift */; };
 		D01EB7B51B2EB4D6002D04A4 /* TransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01EB7B41B2EB4D6002D04A4 /* TransitionManager.swift */; };
 		D01EB7B71B2EB505002D04A4 /* TagSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01EB7B61B2EB505002D04A4 /* TagSettingController.swift */; };
 		D01EB7EF1B2EEACB002D04A4 /* BubbleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01EB7EE1B2EEACB002D04A4 /* BubbleTransition.swift */; };
@@ -430,6 +431,7 @@
 		29ED0C7D1AE4AC0900B51C7E /* TextFieldInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextFieldInputViewController.swift; path = Classes/TextFieldInputViewController.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		D00E0FD51B3D3B4D00AEB521 /* DBCameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBCameraController.swift; path = Classes/DBCameraController.swift; sourceTree = "<group>"; };
 		D01EB7B41B2EB4D6002D04A4 /* TransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransitionManager.swift; path = TransitioningDelegate/TransitionManager.swift; sourceTree = "<group>"; };
 		D01EB7B61B2EB505002D04A4 /* TagSettingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagSettingController.swift; path = Classes/TagSettingController.swift; sourceTree = "<group>"; };
 		D01EB7EE1B2EEACB002D04A4 /* BubbleTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BubbleTransition.swift; path = TransitioningDelegate/BubbleTransition.swift; sourceTree = "<group>"; };
@@ -741,6 +743,7 @@
 				290134F71AC39F4600BBFE29 /* ApiController.swift */,
 				29C1DA781AD36659009A02CC /* S3Controller.swift */,
 				29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */,
+				D00E0FD51B3D3B4D00AEB521 /* DBCameraController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1253,6 +1256,7 @@
 				29BE7E231AC55A28008110B4 /* MultilineLabel.swift in Sources */,
 				29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */,
 				29A1AFF71AC4113000775765 /* _Post.swift in Sources */,
+				D00E0FD61B3D3B4D00AEB521 /* DBCameraController.swift in Sources */,
 				2942CCD51ACD03BF007CDC97 /* NewsfeedCell.swift in Sources */,
 				2908430B1B09C9140037A6CD /* Array.swift in Sources */,
 				2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */,

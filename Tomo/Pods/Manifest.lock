@@ -6,9 +6,12 @@ PODS:
     - AFNetworking (~> 1.x)
     - SocketRocket (~> 0.x)
   - CHTCollectionViewWaterfallLayout (0.8)
+  - DBCamera (2.3.16):
+    - GPUImage (~> 0.1)
   - DCAnimationKit (0.0.6)
   - DXYTencentOpenAPI (2.3)
   - FCFileManager (1.0.7)
+  - GPUImage (0.1.6)
   - ISO8601DateFormatterValueTransformer (0.6.0):
     - RKValueTransformers (~> 1.1.0)
   - JSBadgeView (1.4)
@@ -67,6 +70,7 @@ DEPENDENCIES:
   - AMTagListView (~> 0.6)
   - AZSocketIO (= 0.0.5)
   - CHTCollectionViewWaterfallLayout
+  - DBCamera (~> 2.3)
   - DCAnimationKit
   - DXYTencentOpenAPI (~> 2.3)
   - FCFileManager
@@ -74,7 +78,7 @@ DEPENDENCIES:
   - JSQMessagesViewController (= 7.0.0)
   - libWeChatSDK (~> 1.5)
   - MagicalRecord
-  - MCSwipeTableViewCell
+  - MCSwipeTableViewCell (~> 2.1)
   - MHVideoPhotoGallery
   - MZFormSheetController (~> 3.0)
   - NYXImagesKit
@@ -82,7 +86,7 @@ DEPENDENCIES:
   - SDWebImage
   - SSKeychain
   - SVProgressHUD
-  - TLYShyNavBar
+  - TLYShyNavBar (~> 0.9)
   - UIActivityIndicator-for-SDWebImage
   - UIColor-HexString
 
@@ -92,9 +96,11 @@ SPEC CHECKSUMS:
   AMTagListView: 3f95751a6bae491553800447d4f5deba033ca7da
   AZSocketIO: 0d9604933c1509fa2f6d755f8a4df235fe3eac6c
   CHTCollectionViewWaterfallLayout: 058823cc65c9d84e059b0a85eede517550da0334
+  DBCamera: c88a0deea468d153f54196e56a423301c7092737
   DCAnimationKit: 7133bef877ce1aa113dcfeea1380ca67f91f7608
   DXYTencentOpenAPI: 84e315d64bcf44ecc38e292017192e941870fed7
   FCFileManager: fd77211e8448b0e9713d51d4f75769d9dc4ceb58
+  GPUImage: 4675ce4a5370ca92fcea8623b2a08b8f0c51b940
   ISO8601DateFormatterValueTransformer: 3ac3a721381697cab4e792d8049ce2f2e9ad3036
   JSBadgeView: 3bcf5042339628825797438ceeb76ca59c0285ef
   JSQMessagesViewController: 9fd7e9ac96e9fc91f2deca86928e2cc916aeebaa

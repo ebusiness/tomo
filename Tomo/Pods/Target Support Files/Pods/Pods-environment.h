@@ -36,6 +36,12 @@
 #define COCOAPODS_VERSION_MINOR_CHTCollectionViewWaterfallLayout 8
 #define COCOAPODS_VERSION_PATCH_CHTCollectionViewWaterfallLayout 0
 
+// DBCamera
+#define COCOAPODS_POD_AVAILABLE_DBCamera
+#define COCOAPODS_VERSION_MAJOR_DBCamera 2
+#define COCOAPODS_VERSION_MINOR_DBCamera 3
+#define COCOAPODS_VERSION_PATCH_DBCamera 16
+
 // DCAnimationKit
 #define COCOAPODS_POD_AVAILABLE_DCAnimationKit
 #define COCOAPODS_VERSION_MAJOR_DCAnimationKit 0
@@ -53,6 +59,12 @@
 #define COCOAPODS_VERSION_MAJOR_FCFileManager 1
 #define COCOAPODS_VERSION_MINOR_FCFileManager 0
 #define COCOAPODS_VERSION_PATCH_FCFileManager 7
+
+// GPUImage
+#define COCOAPODS_POD_AVAILABLE_GPUImage
+#define COCOAPODS_VERSION_MAJOR_GPUImage 0
+#define COCOAPODS_VERSION_MINOR_GPUImage 1
+#define COCOAPODS_VERSION_PATCH_GPUImage 6
 
 // ISO8601DateFormatterValueTransformer
 #define COCOAPODS_POD_AVAILABLE_ISO8601DateFormatterValueTransformer
