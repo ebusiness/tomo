@@ -15,6 +15,8 @@ class RegViewController: BaseViewController {
     @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var upImageView: UIImageView!
     
+    @IBOutlet weak var loginButton: UIButton!//<--
+    
     var regPageDatas = [RegPageData]()
     var pages: Int {
         return regPageDatas.count
@@ -111,6 +113,27 @@ extension RegViewController: UIScrollViewDelegate {
         let percentage = scrollView.contentOffset.x / pageWidth
         
         let p = Int(percentage)
+        
+        let maxpage = Int(scrollView.contentSize.width/pageWidth)
+        
+        if maxpage == (p + 1) {
+            self.loginButton.hidden = false
+            self.loginButton.alpha = 1
+        }else{
+            self.loginButton.hidden = true
+        }
+//        if (p + 1) == maxpage && self.loginButton.hidden {
+//            self.loginButton.hidden = false
+//            UIView.animateWithDuration(0.5, animations: { () -> Void in
+//                self.loginButton.alpha = 1
+//            })
+//        }else if !self.loginButton.hidden && (p + 2) == maxpage {
+//            UIView.animateWithDuration(0.5, animations: { () -> Void in
+//                self.loginButton.alpha = 0
+//                }) { (finished) -> Void in
+//                    self.loginButton.hidden = true
+//            }
+//        }
         
         let alpha = percentage - CGFloat(p)
         

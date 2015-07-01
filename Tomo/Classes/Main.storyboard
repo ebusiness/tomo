@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="UXu-t1-ZqZ">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
         <!--Reg Sign Up View Controller-->
@@ -569,6 +568,93 @@
             </objects>
             <point key="canvasLocation" x="115" y="1109"/>
         </scene>
+        <!--Reg View Controller-->
+        <scene sceneID="ME3-kH-ET0">
+            <objects>
+                <viewController id="UXu-t1-ZqZ" customClass="RegViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Rzb-S5-hWb"/>
+                        <viewControllerLayoutGuide type="bottom" id="Z5N-JH-FvQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wUk-l0-V2H">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d23-sF-hDs">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="80e-bE-ttC">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R5M-eZ-6gh" userLabel="fadeView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="eP8-1C-kBN">
+                                        <rect key="frame" x="141" y="511" width="39" height="37"/>
+                                    </pageControl>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v11-o6-5hz">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="511"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="UXu-t1-ZqZ" id="sCs-wX-MWZ"/>
+                                        </connections>
+                                    </scrollView>
+                                    <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s8E-bz-QxW">
+                                        <rect key="frame" x="10" y="511" width="300" height="47"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <state key="normal" title="サインイン" backgroundImage="btn_footer_bg_blue">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="login:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Ofl-mE-zaM"/>
+                                            <segue destination="4Wm-m0-0bg" kind="modal" id="i0V-5t-R1w"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="s8E-bz-QxW" firstAttribute="top" secondItem="v11-o6-5hz" secondAttribute="bottom" id="7Ko-Yh-CDJ"/>
+                                    <constraint firstAttribute="centerX" secondItem="eP8-1C-kBN" secondAttribute="centerX" id="FFY-tK-jE6"/>
+                                    <constraint firstItem="s8E-bz-QxW" firstAttribute="leading" secondItem="R5M-eZ-6gh" secondAttribute="leading" constant="10" id="GFd-NI-ccd"/>
+                                    <constraint firstAttribute="bottom" secondItem="s8E-bz-QxW" secondAttribute="bottom" constant="10" id="H5p-Fw-A7G"/>
+                                    <constraint firstItem="v11-o6-5hz" firstAttribute="top" secondItem="R5M-eZ-6gh" secondAttribute="top" id="NrQ-o4-Kqd"/>
+                                    <constraint firstAttribute="trailing" secondItem="s8E-bz-QxW" secondAttribute="trailing" constant="10" id="a3C-P7-Obg"/>
+                                    <constraint firstAttribute="trailing" secondItem="v11-o6-5hz" secondAttribute="trailing" id="fe2-Nj-beJ"/>
+                                    <constraint firstAttribute="width" secondItem="v11-o6-5hz" secondAttribute="width" id="g9t-S7-TCt"/>
+                                    <constraint firstAttribute="bottom" secondItem="eP8-1C-kBN" secondAttribute="bottom" constant="20" id="gqt-Q6-182"/>
+                                    <constraint firstItem="eP8-1C-kBN" firstAttribute="top" secondItem="v11-o6-5hz" secondAttribute="bottom" id="u9e-nU-we0"/>
+                                    <constraint firstItem="v11-o6-5hz" firstAttribute="leading" secondItem="R5M-eZ-6gh" secondAttribute="leading" id="w8i-Bh-KE6"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="d23-sF-hDs" firstAttribute="leading" secondItem="wUk-l0-V2H" secondAttribute="leading" id="0xD-Ky-bL3"/>
+                            <constraint firstItem="Z5N-JH-FvQ" firstAttribute="top" secondItem="R5M-eZ-6gh" secondAttribute="bottom" id="4v0-Pu-tTh"/>
+                            <constraint firstItem="R5M-eZ-6gh" firstAttribute="top" secondItem="wUk-l0-V2H" secondAttribute="top" id="5R5-Yd-CKq"/>
+                            <constraint firstItem="d23-sF-hDs" firstAttribute="top" secondItem="wUk-l0-V2H" secondAttribute="top" id="7ng-FB-IpC"/>
+                            <constraint firstItem="Z5N-JH-FvQ" firstAttribute="top" secondItem="d23-sF-hDs" secondAttribute="bottom" id="EHo-VE-h9F"/>
+                            <constraint firstItem="80e-bE-ttC" firstAttribute="leading" secondItem="wUk-l0-V2H" secondAttribute="leading" id="PT7-5M-LAd"/>
+                            <constraint firstItem="R5M-eZ-6gh" firstAttribute="leading" secondItem="wUk-l0-V2H" secondAttribute="leading" id="Qcg-es-RlL"/>
+                            <constraint firstItem="Z5N-JH-FvQ" firstAttribute="top" secondItem="80e-bE-ttC" secondAttribute="bottom" id="Qzx-KH-yn4"/>
+                            <constraint firstItem="80e-bE-ttC" firstAttribute="top" secondItem="wUk-l0-V2H" secondAttribute="top" id="WVf-aA-aZc"/>
+                            <constraint firstAttribute="trailing" secondItem="80e-bE-ttC" secondAttribute="trailing" id="dj4-7D-Gwx"/>
+                            <constraint firstAttribute="trailing" secondItem="d23-sF-hDs" secondAttribute="trailing" id="m2h-px-ESx"/>
+                            <constraint firstAttribute="trailing" secondItem="R5M-eZ-6gh" secondAttribute="trailing" id="qsu-Iv-LWo"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backImageView" destination="d23-sF-hDs" id="zwy-Zw-V2e"/>
+                        <outlet property="loginButton" destination="s8E-bz-QxW" id="dmv-jX-08E"/>
+                        <outlet property="pageControl" destination="eP8-1C-kBN" id="AjX-nM-zTO"/>
+                        <outlet property="scrollView" destination="v11-o6-5hz" id="HVE-SL-Qsz"/>
+                        <outlet property="upImageView" destination="80e-bE-ttC" id="Hvl-UI-W1v"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lwA-QV-d4y" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="537" y="1109"/>
+        </scene>
     </scenes>
     <resources>
         <image name="btn_footer_bg_blue" width="10" height="40"/>
@@ -584,4 +670,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="i0V-5t-R1w"/>
+    </inferredMetricsTieBreakers>
 </document>
