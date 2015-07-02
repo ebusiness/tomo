@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="UXu-t1-ZqZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4Wm-m0-0bg">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -379,7 +379,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zio-7z-6Vn">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bsC-sv-Myi">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bsC-sv-Myi">
                                         <rect key="frame" x="276" y="20" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="MyF-39-j3w"/>
@@ -549,7 +549,7 @@
         <!--Reg View Controller-->
         <scene sceneID="ME3-kH-ET0">
             <objects>
-                <viewController id="UXu-t1-ZqZ" customClass="RegViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegViewController" id="UXu-t1-ZqZ" customClass="RegViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Rzb-S5-hWb"/>
                         <viewControllerLayoutGuide type="bottom" id="Z5N-JH-FvQ"/>
@@ -649,6 +649,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="k9h-3c-8cx"/>
+        <segue reference="i0V-5t-R1w"/>
     </inferredMetricsTieBreakers>
 </document>
