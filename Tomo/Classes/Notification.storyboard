@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="qAQ-Gz-Vxn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="qAQ-Gz-Vxn">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
         <!--Notification List View Controller-->
@@ -28,21 +27,12 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WoT-Hf-JPy">
-                                                    <rect key="frame" x="282" y="55" width="30" height="30"/>
-                                                    <state key="normal" title="許可">
+                                                    <rect key="frame" x="282" y="37" width="30" height="48.5"/>
+                                                    <state key="normal" title="允许">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="allow:" destination="Ovq-tN-rig" eventType="touchUpInside" id="gOx-JX-Zbt"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l03-Qi-NNr">
-                                                    <rect key="frame" x="236" y="55" width="30" height="30"/>
-                                                    <state key="normal" title="拒否">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="disallow:" destination="Ovq-tN-rig" eventType="touchUpInside" id="Ylr-fL-Hmz"/>
                                                     </connections>
                                                 </button>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="y3A-gQ-lQA">
@@ -59,14 +49,23 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tvw-6s-ZPx">
-                                                    <rect key="frame" x="109" y="15" width="203" height="36"/>
+                                                    <rect key="frame" x="109" y="15" width="203" height="18"/>
                                                     <string key="text" base64-UTF8="YES">
-COOBi+OCieWPi+mBlOOBq+OBquOCi+ODquOCr+OCqOOCueODiOOBjOOBguOCiuOBvuOBl+OBnw
+COWQkeS9oOWPkemAgeS6huS6pOaci+WPi+eahOivt+axgg
 </string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l03-Qi-NNr">
+                                                    <rect key="frame" x="236" y="55.5" width="30" height="30"/>
+                                                    <state key="normal" title="拒绝">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="disallow:" destination="Ovq-tN-rig" eventType="touchUpInside" id="Ylr-fL-Hmz"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="l03-Qi-NNr" secondAttribute="bottom" constant="8" id="1io-ev-Te8"/>

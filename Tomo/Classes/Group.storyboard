@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="AM0-J6-0RI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="AM0-J6-0RI">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -92,7 +91,7 @@
                                                                 <constraint firstAttribute="height" constant="34" id="6hb-kl-YPY"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                            <state key="normal" title="グループに参加" backgroundImage="btn_32_white,6,6,">
+                                                            <state key="normal" title="参加这个圈子" backgroundImage="btn_32_white,6,6,">
                                                                 <color key="titleColor" red="0.45098039215686275" green="0.45098039215686275" blue="0.45098039215686275" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
@@ -179,7 +178,7 @@
             </objects>
             <point key="canvasLocation" x="292" y="497"/>
         </scene>
-        <!--新規グループ-->
+        <!--新建圈子-->
         <scene sceneID="r6R-sn-qaT">
             <objects>
                 <tableViewController storyboardIdentifier="GroupAddTableViewController" id="tmf-0L-tCw" customClass="GroupAddTableViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -198,14 +197,14 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s6G-wv-EKc">
                                                     <rect key="frame" x="8" y="8" width="304" height="44"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="タイトル" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n0t-s8-lCe">
-                                                            <rect key="frame" x="8" y="12" width="68" height="21"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="名称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n0t-s8-lCe">
+                                                            <rect key="frame" x="8" y="12.5" width="34" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="タイトル" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l2H-Q0-cHx">
-                                                            <rect key="frame" x="84" y="7" width="212" height="30"/>
+                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="名称" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l2H-Q0-cHx">
+                                                            <rect key="frame" x="50" y="7" width="246" height="30"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits"/>
                                                             <connections>
@@ -252,7 +251,7 @@
                                                                 <outletCollection property="gestureRecognizers" destination="0mj-3K-VBg" appends="YES" id="iKp-yH-lo0"/>
                                                             </connections>
                                                         </imageView>
-                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="説明を書く" translatesAutoresizingMaskIntoConstraints="NO" id="upn-jB-sOs">
+                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="给圈子写一些说明" translatesAutoresizingMaskIntoConstraints="NO" id="upn-jB-sOs">
                                                             <rect key="frame" x="101" y="0.0" width="202.5" height="120"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -294,8 +293,8 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mKY-4g-dji" id="9Tt-O5-ZHN">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="現場駅" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cba-M9-2Zm" userLabel="駅">
-                                                    <rect key="frame" x="15" y="11" width="51" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="现场车站" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cba-M9-2Zm" userLabel="駅">
+                                                    <rect key="frame" x="15" y="11.5" width="68" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -323,7 +322,7 @@
                             <outlet property="delegate" destination="tmf-0L-tCw" id="ptH-ic-9I4"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="新規グループ" id="U11-b6-XMb">
+                    <navigationItem key="navigationItem" title="新建圈子" id="U11-b6-XMb">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="qFn-4J-C0j">
                             <connections>
                                 <action selector="cancel:" destination="tmf-0L-tCw" id="l1e-I5-yj4"/>
