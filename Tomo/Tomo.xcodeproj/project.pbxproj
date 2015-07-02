@@ -239,6 +239,8 @@
 		D01EB7F11B2EEB43002D04A4 /* TagListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01EB7F01B2EEB43002D04A4 /* TagListController.swift */; };
 		D06CF9AE1B382A7D00BF24B6 /* tagUIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06CF9AD1B382A7D00BF24B6 /* tagUIController.swift */; };
 		D07C99631B3ABD29008EB420 /* TableViewCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C99621B3ABD29008EB420 /* TableViewCellController.swift */; };
+		D0A5E1381B4546B3002E2FE6 /* NewAddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A5E1371B4546B3002E2FE6 /* NewAddPostViewController.swift */; };
+		D0A5E13A1B45669D002E2FE6 /* ImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A5E1391B45669D002E2FE6 /* ImageCollectionCell.swift */; };
 		D0ACAE571B0AD98400AA9907 /* ActionSheet.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */; };
 		D0ACAE5C1B0AE0CA00AA9907 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */; };
 		D0BD83F41B3122350040F503 /* TagSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD83F31B3122350040F503 /* TagSearchController.swift */; };
@@ -438,6 +440,8 @@
 		D01EB7F01B2EEB43002D04A4 /* TagListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagListController.swift; path = Classes/TagListController.swift; sourceTree = "<group>"; };
 		D06CF9AD1B382A7D00BF24B6 /* tagUIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = tagUIController.swift; path = Classes/tagUIController.swift; sourceTree = "<group>"; };
 		D07C99621B3ABD29008EB420 /* TableViewCellController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCellController.swift; path = Classes/TableViewCellController.swift; sourceTree = "<group>"; };
+		D0A5E1371B4546B3002E2FE6 /* NewAddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewAddPostViewController.swift; path = Classes/NewAddPostViewController.swift; sourceTree = "<group>"; };
+		D0A5E1391B45669D002E2FE6 /* ImageCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCollectionCell.swift; path = Classes/ImageCollectionCell.swift; sourceTree = "<group>"; };
 		D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ActionSheet.storyboard; sourceTree = "<group>"; };
 		D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = Classes/ShareViewController.swift; sourceTree = "<group>"; };
 		D0BD83F31B3122350040F503 /* TagSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagSearchController.swift; path = Classes/TagSearchController.swift; sourceTree = "<group>"; };
@@ -810,6 +814,8 @@
 				2942CCD41ACD03BF007CDC97 /* NewsfeedCell.swift */,
 				2942CCD21ACCF761007CDC97 /* NewsfeedViewController.swift */,
 				294EF0AF1B01D54500A94A3F /* RadioButtonCell.swift */,
+				D0A5E1371B4546B3002E2FE6 /* NewAddPostViewController.swift */,
+				D0A5E1391B45669D002E2FE6 /* ImageCollectionCell.swift */,
 			);
 			name = "ホーム";
 			sourceTree = "<group>";
@@ -1217,11 +1223,13 @@
 				296D8BCE1B004C6B0058D400 /* MessageGroupViewController.swift in Sources */,
 				2908430F1B09C9140037A6CD /* Double.swift in Sources */,
 				D0DC4AB81B15C01A00AA4022 /* AlertViewController.swift in Sources */,
+				D0A5E13A1B45669D002E2FE6 /* ImageCollectionCell.swift in Sources */,
 				1712BE381ACE183C000A9C47 /* _Images.swift in Sources */,
 				D0D8BCA91B0C76EE00DE7B3F /* AlertTableViewController.swift in Sources */,
 				D01EB7F11B2EEB43002D04A4 /* TagListController.swift in Sources */,
 				D01EB7B71B2EB505002D04A4 /* TagSettingController.swift in Sources */,
 				296D8BAE1AFC5A020058D400 /* LoadingViewController.swift in Sources */,
+				D0A5E1381B4546B3002E2FE6 /* NewAddPostViewController.swift in Sources */,
 				294EF0B01B01D54500A94A3F /* RadioButtonCell.swift in Sources */,
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
 				D07C99631B3ABD29008EB420 /* TableViewCellController.swift in Sources */,

@@ -55,7 +55,7 @@ class NewsfeedViewController: BaseViewController {
     
     func rightBarButtonItem() -> UIBarButtonItem? {
         switch displayMode {
-        case .Newsfeed, .Account:
+        case .Newsfeed , .Account:
             return UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: Selector("addPostBtnTapped:"))
         case .Group:
             if let group = group where group.participants.count > 1 {
@@ -191,17 +191,23 @@ class NewsfeedViewController: BaseViewController {
     // MARK: - Action
     
     @IBAction func addPostBtnTapped(sender: UIBarButtonItem) {
+        let vcNavi = Util.createViewControllerWithIdentifier(nil, storyboardName: "AddPost") as! UINavigationController
         
+        let vc = vcNavi.topViewController as! NewAddPostViewController
+
+        self.presentViewController(vcNavi, animated: true, completion: nil)
         
-        let atvc = Util.createViewControllerWithIdentifier("AlertTableView", storyboardName: "ActionSheet") as! AlertTableViewController
-        
-        let cameraAction = AlertTableViewController.tappenDic(title: "写真を撮る",tappen: { (sender) -> () in
-            DBCameraController.openCamera(self, delegate: self)
-        })
-        let albumAction = AlertTableViewController.tappenDic(title: "写真から選択",tappen: { (sender) -> () in
-            DBCameraController.openLibrary(self, delegate: self)
-        })
-        atvc.show(self, data: [cameraAction,albumAction])
+//        
+//        
+//        let atvc = Util.createViewControllerWithIdentifier("AlertTableView", storyboardName: "ActionSheet") as! AlertTableViewController
+//        
+//        let cameraAction = AlertTableViewController.tappenDic(title: "写真を撮る",tappen: { (sender) -> () in
+//            DBCameraController.openCamera(self, delegate: self)
+//        })
+//        let albumAction = AlertTableViewController.tappenDic(title: "写真から選択",tappen: { (sender) -> () in
+//            DBCameraController.openLibrary(self, delegate: self)
+//        })
+//        atvc.show(self, data: [cameraAction,albumAction])
     }
     
     func groupChat() {

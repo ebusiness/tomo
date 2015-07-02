@@ -589,7 +589,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="s8E-bz-QxW" firstAttribute="top" secondItem="v11-o6-5hz" secondAttribute="bottom" id="7Ko-Yh-CDJ"/>
                                     <constraint firstAttribute="centerX" secondItem="eP8-1C-kBN" secondAttribute="centerX" id="FFY-tK-jE6"/>
