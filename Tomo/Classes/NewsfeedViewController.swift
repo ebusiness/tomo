@@ -191,11 +191,9 @@ class NewsfeedViewController: BaseViewController {
     // MARK: - Action
     
     @IBAction func addPostBtnTapped(sender: UIBarButtonItem) {
-        let vcNavi = Util.createViewControllerWithIdentifier(nil, storyboardName: "AddPost") as! UINavigationController
+        let vc = Util.createViewControllerWithIdentifier("NewAddPostViewController", storyboardName: "AddPost") as! NewAddPostViewController
         
-        let vc = vcNavi.topViewController as! NewAddPostViewController
-
-        self.presentViewController(vcNavi, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
         
 //        
 //        
