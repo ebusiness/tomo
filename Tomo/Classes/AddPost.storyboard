@@ -17,7 +17,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="7rE-vt-rUs" kind="relationship" relationship="rootViewController" id="qYY-zB-GfY"/>
+                        <segue destination="4se-nf-scf" kind="relationship" relationship="rootViewController" id="I90-Pw-pph"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="90z-7S-y1m" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -314,8 +314,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="这一刻的想法..." translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-eu-n8y">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="392"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="384"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
@@ -323,32 +324,32 @@
                                 </connections>
                             </textView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="F5s-Dv-2sW">
-                                <rect key="frame" x="0.0" y="392" width="320" height="176"/>
-                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="0.0" y="384" width="320" height="140"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dgG-pT-WXC">
-                                    <size key="itemSize" width="150" height="150"/>
+                                    <size key="itemSize" width="130" height="130"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="10" minY="10" maxX="0.0" maxY="10"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="mxo-EU-HJR" customClass="ImageCollectionCell" customModule="tomo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="taq-gg-SDL">
-                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Znn-GX-vPf">
-                                                    <rect key="frame" x="106" y="0.0" width="44" height="44"/>
+                                                    <rect key="frame" x="98" y="10" width="22" height="22"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="44" id="EFf-i2-5dW"/>
-                                                        <constraint firstAttribute="width" constant="44" id="yiJ-xn-rps"/>
+                                                        <constraint firstAttribute="height" constant="22" id="EFf-i2-5dW"/>
+                                                        <constraint firstAttribute="width" constant="22" id="yiJ-xn-rps"/>
                                                     </constraints>
-                                                    <state key="normal" title="删除">
+                                                    <state key="normal" backgroundImage="icon_close">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -362,12 +363,13 @@
                                         <constraints>
                                             <constraint firstItem="taq-gg-SDL" firstAttribute="leading" secondItem="mxo-EU-HJR" secondAttribute="leading" id="4GU-Oj-Ils"/>
                                             <constraint firstAttribute="bottom" secondItem="taq-gg-SDL" secondAttribute="bottom" id="d8t-0J-1Fu"/>
-                                            <constraint firstItem="Znn-GX-vPf" firstAttribute="top" secondItem="mxo-EU-HJR" secondAttribute="top" id="g4X-o3-9DP"/>
-                                            <constraint firstAttribute="trailing" secondItem="Znn-GX-vPf" secondAttribute="trailing" id="qcg-4A-cEf"/>
+                                            <constraint firstItem="Znn-GX-vPf" firstAttribute="top" secondItem="mxo-EU-HJR" secondAttribute="top" constant="10" id="g4X-o3-9DP"/>
+                                            <constraint firstAttribute="trailing" secondItem="Znn-GX-vPf" secondAttribute="trailing" constant="10" id="qcg-4A-cEf"/>
                                             <constraint firstItem="taq-gg-SDL" firstAttribute="top" secondItem="mxo-EU-HJR" secondAttribute="top" id="rWm-Ce-LXb"/>
                                             <constraint firstAttribute="trailing" secondItem="taq-gg-SDL" secondAttribute="trailing" id="rvC-Rl-1Xw"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="btnClose" destination="Znn-GX-vPf" id="pzG-x2-5ht"/>
                                             <outlet property="imageView" destination="taq-gg-SDL" id="fbT-TR-7QQ"/>
                                         </connections>
                                     </collectionViewCell>
@@ -375,12 +377,16 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vs1-Gm-x0i">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                    <state key="normal" backgroundImage="ic_add_black_48dp">
+                                                <button opaque="NO" alpha="0.38" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vs1-Gm-x0i">
+                                                    <rect key="frame" x="0.0" y="50" width="30" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="0LP-4c-Zev"/>
+                                                        <constraint firstAttribute="height" constant="30" id="QJh-AS-UWz"/>
+                                                    </constraints>
+                                                    <state key="normal" backgroundImage="icon_plus">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -392,12 +398,10 @@
                                         </view>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="vs1-Gm-x0i" secondAttribute="bottom" id="Utd-o4-59h"/>
-                                            <constraint firstItem="vs1-Gm-x0i" firstAttribute="leading" secondItem="0RK-QR-7Av" secondAttribute="leading" id="Ycx-6B-20j"/>
-                                            <constraint firstItem="vs1-Gm-x0i" firstAttribute="top" secondItem="0RK-QR-7Av" secondAttribute="top" id="YuT-Ra-OoW"/>
-                                            <constraint firstAttribute="trailing" secondItem="vs1-Gm-x0i" secondAttribute="trailing" id="nWU-hN-EJA"/>
+                                            <constraint firstItem="vs1-Gm-x0i" firstAttribute="leading" secondItem="0RK-QR-7Av" secondAttribute="leading" id="2lj-iM-uls"/>
+                                            <constraint firstAttribute="centerY" secondItem="vs1-Gm-x0i" secondAttribute="centerY" id="Zj3-U2-Vja"/>
                                         </constraints>
-                                        <size key="customSize" width="50" height="50"/>
+                                        <size key="customSize" width="130" height="130"/>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -415,16 +419,23 @@
                             <constraint firstAttribute="trailing" secondItem="1Nk-eu-n8y" secondAttribute="trailing" id="n35-91-ZqS"/>
                             <constraint firstAttribute="trailing" secondItem="F5s-Dv-2sW" secondAttribute="trailing" id="obo-1m-ZWj"/>
                             <constraint firstItem="1Nk-eu-n8y" firstAttribute="leading" secondItem="4Gy-P4-w4r" secondAttribute="leading" id="wXX-Hy-sX1"/>
-                            <constraint firstItem="0UP-ir-yOe" firstAttribute="top" secondItem="1Nk-eu-n8y" secondAttribute="bottom" constant="176" id="xWM-B9-geP"/>
+                            <constraint firstItem="0UP-ir-yOe" firstAttribute="top" secondItem="1Nk-eu-n8y" secondAttribute="bottom" constant="140" id="xWM-B9-geP"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="发帖" id="tCM-GS-fP4">
+                        <barButtonItem key="leftBarButtonItem" title="取消" id="0W6-Co-tvQ">
+                            <connections>
+                                <action selector="btnClose:" destination="4se-nf-scf" id="q2P-cN-otw"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="提交" id="5hh-BX-TWJ">
                             <connections>
                                 <action selector="btnOnClick:" destination="4se-nf-scf" id="Ino-Yb-LwP"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="imageListView" destination="F5s-Dv-2sW" id="k2h-I3-AFc"/>
                         <outlet property="postInput" destination="1Nk-eu-n8y" id="s1S-Md-V7b"/>
@@ -436,9 +447,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_add_black_48dp" width="24" height="24"/>
         <image name="ic_radio_button_off_black_24dp" width="36" height="36"/>
         <image name="ic_radio_button_on_black_24dp" width="36" height="36"/>
+        <image name="icon_close" width="32" height="32"/>
+        <image name="icon_plus" width="32" height="32"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

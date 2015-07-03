@@ -191,21 +191,9 @@ class NewsfeedViewController: BaseViewController {
     // MARK: - Action
     
     @IBAction func addPostBtnTapped(sender: UIBarButtonItem) {
-        let vc = Util.createViewControllerWithIdentifier("NewAddPostViewController", storyboardName: "AddPost") as! NewAddPostViewController
         
-        self.navigationController?.pushViewController(vc, animated: true)
-        
-//        
-//        
-//        let atvc = Util.createViewControllerWithIdentifier("AlertTableView", storyboardName: "ActionSheet") as! AlertTableViewController
-//        
-//        let cameraAction = AlertTableViewController.tappenDic(title: "写真を撮る",tappen: { (sender) -> () in
-//            DBCameraController.openCamera(self, delegate: self)
-//        })
-//        let albumAction = AlertTableViewController.tappenDic(title: "写真から選択",tappen: { (sender) -> () in
-//            DBCameraController.openLibrary(self, delegate: self)
-//        })
-//        atvc.show(self, data: [cameraAction,albumAction])
+        let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: "AddPost") as! UINavigationController
+        self.presentViewController(vc, animated: true, completion: nil)
     }
     
     func groupChat() {
@@ -418,31 +406,4 @@ extension NewsfeedViewController: UINavigationControllerDelegate {
 extension NewsfeedViewController: UIGestureRecognizerDelegate {
     
     
-}
-
-// MARK: - DBCameraViewControllerDelegate
-
-extension NewsfeedViewController: DBCameraViewControllerDelegate {
-    func camera(cameraViewController: AnyObject!, didFinishWithImage image: UIImage!, withMetadata metadata: [NSObject : AnyObject]!) {
-        let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
-        
-        let name = NSUUID().UUIDString
-        let path = NSTemporaryDirectory() + name
-        
-        let newImage = image.normalizedImage()
-        
-        newImage.saveToPath(path)
-        
-        self.presentedViewController?.dismissViewControllerAnimated(false, completion: { () -> Void in
-            let vcNavi = Util.createViewControllerWithIdentifier(nil, storyboardName: "AddPost") as! UINavigationController
-            
-            let vc = vcNavi.topViewController as! AddPostViewController
-            vc.imagePath = path
-            self.presentViewController(vcNavi, animated: true, completion: nil)
-        })
-    }
-    func dismissCamera(cameraViewController: AnyObject!) {
-        self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
-        cameraViewController.restoreFullScreenMode()
-    }
 }

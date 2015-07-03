@@ -64,14 +64,14 @@ extension FriendCell {
     //タグを追加する
     func addTag(tag: Tag){
         if let name = tag.name where !name.isEmpty {
-            tagUIController.serTagView(.small)
+            tagUIController.setTagView(.small)
             self.tagListView.addTag(name)
         }
     }
     func addTags(array: [AnyObject]!){
         tagListView.hidden = array.count == 0 && self.tagListView.tags.count == 0
         if !tagListView.hidden {
-            tagUIController.serTagView(.small)
+            tagUIController.setTagView(.small)
         }
         self.tagListView.addTags(array)
     }

@@ -16,7 +16,7 @@ class tagUIController {
     class var color_selected:UIColor { return Util.UIColorFromRGB(0x8FA8EE, alpha: 1) }
     class var color_unselected:UIColor { return UIColor.whiteColor()}
     
-    class func serTagView(size:tagSize){
+    class func setTagView(size:tagSize){
         AMTagView.appearance().textColor = color_normal
         AMTagView.appearance().tagColor = color_normal
         AMTagView.appearance().innerTagColor = color_unselected

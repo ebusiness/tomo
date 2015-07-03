@@ -10,6 +10,7 @@ import Foundation
 
 class ImageCollectionCell :UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var btnClose: UIButton!
     
     var whenDelete : (()->())!
     
@@ -19,4 +20,15 @@ class ImageCollectionCell :UICollectionViewCell {
         println("del")
     }
     
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        if let image = UIImage(named:"icon_close") {
+            //btnClose.backgroundColor = Util.coloredImage( image, color: UIColor.redColor())
+        }
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder:aDecoder)
+    }
 }

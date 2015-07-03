@@ -20,6 +20,7 @@ class NewAddPostViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //self.postInput.inputAccessoryView //= inputAccessoryViewController()
         self.navigationItem.rightBarButtonItem?.enabled = false
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardDidShow:"), name: UIKeyboardDidShowNotification, object: nil)
         
@@ -33,16 +34,51 @@ class NewAddPostViewController: BaseViewController {
         isKeyboardsShown = true
         self.navigationItem.rightBarButtonItem?.title = "完成"
     }
-    
+    //取消
+    @IBAction func btnClose(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    //关闭键盘,发帖
     @IBAction func btnOnClick(sender: AnyObject) {
-        if isKeyboardsShown {
+        if isKeyboardsShown {//hide keyboard
             postInput.resignFirstResponder()
             self.navigationItem.rightBarButtonItem?.title = "提交"
-        }else{
-            //
+            isKeyboardsShown = false
+        }else{//create post
+            self.uploadToS3({ (imageNames, sizes) -> () in
+                ApiController.addPost(imageNames, sizes: sizes, content: self.content!, groupId: nil, stationId: nil,location: nil, done: { (error) -> Void in
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                })
+            })
         }
         
     }
+    //upload to amazon s3
+    func uploadToS3(completion:(imageNames: [String], sizes: [CGSize])->()){
+        var names: [String] = []
+        var sizes: [CGSize] = []
+        if imageList.count == 0 {
+            completion(imageNames: names,sizes: sizes)
+            return
+        }
+        for image in imageList {
+            let name = NSUUID().UUIDString
+            let imagePath = NSTemporaryDirectory() + name
+            image.saveToPath(imagePath)
+            
+            let remotePath = Constants.postPath(fileName: name)
+            
+            S3Controller.uploadFile(name: name, localPath: imagePath, remotePath: remotePath, done: { (error) -> Void in
+                names.append(name)
+                sizes.append(image.size)
+                if error == nil && sizes.count == self.imageList.count {
+                    completion(imageNames: names,sizes: sizes)
+                }
+            })
+        }
+
+    }
+    
     @IBAction func takePhoto(sender: AnyObject) {
         let atvc = Util.createViewControllerWithIdentifier("AlertTableView", storyboardName: "ActionSheet") as! AlertTableViewController
         
@@ -82,7 +118,6 @@ extension NewAddPostViewController: UITextViewDelegate {
 // MARK: - UICollectionView
 
 extension NewAddPostViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageList.count + 1
@@ -127,12 +162,7 @@ extension NewAddPostViewController: DBCameraViewControllerDelegate {
     func camera(cameraViewController: AnyObject!, didFinishWithImage image: UIImage!, withMetadata metadata: [NSObject : AnyObject]!) {
         let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
         
-        let name = NSUUID().UUIDString
-        let path = NSTemporaryDirectory() + name
-        
         let newImage = image.normalizedImage()
-        
-        newImage.saveToPath(path)
         
         self.imageList.append(newImage)
         imageListView.reloadData()

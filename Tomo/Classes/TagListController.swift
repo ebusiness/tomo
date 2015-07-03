@@ -75,7 +75,7 @@ class TagListController: UIViewController {
 extension TagListController {
     func didLoad(){
         
-        tagUIController.serTagView(.normal)
+        tagUIController.setTagView(.normal)
         
         self.addMyTags()
         

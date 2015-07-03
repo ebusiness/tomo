@@ -19,7 +19,7 @@ class TagSearchResultsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //データの初期化
-        tagUIController.serTagView(.normal)
+        tagUIController.setTagView(.normal)
         self.tagListView.setTapHandler { (tagView) -> Void in
             self.delegate?.whenTagDidSelected(tagView)
         }
