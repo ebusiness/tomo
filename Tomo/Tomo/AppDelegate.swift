@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         ApiController.setup()
         
-        if Defaults["firsttime"].string == nil {
+        if true || Defaults["firsttime"].string == nil {
             Defaults["firsttime"] = "1"
             let vc = Util.createViewControllerWithIdentifier("RegViewController", storyboardName: "Main")
             self.window?.rootViewController = vc

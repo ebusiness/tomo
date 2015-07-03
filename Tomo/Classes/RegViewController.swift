@@ -15,9 +15,10 @@ class RegViewController: BaseViewController {
     @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var upImageView: UIImageView!
     
-    @IBOutlet weak var loginButton: UIButton!//<--
+    @IBOutlet weak var loginButton: UIButton!
     
     var regPageDatas = [RegPageData]()
+    
     var pages: Int {
         return regPageDatas.count
     }
@@ -29,7 +30,10 @@ class RegViewController: BaseViewController {
     var lastContentOffset = CGPointZero
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
+        self.loginButton.hidden = true
         
         loadRegPageData()
         
@@ -42,6 +46,10 @@ class RegViewController: BaseViewController {
         
         backImageView.alpha = 0
         upImageView.alpha = 1
+        
+        loginButton.layer.borderColor = UIColor.whiteColor().CGColor
+        loginButton.layer.borderWidth = 1
+        loginButton.layer.cornerRadius = 2
     }
     
     func loadRegPageData() {
@@ -53,6 +61,7 @@ class RegViewController: BaseViewController {
     }
     
     func setupPageView() {
+        
         var lastPageView: RegPageView?
         
         for i in 0..<pages {
@@ -86,21 +95,86 @@ class RegViewController: BaseViewController {
     }
     
 
-    // MARK: - Action
+    @IBAction func login_wechat(sender: AnyObject) {
+        OpenidController.instance.wxCheckAuth({ (result) -> () in
+            self.loginCheck(result)
+            
+            }, failure: { (errCode, errMessage) -> () in
+                
+                println(errCode)
+                println(errMessage)
+                
+        })
+    }
     
-    @IBAction func login(sender: AnyObject) {
+    func loginCheck(result: Dictionary<String, AnyObject>){
+        Util.showMessage("ログイン")
+        //        if Defaults["shouldTypeLoginInfo"].bool == true {
+        //            Util.showInfo("Tomoid、またパスワードが変更されましたため、ご入力ください。")
+        //            return;
+        //        }
+        
+        if let uid = result["_id"] as? String {
+            ApiController.getMyInfo({ (error) -> Void in
+                if let err = error{
+                    Util.showError(err)
+                } else {
+                    if let user = DBController.myUser() {//auto login
+                        Defaults["email"] = user.tomoid
+                        Defaults["shouldAutoLogin"] = true
+                    }
+                    RegLoginViewController.changeRootToTab(self)
+                }
+            })
+        }else{
+            let password = NSUUID().UUIDString
+            var tomoid = NSUUID().UUIDString
+            if let openid = result["openid"] as? String ,type = result["type"] as? String {
+                tomoid = openid + "@" + type
+                OpenidController.instance.getUserInfo(type, done: { (openidInfo) -> Void in
+                    var nickname = tomoid
+                    if let oinfo = openidInfo{
+                        nickname = oinfo["nickname"] as! String
+                    }
+                    
+                    
+                    ApiController.signUp(email: tomoid, password: password, firstName: nickname, lastName: type) { (error) -> Void in
+                        if let error = error {
+                            Util.showError(error)
+                        }
+                        
+                        if let preAccount = Defaults["email"].string where tomoid != preAccount {
+                            DBController.clearDB()
+                        }
+                        
+                        Defaults["email"] = tomoid
+                        Defaults["shouldAutoLogin"] = true
+                        
+                        SSKeychain.setPassword(password, forService: kTomoService, account: tomoid)
+                        
+                        ApiController.addOpenid(result, done: { (error) -> Void in
+                            println(error)
+                        })
+                        //get user detail
+                        ApiController.getMyInfo({ (error) -> Void in
+                            if error == nil{
+                                RegLoginViewController.changeRootToTab(self)
+                                
+                            }
+                        })
+                    }
+                })
+            }
+        }
+        
         
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    class func changeRootToTab(from:UIViewController){
+        Util.dismissHUD()
+        let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+        Util.changeRootViewController(from: from, to: tab)
     }
-    */
 
 }
 
@@ -118,9 +192,11 @@ extension RegViewController: UIScrollViewDelegate {
         
         if maxpage == (p + 1) {
             self.loginButton.hidden = false
+            pageControl.hidden = true
             self.loginButton.alpha = 1
         }else{
             self.loginButton.hidden = true
+            pageControl.hidden = false
         }
 //        if (p + 1) == maxpage && self.loginButton.hidden {
 //            self.loginButton.hidden = false

@@ -109,7 +109,6 @@
 		291ADF961AD247C4009D8BE3 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
 		291ADF971AD24892009D8BE3 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */; };
 		291ADF991AD24F7B009D8BE3 /* PostDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */; };
-		291ADF9D1AD2654E009D8BE3 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF9C1AD2654E009D8BE3 /* AddPostViewController.swift */; };
 		292B9CC51AE6012A00604986 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B9CC41AE6012A00604986 /* GroupListViewController.swift */; };
 		292B9CC81AE61A0D00604986 /* LineMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 292B9CC71AE61A0D00604986 /* LineMapping.plist */; };
 		292B9CCA1AE61A2500604986 /* StationMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 292B9CC91AE61A2500604986 /* StationMapping.plist */; };
@@ -239,7 +238,7 @@
 		D01EB7F11B2EEB43002D04A4 /* TagListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01EB7F01B2EEB43002D04A4 /* TagListController.swift */; };
 		D06CF9AE1B382A7D00BF24B6 /* tagUIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06CF9AD1B382A7D00BF24B6 /* tagUIController.swift */; };
 		D07C99631B3ABD29008EB420 /* TableViewCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C99621B3ABD29008EB420 /* TableViewCellController.swift */; };
-		D0A5E1381B4546B3002E2FE6 /* NewAddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A5E1371B4546B3002E2FE6 /* NewAddPostViewController.swift */; };
+		D0A5E1381B4546B3002E2FE6 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A5E1371B4546B3002E2FE6 /* AddPostViewController.swift */; };
 		D0A5E13A1B45669D002E2FE6 /* ImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A5E1391B45669D002E2FE6 /* ImageCollectionCell.swift */; };
 		D0A877891B4613DA0049588A /* inputAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A877881B4613DA0049588A /* inputAccessoryView.xib */; };
 		D0A8778B1B4618D10049588A /* inputAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8778A1B4618D10049588A /* inputAccessoryViewController.swift */; };
@@ -334,7 +333,6 @@
 		291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailViewController.swift; path = Classes/PostDetailViewController.swift; sourceTree = "<group>"; };
 		291ADF941AD229B3009D8BE3 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentCell.swift; path = Classes/CommentCell.swift; sourceTree = "<group>"; };
 		291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailHeaderView.swift; path = Classes/PostDetailHeaderView.swift; sourceTree = "<group>"; };
-		291ADF9C1AD2654E009D8BE3 /* AddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPostViewController.swift; path = Classes/AddPostViewController.swift; sourceTree = "<group>"; };
 		292B9CC41AE6012A00604986 /* GroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupListViewController.swift; path = Classes/GroupListViewController.swift; sourceTree = "<group>"; };
 		292B9CC71AE61A0D00604986 /* LineMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LineMapping.plist; sourceTree = "<group>"; };
 		292B9CC91AE61A2500604986 /* StationMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = StationMapping.plist; sourceTree = "<group>"; };
@@ -443,7 +441,7 @@
 		D01EB7F01B2EEB43002D04A4 /* TagListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagListController.swift; path = Classes/TagListController.swift; sourceTree = "<group>"; };
 		D06CF9AD1B382A7D00BF24B6 /* tagUIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = tagUIController.swift; path = Classes/tagUIController.swift; sourceTree = "<group>"; };
 		D07C99621B3ABD29008EB420 /* TableViewCellController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCellController.swift; path = Classes/TableViewCellController.swift; sourceTree = "<group>"; };
-		D0A5E1371B4546B3002E2FE6 /* NewAddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewAddPostViewController.swift; path = Classes/NewAddPostViewController.swift; sourceTree = "<group>"; };
+		D0A5E1371B4546B3002E2FE6 /* AddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPostViewController.swift; path = Classes/AddPostViewController.swift; sourceTree = "<group>"; };
 		D0A5E1391B45669D002E2FE6 /* ImageCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCollectionCell.swift; path = Classes/ImageCollectionCell.swift; sourceTree = "<group>"; };
 		D0A877881B4613DA0049588A /* inputAccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = inputAccessoryView.xib; path = Classes/inputAccessoryView.xib; sourceTree = "<group>"; };
 		D0A8778A1B4618D10049588A /* inputAccessoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = inputAccessoryViewController.swift; path = Classes/inputAccessoryViewController.swift; sourceTree = "<group>"; };
@@ -815,14 +813,13 @@
 		299389571AD3D13700043D91 /* ホーム */ = {
 			isa = PBXGroup;
 			children = (
-				291ADF9C1AD2654E009D8BE3 /* AddPostViewController.swift */,
 				291ADF911AD21C01009D8BE3 /* PostDetailViewController.swift */,
 				291ADF981AD24F7B009D8BE3 /* PostDetailHeaderView.swift */,
 				291ADF941AD229B3009D8BE3 /* CommentCell.swift */,
 				2942CCD41ACD03BF007CDC97 /* NewsfeedCell.swift */,
 				2942CCD21ACCF761007CDC97 /* NewsfeedViewController.swift */,
 				294EF0AF1B01D54500A94A3F /* RadioButtonCell.swift */,
-				D0A5E1371B4546B3002E2FE6 /* NewAddPostViewController.swift */,
+				D0A5E1371B4546B3002E2FE6 /* AddPostViewController.swift */,
 				D0A5E1391B45669D002E2FE6 /* ImageCollectionCell.swift */,
 			);
 			name = "ホーム";
@@ -1240,7 +1237,7 @@
 				D01EB7F11B2EEB43002D04A4 /* TagListController.swift in Sources */,
 				D01EB7B71B2EB505002D04A4 /* TagSettingController.swift in Sources */,
 				296D8BAE1AFC5A020058D400 /* LoadingViewController.swift in Sources */,
-				D0A5E1381B4546B3002E2FE6 /* NewAddPostViewController.swift in Sources */,
+				D0A5E1381B4546B3002E2FE6 /* AddPostViewController.swift in Sources */,
 				294EF0B01B01D54500A94A3F /* RadioButtonCell.swift in Sources */,
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
 				D07C99631B3ABD29008EB420 /* TableViewCellController.swift in Sources */,
@@ -1282,7 +1279,6 @@
 				291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */,
 				292B9CCC1AE61ACA00604986 /* StationTableViewController.swift in Sources */,
 				17B9931D1AF3712C00204E97 /* OpenidWXController.swift in Sources */,
-				291ADF9D1AD2654E009D8BE3 /* AddPostViewController.swift in Sources */,
 				290843141B09C9140037A6CD /* NSArray.swift in Sources */,
 				290135171AC3A78E00BBFE29 /* User.swift in Sources */,
 				29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */,
