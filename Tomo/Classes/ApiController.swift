@@ -117,13 +117,6 @@ extension ApiController {
             done(error)
         }
     }
-    class func getOpenids(done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().getObjectsAtPath("/mobile/user/openidinfo", parameters: nil, success: { (_, result) -> Void in
-            done(nil)
-        }) { (_, error) -> Void in
-            done(error)
-        }
-    }
     
     class func getMyInfo(done: (NSError?) -> Void) {
         if let id = Defaults["myId"].string {
@@ -420,9 +413,7 @@ extension ApiController {
         
         if let t = token {
             param["token"] = token;
-            SSKeychain.setPassword(token, forService: kTomoService, account: kTomoPushToken)
         }else{
-            param["token"] = SSKeychain.passwordForService(kTomoService, account: kTomoPushToken)
             param["remove"] = "1"
         }
         
@@ -842,8 +833,6 @@ extension ApiController {
         addCommonResponseDescriptor(usermapping, method: .POST, pathPattern: "/mobile/user/regist", keyPath: nil, statusCodes: nil)
         //openid
         addCommonResponseDescriptor(_openidsMapping, method: .PATCH, pathPattern: "/mobile/user/openid", keyPath: nil, statusCodes: nil)
-        //openidInfo
-        addCommonResponseDescriptor(_openidsMapping, method: .GET, pathPattern: "/mobile/user/openidinfo", keyPath: nil, statusCodes: nil)
         //UserInfo
         addCommonResponseDescriptor(getUserMapping(stationIdOnly: false), method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: nil)
         //UserTag

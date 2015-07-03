@@ -120,10 +120,9 @@ class RegViewController: BaseViewController {
                     Util.showError(err)
                 } else {
                     if let user = DBController.myUser() {//auto login
-                        Defaults["email"] = user.tomoid
                         Defaults["shouldAutoLogin"] = true
                     }
-                    RegLoginViewController.changeRootToTab(self)
+                    RegViewController.changeRootToTab(self)
                 }
             })
         }else{
@@ -143,14 +142,9 @@ class RegViewController: BaseViewController {
                             Util.showError(error)
                         }
                         
-                        if let preAccount = Defaults["email"].string where tomoid != preAccount {
-                            DBController.clearDB()
-                        }
+                        DBController.clearDB()
                         
-                        Defaults["email"] = tomoid
                         Defaults["shouldAutoLogin"] = true
-                        
-                        SSKeychain.setPassword(password, forService: kTomoService, account: tomoid)
                         
                         ApiController.addOpenid(result, done: { (error) -> Void in
                             println(error)
@@ -158,7 +152,7 @@ class RegViewController: BaseViewController {
                         //get user detail
                         ApiController.getMyInfo({ (error) -> Void in
                             if error == nil{
-                                RegLoginViewController.changeRootToTab(self)
+                                RegViewController.changeRootToTab(self)
                                 
                             }
                         })

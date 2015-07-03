@@ -15,37 +15,24 @@ class LoadingViewController: BaseViewController {
         
         Util.showMessage("ログイン")
         
-        let email = Defaults["email"].string!
-        let password = SSKeychain.passwordForService(kTomoService, account: email)
-        
-        ApiController.login(tomoid: email, password: password) { (error) -> Void in
-            assert(NSThread.currentThread().isMainThread, "not main thread")
+        OpenidController.instance.wxCheckAuth({ (res) -> () in
             
-            if let error = error {
-                if error.code == 400{
-                    //missing tomoid or password
-                }else if error.code == 401 {
-                    Defaults["shouldTypeLoginInfo"] = true;
-                    Defaults["shouldAutoLogin"] = false
-                }else{
-                    Util.showError(error)
-                }
-                let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
-                Util.changeRootViewController(from: self, to: main)
-                return
+            if let uid = res["_id"] as? String {
+                ApiController.getMyInfo({ (error) -> Void in
+                    if let err = error{
+                        Util.showError(err)
+                    } else {
+                        if let user = DBController.myUser() {//auto login
+                            Defaults["shouldAutoLogin"] = true
+                        }
+                        let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+                        Util.changeRootViewController(from: self, to: tab)
+                    }
+                })
             }
-            
-            //get user detail
-            ApiController.getMyInfo({ (error) -> Void in
-                if error == nil{
-                    Util.dismissHUD()
-                    
-                    let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-                    
-                    Util.changeRootViewController(from: self, to: tab)
-                }
-            })
-        }
+        }, failure: { (errCode, errMessage) -> () in
+
+        })
     }
 
 }

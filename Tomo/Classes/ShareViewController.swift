@@ -14,7 +14,7 @@ class ShareViewController: BaseViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var icons = ["icon_qq", "icon_qzone", "icon_wx", "icon_moments" ]
+    var icons = ["icon_wx", "icon_moments" ]
     
     var share_image :UIImage!
     var share_description = ""
@@ -23,12 +23,12 @@ class ShareViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let rowCount = CGFloat(ceil(CDouble(icons.count) / 4))
+        let rowCount = CGFloat(ceil(CDouble(icons.count) / 1))
         var h:CGFloat = 21 + 10 + 10 + 44 + 20 + rowCount * (cellwidth + 10)
         
         self.formSheetController.presentedFormSheetSize = CGSizeMake(300, h);
         
-        collectionView.backgroundColor = Util.UIColorFromRGB(0xDAEFFE, alpha: 0.5)
+        collectionView.backgroundColor = Util.UIColorFromRGB(0xDAEFFE, alpha: 0.38)
         
     }
     @IBAction func closeTappen(sender: AnyObject) {
@@ -59,15 +59,9 @@ extension ShareViewController: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
         case 0:
-            OpenidController.instance.qqShare(0, img: self.share_image, description: self.share_description, url: self.share_url)
-            break;
-        case 1:
-            OpenidController.instance.qqShare(1, img: self.share_image, description: self.share_description, url: self.share_url)
-            break;
-        case 2:
             OpenidController.instance.wxShare(0, img: self.share_image, description: self.share_description, url: self.share_url)
             break;
-        case 3:
+        case 1:
             OpenidController.instance.wxShare(1, img: self.share_image, description: self.share_description, url: self.share_url)
             break;
         default:

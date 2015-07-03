@@ -48,7 +48,6 @@
 		172EADD01ACC1C850039F42E /* _Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D64A11ACC10BE00185368 /* _Message.swift */; };
 		172EADD11ACC1C910039F42E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D649F1ACC10B600185368 /* Message.swift */; };
 		17455E521AFAF6590079F648 /* OpenidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993181AF3712C00204E97 /* OpenidController.swift */; };
-		17455E531AFAF65B0079F648 /* OpenidQQController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993191AF3712C00204E97 /* OpenidQQController.swift */; };
 		17455E541AFAF65E0079F648 /* OpenidWXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B9931A1AF3712C00204E97 /* OpenidWXController.swift */; };
 		178D649E1ACC0DDF00185368 /* MessageMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 178D649D1ACC0DDF00185368 /* MessageMapping.plist */; };
 		178D64A01ACC10B600185368 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D649F1ACC10B600185368 /* Message.swift */; };
@@ -61,10 +60,7 @@
 		17B993161AF36CBE00204E97 /* _Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993141AF36CBB00204E97 /* _Openids.swift */; };
 		17B993171AF36CC100204E97 /* Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993121AF36CB200204E97 /* Openids.swift */; };
 		17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993181AF3712C00204E97 /* OpenidController.swift */; };
-		17B9931C1AF3712C00204E97 /* OpenidQQController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993191AF3712C00204E97 /* OpenidQQController.swift */; };
 		17B9931D1AF3712C00204E97 /* OpenidWXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B9931A1AF3712C00204E97 /* OpenidWXController.swift */; };
-		17EE9A2D1AFC7FE200372134 /* OpenidSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EE9A2C1AFC7FE200372134 /* OpenidSwitch.swift */; };
-		17EE9A2E1AFC815B00372134 /* OpenidSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17EE9A2C1AFC7FE200372134 /* OpenidSwitch.swift */; };
 		290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
 		290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290134DE1AC3991C00BBFE29 /* Images.xcassets */; };
 		290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134ED1AC3991D00BBFE29 /* TomoTests.swift */; };
@@ -77,7 +73,6 @@
 		2901351B1AC3A79500BBFE29 /* _User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290135191AC3A79500BBFE29 /* _User.swift */; };
 		2901351E1AC3A90C00BBFE29 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901351C1AC3A90C00BBFE29 /* Constants.swift */; };
 		290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144161ADF6D890048F3D8 /* MapViewController.swift */; };
-		2901441A1ADF983E0048F3D8 /* RegSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144191ADF983E0048F3D8 /* RegSignUpViewController.swift */; };
 		290177221AE635F8009C7472 /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290177211AE635F8009C7472 /* GroupCell.swift */; };
 		2908430B1B09C9140037A6CD /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290842FC1B09C9140037A6CD /* Array.swift */; };
 		2908430C1B09C9140037A6CD /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290842FD1B09C9140037A6CD /* Bool.swift */; };
@@ -124,7 +119,6 @@
 		29341A881B0EF86000CB45A2 /* AnnouncementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29341A871B0EF86000CB45A2 /* AnnouncementCell.swift */; };
 		29341A8B1B0F04EC00CB45A2 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29341A8A1B0F04EC00CB45A2 /* WebViewController.swift */; };
 		293EB4251B132B06006BAF27 /* JSQVoiceMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */; };
-		2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */; };
 		2942CCD31ACCF761007CDC97 /* NewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCD21ACCF761007CDC97 /* NewsfeedViewController.swift */; };
 		2942CCD51ACD03BF007CDC97 /* NewsfeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2942CCD41ACD03BF007CDC97 /* NewsfeedCell.swift */; };
 		2942F1501B15C24500E7FBDC /* JSQVoiceMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */; };
@@ -243,6 +237,8 @@
 		D0A877891B4613DA0049588A /* inputAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A877881B4613DA0049588A /* inputAccessoryView.xib */; };
 		D0A8778B1B4618D10049588A /* inputAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8778A1B4618D10049588A /* inputAccessoryViewController.swift */; };
 		D0A8778D1B4661330049588A /* PostCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A8778C1B4661330049588A /* PostCollectionCell.xib */; };
+		D0A8778F1B46B92A0049588A /* OpenidQQController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8778E1B46B92A0049588A /* OpenidQQController.swift */; };
+		D0A877901B46B9E90049588A /* OpenidQQController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8778E1B46B92A0049588A /* OpenidQQController.swift */; };
 		D0ACAE571B0AD98400AA9907 /* ActionSheet.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */; };
 		D0ACAE5C1B0AE0CA00AA9907 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */; };
 		D0BD83F41B3122350040F503 /* TagSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD83F31B3122350040F503 /* TagSearchController.swift */; };
@@ -294,9 +290,7 @@
 		17B993121AF36CB200204E97 /* Openids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Openids.swift; sourceTree = "<group>"; };
 		17B993141AF36CBB00204E97 /* _Openids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Openids.swift; sourceTree = "<group>"; };
 		17B993181AF3712C00204E97 /* OpenidController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidController.swift; path = Classes/OpenidController.swift; sourceTree = "<group>"; };
-		17B993191AF3712C00204E97 /* OpenidQQController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidQQController.swift; path = Classes/OpenidQQController.swift; sourceTree = "<group>"; };
 		17B9931A1AF3712C00204E97 /* OpenidWXController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidWXController.swift; path = Classes/OpenidWXController.swift; sourceTree = "<group>"; };
-		17EE9A2C1AFC7FE200372134 /* OpenidSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidSwitch.swift; path = Classes/OpenidSwitch.swift; sourceTree = "<group>"; };
 		290134D21AC3991C00BBFE29 /* tomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		290134D61AC3991C00BBFE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		290134D71AC3991C00BBFE29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -312,7 +306,6 @@
 		2901351C1AC3A90C00BBFE29 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Classes/Constants.swift; sourceTree = "<group>"; };
 		290144111ADE3BBD0048F3D8 /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
 		290144161ADF6D890048F3D8 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = Classes/MapViewController.swift; sourceTree = "<group>"; };
-		290144191ADF983E0048F3D8 /* RegSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegSignUpViewController.swift; path = Classes/RegSignUpViewController.swift; sourceTree = "<group>"; };
 		2901441B1ADFA1AB0048F3D8 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		290177211AE635F8009C7472 /* GroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCell.swift; path = Classes/GroupCell.swift; sourceTree = "<group>"; };
 		290842FC1B09C9140037A6CD /* Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
@@ -345,7 +338,6 @@
 		29341A8A1B0F04EC00CB45A2 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewController.swift; path = Classes/WebViewController.swift; sourceTree = "<group>"; };
 		293EB4231B132B06006BAF27 /* JSQVoiceMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQVoiceMediaItem.h; sourceTree = "<group>"; };
 		293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQVoiceMediaItem.m; sourceTree = "<group>"; };
-		2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegLoginViewController.swift; path = Classes/RegLoginViewController.swift; sourceTree = "<group>"; };
 		2942CCD21ACCF761007CDC97 /* NewsfeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsfeedViewController.swift; path = Classes/NewsfeedViewController.swift; sourceTree = "<group>"; };
 		2942CCD41ACD03BF007CDC97 /* NewsfeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsfeedCell.swift; path = Classes/NewsfeedCell.swift; sourceTree = "<group>"; };
 		29446DC01B156C960062CA7F /* StationResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationResultsTableViewController.swift; path = Classes/StationResultsTableViewController.swift; sourceTree = "<group>"; };
@@ -446,6 +438,7 @@
 		D0A877881B4613DA0049588A /* inputAccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = inputAccessoryView.xib; path = Classes/inputAccessoryView.xib; sourceTree = "<group>"; };
 		D0A8778A1B4618D10049588A /* inputAccessoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = inputAccessoryViewController.swift; path = Classes/inputAccessoryViewController.swift; sourceTree = "<group>"; };
 		D0A8778C1B4661330049588A /* PostCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostCollectionCell.xib; path = Classes/PostCollectionCell.xib; sourceTree = "<group>"; };
+		D0A8778E1B46B92A0049588A /* OpenidQQController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidQQController.swift; path = Classes/OpenidQQController.swift; sourceTree = "<group>"; };
 		D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ActionSheet.storyboard; path = Classes/ActionSheet.storyboard; sourceTree = "<group>"; };
 		D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = Classes/ShareViewController.swift; sourceTree = "<group>"; };
 		D0BD83F31B3122350040F503 /* TagSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagSearchController.swift; path = Classes/TagSearchController.swift; sourceTree = "<group>"; };
@@ -521,8 +514,8 @@
 		17B993091AF3644A00204E97 /* Openid */ = {
 			isa = PBXGroup;
 			children = (
+				D0A8778E1B46B92A0049588A /* OpenidQQController.swift */,
 				17B993181AF3712C00204E97 /* OpenidController.swift */,
-				17B993191AF3712C00204E97 /* OpenidQQController.swift */,
 				17B9931A1AF3712C00204E97 /* OpenidWXController.swift */,
 			);
 			name = Openid;
@@ -786,9 +779,7 @@
 			children = (
 				296D8BAD1AFC5A020058D400 /* LoadingViewController.swift */,
 				29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */,
-				2942CCCC1ACCDB8D007CDC97 /* RegLoginViewController.swift */,
 				29A5D1D81ACBE01700D95B77 /* RegPageView.swift */,
-				290144191ADF983E0048F3D8 /* RegSignUpViewController.swift */,
 			);
 			name = "ログイン";
 			sourceTree = "<group>";
@@ -859,7 +850,6 @@
 			isa = PBXGroup;
 			children = (
 				D069D1871B32C83C005A4240 /* タグ */,
-				17EE9A2C1AFC7FE200372134 /* OpenidSwitch.swift */,
 				296D8BB71AFC5A4A0058D400 /* AccountEditViewController.swift */,
 				296D8BB81AFC5A4A0058D400 /* TextViewInputViewController.swift */,
 				292B9CCB1AE61ACA00604986 /* StationTableViewController.swift */,
@@ -1192,7 +1182,6 @@
 				291ADF991AD24F7B009D8BE3 /* PostDetailHeaderView.swift in Sources */,
 				292B9CD01AE61C3F00604986 /* _Station.swift in Sources */,
 				290843101B09C9140037A6CD /* ExSwift.swift in Sources */,
-				2901441A1ADF983E0048F3D8 /* RegSignUpViewController.swift in Sources */,
 				29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */,
 				D0BD83F41B3122350040F503 /* TagSearchController.swift in Sources */,
 				2987F1E41AD79D0500AA39CE /* Chat.swift in Sources */,
@@ -1210,14 +1199,12 @@
 				29539C791B13175D00545509 /* VoiceMessageController.swift in Sources */,
 				2994AF911B019AA100656C39 /* GCD.swift in Sources */,
 				D0BD83F61B317BDD0040F503 /* TagSearchResultsViewController.swift in Sources */,
-				17B9931C1AF3712C00204E97 /* OpenidQQController.swift in Sources */,
 				2960404F1ACE75C500D2A338 /* AFDateExtension.swift in Sources */,
 				1712BE2E1ACCE809000A9C47 /* Group.swift in Sources */,
 				296D8BAB1AFC59F10058D400 /* BaseViewController.swift in Sources */,
 				D01EB7EF1B2EEACB002D04A4 /* BubbleTransition.swift in Sources */,
 				292B9CD31AE61C4800604986 /* Line.swift in Sources */,
 				178D64A01ACC10B600185368 /* Message.swift in Sources */,
-				17EE9A2D1AFC7FE200372134 /* OpenidSwitch.swift in Sources */,
 				D0D7B6981B303AEE00692C2F /* Tag.swift in Sources */,
 				1712BE4B1ACE5D0F000A9C47 /* _Comments.swift in Sources */,
 				292B9CD41AE61C4800604986 /* Station.swift in Sources */,
@@ -1241,6 +1228,7 @@
 				294EF0B01B01D54500A94A3F /* RadioButtonCell.swift in Sources */,
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
 				D07C99631B3ABD29008EB420 /* TableViewCellController.swift in Sources */,
+				D0A8778F1B46B92A0049588A /* OpenidQQController.swift in Sources */,
 				290843181B09C9140037A6CD /* String.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */,
@@ -1275,7 +1263,6 @@
 				D00E0FD61B3D3B4D00AEB521 /* DBCameraController.swift in Sources */,
 				2942CCD51ACD03BF007CDC97 /* NewsfeedCell.swift in Sources */,
 				2908430B1B09C9140037A6CD /* Array.swift in Sources */,
-				2942CCCD1ACCDB8D007CDC97 /* RegLoginViewController.swift in Sources */,
 				291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */,
 				292B9CCC1AE61ACA00604986 /* StationTableViewController.swift in Sources */,
 				17B9931D1AF3712C00204E97 /* OpenidWXController.swift in Sources */,
@@ -1331,13 +1318,13 @@
 				2960404C1ACE68C500D2A338 /* TestDataTests.swift in Sources */,
 				292B9CD51AE6243200604986 /* Line.swift in Sources */,
 				29BE7E1C1AC54663008110B4 /* DBController.swift in Sources */,
-				17455E531AFAF65B0079F648 /* OpenidQQController.swift in Sources */,
 				290843221B09CA4B0037A6CD /* Range.swift in Sources */,
 				295466F01B0EB6B800AAD608 /* SocketController.swift in Sources */,
 				290843231B09CA4D0037A6CD /* Sequence.swift in Sources */,
 				1712BE3A1ACE195B000A9C47 /* _Images.swift in Sources */,
 				29A1AFF81AC4113000775765 /* _Post.swift in Sources */,
 				1712BE431ACE4140000A9C47 /* Devices.swift in Sources */,
+				D0A877901B46B9E90049588A /* OpenidQQController.swift in Sources */,
 				2993894B1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
 				290843191B09CA310037A6CD /* Array.swift in Sources */,
 				D0D7B69B1B30417200692C2F /* Tag.swift in Sources */,
@@ -1347,7 +1334,6 @@
 				2993894E1AD3B70200043D91 /* SwiftyUserDefaults.swift in Sources */,
 				294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */,
 				292B9CD71AE6247100604986 /* _Line.swift in Sources */,
-				17EE9A2E1AFC815B00372134 /* OpenidSwitch.swift in Sources */,
 				17455E541AFAF65E0079F648 /* OpenidWXController.swift in Sources */,
 				290843241B09CA4F0037A6CD /* String.swift in Sources */,
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
