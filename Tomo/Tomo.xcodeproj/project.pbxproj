@@ -237,8 +237,6 @@
 		D0A877891B4613DA0049588A /* inputAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A877881B4613DA0049588A /* inputAccessoryView.xib */; };
 		D0A8778B1B4618D10049588A /* inputAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8778A1B4618D10049588A /* inputAccessoryViewController.swift */; };
 		D0A8778D1B4661330049588A /* PostCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A8778C1B4661330049588A /* PostCollectionCell.xib */; };
-		D0A8778F1B46B92A0049588A /* OpenidQQController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8778E1B46B92A0049588A /* OpenidQQController.swift */; };
-		D0A877901B46B9E90049588A /* OpenidQQController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8778E1B46B92A0049588A /* OpenidQQController.swift */; };
 		D0ACAE571B0AD98400AA9907 /* ActionSheet.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */; };
 		D0ACAE5C1B0AE0CA00AA9907 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */; };
 		D0BD83F41B3122350040F503 /* TagSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD83F31B3122350040F503 /* TagSearchController.swift */; };
@@ -438,7 +436,6 @@
 		D0A877881B4613DA0049588A /* inputAccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = inputAccessoryView.xib; path = Classes/inputAccessoryView.xib; sourceTree = "<group>"; };
 		D0A8778A1B4618D10049588A /* inputAccessoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = inputAccessoryViewController.swift; path = Classes/inputAccessoryViewController.swift; sourceTree = "<group>"; };
 		D0A8778C1B4661330049588A /* PostCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostCollectionCell.xib; path = Classes/PostCollectionCell.xib; sourceTree = "<group>"; };
-		D0A8778E1B46B92A0049588A /* OpenidQQController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidQQController.swift; path = Classes/OpenidQQController.swift; sourceTree = "<group>"; };
 		D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ActionSheet.storyboard; path = Classes/ActionSheet.storyboard; sourceTree = "<group>"; };
 		D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = Classes/ShareViewController.swift; sourceTree = "<group>"; };
 		D0BD83F31B3122350040F503 /* TagSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagSearchController.swift; path = Classes/TagSearchController.swift; sourceTree = "<group>"; };
@@ -514,7 +511,6 @@
 		17B993091AF3644A00204E97 /* Openid */ = {
 			isa = PBXGroup;
 			children = (
-				D0A8778E1B46B92A0049588A /* OpenidQQController.swift */,
 				17B993181AF3712C00204E97 /* OpenidController.swift */,
 				17B9931A1AF3712C00204E97 /* OpenidWXController.swift */,
 			);
@@ -1228,7 +1224,6 @@
 				294EF0B01B01D54500A94A3F /* RadioButtonCell.swift in Sources */,
 				1712BE361ACE1836000A9C47 /* Images.swift in Sources */,
 				D07C99631B3ABD29008EB420 /* TableViewCellController.swift in Sources */,
-				D0A8778F1B46B92A0049588A /* OpenidQQController.swift in Sources */,
 				290843181B09C9140037A6CD /* String.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */,
@@ -1324,7 +1319,6 @@
 				1712BE3A1ACE195B000A9C47 /* _Images.swift in Sources */,
 				29A1AFF81AC4113000775765 /* _Post.swift in Sources */,
 				1712BE431ACE4140000A9C47 /* Devices.swift in Sources */,
-				D0A877901B46B9E90049588A /* OpenidQQController.swift in Sources */,
 				2993894B1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
 				290843191B09CA310037A6CD /* Array.swift in Sources */,
 				D0D7B69B1B30417200692C2F /* Tag.swift in Sources */,

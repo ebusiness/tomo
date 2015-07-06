@@ -108,7 +108,7 @@ class RegViewController: BaseViewController {
     }
     
     func loginCheck(result: Dictionary<String, AnyObject>){
-        Util.showMessage("ログイン")
+        Util.showHUD()
         //        if Defaults["shouldTypeLoginInfo"].bool == true {
         //            Util.showInfo("Tomoid、またパスワードが変更されましたため、ご入力ください。")
         //            return;
@@ -129,8 +129,8 @@ class RegViewController: BaseViewController {
             let password = NSUUID().UUIDString
             var tomoid = NSUUID().UUIDString
             if let openid = result["openid"] as? String ,type = result["type"] as? String {
-                tomoid = openid + "@" + type
-                OpenidController.instance.getUserInfo(type, done: { (openidInfo) -> Void in
+                tomoid = openid
+                OpenidController.instance.getUserInfo{(openidInfo) -> Void in
                     var nickname = tomoid
                     if let oinfo = openidInfo{
                         nickname = oinfo["nickname"] as! String
@@ -157,7 +157,7 @@ class RegViewController: BaseViewController {
                             }
                         })
                     }
-                })
+                }
             }
         }
         

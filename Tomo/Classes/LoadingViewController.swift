@@ -13,7 +13,7 @@ class LoadingViewController: BaseViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        Util.showMessage("ログイン")
+        Util.showHUD()
         
         OpenidController.instance.wxCheckAuth({ (res) -> () in
             

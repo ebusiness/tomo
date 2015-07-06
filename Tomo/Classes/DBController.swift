@@ -296,9 +296,7 @@ class DBController: NSObject {
     
     class func clearDBForLogout() {
         Openids.MR_truncateAll()
-        save { () -> Void in
-            OpenidController.instance.registQQ()
-        }
+        save()
         
         Defaults["email"] = ""
         Defaults["shouldAutoLogin"] = false
