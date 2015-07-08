@@ -46,5 +46,7 @@
 	<string>webSite</string>
 	<key>tomoid</key>
 	<string>tomoid</string>
+	<key>nickName</key>
+	<string>nickName</string>
 </dict>
 </plist>

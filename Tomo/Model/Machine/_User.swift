@@ -18,6 +18,7 @@ enum UserAttributes: String {
     case marriage = "marriage"
     case nationality = "nationality"
     case nearestSt = "nearestSt"
+    case nickName = "nickName"
     case photo = "photo"
     case photo_ref = "photo_ref"
     case provider = "provider"
@@ -142,6 +143,11 @@ class _User: NSManagedObject {
     var nearestSt: String?
 
     // func validateNearestSt(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
+
+    @NSManaged
+    var nickName: String?
+
+    // func validateNickName(value: AutoreleasingUnsafePointer<AnyObject>, error: NSErrorPointer) {}
 
     @NSManaged
     var photo: String?
