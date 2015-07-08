@@ -48,7 +48,6 @@
 		172EADD01ACC1C850039F42E /* _Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D64A11ACC10BE00185368 /* _Message.swift */; };
 		172EADD11ACC1C910039F42E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D649F1ACC10B600185368 /* Message.swift */; };
 		17455E521AFAF6590079F648 /* OpenidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993181AF3712C00204E97 /* OpenidController.swift */; };
-		17455E541AFAF65E0079F648 /* OpenidWXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B9931A1AF3712C00204E97 /* OpenidWXController.swift */; };
 		178D649E1ACC0DDF00185368 /* MessageMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 178D649D1ACC0DDF00185368 /* MessageMapping.plist */; };
 		178D64A01ACC10B600185368 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D649F1ACC10B600185368 /* Message.swift */; };
 		178D64A21ACC10BE00185368 /* _Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178D64A11ACC10BE00185368 /* _Message.swift */; };
@@ -60,7 +59,6 @@
 		17B993161AF36CBE00204E97 /* _Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993141AF36CBB00204E97 /* _Openids.swift */; };
 		17B993171AF36CC100204E97 /* Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993121AF36CB200204E97 /* Openids.swift */; };
 		17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993181AF3712C00204E97 /* OpenidController.swift */; };
-		17B9931D1AF3712C00204E97 /* OpenidWXController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B9931A1AF3712C00204E97 /* OpenidWXController.swift */; };
 		290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
 		290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290134DE1AC3991C00BBFE29 /* Images.xcassets */; };
 		290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134ED1AC3991D00BBFE29 /* TomoTests.swift */; };
@@ -288,7 +286,6 @@
 		17B993121AF36CB200204E97 /* Openids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Openids.swift; sourceTree = "<group>"; };
 		17B993141AF36CBB00204E97 /* _Openids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Openids.swift; sourceTree = "<group>"; };
 		17B993181AF3712C00204E97 /* OpenidController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidController.swift; path = Classes/OpenidController.swift; sourceTree = "<group>"; };
-		17B9931A1AF3712C00204E97 /* OpenidWXController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidWXController.swift; path = Classes/OpenidWXController.swift; sourceTree = "<group>"; };
 		290134D21AC3991C00BBFE29 /* tomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		290134D61AC3991C00BBFE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		290134D71AC3991C00BBFE29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -512,7 +509,6 @@
 			isa = PBXGroup;
 			children = (
 				17B993181AF3712C00204E97 /* OpenidController.swift */,
-				17B9931A1AF3712C00204E97 /* OpenidWXController.swift */,
 			);
 			name = Openid;
 			sourceTree = "<group>";
@@ -1260,7 +1256,6 @@
 				2908430B1B09C9140037A6CD /* Array.swift in Sources */,
 				291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */,
 				292B9CCC1AE61ACA00604986 /* StationTableViewController.swift in Sources */,
-				17B9931D1AF3712C00204E97 /* OpenidWXController.swift in Sources */,
 				290843141B09C9140037A6CD /* NSArray.swift in Sources */,
 				290135171AC3A78E00BBFE29 /* User.swift in Sources */,
 				29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */,
@@ -1328,7 +1323,6 @@
 				2993894E1AD3B70200043D91 /* SwiftyUserDefaults.swift in Sources */,
 				294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */,
 				292B9CD71AE6247100604986 /* _Line.swift in Sources */,
-				17455E541AFAF65E0079F648 /* OpenidWXController.swift in Sources */,
 				290843241B09CA4F0037A6CD /* String.swift in Sources */,
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
 				2942F1501B15C24500E7FBDC /* JSQVoiceMediaItem.m in Sources */,

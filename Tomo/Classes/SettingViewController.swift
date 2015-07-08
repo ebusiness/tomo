@@ -69,26 +69,35 @@ class SettingViewController: BaseTableViewController {
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         
         if cell == myPostsCell {
+            
             let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
             vc.user = user
             vc.displayMode = .Account
 
             navigationController?.pushViewController(vc, animated: true)
-        }else if cell == logoutCell {
-            let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
             
-            acvc.show(self, content: "ログアウトしますか？", action: { () -> () in
+        } else if cell == logoutCell {
+            
+            let alertController = UIAlertController(title: "退出账号", message: "真的要退出当前的账号吗？", preferredStyle: .Alert)
+            
+            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+            let logoutAction = UIAlertAction(title: "退出", style: .Destructive, handler: {(_) -> () in
                 DBController.clearDBForLogout();
-                
                 let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
-                
                 Util.changeRootViewController(from: self, to: main)
             })
+            
+            alertController.addAction(cancelAction)
+            alertController.addAction(logoutAction)
+            
+            presentViewController(alertController, animated: true, completion: nil)
+            
         }
     }
 }

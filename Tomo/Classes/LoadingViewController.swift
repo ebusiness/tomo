@@ -15,24 +15,27 @@ class LoadingViewController: BaseViewController {
         
         Util.showHUD()
         
-        OpenidController.instance.wxCheckAuth({ (res) -> () in
+        OpenidController.instance.wxCheckAuth(
             
-            if let uid = res["_id"] as? String {
-                ApiController.getMyInfo({ (error) -> Void in
-                    if let err = error{
-                        Util.showError(err)
-                    } else {
-                        if let user = DBController.myUser() {//auto login
-                            Defaults["shouldAutoLogin"] = true
+            success: { (res) -> () in
+            
+                if let uid = res["_id"] as? String {
+                    ApiController.getMyInfo({ (error) -> Void in
+                        if let err = error{
+                            Util.showError(err)
+                        } else {
+                            if let user = DBController.myUser() {//auto login
+                                Defaults["shouldAutoLogin"] = true
+                            }
+                            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+                            Util.changeRootViewController(from: self, to: tab)
                         }
-                        let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-                        Util.changeRootViewController(from: self, to: tab)
-                    }
-                })
-            }
-        }, failure: { (errCode, errMessage) -> () in
+                    })
+                }
+            },
+            failure: { (errCode, errMessage) -> () in
 
-        })
+            })
     }
 
 }

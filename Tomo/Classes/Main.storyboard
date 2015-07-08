@@ -56,7 +56,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="eP8-1C-kBN">
-                                        <rect key="frame" x="141" y="511" width="39" height="37"/>
+                                        <rect key="frame" x="140.5" y="511" width="39" height="37"/>
                                     </pageControl>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v11-o6-5hz">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="511"/>
@@ -65,9 +65,9 @@
                                         </connections>
                                     </scrollView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dk2-te-xE9">
-                                        <rect key="frame" x="179" y="491" width="125" height="57"/>
+                                        <rect key="frame" x="20" y="491" width="280" height="57"/>
                                         <inset key="contentEdgeInsets" minX="20" minY="5" maxX="20" maxY="5"/>
-                                        <state key="normal" title="微信" image="icon_wx">
+                                        <state key="normal" title="    轻松一键登录" image="icon_wx">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -78,15 +78,16 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Dk2-te-xE9" secondAttribute="trailing" constant="16" id="Bfc-da-KzZ"/>
-                                    <constraint firstAttribute="centerX" secondItem="eP8-1C-kBN" secondAttribute="centerX" id="FFY-tK-jE6"/>
-                                    <constraint firstAttribute="bottom" secondItem="Dk2-te-xE9" secondAttribute="bottom" constant="20" id="Hsz-8Z-gqS"/>
-                                    <constraint firstItem="v11-o6-5hz" firstAttribute="top" secondItem="R5M-eZ-6gh" secondAttribute="top" id="NrQ-o4-Kqd"/>
-                                    <constraint firstAttribute="trailing" secondItem="v11-o6-5hz" secondAttribute="trailing" id="fe2-Nj-beJ"/>
-                                    <constraint firstAttribute="width" secondItem="v11-o6-5hz" secondAttribute="width" id="g9t-S7-TCt"/>
-                                    <constraint firstAttribute="bottom" secondItem="eP8-1C-kBN" secondAttribute="bottom" constant="20" id="gqt-Q6-182"/>
-                                    <constraint firstItem="eP8-1C-kBN" firstAttribute="top" secondItem="v11-o6-5hz" secondAttribute="bottom" id="u9e-nU-we0"/>
-                                    <constraint firstItem="v11-o6-5hz" firstAttribute="leading" secondItem="R5M-eZ-6gh" secondAttribute="leading" id="w8i-Bh-KE6"/>
+                                    <constraint firstItem="Dk2-te-xE9" firstAttribute="leading" secondItem="R5M-eZ-6gh" secondAttribute="leading" constant="20" id="3GB-Do-Dh7"/>
+                                    <constraint firstAttribute="centerX" secondItem="eP8-1C-kBN" secondAttribute="centerX" id="6BK-ri-ufZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="Dk2-te-xE9" secondAttribute="trailing" constant="20" id="Cmc-rL-JFg"/>
+                                    <constraint firstAttribute="trailing" secondItem="v11-o6-5hz" secondAttribute="trailing" id="Xl9-CD-0xz"/>
+                                    <constraint firstAttribute="bottom" secondItem="Dk2-te-xE9" secondAttribute="bottom" constant="20" id="c1p-iO-yca"/>
+                                    <constraint firstItem="eP8-1C-kBN" firstAttribute="top" secondItem="v11-o6-5hz" secondAttribute="bottom" id="dJb-5p-WxE"/>
+                                    <constraint firstItem="v11-o6-5hz" firstAttribute="leading" secondItem="R5M-eZ-6gh" secondAttribute="leading" id="i6J-cA-pme"/>
+                                    <constraint firstItem="v11-o6-5hz" firstAttribute="top" secondItem="R5M-eZ-6gh" secondAttribute="top" id="jwM-Pd-pip"/>
+                                    <constraint firstAttribute="centerX" secondItem="Dk2-te-xE9" secondAttribute="centerX" id="nbq-6x-4EX"/>
+                                    <constraint firstAttribute="bottom" secondItem="eP8-1C-kBN" secondAttribute="bottom" constant="20" id="u0r-XQ-dLX"/>
                                 </constraints>
                             </view>
                         </subviews>

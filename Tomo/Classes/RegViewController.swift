@@ -96,23 +96,20 @@ class RegViewController: BaseViewController {
     
 
     @IBAction func login_wechat(sender: AnyObject) {
-        OpenidController.instance.wxCheckAuth({ (result) -> () in
-            self.loginCheck(result)
+        OpenidController.instance.wxCheckAuth(
+            success: { (result) -> () in
+                self.loginCheck(result)
             
-            }, failure: { (errCode, errMessage) -> () in
+            },
+            failure: { (errCode, errMessage) -> () in
                 
                 println(errCode)
                 println(errMessage)
-                
-        })
+            })
     }
     
     func loginCheck(result: Dictionary<String, AnyObject>){
         Util.showHUD()
-        //        if Defaults["shouldTypeLoginInfo"].bool == true {
-        //            Util.showInfo("Tomoid、またパスワードが変更されましたため、ご入力ください。")
-        //            return;
-        //        }
         
         if let uid = result["_id"] as? String {
             ApiController.getMyInfo({ (error) -> Void in
@@ -125,43 +122,7 @@ class RegViewController: BaseViewController {
                     RegViewController.changeRootToTab(self)
                 }
             })
-        }else{
-            let password = NSUUID().UUIDString
-            var tomoid = NSUUID().UUIDString
-            if let openid = result["openid"] as? String ,type = result["type"] as? String {
-                tomoid = openid
-                OpenidController.instance.getUserInfo{(openidInfo) -> Void in
-                    var nickname = tomoid
-                    if let oinfo = openidInfo{
-                        nickname = oinfo["nickname"] as! String
-                    }
-                    
-                    
-                    ApiController.signUp(email: tomoid, password: password, firstName: nickname, lastName: type) { (error) -> Void in
-                        if let error = error {
-                            Util.showError(error)
-                        }
-                        
-                        DBController.clearDB()
-                        
-                        Defaults["shouldAutoLogin"] = true
-                        
-                        ApiController.addOpenid(result, done: { (error) -> Void in
-                            println(error)
-                        })
-                        //get user detail
-                        ApiController.getMyInfo({ (error) -> Void in
-                            if error == nil{
-                                RegViewController.changeRootToTab(self)
-                                
-                            }
-                        })
-                    }
-                }
-            }
         }
-        
-        
     }
     
     class func changeRootToTab(from:UIViewController){

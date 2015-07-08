@@ -33,34 +33,20 @@ enum TabItem: Int {
         
         switch self {
         case .Home:
-            imageName = "tab_home"
+            imageName = "home"
         case .Chat:
-            imageName = "tab_chat"
+            imageName = "speech_bubble"
         case .Group:
-            imageName = "tab_group"
+            imageName = "group"
         case .Map:
-            imageName = "tab_map"
+            imageName = "globe"
         case .Setting:
-            imageName = "tab_setting"
+            imageName = "settings"
         }
         
         return UIImage(named: imageName)!
     }
     
-    func tabTitle() -> String {
-        switch self {
-        case .Home:
-            return "ホーム"
-        case .Chat:
-            return "トーク"
-        case .Group:
-            return "グループ"
-        case .Map:
-            return "マップ"
-        case .Setting:
-            return "設定"
-        }
-    }
 }
 
 class TabBarController: UITabBarController {

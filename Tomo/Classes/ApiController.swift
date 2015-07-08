@@ -69,14 +69,21 @@ class ApiController: NSObject {
 // MARK: - Action
 extension ApiController {
     
-    class func signUp(#email: String, password: String, firstName: String, lastName: String, done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().postObject(nil, path: "/mobile/user/regist", parameters: ["email" : email, "password" : password, "firstName" : firstName, "lastName" : lastName], success: { (_, result) -> Void in
-            println(result)
-            Defaults["myId"] = (result.firstObject as! User).id
-            done(nil)
-            }) { (_, error) -> Void in
-                done(error)
-        }
+    class func signUpWith(#weChatUserInfo: Dictionary<String, AnyObject>, done: (NSError?) -> Void) {
+        RKObjectManager.sharedManager()
+            .postObject(nil,
+                path: "/mobile/user/regist",
+                parameters: weChatUserInfo,
+                success: {
+                    (_, result) -> Void in
+                    println(result)
+                    Defaults["myId"] = (result.firstObject as! User).id
+                    done(nil)
+                },
+                failure: {
+                    (_, error) -> Void in
+                    done(error)
+                })
     }
     
     class func loginWithUser(user: User, done: (NSError?) -> Void) {

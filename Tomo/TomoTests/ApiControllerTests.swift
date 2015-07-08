@@ -37,9 +37,9 @@ class ApiControllerTests: XCTestCase {
     func testSignUp() {
         let expect = expectationWithDescription("api")
         
-        ApiController.signUp(email: "1@1.com", password: "12345678", firstName: "fName", lastName: "lName") { (error) -> Void in
-            
-        }
+//        ApiController.signUp(openid: "1@1.com", nickName: "fName") { (error) -> Void in
+//            
+//        }
         
         waitForExpectationsWithTimeout(15, handler: { (error) -> Void in
             println(error)
