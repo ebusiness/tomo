@@ -56,7 +56,8 @@ class NewsfeedViewController: BaseViewController {
     func rightBarButtonItem() -> UIBarButtonItem? {
         switch displayMode {
         case .Newsfeed , .Account:
-            return UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: Selector("addPostBtnTapped:"))
+//            return UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: Selector("addPostBtnTapped:"))
+            return UIBarButtonItem(image: UIImage(named: "create_new")!, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("addPostBtnTapped:"))
         case .Group:
             if let group = group where group.participants.count > 1 {
                 return UIBarButtonItem(title: "チャット", style: .Plain, target: self, action: Selector("groupChat"))
