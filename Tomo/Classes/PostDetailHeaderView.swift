@@ -21,12 +21,14 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var postImageView: UIImageView!
+    @IBOutlet weak var postImageList: UIScrollView!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var commentsCount: UILabel!
     @IBOutlet weak var deleteBtn: UIButton!
+    @IBOutlet weak var pageControl: UIPageControl!
     
     @IBOutlet weak var postImageViewHeightConstraint: NSLayoutConstraint!
+    
 
     weak var delegate: PostDetailHeaderViewDelegate?
     
@@ -35,7 +37,11 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         avatarImageView.layer.cornerRadius = 18.0
         avatarImageView.layer.masksToBounds = true
+        
+        postImageList.delegate = self
+        
     }
+    
     
     var viewWidth: CGFloat!
     
@@ -48,11 +54,9 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
             userName.text = post.owner?.fullName()
             timeLabel.text = Util.displayDate(post.createDate)
             
-            if let imagePath = post.imagePath {
-                postImageView.setImageWithURL(NSURL(string: imagePath), completed: { (image, error, cacheType, url) -> Void in
-                    }, usingActivityIndicatorStyle: .Gray)
-            }
             contentLabel.text = post.content
+            
+            self.setImageList()
             
             commentsCount.text = "\(post.comments.count)条评论"
             
@@ -62,12 +66,6 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
 
     var viewHeight: CGFloat! {
         get {
-            if let imageSize = post.imageSize {
-                postImageViewHeightConstraint.constant = viewWidth * imageSize.height / imageSize.width
-            } else {
-                postImageViewHeightConstraint.constant = 0
-            }
-            
             contentLabel.preferredMaxLayoutWidth = viewWidth - 2*8
             
             let size = self.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize) as CGSize
@@ -87,7 +85,7 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
     }
     
     @IBAction func postImageViewTapped(sender: UITapGestureRecognizer) {
-        delegate?.imageViewTapped(postImageView)
+        //delegate?.imageViewTapped(postImageView)
     }
     
     @IBAction func shareBtnTapped(sender: AnyObject) {
@@ -96,5 +94,67 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
     
     @IBAction func deleteBtnTapped(sender: UIButton) {
         delegate?.deleteBtnTapped()
+    }
+}
+
+extension PostDetailHeaderView {
+
+    func setImageList(){
+        
+        let lv = postImageList.frame.size.width/postImageList.frame.size.height
+        
+        var lastPageView: UIImageView?
+        for i in 0..<post.imagesmobile.count{
+            
+            if let image = post.imagesmobile[i] as? Images{
+                let imgView = UIImageView(frame: CGRectZero )
+                imgView.setImageWithURL(NSURL(string: image.name! ), completed: { (image, error, cacheType, url) -> Void in
+                    }, usingActivityIndicatorStyle: .Gray)
+                
+                postImageList.addSubview(imgView)
+                imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
+                
+                var width:CGFloat = postImageList.frame.size.width
+                var height:CGFloat = postImageList.frame.size.height
+                
+                if let w = image.width as? CGFloat,h=image.height as? CGFloat{
+                    
+                    if  (w / h) > lv{
+                        width = w > postImageList.frame.size.width ? postImageList.frame.size.width : w
+                        height = h / w * width
+                    }else{
+                        
+                        height = h > postImageList.frame.size.height ? postImageList.frame.size.height : h
+                        width = w / h * height
+                    }
+                }
+                
+                imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: width))
+                imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: height))
+                
+                
+                postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterY, relatedBy: .Equal, toItem: postImageList, attribute: .CenterY, multiplier: 1.0, constant: 0))
+                
+                postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterX, relatedBy: .Equal, toItem: postImageList, attribute: .CenterX, multiplier: 1.0, constant: CGFloat(i) * 320 ))
+                
+            }
+            
+        }
+        
+        postImageList.contentSize.width = CGFloat(post.imagesmobile.count) * postImageList.bounds.width
+        pageControl.numberOfPages = post.imagesmobile.count
+    }
+    
+}
+
+extension PostDetailHeaderView: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let pageWidth = scrollView.bounds.width
+        let percentage = scrollView.contentOffset.x / pageWidth
+        
+        let p = Int(percentage)
+
+        pageControl.currentPage = p
     }
 }

@@ -205,11 +205,11 @@ extension OpenidController {
         }
     }
     
-    func fixShareMessage(img:UIImage,_ description:String)->(UIImage,String?,String?){
+    func fixShareMessage(img:UIImage?,_ description:String)->(UIImage?,String?,String?){
         let desc = description.length > 128 ? description[0..<128] :description
         
         return (
-            img.scaleToFitSize(CGSize(width: 100, height: 100)),
+            img?.scaleToFitSize(CGSize(width: 100, height: 100)),
             desc,
             "@現場TOMO"
         )
@@ -246,7 +246,7 @@ extension OpenidController {
     WXSceneFavorite = 2,        /**< 收藏       */
     */
     //share url
-    func wxShare(scence:Int32,img:UIImage,description:String,url:String?){
+    func wxShare(scence:Int32,img:UIImage?,description:String,url:String?){
         
         let message = self.wxGetRequestMesage(img, description: description)
         
@@ -259,7 +259,7 @@ extension OpenidController {
         self.wxSendReq(message, scence: scence)
     }
     //share app
-    func wxShare(scence:Int32,img:UIImage,description:String,extInfo:String = "info"){
+    func wxShare(scence:Int32,img:UIImage?,description:String,extInfo:String = "info"){
         
         let message = self.wxGetRequestMesage(img, description: description)
         
@@ -280,13 +280,16 @@ extension OpenidController {
         self.wxSendReq(message, scence: scence)
     }
     //get message
-    private func wxGetRequestMesage(img:UIImage,description:String)->WXMediaMessage{
+    private func wxGetRequestMesage(img:UIImage?,description:String)->WXMediaMessage{
         
         let message = WXMediaMessage()
         
         let (image,title,desc) = self.fixShareMessage(img,description)
-        
-        message.setThumbImage(image)
+        if let image = image {
+            message.setThumbImage(image)
+        }else{
+            message.setThumbImage(UIImage(named: "icon_logo")!)
+        }
         message.title = title
         message.description = desc
         
@@ -350,6 +353,6 @@ extension OpenidController: WXApiDelegate {
 extension OpenidController{
     func handleOpenURL(url:NSURL)->Bool{
         println(url)
-        return WXApi.handleOpenURL(url, delegate: OpenidController.instance)||TencentOAuth.HandleOpenURL(url)
+        return WXApi.handleOpenURL(url, delegate: OpenidController.instance)
     }
 }

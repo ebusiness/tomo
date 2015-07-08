@@ -20,9 +20,6 @@
 #import "ActionSheetPicker.h"
 
 #import "libWeChatSDK/WXApi.h"
-#import <TencentOpenAPI/TencentOAuth.h>
-#import <TencentOpenAPI/QQApi.h>
-#import <TencentOpenAPI/QQApiInterface.h>
 //voice
 #include "interf_dec.h"
 #include "interf_enc.h"
