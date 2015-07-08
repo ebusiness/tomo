@@ -46,7 +46,7 @@ class SettingViewController: BaseTableViewController {
     func updateUI() {
         user = DBController.myUser()
 
-        nameLabel.text = user?.fullName()
+        nameLabel.text = user?.nickName
 
         if let url = user?.photo_ref {
             userImage.sd_setImageWithURL(NSURL(string: url), placeholderImage: DefaultAvatarImage)

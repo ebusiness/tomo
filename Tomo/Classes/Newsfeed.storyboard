@@ -173,7 +173,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="現場Tomo" id="uKo-2v-h3N">
-                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="dct-t8-x0i">
+                        <barButtonItem key="rightBarButtonItem" image="create_new" id="dct-t8-x0i">
                             <connections>
                                 <action selector="addPostBtnTapped:" destination="pQ2-07-Tsh" id="qTU-aL-mnm"/>
                             </connections>
@@ -449,6 +449,7 @@
     </scenes>
     <resources>
         <image name="btn_32_white,6,6," width="6" height="34"/>
+        <image name="create_new" width="25" height="25"/>
         <image name="tab_setting" width="32" height="32"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
