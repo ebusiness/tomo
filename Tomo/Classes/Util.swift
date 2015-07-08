@@ -145,7 +145,7 @@ class Util: NSObject {
                 
             case .Message:
                 if let message = DBController.latestMessage() {
-                    notification.alertBody = message.from!.fullName() + " : " + message.content!
+                    notification.alertBody = message.from!.nickName! + " : " + message.content!
                 }
                 
             case .Announcement:

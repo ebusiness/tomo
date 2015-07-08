@@ -23,7 +23,7 @@ class FriendInvitedCell: UITableViewCell {
     var friendInvitedNotification: Notification! {
         didSet {
             let user = friendInvitedNotification.from!
-            nameLabel.text = user.fullName()
+            nameLabel.text = user.nickName
             
             if let photo_ref = user.photo_ref {
                 avatarImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)

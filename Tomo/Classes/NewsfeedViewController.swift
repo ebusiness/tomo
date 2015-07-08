@@ -76,7 +76,7 @@ class NewsfeedViewController: BaseViewController {
         case .Account:
             return "個人投稿"
         case .User:
-            return user?.fullName()
+            return user?.nickName
         case .Station:
             return "投稿一覧"
         }

@@ -43,7 +43,7 @@ class RecentlyFriendCell: MCSwipeTableViewCell {
             friendImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
         }
         
-        friendNameLabel.text = friend.fullName()
+        friendNameLabel.text = friend.nickName
         
         if let count = unreadCount where unreadCount > 0 {
             badgeView.hidden = false

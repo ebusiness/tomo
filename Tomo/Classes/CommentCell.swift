@@ -21,7 +21,7 @@ class CommentCell: UITableViewCell {
                 avatarImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
             }
             
-            userNameLabel.text = comment.owner?.fullName()
+            userNameLabel.text = comment.owner?.nickName
             timeLabel.text = Util.displayDate(comment.createDate)
             contentLabel.text = comment.content
         }
@@ -30,7 +30,7 @@ class CommentCell: UITableViewCell {
     func height(comment: Comments, width: CGFloat) -> CGFloat {
         contentLabel.preferredMaxLayoutWidth = width - 8 - 36 - 8
         
-        userNameLabel.text = comment.owner?.fullName()
+        userNameLabel.text = comment.owner?.nickName
         timeLabel.text = Util.displayDate(comment.createDate)
         contentLabel.text = comment.content
         

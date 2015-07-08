@@ -168,9 +168,6 @@ extension OpenidController {
                     
                     if (!contains(result.keys, "errcode")) {
                         
-                        let tomoid = NSUUID().UUIDString
-                        let nickname = result["nickname"] as! String
-                        
                         ApiController.signUpWith(weChatUserInfo: result) {
                             (error) -> Void in
                             if let error = error {

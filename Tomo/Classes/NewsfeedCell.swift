@@ -38,7 +38,7 @@ class NewsfeedCell: UICollectionViewCell {
         updateTitleWithPost()
         
         if let owner = post.owner {
-            userNameLabel.text = owner.fullName()
+            userNameLabel.text = owner.nickName
             
             if let photo_ref = owner.photo_ref {
                 avatarImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)

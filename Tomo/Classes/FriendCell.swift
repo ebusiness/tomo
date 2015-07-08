@@ -33,7 +33,7 @@ class FriendCell: MCSwipeTableViewCell {
             friendImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
         }
         
-        nameLabel.text = friend.fullName()
+        nameLabel.text = friend.nickName
         
         invitedLabel.hidden = !DBController.isInvitedUser(friend)
         

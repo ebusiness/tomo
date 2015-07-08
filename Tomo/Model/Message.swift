@@ -15,7 +15,7 @@ extension Message: JSQMessageData {
     }
     
     func senderDisplayName() -> String! {
-        return from?.fullName()
+        return from?.nickName
     }
     
     func date() -> NSDate! {

@@ -51,7 +51,7 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
                 avatarImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
             }
             
-            userName.text = post.owner?.fullName()
+            userName.text = post.owner?.nickName
             timeLabel.text = Util.displayDate(post.createDate)
             
             contentLabel.text = post.content

@@ -113,7 +113,7 @@ class AccountEditViewController: BaseTableViewController {
         }
         
         //名前
-        nameTF.text = user.fullName()
+        nameTF.text = user.nickName
         //誕生日
         birthdayLabel.text = user.birthDay?.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
         

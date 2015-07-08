@@ -44,9 +44,9 @@ class MessageViewController: JSQMessagesViewController {
         setAccessoryButtonImageView()
 
         self.senderId = me.id
-        self.senderDisplayName = me.fullName()
+        self.senderDisplayName = me.nickName
         if let friend = friend {
-            navigationItem.title = friend.fullName()
+            navigationItem.title = friend.nickName
         }
         
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("gotNewMessage"), name: "GotNewMessage", object: nil)
