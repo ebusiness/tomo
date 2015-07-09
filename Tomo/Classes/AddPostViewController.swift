@@ -12,6 +12,8 @@ class AddPostViewController: BaseViewController {
     
     @IBOutlet weak var postInput: UITextView!
     @IBOutlet weak var imageListView: UICollectionView!
+    @IBOutlet weak var toolBar: UIView!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
     var postContent: String?
     var imageList:[UIImage] = []
@@ -23,6 +25,16 @@ class AddPostViewController: BaseViewController {
 
         // set post button disabled
         self.navigationItem.rightBarButtonItem?.enabled = false
+
+        let toolbar = Util.createViewWithNibName("PostToolBarView") as! PostToolBarView
+        toolbar.delegate = self
+        toolbar.addToSuperView(self.toolBar, attr: .Top)
+        
+        let inputAccessory = Util.createViewWithNibName("PostToolBarView") as! PostToolBarView
+        inputAccessory.delegate = self
+        self.postInput.inputAccessoryView = inputAccessory
+        self.postInput.becomeFirstResponder()
+        self.changeConstraint()
         
         // watch the keyboard
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardDidShow:"), name: UIKeyboardDidShowNotification, object: nil)
@@ -42,10 +54,7 @@ class AddPostViewController: BaseViewController {
         
         if isKeyboardShown {
             
-            // hide keyboard
-            postInput.resignFirstResponder()
-            self.navigationItem.rightBarButtonItem?.title = "提交"
-            isKeyboardShown = false
+            self.hideKeynoard()
             
         } else {
             
@@ -56,26 +65,6 @@ class AddPostViewController: BaseViewController {
                 })
             })
         }
-        
-    }
-    
-    @IBAction func takePhoto(sender: AnyObject) {
-        
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        
-        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
-        let takePhotoAction = UIAlertAction(title: "拍摄", style: .Default, handler: { (_) -> Void in
-            DBCameraController.openCamera(self, delegate: self)
-        })
-        let chooseFromLibraryAction = UIAlertAction(title: "从相册选择", style: .Default, handler: { (_) -> () in
-            DBCameraController.openLibrary(self, delegate: self)
-        })
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(takePhotoAction)
-        alertController.addAction(chooseFromLibraryAction)
-        
-        presentViewController(alertController, animated: true, completion: nil)
         
     }
     
@@ -112,6 +101,12 @@ extension AddPostViewController {
         }
         
     }
+    
+    func hideKeynoard(){
+        postInput.resignFirstResponder()
+        self.navigationItem.rightBarButtonItem?.title = "提交"
+        isKeyboardShown = false
+    }
 }
 
 extension AddPostViewController: UITextViewDelegate {
@@ -138,24 +133,19 @@ extension AddPostViewController: UITextViewDelegate {
 extension AddPostViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageList.count + 1
+        return imageList.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-
-        if indexPath.row == imageList.count {
-            return collectionView.dequeueReusableCellWithReuseIdentifier("btnCell", forIndexPath: indexPath) as! UICollectionViewCell
-        } else {
-            
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! ImageCollectionCell
-            let image = imageList[indexPath.row]
-            cell.imageView.image = image
-            cell.whenDelete = { ()->() in
-                self.imageList.remove(image)
-                self.scrollToEnd()
-            }
-            return cell
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! ImageCollectionCell
+        let image = imageList[indexPath.row]
+        cell.imageView.image = image
+        cell.whenDelete = { ()->() in
+            self.imageList.remove(image)
+            self.scrollToEnd()
         }
+        return cell
         
     }
     
@@ -165,18 +155,52 @@ extension AddPostViewController: UICollectionViewDataSource, UICollectionViewDel
             
     // move to the last image
     func scrollToEnd(){
-        
         self.imageListView.reloadData()
+        self.changeConstraint()
+        if imageList.count == 0 {
+            return
+        }
         let section = imageListView.numberOfSections() - 1
         let item = imageListView.numberOfItemsInSection(section) - 1
         let lastIndexPath = NSIndexPath(forItem: item, inSection: section)
         
         imageListView.scrollToItemAtIndexPath(lastIndexPath, atScrollPosition: UICollectionViewScrollPosition.Right, animated: true)
     }
+    
+    func changeConstraint(){
+        heightConstraint.constant = imageList.count == 0 ? 0 : 130
+    }
+}
+
+extension AddPostViewController : PostToolBarDelegate{
+    
+    func cameraOnClick() {
+        
+        if isKeyboardShown {
+            self.hideKeynoard()
+        }
+        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+        let takePhotoAction = UIAlertAction(title: "拍摄", style: .Default, handler: { (_) -> Void in
+            DBCameraController.openCamera(self, delegate: self)
+        })
+        let chooseFromLibraryAction = UIAlertAction(title: "从相册选择", style: .Default, handler: { (_) -> () in
+            DBCameraController.openLibrary(self, delegate: self)
+        })
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(takePhotoAction)
+        alertController.addAction(chooseFromLibraryAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
+
+    }
 }
 
 extension AddPostViewController: DBCameraViewControllerDelegate {
-            
+    
     func camera(cameraViewController: AnyObject!, didFinishWithImage image: UIImage!, withMetadata metadata: [NSObject : AnyObject]!) {
         let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
         
@@ -187,10 +211,12 @@ extension AddPostViewController: DBCameraViewControllerDelegate {
         self.dismissCamera(cameraViewController)
         
     }
-            
+    
     func dismissCamera(cameraViewController: AnyObject!) {
         self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
         cameraViewController.restoreFullScreenMode()
     }
 }
+
+
 

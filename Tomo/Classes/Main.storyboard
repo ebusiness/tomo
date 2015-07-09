@@ -56,7 +56,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="eP8-1C-kBN">
-                                        <rect key="frame" x="140.5" y="511" width="39" height="37"/>
+                                        <rect key="frame" x="141" y="511" width="39" height="37"/>
                                     </pageControl>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v11-o6-5hz">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="511"/>

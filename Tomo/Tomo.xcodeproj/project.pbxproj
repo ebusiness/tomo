@@ -232,8 +232,8 @@
 		D07C99631B3ABD29008EB420 /* TableViewCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C99621B3ABD29008EB420 /* TableViewCellController.swift */; };
 		D0A5E1381B4546B3002E2FE6 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A5E1371B4546B3002E2FE6 /* AddPostViewController.swift */; };
 		D0A5E13A1B45669D002E2FE6 /* ImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A5E1391B45669D002E2FE6 /* ImageCollectionCell.swift */; };
-		D0A877891B4613DA0049588A /* inputAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A877881B4613DA0049588A /* inputAccessoryView.xib */; };
-		D0A8778B1B4618D10049588A /* inputAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8778A1B4618D10049588A /* inputAccessoryViewController.swift */; };
+		D0A877891B4613DA0049588A /* PostToolBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A877881B4613DA0049588A /* PostToolBarView.xib */; };
+		D0A8778B1B4618D10049588A /* PostToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8778A1B4618D10049588A /* PostToolBarView.swift */; };
 		D0A8778D1B4661330049588A /* PostCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A8778C1B4661330049588A /* PostCollectionCell.xib */; };
 		D0ACAE571B0AD98400AA9907 /* ActionSheet.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */; };
 		D0ACAE5C1B0AE0CA00AA9907 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */; };
@@ -430,8 +430,8 @@
 		D07C99621B3ABD29008EB420 /* TableViewCellController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableViewCellController.swift; path = Classes/TableViewCellController.swift; sourceTree = "<group>"; };
 		D0A5E1371B4546B3002E2FE6 /* AddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPostViewController.swift; path = Classes/AddPostViewController.swift; sourceTree = "<group>"; };
 		D0A5E1391B45669D002E2FE6 /* ImageCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCollectionCell.swift; path = Classes/ImageCollectionCell.swift; sourceTree = "<group>"; };
-		D0A877881B4613DA0049588A /* inputAccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = inputAccessoryView.xib; path = Classes/inputAccessoryView.xib; sourceTree = "<group>"; };
-		D0A8778A1B4618D10049588A /* inputAccessoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = inputAccessoryViewController.swift; path = Classes/inputAccessoryViewController.swift; sourceTree = "<group>"; };
+		D0A877881B4613DA0049588A /* PostToolBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostToolBarView.xib; path = Classes/PostToolBarView.xib; sourceTree = "<group>"; };
+		D0A8778A1B4618D10049588A /* PostToolBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostToolBarView.swift; path = Classes/PostToolBarView.swift; sourceTree = "<group>"; };
 		D0A8778C1B4661330049588A /* PostCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostCollectionCell.xib; path = Classes/PostCollectionCell.xib; sourceTree = "<group>"; };
 		D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ActionSheet.storyboard; path = Classes/ActionSheet.storyboard; sourceTree = "<group>"; };
 		D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = Classes/ShareViewController.swift; sourceTree = "<group>"; };
@@ -760,7 +760,7 @@
 				29ED0C7B1AE48CBC00B51C7E /* Group.storyboard */,
 				297163B51AEA23BF005EA9C0 /* GroupHeaderView.xib */,
 				D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */,
-				D0A877881B4613DA0049588A /* inputAccessoryView.xib */,
+				D0A877881B4613DA0049588A /* PostToolBarView.xib */,
 				D0A8778C1B4661330049588A /* PostCollectionCell.xib */,
 			);
 			name = "xib&storyboard";
@@ -900,7 +900,7 @@
 			children = (
 				D06CF9AD1B382A7D00BF24B6 /* tagUIController.swift */,
 				D07C99621B3ABD29008EB420 /* TableViewCellController.swift */,
-				D0A8778A1B4618D10049588A /* inputAccessoryViewController.swift */,
+				D0A8778A1B4618D10049588A /* PostToolBarView.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1049,7 +1049,7 @@
 				29A1AFFD1AC527BD00775765 /* GroupMapping.plist in Resources */,
 				297163B61AEA23BF005EA9C0 /* GroupHeaderView.xib in Resources */,
 				29B00A5E1AE09E7E002AF208 /* NotificationMapping.plist in Resources */,
-				D0A877891B4613DA0049588A /* inputAccessoryView.xib in Resources */,
+				D0A877891B4613DA0049588A /* PostToolBarView.xib in Resources */,
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
 				296D8BC31AFC5A680058D400 /* LaunchScreen.xib in Resources */,
 				292B9CCA1AE61A2500604986 /* StationMapping.plist in Resources */,
@@ -1261,7 +1261,7 @@
 				29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */,
 				292B9CCF1AE61C3F00604986 /* _Line.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
-				D0A8778B1B4618D10049588A /* inputAccessoryViewController.swift in Sources */,
+				D0A8778B1B4618D10049588A /* PostToolBarView.swift in Sources */,
 				17B993151AF36CBB00204E97 /* _Openids.swift in Sources */,
 				290843111B09C9140037A6CD /* Float.swift in Sources */,
 				295466E61B0C7FB500AAD608 /* Announcements.swift in Sources */,

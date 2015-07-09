@@ -14,21 +14,15 @@ class ImageCollectionCell :UICollectionViewCell {
     
     var whenDelete : (()->())!
     
-    
-    @IBAction func deleteAction(sender: AnyObject) {
-        self.whenDelete?()
-        println("del")
-    }
-    
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override func awakeFromNib() {
+        
         if let image = UIImage(named:"icon_close") {
-            //btnClose.backgroundColor = Util.coloredImage( image, color: UIColor.redColor())
+            btnClose?.setBackgroundImage(Util.coloredImage( image, color: UIColor.redColor()), forState: .Normal)
         }
     }
     
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder:aDecoder)
+    @IBAction func deleteAction(sender: AnyObject) {
+        self.whenDelete?()
     }
+
 }
