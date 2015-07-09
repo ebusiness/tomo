@@ -13,7 +13,14 @@ class AddPostViewController: BaseViewController {
     @IBOutlet weak var postInput: UITextView!
     @IBOutlet weak var imageListView: UICollectionView!
     @IBOutlet weak var toolBar: UIView!
-    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var groupBorder: UIView!
+    @IBOutlet weak var groupName: UILabel!
+    @IBOutlet weak var groupCover: UIImageView!
+    
+    @IBOutlet weak var imageListHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var titleHeightConstraint: NSLayoutConstraint!
+    
     
     var postContent: String?
     var imageList:[UIImage] = []
@@ -25,7 +32,14 @@ class AddPostViewController: BaseViewController {
 
         // set post button disabled
         self.navigationItem.rightBarButtonItem?.enabled = false
-
+        
+        groupBorder.layer.borderColor = UIColor.grayColor().CGColor
+        groupBorder.layer.borderWidth = 1
+        groupBorder.layer.cornerRadius = groupBorder.frame.size.height / 2
+        
+        groupCover.layer.cornerRadius = groupCover.frame.size.height / 2
+        groupCover.layer.masksToBounds = true
+        
         let toolbar = Util.createViewWithNibName("PostToolBarView") as! PostToolBarView
         toolbar.delegate = self
         toolbar.addToSuperView(self.toolBar, attr: .Top)
@@ -66,6 +80,10 @@ class AddPostViewController: BaseViewController {
             })
         }
         
+    }
+    
+    @IBAction func removeGroup(sender: AnyObject) {
+        titleHeightConstraint.constant = 0
     }
     
 }
@@ -168,7 +186,7 @@ extension AddPostViewController: UICollectionViewDataSource, UICollectionViewDel
     }
     
     func changeConstraint(){
-        heightConstraint.constant = imageList.count == 0 ? 0 : 130
+        imageListHeightConstraint.constant = imageList.count == 0 ? 0 : 130
     }
 }
 
