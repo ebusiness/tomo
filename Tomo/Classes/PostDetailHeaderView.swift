@@ -25,7 +25,6 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var commentsCount: UILabel!
     @IBOutlet weak var deleteBtn: UIButton!
-    @IBOutlet weak var pageControl: UIPageControl!
     
     @IBOutlet weak var postImageViewHeightConstraint: NSLayoutConstraint!
     
@@ -103,7 +102,8 @@ extension PostDetailHeaderView {
         
         let lv = postImageList.frame.size.width/postImageList.frame.size.height
         
-        var lastPageView: UIImageView?
+        var scrollWidth:CGFloat = 0
+        
         for i in 0..<post.imagesmobile.count{
             
             if let image = post.imagesmobile[i] as? Images{
@@ -135,14 +135,15 @@ extension PostDetailHeaderView {
                 
                 postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterY, relatedBy: .Equal, toItem: postImageList, attribute: .CenterY, multiplier: 1.0, constant: 0))
                 
-                postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterX, relatedBy: .Equal, toItem: postImageList, attribute: .CenterX, multiplier: 1.0, constant: CGFloat(i) * 320 ))
+                postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: scrollWidth ))
                 
+                
+                scrollWidth += width
             }
             
         }
         
-        postImageList.contentSize.width = CGFloat(post.imagesmobile.count) * postImageList.bounds.width
-        pageControl.numberOfPages = post.imagesmobile.count
+        postImageList.contentSize.width = scrollWidth
     }
     
 }
@@ -150,11 +151,6 @@ extension PostDetailHeaderView {
 extension PostDetailHeaderView: UIScrollViewDelegate {
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        let pageWidth = scrollView.bounds.width
-        let percentage = scrollView.contentOffset.x / pageWidth
-        
-        let p = Int(percentage)
 
-        pageControl.currentPage = p
     }
 }

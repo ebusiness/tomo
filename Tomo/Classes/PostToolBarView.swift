@@ -10,6 +10,8 @@ import UIKit
 
 @objc protocol PostToolBarDelegate {
     optional func cameraOnClick()
+    optional func groupOnClick()
+    optional func stationOnClick()
 }
 
 class PostToolBarView:UIView {
@@ -19,10 +21,13 @@ class PostToolBarView:UIView {
     var delegate:PostToolBarDelegate?
     
     override func awakeFromNib() {
-        if let image = UIImage(named:"screenshot") {
-            let color = Util.UIColorFromRGB(0xFF007AFF, alpha: 1)
-            let image = Util.coloredImage( image, color: color)
-            self.cameraButton?.setBackgroundImage(image, forState: .Normal)
+        
+        for subview in self.subviews {
+            if let btn = subview as? UIButton,image = btn.backgroundImageForState(.Normal) {
+                let color = Util.UIColorFromRGB(0xFF007AFF, alpha: 1)
+                let image = Util.coloredImage( image, color: color)
+                btn.setBackgroundImage(image, forState: .Normal)
+            }
         }
     }
     
@@ -30,6 +35,13 @@ class PostToolBarView:UIView {
         self.delegate?.cameraOnClick?()
     }
     
+    @IBAction func groupOnClick(sender: AnyObject) {
+        self.delegate?.groupOnClick?()
+    }
+    
+    @IBAction func stationOnClick(sender: AnyObject) {
+        self.delegate?.stationOnClick?()
+    }
 }
 
 extension PostToolBarView {

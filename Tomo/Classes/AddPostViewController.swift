@@ -13,7 +13,9 @@ class AddPostViewController: BaseViewController {
     @IBOutlet weak var postInput: UITextView!
     @IBOutlet weak var imageListView: UICollectionView!
     @IBOutlet weak var toolBar: UIView!
+    @IBOutlet weak var submitButton: UIButton!
     
+    @IBOutlet weak var groupView: UIView!
     @IBOutlet weak var groupBorder: UIView!
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var groupCover: UIImageView!
@@ -26,15 +28,22 @@ class AddPostViewController: BaseViewController {
     var imageList:[UIImage] = []
     var isKeyboardShown = false
     
+    
+    var groupListVC: GroupListViewController?
+    var stationListVC: StationTableViewController?
+    var selectedGroup: Group?
+    var selectedStation: Station?
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
 
         // set post button disabled
-        self.navigationItem.rightBarButtonItem?.enabled = false
+//        self.navigationItem.rightBarButtonItem?.enabled = false
+        self.navigationController?.navigationBarHidden = true
         
         groupBorder.layer.borderColor = UIColor.grayColor().CGColor
-        groupBorder.layer.borderWidth = 1
+        groupBorder.layer.borderWidth = 0.5
         groupBorder.layer.cornerRadius = groupBorder.frame.size.height / 2
         
         groupCover.layer.cornerRadius = groupCover.frame.size.height / 2
@@ -57,10 +66,24 @@ class AddPostViewController: BaseViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        self.shyNavBarManager.scrollView = nil
+        //self.shyNavBarManager.scrollView = nil
+        
+        
+        if let groupListVC = groupListVC, selectedGroup = groupListVC.selectedGroup {
+            self.selectedGroup = selectedGroup
+            self.groupListVC = nil
+            return
+        }
+        
+        if let stationListVC = stationListVC, selectedStation = stationListVC.selectedStation {
+            self.selectedStation = selectedStation
+            self.stationListVC = nil
+            return
+        }
     }
     
     @IBAction func cancel(sender: AnyObject) {
+        self.postInput.resignFirstResponder()
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -74,7 +97,7 @@ class AddPostViewController: BaseViewController {
             
             // send post
             self.uploadToS3({ (imageNames, sizes) -> () in
-                ApiController.addPost(imageNames, sizes: sizes, content: self.postContent!, groupId: nil, stationId: nil,location: nil, done: { (error) -> Void in
+                ApiController.addPost(imageNames, sizes: sizes, content: self.postContent!, groupId: self.selectedGroup?.id, stationId: self.selectedStation?.id,location: nil, done: { (error) -> Void in
                     self.dismissViewControllerAnimated(true, completion: nil)
                 })
             })
@@ -84,6 +107,7 @@ class AddPostViewController: BaseViewController {
     
     @IBAction func removeGroup(sender: AnyObject) {
         titleHeightConstraint.constant = 0
+        groupView.hidden = true
     }
     
 }
@@ -92,7 +116,8 @@ extension AddPostViewController {
     
     func keyboardDidShow(notification: NSNotification){
         isKeyboardShown = true
-        self.navigationItem.rightBarButtonItem!.title = "完成"
+        submitButton.setTitle("完成", forState: .Normal)
+        //self.navigationItem.rightBarButtonItem!.title = "完成"
     }
     
     func uploadToS3(completion:(imageNames: [String], sizes: [CGSize])->()){
@@ -122,7 +147,8 @@ extension AddPostViewController {
     
     func hideKeynoard(){
         postInput.resignFirstResponder()
-        self.navigationItem.rightBarButtonItem?.title = "提交"
+        submitButton.setTitle("提交", forState: .Normal)
+        //self.navigationItem.rightBarButtonItem?.title = "提交"
         isKeyboardShown = false
     }
 }
@@ -141,9 +167,11 @@ extension AddPostViewController: UITextViewDelegate {
         postContent = textView.text
         
         if postContent != nil && postContent!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
-            self.navigationItem.rightBarButtonItem?.enabled = true
+            submitButton.enabled = true
+            //self.navigationItem.rightBarButtonItem?.enabled = true
         } else {
-            self.navigationItem.rightBarButtonItem?.enabled = false
+            submitButton.enabled = false
+            //self.navigationItem.rightBarButtonItem?.enabled = false
         }
     }
 }
@@ -215,6 +243,26 @@ extension AddPostViewController : PostToolBarDelegate{
         presentViewController(alertController, animated: true, completion: nil)
 
     }
+    
+    func groupOnClick() {
+        
+        groupListVC = Util.createViewControllerWithIdentifier("GroupListViewController", storyboardName: "Group") as? GroupListViewController
+        groupListVC!.showMyGroupOnly = true
+        groupListVC!.selectedGroup = selectedGroup
+        
+        
+//        presentViewController(groupListVC!, animated: true, completion: nil)
+        navigationController?.pushViewController(groupListVC!, animated: true)
+    }
+    
+    func stationOnClick() {
+        stationListVC = StationTableViewController()
+        stationListVC?.displayMode = .MyStationOnly
+        
+//        presentViewController(stationListVC!, animated: true, completion: nil)
+        navigationController?.pushViewController(stationListVC!, animated: true)
+    }
+    
 }
 
 extension AddPostViewController: DBCameraViewControllerDelegate {

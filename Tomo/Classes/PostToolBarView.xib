@@ -22,9 +22,37 @@
                         <action selector="cameraOnClick:" destination="Sty-xW-QiC" eventType="touchUpInside" id="erG-C9-Uvg"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x4O-fI-1nG">
+                    <rect key="frame" x="238" y="10" width="25" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="25" id="Qyu-d3-Tod"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="group">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="groupOnClick:" destination="Sty-xW-QiC" eventType="touchUpInside" id="jfu-UZ-zA4"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SR7-d0-i7a">
+                    <rect key="frame" x="197" y="10" width="25" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="25" id="ypa-7M-1lK"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="railway_station">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="stationOnClick:" destination="Sty-xW-QiC" eventType="touchUpInside" id="7wF-be-aB0"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="centerY" secondItem="SR7-d0-i7a" secondAttribute="centerY" constant="-0.5" id="18c-hl-Fti"/>
+                <constraint firstItem="TG6-GW-m61" firstAttribute="leading" secondItem="x4O-fI-1nG" secondAttribute="trailing" constant="16" id="D4Q-Xc-4PS"/>
+                <constraint firstItem="x4O-fI-1nG" firstAttribute="leading" secondItem="SR7-d0-i7a" secondAttribute="trailing" constant="16" id="NIf-KJ-k2k"/>
+                <constraint firstAttribute="centerY" secondItem="x4O-fI-1nG" secondAttribute="centerY" constant="-0.5" id="hug-HN-yzd"/>
                 <constraint firstAttribute="bottom" secondItem="TG6-GW-m61" secondAttribute="bottom" constant="8" id="pvg-4s-26D"/>
                 <constraint firstAttribute="trailing" secondItem="TG6-GW-m61" secondAttribute="trailing" constant="16" id="qoG-MO-EIK"/>
             </constraints>
@@ -36,6 +64,8 @@
         </view>
     </objects>
     <resources>
+        <image name="group" width="25" height="25"/>
+        <image name="railway_station" width="25" height="25"/>
         <image name="screenshot" width="25" height="25"/>
     </resources>
 </document>
