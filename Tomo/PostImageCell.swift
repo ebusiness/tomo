@@ -24,6 +24,7 @@ class PostImageCell: PostCell {
             
             imageView.sd_setImageWithURL(NSURL(string: imageData.name))
             imageView.contentMode = UIViewContentMode.ScaleAspectFill
+            imageView.clipsToBounds = true
             
             imageCount++
             

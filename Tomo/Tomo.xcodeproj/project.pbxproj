@@ -1541,7 +1541,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_NAME = tomo;
-				PROVISIONING_PROFILE = "2f7e360c-3a9a-42a1-b5e7-b6579ce67a71";
+				PROVISIONING_PROFILE = "d05d10ab-a6a3-455b-98e1-ce82c2c431c2";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};

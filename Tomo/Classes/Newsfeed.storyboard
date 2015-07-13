@@ -191,7 +191,7 @@
         <!--Post Detail View Controller-->
         <scene sceneID="aZs-NW-iLX">
             <objects>
-                <viewController id="OTK-dR-r8Z" customClass="PostDetailViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PostDetailView" id="OTK-dR-r8Z" customClass="PostDetailViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CpK-Tv-fvb"/>
                         <viewControllerLayoutGuide type="bottom" id="9o5-31-HQn"/>
@@ -234,7 +234,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FVe-d0-bCK">
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FVe-d0-bCK">
                                                     <rect key="frame" x="0.0" y="83" width="320" height="1"/>
                                                     <color key="backgroundColor" red="0.87450980392156863" green="0.87450980392156863" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>

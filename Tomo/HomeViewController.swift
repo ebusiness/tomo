@@ -92,13 +92,14 @@ extension HomeViewController: UITableViewDataSource {
         
         if post.imagesmobile.count > 0 {
             
-            for image in post.imagesmobile {
-                if let image = image as? Images {
-                    println("###########\(image.name)")
-                }
+            cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell", forIndexPath: indexPath) as! PostImageCell
+            
+            let subviews = (cell as! PostImageCell).scrollView.subviews
+            
+            for subview in subviews {
+                subview.removeFromSuperview()
             }
             
-            cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell", forIndexPath: indexPath) as! PostImageCell
         } else {
             cell = tableView.dequeueReusableCellWithIdentifier("PostCell", forIndexPath: indexPath) as! PostCell
         }
@@ -114,6 +115,10 @@ extension HomeViewController: UITableViewDelegate {
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let detailView = Util.createViewControllerWithIdentifier("PostDetailView", storyboardName: "Newsfeed") as! PostDetailViewController
+        detailView.postId = (frc.objectAtIndexPath(indexPath) as! Post).id
+        self.navigationController?.pushViewController(detailView, animated: true)
     }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
