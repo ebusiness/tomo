@@ -16,7 +16,7 @@ enum TabItem: Int {
     func storyBoardName() -> String {
         switch self {
         case .Home:
-            return "Newsfeed"
+            return "Home"
         case .Chat:
             return "Chat"
         case .Group:
@@ -68,6 +68,7 @@ class TabBarController: UITabBarController {
         }
         self.tabBar.barTintColor = UIColor.whiteColor()
         self.viewControllers = viewControllers
+        
     }
     
     override func viewDidLoad() {

@@ -59,6 +59,12 @@
 		17B993161AF36CBE00204E97 /* _Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993141AF36CBB00204E97 /* _Openids.swift */; };
 		17B993171AF36CC100204E97 /* Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993121AF36CB200204E97 /* Openids.swift */; };
 		17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993181AF3712C00204E97 /* OpenidController.swift */; };
+		1F8BF0111B53639F00090079 /* PostImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8BF0101B53639F00090079 /* PostImageCell.swift */; };
+		1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8BF0121B536D9500090079 /* PostImageCell.xib */; };
+		1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE80E71B4E552A0061B913 /* Home.storyboard */; };
+		1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */; };
+		1FEE80EC1B4E5C540061B913 /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE80EB1B4E5C540061B913 /* PostCell.xib */; };
+		1FEE80EE1B4E60850061B913 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE80ED1B4E60850061B913 /* PostCell.swift */; };
 		290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
 		290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290134DE1AC3991C00BBFE29 /* Images.xcassets */; };
 		290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134ED1AC3991D00BBFE29 /* TomoTests.swift */; };
@@ -286,6 +292,12 @@
 		17B993121AF36CB200204E97 /* Openids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Openids.swift; sourceTree = "<group>"; };
 		17B993141AF36CBB00204E97 /* _Openids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Openids.swift; sourceTree = "<group>"; };
 		17B993181AF3712C00204E97 /* OpenidController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidController.swift; path = Classes/OpenidController.swift; sourceTree = "<group>"; };
+		1F8BF0101B53639F00090079 /* PostImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostImageCell.swift; sourceTree = "<group>"; };
+		1F8BF0121B536D9500090079 /* PostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostImageCell.xib; sourceTree = "<group>"; };
+		1FEE80E71B4E552A0061B913 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		1FEE80EB1B4E5C540061B913 /* PostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCell.xib; sourceTree = "<group>"; };
+		1FEE80ED1B4E60850061B913 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		290134D21AC3991C00BBFE29 /* tomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		290134D61AC3991C00BBFE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		290134D71AC3991C00BBFE29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -762,6 +774,9 @@
 				D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */,
 				D0A877881B4613DA0049588A /* PostToolBarView.xib */,
 				D0A8778C1B4661330049588A /* PostCollectionCell.xib */,
+				1FEE80E71B4E552A0061B913 /* Home.storyboard */,
+				1FEE80EB1B4E5C540061B913 /* PostCell.xib */,
+				1F8BF0121B536D9500090079 /* PostImageCell.xib */,
 			);
 			name = "xib&storyboard";
 			sourceTree = "<group>";
@@ -804,6 +819,9 @@
 				294EF0AF1B01D54500A94A3F /* RadioButtonCell.swift */,
 				D0A5E1371B4546B3002E2FE6 /* AddPostViewController.swift */,
 				D0A5E1391B45669D002E2FE6 /* ImageCollectionCell.swift */,
+				1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */,
+				1FEE80ED1B4E60850061B913 /* PostCell.swift */,
+				1F8BF0101B53639F00090079 /* PostImageCell.swift */,
 			);
 			name = "ホーム";
 			sourceTree = "<group>";
@@ -1031,9 +1049,11 @@
 				296D8BCA1AFC5A7F0058D400 /* RegPageData.plist in Resources */,
 				295272D21AD60D9300FC7833 /* Debug.storyboard in Resources */,
 				29CA441A1AD4CA48009EB177 /* Chat.storyboard in Resources */,
+				1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */,
 				296D8BC51AFC5A680058D400 /* Newsfeed.storyboard in Resources */,
 				296D8BC61AFC5A680058D400 /* NewsfeedCell.xib in Resources */,
 				D0ACAE571B0AD98400AA9907 /* ActionSheet.storyboard in Resources */,
+				1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */,
 				29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */,
 				292B9CC81AE61A0D00604986 /* LineMapping.plist in Resources */,
 				D0D7B6961B3038BE00692C2F /* TagMapping.plist in Resources */,
@@ -1054,6 +1074,7 @@
 				296D8BC31AFC5A680058D400 /* LaunchScreen.xib in Resources */,
 				292B9CCA1AE61A2500604986 /* StationMapping.plist in Resources */,
 				29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */,
+				1FEE80EC1B4E5C540061B913 /* PostCell.xib in Resources */,
 				296D8BC81AFC5A680058D400 /* RegPageView.xib in Resources */,
 				296D8BC21AFC5A680058D400 /* AddPost.storyboard in Resources */,
 				29ED0C7C1AE48CBC00B51C7E /* Group.storyboard in Resources */,
@@ -1183,6 +1204,7 @@
 				297163B81AEA2422005EA9C0 /* GroupHeaderView.swift in Sources */,
 				2901351A1AC3A79500BBFE29 /* _User.swift in Sources */,
 				29DCEFE91B14519300A7C7AF /* TomoVideoMediaItem.swift in Sources */,
+				1FEE80EE1B4E60850061B913 /* PostCell.swift in Sources */,
 				17B993011AF353D000204E97 /* amrFileCodec.m in Sources */,
 				290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */,
 				295466E41B0C7FA300AAD608 /* _Announcements.swift in Sources */,
@@ -1249,12 +1271,14 @@
 				290134F81AC39F4600BBFE29 /* ApiController.swift in Sources */,
 				296D8BB61AFC5A350058D400 /* CommentInputViewController.swift in Sources */,
 				29BE7E231AC55A28008110B4 /* MultilineLabel.swift in Sources */,
+				1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */,
 				29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */,
 				29A1AFF71AC4113000775765 /* _Post.swift in Sources */,
 				D00E0FD61B3D3B4D00AEB521 /* DBCameraController.swift in Sources */,
 				2942CCD51ACD03BF007CDC97 /* NewsfeedCell.swift in Sources */,
 				2908430B1B09C9140037A6CD /* Array.swift in Sources */,
 				291ADF921AD21C01009D8BE3 /* PostDetailViewController.swift in Sources */,
+				1F8BF0111B53639F00090079 /* PostImageCell.swift in Sources */,
 				292B9CCC1AE61ACA00604986 /* StationTableViewController.swift in Sources */,
 				290843141B09C9140037A6CD /* NSArray.swift in Sources */,
 				290135171AC3A78E00BBFE29 /* User.swift in Sources */,
