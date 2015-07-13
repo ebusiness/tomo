@@ -39,8 +39,10 @@ class AddPostViewController: BaseViewController {
         super.viewDidLoad()
 
         // set post button disabled
-//        self.navigationItem.rightBarButtonItem?.enabled = false
+        //        self.navigationItem.rightBarButtonItem?.enabled = false
+        
         self.navigationController?.navigationBarHidden = true
+        UIApplication.sharedApplication().statusBarHidden = true
         
         groupBorder.layer.borderColor = UIColor.grayColor().CGColor
         groupBorder.layer.borderWidth = 0.5
@@ -63,10 +65,12 @@ class AddPostViewController: BaseViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardDidShow:"), name: UIKeyboardDidShowNotification, object: nil)
         
     }
+    override func prefersStatusBarHidden() -> Bool {
+        return true;
+    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        //self.shyNavBarManager.scrollView = nil
         
         
         if let groupListVC = groupListVC, selectedGroup = groupListVC.selectedGroup {
@@ -81,7 +85,11 @@ class AddPostViewController: BaseViewController {
             return
         }
     }
-    
+    override func dismissViewControllerAnimated(flag: Bool, completion: (() -> Void)?) {
+        super.dismissViewControllerAnimated(flag, completion: completion)
+        UIApplication.sharedApplication().statusBarHidden = false
+        
+    }
     @IBAction func cancel(sender: AnyObject) {
         self.postInput.resignFirstResponder()
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -245,22 +253,28 @@ extension AddPostViewController : PostToolBarDelegate{
     }
     
     func groupOnClick() {
-        
-        groupListVC = Util.createViewControllerWithIdentifier("GroupListViewController", storyboardName: "Group") as? GroupListViewController
-        groupListVC!.showMyGroupOnly = true
-        groupListVC!.selectedGroup = selectedGroup
-        
-        
-//        presentViewController(groupListVC!, animated: true, completion: nil)
-        navigationController?.pushViewController(groupListVC!, animated: true)
+        if DBController.myUser()?.groups.count > 0 {
+            //select group
+            groupListVC = Util.createViewControllerWithIdentifier("GroupListViewController", storyboardName: "Group") as? GroupListViewController
+            groupListVC!.showMyGroupOnly = true
+            groupListVC!.selectedGroup = selectedGroup
+            
+            navigationController?.pushViewController(groupListVC!, animated: true)
+        } else {
+            //add group?
+        }
     }
     
     func stationOnClick() {
-        stationListVC = StationTableViewController()
-        stationListVC?.displayMode = .MyStationOnly
-        
-//        presentViewController(stationListVC!, animated: true, completion: nil)
-        navigationController?.pushViewController(stationListVC!, animated: true)
+        if DBController.myStations().count > 0 {
+            //select station
+            stationListVC = StationTableViewController()
+            stationListVC?.displayMode = .MyStationOnly
+            
+            navigationController?.pushViewController(stationListVC!, animated: true)
+        } else {
+            // set station?
+        }
     }
     
 }
