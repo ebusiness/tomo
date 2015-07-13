@@ -34,7 +34,7 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
     var layoutSize: CGSize!
     
     override func awakeFromNib() {
-        avatarImageView.layer.cornerRadius = 18.0
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
         avatarImageView.layer.masksToBounds = true
         
         postImageList.delegate = self
@@ -100,7 +100,7 @@ extension PostDetailHeaderView {
 
     func setImageList(){
         
-        if post.imagesmobile.count < 10 {
+        if post.imagesmobile.count < 1 {
             //hide [postImageList] when imagesmobile.count
             postImageList.addConstraint(NSLayoutConstraint(item: postImageList, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 0))
             return
