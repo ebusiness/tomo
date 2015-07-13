@@ -57,7 +57,7 @@ class PostDetailHeaderView: UITableViewHeaderFooterView {
             
             self.setImageList()
             
-            commentsCount.text = "\(post.comments.count)条评论"
+            commentsCount.text = "\(post.comments.count)"
             
             deleteBtn.hidden = !post.isMyPost
         }
@@ -100,6 +100,12 @@ extension PostDetailHeaderView {
 
     func setImageList(){
         
+        if post.imagesmobile.count < 10 {
+            //hide [postImageList] when imagesmobile.count
+            postImageList.addConstraint(NSLayoutConstraint(item: postImageList, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 0))
+            return
+        }
+        
         let lv = postImageList.frame.size.width/postImageList.frame.size.height
         
         var scrollWidth:CGFloat = 0
@@ -138,7 +144,7 @@ extension PostDetailHeaderView {
                 postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: scrollWidth ))
                 
                 
-                scrollWidth += width
+                scrollWidth += width + 5
             }
             
         }
