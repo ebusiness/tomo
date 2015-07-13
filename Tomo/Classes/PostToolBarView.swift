@@ -21,7 +21,6 @@ class PostToolBarView:UIView {
     var delegate:PostToolBarDelegate?
     
     override func awakeFromNib() {
-        
         for subview in self.subviews {
             if let btn = subview as? UIButton,image = btn.backgroundImageForState(.Normal) {
                 let color = Util.UIColorFromRGB(0xFF007AFF, alpha: 1)
@@ -47,19 +46,24 @@ class PostToolBarView:UIView {
 extension PostToolBarView {
     
     func addToSuperView(view :UIView,attr:NSLayoutAttribute){
+        self.setTranslatesAutoresizingMaskIntoConstraints(false)
         view.addSubview(self)
+        
+        
+        
+        view.addConstraint(NSLayoutConstraint(item: self, attribute: .Width, relatedBy: .Equal, toItem: view, attribute: .Width, multiplier: 1.0, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: self, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 44))
+        
+        
+        view.addConstraint(NSLayoutConstraint(item: self, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1.0, constant: 0))
+        //view.addConstraint(NSLayoutConstraint(item: view, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1, constant: 0))
+        
         
         if attr == .Top {
             view.addConstraint(NSLayoutConstraint(item: self, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1.0, constant: 0))
         } else {
             view.addConstraint(NSLayoutConstraint(item: view, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1.0, constant: 0))
         }
-        view.addConstraint(NSLayoutConstraint(item: self, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: view, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1, constant: 0))
-        
-        self.addConstraint(NSLayoutConstraint(item: self, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 44))
-        
-        
         
     }
 }
