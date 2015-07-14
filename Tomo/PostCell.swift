@@ -24,17 +24,6 @@ class PostCell: UITableViewCell {
         avatarImageView.layer.cornerRadius = 25.0
         avatarImageView.layer.masksToBounds = true
         
-        if let likeImage = likeButton.imageView?.image {
-//            let color = Util.UIColorFromRGB(0x2196F3, alpha: 1)
-            let image = Util.coloredImage(likeImage, color: UIColor.redColor())
-            likeButton?.setImage(image, forState: UIControlState.Normal)
-        }
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     func setupDisplay() {
@@ -62,8 +51,40 @@ class PostCell: UITableViewCell {
             }
         }
         
-        postContentLabel.text = post.content
+        if post.content?.length > 200 {
+            
+            let index = advance(post.content!.startIndex, 200)
+            let display = post.content?.substringToIndex(index)
+            
+            postContentLabel.text = String(format: "%@...", display!)
+            
+        } else {
+            postContentLabel.text = post.content
+        }
+        
+        
+        var likeImage: UIImage?
+        
+        if post.liked.count > 0 {
+            likeImage = UIImage(named: "hearts_filled")
+        } else {
+            likeImage = UIImage(named: "hearts")
+        }
+        
+        if let likeImage = likeImage {
+            
+            let image = Util.coloredImage(likeImage, color: UIColor.redColor())
+            
+            likeButton?.setImage(image, forState: UIControlState.Normal)
+        }
 
+    }
+    
+    @IBAction func likePost() {
+        
+        ApiController.postLike(post.id!, done: { (error) -> Void in
+            self.setupDisplay()
+        })
     }
 
 }
