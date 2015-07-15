@@ -51,9 +51,9 @@ class PostCell: UITableViewCell {
             }
         }
         
-        if post.content?.length > 200 {
+        if post.content?.length > 150 {
             
-            let index = advance(post.content!.startIndex, 200)
+            let index = advance(post.content!.startIndex, 150)
             let display = post.content?.substringToIndex(index)
             
             postContentLabel.text = String(format: "%@...", display!)

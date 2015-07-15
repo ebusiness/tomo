@@ -59,6 +59,7 @@
 		17B993161AF36CBE00204E97 /* _Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993141AF36CBB00204E97 /* _Openids.swift */; };
 		17B993171AF36CC100204E97 /* Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993121AF36CB200204E97 /* Openids.swift */; };
 		17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993181AF3712C00204E97 /* OpenidController.swift */; };
+		1F4A9ACF1B56232000C5DAD3 /* NewGroupAddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A9ACE1B56232000C5DAD3 /* NewGroupAddTableViewController.swift */; };
 		1F8BF0111B53639F00090079 /* PostImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8BF0101B53639F00090079 /* PostImageCell.swift */; };
 		1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8BF0121B536D9500090079 /* PostImageCell.xib */; };
 		1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE80E71B4E552A0061B913 /* Home.storyboard */; };
@@ -292,6 +293,7 @@
 		17B993121AF36CB200204E97 /* Openids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Openids.swift; sourceTree = "<group>"; };
 		17B993141AF36CBB00204E97 /* _Openids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Openids.swift; sourceTree = "<group>"; };
 		17B993181AF3712C00204E97 /* OpenidController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidController.swift; path = Classes/OpenidController.swift; sourceTree = "<group>"; };
+		1F4A9ACE1B56232000C5DAD3 /* NewGroupAddTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGroupAddTableViewController.swift; sourceTree = "<group>"; };
 		1F8BF0101B53639F00090079 /* PostImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostImageCell.swift; sourceTree = "<group>"; };
 		1F8BF0121B536D9500090079 /* PostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostImageCell.xib; sourceTree = "<group>"; };
 		1FEE80E71B4E552A0061B913 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
@@ -674,6 +676,7 @@
 				297163B71AEA2422005EA9C0 /* GroupHeaderView.swift */,
 				299567901AEF2FAE00F168AA /* GroupPostsHeaderCell.swift */,
 				2978F5641B05C08000236EA3 /* GroupSettingViewController.swift */,
+				1F4A9ACE1B56232000C5DAD3 /* NewGroupAddTableViewController.swift */,
 			);
 			name = "グループ";
 			sourceTree = "<group>";
@@ -1199,6 +1202,7 @@
 				D0BD83F41B3122350040F503 /* TagSearchController.swift in Sources */,
 				2987F1E41AD79D0500AA39CE /* Chat.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
+				1F4A9ACF1B56232000C5DAD3 /* NewGroupAddTableViewController.swift in Sources */,
 				D0F9C0F41B1D88FD00594A9D /* OneShotLocationManager.swift in Sources */,
 				293EB4251B132B06006BAF27 /* JSQVoiceMediaItem.m in Sources */,
 				297163B81AEA2422005EA9C0 /* GroupHeaderView.swift in Sources */,
