@@ -216,6 +216,20 @@ extension Util {
             
         }
     }
+    //
+    class func alertActionSheet(parentvc:UIViewController,optionalDict: Dictionary<String,((UIAlertAction!) -> Void)!>){
+        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        for optional in optionalDict {
+            let action = UIAlertAction(title: optional.0, style: .Default, handler: optional.1)
+            alertController.addAction(action)
+        }
+        parentvc.presentViewController(alertController, animated: true, completion: nil)
+    }
 
 }
 extension UIApplication {
