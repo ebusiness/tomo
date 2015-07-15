@@ -17,8 +17,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="YKt-OY-KV6">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="620"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <outlet property="dataSource" destination="pIf-el-6Lk" id="1Vo-AT-qji"/>
@@ -27,9 +28,10 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="YKt-OY-KV6" firstAttribute="leading" secondItem="AgN-Tw-cSJ" secondAttribute="leading" id="I79-MC-jGb"/>
-                            <constraint firstItem="1aj-pl-Xbb" firstAttribute="top" secondItem="YKt-OY-KV6" secondAttribute="bottom" id="V5G-3M-OZ0"/>
+                            <constraint firstItem="1aj-pl-Xbb" firstAttribute="top" secondItem="YKt-OY-KV6" secondAttribute="bottom" constant="-52" id="V5G-3M-OZ0"/>
                             <constraint firstItem="YKt-OY-KV6" firstAttribute="top" secondItem="AgN-Tw-cSJ" secondAttribute="top" id="WBC-Ef-7PT"/>
                             <constraint firstAttribute="trailing" secondItem="YKt-OY-KV6" secondAttribute="trailing" id="dn2-up-8Bb"/>
                         </constraints>

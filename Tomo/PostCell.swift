@@ -67,8 +67,10 @@ class PostCell: UITableViewCell {
         
         if post.liked.count > 0 {
             likeImage = UIImage(named: "hearts_filled")
+            likeButton.setTitle(String(post.liked.count), forState: UIControlState.Normal)
         } else {
             likeImage = UIImage(named: "hearts")
+            likeButton.setTitle("", forState: UIControlState.Normal)
         }
         
         if let likeImage = likeImage {
@@ -77,6 +79,8 @@ class PostCell: UITableViewCell {
             
             likeButton?.setImage(image, forState: UIControlState.Normal)
         }
+        
+        likeButton.sizeToFit()
 
     }
     
