@@ -216,6 +216,14 @@ extension Util {
             
         }
     }
+    
+    class func changeImageColorForButton(btn:UIButton?,color:UIColor){
+        if let image = btn?.imageView?.image {
+            let image = Util.coloredImage( image, color: color)
+            btn?.setImage(image, forState: .Normal)
+        }
+    }
+    
     //
     class func alertActionSheet(parentvc:UIViewController,optionalDict: Dictionary<String,((UIAlertAction!) -> Void)!>){
         

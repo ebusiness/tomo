@@ -244,6 +244,7 @@
 		D0A8778D1B4661330049588A /* PostCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A8778C1B4661330049588A /* PostCollectionCell.xib */; };
 		D0ACAE571B0AD98400AA9907 /* ActionSheet.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */; };
 		D0ACAE5C1B0AE0CA00AA9907 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */; };
+		D0BA8DE71B55375A00271F2B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BA8DE61B55375A00271F2B /* PostViewController.swift */; };
 		D0BD83F41B3122350040F503 /* TagSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD83F31B3122350040F503 /* TagSearchController.swift */; };
 		D0BD83F61B317BDD0040F503 /* TagSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD83F51B317BDD0040F503 /* TagSearchResultsViewController.swift */; };
 		D0D7B6961B3038BE00692C2F /* TagMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0D7B6951B3038BE00692C2F /* TagMapping.plist */; };
@@ -449,6 +450,7 @@
 		D0A8778C1B4661330049588A /* PostCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostCollectionCell.xib; path = Classes/PostCollectionCell.xib; sourceTree = "<group>"; };
 		D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ActionSheet.storyboard; path = Classes/ActionSheet.storyboard; sourceTree = "<group>"; };
 		D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = Classes/ShareViewController.swift; sourceTree = "<group>"; };
+		D0BA8DE61B55375A00271F2B /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostViewController.swift; path = Classes/PostViewController.swift; sourceTree = "<group>"; };
 		D0BD83F31B3122350040F503 /* TagSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagSearchController.swift; path = Classes/TagSearchController.swift; sourceTree = "<group>"; };
 		D0BD83F51B317BDD0040F503 /* TagSearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagSearchResultsViewController.swift; path = Classes/TagSearchResultsViewController.swift; sourceTree = "<group>"; };
 		D0D7B6951B3038BE00692C2F /* TagMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TagMapping.plist; sourceTree = "<group>"; };
@@ -825,6 +827,7 @@
 				1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */,
 				1FEE80ED1B4E60850061B913 /* PostCell.swift */,
 				1F8BF0101B53639F00090079 /* PostImageCell.swift */,
+				D0BA8DE61B55375A00271F2B /* PostViewController.swift */,
 			);
 			name = "ホーム";
 			sourceTree = "<group>";
@@ -1295,6 +1298,7 @@
 				295466E61B0C7FB500AAD608 /* Announcements.swift in Sources */,
 				29341A881B0EF86000CB45A2 /* AnnouncementCell.swift in Sources */,
 				298C3B451AE8EF2F0011009D /* GroupAddTableViewController.swift in Sources */,
+				D0BA8DE71B55375A00271F2B /* PostViewController.swift in Sources */,
 				D06CF9AE1B382A7D00BF24B6 /* tagUIController.swift in Sources */,
 				29A8FA051AE776F200750A56 /* SearchInputViewController.swift in Sources */,
 				290843171B09C9140037A6CD /* Sequence.swift in Sources */,

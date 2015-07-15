@@ -57,15 +57,16 @@ class HomeViewController: UIViewController {
         return self.navigationController!.navigationBarHidden
     }
     
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "postdetail" {
+            if let post = sender as? Post {
+                let vc = segue.destinationViewController as! PostViewController
+                vc.post = post
+            }
+        }
     }
-    */
     
     func test() {
         println("###############")
@@ -160,10 +161,8 @@ extension HomeViewController: UITableViewDelegate {
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
-        let detailView = Util.createViewControllerWithIdentifier("PostDetailView", storyboardName: "Newsfeed") as! PostDetailViewController
-        detailView.postId = (frc.objectAtIndexPath(indexPath) as! Post).id
-        self.navigationController?.pushViewController(detailView, animated: true)
+        let post: AnyObject = frc.objectAtIndexPath(indexPath)
+        self.performSegueWithIdentifier("postdetail", sender: post)
     }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

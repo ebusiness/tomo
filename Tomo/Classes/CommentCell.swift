@@ -15,6 +15,8 @@ class CommentCell: UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     
+    var parentVC:UIViewController!
+    
     var comment: Comments! {
         didSet {
             if let photo_ref = comment.owner?.photo_ref {
@@ -41,8 +43,11 @@ class CommentCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        avatarImageView.layer.cornerRadius = 18.0
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.size.height / 2
         avatarImageView.layer.masksToBounds = true
+        
+//        avatarImageView.userInteractionEnabled = true
+//        avatarImageView.addGestureRecognizer(UIGestureRecognizer(target: self, action: Selector("avatarImageTapped:")))
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -50,5 +55,12 @@ class CommentCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+//    func avatarImageTapped(sender: UITapGestureRecognizer) {
+//        let vc = Util.createViewControllerWithIdentifier("AccountEditViewController", storyboardName: "Setting") as! AccountEditViewController
+//        vc.user = comment.owner
+//        vc.readOnlyMode = true
+//        parentVC.navigationController?.pushViewController(vc, animated: true)
+//    }
 
 }
