@@ -64,9 +64,8 @@ class PostViewController : BaseViewController{
         commentInput.layer.cornerRadius = 5
         deleteBtn.hidden = !post.isMyPost
         
-        updateUIForHeader()
-        
         self.setImageList()
+        updateUIForHeader()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardDidHide:"), name: UIKeyboardWillHideNotification, object: nil)
@@ -74,9 +73,6 @@ class PostViewController : BaseViewController{
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("postWasDeleted:"), name: SVProgressHUDDidDisappearNotification, object: nil)
-        
     }
     
     // MARK:HeaderView - @IBAction
@@ -173,7 +169,15 @@ extension PostViewController {
         commentBtn.setTitle("\(post.comments.count)", forState: .Normal)
         likedBtn.setTitle("\(post.liked.count)", forState: .Normal)
 
+        //////↓ bug?
+        for constraint in contentLabel.constraints() {
+            if constraint.firstAttribute == .Width {
+                contentLabel.removeConstraint(constraint as! NSLayoutConstraint)
+            }
+        }
+        //////↑
         contentLabel.preferredMaxLayoutWidth = self.headerView.frame.size.width - 2 * 16
+        headerView.setTranslatesAutoresizingMaskIntoConstraints(true)
         let size = self.headerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize) as CGSize
         
         self.headerView.frame.size.height = size.height
@@ -182,9 +186,9 @@ extension PostViewController {
     
     func setImageList(){
         
-//        for imageview in postImageList.subviews {
-//            imageview.removeFromSuperview()
-//        }
+        for imageview in postImageList.subviews {
+            imageview.removeFromSuperview()
+        }
         if post.imagesmobile.count < 1 {
             //hide [postImageList] when imagesmobile.count
             postImageList.addConstraint(NSLayoutConstraint(item: postImageList, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 0))
@@ -192,10 +196,12 @@ extension PostViewController {
         }
         
         var listViewHeight:CGFloat = 250
+        
+        headerView.setTranslatesAutoresizingMaskIntoConstraints(false)
         postImageList.addConstraint(NSLayoutConstraint(item: postImageList, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: listViewHeight))
-        
+      
         let lv = postImageList.frame.size.width / listViewHeight
-        
+
         var scrollWidth:CGFloat = 0
         
         for i in 0..<post.imagesmobile.count{
@@ -246,6 +252,7 @@ extension PostViewController {
             } else {
                 Util.showInfo("この投稿が削除されました。")
                 self.post.delete()
+                self.navigationController?.popViewControllerAnimated(true)
             }
         })
     }
@@ -262,7 +269,8 @@ extension PostViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as! CommentCell
-        let comment = comments[indexPath.row]
+        let index = post.comments.count - indexPath.row - 1
+        let comment = comments[index ]
         cell.comment = comment
         cell.parentVC = self
         
@@ -278,7 +286,8 @@ extension PostViewController: UITableViewDelegate {
             cellForHeight = tableView.dequeueReusableCellWithIdentifier("CommentCell") as! CommentCell
         }
         
-        return cellForHeight.height(comments[indexPath.row], width: tableView.bounds.width)
+        let index = post.comments.count - indexPath.row - 1
+        return cellForHeight.height(comments[index], width: tableView.bounds.width)
     }
     
 }
