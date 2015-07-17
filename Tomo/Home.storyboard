@@ -329,7 +329,11 @@
                         <action selector="avatarImageTapped:" destination="eVA-CV-rLY" id="L0h-IZ-9az"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="rj0-4H-vSx"/>
+                <tapGestureRecognizer id="rj0-4H-vSx">
+                    <connections>
+                        <action selector="tableViewTapped:" destination="eVA-CV-rLY" id="WED-Cd-fBI"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1441" y="-75"/>
         </scene>
