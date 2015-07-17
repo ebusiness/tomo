@@ -71,6 +71,7 @@ class NewAddPostViewController: BaseViewController {
             self.stationListVC = nil
             self.stationName.text = selectedStation.name
         }
+        self.postInput.becomeFirstResponder()
     }
     
     override func prefersStatusBarHidden() -> Bool {
