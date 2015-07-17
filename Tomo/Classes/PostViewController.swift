@@ -88,12 +88,10 @@ class PostViewController : BaseViewController{
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    @IBAction func postImageViewTapped(sender: UITapGestureRecognizer) {
-        println("postImageViewTapped")
-    }
-    
     @IBAction func likeBtnTapped(sender: AnyObject) {
-        println("likeBtnTapped")
+        ApiController.postLike(post.id!, done: { (error) -> Void in
+            self.updateUIForHeader()
+        })
     }
     
     @IBAction func shareBtnTapped(sender: AnyObject) {
@@ -199,7 +197,8 @@ extension PostViewController {
         
         headerView.setTranslatesAutoresizingMaskIntoConstraints(false)
         postImageList.addConstraint(NSLayoutConstraint(item: postImageList, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: listViewHeight))
-      
+        headerView.addConstraint(NSLayoutConstraint(item: postImageList, attribute: .Trailing, relatedBy: .Equal, toItem: headerView, attribute: .Trailing, multiplier: 1.0, constant: 0))
+
         let lv = postImageList.frame.size.width / listViewHeight
 
         var scrollWidth:CGFloat = 0
@@ -211,30 +210,47 @@ extension PostViewController {
                 imgView.setImageWithURL(NSURL(string: image.name! ), completed: { (image, error, cacheType, url) -> Void in
                     }, usingActivityIndicatorStyle: .Gray)
                 
-                postImageList.addSubview(imgView)
-                imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
+                imgView.userInteractionEnabled = true
                 
+                let tap = UITapGestureRecognizer(target: self, action: Selector("postImageViewTapped:"))
+                imgView.addGestureRecognizer(tap)
+                
+                postImageList.addSubview(imgView)
+                
+                imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
                 var width:CGFloat = postImageList.frame.size.width
                 
-                if let w = image.width as? CGFloat,h=image.height as? CGFloat{
+                if post.imagesmobile.count == 1 {
+                    scrollWidth += width
                     
-                    if  (w / h) > lv{
-                        width = w > postImageList.frame.size.width ? postImageList.frame.size.width : w
-                    }else{
-                        width = w / h * (h > listViewHeight ? listViewHeight : h)
+                    imgView.contentMode = UIViewContentMode.ScaleAspectFill
+                    imgView.clipsToBounds = true
+                    
+                    imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: width))
+                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterX, relatedBy: .Equal, toItem: postImageList, attribute: .CenterX, multiplier: 1.0, constant: 0 ))
+                } else {
+                    
+                    if let w = image.width as? CGFloat,h=image.height as? CGFloat{
+                        
+                        if  (w / h) > lv{
+                            width = w > postImageList.frame.size.width ? postImageList.frame.size.width : w
+                        }else{
+                            width = w / h * (h > listViewHeight ? listViewHeight : h)
+                        }
                     }
+                    
+                    imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: width))
+                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: scrollWidth ))
+                    
+                    scrollWidth += width + 5
                 }
                 
-                imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: width))
                 
                 postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Height, relatedBy: .Equal, toItem: postImageList, attribute: .Height, multiplier: 1.0, constant: 0))
-                
                 postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterY, relatedBy: .Equal, toItem: postImageList, attribute: .CenterY, multiplier: 1.0, constant: 0))
                 
-                postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: scrollWidth ))
                 
                 
-                scrollWidth += width + 5
             }
             
         }
@@ -242,6 +258,43 @@ extension PostViewController {
         postImageList.contentSize.width = scrollWidth
     }
     
+    func postImageViewTapped(sender: UITapGestureRecognizer) {
+        if let imageView = sender.view as? UIImageView,image = imageView.image {
+            
+            var items = [MHGalleryItem]();
+            var index = 0
+            for i in 0..postImageList.subviews.count {
+                if let item = postImageList.subviews[i] as? UIImageView,image = item.image {
+                    if imageView == item {
+                        index = i
+                    }
+                    items.append(MHGalleryItem(image: image))
+                }
+            }
+            
+            let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.ImageViewerNavigationBarShown)
+            gallery.galleryItems = items
+            gallery.presentationIndex = index
+            
+            if post.imagesmobile.count == 1 {
+                gallery.presentingFromImageView = imageView
+            }
+            
+            gallery.UICustomization.useCustomBackButtonImageOnImageViewer = false
+            gallery.UICustomization.showOverView = false
+            gallery.UICustomization.showMHShareViewInsteadOfActivityViewController = false
+            
+            gallery.finishedCallback = { (currentIndex, image, transition, viewMode) -> Void in
+                gcd.async(.Main, closure: { () -> () in
+                    gallery.dismissViewControllerAnimated(true, dismissImageView: imageView, completion: { () -> Void in
+                    })
+                    
+                })
+            }
+            
+            presentMHGalleryController(gallery, animated: true, completion: nil)
+        }
+    }
     
     func refreshPostDetail(){
         

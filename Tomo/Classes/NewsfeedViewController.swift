@@ -178,11 +178,6 @@ class NewsfeedViewController: BaseViewController {
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "SeguePostDetail" {
-            let vc = segue.destinationViewController as! PostDetailViewController
-            vc.postId = sender as! String
-        }
-        
         if segue.identifier == "SegueGroupSetting" {
             let vc = segue.destinationViewController as! GroupSettingViewController
             vc.group = group
@@ -289,7 +284,9 @@ extension NewsfeedViewController: UICollectionViewDataSource, UICollectionViewDe
         
         let post = postAtIndexPath(indexPath)
         
-        performSegueWithIdentifier("SeguePostDetail", sender: post.id!)
+        let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
+        vc.post = post
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
