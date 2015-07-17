@@ -62,6 +62,11 @@
 		1F4A9ACF1B56232000C5DAD3 /* NewGroupAddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A9ACE1B56232000C5DAD3 /* NewGroupAddTableViewController.swift */; };
 		1F8BF0111B53639F00090079 /* PostImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8BF0101B53639F00090079 /* PostImageCell.swift */; };
 		1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8BF0121B536D9500090079 /* PostImageCell.xib */; };
+		1F937FE61B58C2E3009722CE /* NewSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F937FE51B58C2E3009722CE /* NewSettingViewController.swift */; };
+		1F937FE81B58EE8B009722CE /* NewAccountEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F937FE71B58EE8B009722CE /* NewAccountEditViewController.swift */; };
+		1FA085661B57521B008EEAED /* NewGroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA085651B57521B008EEAED /* NewGroupListViewController.swift */; };
+		1FA085681B575790008EEAED /* NewGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA085671B575790008EEAED /* NewGroupCell.swift */; };
+		1FA0856A1B57B630008EEAED /* NewGroupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA085691B57B630008EEAED /* NewGroupDetailViewController.swift */; };
 		1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE80E71B4E552A0061B913 /* Home.storyboard */; };
 		1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */; };
 		1FEE80EC1B4E5C540061B913 /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE80EB1B4E5C540061B913 /* PostCell.xib */; };
@@ -298,6 +303,11 @@
 		1F4A9ACE1B56232000C5DAD3 /* NewGroupAddTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGroupAddTableViewController.swift; sourceTree = "<group>"; };
 		1F8BF0101B53639F00090079 /* PostImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostImageCell.swift; sourceTree = "<group>"; };
 		1F8BF0121B536D9500090079 /* PostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostImageCell.xib; sourceTree = "<group>"; };
+		1F937FE51B58C2E3009722CE /* NewSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewSettingViewController.swift; sourceTree = "<group>"; };
+		1F937FE71B58EE8B009722CE /* NewAccountEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAccountEditViewController.swift; sourceTree = "<group>"; };
+		1FA085651B57521B008EEAED /* NewGroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGroupListViewController.swift; sourceTree = "<group>"; };
+		1FA085671B575790008EEAED /* NewGroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGroupCell.swift; sourceTree = "<group>"; };
+		1FA085691B57B630008EEAED /* NewGroupDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGroupDetailViewController.swift; sourceTree = "<group>"; };
 		1FEE80E71B4E552A0061B913 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		1FEE80EB1B4E5C540061B913 /* PostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCell.xib; sourceTree = "<group>"; };
@@ -681,6 +691,9 @@
 				299567901AEF2FAE00F168AA /* GroupPostsHeaderCell.swift */,
 				2978F5641B05C08000236EA3 /* GroupSettingViewController.swift */,
 				1F4A9ACE1B56232000C5DAD3 /* NewGroupAddTableViewController.swift */,
+				1FA085651B57521B008EEAED /* NewGroupListViewController.swift */,
+				1FA085671B575790008EEAED /* NewGroupCell.swift */,
+				1FA085691B57B630008EEAED /* NewGroupDetailViewController.swift */,
 			);
 			name = "グループ";
 			sourceTree = "<group>";
@@ -878,6 +891,8 @@
 				29341A871B0EF86000CB45A2 /* AnnouncementCell.swift */,
 				29341A8A1B0F04EC00CB45A2 /* WebViewController.swift */,
 				29446DC01B156C960062CA7F /* StationResultsTableViewController.swift */,
+				1F937FE51B58C2E3009722CE /* NewSettingViewController.swift */,
+				1F937FE71B58EE8B009722CE /* NewAccountEditViewController.swift */,
 			);
 			name = "設定";
 			sourceTree = "<group>";
@@ -1201,6 +1216,7 @@
 				296D8BB31AFC5A250058D400 /* MessageViewController.swift in Sources */,
 				290843131B09C9140037A6CD /* Int.swift in Sources */,
 				29925BAA1AD6693F00F98BD7 /* Alamofire.swift in Sources */,
+				1FA0856A1B57B630008EEAED /* NewGroupDetailViewController.swift in Sources */,
 				291ADF991AD24F7B009D8BE3 /* PostDetailHeaderView.swift in Sources */,
 				292B9CD01AE61C3F00604986 /* _Station.swift in Sources */,
 				D0E274ED1B58D830003FDC55 /* NewAddPostViewController.swift in Sources */,
@@ -1233,6 +1249,7 @@
 				D0D7B6981B303AEE00692C2F /* Tag.swift in Sources */,
 				1712BE4B1ACE5D0F000A9C47 /* _Comments.swift in Sources */,
 				292B9CD41AE61C4800604986 /* Station.swift in Sources */,
+				1FA085681B575790008EEAED /* NewGroupCell.swift in Sources */,
 				2908430D1B09C9140037A6CD /* Character.swift in Sources */,
 				295272DA1AD6155300FC7833 /* FriendListViewController.swift in Sources */,
 				296D8BB21AFC5A250058D400 /* FriendCell.swift in Sources */,
@@ -1263,6 +1280,7 @@
 				29B00A6E1AE0A947002AF208 /* FriendInvitedCell.swift in Sources */,
 				29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */,
 				295466EB1B0D727500AAD608 /* SettingViewController.swift in Sources */,
+				1F937FE61B58C2E3009722CE /* NewSettingViewController.swift in Sources */,
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
 				2978F5651B05C08000236EA3 /* GroupSettingViewController.swift in Sources */,
 				29A5D1D91ACBE01700D95B77 /* RegPageView.swift in Sources */,
@@ -1278,9 +1296,11 @@
 				1712BE421ACE413C000A9C47 /* Devices.swift in Sources */,
 				29341A8B1B0F04EC00CB45A2 /* WebViewController.swift in Sources */,
 				29ED0C7E1AE4AC0900B51C7E /* TextFieldInputViewController.swift in Sources */,
+				1FA085661B57521B008EEAED /* NewGroupListViewController.swift in Sources */,
 				2993894A1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
 				290134F81AC39F4600BBFE29 /* ApiController.swift in Sources */,
 				296D8BB61AFC5A350058D400 /* CommentInputViewController.swift in Sources */,
+				1F937FE81B58EE8B009722CE /* NewAccountEditViewController.swift in Sources */,
 				29BE7E231AC55A28008110B4 /* MultilineLabel.swift in Sources */,
 				1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */,
 				29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */,

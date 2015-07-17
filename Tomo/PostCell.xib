@@ -44,9 +44,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wi9-ri-1Wb">
-                        <rect key="frame" x="302" y="68" width="55" height="25"/>
+                        <rect key="frame" x="331" y="68" width="39" height="25"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="55" id="0PU-4T-mcD"/>
+                            <constraint firstAttribute="width" constant="39" id="0PU-4T-mcD"/>
                             <constraint firstAttribute="height" constant="25" id="Pfn-dG-gS7"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -58,16 +58,29 @@
                             <action selector="likePost" destination="Ujz-bV-rYC" eventType="touchUpInside" id="6lD-sB-Qa0"/>
                         </connections>
                     </button>
+                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KMd-bx-R3z">
+                        <rect key="frame" x="298" y="68" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="JKC-hk-HmA"/>
+                            <constraint firstAttribute="width" constant="25" id="pnY-0J-JTs"/>
+                        </constraints>
+                        <state key="normal" image="star">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Wi9-ri-1Wb" firstAttribute="top" secondItem="glE-50-8OZ" secondAttribute="bottom" constant="8" id="NDe-Le-1UU"/>
                     <constraint firstItem="fxh-cE-fgV" firstAttribute="top" secondItem="8Dp-F4-IB8" secondAttribute="top" constant="16" id="X6K-ds-2qM"/>
                     <constraint firstItem="2aQ-gP-sJC" firstAttribute="leading" secondItem="8Dp-F4-IB8" secondAttribute="leading" constant="16" id="d52-qM-wzN"/>
+                    <constraint firstItem="Wi9-ri-1Wb" firstAttribute="leading" secondItem="KMd-bx-R3z" secondAttribute="trailing" constant="8" id="e8L-kN-1Vj"/>
                     <constraint firstItem="2aQ-gP-sJC" firstAttribute="top" secondItem="8Dp-F4-IB8" secondAttribute="top" constant="16" id="lX3-fo-kND"/>
                     <constraint firstItem="lbm-Z1-PmS" firstAttribute="leading" secondItem="fxh-cE-fgV" secondAttribute="trailing" id="lfN-2x-t6T"/>
                     <constraint firstItem="glE-50-8OZ" firstAttribute="top" secondItem="fxh-cE-fgV" secondAttribute="bottom" constant="8" id="loF-de-GtJ"/>
                     <constraint firstAttribute="trailing" secondItem="lbm-Z1-PmS" secondAttribute="trailing" constant="16" id="nth-UA-DGP"/>
-                    <constraint firstAttribute="trailing" secondItem="Wi9-ri-1Wb" secondAttribute="trailing" constant="29" id="rx3-gf-MGv"/>
+                    <constraint firstItem="Wi9-ri-1Wb" firstAttribute="leading" secondItem="KMd-bx-R3z" secondAttribute="trailing" constant="8" id="q2j-7r-fM3"/>
+                    <constraint firstAttribute="bottom" secondItem="KMd-bx-R3z" secondAttribute="bottom" constant="15.5" id="r6r-yS-woR"/>
+                    <constraint firstAttribute="trailing" secondItem="Wi9-ri-1Wb" secondAttribute="trailing" constant="16" id="rx3-gf-MGv"/>
                     <constraint firstItem="fxh-cE-fgV" firstAttribute="leading" secondItem="2aQ-gP-sJC" secondAttribute="trailing" constant="8" id="vEA-uB-gZH"/>
                     <constraint firstAttribute="trailing" secondItem="glE-50-8OZ" secondAttribute="trailing" constant="16" id="wHa-2Y-dvm"/>
                     <constraint firstAttribute="bottom" secondItem="Wi9-ri-1Wb" secondAttribute="bottom" constant="16" id="zSd-AF-HDI"/>
@@ -77,6 +90,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="avatarImageView" destination="2aQ-gP-sJC" id="hLw-bM-TJ0"/>
+                <outlet property="bookmarkButton" destination="KMd-bx-R3z" id="zUi-eb-m25"/>
                 <outlet property="likeButton" destination="Wi9-ri-1Wb" id="OgR-OM-9yA"/>
                 <outlet property="postContentLabel" destination="glE-50-8OZ" id="tiB-Nq-AWT"/>
                 <outlet property="postDateLabel" destination="lbm-Z1-PmS" id="UBF-2p-SmN"/>
@@ -87,5 +101,6 @@
     </objects>
     <resources>
         <image name="hearts" width="25" height="25"/>
+        <image name="star" width="25" height="25"/>
     </resources>
 </document>

@@ -41,7 +41,7 @@ enum TabItem: Int {
         case .Map:
             imageName = "globe"
         case .Setting:
-            imageName = "settings"
+            imageName = "user_male_circle"
         }
         
         return UIImage(named: imageName)!

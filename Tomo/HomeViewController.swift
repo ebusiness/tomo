@@ -166,7 +166,7 @@ extension HomeViewController: UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 160
+        return UITableViewAutomaticDimension
     }
     
 }

@@ -122,11 +122,13 @@ extension NewGroupAddTableViewController: UITextFieldDelegate {
 
 extension NewGroupAddTableViewController: UITextViewDelegate {
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        
-        introduction = (textView.text as NSString).stringByReplacingCharactersInRange(range, withString: text)
-        
-        return true
+    func textViewDidBeginEditing(textView: UITextView) {
+        textView.text = nil
+        textView.textColor = UIColor.blackColor()
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        introduction = textView.text
     }
 }
 

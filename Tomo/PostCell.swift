@@ -15,6 +15,7 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var postContentLabel: UILabel!
     @IBOutlet weak var postDateLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var bookmarkButton: UIButton!
     
     var post: Post!
     
@@ -67,20 +68,24 @@ class PostCell: UITableViewCell {
         
         if post.liked.count > 0 {
             likeImage = UIImage(named: "hearts_filled")
-            likeButton.setTitle(String(post.liked.count), forState: UIControlState.Normal)
+            likeButton.setTitle(String(post.liked.count), forState: .Normal)
         } else {
             likeImage = UIImage(named: "hearts")
-            likeButton.setTitle("", forState: UIControlState.Normal)
+            likeButton.setTitle("", forState: .Normal)
         }
         
         if let likeImage = likeImage {
             
             let image = Util.coloredImage(likeImage, color: UIColor.redColor())
             
-            likeButton?.setImage(image, forState: UIControlState.Normal)
+            likeButton?.setImage(image, forState: .Normal)
         }
         
         likeButton.sizeToFit()
+        
+        let bookmarkImage = Util.coloredImage(UIImage(named: "star")!, color: UIColor.orangeColor())
+        
+        bookmarkButton.setImage(bookmarkImage, forState: .Normal)
 
     }
     
