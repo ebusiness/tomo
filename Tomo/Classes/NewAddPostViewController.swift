@@ -19,6 +19,7 @@ class NewAddPostViewController: BaseViewController {
     @IBOutlet weak var groupButton: UIButton!
     @IBOutlet weak var stationButton: UIButton!
     
+    @IBOutlet weak var headerHeight: NSLayoutConstraint!
     @IBOutlet weak var stationName: UILabel!
     @IBOutlet weak var groupName: UILabel!
     
@@ -55,21 +56,21 @@ class NewAddPostViewController: BaseViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.selectedGroup = nil
-        self.selectedStation = nil
-        self.groupName.text = ""
-        self.stationName.text = ""
         
         if let groupListVC = groupListVC, selectedGroup = groupListVC.selectedGroup {
             self.selectedGroup = selectedGroup
             self.groupListVC = nil
             self.groupName.text = selectedGroup.name
+            self.selectedStation = nil
+            self.stationName.text = ""
         }
         
         if let stationListVC = stationListVC, selectedStation = stationListVC.selectedStation {
             self.selectedStation = selectedStation
-            self.stationListVC = nil
+            self.selectedGroup = nil
             self.stationName.text = selectedStation.name
+            self.groupName.text = ""
+            self.stationListVC = nil
         }
         self.postInput.becomeFirstResponder()
     }
@@ -115,6 +116,26 @@ class NewAddPostViewController: BaseViewController {
         
         navigationController?.pushViewController(stationListVC!, animated: true)
     }
+    
+    @IBAction func viewPanGesture(sender: UIPanGestureRecognizer) {
+        
+        let point = sender.translationInView(self.view)
+        let h:CGFloat = self.imageList.count == 0 ? 88 : 244
+        
+        if sender.state == UIGestureRecognizerState.Began {
+
+        } else if sender.state == UIGestureRecognizerState.Changed {
+            var constant = h + point.y
+            headerHeight.constant = constant < 88 ? 88 : constant
+            
+        } else if sender.state == UIGestureRecognizerState.Ended {
+            
+            headerHeight.constant = h
+            UIView.animateWithDuration(0.2, animations: { () -> Void in
+                self.view.layoutIfNeeded()
+            })
+        }
+    }
 }
 
 
@@ -137,7 +158,7 @@ extension NewAddPostViewController {
                 self.setImageList()
             }
             }, failureBlock: { (fail) in
-                println(fail)
+                self.headerHeight.constant = self.imageList.count == 0 ? 88 : 244
         })
         
     }
@@ -158,6 +179,10 @@ extension NewAddPostViewController {
             let imgView = UIImageView(frame: CGRectZero )
             imgView.image = image
             imgView.userInteractionEnabled = true
+            
+            imgView.contentMode = UIViewContentMode.ScaleAspectFill
+            imgView.clipsToBounds = true
+            
             
             let tap = UITapGestureRecognizer(target: self, action: Selector("imageViewTapped:"))
             imgView.addGestureRecognizer(tap)

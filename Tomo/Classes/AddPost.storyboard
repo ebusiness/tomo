@@ -385,10 +385,12 @@
                                             <constraint firstAttribute="centerY" secondItem="ivM-Pa-Y0F" secondAttribute="centerY" id="5QC-As-22r"/>
                                             <constraint firstAttribute="centerY" secondItem="u9f-NA-rY8" secondAttribute="centerY" id="F8J-4i-PYl"/>
                                             <constraint firstAttribute="centerY" secondItem="fCe-Cc-yBB" secondAttribute="centerY" id="LCD-me-Ahc"/>
+                                            <constraint firstItem="u9f-NA-rY8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ume-0W-IOC" secondAttribute="trailing" constant="8" id="OBk-el-Ugc"/>
                                             <constraint firstItem="ivM-Pa-Y0F" firstAttribute="leading" secondItem="u9f-NA-rY8" secondAttribute="trailing" constant="8" id="Ten-e6-p0X"/>
                                             <constraint firstAttribute="trailing" secondItem="ivM-Pa-Y0F" secondAttribute="trailing" constant="16" id="ZE9-Tb-wWE"/>
                                             <constraint firstItem="ume-0W-IOC" firstAttribute="leading" secondItem="fRq-0F-ybI" secondAttribute="leading" constant="16" id="cnl-Pq-zYh"/>
                                             <constraint firstItem="fCe-Cc-yBB" firstAttribute="leading" secondItem="ume-0W-IOC" secondAttribute="trailing" constant="8" id="dyV-je-IDa"/>
+                                            <constraint firstItem="ivM-Pa-Y0F" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fCe-Cc-yBB" secondAttribute="trailing" constant="8" id="mPY-ZC-KRH"/>
                                             <constraint firstAttribute="height" constant="44" id="oXQ-sM-psi"/>
                                             <constraint firstAttribute="centerY" secondItem="ume-0W-IOC" secondAttribute="centerY" id="s98-vu-cwQ"/>
                                         </constraints>
@@ -415,6 +417,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="这一刻的想法..." translatesAutoresizingMaskIntoConstraints="NO" id="IRO-Pb-qC7">
                                 <rect key="frame" x="0.0" y="244" width="320" height="280"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
@@ -432,6 +435,9 @@
                             <constraint firstItem="Xyt-1o-i3E" firstAttribute="top" secondItem="3VU-Me-PZb" secondAttribute="top" id="y7V-oD-Qyt"/>
                             <constraint firstAttribute="trailing" secondItem="Xyt-1o-i3E" secondAttribute="trailing" id="zaE-al-FLM"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="zPp-lc-GKD" appends="YES" id="PER-aw-n3h"/>
+                        </connections>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="pgY-GA-nw6"/>
@@ -439,6 +445,7 @@
                     <connections>
                         <outlet property="groupButton" destination="ume-0W-IOC" id="hSO-j5-LGL"/>
                         <outlet property="groupName" destination="fCe-Cc-yBB" id="0QE-Xi-WNz"/>
+                        <outlet property="headerHeight" destination="cX8-f9-0gs" id="KiU-F5-Geb"/>
                         <outlet property="imageListView" destination="aqd-Vi-14w" id="5mw-V1-wjf"/>
                         <outlet property="postInput" destination="IRO-Pb-qC7" id="VAh-f1-Elx"/>
                         <outlet property="stationButton" destination="ivM-Pa-Y0F" id="dNF-jR-PQa"/>
@@ -447,6 +454,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VTP-4V-WXf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="zPp-lc-GKD">
+                    <connections>
+                        <action selector="viewPanGesture:" destination="FUP-Bs-H5j" id="rgE-Vd-SIO"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="602" y="1064"/>
         </scene>
