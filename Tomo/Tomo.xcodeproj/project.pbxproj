@@ -255,6 +255,7 @@
 		D0D8BCA91B0C76EE00DE7B3F /* AlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8BCA81B0C76EE00DE7B3F /* AlertTableViewController.swift */; };
 		D0D8BCAE1B0D70E600DE7B3F /* AlertConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8BCAD1B0D70E600DE7B3F /* AlertConfirmViewController.swift */; };
 		D0DC4AB81B15C01A00AA4022 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DC4AB71B15C01A00AA4022 /* AlertViewController.swift */; };
+		D0E274ED1B58D830003FDC55 /* NewAddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E274EC1B58D830003FDC55 /* NewAddPostViewController.swift */; };
 		D0F9C0F41B1D88FD00594A9D /* OneShotLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F9C0F31B1D88FD00594A9D /* OneShotLocationManager.swift */; };
 		D0F9C0F71B1D8BD200594A9D /* CommonSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F9C0F61B1D8BD200594A9D /* CommonSwitch.swift */; };
 /* End PBXBuildFile section */
@@ -459,6 +460,7 @@
 		D0D8BCA81B0C76EE00DE7B3F /* AlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertTableViewController.swift; path = Classes/AlertTableViewController.swift; sourceTree = "<group>"; };
 		D0D8BCAD1B0D70E600DE7B3F /* AlertConfirmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertConfirmViewController.swift; path = Classes/AlertConfirmViewController.swift; sourceTree = "<group>"; };
 		D0DC4AB71B15C01A00AA4022 /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertViewController.swift; path = Classes/AlertViewController.swift; sourceTree = "<group>"; };
+		D0E274EC1B58D830003FDC55 /* NewAddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewAddPostViewController.swift; path = Classes/NewAddPostViewController.swift; sourceTree = "<group>"; };
 		D0F9C0F31B1D88FD00594A9D /* OneShotLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OneShotLocationManager.swift; path = OneShotLocationManager/OneShotLocationManager.swift; sourceTree = "<group>"; };
 		D0F9C0F61B1D8BD200594A9D /* CommonSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommonSwitch.swift; path = Classes/CommonSwitch.swift; sourceTree = "<group>"; };
 		F1801CE63ECC013D9C8C9BB6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -823,6 +825,7 @@
 				2942CCD21ACCF761007CDC97 /* NewsfeedViewController.swift */,
 				294EF0AF1B01D54500A94A3F /* RadioButtonCell.swift */,
 				D0A5E1371B4546B3002E2FE6 /* AddPostViewController.swift */,
+				D0E274EC1B58D830003FDC55 /* NewAddPostViewController.swift */,
 				D0A5E1391B45669D002E2FE6 /* ImageCollectionCell.swift */,
 				1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */,
 				1FEE80ED1B4E60850061B913 /* PostCell.swift */,
@@ -1200,6 +1203,7 @@
 				29925BAA1AD6693F00F98BD7 /* Alamofire.swift in Sources */,
 				291ADF991AD24F7B009D8BE3 /* PostDetailHeaderView.swift in Sources */,
 				292B9CD01AE61C3F00604986 /* _Station.swift in Sources */,
+				D0E274ED1B58D830003FDC55 /* NewAddPostViewController.swift in Sources */,
 				290843101B09C9140037A6CD /* ExSwift.swift in Sources */,
 				29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */,
 				D0BD83F41B3122350040F503 /* TagSearchController.swift in Sources */,

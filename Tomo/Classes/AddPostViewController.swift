@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AssetsLibrary
 
 class AddPostViewController: BaseViewController {
     
@@ -37,7 +38,7 @@ class AddPostViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-
+//        self.getAllPhoto()
         // set post button disabled
         //        self.navigationItem.rightBarButtonItem?.enabled = false
         
@@ -65,6 +66,29 @@ class AddPostViewController: BaseViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardDidShow:"), name: UIKeyboardDidShowNotification, object: nil)
         
     }
+//    ////////////test
+//    func getAllPhoto(){
+//        let library = ALAssetsLibrary()
+//        
+//        library.enumerateGroupsWithTypes(ALAssetsGroupSavedPhotos, usingBlock: {
+//            (group: ALAssetsGroup!, stop) in
+//            if group != nil {
+//                var assetBlock : ALAssetsGroupEnumerationResultsBlock = { (result: ALAsset!, index: Int, stop) in
+//                    if result != nil {
+//                        //var image = UIImage(CGImage:result.thumbnail().takeUnretainedValue())
+//                        var image = UIImage(CGImage:result.defaultRepresentation().fullScreenImage().takeUnretainedValue())
+//                        self.imageList.append(image!)
+//                    }
+//                }
+//                group.enumerateAssetsUsingBlock(assetBlock)
+//                self.scrollToEnd()
+//            }
+//            }, failureBlock: { (fail) in
+//                println(fail)
+//        })
+//        
+//    }
+    /////////////////
     override func prefersStatusBarHidden() -> Bool {
         return true;
     }
