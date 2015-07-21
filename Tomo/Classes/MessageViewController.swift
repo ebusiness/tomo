@@ -158,26 +158,27 @@ class MessageViewController: JSQMessagesViewController {
     // MARK: - Action
     
     func mediaMessageBtnTapped() {
-        let atvc = Util.createViewControllerWithIdentifier("AlertTableView", storyboardName: "ActionSheet") as! AlertTableViewController
-
-        let cameraAction = AlertTableViewController.tappenDic(title: "写真/ビデオを撮る",tappen: { (sender) -> () in
-            let picker = UIImagePickerController()
-            picker.sourceType = .Camera
-//            picker.allowsEditing = true
-            picker.delegate = self
-            picker.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(.Camera)!
-            picker.videoMaximumDuration = 10
-            self.presentViewController(picker, animated: true, completion: nil)
-        })
-        let albumAction = AlertTableViewController.tappenDic(title: "写真/ビデオ ライブラリー",tappen: { (sender) -> () in
-            let picker = UIImagePickerController()
-            picker.sourceType = .PhotoLibrary
-//            picker.allowsEditing = true
-            picker.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(.Camera)!
-            picker.delegate = self
-            self.presentViewController(picker, animated: true, completion: nil)
-        })
-        atvc.show(self, data: [cameraAction,albumAction])
+        
+        Util.alertActionSheet(self, optionalDict: [
+            "拍摄/视频":{ (_) -> Void in
+                let picker = UIImagePickerController()
+                picker.sourceType = .Camera
+                //            picker.allowsEditing = true
+                picker.delegate = self
+                picker.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(.Camera)!
+                picker.videoMaximumDuration = 10
+                self.presentViewController(picker, animated: true, completion: nil)
+            },
+            "从相册选择":{ (_) -> Void in
+                let picker = UIImagePickerController()
+                picker.sourceType = .PhotoLibrary
+                //            picker.allowsEditing = true
+                picker.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(.Camera)!
+                picker.delegate = self
+                self.presentViewController(picker, animated: true, completion: nil)
+                
+            }
+            ])
     }
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {

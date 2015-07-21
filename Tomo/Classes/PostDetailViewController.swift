@@ -159,24 +159,32 @@ extension PostDetailViewController: PostDetailHeaderViewDelegate {
 	}
 	
     func shareBtnTapped(){
-        let share = Util.createViewControllerWithIdentifier("share", storyboardName: "ActionSheet") as! ShareViewController
-        share.share_description = self.post.content!
+        
+        let shareUrl = kAPIBaseURLString + "/mobile/share/post/" + self.post.id!
+        
+        var shareImage:UIImage?
         if let imageView = headerView.postImageList.subviews[0] as? UIImageView {
-            share.share_image = imageView.image
+            shareImage = imageView.image!
         }
-        share.share_url = kAPIBaseURLString + "/mobile/share/post/" + self.post.id!;
-        Util.showActionSheet(self, vc: share)
+        
+        Util.alertActionSheet(self, optionalDict: [
+            "微信":{ (_) -> Void in
+                OpenidController.instance.wxShare(0, img: shareImage, description: self.post.content!, url:shareUrl)
+            },
+            "朋友圈":{ (_) -> Void in
+                OpenidController.instance.wxShare(1, img: shareImage, description: self.post.content!, url: shareUrl)
+                
+            }
+            ])
     }
     
     func deleteBtnTapped() {
-        let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
-        
-        acvc.show(self, content: "削除しますか？", action: { () -> () in
+        Util.alertActionSheet(self, optionalDict: ["确定删除么?":{ (_) -> Void in
             ApiController.postDelete(self.post.id!, done: { (error) -> Void in
             })
             
             self.post.delete()
             self.navigationController?.popViewControllerAnimated(true)
-        })
+        }])
     }
 }

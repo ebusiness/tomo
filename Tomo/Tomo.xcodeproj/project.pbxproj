@@ -247,8 +247,6 @@
 		D0A877891B4613DA0049588A /* PostToolBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A877881B4613DA0049588A /* PostToolBarView.xib */; };
 		D0A8778B1B4618D10049588A /* PostToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A8778A1B4618D10049588A /* PostToolBarView.swift */; };
 		D0A8778D1B4661330049588A /* PostCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A8778C1B4661330049588A /* PostCollectionCell.xib */; };
-		D0ACAE571B0AD98400AA9907 /* ActionSheet.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */; };
-		D0ACAE5C1B0AE0CA00AA9907 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */; };
 		D0BA8DE71B55375A00271F2B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BA8DE61B55375A00271F2B /* PostViewController.swift */; };
 		D0BD83F41B3122350040F503 /* TagSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD83F31B3122350040F503 /* TagSearchController.swift */; };
 		D0BD83F61B317BDD0040F503 /* TagSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BD83F51B317BDD0040F503 /* TagSearchResultsViewController.swift */; };
@@ -257,12 +255,8 @@
 		D0D7B69A1B303AF600692C2F /* _Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D7B6991B303AF600692C2F /* _Tag.swift */; };
 		D0D7B69B1B30417200692C2F /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D7B6971B303AEE00692C2F /* Tag.swift */; };
 		D0D7B69C1B30417700692C2F /* _Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D7B6991B303AF600692C2F /* _Tag.swift */; };
-		D0D8BCA91B0C76EE00DE7B3F /* AlertTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8BCA81B0C76EE00DE7B3F /* AlertTableViewController.swift */; };
-		D0D8BCAE1B0D70E600DE7B3F /* AlertConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D8BCAD1B0D70E600DE7B3F /* AlertConfirmViewController.swift */; };
-		D0DC4AB81B15C01A00AA4022 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DC4AB71B15C01A00AA4022 /* AlertViewController.swift */; };
 		D0E274ED1B58D830003FDC55 /* NewAddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E274EC1B58D830003FDC55 /* NewAddPostViewController.swift */; };
 		D0F9C0F41B1D88FD00594A9D /* OneShotLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F9C0F31B1D88FD00594A9D /* OneShotLocationManager.swift */; };
-		D0F9C0F71B1D8BD200594A9D /* CommonSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F9C0F61B1D8BD200594A9D /* CommonSwitch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -459,20 +453,14 @@
 		D0A877881B4613DA0049588A /* PostToolBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostToolBarView.xib; path = Classes/PostToolBarView.xib; sourceTree = "<group>"; };
 		D0A8778A1B4618D10049588A /* PostToolBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostToolBarView.swift; path = Classes/PostToolBarView.swift; sourceTree = "<group>"; };
 		D0A8778C1B4661330049588A /* PostCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostCollectionCell.xib; path = Classes/PostCollectionCell.xib; sourceTree = "<group>"; };
-		D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ActionSheet.storyboard; path = Classes/ActionSheet.storyboard; sourceTree = "<group>"; };
-		D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShareViewController.swift; path = Classes/ShareViewController.swift; sourceTree = "<group>"; };
 		D0BA8DE61B55375A00271F2B /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostViewController.swift; path = Classes/PostViewController.swift; sourceTree = "<group>"; };
 		D0BD83F31B3122350040F503 /* TagSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagSearchController.swift; path = Classes/TagSearchController.swift; sourceTree = "<group>"; };
 		D0BD83F51B317BDD0040F503 /* TagSearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TagSearchResultsViewController.swift; path = Classes/TagSearchResultsViewController.swift; sourceTree = "<group>"; };
 		D0D7B6951B3038BE00692C2F /* TagMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TagMapping.plist; sourceTree = "<group>"; };
 		D0D7B6971B303AEE00692C2F /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		D0D7B6991B303AF600692C2F /* _Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Tag.swift; sourceTree = "<group>"; };
-		D0D8BCA81B0C76EE00DE7B3F /* AlertTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertTableViewController.swift; path = Classes/AlertTableViewController.swift; sourceTree = "<group>"; };
-		D0D8BCAD1B0D70E600DE7B3F /* AlertConfirmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertConfirmViewController.swift; path = Classes/AlertConfirmViewController.swift; sourceTree = "<group>"; };
-		D0DC4AB71B15C01A00AA4022 /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertViewController.swift; path = Classes/AlertViewController.swift; sourceTree = "<group>"; };
 		D0E274EC1B58D830003FDC55 /* NewAddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewAddPostViewController.swift; path = Classes/NewAddPostViewController.swift; sourceTree = "<group>"; };
 		D0F9C0F31B1D88FD00594A9D /* OneShotLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OneShotLocationManager.swift; path = OneShotLocationManager/OneShotLocationManager.swift; sourceTree = "<group>"; };
-		D0F9C0F61B1D8BD200594A9D /* CommonSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommonSwitch.swift; path = Classes/CommonSwitch.swift; sourceTree = "<group>"; };
 		F1801CE63ECC013D9C8C9BB6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -544,7 +532,6 @@
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
-				D0F9C0F51B1D8B9A00594A9D /* View */,
 				299389561AD3C7CA00043D91 /* ViewController */,
 				299389521AD3C6FB00043D91 /* Controller */,
 				299389531AD3C71500043D91 /* xib&storyboard */,
@@ -791,7 +778,6 @@
 				29B00A651AE0A1E6002AF208 /* Notification.storyboard */,
 				29ED0C7B1AE48CBC00B51C7E /* Group.storyboard */,
 				297163B51AEA23BF005EA9C0 /* GroupHeaderView.xib */,
-				D0ACAE561B0AD98400AA9907 /* ActionSheet.storyboard */,
 				D0A877881B4613DA0049588A /* PostToolBarView.xib */,
 				D0A8778C1B4661330049588A /* PostCollectionCell.xib */,
 				1FEE80E71B4E552A0061B913 /* Home.storyboard */,
@@ -814,7 +800,6 @@
 		299389561AD3C7CA00043D91 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				D0ACAE5A1B0AE0A600AA9907 /* ActionSheet */,
 				29EA55B31AEDD27D006A1F41 /* Base */,
 				299389541AD3C77300043D91 /* ログイン */,
 				299389571AD3D13700043D91 /* ホーム */,
@@ -947,31 +932,12 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
-		D0ACAE5A1B0AE0A600AA9907 /* ActionSheet */ = {
-			isa = PBXGroup;
-			children = (
-				D0DC4AB71B15C01A00AA4022 /* AlertViewController.swift */,
-				D0D8BCAD1B0D70E600DE7B3F /* AlertConfirmViewController.swift */,
-				D0D8BCA81B0C76EE00DE7B3F /* AlertTableViewController.swift */,
-				D0ACAE5B1B0AE0CA00AA9907 /* ShareViewController.swift */,
-			);
-			name = ActionSheet;
-			sourceTree = "<group>";
-		};
 		D0F9C0F21B1D88F300594A9D /* OneShotLocationManager */ = {
 			isa = PBXGroup;
 			children = (
 				D0F9C0F31B1D88FD00594A9D /* OneShotLocationManager.swift */,
 			);
 			name = OneShotLocationManager;
-			sourceTree = "<group>";
-		};
-		D0F9C0F51B1D8B9A00594A9D /* View */ = {
-			isa = PBXGroup;
-			children = (
-				D0F9C0F61B1D8BD200594A9D /* CommonSwitch.swift */,
-			);
-			name = View;
 			sourceTree = "<group>";
 		};
 		D4F3CDABDCA581BFF7D35DBA /* Frameworks */ = {
@@ -1076,7 +1042,6 @@
 				1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */,
 				296D8BC51AFC5A680058D400 /* Newsfeed.storyboard in Resources */,
 				296D8BC61AFC5A680058D400 /* NewsfeedCell.xib in Resources */,
-				D0ACAE571B0AD98400AA9907 /* ActionSheet.storyboard in Resources */,
 				1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */,
 				29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */,
 				292B9CC81AE61A0D00604986 /* LineMapping.plist in Resources */,
@@ -1259,10 +1224,8 @@
 				295466EF1B0DBD5F00AAD608 /* AnnouncementsViewController.swift in Sources */,
 				296D8BCE1B004C6B0058D400 /* MessageGroupViewController.swift in Sources */,
 				2908430F1B09C9140037A6CD /* Double.swift in Sources */,
-				D0DC4AB81B15C01A00AA4022 /* AlertViewController.swift in Sources */,
 				D0A5E13A1B45669D002E2FE6 /* ImageCollectionCell.swift in Sources */,
 				1712BE381ACE183C000A9C47 /* _Images.swift in Sources */,
-				D0D8BCA91B0C76EE00DE7B3F /* AlertTableViewController.swift in Sources */,
 				D01EB7F11B2EEB43002D04A4 /* TagListController.swift in Sources */,
 				D01EB7B71B2EB505002D04A4 /* TagSettingController.swift in Sources */,
 				296D8BAE1AFC5A020058D400 /* LoadingViewController.swift in Sources */,
@@ -1287,9 +1250,7 @@
 				29446DC11B156C960062CA7F /* StationResultsTableViewController.swift in Sources */,
 				17B993131AF36CB200204E97 /* Openids.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
-				D0F9C0F71B1D8BD200594A9D /* CommonSwitch.swift in Sources */,
 				290843161B09C9140037A6CD /* Range.swift in Sources */,
-				D0D8BCAE1B0D70E600DE7B3F /* AlertConfirmViewController.swift in Sources */,
 				2987F1ED1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m in Sources */,
 				2942CCD31ACCF761007CDC97 /* NewsfeedViewController.swift in Sources */,
 				29539C781B13175D00545509 /* VoiceController.swift in Sources */,
@@ -1332,7 +1293,6 @@
 				296D8BBA1AFC5A4A0058D400 /* TextViewInputViewController.swift in Sources */,
 				178D64A21ACC10BE00185368 /* _Message.swift in Sources */,
 				2908430E1B09C9140037A6CD /* Dictionary.swift in Sources */,
-				D0ACAE5C1B0AE0CA00AA9907 /* ShareViewController.swift in Sources */,
 				290135121AC3A67200BBFE29 /* Model.xcdatamodeld in Sources */,
 				1712BE401ACE4135000A9C47 /* _Devices.swift in Sources */,
 				2987F1E91AD79D1A00AA39CE /* _Chat.swift in Sources */,

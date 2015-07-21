@@ -198,25 +198,6 @@ extension Util {
         return result
     }
     
-    //ActionSheet
-    class func showActionSheet(parentvc:UIViewController,vc: UIViewController,style:MZFormSheetTransitionStyle = MZFormSheetTransitionStyle.DropDown){
-        let formSheet = MZFormSheetController(viewController: vc)
-        //formSheet.presentedFormSheetSize = CGSizeMake(300, 298);
-        formSheet.transitionStyle = style;
-        formSheet.shadowRadius = 2.0;
-        formSheet.shadowOpacity = 0.3;
-        formSheet.shouldDismissOnBackgroundViewTap = true;
-        formSheet.shouldCenterVertically = true;
-        formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppears.MoveToTopInset;
-        formSheet.landscapeTopInset = 50;
-        formSheet.portraitTopInset = 100;
-        
-        formSheet.shouldDismissOnBackgroundViewTap = true;
-        parentvc.mz_presentFormSheetController(formSheet, animated: true) { (s) -> Void in
-            
-        }
-    }
-    
     class func changeImageColorForButton(btn:UIButton?,color:UIColor){
         if let image = btn?.imageView?.image {
             let image = Util.coloredImage( image, color: color)
@@ -224,7 +205,7 @@ extension Util {
         }
     }
     
-    //
+    //ActionSheet
     class func alertActionSheet(parentvc:UIViewController,optionalDict: Dictionary<String,((UIAlertAction!) -> Void)!>){
         
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
@@ -237,6 +218,19 @@ extension Util {
             alertController.addAction(action)
         }
         parentvc.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    class func alert(parentvc:UIViewController,title:String,message:String,action:((UIAlertAction!) -> Void)!){
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+        let okAction = UIAlertAction(title: "确定", style: .Destructive, handler: action)
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        
+        parentvc.presentViewController(alertController, animated: true, completion: nil)
+
     }
 
 }

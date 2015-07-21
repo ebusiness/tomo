@@ -181,16 +181,13 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.setHandler(false, withRight: true, handler: { (cell, state, mode) -> () in
             if state == .State3 ||  state == .State4 {
-                let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
-                
-                acvc.show(self, content: "友達を解除しますか？", action: { () -> () in
+                Util.alert(self, title: "删除好友", message: "您确定要删除已选定的好友?", action: { (_) -> Void in
                     ApiController.connectionsBreakUsers(friend.id!, done: { (error) -> Void in
                         self.users.remove(friend)
                         if let path = tableView.indexPathForCell(cell) {
                             tableView.deleteRowsAtIndexPaths([path], withRowAnimation: .Fade)
                         }
                     })
-                    
                 })
             }
         })
@@ -232,12 +229,7 @@ extension FriendListViewController: UITableViewDataSource, UITableViewDelegate {
                 if let path = tableView.indexPathForCell(cell) {
                     tableView.deleteRowsAtIndexPaths([path], withRowAnimation: .Fade)
                 }
-                //                let acvc = Util.createViewControllerWithIdentifier("AlertConfirmView", storyboardName: "ActionSheet") as! AlertConfirmViewController
-                //
-                //                acvc.show(self, content: "削除しますか？", action: { () -> () in
-                //
-                //
-                //                })
+
             }else if state == .State1 ||  state == .State2 {
                 
                 ApiController.invite(friend.id!, done: { (error) -> Void in

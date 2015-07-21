@@ -303,15 +303,16 @@ extension AccountEditViewController: DBCameraViewControllerDelegate {
 extension AccountEditViewController {
     //　プロファイル写真
     func didSelectAvatarCell(){
-        let atvc = Util.createViewControllerWithIdentifier("AlertTableView", storyboardName: "ActionSheet") as! AlertTableViewController
-
-        let cameraAction = AlertTableViewController.tappenDic(title: "写真を撮る",tappen: { (sender) -> () in
-            DBCameraController.openCamera(self, delegate: self,isQuad: true)
-        })
-        let albumAction = AlertTableViewController.tappenDic(title: "写真から選択",tappen: { (sender) -> () in
-            DBCameraController.openLibrary(self, delegate: self,isQuad: true)
-        })
-        atvc.show(self, data: [cameraAction,albumAction])
+        
+        Util.alertActionSheet(self, optionalDict: [
+            "拍摄":{ (_) -> Void in
+                DBCameraController.openCamera(self, delegate: self,isQuad: true)
+            },
+            "从相册选择":{ (_) -> Void in
+                DBCameraController.openLibrary(self, delegate: self,isQuad: true)
+                
+            }
+            ])
     }
     //　名前
     func didSelectNameCell() { nameTF.becomeFirstResponder() }
