@@ -64,6 +64,7 @@ class PostCell: UITableViewCell {
         }
         
         likeButton.setTitle("\(post.liked.count)", forState: .Normal)
+        bookmarkButton.setTitle("\(post.bookmarked.count)", forState: .Normal)
         
         var likeimage = "hearts"
         var bookmarkimage = "star"
@@ -98,4 +99,10 @@ class PostCell: UITableViewCell {
         })
     }
 
+    @IBAction func bookmarkPost(sender: AnyObject) {
+        
+        ApiController.postBookmark(post.id!, done: { (error) -> Void in
+            self.setupDisplay()
+        })
+    }
 }
