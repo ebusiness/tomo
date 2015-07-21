@@ -60,6 +60,10 @@
 		17B993171AF36CC100204E97 /* Openids.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993121AF36CB200204E97 /* Openids.swift */; };
 		17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993181AF3712C00204E97 /* OpenidController.swift */; };
 		1F4A9ACF1B56232000C5DAD3 /* NewGroupAddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A9ACE1B56232000C5DAD3 /* NewGroupAddTableViewController.swift */; };
+		1F79C1B21B5E0E22008800E1 /* NewFriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B11B5E0E22008800E1 /* NewFriendListViewController.swift */; };
+		1F79C1B41B5E10DC008800E1 /* NewFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B31B5E10DC008800E1 /* NewFriendCell.swift */; };
+		1F79C1B61B5E55D5008800E1 /* NewInvitationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B51B5E55D5008800E1 /* NewInvitationCell.swift */; };
+		1F79C1B81B5E730E008800E1 /* NewSearchFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B71B5E730E008800E1 /* NewSearchFriendViewController.swift */; };
 		1F8BF0111B53639F00090079 /* PostImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8BF0101B53639F00090079 /* PostImageCell.swift */; };
 		1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8BF0121B536D9500090079 /* PostImageCell.xib */; };
 		1F937FE61B58C2E3009722CE /* NewSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F937FE51B58C2E3009722CE /* NewSettingViewController.swift */; };
@@ -305,6 +309,10 @@
 		17B993141AF36CBB00204E97 /* _Openids.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Openids.swift; sourceTree = "<group>"; };
 		17B993181AF3712C00204E97 /* OpenidController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidController.swift; path = Classes/OpenidController.swift; sourceTree = "<group>"; };
 		1F4A9ACE1B56232000C5DAD3 /* NewGroupAddTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGroupAddTableViewController.swift; sourceTree = "<group>"; };
+		1F79C1B11B5E0E22008800E1 /* NewFriendListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewFriendListViewController.swift; sourceTree = "<group>"; };
+		1F79C1B31B5E10DC008800E1 /* NewFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewFriendCell.swift; sourceTree = "<group>"; };
+		1F79C1B51B5E55D5008800E1 /* NewInvitationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewInvitationCell.swift; sourceTree = "<group>"; };
+		1F79C1B71B5E730E008800E1 /* NewSearchFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewSearchFriendViewController.swift; sourceTree = "<group>"; };
 		1F8BF0101B53639F00090079 /* PostImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostImageCell.swift; sourceTree = "<group>"; };
 		1F8BF0121B536D9500090079 /* PostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostImageCell.xib; sourceTree = "<group>"; };
 		1F937FE51B58C2E3009722CE /* NewSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewSettingViewController.swift; sourceTree = "<group>"; };
@@ -717,6 +725,10 @@
 				29A8FA021AE768E000750A56 /* FriendAddMethodTableViewController.swift */,
 				29A8FA041AE776F200750A56 /* SearchInputViewController.swift */,
 				298C3B421AE8B76F0011009D /* NewNotificationListViewController.swift */,
+				1F79C1B11B5E0E22008800E1 /* NewFriendListViewController.swift */,
+				1F79C1B31B5E10DC008800E1 /* NewFriendCell.swift */,
+				1F79C1B51B5E55D5008800E1 /* NewInvitationCell.swift */,
+				1F79C1B71B5E730E008800E1 /* NewSearchFriendViewController.swift */,
 			);
 			name = "トーク";
 			sourceTree = "<group>";
@@ -1269,6 +1281,7 @@
 				D0A5E13A1B45669D002E2FE6 /* ImageCollectionCell.swift in Sources */,
 				1712BE381ACE183C000A9C47 /* _Images.swift in Sources */,
 				D01EB7F11B2EEB43002D04A4 /* TagListController.swift in Sources */,
+				1F79C1B81B5E730E008800E1 /* NewSearchFriendViewController.swift in Sources */,
 				D01EB7B71B2EB505002D04A4 /* TagSettingController.swift in Sources */,
 				D0A0C0301B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift in Sources */,
 				296D8BAE1AFC5A020058D400 /* LoadingViewController.swift in Sources */,
@@ -1294,7 +1307,10 @@
 				17B993131AF36CB200204E97 /* Openids.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				290843161B09C9140037A6CD /* Range.swift in Sources */,
+				D0D8BCAE1B0D70E600DE7B3F /* AlertConfirmViewController.swift in Sources */,
+				1F79C1B41B5E10DC008800E1 /* NewFriendCell.swift in Sources */,
 				2987F1ED1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m in Sources */,
+				1F79C1B21B5E0E22008800E1 /* NewFriendListViewController.swift in Sources */,
 				2942CCD31ACCF761007CDC97 /* NewsfeedViewController.swift in Sources */,
 				29539C781B13175D00545509 /* VoiceController.swift in Sources */,
 				1712BE421ACE413C000A9C47 /* Devices.swift in Sources */,
@@ -1342,6 +1358,7 @@
 				290135121AC3A67200BBFE29 /* Model.xcdatamodeld in Sources */,
 				1712BE401ACE4135000A9C47 /* _Devices.swift in Sources */,
 				2987F1E91AD79D1A00AA39CE /* _Chat.swift in Sources */,
+				1F79C1B61B5E55D5008800E1 /* NewInvitationCell.swift in Sources */,
 				29A8FA031AE768E000750A56 /* FriendAddMethodTableViewController.swift in Sources */,
 				296D8BAC1AFC59F10058D400 /* TabBarController.swift in Sources */,
 				296D8BB41AFC5A250058D400 /* RecentlyFriendCell.swift in Sources */,
