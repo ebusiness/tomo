@@ -25,12 +25,6 @@ PODS:
   - MCSwipeTableViewCell (2.1.2)
   - MHVideoPhotoGallery (1.6.7):
     - SDWebImage
-  - MZAppearance (1.1.4)
-  - MZFormSheetController (3.0.3):
-    - MZAppearance
-    - MZFormSheetController/Core (= 3.0.3)
-  - MZFormSheetController/Core (3.0.3):
-    - MZAppearance
   - NYXImagesKit (2.3)
   - RestKit (0.24.1):
     - RestKit/Core (= 0.24.1)
@@ -79,7 +73,6 @@ DEPENDENCIES:
   - MagicalRecord
   - MCSwipeTableViewCell (~> 2.1)
   - MHVideoPhotoGallery
-  - MZFormSheetController (~> 3.0)
   - NYXImagesKit
   - RestKit
   - SDWebImage
@@ -107,8 +100,6 @@ SPEC CHECKSUMS:
   MagicalRecord: f8a56bb87ab6552f20c4bb8681a1958a197ea3cd
   MCSwipeTableViewCell: 0fc22bd3635b9b5f4ce08675218b0a7278b6440f
   MHVideoPhotoGallery: d6433bc1ec2caf227ad960ee709500b23949bbb2
-  MZAppearance: 417ac97a5dd739329545e44372e06f715b7e5c15
-  MZFormSheetController: 36771856696eeef2eaec9b18c75791d3c95cb661
   NYXImagesKit: 8163e3335a40eaa173ca5bbbf81fafb57d3947eb
   RestKit: 1987b5efef289c6b27bd980714d6ca48d3871b78
   RKValueTransformers: 66ac5e4f077fdbe3496e792d89eeff4c3eb67701
