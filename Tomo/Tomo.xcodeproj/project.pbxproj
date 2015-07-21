@@ -321,7 +321,6 @@
 		2901351C1AC3A90C00BBFE29 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Classes/Constants.swift; sourceTree = "<group>"; };
 		290144111ADE3BBD0048F3D8 /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
 		290144161ADF6D890048F3D8 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = Classes/MapViewController.swift; sourceTree = "<group>"; };
-		2901441B1ADFA1AB0048F3D8 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		290177211AE635F8009C7472 /* GroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCell.swift; path = Classes/GroupCell.swift; sourceTree = "<group>"; };
 		290842FC1B09C9140037A6CD /* Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		290842FD1B09C9140037A6CD /* Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bool.swift; sourceTree = "<group>"; };
@@ -721,7 +720,6 @@
 				290842FB1B09C9140037A6CD /* ExSwift */,
 				2994AF901B019AA100656C39 /* GCD.swift */,
 				17B992FE1AF353C200204E97 /* opencore-amr */,
-				2901441B1ADFA1AB0048F3D8 /* String.swift */,
 				290144111ADE3BBD0048F3D8 /* SCLAlertView.swift */,
 				29BE7E221AC55A28008110B4 /* MultilineLabel.swift */,
 				299389421AD3B33800043D91 /* AmazonS3RequestManager */,
