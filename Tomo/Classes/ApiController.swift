@@ -960,8 +960,8 @@ extension ApiController {
     //post
     private class func getPostMapping(isusers:Bool, groupIdOnly: Bool = false)->RKEntityMapping{
         var mapping = _postMapping
-        mapping.addPropertyMappingById("User",fromKey: "bookmarked",toKeyPath: "bookmarked")
-        mapping.addPropertyMappingById("User",fromKey: "liked",toKeyPath: "liked")
+        mapping.addPropertyMappingById("User",fromKey: "bookmark",toKeyPath: "bookmarked")
+        mapping.addPropertyMappingById("User",fromKey: "like",toKeyPath: "liked")
         if isusers {
             mapping.addPropertyMappingById("User",fromKey: "_owner",toKeyPath: "owner")
         }else{
@@ -998,7 +998,7 @@ extension ApiController {
         }else{
             mapping.addPropertyMapping(RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: _userMapping))
         }
-        mapping.addPropertyMappingById("User",fromKey: "liked",toKeyPath: "liked")
+        mapping.addPropertyMappingById("User",fromKey: "like",toKeyPath: "liked")
         return mapping
     }
     

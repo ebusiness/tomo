@@ -121,7 +121,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LRy-EA-aIl">
-                                            <rect key="frame" x="211" y="308" width="32" height="25"/>
+                                            <rect key="frame" x="163" y="308" width="32" height="25"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="25" id="o8y-9N-hXA"/>
                                             </constraints>
@@ -135,7 +135,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UbQ-3L-6wc">
-                                            <rect key="frame" x="170" y="308" width="25" height="25"/>
+                                            <rect key="frame" x="122" y="308" width="25" height="25"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="25" id="jq6-jD-K2f"/>
                                             </constraints>
@@ -157,26 +157,42 @@
                                                 <outletCollection property="gestureRecognizers" destination="SYV-oU-crR" appends="YES" id="xHG-DT-xDW"/>
                                             </connections>
                                         </imageView>
+                                        <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LAU-ua-LmA">
+                                            <rect key="frame" x="211" y="308" width="32" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="25" id="Xv8-WG-C1N"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <state key="normal" title="0" image="star">
+                                                <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="bookmarkBtnTapped:" destination="eVA-CV-rLY" eventType="touchUpInside" id="zbf-Lh-5SS"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="Xix-c6-wMG" secondAttribute="trailing" constant="29" id="0Vl-VX-Ka0"/>
                                         <constraint firstItem="VJR-Vx-mUY" firstAttribute="leading" secondItem="Vnf-NQ-MCs" secondAttribute="leading" constant="16" id="9iH-2K-8Wc"/>
                                         <constraint firstItem="UbQ-3L-6wc" firstAttribute="top" secondItem="Xix-c6-wMG" secondAttribute="top" id="B9O-Qu-3Ok"/>
+                                        <constraint firstItem="Xix-c6-wMG" firstAttribute="leading" secondItem="LAU-ua-LmA" secondAttribute="trailing" constant="16" id="D5j-sA-hKp"/>
                                         <constraint firstAttribute="trailing" secondItem="dk2-cP-wR3" secondAttribute="trailing" constant="16" id="F7x-IN-YYB"/>
                                         <constraint firstAttribute="trailing" secondItem="Q9Y-Dv-dhP" secondAttribute="trailing" constant="16" id="Fw1-xS-S0C"/>
                                         <constraint firstItem="Q9Y-Dv-dhP" firstAttribute="leading" secondItem="Vnf-NQ-MCs" secondAttribute="leading" constant="16" id="LB5-rm-44l"/>
                                         <constraint firstItem="b57-dF-aQN" firstAttribute="top" secondItem="4oN-93-adi" secondAttribute="bottom" constant="16" id="Ry4-Hz-LB4"/>
                                         <constraint firstItem="VJR-Vx-mUY" firstAttribute="top" secondItem="Xix-c6-wMG" secondAttribute="top" id="WKX-lB-nju"/>
                                         <constraint firstAttribute="bottom" secondItem="Xix-c6-wMG" secondAttribute="bottom" constant="16" id="Xbk-ix-cnI"/>
+                                        <constraint firstItem="LAU-ua-LmA" firstAttribute="centerY" secondItem="Xix-c6-wMG" secondAttribute="centerY" id="azq-eK-OUB"/>
                                         <constraint firstItem="Xix-c6-wMG" firstAttribute="top" secondItem="Q9Y-Dv-dhP" secondAttribute="bottom" constant="8" id="fzg-O1-0f8"/>
                                         <constraint firstItem="4oN-93-adi" firstAttribute="top" secondItem="Vnf-NQ-MCs" secondAttribute="top" constant="16" id="gEk-Cg-ToH"/>
                                         <constraint firstItem="4oN-93-adi" firstAttribute="leading" secondItem="Vnf-NQ-MCs" secondAttribute="leading" constant="16" id="pgU-Nt-hjT"/>
                                         <constraint firstItem="LRy-EA-aIl" firstAttribute="leading" secondItem="UbQ-3L-6wc" secondAttribute="trailing" constant="16" id="sAE-UZ-ElJ"/>
                                         <constraint firstItem="dk2-cP-wR3" firstAttribute="top" secondItem="wkh-ra-aTO" secondAttribute="top" id="scR-Lj-7Ti"/>
                                         <constraint firstItem="b57-dF-aQN" firstAttribute="leading" secondItem="Vnf-NQ-MCs" secondAttribute="leading" id="u6T-a6-ZwN"/>
+                                        <constraint firstItem="LAU-ua-LmA" firstAttribute="leading" secondItem="LRy-EA-aIl" secondAttribute="trailing" constant="16" id="vAw-Wr-lza"/>
                                         <constraint firstItem="LRy-EA-aIl" firstAttribute="top" secondItem="Xix-c6-wMG" secondAttribute="top" id="xBm-qm-Qx5"/>
-                                        <constraint firstItem="Xix-c6-wMG" firstAttribute="leading" secondItem="LRy-EA-aIl" secondAttribute="trailing" constant="16" id="xzz-lq-trr"/>
                                         <constraint firstItem="wkh-ra-aTO" firstAttribute="leading" secondItem="4oN-93-adi" secondAttribute="trailing" constant="8" id="yy7-fu-PAL"/>
                                         <constraint firstItem="Q9Y-Dv-dhP" firstAttribute="top" secondItem="b57-dF-aQN" secondAttribute="bottom" constant="8" id="z3F-Yx-9WC"/>
                                         <constraint firstItem="wkh-ra-aTO" firstAttribute="top" secondItem="4oN-93-adi" secondAttribute="top" constant="8" id="zKK-JH-o1i"/>
@@ -307,6 +323,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="avatarImageView" destination="4oN-93-adi" id="npV-Gc-hGi"/>
+                        <outlet property="bookmarkBtn" destination="LAU-ua-LmA" id="5UU-Rn-klq"/>
                         <outlet property="commentBtn" destination="LRy-EA-aIl" id="Czx-ED-46d"/>
                         <outlet property="commentInput" destination="Fsj-tr-3N8" id="q5q-HR-TMu"/>
                         <outlet property="commentInputViewHeight" destination="MT3-Oy-lqK" id="lYn-kM-WYx"/>
@@ -362,6 +379,7 @@
         <image name="forward_arrow" width="25" height="25"/>
         <image name="hearts" width="25" height="25"/>
         <image name="speech_bubble" width="25" height="25"/>
+        <image name="star" width="25" height="25"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

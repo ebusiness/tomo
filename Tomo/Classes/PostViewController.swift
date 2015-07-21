@@ -25,6 +25,7 @@ class PostViewController : BaseViewController{
     @IBOutlet weak var shareBtn: UIButton!
     @IBOutlet weak var deleteBtn: UIButton!
     @IBOutlet weak var commentBtn: UIButton!
+    @IBOutlet weak var bookmarkBtn: UIButton!
     
     @IBOutlet weak var commentVerticalSpace: NSLayoutConstraint!
     @IBOutlet weak var commentInputViewHeight: NSLayoutConstraint!
@@ -58,6 +59,7 @@ class PostViewController : BaseViewController{
         Util.changeImageColorForButton(commentBtn,color: color)
         Util.changeImageColorForButton(shareBtn,color: color)
         Util.changeImageColorForButton(deleteBtn,color: color)
+        Util.changeImageColorForButton(bookmarkBtn,color: color)
         
         commentInput.layer.borderColor = UIColor.grayColor().CGColor
         commentInput.layer.borderWidth = 0.5
@@ -93,6 +95,13 @@ class PostViewController : BaseViewController{
             self.updateUIForHeader()
         })
     }
+    
+    @IBAction func bookmarkBtnTapped(sender: AnyObject) {
+        ApiController.postBookmark(post.id!, done: { (error) -> Void in
+            self.updateUIForHeader()
+        })
+    }
+    
     
     @IBAction func shareBtnTapped(sender: AnyObject) {
         
@@ -166,21 +175,35 @@ extension PostViewController {
         
         commentBtn.setTitle("\(post.comments.count)", forState: .Normal)
         likedBtn.setTitle("\(post.liked.count)", forState: .Normal)
+        bookmarkBtn.setTitle("\(post.bookmarked.count)", forState: .Normal)
 
-        //////↓ bug?
-        for constraint in contentLabel.constraints() {
-            if constraint.firstAttribute == .Width {
-                contentLabel.removeConstraint(constraint as! NSLayoutConstraint)
+        if let me = DBController.myUser() {
+            
+            let likeimage = me.liked_posts.containsObject(post) ? "hearts_filled" : "hearts"
+            if let image = UIImage(named: likeimage) {
+                
+                let image = Util.coloredImage(image, color: UIColor.redColor())
+                likedBtn?.setImage(image, forState: .Normal)
+                
             }
+            
+            let bookmarkimage = me.bookmarked_posts.containsObject(post) ? "star_filled" : "star"
+            if let image = UIImage(named: bookmarkimage) {
+                
+                let image = Util.coloredImage(image, color: UIColor.orangeColor())
+                bookmarkBtn?.setImage(image, forState: .Normal)
+                
+            }
+            
         }
-        //////↑
+        
         contentLabel.preferredMaxLayoutWidth = self.headerView.frame.size.width - 2 * 16
+        
         headerView.setTranslatesAutoresizingMaskIntoConstraints(true)
         let size = self.headerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize) as CGSize
         
         self.headerView.frame.size.height = size.height
     }
-    
     
     func setImageList(){
         

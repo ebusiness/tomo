@@ -63,29 +63,31 @@ class PostCell: UITableViewCell {
             postContentLabel.text = post.content
         }
         
+        likeButton.setTitle("\(post.liked.count)", forState: .Normal)
         
-        var likeImage: UIImage?
+        var likeimage = "hearts"
+        var bookmarkimage = "star"
         
-        if post.liked.count > 0 {
-            likeImage = UIImage(named: "hearts_filled")
-            likeButton.setTitle(String(post.liked.count), forState: .Normal)
-        } else {
-            likeImage = UIImage(named: "hearts")
-            likeButton.setTitle("", forState: .Normal)
+        if let me = DBController.myUser() {
+            
+            likeimage = me.liked_posts.containsObject(post) ? "hearts_filled" : "hearts"
+            
+            bookmarkimage = me.bookmarked_posts.containsObject(post) ? "star_filled" : "star"
+            
         }
-        
-        if let likeImage = likeImage {
+        if let image = UIImage(named: likeimage) {
             
-            let image = Util.coloredImage(likeImage, color: UIColor.redColor())
-            
+            let image = Util.coloredImage(image, color: UIColor.redColor())
             likeButton?.setImage(image, forState: .Normal)
+            
         }
         
-        likeButton.sizeToFit()
-        
-        let bookmarkImage = Util.coloredImage(UIImage(named: "star")!, color: UIColor.orangeColor())
-        
-        bookmarkButton.setImage(bookmarkImage, forState: .Normal)
+        if let image = UIImage(named: bookmarkimage) {
+            
+            let image = Util.coloredImage(image, color: UIColor.orangeColor())
+            bookmarkButton?.setImage(image, forState: .Normal)
+            
+        }
 
     }
     
