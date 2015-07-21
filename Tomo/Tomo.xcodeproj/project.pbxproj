@@ -520,14 +520,6 @@
 			name = lib;
 			sourceTree = "<group>";
 		};
-		17B993091AF3644A00204E97 /* Openid */ = {
-			isa = PBXGroup;
-			children = (
-				17B993181AF3712C00204E97 /* OpenidController.swift */,
-			);
-			name = Openid;
-			sourceTree = "<group>";
-		};
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
@@ -747,8 +739,8 @@
 		299389521AD3C6FB00043D91 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				17B993181AF3712C00204E97 /* OpenidController.swift */,
 				D06CF9AB1B382A4A00BF24B6 /* UI */,
-				17B993091AF3644A00204E97 /* Openid */,
 				29BE7E1A1AC54663008110B4 /* DBController.swift */,
 				290134F71AC39F4600BBFE29 /* ApiController.swift */,
 				29C1DA781AD36659009A02CC /* S3Controller.swift */,
