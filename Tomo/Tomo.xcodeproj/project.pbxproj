@@ -1307,7 +1307,6 @@
 				17B993131AF36CB200204E97 /* Openids.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				290843161B09C9140037A6CD /* Range.swift in Sources */,
-				D0D8BCAE1B0D70E600DE7B3F /* AlertConfirmViewController.swift in Sources */,
 				1F79C1B41B5E10DC008800E1 /* NewFriendCell.swift in Sources */,
 				2987F1ED1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m in Sources */,
 				1F79C1B21B5E0E22008800E1 /* NewFriendListViewController.swift in Sources */,
