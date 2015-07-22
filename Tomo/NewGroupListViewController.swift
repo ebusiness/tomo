@@ -65,11 +65,15 @@ extension NewGroupListViewController {
 extension NewGroupListViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (frc.sections as! [NSFetchedResultsSectionInfo])[0].numberOfObjects
+        
+        var sections = frc.sections as! [NSFetchedResultsSectionInfo]
+        
+        if sections.count > 0 {
+            return sections[0].numberOfObjects
+        } else {
+            return 0
+        }
     }
-}
-
-extension NewGroupListViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("NewGroupCell", forIndexPath: indexPath) as! NewGroupCell
@@ -79,6 +83,9 @@ extension NewGroupListViewController: UITableViewDelegate {
         
         return cell
     }
+}
+
+extension NewGroupListViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 132
