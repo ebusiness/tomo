@@ -8,10 +8,7 @@
 
 import UIKit
 
-class NewAccountEditViewController: UITableViewController {
-
-    @IBOutlet weak var photoImageView: UIImageView!
-    @IBOutlet weak var coverImageView: UIImageView!
+class NewAccountEditViewController: MyAccountBaseController {
     
     @IBOutlet weak var nickNameTextField: UITextField!
     @IBOutlet weak var bioTextView: UITextView!
@@ -22,16 +19,13 @@ class NewAccountEditViewController: UITableViewController {
     @IBOutlet weak var telTextField: UITextField!
     @IBOutlet weak var addressTextField: UITextField!
     
-    var user: User!
     var path: String?
+    var user:User!
+    var isAvatar = true
+    var headerView:MyAccountHeaderViewController! // for update image realtime when take a photo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        photoImageView.layer.cornerRadius = photoImageView.bounds.width / 2
-        photoImageView.layer.masksToBounds = true
-        photoImageView.layer.borderWidth = 1
-        photoImageView.layer.borderColor = UIColor.whiteColor().CGColor
         
         ApiController.getMyInfo({ (error) -> Void in
             if error == nil {
@@ -39,14 +33,38 @@ class NewAccountEditViewController: UITableViewController {
             }
         })
     }
+
+    // MARK: - Navigation
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        super.prepareForSegue(segue, sender: sender)
+        if let vc = segue.destinationViewController as? MyAccountHeaderViewController{
+            vc.user = DBController.myUser()
+            
+            vc.photoImageViewTapped = { (sender)->() in
+                
+                self.imageViewTapped(true)
+            }
+            
+            vc.coverImageViewTapped = { (sender)->() in
+                
+                self.imageViewTapped(false)
+            }
+            self.headerView = vc
+        }
+        
+        if segue.identifier == "segue_save" {
+            updateUser()
+        }
+    }
+
+}
+
+extension NewAccountEditViewController{
     
     func updateUI() {
         
         user = DBController.myUser()
-        
-        if let photo_ref = user.photo_ref {
-            photoImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
-        }
         
         nickNameTextField.text = user.nickName
         firstNameTextField.text = user.firstName
@@ -54,15 +72,9 @@ class NewAccountEditViewController: UITableViewController {
         birthDayTextField.text = user.birthDay?.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
         genderTextField.text = user.genderText()
         addressTextField.text = user.address
-//        stationLabel.text = (user.stations.array.last as? Station)?.name
+        //        stationLabel.text = (user.stations.array.last as? Station)?.name
         telTextField.text = user.telNo
         bioTextView.text = user.bioText
-    }
-
-    // MARK: - Navigation
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        updateUser()
     }
     
     func updateUser() {
@@ -71,8 +83,8 @@ class NewAccountEditViewController: UITableViewController {
         user.bioText = bioTextView.text
         user.firstName = firstNameTextField.text
         user.lastName = lastNameTextField.text
-//        user.gender =
-//        user.birthDay =
+        //        user.gender =
+        //        user.birthDay =
         user.telNo = telTextField.text
         user.address = addressTextField.text
         
@@ -83,30 +95,36 @@ class NewAccountEditViewController: UITableViewController {
         })
     }
     
-    @IBAction func photoImageViewTapped() {
+    func imageViewTapped(isAvatar:Bool) {
         
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        self.isAvatar = isAvatar
         
-        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
-        let takePhotoAction = UIAlertAction(title: "拍摄", style: .Default, handler: { (_) -> Void in
-            DBCameraController.openCamera(self, delegate: self)
-        })
-        let chooseFromLibraryAction = UIAlertAction(title: "从相册选择", style: .Default, handler: { (_) -> () in
-            DBCameraController.openLibrary(self, delegate: self)
-        })
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(takePhotoAction)
-        alertController.addAction(chooseFromLibraryAction)
-        
-        presentViewController(alertController, animated: true, completion: nil)
+        Util.alertActionSheet(self, optionalDict: [
+            
+            "拍摄":{ (_) -> Void in
+                DBCameraController.openCamera(self, delegate: self,isQuad: isAvatar)
+            },
+            "从相册选择":{ (_) -> () in
+                DBCameraController.openLibrary(self, delegate: self,isQuad: isAvatar)
+            }
+            ])
     }
-
+}
+    
+    
+extension NewAccountEditViewController: UITableViewDelegate {
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+    }
 }
 
 // MARK: - DBCameraViewControllerDelegate
 
 extension NewAccountEditViewController: DBCameraViewControllerDelegate {
+    
     func camera(cameraViewController: AnyObject!, didFinishWithImage image: UIImage!, withMetadata metadata: [NSObject : AnyObject]!) {
         let image = image.scaleToFitSize(CGSize(width: AvatarMaxWidth, height: AvatarMaxWidth))
         
@@ -118,20 +136,31 @@ extension NewAccountEditViewController: DBCameraViewControllerDelegate {
         newImage.saveToPath(path)
         
         self.presentedViewController?.dismissViewControllerAnimated(false, completion: { () -> Void in
-            let remotePath = Constants.avatarPath(fileName: name)
+            let remotePath =  self.isAvatar ? Constants.avatarPath(fileName: name) : Constants.coverPath(fileName: name)
             
             S3Controller.uploadFile(name: name, localPath: self.path!, remotePath: remotePath, done: { (error) -> Void in
-                println(error)
-                println("done")
+                #if DEBUG
+                    println(error)
+                    println("done")
+                #endif
                 
                 if error == nil {
-                    ApiController.editAvatarName(name, done: { (error) -> Void in
-                        
-                    })
+                    if self.isAvatar {
+                        ApiController.editAvatarName(name, done: { (error) -> Void in
+                            
+                            self.headerView.updateUI()
+                        })
+                    } else {
+                        ApiController.editCoverName(name, done: { (error) -> Void in
+                            
+                            self.headerView.updateUI()
+                        })
+                    }
                 }
             })
         })
     }
+    
     func dismissCamera(cameraViewController: AnyObject!) {
         self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
         cameraViewController.restoreFullScreenMode()

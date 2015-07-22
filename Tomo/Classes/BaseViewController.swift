@@ -33,18 +33,6 @@ class BaseViewController: UIViewController {
         }
         
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        if let navbar = navigationController?.navigationBar {
-            for v in self.view.subviews {
-                if let v = v as? UIScrollView {
-                    self.shyNavBarManager.scrollView = v
-                    break
-                }
-            }
-        }
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

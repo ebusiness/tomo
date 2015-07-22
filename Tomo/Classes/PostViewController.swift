@@ -84,10 +84,12 @@ class PostViewController : BaseViewController{
     }
     
     @IBAction func avatarImageTapped(sender: UITapGestureRecognizer) {
-        let vc = Util.createViewControllerWithIdentifier("AccountEditViewController", storyboardName: "Setting") as! AccountEditViewController
+        
+        let vc = Util.createViewControllerWithIdentifier("PofileView", storyboardName: "Pofile") as! PofileViewController
         vc.user = post.owner
-        vc.readOnlyMode = true
+        
         self.navigationController?.pushViewController(vc, animated: true)
+        
     }
     
     @IBAction func likeBtnTapped(sender: AnyObject) {

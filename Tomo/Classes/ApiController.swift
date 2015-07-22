@@ -454,9 +454,23 @@ extension ApiController {
                 done(error)
         }
     }
+    
+    class func editCoverName(name: String, done: (NSError?) -> Void) {
+        var param = Dictionary<String, String>()
+        param["cover"] = name
+        
+        let id = Defaults["myId"].string!
+        
+        RKObjectManager.sharedManager().patchObject(nil,path:"/users/\(id)", parameters: param, success: { (_, _) -> Void in
+            done(nil)
+            }) { (_, error) -> Void in
+                done(error)
+        }
+    }
 
     class func editUser(user: User, done: (NSError?) -> Void) {
         var param = Dictionary<String, String>()
+        param["nickName"] = user.nickName
         param["address"] = user.address
         param["nearestSt"] = user.nearestSt
         param["webSite"] = user.webSite

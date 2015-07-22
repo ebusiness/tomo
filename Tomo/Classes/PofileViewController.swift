@@ -1,43 +1,35 @@
 //
-//  NewSettingViewController.swift
+//  PofileViewController.swift
 //  Tomo
 //
-//  Created by ebuser on 2015/07/17.
+//  Created by starboychina on 2015/07/21.
 //  Copyright (c) 2015年 &#24373;&#24535;&#33775;. All rights reserved.
 //
 
 import UIKit
 
-class NewSettingViewController: MyAccountBaseController {
+class PofileViewController: ProfileBaseController {
 
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var genderLabel: UILabel!
     @IBOutlet weak var birthDayLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
-    @IBOutlet weak var editButton: UIButton!
     
     @IBOutlet weak var logoutCell: UITableViewCell!
-    
-    var user: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let editImage = UIImage(named: "edit_user") {
-            let image = Util.coloredImage(editImage, color: UIColor.whiteColor())
-            editButton?.setImage(image, forState: UIControlState.Normal)
-        }
         
-        ApiController.getMyInfo({ (error) -> Void in
+        ApiController.getUserInfo(user.id!, done: { (error) -> Void in
             if error == nil {
                 self.updateUI()
             }
         })
+        
     }
     
     func updateUI() {
-        user = DBController.myUser()
-        
     
         fullNameLabel.text = user?.fullName()
         
@@ -72,12 +64,6 @@ class NewSettingViewController: MyAccountBaseController {
             presentViewController(alertController, animated: true, completion: nil)
             
         }
-    }
-
-    // MARK: - Navigation
-
-    @IBAction func profileDidFinishEdit(segue: UIStoryboardSegue) {
-        self.updateUI()
     }
 
 }

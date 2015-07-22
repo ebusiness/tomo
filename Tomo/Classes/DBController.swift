@@ -32,6 +32,10 @@ class DBController: NSObject {
         return Post.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "owner = %@ AND createDate != nil AND logicDelete != 1", myUser()!), sortedBy: "createDate", ascending: false)
     }
     
+    class func myBookmarkedPosts() -> NSFetchedResultsController {
+        return Post.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "self IN %@ AND createDate != nil AND logicDelete != 1", myUser()!.bookmarked_posts), sortedBy: "createDate", ascending: false)
+    }
+    
     // MARK: - User
     
     class func myUser() -> User? {

@@ -14,17 +14,7 @@ class BaseTableViewController: UITableViewController {
         super.viewDidLoad()
         self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
         println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        if let navbar = navigationController?.navigationBar  {
-            if let headerView = self.tableView.tableHeaderView as? UISearchBar{
-                
-            }else{
-                self.shyNavBarManager.scrollView = self.tableView;
-            }
-        }
+ 
     }
     
     override func didReceiveMemoryWarning() {
