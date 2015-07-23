@@ -23,10 +23,7 @@ class NewSettingViewController: MyAccountBaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let editImage = UIImage(named: "edit_user") {
-            let image = Util.coloredImage(editImage, color: UIColor.whiteColor())
-            editButton?.setImage(image, forState: UIControlState.Normal)
-        }
+        Util.changeImageColorForButton(editButton,color: UIColor.whiteColor())        
         
         ApiController.getMyInfo({ (error) -> Void in
             if error == nil {

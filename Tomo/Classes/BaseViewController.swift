@@ -13,7 +13,6 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
-        self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
         
 //        if let setting_tag = Defaults["setting_tag"].string where setting_tag == "set" {
 //        }else{
@@ -32,9 +31,31 @@ class BaseViewController: UIViewController {
 //                })
 //            }
 //            self.presentViewController(tagSetting, animated: true, completion: nil)
-//        }
+        //        }
+        
+        
+        let backitem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = backitem
+        
+        let backimage = UIImage(named: "back")!
+        navigationController?.navigationBar.backIndicatorImage = backimage
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = backimage
+        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
+        navigationController?.navigationBar.barStyle = .Black
+        //        if let left = self.navigationController?.navigationItem.backBarButtonItem {
+        //            println(left.title)
+        //        }
         
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.translucent = true
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+    }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

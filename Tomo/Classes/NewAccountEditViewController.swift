@@ -19,6 +19,7 @@ class NewAccountEditViewController: MyAccountBaseController {
     @IBOutlet weak var telTextField: UITextField!
     @IBOutlet weak var addressTextField: UITextField!
     
+    @IBOutlet weak var saveButton: UIButton!
     var path: String?
     var user:User!
     var isAvatar = true
@@ -26,6 +27,8 @@ class NewAccountEditViewController: MyAccountBaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        Util.changeImageColorForButton(saveButton,color: UIColor.whiteColor())
         
         ApiController.getMyInfo({ (error) -> Void in
             if error == nil {
@@ -126,7 +129,7 @@ extension NewAccountEditViewController: UITableViewDelegate {
 extension NewAccountEditViewController: DBCameraViewControllerDelegate {
     
     func camera(cameraViewController: AnyObject!, didFinishWithImage image: UIImage!, withMetadata metadata: [NSObject : AnyObject]!) {
-        let image = image.scaleToFitSize(CGSize(width: AvatarMaxWidth, height: AvatarMaxWidth))
+        let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
         
         let name = NSUUID().UUIDString
         path = NSTemporaryDirectory() + name
