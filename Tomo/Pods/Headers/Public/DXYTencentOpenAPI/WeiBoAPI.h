@@ -1,1 +1,0 @@
-../../../DXYTencentOpenAPI/TencentOpenAPI/TencentOpenAPI.framework/Headers/WeiBoAPI.h

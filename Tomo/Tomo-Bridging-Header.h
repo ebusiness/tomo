@@ -12,14 +12,13 @@
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 #import "NYXImagesKit.h"
-#import "UIColor+HexString.h"
 #import "AmazonS3SignatureHelpers.h"
 #import "JSQMessages.h"
 #import "NSManagedObjectContext+Tomo.h"
 #import "AZSocketIO.h"
 #import "ActionSheetPicker.h"
 
-#import "libWeChatSDK/WXApi.h"
+#import "WXApi.h"
 //voice
 #include "interf_dec.h"
 #include "interf_enc.h"

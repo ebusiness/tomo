@@ -69,7 +69,7 @@ class RecentlyFriendCell: MCSwipeTableViewCell {
         super.awakeFromNib()
 
         badgeView = JSBadgeView(parentView: badgeBackView, alignment: .Center)
-        badgeView.badgeBackgroundColor = UIColor(hexString: "#0EAA00")
+        badgeView.badgeBackgroundColor = Util.UIColorFromRGB(0x0EAA00, alpha: 1)
         
         setupDefault()
     }

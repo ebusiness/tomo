@@ -69,7 +69,7 @@ class GroupPostsHeaderCell: UICollectionViewCell {
         contentView.autoresizingMask = .FlexibleHeight | .FlexibleWidth
         
         backView.layer.cornerRadius = 3.0
-        backView.layer.shadowColor = UIColor(hexString: "#DADADA").CGColor
+        backView.layer.shadowColor = Util.UIColorFromRGB(0xDADADA, alpha: 1).CGColor
         backView.layer.shadowOffset = CGSize(width: 0, height: 3)
         backView.layer.shadowOpacity = 1.0
         backView.layer.shadowRadius = 0.0
