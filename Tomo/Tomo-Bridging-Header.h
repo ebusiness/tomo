@@ -31,8 +31,6 @@
 #import "MHGallery.h"
 
 #import "JSQVoiceMediaItem.h"
-#import "AMTagListView.h"
-#import "MCSwipeTableViewCell.h"
 #import "UIView+DCAnimationKit.h"
 
 #import "DBCameraViewController.h"

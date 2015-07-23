@@ -36,7 +36,7 @@ class NewGroupListViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func configCell(cell: GroupCell?, indexPath: NSIndexPath) {
+    func configCell(cell: NewGroupCell?, indexPath: NSIndexPath) {
         if let cell = cell {
             let group = frc.objectAtIndexPath(indexPath) as! Group
             cell.group = group
@@ -135,7 +135,7 @@ extension NewGroupListViewController: NSFetchedResultsControllerDelegate {
             }
         case .Update:
             if let indexPath = indexPath {
-                configCell(tableView.cellForRowAtIndexPath(indexPath) as? GroupCell, indexPath: indexPath)
+                configCell(tableView.cellForRowAtIndexPath(indexPath) as? NewGroupCell, indexPath: indexPath)
             }
         case .Move:
             if let indexPath = indexPath, newIndexPath = newIndexPath {

@@ -15,22 +15,24 @@ class BaseViewController: UIViewController {
         println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
         self.navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
         
-        if let setting_tag = Defaults["setting_tag"].string where setting_tag == "set" {
-        }else{
-            let tagSetting = Util.createViewControllerWithIdentifier("TagSettingController", storyboardName: "Setting") as! TagSettingController
-            tagSetting.submitHandler = {()->() in
-                Defaults["setting_tag"] = "set"
-                ApiController.getUsers({ (users, error) -> Void in
-                    if let users = users {
-                        let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController
-                        vc.displayMode = .SearchResult
-                        vc.users = users
-                        self.navigationController?.pushViewController(vc, animated: true)
-                    }
-                })
-            }
-            self.presentViewController(tagSetting, animated: true, completion: nil)
-        }
+//        if let setting_tag = Defaults["setting_tag"].string where setting_tag == "set" {
+//        }else{
+//            let tagSetting = Util.createViewControllerWithIdentifier("TagSettingController", storyboardName: "Setting") as! TagSettingController
+//            tagSetting.submitHandler = {()->() in
+//                Defaults["setting_tag"] = "set"
+//                
+//                // TODO: system recommended friend list
+//                ApiController.getUsers({ (users, error) -> Void in
+//                    if let users = users {
+//                        let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! NewFriendListViewController
+////                        vc.displayMode = .SearchResult
+//                        vc.users = users
+//                        self.navigationController?.pushViewController(vc, animated: true)
+//                    }
+//                })
+//            }
+//            self.presentViewController(tagSetting, animated: true, completion: nil)
+//        }
         
     }
 

@@ -99,38 +99,38 @@ extension MapViewController {
 extension MapViewController {
     // group
     func hostGroups(param:Dictionary<String, String>){
-        let vc = Util.createViewControllerWithIdentifier("GroupListViewController", storyboardName: "Group") as! GroupListViewController
-        vc.station = param["station._id"]!;
-        Util.showHUD(maskType: .None)
-        ApiController.getGroups(param, done: { (error) -> Void in
-            self.navigationController?.pushViewController(vc, animated: true)
-        })
+//        let vc = Util.createViewControllerWithIdentifier("GroupListViewController", storyboardName: "Group") as! GroupListViewController
+//        vc.station = param["station._id"]!;
+//        Util.showHUD(maskType: .None)
+//        ApiController.getGroups(param, done: { (error) -> Void in
+//            self.navigationController?.pushViewController(vc, animated: true)
+//        })
     }
     // users
     func hostUsers(param:Dictionary<String, String>){
 
-        Util.showHUD(maskType: .None)
-        var searchKey = SearchType.Station.searchKey();
-        
-        ApiController.getUsers(key: searchKey, value: param[searchKey]!, done: { (users, error) -> Void in
-            if let users = users {
-                if users.count > 0 {
-                    let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController
-                    vc.displayMode = .SearchResult
-                    vc.users = users
-                    self.navigationController?.pushViewController(vc, animated: true)
-                    return
-                }
-            }
-            
-            Util.showInfo("見つかりませんでした。")
-        })
+//        Util.showHUD(maskType: .None)
+//        var searchKey = SearchType.Station.searchKey();
+//        
+//        ApiController.getUsers(key: searchKey, value: param[searchKey]!, done: { (users, error) -> Void in
+//            if let users = users {
+//                if users.count > 0 {
+//                    let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController
+//                    vc.displayMode = .SearchResult
+//                    vc.users = users
+//                    self.navigationController?.pushViewController(vc, animated: true)
+//                    return
+//                }
+//            }
+//            
+//            Util.showInfo("見つかりませんでした。")
+//        })
     }
     // posts
     func hostPosts(param:Dictionary<String, String>){
-        let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
-        vc.displayMode = .Station
-        vc.stationCondition = param
-        self.navigationController?.pushViewController(vc, animated: true)
+//        let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
+//        vc.displayMode = .Station
+//        vc.stationCondition = param
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

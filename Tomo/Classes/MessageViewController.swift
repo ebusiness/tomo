@@ -354,9 +354,9 @@ extension MessageViewController: JSQMessagesCollectionViewDelegateFlowLayout {
     override func collectionView(collectionView: JSQMessagesCollectionView!, didTapAvatarImageView avatarImageView: UIImageView!, atIndexPath indexPath: NSIndexPath!) {
         let message = frc.objectAtIndexPath(indexPath) as! Message
         
-        let vc = Util.createViewControllerWithIdentifier("AccountEditViewController", storyboardName: "Setting") as! AccountEditViewController
+        let vc = Util.createViewControllerWithIdentifier("PofileView", storyboardName: "Pofile") as! PofileViewController
         vc.user = message.from
-        vc.readOnlyMode = true
+//        vc.readOnlyMode = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

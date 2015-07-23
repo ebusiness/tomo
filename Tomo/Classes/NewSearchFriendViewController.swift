@@ -59,9 +59,9 @@ class NewSearchFriendViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let vc = Util.createViewControllerWithIdentifier("AccountEditViewController", storyboardName: "Setting") as! AccountEditViewController
+        let vc = Util.createViewControllerWithIdentifier("PofileView", storyboardName: "Profile") as! PofileViewController
         vc.user = result[indexPath.row]
-        vc.readOnlyMode = true
+//        vc.readOnlyMode = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

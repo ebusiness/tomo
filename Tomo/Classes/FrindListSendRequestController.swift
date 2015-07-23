@@ -35,9 +35,9 @@ extension FrindListSendRequestController: UITableViewDataSource {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let user = invitedUsers[indexPath.row]
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! FriendCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! NewFriendCell
         
-        cell.friend = user
+//        cell.friend = user
         
         return cell
     }

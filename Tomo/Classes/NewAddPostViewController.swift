@@ -27,7 +27,7 @@ class NewAddPostViewController: BaseViewController {
     var imageListSelected:[UIImage] = []
     var postContent: String?
     
-    var groupListVC: GroupListViewController?
+    var groupListVC: NewGroupListViewController?
     var stationListVC: StationTableViewController?
     var selectedGroup: Group?
     var selectedStation: Station?
@@ -57,13 +57,13 @@ class NewAddPostViewController: BaseViewController {
         super.viewDidAppear(animated)
         
         
-        if let groupListVC = groupListVC, selectedGroup = groupListVC.selectedGroup {
-            self.selectedGroup = selectedGroup
-            self.groupListVC = nil
-            self.groupName.text = selectedGroup.name
-            self.selectedStation = nil
-            self.stationName.text = ""
-        }
+//        if let groupListVC = groupListVC, selectedGroup = groupListVC.selectedGroup {
+//            self.selectedGroup = selectedGroup
+//            self.groupListVC = nil
+//            self.groupName.text = selectedGroup.name
+//            self.selectedStation = nil
+//            self.stationName.text = ""
+//        }
         
         if let stationListVC = stationListVC, selectedStation = stationListVC.selectedStation {
             self.selectedStation = selectedStation
@@ -102,9 +102,9 @@ class NewAddPostViewController: BaseViewController {
     
     @IBAction func groupTapped(sender: AnyObject) {
         //select group
-        groupListVC = Util.createViewControllerWithIdentifier("GroupListViewController", storyboardName: "Group") as? GroupListViewController
-        groupListVC!.showMyGroupOnly = true
-        groupListVC!.selectedGroup = selectedGroup
+        groupListVC = Util.createViewControllerWithIdentifier("GroupListViewController", storyboardName: "Group") as? NewGroupListViewController
+//        groupListVC!.showMyGroupOnly = true
+//        groupListVC!.selectedGroup = selectedGroup
         
         navigationController?.pushViewController(groupListVC!, animated: true)
     }

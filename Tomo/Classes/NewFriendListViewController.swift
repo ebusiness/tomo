@@ -96,9 +96,9 @@ class NewFriendListViewController: UITableViewController {
             let friend = users[indexPath.row]
             
             DBController.makeAllMessageRead(friend)
-            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? RecentlyFriendCell {
-                cell.clearBadge()
-            }
+//            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? RecentlyFriendCell {
+//                cell.clearBadge()
+//            }
             (self.navigationController?.tabBarController as? TabBarController)?.updateBadgeNumber()
             
             let vc = MessageViewController()

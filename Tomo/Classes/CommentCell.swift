@@ -58,9 +58,9 @@ class CommentCell: UITableViewCell {
     }
     
     func avatarImageTapped(sender: UITapGestureRecognizer) {
-        let vc = Util.createViewControllerWithIdentifier("PofileView", storyboardName: "Pofile") as! AccountEditViewController
+        let vc = Util.createViewControllerWithIdentifier("PofileView", storyboardName: "Pofile") as! PofileViewController
         vc.user = comment.owner
-        vc.readOnlyMode = true
+//        vc.readOnlyMode = true
         self.parentVC?.navigationController?.pushViewController(vc, animated: true)
     }
 
