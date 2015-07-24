@@ -1,10 +1,8 @@
 PODS:
-  - ActionSheetPicker-3.0 (1.6.1)
   - AFNetworking (1.3.4)
   - AZSocketIO (0.0.5):
     - AFNetworking (~> 1.x)
     - SocketRocket (~> 0.x)
-  - CHTCollectionViewWaterfallLayout (0.8)
   - DBCamera (2.3.16):
     - GPUImage (~> 0.1)
   - DCAnimationKit (0.0.6)
@@ -21,6 +19,7 @@ PODS:
   - MagicalRecord/Core (2.2)
   - MHVideoPhotoGallery (1.6.7):
     - SDWebImage
+  - MJExtension (2.5.2)
   - NYXImagesKit (2.3)
   - RestKit (0.24.1):
     - RestKit/Core (= 0.24.1)
@@ -54,9 +53,7 @@ PODS:
     - SDWebImage (~> 3.7)
 
 DEPENDENCIES:
-  - ActionSheetPicker-3.0
   - AZSocketIO (= 0.0.5)
-  - CHTCollectionViewWaterfallLayout
   - DBCamera (~> 2.3)
   - DCAnimationKit
   - FCFileManager
@@ -64,6 +61,7 @@ DEPENDENCIES:
   - JSQMessagesViewController (= 7.0.0)
   - MagicalRecord
   - MHVideoPhotoGallery
+  - MJExtension
   - NYXImagesKit
   - RestKit
   - SDWebImage
@@ -72,10 +70,8 @@ DEPENDENCIES:
   - UIActivityIndicator-for-SDWebImage
 
 SPEC CHECKSUMS:
-  ActionSheetPicker-3.0: f8da36f51ba109882a7cfa5979a4856b4e26fa37
   AFNetworking: cf8e418e16f0c9c7e5c3150d019a3c679d015018
   AZSocketIO: 0d9604933c1509fa2f6d755f8a4df235fe3eac6c
-  CHTCollectionViewWaterfallLayout: 058823cc65c9d84e059b0a85eede517550da0334
   DBCamera: c88a0deea468d153f54196e56a423301c7092737
   DCAnimationKit: 7133bef877ce1aa113dcfeea1380ca67f91f7608
   FCFileManager: fd77211e8448b0e9713d51d4f75769d9dc4ceb58
@@ -86,6 +82,7 @@ SPEC CHECKSUMS:
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   MagicalRecord: f8a56bb87ab6552f20c4bb8681a1958a197ea3cd
   MHVideoPhotoGallery: d6433bc1ec2caf227ad960ee709500b23949bbb2
+  MJExtension: 73e812aca0846e4a7b4d7aca34cfacf48d1f3310
   NYXImagesKit: 8163e3335a40eaa173ca5bbbf81fafb57d3947eb
   RestKit: 1987b5efef289c6b27bd980714d6ca48d3871b78
   RKValueTransformers: 66ac5e4f077fdbe3496e792d89eeff4c3eb67701

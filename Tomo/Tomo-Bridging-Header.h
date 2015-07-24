@@ -6,9 +6,7 @@
 #import "RestKit.h"
 #import "RKEntityCache.h"
 
-#import "AFNetworking.h"
 #import "SVProgressHUD.h"
-#import "CHTCollectionViewWaterfallLayout.h"
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 #import "NYXImagesKit.h"
@@ -16,7 +14,6 @@
 #import "JSQMessages.h"
 #import "NSManagedObjectContext+Tomo.h"
 #import "AZSocketIO.h"
-#import "ActionSheetPicker.h"
 
 #import "WXApi.h"
 //voice
@@ -36,3 +33,5 @@
 #import "DBCameraViewController.h"
 #import "DBCameraContainerViewController.h"
 #import "DBCameraLibraryViewController.h"
+
+#import "MJExtension.h"
