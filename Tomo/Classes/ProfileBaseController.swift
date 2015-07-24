@@ -18,6 +18,48 @@ class ProfileBaseController: BaseTableViewController {
         
         if let vc = segue.destinationViewController as? ProfileHeaderViewController {
             vc.user = self.user
+            
+            
+            self.whenShowNavigationBar = { (OffsetY)->() in
+                
+                self.setNavigationBarBackgroundImage(vc.coverImageView.image, alpha: 1)
+                
+            }
+            self.whenHideNavigationBar = { (OffsetY)->() in
+                
+                vc.photoImageView.constraints().map { (constraint:AnyObject) -> () in
+                    
+                    if let constraint = constraint as? NSLayoutConstraint
+                        where constraint.firstAttribute == .Width || constraint.firstAttribute == .Height
+                    {
+                        var constant = (1 - (OffsetY / self.headerHeight) ) * 100 //speed
+                        if constant > 100 { constant = 100 }
+                        else if constant < 60 { constant = 60 }
+                        constraint.constant = constant
+                        
+                        vc.photoImageView.layer.cornerRadius = constant / 2
+                    }
+                }
+                vc.photoImageView.superview?.constraints().map { (constraint:AnyObject) -> () in
+                    
+                    if let constraint = constraint as? NSLayoutConstraint
+                        where constraint.firstAttribute == .CenterY
+                    {
+                        var constant = OffsetY / self.headerHeight * 100 //speed
+                        if constant > 40 { constant = 40 }
+                        else if constant < 0 { constant = 0 }
+                        constraint.constant = constant
+                        println("CenterY = > \(constraint.constant)")
+                    }
+                    
+                }
+                
+                //                let alpha = OffsetY / self.headerHeight
+                self.setNavigationBarBackgroundImage(nil, alpha: 0)
+                
+            }
+
+            
         } else if let vc = segue.destinationViewController as? ProfileBaseController {
             vc.user = self.user
         }

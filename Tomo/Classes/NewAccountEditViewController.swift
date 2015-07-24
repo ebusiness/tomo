@@ -40,9 +40,9 @@ class NewAccountEditViewController: MyAccountBaseController {
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        super.prepareForSegue(segue, sender: sender)
+        super.prepareForSegue(segue, sender: sender)
+        
         if let vc = segue.destinationViewController as? MyAccountHeaderViewController{
-            vc.user = DBController.myUser()
             
             vc.photoImageViewTapped = { (sender)->() in
                 
