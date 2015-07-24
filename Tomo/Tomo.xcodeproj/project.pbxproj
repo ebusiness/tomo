@@ -131,7 +131,6 @@
 		29446DC11B156C960062CA7F /* StationResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29446DC01B156C960062CA7F /* StationResultsTableViewController.swift */; };
 		294BA32F1AC3D79100089204 /* ApiControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BA32E1AC3D79100089204 /* ApiControllerTests.swift */; };
 		295272D01AD51B2300FC7833 /* S3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295272CF1AD51B2300FC7833 /* S3.swift */; };
-		295272D21AD60D9300FC7833 /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 295272D11AD60D9300FC7833 /* Debug.storyboard */; };
 		29539C781B13175D00545509 /* VoiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29539C761B13175D00545509 /* VoiceController.swift */; };
 		29539C791B13175D00545509 /* VoiceMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29539C771B13175D00545509 /* VoiceMessageController.swift */; };
 		295466E21B0C79D900AAD608 /* AnnouncementsMapping.plist in Resources */ = {isa = PBXBuildFile; fileRef = 295466E11B0C79D900AAD608 /* AnnouncementsMapping.plist */; };
@@ -322,8 +321,6 @@
 		29446DC01B156C960062CA7F /* StationResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationResultsTableViewController.swift; path = Classes/StationResultsTableViewController.swift; sourceTree = "<group>"; };
 		294BA32E1AC3D79100089204 /* ApiControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiControllerTests.swift; sourceTree = "<group>"; };
 		295272CF1AD51B2300FC7833 /* S3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3.swift; path = ../../../S3.swift; sourceTree = "<group>"; };
-		295272D11AD60D9300FC7833 /* Debug.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Debug.storyboard; path = Classes/Debug.storyboard; sourceTree = "<group>"; };
-		295272D31AD60E9300FC7833 /* DebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DebugViewController.swift; path = Classes/DebugViewController.swift; sourceTree = "<group>"; };
 		29539C761B13175D00545509 /* VoiceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VoiceController.swift; path = Classes/VoiceController.swift; sourceTree = "<group>"; };
 		29539C771B13175D00545509 /* VoiceMessageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VoiceMessageController.swift; path = Classes/VoiceMessageController.swift; sourceTree = "<group>"; };
 		295466E11B0C79D900AAD608 /* AnnouncementsMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AnnouncementsMapping.plist; sourceTree = "<group>"; };
@@ -697,7 +694,6 @@
 			children = (
 				296D8BBB1AFC5A680058D400 /* AddPost.storyboard */,
 				296D8BBD1AFC5A680058D400 /* Main.storyboard */,
-				295272D11AD60D9300FC7833 /* Debug.storyboard */,
 				29CA44191AD4CA48009EB177 /* Chat.storyboard */,
 				29CA441B1AD4CAAA009EB177 /* Map.storyboard */,
 				29CA441D1AD4CAF0009EB177 /* Setting.storyboard */,
@@ -787,7 +783,6 @@
 			children = (
 				296D8BA91AFC59F10058D400 /* BaseViewController.swift */,
 				296D8BAA1AFC59F10058D400 /* TabBarController.swift */,
-				295272D31AD60E9300FC7833 /* DebugViewController.swift */,
 				29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */,
 			);
 			name = Base;
@@ -899,7 +894,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				296D8BCA1AFC5A7F0058D400 /* RegPageData.plist in Resources */,
-				295272D21AD60D9300FC7833 /* Debug.storyboard in Resources */,
 				29CA441A1AD4CA48009EB177 /* Chat.storyboard in Resources */,
 				1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */,
 				1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */,
