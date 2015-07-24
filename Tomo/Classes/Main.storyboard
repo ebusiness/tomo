@@ -75,16 +75,33 @@
                                             <action selector="login_wechat:" destination="UXu-t1-ZqZ" eventType="touchUpInside" id="jWU-bk-B9n"/>
                                         </connections>
                                     </button>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="en0-bU-l7P">
+                                        <rect key="frame" x="10" y="455" width="300" height="29"/>
+                                        <segments>
+                                            <segment title="test01"/>
+                                            <segment title="test02"/>
+                                            <segment title="test03"/>
+                                            <segment title="test04"/>
+                                            <segment title="test05"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="testLogin:" destination="UXu-t1-ZqZ" eventType="valueChanged" id="wIS-aR-2VO"/>
+                                        </connections>
+                                    </segmentedControl>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="Dk2-te-xE9" firstAttribute="leading" secondItem="R5M-eZ-6gh" secondAttribute="leading" constant="20" id="3GB-Do-Dh7"/>
+                                    <constraint firstItem="Dk2-te-xE9" firstAttribute="top" secondItem="en0-bU-l7P" secondAttribute="bottom" constant="8" id="3Mx-6L-gzz"/>
                                     <constraint firstAttribute="centerX" secondItem="eP8-1C-kBN" secondAttribute="centerX" id="6BK-ri-ufZ"/>
                                     <constraint firstAttribute="trailing" secondItem="Dk2-te-xE9" secondAttribute="trailing" constant="20" id="Cmc-rL-JFg"/>
                                     <constraint firstAttribute="trailing" secondItem="v11-o6-5hz" secondAttribute="trailing" id="Xl9-CD-0xz"/>
                                     <constraint firstAttribute="bottom" secondItem="Dk2-te-xE9" secondAttribute="bottom" constant="20" id="c1p-iO-yca"/>
                                     <constraint firstItem="eP8-1C-kBN" firstAttribute="top" secondItem="v11-o6-5hz" secondAttribute="bottom" id="dJb-5p-WxE"/>
+                                    <constraint firstItem="en0-bU-l7P" firstAttribute="centerX" secondItem="Dk2-te-xE9" secondAttribute="centerX" id="dpy-em-wps"/>
                                     <constraint firstItem="v11-o6-5hz" firstAttribute="leading" secondItem="R5M-eZ-6gh" secondAttribute="leading" id="i6J-cA-pme"/>
+                                    <constraint firstItem="en0-bU-l7P" firstAttribute="leading" secondItem="R5M-eZ-6gh" secondAttribute="leading" constant="10" id="iVI-8T-EVu"/>
+                                    <constraint firstAttribute="trailing" secondItem="en0-bU-l7P" secondAttribute="trailing" constant="10" id="jEg-J6-CZy"/>
                                     <constraint firstItem="v11-o6-5hz" firstAttribute="top" secondItem="R5M-eZ-6gh" secondAttribute="top" id="jwM-Pd-pip"/>
                                     <constraint firstAttribute="centerX" secondItem="Dk2-te-xE9" secondAttribute="centerX" id="nbq-6x-4EX"/>
                                     <constraint firstAttribute="bottom" secondItem="eP8-1C-kBN" secondAttribute="bottom" constant="20" id="u0r-XQ-dLX"/>
@@ -112,6 +129,7 @@
                         <outlet property="loginButton" destination="Dk2-te-xE9" id="25a-nP-BqT"/>
                         <outlet property="pageControl" destination="eP8-1C-kBN" id="AjX-nM-zTO"/>
                         <outlet property="scrollView" destination="v11-o6-5hz" id="HVE-SL-Qsz"/>
+                        <outlet property="testSegment" destination="en0-bU-l7P" id="RiE-RM-AD1"/>
                         <outlet property="upImageView" destination="80e-bE-ttC" id="Hvl-UI-W1v"/>
                     </connections>
                 </viewController>
