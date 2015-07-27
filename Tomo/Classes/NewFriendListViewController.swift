@@ -137,7 +137,18 @@ extension NewFriendListViewController: FriendInvitationCellDelegate {
             friendInvitedNotifications.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
         }
-        ApiController.approveFriendInvite(cell.friendInvitedNotification!.id!, done: { (error) -> Void in
+        ApiController.friendInvite(cell.friendInvitedNotification!.id!,isApproved: true, done: { (error) -> Void in
+            self.updateBadgeNumber()
+        })
+    }
+    
+    func friendInvitationDeclined(cell: NewInvitationCell) {
+        if let indexPath = tableView.indexPathForCell(cell) {
+            friendInvitedNotifications.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+        }
+        ApiController.friendInvite(cell.friendInvitedNotification!.id!,isApproved:false, done: { (error) -> Void in
+            self.updateBadgeNumber()
         })
     }
 }

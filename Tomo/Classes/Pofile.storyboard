@@ -145,14 +145,14 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EoY-Cn-9EY" id="kCF-hU-hjU">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="退出账号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qbv-OV-OCI">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="添加好友" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qbv-OV-OCI">
                                                     <rect key="frame" x="126" y="11" width="68" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.95686274510000002" green="0.26274509800000001" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="0.0" green="0.59215686274509804" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="Qbv-OV-OCI" secondAttribute="centerY" id="Q4B-lu-7rp"/>
                                                 <constraint firstAttribute="centerX" secondItem="Qbv-OV-OCI" secondAttribute="centerX" id="YRk-rG-1nE"/>
@@ -169,11 +169,12 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="2pT-iK-RWo"/>
                     <connections>
+                        <outlet property="addFriendCell" destination="EoY-Cn-9EY" id="gna-88-9qx"/>
                         <outlet property="addressLabel" destination="6Gj-Jm-Z68" id="ZhM-67-gGm"/>
                         <outlet property="birthDayLabel" destination="82x-ph-VAx" id="VQw-p3-AAC"/>
                         <outlet property="fullNameLabel" destination="pY4-IG-I22" id="gzf-bS-v2B"/>
                         <outlet property="genderLabel" destination="VLB-C2-sSj" id="6EO-z8-ITh"/>
-                        <outlet property="logoutCell" destination="EoY-Cn-9EY" id="raF-Or-QVu"/>
+                        <outlet property="statusLabel" destination="Qbv-OV-OCI" id="37i-Qr-dFM"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bwx-Dy-Bpf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -370,6 +371,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Nf0-wz-A8g"/>
+        <segue reference="M2b-6g-mlH"/>
     </inferredMetricsTieBreakers>
 </document>

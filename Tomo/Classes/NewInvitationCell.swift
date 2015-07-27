@@ -11,6 +11,7 @@ import UIKit
 @objc protocol FriendInvitationCellDelegate {
     
     func friendInvitationAccept(cell: NewInvitationCell)
+    func friendInvitationDeclined(cell: NewInvitationCell)
 }
 
 class NewInvitationCell: UITableViewCell {
@@ -18,6 +19,7 @@ class NewInvitationCell: UITableViewCell {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var declinedButton: UIButton!
     
     var friendInvitedNotification: Notification?
     
@@ -28,6 +30,7 @@ class NewInvitationCell: UITableViewCell {
 
         avatarImageView.layer.cornerRadius = avatarImageView.layer.bounds.width / 2
         avatarImageView.layer.masksToBounds = true
+        Util.changeImageColorForButton(declinedButton,color: UIColor.redColor())
         
     }
 
@@ -56,4 +59,18 @@ class NewInvitationCell: UITableViewCell {
         }
         
     }
+    
+    @IBAction func allow(sender: AnyObject) {
+        
+        self.delegate?.friendInvitationAccept(self)
+
+    }
+    
+    @IBAction func declined(sender: UIButton) {
+        
+        self.delegate?.friendInvitationDeclined(self)
+
+    }
+    
+    
 }

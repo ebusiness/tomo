@@ -825,9 +825,9 @@ extension ApiController {
         }
     }
     
-    class func approveFriendInvite(id: String, done: (NSError?) -> Void) {
+    class func friendInvite(id: String,isApproved: Bool, done: (NSError?) -> Void) {
         var param = Dictionary<String, String>()
-        param["result"] = "approved"
+        param["result"] = isApproved ? "approved" : "declined"
         
         RKObjectManager.sharedManager().patchObject(nil,path:"/notifications/\(id)", parameters: param, success: { (_, _) -> Void in
 //            done(nil)

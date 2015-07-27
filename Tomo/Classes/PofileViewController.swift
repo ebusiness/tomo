@@ -15,11 +15,21 @@ class PofileViewController: ProfileBaseController {
     @IBOutlet weak var birthDayLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     
-    @IBOutlet weak var logoutCell: UITableViewCell!
+    @IBOutlet weak var addFriendCell: UITableViewCell!
+    @IBOutlet weak var statusLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if DBController.isFriend(user) {
+            statusLabel.text = "发送消息"
+        } else if DBController.isInvitedUser(user) {
+            statusLabel.text = "已发送交友请求"
+        } else if user.id == Defaults["myId"].string {
+            addFriendCell.hidden = true
+        } else {
+            statusLabel.text = "添加好友"
+        }
         
         ApiController.getUserInfo(user.id!, done: { (error) -> Void in
             if error == nil {
@@ -47,21 +57,38 @@ class PofileViewController: ProfileBaseController {
         
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         
-        if cell == logoutCell {
+        if cell == addFriendCell {
             
-            let alertController = UIAlertController(title: "退出账号", message: "真的要退出当前的账号吗？", preferredStyle: .Alert)
+            if DBController.isFriend(user) {
+                
+                let vc = MessageViewController()
+                vc.hidesBottomBarWhenPushed = true
+                
+                vc.friend = user
+                
+                navigationController?.pushViewController(vc, animated: true)
+                return
+            }
             
-            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
-            let logoutAction = UIAlertAction(title: "退出", style: .Destructive, handler: {(_) -> () in
-                DBController.clearDBForLogout();
-                let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
-                Util.changeRootViewController(from: self, to: main)
+            if DBController.isInvitedUser(user) {
+                return
+            }
+            
+            if user.id == Defaults["myId"].string {
+                return
+            }
+            
+            statusLabel.text = "处理中..."
+            ApiController.invite(user.id!, done: { (error) -> Void in
+                if error == nil {
+                    self.statusLabel.text = "已发送交友请求"
+                    self.addFriendCell.shake({ () -> Void in
+                        
+                    })
+                    Util.showSuccess("已发送交友请求")
+                }
             })
             
-            alertController.addAction(cancelAction)
-            alertController.addAction(logoutAction)
-            
-            presentViewController(alertController, animated: true, completion: nil)
             
         }
     }
