@@ -218,13 +218,12 @@ extension PostViewController {
             return
         }
         
-        var listViewHeight:CGFloat = 250
+        let listViewHeight:CGFloat = 250
+        let imageWidth = listViewHeight / 3 * 4
         
         headerView.setTranslatesAutoresizingMaskIntoConstraints(false)
         postImageList.addConstraint(NSLayoutConstraint(item: postImageList, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: listViewHeight))
         headerView.addConstraint(NSLayoutConstraint(item: postImageList, attribute: .Trailing, relatedBy: .Equal, toItem: headerView, attribute: .Trailing, multiplier: 1.0, constant: 0))
-
-        let lv = postImageList.frame.size.width / listViewHeight
 
         var scrollWidth:CGFloat = 0
         
@@ -239,43 +238,27 @@ extension PostViewController {
                 
                 let tap = UITapGestureRecognizer(target: self, action: Selector("postImageViewTapped:"))
                 imgView.addGestureRecognizer(tap)
+                imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
+                imgView.contentMode = UIViewContentMode.ScaleAspectFill
+                imgView.clipsToBounds = true
                 
                 postImageList.addSubview(imgView)
                 
-                imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
-                var width:CGFloat = postImageList.frame.size.width
-                
-                if post.imagesmobile.count == 1 {
-                    scrollWidth += width
-                    
-                    imgView.contentMode = UIViewContentMode.ScaleAspectFill
-                    imgView.clipsToBounds = true
-                    
-                    imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: width))
-                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterX, relatedBy: .Equal, toItem: postImageList, attribute: .CenterX, multiplier: 1.0, constant: 0 ))
-                } else {
-                    
-                    if let w = image.width as? CGFloat,h=image.height as? CGFloat{
-                        
-                        if  (w / h) > lv{
-                            width = w > postImageList.frame.size.width ? postImageList.frame.size.width : w
-                        }else{
-                            width = w / h * (h > listViewHeight ? listViewHeight : h)
-                        }
-                    }
-                    
-                    imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: width))
-                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: scrollWidth ))
-                    
-                    scrollWidth += width + 5
-                }
-                
-                
+                imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: imageWidth))
                 postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Height, relatedBy: .Equal, toItem: postImageList, attribute: .Height, multiplier: 1.0, constant: 0))
                 postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterY, relatedBy: .Equal, toItem: postImageList, attribute: .CenterY, multiplier: 1.0, constant: 0))
                 
-                
-                
+                if post.imagesmobile.count == 1 {
+                    
+                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterX, relatedBy: .Equal, toItem: postImageList, attribute: .CenterX, multiplier: 1.0, constant: 0 ))
+                    
+                } else {
+                    
+                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: scrollWidth ))
+                    
+                    scrollWidth += 5
+                }
+                scrollWidth += imageWidth
             }
             
         }
