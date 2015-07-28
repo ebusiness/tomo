@@ -10,11 +10,14 @@ import UIKit
 
 class NewFriendListViewController: BaseTableViewController {
     
+    @IBOutlet weak var addFriendButton: UIButton!
+    
     var friendInvitedNotifications = [Notification]()
     var users = [User]()
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Util.changeImageColorForButton(addFriendButton,color: UIColor.whiteColor())
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("updateBadgeNumber"), name: kNotificationGotNewMessage, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
@@ -22,16 +25,21 @@ class NewFriendListViewController: BaseTableViewController {
         users = DBController.friends()
         
         updateBadgeNumber()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
         ApiController.unconfirmedNotification { (error) -> Void in
-            ApiController.getFriends { (error) -> Void in
-                ApiController.getMessage({ (error) -> Void in
-                    self.updateBadgeNumber()
-                })
-                
-                self.updateBadgeNumber()
-            }
+            ApiController.getMyInfo({ (error) -> Void in
+                ApiController.getFriends { (error) -> Void in
+                    ApiController.getMessage({ (error) -> Void in
+                        self.updateBadgeNumber()
+                    })
+                }
+            })
         }
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -91,7 +99,15 @@ class NewFriendListViewController: BaseTableViewController {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        if indexPath.section == 1 {
+        if indexPath.section == 0 {
+            
+            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+            
+            vc.user = friendInvitedNotifications[indexPath.row].from
+            1
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        } else if indexPath.section == 1 {
         
             let friend = users[indexPath.row]
             

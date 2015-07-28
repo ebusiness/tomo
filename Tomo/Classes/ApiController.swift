@@ -818,11 +818,17 @@ extension ApiController {
 extension ApiController {
     
     class func unconfirmedNotification(done: (NSError?) -> Void) {
-        RKObjectManager.sharedManager().getObjectsAtPath("/notifications/unconfirmed", parameters: nil, success: { (_, _) -> Void in
-            done(nil)
-            }) { (_, error) -> Void in
-                done(error)
+        
+        Notification.MR_truncateAll()
+        DBController.save { () -> Void in
+            
+            RKObjectManager.sharedManager().getObjectsAtPath("/notifications/unconfirmed", parameters: nil, success: { (_, _) -> Void in
+                done(nil)
+                }) { (_, error) -> Void in
+                    done(error)
+            }
         }
+        
     }
     
     class func friendInvite(id: String,isApproved: Bool, done: (NSError?) -> Void) {

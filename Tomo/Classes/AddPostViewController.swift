@@ -1,5 +1,5 @@
 //
-//  NewAddPostViewController.swift
+//  AddPostViewController.swift
 //  Tomo
 //
 //  Created by starboychina on 2015/07/17.
@@ -9,7 +9,7 @@
 import UIKit
 import AssetsLibrary
 
-class NewAddPostViewController: BaseViewController {
+class AddPostViewController: BaseViewController {
     
     
     @IBOutlet weak var postInput: UITextView!
@@ -139,7 +139,7 @@ class NewAddPostViewController: BaseViewController {
 }
 
 
-extension NewAddPostViewController {
+extension AddPostViewController {
     
     func getAllPhoto(){
         let library = ALAssetsLibrary()
@@ -169,7 +169,8 @@ extension NewAddPostViewController {
             imageview.removeFromSuperview()
         }
         
-        let lv = imageListView.frame.size.width / imageListView.frame.size.height
+        let height = imageListView.frame.size.height
+        let width = height / 3 * 4
         
         var scrollWidth:CGFloat = 0
         
@@ -190,16 +191,6 @@ extension NewAddPostViewController {
             imageListView.addSubview(imgView)
             
             imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
-            var width:CGFloat = imageListView.frame.size.width
-            
-            let w = image.size.width
-            let h=image.size.height
-            
-            if  (w / h) > lv{
-                width = w > imageListView.frame.size.width ? imageListView.frame.size.width : w
-            }else{
-                width = w / h * (h > imageListView.frame.size.height ? imageListView.frame.size.height : h)
-            }
             
             imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: width))
             imageListView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: imageListView, attribute: .Leading, multiplier: 1.0, constant: scrollWidth ))
@@ -263,7 +254,7 @@ extension NewAddPostViewController {
     
 }
 
-extension NewAddPostViewController: UITextViewDelegate {
+extension AddPostViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(textView: UITextView) {
         if postContent == nil || postContent!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
@@ -286,7 +277,7 @@ extension NewAddPostViewController: UITextViewDelegate {
 
 
 
-extension NewAddPostViewController: DBCameraViewControllerDelegate {
+extension AddPostViewController: DBCameraViewControllerDelegate {
     
     func camera(cameraViewController: AnyObject!, didFinishWithImage image: UIImage!, withMetadata metadata: [NSObject : AnyObject]!) {
         let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
@@ -306,7 +297,7 @@ extension NewAddPostViewController: DBCameraViewControllerDelegate {
 }
 
 
-extension NewAddPostViewController: UIScrollViewDelegate {
+extension AddPostViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         

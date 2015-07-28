@@ -18,8 +18,6 @@ class NewInvitationCell: UITableViewCell {
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var declinedButton: UIButton!
     
     var friendInvitedNotification: Notification?
     
@@ -30,7 +28,6 @@ class NewInvitationCell: UITableViewCell {
 
         avatarImageView.layer.cornerRadius = avatarImageView.layer.bounds.width / 2
         avatarImageView.layer.masksToBounds = true
-        Util.changeImageColorForButton(declinedButton,color: UIColor.redColor())
         
     }
 
@@ -49,14 +46,6 @@ class NewInvitationCell: UITableViewCell {
         }
         
         userNameLabel.text = user?.nickName
-
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = .ShortStyle
-        if let date = friendInvitedNotification!.createDate {
-            timeLabel.text = dateFormatter.stringFromDate(date)
-        } else {
-            timeLabel.hidden = true
-        }
         
     }
     

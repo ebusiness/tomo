@@ -14,7 +14,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="j2F-kj-xgQ">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="284"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kca-zC-XfM">
@@ -23,13 +23,87 @@
                                         <segue destination="yZR-l7-g0c" kind="embed" id="M2b-6g-mlH"/>
                                     </connections>
                                 </containerView>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zF6-o3-6UP">
+                                    <rect key="frame" x="0.0" y="240" width="320" height="44"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="希望添加你为好友" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ts-M9-JX0">
+                                            <rect key="frame" x="16" y="11" width="144" height="22"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vpB-gS-b1L">
+                                            <rect key="frame" x="192" y="3" width="52" height="38"/>
+                                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                            <state key="normal" title="拒绝"/>
+                                            <connections>
+                                                <action selector="Declined:" destination="3I6-mu-eq3" eventType="touchUpInside" id="iK2-iC-xbe"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H0F-YP-Aio">
+                                            <rect key="frame" x="252" y="3" width="52" height="38"/>
+                                            <color key="backgroundColor" red="0.0" green="0.59215686270000001" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                            <state key="normal" title="允许">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="Approved:" destination="3I6-mu-eq3" eventType="touchUpInside" id="ywS-bG-m75"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="3gR-qh-CYW"/>
+                                        <constraint firstItem="H0F-YP-Aio" firstAttribute="leading" secondItem="vpB-gS-b1L" secondAttribute="trailing" constant="8" id="DiP-RP-IQh"/>
+                                        <constraint firstAttribute="centerY" secondItem="6ts-M9-JX0" secondAttribute="centerY" id="ED0-AH-2YN"/>
+                                        <constraint firstAttribute="centerY" secondItem="H0F-YP-Aio" secondAttribute="centerY" id="ObT-uI-lWU"/>
+                                        <constraint firstAttribute="trailing" secondItem="H0F-YP-Aio" secondAttribute="trailing" constant="16" id="QsC-iL-5y0"/>
+                                        <constraint firstItem="vpB-gS-b1L" firstAttribute="centerY" secondItem="H0F-YP-Aio" secondAttribute="centerY" id="cvb-hV-eD3"/>
+                                        <constraint firstItem="6ts-M9-JX0" firstAttribute="leading" secondItem="zF6-o3-6UP" secondAttribute="leading" constant="16" id="o84-SV-SgC"/>
+                                    </constraints>
+                                </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FvK-sk-tJZ">
+                                    <rect key="frame" x="232" y="172" width="72" height="33"/>
+                                    <color key="backgroundColor" red="0.0" green="0.59215686270000001" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                    <state key="normal" title="添加好友">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="Approved:" destination="3I6-mu-eq3" eventType="touchUpInside" id="3dT-vy-wUF"/>
+                                        <action selector="addFriend:" destination="3I6-mu-eq3" eventType="touchUpInside" id="nOk-Z7-b7q"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SS6-yz-muv">
+                                    <rect key="frame" x="232" y="172" width="72" height="33"/>
+                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                    <state key="normal" title="删除好友"/>
+                                    <connections>
+                                        <action selector="Declined:" destination="3I6-mu-eq3" eventType="touchUpInside" id="VHv-UX-ear"/>
+                                        <action selector="deleteFriend:" destination="3I6-mu-eq3" eventType="touchUpInside" id="a3O-Jr-Xrq"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="kca-zC-XfM" secondAttribute="bottom" id="EMb-Bx-gDz"/>
+                                <constraint firstAttribute="bottom" secondItem="zF6-o3-6UP" secondAttribute="bottom" id="CUi-Bd-HcL"/>
+                                <constraint firstItem="zF6-o3-6UP" firstAttribute="leading" secondItem="j2F-kj-xgQ" secondAttribute="leading" id="Dmx-1A-ve3"/>
                                 <constraint firstItem="kca-zC-XfM" firstAttribute="top" secondItem="j2F-kj-xgQ" secondAttribute="top" id="HtL-Tb-5KC"/>
+                                <constraint firstItem="zF6-o3-6UP" firstAttribute="top" secondItem="kca-zC-XfM" secondAttribute="bottom" id="MAO-Bo-9Es"/>
                                 <constraint firstAttribute="trailing" secondItem="kca-zC-XfM" secondAttribute="trailing" id="PdQ-Tw-dgC"/>
+                                <constraint firstItem="kca-zC-XfM" firstAttribute="bottom" secondItem="SS6-yz-muv" secondAttribute="bottom" constant="35" id="Pqi-ki-X4v"/>
+                                <constraint firstItem="kca-zC-XfM" firstAttribute="trailing" secondItem="SS6-yz-muv" secondAttribute="trailing" constant="16" id="Qdi-Vh-eBz"/>
+                                <constraint firstItem="kca-zC-XfM" firstAttribute="bottom" secondItem="FvK-sk-tJZ" secondAttribute="bottom" constant="35" id="SVA-Cf-hQC"/>
                                 <constraint firstItem="kca-zC-XfM" firstAttribute="leading" secondItem="j2F-kj-xgQ" secondAttribute="leading" id="iTT-zV-QuW"/>
+                                <constraint firstItem="kca-zC-XfM" firstAttribute="trailing" secondItem="FvK-sk-tJZ" secondAttribute="trailing" constant="16" id="jDF-hy-BH4"/>
+                                <constraint firstAttribute="trailing" secondItem="zF6-o3-6UP" secondAttribute="trailing" id="lX7-RK-sLW"/>
                             </constraints>
                         </view>
                         <sections>
@@ -124,7 +198,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uci-Ij-g1i" id="TGF-RY-3v0">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="我的投稿" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K0K-7b-cJe">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="帖子一览" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="K0K-7b-cJe">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -138,24 +212,31 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="Ts1-0j-hug">
+                            <tableViewSection id="zkC-kP-nca">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="EoY-Cn-9EY">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="wBS-qP-LUZ">
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EoY-Cn-9EY" id="kCF-hU-hjU">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wBS-qP-LUZ" id="Glv-Ml-Ybr">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="添加好友" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qbv-OV-OCI">
-                                                    <rect key="frame" x="126" y="11" width="68" height="21"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uqw-si-s14">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                    <state key="normal" title="发送消息">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="sendMessage:" destination="3I6-mu-eq3" eventType="touchUpInside" id="Yjn-C5-oWB"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.0" green="0.59215686274509804" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="0.0" green="0.59215686270000001" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="Qbv-OV-OCI" secondAttribute="centerY" id="Q4B-lu-7rp"/>
-                                                <constraint firstAttribute="centerX" secondItem="Qbv-OV-OCI" secondAttribute="centerX" id="YRk-rG-1nE"/>
+                                                <constraint firstItem="uqw-si-s14" firstAttribute="top" secondItem="Glv-Ml-Ybr" secondAttribute="top" id="51L-Gf-fGW"/>
+                                                <constraint firstAttribute="bottom" secondItem="uqw-si-s14" secondAttribute="bottom" id="Vbg-We-ySS"/>
+                                                <constraint firstAttribute="trailing" secondItem="uqw-si-s14" secondAttribute="trailing" id="WSD-7K-4fH"/>
+                                                <constraint firstItem="uqw-si-s14" firstAttribute="leading" secondItem="Glv-Ml-Ybr" secondAttribute="leading" id="f2R-y2-aTw"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -169,12 +250,15 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="2pT-iK-RWo"/>
                     <connections>
-                        <outlet property="addFriendCell" destination="EoY-Cn-9EY" id="gna-88-9qx"/>
+                        <outlet property="addFriendButton" destination="FvK-sk-tJZ" id="zfa-fN-gtv"/>
                         <outlet property="addressLabel" destination="6Gj-Jm-Z68" id="ZhM-67-gGm"/>
                         <outlet property="birthDayLabel" destination="82x-ph-VAx" id="VQw-p3-AAC"/>
+                        <outlet property="deleteFriendButton" destination="SS6-yz-muv" id="Mhx-DG-tnA"/>
                         <outlet property="fullNameLabel" destination="pY4-IG-I22" id="gzf-bS-v2B"/>
                         <outlet property="genderLabel" destination="VLB-C2-sSj" id="6EO-z8-ITh"/>
-                        <outlet property="statusLabel" destination="Qbv-OV-OCI" id="37i-Qr-dFM"/>
+                        <outlet property="heightOfInvitedView" destination="3gR-qh-CYW" id="bqZ-YW-0Kp"/>
+                        <outlet property="invitedView" destination="zF6-o3-6UP" id="ZTy-Fw-wr4"/>
+                        <outlet property="sendMessageCell" destination="wBS-qP-LUZ" id="hme-cG-CMY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bwx-Dy-Bpf" userLabel="First Responder" sceneMemberID="firstResponder"/>

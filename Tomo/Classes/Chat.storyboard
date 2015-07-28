@@ -44,30 +44,15 @@
                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IuB-8P-6Gd">
-                                    <rect key="frame" x="279" y="119" width="25" height="25"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="25" id="2Ef-et-juW"/>
-                                        <constraint firstAttribute="width" constant="25" id="gtA-xp-w9e"/>
-                                    </constraints>
-                                    <state key="normal" image="add_user">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <segue destination="ZM5-Wx-qKR" kind="modal" id="ICx-hj-udd"/>
-                                    </connections>
-                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="OCd-qx-lg7" secondAttribute="bottom" id="AxD-Br-Oq1"/>
                                 <constraint firstItem="OCd-qx-lg7" firstAttribute="leading" secondItem="XJg-iD-45R" secondAttribute="leading" id="C9L-jR-LGg"/>
-                                <constraint firstAttribute="bottom" secondItem="IuB-8P-6Gd" secondAttribute="bottom" constant="16" id="Rkh-JR-yzT"/>
                                 <constraint firstItem="nlt-Cw-rPP" firstAttribute="leading" secondItem="XJg-iD-45R" secondAttribute="leading" constant="16" id="eoZ-st-IRZ"/>
                                 <constraint firstAttribute="trailing" secondItem="OCd-qx-lg7" secondAttribute="trailing" id="nkk-Xw-8Nf"/>
                                 <constraint firstAttribute="bottom" secondItem="nlt-Cw-rPP" secondAttribute="bottom" constant="16" id="v6N-XI-dAL"/>
                                 <constraint firstItem="OCd-qx-lg7" firstAttribute="top" secondItem="XJg-iD-45R" secondAttribute="top" id="vJH-zA-5ro"/>
-                                <constraint firstAttribute="trailing" secondItem="IuB-8P-6Gd" secondAttribute="trailing" constant="16" id="xeT-M7-wyv"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -98,56 +83,48 @@
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="时间" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gc-if-PgX">
-                                            <rect key="frame" x="280" y="12" width="24" height="15"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y6d-RP-kSB">
+                                            <rect key="frame" x="208" y="15" width="44" height="35"/>
+                                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
+                                            <state key="normal" title="拒绝"/>
+                                            <connections>
+                                                <action selector="declined:" destination="uUi-Gs-dgT" eventType="touchUpInside" id="AA3-EO-Oyq"/>
+                                            </connections>
+                                        </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OSO-e2-a28">
-                                            <rect key="frame" x="279" y="29" width="25" height="25"/>
+                                            <rect key="frame" x="260" y="15" width="44" height="35"/>
+                                            <color key="backgroundColor" red="0.0" green="0.59215686270000001" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="25" id="gkO-eK-jnj"/>
-                                                <constraint firstAttribute="width" constant="25" id="xKk-O9-0l1"/>
+                                                <constraint firstAttribute="height" constant="35" id="gkO-eK-jnj"/>
                                             </constraints>
-                                            <state key="normal" image="checkmark">
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
+                                            <state key="normal" title="允许">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
                                                 <action selector="allow:" destination="uUi-Gs-dgT" eventType="touchUpInside" id="cuc-PP-7ej"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y6d-RP-kSB">
-                                            <rect key="frame" x="238" y="29" width="25" height="25"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="25" id="QAh-K9-Cfu"/>
-                                                <constraint firstAttribute="width" constant="25" id="crg-GB-ILq"/>
-                                            </constraints>
-                                            <state key="normal" image="delete_sign"/>
-                                            <connections>
-                                                <action selector="declined:" destination="uUi-Gs-dgT" eventType="touchUpInside" id="AA3-EO-Oyq"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Ak0-EI-RRx" firstAttribute="top" secondItem="7Vo-rd-YL8" secondAttribute="top" constant="12" id="069-AH-Hre"/>
-                                        <constraint firstItem="OSO-e2-a28" firstAttribute="leading" secondItem="Y6d-RP-kSB" secondAttribute="trailing" constant="16" id="17U-QX-IBl"/>
+                                        <constraint firstItem="OSO-e2-a28" firstAttribute="leading" secondItem="Y6d-RP-kSB" secondAttribute="trailing" constant="8" id="17U-QX-IBl"/>
                                         <constraint firstItem="Y6d-RP-kSB" firstAttribute="centerY" secondItem="OSO-e2-a28" secondAttribute="centerY" id="33n-90-0pj"/>
                                         <constraint firstItem="3p2-TB-ica" firstAttribute="leading" secondItem="ryD-c6-MJs" secondAttribute="trailing" constant="8" id="APe-ys-AM5"/>
-                                        <constraint firstAttribute="bottom" secondItem="OSO-e2-a28" secondAttribute="bottom" constant="11.5" id="B4p-CB-a52"/>
-                                        <constraint firstItem="6Gc-if-PgX" firstAttribute="top" secondItem="7Vo-rd-YL8" secondAttribute="top" constant="12" id="Dm6-VU-QvE"/>
+                                        <constraint firstItem="OSO-e2-a28" firstAttribute="height" secondItem="Y6d-RP-kSB" secondAttribute="height" id="De7-pZ-rmk"/>
                                         <constraint firstAttribute="trailing" secondItem="OSO-e2-a28" secondAttribute="trailing" constant="16" id="FKU-zF-Jfu"/>
                                         <constraint firstItem="Ak0-EI-RRx" firstAttribute="leading" secondItem="ryD-c6-MJs" secondAttribute="trailing" constant="8" id="G53-B6-qWF"/>
                                         <constraint firstItem="3p2-TB-ica" firstAttribute="top" secondItem="Ak0-EI-RRx" secondAttribute="bottom" constant="4" id="GOk-y2-o4P"/>
                                         <constraint firstAttribute="centerY" secondItem="ryD-c6-MJs" secondAttribute="centerY" id="Vhz-bQ-kpp"/>
                                         <constraint firstItem="ryD-c6-MJs" firstAttribute="leading" secondItem="7Vo-rd-YL8" secondAttribute="leading" constant="16" id="aJv-Nn-Kfq"/>
-                                        <constraint firstAttribute="trailing" secondItem="6Gc-if-PgX" secondAttribute="trailing" constant="16" id="nqS-0V-AXx"/>
+                                        <constraint firstAttribute="centerY" secondItem="OSO-e2-a28" secondAttribute="centerY" id="ajQ-Or-kd8"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avatarImageView" destination="ryD-c6-MJs" id="HKO-jl-eI6"/>
-                                    <outlet property="declinedButton" destination="Y6d-RP-kSB" id="Fpf-wx-xLP"/>
-                                    <outlet property="timeLabel" destination="6Gc-if-PgX" id="8jt-ke-JF5"/>
                                     <outlet property="userNameLabel" destination="Ak0-EI-RRx" id="1Fu-c0-yng"/>
                                 </connections>
                             </tableViewCell>
@@ -227,7 +204,27 @@
                             <outlet property="delegate" destination="gTz-Da-yp8" id="63i-mC-3Qg"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="nfb-I8-53f"/>
+                    <navigationItem key="navigationItem" id="nfb-I8-53f">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="Kj6-Ve-i63">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IuB-8P-6Gd">
+                                <rect key="frame" x="279" y="119" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="2Ef-et-juW"/>
+                                    <constraint firstAttribute="width" constant="25" id="gtA-xp-w9e"/>
+                                </constraints>
+                                <state key="normal" image="add_user">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="ZM5-Wx-qKR" kind="modal" id="ICx-hj-udd"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="addFriendButton" destination="IuB-8P-6Gd" id="bj6-pn-07V"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ruz-2e-sHK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -334,6 +331,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="closeButton" destination="mjV-7K-j0u" id="Rps-1u-nIF"/>
                         <outlet property="searchBar" destination="oL0-Zi-hp9" id="gKU-kT-dpd"/>
                         <outlet property="tableView" destination="BBL-yB-RdG" id="sTa-2n-6QV"/>
                     </connections>
@@ -383,7 +381,6 @@
     <resources>
         <image name="add_user" width="25" height="25"/>
         <image name="avatar" width="80" height="80"/>
-        <image name="checkmark" width="25" height="25"/>
         <image name="delete_sign" width="25" height="25"/>
         <image name="desktop2" width="680" height="435"/>
         <image name="desktop3" width="680" height="453"/>

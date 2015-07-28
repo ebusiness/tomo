@@ -10,27 +10,22 @@ import UIKit
 
 class ProfileViewController: ProfileBaseController {
 
-    @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var genderLabel: UILabel!
-    @IBOutlet weak var birthDayLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var fullNameLabel: UILabel!
+    @IBOutlet weak var birthDayLabel: UILabel!
     
-    @IBOutlet weak var addFriendCell: UITableViewCell!
-    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var addFriendButton: UIButton!
+    @IBOutlet weak var deleteFriendButton: UIButton!
+    @IBOutlet weak var sendMessageCell: UITableViewCell!
     
+    @IBOutlet weak var invitedView: UIView!
+    @IBOutlet weak var heightOfInvitedView: NSLayoutConstraint!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if DBController.isFriend(user) {
-            statusLabel.text = "发送消息"
-        } else if DBController.isInvitedUser(user) {
-            statusLabel.text = "已发送交友请求"
-            self.addFriendCell.userInteractionEnabled = false
-        } else if user.id == Defaults["myId"].string {
-            addFriendCell.hidden = true
-        } else {
-            statusLabel.text = "添加好友"
-        }
+        self.updateUI()
         
         ApiController.getUserInfo(user.id!, done: { (error) -> Void in
             if error == nil {
@@ -40,58 +35,133 @@ class ProfileViewController: ProfileBaseController {
         
     }
     
-    func updateUI() {
+    @IBAction func Approved(sender: UIButton) {
+        
+        inviteAction(true)
+    }
     
+    @IBAction func Declined(sender: UIButton) {
+        
+        inviteAction(false)
+    }
+    
+    @IBAction func deleteFriend(sender: UIButton) {
+        
+        Util.alert(self, title: "删除好友", message: "确定删除该好友么?", action: { (_) -> Void in
+            ApiController.connectionsBreakUsers(self.user.id!, done: { (error) -> Void in
+                ApiController.getMyInfo({ (error) -> Void in
+                    
+                    self.updateUI()
+                    Util.showSuccess("已删除好友")
+                })
+            })
+        })
+        
+    }
+    
+    @IBAction func addFriend(sender: UIButton) {
+        
+        Util.showHUD()
+        ApiController.invite(self.user.id!, done: { (error) -> Void in
+            if error == nil {
+                
+                self.updateUI()
+                Util.showSuccess("已发送交友请求")
+            }
+        })
+        
+    }
+    
+    @IBAction func sendMessage(sender: UIButton) {
+        
+        let vc = MessageViewController()
+        vc.hidesBottomBarWhenPushed = true
+        
+        vc.friend = self.user
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
+}
+
+extension ProfileViewController {
+    
+    func updateUI() {
+        
         fullNameLabel.text = user?.fullName()
         
         genderLabel.text = user?.genderText()
         
-//        birthDayLabel.text = user?.birthDay.
+        //        birthDayLabel.text = user?.birthDay.
         
         addressLabel.text = user?.address
+        
+        self.addFriendButton.hidden = true
+        self.deleteFriendButton.hidden = true
+        self.sendMessageCell.hidden = true
+        self.invitedView.hidden = true
+        
+        
+        if DBController.isFriend(user) {
+            
+            self.deleteFriendButton.hidden = false
+            self.sendMessageCell.hidden = false
+            
+        } else {
+            
+            if let id = self.getInvitedNotificationId() {
+                
+                self.invitedView.hidden = false
+                
+            } else if !DBController.isInvitedUser(user) && user.id != Defaults["myId"].string {
+                
+                self.addFriendButton.hidden = false
+            }
+            
+        }
 
     }
-
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    
+    func getInvitedNotificationId() -> String? {
+        let notifications = DBController.unconfirmedNotification(type: .FriendInvited)
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        for notification in notifications {
+            if let from = notification.from where from == user {
+                return notification.id
+            }
+        }
+        return nil
         
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+    }
+    
+    func inviteAction(isApproved:Bool){
         
-        if cell == addFriendCell {
+        if let id = self.getInvitedNotificationId() {
             
-            if DBController.isFriend(user) {
+            Util.showHUD()
+            ApiController.friendInvite(id,isApproved: isApproved, done: { (error) -> Void in
                 
-                let vc = MessageViewController()
-                vc.hidesBottomBarWhenPushed = true
+                if isApproved {
+                    Util.showSuccess("已同意添加好友")
+                } else {
+                    Util.showSuccess("已拒绝添加好友")
+                }
                 
-                vc.friend = user
-                
-                navigationController?.pushViewController(vc, animated: true)
-                return
-            }
-            
-            if DBController.isInvitedUser(user) {
-                return
-            }
-            
-            if user.id == Defaults["myId"].string {
-                return
-            }
-            
-            statusLabel.text = "处理中..."
-            ApiController.invite(user.id!, done: { (error) -> Void in
-                if error == nil {
-                    self.statusLabel.text = "已发送交友请求"
-                    self.addFriendCell.shake({ () -> Void in
-                        self.addFriendCell.userInteractionEnabled = false
+                ApiController.unconfirmedNotification { (error) -> Void in
+                    
+                    self.heightOfInvitedView.constant = 0
+                    
+                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+                        
+                        self.tableView.tableHeaderView?.frame.size.height = 240
+                        self.view.layoutIfNeeded()
+                        self.updateUI()
+                        
                     })
-                    Util.showSuccess("已发送交友请求")
                 }
             })
             
-            
         }
+        
     }
-
 }

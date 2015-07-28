@@ -47,6 +47,11 @@ extension FriendListSendRequestController: UITableViewDelegate {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+        vc.user = invitedUsers[indexPath.row]
+        
+        self.navigationController?.pushViewController(vc, animated: true)
 
     }
 }

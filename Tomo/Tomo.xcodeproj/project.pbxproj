@@ -222,7 +222,7 @@
 		D0D7B69A1B303AF600692C2F /* _Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D7B6991B303AF600692C2F /* _Tag.swift */; };
 		D0D7B69B1B30417200692C2F /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D7B6971B303AEE00692C2F /* Tag.swift */; };
 		D0D7B69C1B30417700692C2F /* _Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D7B6991B303AF600692C2F /* _Tag.swift */; };
-		D0E274ED1B58D830003FDC55 /* NewAddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E274EC1B58D830003FDC55 /* NewAddPostViewController.swift */; };
+		D0E274ED1B58D830003FDC55 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E274EC1B58D830003FDC55 /* AddPostViewController.swift */; };
 		D0F44FAB1B5E4790009E12AA /* BookmarkedPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */; };
 		D0F44FAD1B5E534B009E12AA /* MyPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */; };
 		D0F44FAF1B5E540F009E12AA /* FriendListSendRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */; };
@@ -392,7 +392,7 @@
 		D0D7B6951B3038BE00692C2F /* TagMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TagMapping.plist; sourceTree = "<group>"; };
 		D0D7B6971B303AEE00692C2F /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		D0D7B6991B303AF600692C2F /* _Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Tag.swift; sourceTree = "<group>"; };
-		D0E274EC1B58D830003FDC55 /* NewAddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewAddPostViewController.swift; path = Classes/NewAddPostViewController.swift; sourceTree = "<group>"; };
+		D0E274EC1B58D830003FDC55 /* AddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPostViewController.swift; path = Classes/AddPostViewController.swift; sourceTree = "<group>"; };
 		D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BookmarkedPostsViewController.swift; path = Classes/BookmarkedPostsViewController.swift; sourceTree = "<group>"; };
 		D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyPostsViewController.swift; path = Classes/MyPostsViewController.swift; sourceTree = "<group>"; };
 		D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendListSendRequestController.swift; path = Classes/FriendListSendRequestController.swift; sourceTree = "<group>"; };
@@ -736,7 +736,7 @@
 			isa = PBXGroup;
 			children = (
 				291ADF941AD229B3009D8BE3 /* CommentCell.swift */,
-				D0E274EC1B58D830003FDC55 /* NewAddPostViewController.swift */,
+				D0E274EC1B58D830003FDC55 /* AddPostViewController.swift */,
 				1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */,
 				1FEE80ED1B4E60850061B913 /* PostCell.swift */,
 				1F8BF0101B53639F00090079 /* PostImageCell.swift */,
@@ -1037,7 +1037,7 @@
 				292B9CD01AE61C3F00604986 /* _Station.swift in Sources */,
 				1F985E661B60C19F008D5369 /* NSArray.swift in Sources */,
 				1F985E5A1B60C19F008D5369 /* Dictionary.swift in Sources */,
-				D0E274ED1B58D830003FDC55 /* NewAddPostViewController.swift in Sources */,
+				D0E274ED1B58D830003FDC55 /* AddPostViewController.swift in Sources */,
 				29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */,
 				D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */,
 				2987F1E41AD79D0500AA39CE /* Chat.swift in Sources */,

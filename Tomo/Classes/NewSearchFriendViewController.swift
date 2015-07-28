@@ -12,11 +12,14 @@ class NewSearchFriendViewController: BaseTableViewController {
     
     
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var closeButton: UIButton!
     
     var result = [User]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Util.changeImageColorForButton(closeButton,color: UIColor.whiteColor())
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
