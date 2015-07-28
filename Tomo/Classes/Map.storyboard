@@ -16,23 +16,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gr7-Xe-nqZ">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKM-D9-brj">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </webView>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="gr7-Xe-nqZ" firstAttribute="leading" secondItem="wVk-fz-608" secondAttribute="leading" id="GAx-Fb-FVb"/>
-                            <constraint firstAttribute="trailing" secondItem="gr7-Xe-nqZ" secondAttribute="trailing" id="hPa-pd-lIK"/>
-                            <constraint firstItem="gr7-Xe-nqZ" firstAttribute="top" secondItem="wVk-fz-608" secondAttribute="top" id="hZd-9U-hdG"/>
-                            <constraint firstAttribute="bottom" secondItem="gr7-Xe-nqZ" secondAttribute="bottom" id="iKH-Jj-Qqz"/>
+                            <constraint firstItem="UKM-D9-brj" firstAttribute="leading" secondItem="wVk-fz-608" secondAttribute="leading" id="7B1-hi-sXs"/>
+                            <constraint firstAttribute="trailing" secondItem="UKM-D9-brj" secondAttribute="trailing" id="DLL-Kd-ZdR"/>
+                            <constraint firstItem="Cpn-4Z-PSd" firstAttribute="top" secondItem="UKM-D9-brj" secondAttribute="bottom" id="JDw-4z-CWG"/>
+                            <constraint firstItem="UKM-D9-brj" firstAttribute="top" secondItem="wVk-fz-608" secondAttribute="top" id="dPd-0B-QQR"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="地图" id="KKw-VS-iwT"/>
-                    <connections>
-                        <outlet property="webView" destination="gr7-Xe-nqZ" id="2y8-fX-vJf"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lyR-37-tdo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -41,7 +37,7 @@
         <!--Navigation Controller-->
         <scene sceneID="MOJ-Y9-CVB">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lFe-YQ-9Zz" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="lFe-YQ-9Zz" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="DAt-QF-5wW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

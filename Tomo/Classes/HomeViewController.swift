@@ -8,14 +8,13 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
-
-    @IBOutlet weak var tableView: UITableView!
+class HomeViewController: BaseTableViewController {
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var indicatorLabel: UILabel!
     
     var frc: NSFetchedResultsController!
     var objectChanges = Dictionary<NSFetchedResultsChangeType, [NSIndexPath]>()
-    
-    var pointNow: CGPoint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +29,10 @@ class HomeViewController: UIViewController {
         var postImageCellNib = UINib(nibName: "PostImageCell", bundle: nil)
         tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
 
-        var tableViewController = UITableViewController()
-        tableViewController.tableView = tableView
-
         var refresh = UIRefreshControl()
         refresh.addTarget(self, action: "test", forControlEvents: UIControlEvents.ValueChanged)
         
-        tableViewController.refreshControl = refresh
+        self.refreshControl = refresh
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -53,10 +49,6 @@ class HomeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func prefersStatusBarHidden() -> Bool {
-        return self.navigationController!.navigationBarHidden
-    }
-    
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -69,7 +61,19 @@ class HomeViewController: UIViewController {
     }
     
     func test() {
-        println("###############")
+        
+        activityIndicator.startAnimating()
+        indicatorLabel.text = "正在加载"
+        
+        ApiController.getNewsfeed() { (error) -> Void in
+            self.tableView.reloadData()
+            self.refreshControl?.endRefreshing()
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.alpha = 0
+            self.indicatorLabel.alpha = 0
+            self.indicatorLabel.text = "向下拉动加载更多内容"
+        }
+        
         return
         
     }
@@ -82,56 +86,56 @@ class HomeViewController: UIViewController {
     
 }
 
-extension HomeViewController: UIScrollViewDelegate {
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if scrollView.contentOffset.y < pointNow?.y {
-            setTabBarVisible(true, animated: true)
-        } else if scrollView.contentOffset.y > pointNow?.y {
-            setTabBarVisible(false, animated: true)
-        }
-    }
-    
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        pointNow = scrollView.contentOffset;
-    }
-    
-    func setTabBarVisible(visible:Bool, animated:Bool) {
-        
-        //* This cannot be called before viewDidLayoutSubviews(), because the frame is not set before this time
-        
-        // bail if the current state matches the desired state
-        if (tabBarIsVisible() == visible) { return }
-        
-        // get a frame calculation ready
-        let frame = self.tabBarController?.tabBar.frame
-        let height = frame?.size.height
-        let offsetY = (visible ? -height! : height)
-        
-        // zero duration means no animation
-        let duration:NSTimeInterval = (animated ? 0.3 : 0.0)
-        
-        //  animate the tabBar
-        if frame != nil {
-            UIView.animateWithDuration(duration) {
-                self.tabBarController?.tabBar.frame = CGRectOffset(frame!, 0, offsetY!)
-                return
-            }
-        }
-    }
-    
-    func tabBarIsVisible() ->Bool {
-        return self.tabBarController?.tabBar.frame.origin.y < CGRectGetMaxY(self.view.frame)
-    }
-}
+//extension HomeViewController: UIScrollViewDelegate {
+//    
+//    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        if scrollView.contentOffset.y < pointNow?.y {
+//            setTabBarVisible(true, animated: true)
+//        } else if scrollView.contentOffset.y > pointNow?.y {
+//            setTabBarVisible(false, animated: true)
+//        }
+//    }
+//    
+//    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+//        pointNow = scrollView.contentOffset;
+//    }
+//    
+//    func setTabBarVisible(visible:Bool, animated:Bool) {
+//        
+//        //* This cannot be called before viewDidLayoutSubviews(), because the frame is not set before this time
+//        
+//        // bail if the current state matches the desired state
+//        if (tabBarIsVisible() == visible) { return }
+//        
+//        // get a frame calculation ready
+//        let frame = self.tabBarController?.tabBar.frame
+//        let height = frame?.size.height
+//        let offsetY = (visible ? -height! : height)
+//        
+//        // zero duration means no animation
+//        let duration:NSTimeInterval = (animated ? 0.3 : 0.0)
+//        
+//        //  animate the tabBar
+//        if frame != nil {
+//            UIView.animateWithDuration(duration) {
+//                self.tabBarController?.tabBar.frame = CGRectOffset(frame!, 0, offsetY!)
+//                return
+//            }
+//        }
+//    }
+//    
+//    func tabBarIsVisible() ->Bool {
+//        return self.tabBarController?.tabBar.frame.origin.y < CGRectGetMaxY(self.view.frame)
+//    }
+//}
 
-extension HomeViewController: UITableViewDataSource {
+extension HomeViewController {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return frc.fetchedObjects?.count ?? 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var post = frc.objectAtIndexPath(indexPath) as! Post
         var cell: PostCell!
@@ -157,18 +161,33 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
-extension HomeViewController: UITableViewDelegate {
+extension HomeViewController {
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let post: AnyObject = frc.objectAtIndexPath(indexPath)
         self.performSegueWithIdentifier("postdetail", sender: post)
     }
     
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
+}
+
+extension HomeViewController {
+    
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        super.scrollViewDidScroll(scrollView)
+        
+        let offsetY = scrollView.contentOffset.y
+        
+        if offsetY < -44 {
+            indicatorLabel.alpha = abs(offsetY) - 44
+            activityIndicator.alpha = abs(offsetY) - 44
+        }
+        
+    }
 }
 
 // MARK: - NSFetchedResultsControllerDelegate

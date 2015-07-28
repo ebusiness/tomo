@@ -8,29 +8,12 @@
 
 import UIKit
 
-class MapViewController: BaseViewController,UIWebViewDelegate {
-
-    @IBOutlet weak var webView: UIWebView!
+class MapViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        webView.hidden = true
-        let req = NSURLRequest(URL: NSURL(string: mapPath)!)
-        Util.showHUD(maskType: .None)
-        webView.loadRequest(req)
-        webView.delegate = self
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-    
-    override func viewWillDisappear(animated: Bool) {
-        Util.dismissHUD()
-    }
     /*
     // MARK: - Navigation
 
@@ -40,21 +23,7 @@ class MapViewController: BaseViewController,UIWebViewDelegate {
         // Pass the selected object to the new view controller.
     }
     */
-    
-    
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if let url = request.URL {
-            if url.scheme == "genbatomo" {
-                schemeResolve(url)
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    func webViewDidFinishLoad(webView: UIWebView) {
-        Util.dismissHUD()
-    }
+
 }
 // MARK: - Common
 extension MapViewController {
