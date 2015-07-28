@@ -10,7 +10,7 @@ import UIKit
 
 class MyAccountBaseController: BaseTableViewController {
     
-    // MARK: - segue for pofile header
+    // MARK: - segue for profile header
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         

@@ -1,5 +1,5 @@
 //
-//  NewAccountEditViewController.swift
+//  AccountEditViewController.swift
 //  Tomo
 //
 //  Created by ebuser on 2015/07/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewAccountEditViewController: MyAccountBaseController {
+class AccountEditViewController: MyAccountBaseController {
     
     @IBOutlet weak var nickNameTextField: UITextField!
     @IBOutlet weak var bioTextView: UITextView!
@@ -63,7 +63,7 @@ class NewAccountEditViewController: MyAccountBaseController {
 
 }
 
-extension NewAccountEditViewController{
+extension AccountEditViewController{
     
     func updateUI() {
         
@@ -115,7 +115,7 @@ extension NewAccountEditViewController{
 }
     
     
-extension NewAccountEditViewController: UITableViewDelegate {
+extension AccountEditViewController: UITableViewDelegate {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -126,7 +126,7 @@ extension NewAccountEditViewController: UITableViewDelegate {
 
 // MARK: - DBCameraViewControllerDelegate
 
-extension NewAccountEditViewController: DBCameraViewControllerDelegate {
+extension AccountEditViewController: DBCameraViewControllerDelegate {
     
     func camera(cameraViewController: AnyObject!, didFinishWithImage image: UIImage!, withMetadata metadata: [NSObject : AnyObject]!) {
         let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))

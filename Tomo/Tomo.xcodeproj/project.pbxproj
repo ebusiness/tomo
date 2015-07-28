@@ -66,8 +66,8 @@
 		1F79C1B81B5E730E008800E1 /* NewSearchFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B71B5E730E008800E1 /* NewSearchFriendViewController.swift */; };
 		1F8BF0111B53639F00090079 /* PostImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8BF0101B53639F00090079 /* PostImageCell.swift */; };
 		1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8BF0121B536D9500090079 /* PostImageCell.xib */; };
-		1F937FE61B58C2E3009722CE /* NewSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F937FE51B58C2E3009722CE /* NewSettingViewController.swift */; };
-		1F937FE81B58EE8B009722CE /* NewAccountEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F937FE71B58EE8B009722CE /* NewAccountEditViewController.swift */; };
+		1F937FE61B58C2E3009722CE /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F937FE51B58C2E3009722CE /* SettingViewController.swift */; };
+		1F937FE81B58EE8B009722CE /* AccountEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F937FE71B58EE8B009722CE /* AccountEditViewController.swift */; };
 		1F985E171B60BC00008D5369 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */; };
 		1F985E541B60C19F008D5369 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E451B60C19F008D5369 /* Array.swift */; };
 		1F985E551B60C19F008D5369 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E451B60C19F008D5369 /* Array.swift */; };
@@ -208,10 +208,11 @@
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		D00E0FD61B3D3B4D00AEB521 /* DBCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00E0FD51B3D3B4D00AEB521 /* DBCameraController.swift */; };
-		D0A0C02B1B5F585B00ABFA5F /* Pofile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0A0C02A1B5F585B00ABFA5F /* Pofile.storyboard */; };
+		D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D057BAF11B670687007D14D2 /* RequestFriendCell.swift */; };
+		D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */; };
 		D0A0C02E1B5F594C00ABFA5F /* ProfileBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C02D1B5F594C00ABFA5F /* ProfileBaseController.swift */; };
 		D0A0C0301B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */; };
-		D0A0C0321B5F5BF900ABFA5F /* PofileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C0311B5F5BF900ABFA5F /* PofileViewController.swift */; };
+		D0A0C0321B5F5BF900ABFA5F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C0311B5F5BF900ABFA5F /* ProfileViewController.swift */; };
 		D0A0C0341B5F5D0500ABFA5F /* UserPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C0331B5F5D0500ABFA5F /* UserPostsViewController.swift */; };
 		D0B6EB121B5E7D09005A7E45 /* MyAccountHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */; };
 		D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */; };
@@ -224,7 +225,7 @@
 		D0E274ED1B58D830003FDC55 /* NewAddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E274EC1B58D830003FDC55 /* NewAddPostViewController.swift */; };
 		D0F44FAB1B5E4790009E12AA /* BookmarkedPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */; };
 		D0F44FAD1B5E534B009E12AA /* MyPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */; };
-		D0F44FAF1B5E540F009E12AA /* FrindListSendRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAE1B5E540F009E12AA /* FrindListSendRequestController.swift */; };
+		D0F44FAF1B5E540F009E12AA /* FriendListSendRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -269,8 +270,8 @@
 		1F79C1B71B5E730E008800E1 /* NewSearchFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewSearchFriendViewController.swift; path = Classes/NewSearchFriendViewController.swift; sourceTree = "<group>"; };
 		1F8BF0101B53639F00090079 /* PostImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostImageCell.swift; path = Classes/PostImageCell.swift; sourceTree = "<group>"; };
 		1F8BF0121B536D9500090079 /* PostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostImageCell.xib; path = Classes/PostImageCell.xib; sourceTree = "<group>"; };
-		1F937FE51B58C2E3009722CE /* NewSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewSettingViewController.swift; path = Classes/NewSettingViewController.swift; sourceTree = "<group>"; };
-		1F937FE71B58EE8B009722CE /* NewAccountEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewAccountEditViewController.swift; path = Classes/NewAccountEditViewController.swift; sourceTree = "<group>"; };
+		1F937FE51B58C2E3009722CE /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingViewController.swift; path = Classes/SettingViewController.swift; sourceTree = "<group>"; };
+		1F937FE71B58EE8B009722CE /* AccountEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountEditViewController.swift; path = Classes/AccountEditViewController.swift; sourceTree = "<group>"; };
 		1F985E451B60C19F008D5369 /* Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		1F985E461B60C19F008D5369 /* Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bool.swift; sourceTree = "<group>"; };
 		1F985E471B60C19F008D5369 /* Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
@@ -379,10 +380,11 @@
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D00E0FD51B3D3B4D00AEB521 /* DBCameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBCameraController.swift; path = Classes/DBCameraController.swift; sourceTree = "<group>"; };
-		D0A0C02A1B5F585B00ABFA5F /* Pofile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Pofile.storyboard; path = Classes/Pofile.storyboard; sourceTree = "<group>"; };
+		D057BAF11B670687007D14D2 /* RequestFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestFriendCell.swift; path = Classes/RequestFriendCell.swift; sourceTree = "<group>"; };
+		D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Profile.storyboard; path = Classes/Profile.storyboard; sourceTree = "<group>"; };
 		D0A0C02D1B5F594C00ABFA5F /* ProfileBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileBaseController.swift; path = Classes/ProfileBaseController.swift; sourceTree = "<group>"; };
 		D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileHeaderViewController.swift; path = Classes/ProfileHeaderViewController.swift; sourceTree = "<group>"; };
-		D0A0C0311B5F5BF900ABFA5F /* PofileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PofileViewController.swift; path = Classes/PofileViewController.swift; sourceTree = "<group>"; };
+		D0A0C0311B5F5BF900ABFA5F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = Classes/ProfileViewController.swift; sourceTree = "<group>"; };
 		D0A0C0331B5F5D0500ABFA5F /* UserPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserPostsViewController.swift; path = Classes/UserPostsViewController.swift; sourceTree = "<group>"; };
 		D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountHeaderViewController.swift; path = Classes/MyAccountHeaderViewController.swift; sourceTree = "<group>"; };
 		D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountBaseController.swift; path = Classes/MyAccountBaseController.swift; sourceTree = "<group>"; };
@@ -393,7 +395,7 @@
 		D0E274EC1B58D830003FDC55 /* NewAddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewAddPostViewController.swift; path = Classes/NewAddPostViewController.swift; sourceTree = "<group>"; };
 		D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BookmarkedPostsViewController.swift; path = Classes/BookmarkedPostsViewController.swift; sourceTree = "<group>"; };
 		D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyPostsViewController.swift; path = Classes/MyPostsViewController.swift; sourceTree = "<group>"; };
-		D0F44FAE1B5E540F009E12AA /* FrindListSendRequestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrindListSendRequestController.swift; path = Classes/FrindListSendRequestController.swift; sourceTree = "<group>"; };
+		D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendListSendRequestController.swift; path = Classes/FriendListSendRequestController.swift; sourceTree = "<group>"; };
 		F1801CE63ECC013D9C8C9BB6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -469,7 +471,7 @@
 			isa = PBXGroup;
 			children = (
 				D0A0C0331B5F5D0500ABFA5F /* UserPostsViewController.swift */,
-				D0A0C0311B5F5BF900ABFA5F /* PofileViewController.swift */,
+				D0A0C0311B5F5BF900ABFA5F /* ProfileViewController.swift */,
 				D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */,
 				D0A0C02D1B5F594C00ABFA5F /* ProfileBaseController.swift */,
 			);
@@ -697,7 +699,7 @@
 				29CA44191AD4CA48009EB177 /* Chat.storyboard */,
 				29CA441B1AD4CAAA009EB177 /* Map.storyboard */,
 				29CA441D1AD4CAF0009EB177 /* Setting.storyboard */,
-				D0A0C02A1B5F585B00ABFA5F /* Pofile.storyboard */,
+				D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */,
 				29CA44921AD4EEBB009EB177 /* Tab.storyboard */,
 				29ED0C7B1AE48CBC00B51C7E /* Group.storyboard */,
 				1FEE80E71B4E552A0061B913 /* Home.storyboard */,
@@ -767,13 +769,14 @@
 		29CA44911AD4DEEA009EB177 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				1F937FE71B58EE8B009722CE /* NewAccountEditViewController.swift */,
-				1F937FE51B58C2E3009722CE /* NewSettingViewController.swift */,
+				1F937FE71B58EE8B009722CE /* AccountEditViewController.swift */,
+				1F937FE51B58C2E3009722CE /* SettingViewController.swift */,
 				D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */,
 				D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */,
-				D0F44FAE1B5E540F009E12AA /* FrindListSendRequestController.swift */,
+				D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */,
 				D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */,
 				D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */,
+				D057BAF11B670687007D14D2 /* RequestFriendCell.swift */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -897,7 +900,7 @@
 				29CA441A1AD4CA48009EB177 /* Chat.storyboard in Resources */,
 				1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */,
 				1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */,
-				D0A0C02B1B5F585B00ABFA5F /* Pofile.storyboard in Resources */,
+				D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */,
 				29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */,
 				292B9CC81AE61A0D00604986 /* LineMapping.plist in Resources */,
 				D0D7B6961B3038BE00692C2F /* TagMapping.plist in Resources */,
@@ -1036,12 +1039,13 @@
 				1F985E5A1B60C19F008D5369 /* Dictionary.swift in Sources */,
 				D0E274ED1B58D830003FDC55 /* NewAddPostViewController.swift in Sources */,
 				29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */,
+				D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */,
 				2987F1E41AD79D0500AA39CE /* Chat.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
 				1F985E541B60C19F008D5369 /* Array.swift in Sources */,
 				1F4A9ACF1B56232000C5DAD3 /* NewGroupAddTableViewController.swift in Sources */,
-				D0F44FAF1B5E540F009E12AA /* FrindListSendRequestController.swift in Sources */,
-				D0A0C0321B5F5BF900ABFA5F /* PofileViewController.swift in Sources */,
+				D0F44FAF1B5E540F009E12AA /* FriendListSendRequestController.swift in Sources */,
+				D0A0C0321B5F5BF900ABFA5F /* ProfileViewController.swift in Sources */,
 				293EB4251B132B06006BAF27 /* JSQVoiceMediaItem.m in Sources */,
 				D0A0C02E1B5F594C00ABFA5F /* ProfileBaseController.swift in Sources */,
 				2901351A1AC3A79500BBFE29 /* _User.swift in Sources */,
@@ -1082,7 +1086,7 @@
 				1F985E5E1B60C19F008D5369 /* ExSwift.swift in Sources */,
 				29DF4CD61AE0EDC4003A4962 /* _Notification.swift in Sources */,
 				29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */,
-				1F937FE61B58C2E3009722CE /* NewSettingViewController.swift in Sources */,
+				1F937FE61B58C2E3009722CE /* SettingViewController.swift in Sources */,
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
 				29A5D1D91ACBE01700D95B77 /* RegPageView.swift in Sources */,
 				29446DC11B156C960062CA7F /* StationResultsTableViewController.swift in Sources */,
@@ -1098,7 +1102,7 @@
 				2993894A1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
 				1F985E581B60C19F008D5369 /* Character.swift in Sources */,
 				290134F81AC39F4600BBFE29 /* ApiController.swift in Sources */,
-				1F937FE81B58EE8B009722CE /* NewAccountEditViewController.swift in Sources */,
+				1F937FE81B58EE8B009722CE /* AccountEditViewController.swift in Sources */,
 				29BE7E231AC55A28008110B4 /* MultilineLabel.swift in Sources */,
 				1F985E6C1B60C19F008D5369 /* Sequence.swift in Sources */,
 				1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */,

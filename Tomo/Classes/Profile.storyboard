@@ -5,10 +5,10 @@
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--Pofile View Controller-->
+        <!--Profile View Controller-->
         <scene sceneID="RX6-cy-JLs">
             <objects>
-                <tableViewController storyboardIdentifier="PofileView" automaticallyAdjustsScrollViewInsets="NO" id="3I6-mu-eq3" customClass="PofileViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ProfileView" automaticallyAdjustsScrollViewInsets="NO" id="3I6-mu-eq3" customClass="ProfileViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="mIz-xz-Mej">
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

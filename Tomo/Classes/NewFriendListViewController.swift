@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewFriendListViewController: UITableViewController {
+class NewFriendListViewController: BaseTableViewController {
     
     var friendInvitedNotifications = [Notification]()
     var users = [User]()

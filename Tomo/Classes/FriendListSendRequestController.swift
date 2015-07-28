@@ -1,5 +1,5 @@
 //
-//  FrindListSendRequestController.swift
+//  FriendListSendRequestController.swift
 //  Tomo
 //
 //  Created by starboychina on 2015/07/21.
@@ -9,7 +9,7 @@
 
 import UIKit
 
-class FrindListSendRequestController: MyAccountBaseController {
+class FriendListSendRequestController: MyAccountBaseController {
     
     var invitedUsers = [User]()
     
@@ -22,7 +22,7 @@ class FrindListSendRequestController: MyAccountBaseController {
     
 }
 
-extension FrindListSendRequestController: UITableViewDataSource {
+extension FriendListSendRequestController: UITableViewDataSource {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return invitedUsers.count
@@ -35,15 +35,14 @@ extension FrindListSendRequestController: UITableViewDataSource {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let user = invitedUsers[indexPath.row]
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! UITableViewCell
-        
-//        cell.friend = user
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! RequestFriendCell
+        cell.user = user
         
         return cell
     }
 }
 
-extension FrindListSendRequestController: UITableViewDelegate {
+extension FriendListSendRequestController: UITableViewDelegate {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         

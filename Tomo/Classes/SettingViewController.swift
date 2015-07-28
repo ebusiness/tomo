@@ -1,5 +1,5 @@
 //
-//  NewSettingViewController.swift
+//  SettingViewController.swift
 //  Tomo
 //
 //  Created by ebuser on 2015/07/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewSettingViewController: MyAccountBaseController {
+class SettingViewController: MyAccountBaseController {
 
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var genderLabel: UILabel!

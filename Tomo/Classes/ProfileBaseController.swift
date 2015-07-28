@@ -12,7 +12,7 @@ class ProfileBaseController: BaseTableViewController {
     
     var user:User!
     
-    // MARK: - segue for pofile header
+    // MARK: - segue for profile header
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
@@ -49,7 +49,6 @@ class ProfileBaseController: BaseTableViewController {
                         if constant > 40 { constant = 40 }
                         else if constant < 0 { constant = 0 }
                         constraint.constant = constant
-                        println("CenterY = > \(constraint.constant)")
                     }
                     
                 }

@@ -1,5 +1,5 @@
 //
-//  PofileViewController.swift
+//  ProfileViewController.swift
 //  Tomo
 //
 //  Created by starboychina on 2015/07/21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PofileViewController: ProfileBaseController {
+class ProfileViewController: ProfileBaseController {
 
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var genderLabel: UILabel!
@@ -25,6 +25,7 @@ class PofileViewController: ProfileBaseController {
             statusLabel.text = "发送消息"
         } else if DBController.isInvitedUser(user) {
             statusLabel.text = "已发送交友请求"
+            self.addFriendCell.userInteractionEnabled = false
         } else if user.id == Defaults["myId"].string {
             addFriendCell.hidden = true
         } else {
@@ -83,7 +84,7 @@ class PofileViewController: ProfileBaseController {
                 if error == nil {
                     self.statusLabel.text = "已发送交友请求"
                     self.addFriendCell.shake({ () -> Void in
-                        
+                        self.addFriendCell.userInteractionEnabled = false
                     })
                     Util.showSuccess("已发送交友请求")
                 }

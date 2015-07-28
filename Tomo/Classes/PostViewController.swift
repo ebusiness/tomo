@@ -85,7 +85,7 @@ class PostViewController : BaseViewController{
     
     @IBAction func avatarImageTapped(sender: UITapGestureRecognizer) {
         
-        let vc = Util.createViewControllerWithIdentifier("PofileView", storyboardName: "Pofile") as! PofileViewController
+        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = post.owner
         
         self.navigationController?.pushViewController(vc, animated: true)
