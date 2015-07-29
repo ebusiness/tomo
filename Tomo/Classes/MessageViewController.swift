@@ -119,6 +119,9 @@ class MessageViewController: JSQMessagesViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        var image = Util.imageWithColor(0x673AB7, alpha: 1)
+        navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("downloadMediaDone"), name: "NotificationDownloadMediaDone", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("gotNewMessage"), name: kNotificationGotNewMessage, object: nil)
     }
