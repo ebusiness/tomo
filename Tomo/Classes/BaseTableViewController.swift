@@ -87,31 +87,40 @@ extension BaseTableViewController {
 extension BaseTableViewController {
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
+
+        if self.automaticallyAdjustsScrollViewInsets { return } //nothing under the navigationBar
+        
         if let topConstraint = self.topConstraint {
             
             let y = scrollView.contentOffset.y
             
-            if y < 0 || self.headerHeight > y {
+            if let whenHideNavigationBar = self.whenHideNavigationBar ,whenShowNavigationBar = self.whenShowNavigationBar {
                 
-                self.whenHideNavigationBar?(y)
-                topConstraint.constant = y
+                if y < 0 || self.headerHeight > y {
+                    
+                    whenHideNavigationBar(y)
+                    topConstraint.constant = y
+                    
+                } else {
+                    
+                    whenShowNavigationBar(y)
+                    
+                }
                 
             } else {
                 
-                self.whenShowNavigationBar?(y)
-                
+                if y < 0 {
+                    
+                    topConstraint.constant = y
+                    navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+                    
+                } else {
+                    
+                    var image = Util.imageWithColor(0x673AB7, alpha: y/self.headerHeight)
+                    navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+                    
+                }
             }
-
-//            if y < 0 { // pull down
-//                navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
-//                topConstraint.constant = y
-//            } else if self.headerHeight > y {
-//                let alpha = y / self.headerHeight
-//                navigationController?.navigationBar.backgroundColor = Util.UIColorFromRGB(0xFF00FF, alpha: alpha )
-//                topConstraint.constant = y / 2
-//            } else {
-//                navigationController?.navigationBar.backgroundColor = Util.UIColorFromRGB(0xFF00FF, alpha: 1 )
-//            }
         }
     }
 }

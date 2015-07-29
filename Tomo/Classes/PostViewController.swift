@@ -8,47 +8,47 @@
 
 import UIKit
 
-class PostViewController : BaseViewController{
+class PostViewController : BaseTableViewController{
+
     
-    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var commentInput: UITextView!
     @IBOutlet weak var postImageList: UIScrollView!
     @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var commentTableView: UITableView!
-    
+
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var likedBtn: UIButton!
-    @IBOutlet weak var shareBtn: UIButton!
-    @IBOutlet weak var deleteBtn: UIButton!
-    @IBOutlet weak var commentBtn: UIButton!
     @IBOutlet weak var bookmarkBtn: UIButton!
+
+    @IBOutlet weak var contentViewHeight: NSLayoutConstraint!
     
-    @IBOutlet weak var commentVerticalSpace: NSLayoutConstraint!
-    @IBOutlet weak var commentInputViewHeight: NSLayoutConstraint!
-    
+    let listViewHeight:CGFloat = 250
+    let contentViewInitialHeight:CGFloat = 230
+
     var commentContent: String?
     var cellForHeight: CommentCell!
-    
+
     var post: Post! {
         didSet {
-            if let headerView = headerView {
+            if let avatarImageView = avatarImageView {
                 updateUIForHeader()
             }
         }
     }
-    
+
     var comments: [Comments] {
         get {
             return post.comments.array as! [Comments]
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationItem.title = "詳細"
         
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
@@ -56,31 +56,43 @@ class PostViewController : BaseViewController{
         
         Util.changeImageColorForButton(likedBtn,color: UIColor.redColor())
         let color = Util.UIColorFromRGB(0xFF007AFF, alpha: 1)
-        Util.changeImageColorForButton(commentBtn,color: color)
-        Util.changeImageColorForButton(shareBtn,color: color)
-        Util.changeImageColorForButton(deleteBtn,color: color)
         Util.changeImageColorForButton(bookmarkBtn,color: color)
         
         commentInput.layer.borderColor = UIColor.grayColor().CGColor
         commentInput.layer.borderWidth = 0.5
         commentInput.layer.cornerRadius = 5
-        deleteBtn.hidden = !post.isMyPost
         
-        self.setImageList()
         updateUIForHeader()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardDidHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        if post.imagesmobile.count > 0 {
+            
+            self.setImageList()
+            self.headerHeight = self.listViewHeight
+            
+        }
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if post.imagesmobile.count < 1 {
+            self.extendedLayoutIncludesOpaqueBars = false
+            self.automaticallyAdjustsScrollViewInsets = true
+            var image = Util.imageWithColor(0x673AB7, alpha: 1)
+            self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+            
+            self.tableView.tableHeaderView?.frame.size.height = self.contentViewHeight.constant
+        }
     }
     
-    // MARK:HeaderView - @IBAction
     
-    @IBAction func commentBtnTapped(sender: AnyObject) {
-        commentInput.becomeFirstResponder()
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        if post.imagesmobile.count > 0 {
+            super.scrollViewDidScroll(scrollView)
+        }
     }
     
     @IBAction func avatarImageTapped(sender: UITapGestureRecognizer) {
@@ -91,57 +103,64 @@ class PostViewController : BaseViewController{
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
-    
+
     @IBAction func likeBtnTapped(sender: AnyObject) {
         ApiController.postLike(post.id!, done: { (error) -> Void in
             self.updateUIForHeader()
         })
     }
-    
+
     @IBAction func bookmarkBtnTapped(sender: AnyObject) {
         ApiController.postBookmark(post.id!, done: { (error) -> Void in
             self.updateUIForHeader()
         })
     }
+
     
-    
-    @IBAction func shareBtnTapped(sender: AnyObject) {
+    @IBAction func moreBtnTapped(sender: AnyObject) {
         
         let shareUrl = kAPIBaseURLString + "/mobile/share/post/" + self.post.id!
         
         var shareImage:UIImage?
-        if let imageView = self.postImageList.subviews[0] as? UIImageView {
-            shareImage = imageView.image!
+        if self.postImageList.subviews.count > 0 {
+            if let imageView = self.postImageList.subviews[0] as? UIImageView {
+                shareImage = imageView.image!
+            }
         }
         
-        Util.alertActionSheet(self, optionalDict: [
-            "微信":{ (_) -> Void in
-                    OpenidController.instance.wxShare(0, img: shareImage, description: self.post.content!, url:shareUrl)
-                },
-            "朋友圈":{ (_) -> Void in
-                OpenidController.instance.wxShare(1, img: shareImage, description: self.post.content!, url: shareUrl)
-            
-                }
-            ])
+        
+        var optionalList = Dictionary<String,((UIAlertAction!) -> Void)!>()
+        
+        optionalList["微信"] = { (_) -> Void in
+            OpenidController.instance.wxShare(0, img: shareImage, description: self.post.content!, url:shareUrl)
+        }
+        
+        optionalList["朋友圈"] = { (_) -> Void in
+            OpenidController.instance.wxShare(1, img: shareImage, description: self.post.content!, url:shareUrl)
+        }
+        
+        if post.isMyPost {
+            optionalList["删除"] = { (_) -> Void in
+                
+                Util.alert(self, title: "删除帖子", message: "确定删除该帖子么?", action: { (action) -> Void in
+                    ApiController.postDelete(self.post.id!, done: { (error) -> Void in
+                    })
+                    
+                    self.post.delete()
+                    Util.showInfo("帖子已删除")
+                    self.navigationController?.popViewControllerAnimated(true)
+                })
+            }
+        }
 
-    }
-    
-    @IBAction func deleteBtnTapped(sender: UIButton) {
-        
-        Util.alertActionSheet(self, optionalDict: ["削除しますか？":{ (_) -> Void in
-            ApiController.postDelete(self.post.id!, done: { (error) -> Void in
-            })
-            
-            self.post.delete()
-            self.navigationController?.popViewControllerAnimated(true)
-        }])
-        
+        Util.alertActionSheet(self, optionalDict: optionalList)
+
     }
     
     @IBAction func tableViewTapped(sender: UITapGestureRecognizer) {
         self.commentInput.resignFirstResponder()
     }
-    
+
     @IBAction func sendCommentBtnTapped(sender: AnyObject) {
         Util.showHUD()
         
@@ -175,7 +194,6 @@ extension PostViewController {
         
         contentLabel.text = post.content
         
-        commentBtn.setTitle("\(post.comments.count)", forState: .Normal)
         likedBtn.setTitle("\(post.liked.count)", forState: .Normal)
         bookmarkBtn.setTitle("\(post.bookmarked.count)", forState: .Normal)
 
@@ -199,12 +217,16 @@ extension PostViewController {
             
         }
         
-        contentLabel.preferredMaxLayoutWidth = self.headerView.frame.size.width - 2 * 16
+        if let tableHeaderView = self.tableView.tableHeaderView
+            where contentViewHeight.constant == self.contentViewInitialHeight {
+            let contentSize = self.contentLabel.sizeThatFits(self.contentLabel.bounds.size)
+            let heightChange = contentSize.height - self.contentLabel.frame.size.height
+            
+            contentViewHeight.constant = self.contentViewInitialHeight + heightChange
+    
+            tableHeaderView.frame.size.height = tableHeaderView.frame.size.height + heightChange
+        }
         
-        headerView.setTranslatesAutoresizingMaskIntoConstraints(true)
-        let size = self.headerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize) as CGSize
-        
-        self.headerView.frame.size.height = size.height
     }
     
     func setImageList(){
@@ -212,18 +234,9 @@ extension PostViewController {
         for imageview in postImageList.subviews {
             imageview.removeFromSuperview()
         }
-        if post.imagesmobile.count < 1 {
-            //hide [postImageList] when imagesmobile.count
-            postImageList.addConstraint(NSLayoutConstraint(item: postImageList, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: 0))
-            return
-        }
         
-        let listViewHeight:CGFloat = 250
-        let imageWidth = listViewHeight / 3 * 4
-        
-        headerView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        postImageList.addConstraint(NSLayoutConstraint(item: postImageList, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: listViewHeight))
-        headerView.addConstraint(NSLayoutConstraint(item: postImageList, attribute: .Trailing, relatedBy: .Equal, toItem: headerView, attribute: .Trailing, multiplier: 1.0, constant: 0))
+        let imageWidth = self.listViewHeight / 3 * 4
+        self.tableView.tableHeaderView?.frame.size.height = contentViewHeight.constant + self.listViewHeight
 
         var scrollWidth:CGFloat = 0
         
@@ -244,16 +257,18 @@ extension PostViewController {
                 
                 postImageList.addSubview(imgView)
                 
-                imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: imageWidth))
                 postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Height, relatedBy: .Equal, toItem: postImageList, attribute: .Height, multiplier: 1.0, constant: 0))
                 postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterY, relatedBy: .Equal, toItem: postImageList, attribute: .CenterY, multiplier: 1.0, constant: 0))
                 
                 if post.imagesmobile.count == 1 {
                     
+                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: 0 ))
+                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Trailing, relatedBy: .Equal, toItem: postImageList, attribute: .Trailing, multiplier: 1.0, constant: 0 ))
                     postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterX, relatedBy: .Equal, toItem: postImageList, attribute: .CenterX, multiplier: 1.0, constant: 0 ))
                     
                 } else {
                     
+                    imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: imageWidth))
                     postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: scrollWidth ))
                     
                     scrollWidth += 5
@@ -265,7 +280,7 @@ extension PostViewController {
         
         postImageList.contentSize.width = scrollWidth
     }
-    
+
     func postImageViewTapped(sender: UITapGestureRecognizer) {
         if let imageView = sender.view as? UIImageView,image = imageView.image {
             
@@ -309,7 +324,7 @@ extension PostViewController {
         ApiController.getPost(post.id!, done: { (error) -> Void in
             if error == nil {
                 self.post = DBController.postById(self.post.id!)
-                self.commentTableView.reloadData()
+                self.tableView.reloadData()
             } else {
                 Util.showInfo("この投稿が削除されました。")
                 self.post.delete()
@@ -324,11 +339,11 @@ extension PostViewController {
 
 extension PostViewController: UITableViewDataSource {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return post.comments.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as! CommentCell
         let index = post.comments.count - indexPath.row - 1
         let comment = comments[index ]
@@ -342,7 +357,7 @@ extension PostViewController: UITableViewDataSource {
 
 extension PostViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if cellForHeight == nil {
             cellForHeight = tableView.dequeueReusableCellWithIdentifier("CommentCell") as! CommentCell
         }
@@ -352,43 +367,6 @@ extension PostViewController: UITableViewDelegate {
     }
     
 }
-
-
-// MARK:CommentInputView - Action
-
-extension PostViewController {
-    
-    // MARK: - Notification
-    
-    func keyboardWillShow(notification: NSNotification) {
-        if let dic = notification.userInfo {
-            if let keyboardFrame = dic[UIKeyboardFrameEndUserInfoKey]?.CGRectValue() {
-                if let duration = dic[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue {
-                    self.commentInput.superview?.hidden = false
-                    self.commentVerticalSpace.constant = keyboardFrame.height - 49 //tabbar -> 49
-                    
-                    UIView.animateWithDuration(duration, animations: { () -> Void in
-                        self.view.layoutIfNeeded()
-                    })
-                }
-            }
-        }
-    }
-    
-    func keyboardDidHide(notification: NSNotification) {
-        if let dic = notification.userInfo {
-            if let duration = dic[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue {
-                self.commentVerticalSpace.constant = 0
-                
-                UIView.animateWithDuration(duration, animations: { () -> Void in
-                    self.view.layoutIfNeeded()
-                    self.commentInput.superview?.hidden = true
-                })
-            }
-        }
-    }
-}
-
 
 extension PostViewController: UITextViewDelegate {
     func textViewDidBeginEditing(textView: UITextView) {
@@ -416,7 +394,6 @@ extension PostViewController: UITextViewDelegate {
         }
         if let superView = textView.superview {
             let viewheight = (textView.contentSize.height + 2 * 8)
-            commentInputViewHeight.constant = viewheight > 48 ? (viewheight < 201 ? viewheight : 200 ) : 48
         }
     }
 }

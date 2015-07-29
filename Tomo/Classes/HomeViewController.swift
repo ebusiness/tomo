@@ -191,13 +191,6 @@ extension HomeViewController {
             activityIndicator.alpha = abs(offsetY)/64
         }
         
-        if offsetY > 0 {
-            var image = Util.imageWithColor(0x673AB7, alpha: abs(offsetY)/160)
-            navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
-        } else {
-            navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        }
-        
     }
 
 }
