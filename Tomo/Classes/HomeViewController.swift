@@ -29,7 +29,7 @@ class HomeViewController: BaseTableViewController {
         var postImageCellNib = UINib(nibName: "PostImageCell", bundle: nil)
         tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
         
-        var image = Util.coloredImage(UIImage(named: "white")!, color: Util.UIColorFromRGB(0x673AB7, alpha: 0))
+        var image = Util.imageWithColor(0x673AB7, alpha: 0)
         navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
 
         var refresh = UIRefreshControl()

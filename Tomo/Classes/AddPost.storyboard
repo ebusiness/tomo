@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xyt-1o-i3E">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="244"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="204"/>
                                 <subviews>
                                     <toolbar opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M5L-K9-XQQ">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -45,20 +45,20 @@
                                         </items>
                                     </toolbar>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aqd-Vi-14w">
-                                        <rect key="frame" x="0.0" y="44" width="320" height="200"/>
+                                        <rect key="frame" x="0.0" y="44" width="320" height="160"/>
                                         <connections>
                                             <outlet property="delegate" destination="FUP-Bs-H5j" id="YJB-Ij-qEB"/>
                                         </connections>
                                     </scrollView>
-                                    <view alpha="0.15000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FzJ-8Q-dYm">
-                                        <rect key="frame" x="0.0" y="200" width="320" height="44"/>
+                                    <view hidden="YES" alpha="0.15000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FzJ-8Q-dYm">
+                                        <rect key="frame" x="0.0" y="160" width="320" height="44"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="rLz-UR-TkR"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fRq-0F-ybI">
-                                        <rect key="frame" x="0.0" y="200" width="320" height="44"/>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fRq-0F-ybI">
+                                        <rect key="frame" x="0.0" y="160" width="320" height="44"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ume-0W-IOC">
                                                 <rect key="frame" x="16" y="10" width="25" height="25"/>
@@ -124,7 +124,7 @@
                                     <constraint firstItem="M5L-K9-XQQ" firstAttribute="leading" secondItem="Xyt-1o-i3E" secondAttribute="leading" id="F5X-iO-B4x"/>
                                     <constraint firstItem="FzJ-8Q-dYm" firstAttribute="leading" secondItem="Xyt-1o-i3E" secondAttribute="leading" id="PCn-8I-9ic"/>
                                     <constraint firstAttribute="bottom" secondItem="FzJ-8Q-dYm" secondAttribute="bottom" id="YHy-DP-l1g"/>
-                                    <constraint firstAttribute="height" constant="244" id="cX8-f9-0gs"/>
+                                    <constraint firstAttribute="height" constant="204" id="cX8-f9-0gs"/>
                                     <constraint firstItem="M5L-K9-XQQ" firstAttribute="top" secondItem="Xyt-1o-i3E" secondAttribute="top" id="eiJ-jJ-erw"/>
                                     <constraint firstAttribute="trailing" secondItem="aqd-Vi-14w" secondAttribute="trailing" id="i7o-02-b6R"/>
                                     <constraint firstAttribute="bottom" secondItem="aqd-Vi-14w" secondAttribute="bottom" id="oA0-9f-yu7"/>
@@ -134,7 +134,7 @@
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="这一刻的想法..." translatesAutoresizingMaskIntoConstraints="NO" id="IRO-Pb-qC7">
-                                <rect key="frame" x="0.0" y="244" width="320" height="280"/>
+                                <rect key="frame" x="0.0" y="204" width="320" height="320"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>

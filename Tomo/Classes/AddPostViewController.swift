@@ -120,7 +120,7 @@ class AddPostViewController: BaseViewController {
     @IBAction func viewPanGesture(sender: UIPanGestureRecognizer) {
         
         let point = sender.translationInView(self.view)
-        let h:CGFloat = self.imageList.count == 0 ? 88 : 244
+        let h:CGFloat = self.imageList.count == 0 ? 88 : 204
         
         if sender.state == UIGestureRecognizerState.Began {
 
@@ -148,17 +148,19 @@ extension AddPostViewController {
             (group: ALAssetsGroup!, stop) in
             if group != nil {
                 var assetBlock : ALAssetsGroupEnumerationResultsBlock = { (result: ALAsset!, index: Int, stop) in
-                    if result != nil {
+                    if result != nil && self.imageList.count < 10 {
                         //var image = UIImage(CGImage:result.thumbnail().takeUnretainedValue())
                         var image = UIImage(CGImage:result.defaultRepresentation().fullScreenImage().takeUnretainedValue())
                         self.imageList.append(image!)
                     }
                 }
-                group.enumerateAssetsUsingBlock(assetBlock)
+                group.setAssetsFilter(ALAssetsFilter.allPhotos())
+                group.enumerateAssetsWithOptions(.Reverse, usingBlock: assetBlock)//descending
+//                group.enumerateAssetsUsingBlock(assetBlock)
                 self.setImageList()
             }
             }, failureBlock: { (fail) in
-                self.headerHeight.constant = self.imageList.count == 0 ? 88 : 244
+                self.headerHeight.constant = self.imageList.count == 0 ? 88 : 204
         })
         
     }
@@ -175,7 +177,7 @@ extension AddPostViewController {
         var scrollWidth:CGFloat = 0
         
         for i in 0..<imageList.count{
-            let image = imageList[ imageList.count - i - 1 ]
+            let image = imageList[ i ]
             
             let imgView = UIImageView(frame: CGRectZero )
             imgView.image = image
@@ -184,6 +186,10 @@ extension AddPostViewController {
             imgView.contentMode = UIViewContentMode.ScaleAspectFill
             imgView.clipsToBounds = true
             
+            if imageListSelected.contains(image) {
+                imgView.layer.borderColor = UIColor.redColor().CGColor
+                imgView.layer.borderWidth = 2
+            }
             
             let tap = UITapGestureRecognizer(target: self, action: Selector("imageViewTapped:"))
             imgView.addGestureRecognizer(tap)
@@ -216,11 +222,9 @@ extension AddPostViewController {
             if imageListSelected.contains(image) {
                 imageListSelected.remove(image)
                 imageView.layer.borderWidth = 0
-                println("removed")
             } else {
                 imageView.layer.borderWidth = 2
                 imageListSelected.append(image)
-                println("selected")
                 
             }
         }
@@ -280,11 +284,13 @@ extension AddPostViewController: UITextViewDelegate {
 extension AddPostViewController: DBCameraViewControllerDelegate {
     
     func camera(cameraViewController: AnyObject!, didFinishWithImage image: UIImage!, withMetadata metadata: [NSObject : AnyObject]!) {
-        let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
+        let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth * image.size.height / image.size.width ))
         
         let newImage = image.normalizedImage()
         
-        self.imageList.append(newImage)
+        self.imageList.insert(newImage, atIndex: 0)
+        self.imageListSelected.append(newImage)
+//        self.imageList.append(newImage)
         self.setImageList()
         self.dismissCamera(cameraViewController)
         

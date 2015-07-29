@@ -24,8 +24,8 @@ let kS3BasePath = "https://s3-ap-northeast-1.amazonaws.com"
 
 let kAPIBaseURL = NSURL(string: kAPIBaseURLString)
 
-let MaxWidth = 500
-let AvatarMaxWidth = 200
+let MaxWidth: CGFloat = 500
+let AvatarMaxWidth: CGFloat = 200
 let GroupImageWidth: CGFloat = 80
 
 let mapPath = kAPIBaseURLString + "/mobile/map"
