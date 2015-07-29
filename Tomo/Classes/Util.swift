@@ -183,6 +183,23 @@ extension Util {
         )
     }
     
+    class func imageWithColor(rgbValue: UInt,alpha:CGFloat) -> UIImage {
+        
+        var rect = CGRectMake(0.0, 0.0, 320.0, 64.0)
+        var color = Util.UIColorFromRGB(rgbValue, alpha: alpha)
+        
+        UIGraphicsBeginImageContext(rect.size)
+        var context = UIGraphicsGetCurrentContext();
+        
+        CGContextSetFillColorWithColor(context, color.CGColor)
+        CGContextFillRect(context, rect)
+        
+        var image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image
+    }
+    
     //重绘纯色图片
     class func coloredImage(image: UIImage, color:UIColor) -> UIImage! {
         let rect = CGRect(origin: CGPointZero, size: image.size)
