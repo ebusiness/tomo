@@ -149,7 +149,6 @@
 		296D8BAC1AFC59F10058D400 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BAA1AFC59F10058D400 /* TabBarController.swift */; };
 		296D8BAE1AFC5A020058D400 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BAD1AFC5A020058D400 /* LoadingViewController.swift */; };
 		296D8BB31AFC5A250058D400 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BB01AFC5A250058D400 /* MessageViewController.swift */; };
-		296D8BC21AFC5A680058D400 /* AddPost.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 296D8BBB1AFC5A680058D400 /* AddPost.storyboard */; };
 		296D8BC31AFC5A680058D400 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 296D8BBC1AFC5A680058D400 /* LaunchScreen.xib */; };
 		296D8BC41AFC5A680058D400 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 296D8BBD1AFC5A680058D400 /* Main.storyboard */; };
 		296D8BC81AFC5A680058D400 /* RegPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 296D8BC11AFC5A680058D400 /* RegPageView.xib */; };
@@ -335,7 +334,6 @@
 		296D8BAA1AFC59F10058D400 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarController.swift; path = Classes/TabBarController.swift; sourceTree = "<group>"; };
 		296D8BAD1AFC5A020058D400 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingViewController.swift; path = Classes/LoadingViewController.swift; sourceTree = "<group>"; };
 		296D8BB01AFC5A250058D400 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewController.swift; path = Classes/MessageViewController.swift; sourceTree = "<group>"; };
-		296D8BBB1AFC5A680058D400 /* AddPost.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = AddPost.storyboard; path = Classes/AddPost.storyboard; sourceTree = "<group>"; };
 		296D8BBC1AFC5A680058D400 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = Classes/LaunchScreen.xib; sourceTree = "<group>"; };
 		296D8BBD1AFC5A680058D400 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Classes/Main.storyboard; sourceTree = "<group>"; };
 		296D8BC11AFC5A680058D400 /* RegPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RegPageView.xib; path = Classes/RegPageView.xib; sourceTree = "<group>"; };
@@ -694,7 +692,6 @@
 		299389531AD3C71500043D91 /* storyboard */ = {
 			isa = PBXGroup;
 			children = (
-				296D8BBB1AFC5A680058D400 /* AddPost.storyboard */,
 				296D8BBD1AFC5A680058D400 /* Main.storyboard */,
 				29CA44191AD4CA48009EB177 /* Chat.storyboard */,
 				29CA441B1AD4CAAA009EB177 /* Map.storyboard */,
@@ -921,7 +918,6 @@
 				29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */,
 				1FEE80EC1B4E5C540061B913 /* PostCell.xib in Resources */,
 				296D8BC81AFC5A680058D400 /* RegPageView.xib in Resources */,
-				296D8BC21AFC5A680058D400 /* AddPost.storyboard in Resources */,
 				29ED0C7C1AE48CBC00B51C7E /* Group.storyboard in Resources */,
 				296D8BCC1AFC5A890058D400 /* whatsnew.plist in Resources */,
 				178D649E1ACC0DDF00185368 /* MessageMapping.plist in Resources */,

@@ -81,9 +81,12 @@ class AddPostViewController: BaseViewController {
     
     @IBAction func post(sender: AnyObject) {
         
+        Util.showHUD()
         // send post
         self.uploadToS3({ (imageNames, sizes) -> () in
             ApiController.addPost(imageNames, sizes: sizes, content: self.postContent!, groupId: self.selectedGroup?.id, stationId: self.selectedStation?.id,location: nil, done: { (error) -> Void in
+                
+                Util.dismissHUD()
                 self.dismissViewControllerAnimated(true, completion: nil)
             })
         })
@@ -292,6 +295,7 @@ extension AddPostViewController: DBCameraViewControllerDelegate {
         self.imageListSelected.append(newImage)
 //        self.imageList.append(newImage)
         self.setImageList()
+        self.imageListView.setContentOffset(CGPointZero, animated: true)
         self.dismissCamera(cameraViewController)
         
     }

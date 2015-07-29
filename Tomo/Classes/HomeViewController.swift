@@ -81,12 +81,6 @@ class HomeViewController: BaseTableViewController {
         
     }
     
-    @IBAction func addPostBtnTapped(sender: UIBarButtonItem) {
-        
-        let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: "AddPost")
-        self.presentViewController(vc, animated: true, completion: nil)
-    }
-    
 }
 
 //extension HomeViewController: UIScrollViewDelegate {
