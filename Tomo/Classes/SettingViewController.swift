@@ -35,13 +35,9 @@ class SettingViewController: MyAccountBaseController {
     func updateUI() {
         user = DBController.myUser()
         
-    
         fullNameLabel.text = user?.fullName()
-        
-        genderLabel.text = user?.genderText()
-        
-//        birthDayLabel.text = user?.birthDay.
-        
+        genderLabel.text = user?.gender
+        birthDayLabel.text = user?.birthDay?.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
         addressLabel.text = user?.address
 
     }

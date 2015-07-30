@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Setting View Controller-->
@@ -236,7 +237,7 @@
             <objects>
                 <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="aXi-4j-mPv" customClass="AccountEditViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="58E-Xa-dZM">
-                        <rect key="frame" x="0.0" y="64" width="320" height="650"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="H3V-c6-R5y">
@@ -381,7 +382,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="bd3-Rp-Tvh">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="88" id="bd3-Rp-Tvh">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bd3-Rp-Tvh" id="wYp-de-K4s">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -392,48 +393,54 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="您的性别" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="19E-bb-Yls">
-                                                    <rect key="frame" x="109" y="12" width="195" height="19"/>
+                                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q0g-3U-s1e">
+                                                    <rect key="frame" x="204" y="-38" width="100" height="162"/>
+                                                    <gestureRecognizers/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="195" id="wsH-57-A4p"/>
+                                                        <constraint firstAttribute="width" constant="100" id="bNM-zH-rL1"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="aXi-4j-mPv" id="uhb-xa-DrZ"/>
+                                                        <outlet property="delegate" destination="aXi-4j-mPv" id="XpP-Fy-EMK"/>
+                                                    </connections>
+                                                </pickerView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="19E-bb-Yls" secondAttribute="trailing" constant="16" id="1ku-wV-6hV"/>
-                                                <constraint firstAttribute="centerY" secondItem="19E-bb-Yls" secondAttribute="centerY" id="O4x-fJ-DLb"/>
-                                                <constraint firstAttribute="centerY" secondItem="qCP-wX-KiC" secondAttribute="centerY" id="Sux-Ah-aU8"/>
+                                                <constraint firstItem="Q0g-3U-s1e" firstAttribute="top" secondItem="wYp-de-K4s" secondAttribute="top" id="66P-3k-D8G"/>
+                                                <constraint firstAttribute="trailing" secondItem="Q0g-3U-s1e" secondAttribute="trailing" constant="16" id="Fkz-P2-Cn3"/>
+                                                <constraint firstAttribute="bottom" secondItem="Q0g-3U-s1e" secondAttribute="bottom" id="V3x-IN-aKC"/>
+                                                <constraint firstItem="qCP-wX-KiC" firstAttribute="top" secondItem="wYp-de-K4s" secondAttribute="topMargin" constant="4" id="cfi-Yy-Gca"/>
                                                 <constraint firstItem="qCP-wX-KiC" firstAttribute="leading" secondItem="wYp-de-K4s" secondAttribute="leading" constant="16" id="mK9-t3-NIO"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="SEA-3m-Am8">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="150" id="SEA-3m-Am8">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SEA-3m-Am8" id="MQ4-D6-MBo">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="生年月日" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qic-Zh-ff2">
-                                                    <rect key="frame" x="16" y="12" width="64" height="20"/>
+                                                    <rect key="frame" x="16" y="8" width="64" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="您的生日" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="tMo-wE-o6F">
-                                                    <rect key="frame" x="109" y="12" width="195" height="19"/>
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NBS-Ii-vgT">
+                                                    <rect key="frame" x="64" y="-3" width="240" height="162"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="195" id="ch3-2f-wZM"/>
+                                                        <constraint firstAttribute="height" constant="100" id="gj4-lJ-BHR"/>
+                                                        <constraint firstAttribute="width" constant="240" id="jcS-li-AN5"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
+                                                    <date key="date" timeIntervalSinceReferenceDate="-662806799.73345184">
+                                                        <!--1979-12-31 15:00:00 +0000-->
+                                                    </date>
+                                                </datePicker>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="NBS-Ii-vgT" secondAttribute="trailing" constant="16" id="1qI-o1-8en"/>
                                                 <constraint firstItem="Qic-Zh-ff2" firstAttribute="leading" secondItem="MQ4-D6-MBo" secondAttribute="leading" constant="16" id="DJK-iQ-qHZ"/>
-                                                <constraint firstAttribute="centerY" secondItem="Qic-Zh-ff2" secondAttribute="centerY" id="HFY-Fv-98f"/>
-                                                <constraint firstAttribute="trailing" secondItem="tMo-wE-o6F" secondAttribute="trailing" constant="16" id="LFQ-Jc-e0t"/>
-                                                <constraint firstAttribute="centerY" secondItem="tMo-wE-o6F" secondAttribute="centerY" id="Rqw-iS-Vv3"/>
+                                                <constraint firstItem="NBS-Ii-vgT" firstAttribute="top" secondItem="Qic-Zh-ff2" secondAttribute="bottom" id="UC9-3j-hoE"/>
+                                                <constraint firstItem="Qic-Zh-ff2" firstAttribute="top" secondItem="MQ4-D6-MBo" secondAttribute="top" constant="8" id="k9S-eb-0AP"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -501,6 +508,7 @@
                             <outlet property="delegate" destination="aXi-4j-mPv" id="JdB-uS-ARW"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="dW1-TE-8zb">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="3lx-rp-YwE">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4h5-hh-O5V">
@@ -520,13 +528,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="650"/>
+                    <size key="freeformSize" width="320" height="800"/>
                     <connections>
                         <outlet property="addressTextField" destination="wSi-x5-u4Q" id="lWv-G0-HSZ"/>
                         <outlet property="bioTextView" destination="JCU-zG-QLb" id="7JV-jy-305"/>
-                        <outlet property="birthDayTextField" destination="tMo-wE-o6F" id="Xtv-2P-gFH"/>
+                        <outlet property="birthDayPicker" destination="NBS-Ii-vgT" id="iUF-rZ-FCz"/>
                         <outlet property="firstNameTextField" destination="SvO-vb-aBm" id="DUR-t0-rxN"/>
-                        <outlet property="genderTextField" destination="19E-bb-Yls" id="oFj-Ar-rsf"/>
+                        <outlet property="genderPicker" destination="Q0g-3U-s1e" id="m8F-WB-Bb5"/>
                         <outlet property="lastNameTextField" destination="S4j-JK-tlH" id="J2Q-9p-qIv"/>
                         <outlet property="nickNameTextField" destination="rWS-tp-38P" id="5vD-eM-G1I"/>
                         <outlet property="saveButton" destination="4h5-hh-O5V" id="F4r-cH-7pm"/>
@@ -853,6 +861,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="TOo-XU-L5q"/>
+        <segue reference="kfp-TM-OvH"/>
     </inferredMetricsTieBreakers>
 </document>

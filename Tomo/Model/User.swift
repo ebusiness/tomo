@@ -9,21 +9,6 @@ class User: _User {
         return "\(fName) \(lName)"
     }
     
-    func genderText() -> String? {
-        
-        if let gender = gender {
-            
-            if gender == "1" {
-                return "男"
-            } else {
-                return "女"
-            }
-            
-        } else {
-            return nil
-        }
-    }
-    
     var hasIdOnly: Bool {
         return createDate == nil
     }

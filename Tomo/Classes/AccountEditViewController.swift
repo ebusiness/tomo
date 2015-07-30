@@ -14,14 +14,39 @@ class AccountEditViewController: MyAccountBaseController {
     @IBOutlet weak var bioTextView: UITextView!
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
-    @IBOutlet weak var genderTextField: UITextField!
-    @IBOutlet weak var birthDayTextField: UITextField!
+    
     @IBOutlet weak var telTextField: UITextField!
     @IBOutlet weak var addressTextField: UITextField!
     
+    @IBOutlet weak var genderPicker: UIPickerView!
+    
+    @IBOutlet weak var birthDayPicker: UIDatePicker!
     @IBOutlet weak var saveButton: UIButton!
     var path: String?
-    var user:User!
+    var user:User! {
+        didSet{
+            
+            nickNameTextField.text = user.nickName
+            firstNameTextField.text = user.firstName
+            lastNameTextField.text = user.lastName
+//            birthDayTextField.text = user.birthDay?.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
+            addressTextField.text = user.address
+            //        stationLabel.text = (user.stations.array.last as? Station)?.name
+            telTextField.text = user.telNo
+            bioTextView.text = user.bioText
+            
+            if let gender = user.gender {
+                
+                self.genderPicker.selectRow(user.gender == "男" ? 0 : 1 , inComponent: 0, animated: true)
+                
+            }
+            if let birthDay = user.birthDay {
+                
+                self.birthDayPicker.setDate(birthDay, animated: true)
+                
+            }
+        }
+    }
     var isAvatar = true
     var headerView:MyAccountHeaderViewController! // for update image realtime when take a photo
     
@@ -57,7 +82,13 @@ class AccountEditViewController: MyAccountBaseController {
         }
         
         if segue.identifier == "segue_save" {
-            updateUser()
+            
+            self.updateUser()
+            DBController.save()
+            
+            ApiController.editUser(user, done: { (error) -> Void in
+                
+            })
         }
     }
 
@@ -68,16 +99,6 @@ extension AccountEditViewController{
     func updateUI() {
         
         user = DBController.myUser()
-        
-        nickNameTextField.text = user.nickName
-        firstNameTextField.text = user.firstName
-        lastNameTextField.text = user.lastName
-        birthDayTextField.text = user.birthDay?.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
-        genderTextField.text = user.genderText()
-        addressTextField.text = user.address
-        //        stationLabel.text = (user.stations.array.last as? Station)?.name
-        telTextField.text = user.telNo
-        bioTextView.text = user.bioText
     }
     
     func updateUser() {
@@ -86,16 +107,9 @@ extension AccountEditViewController{
         user.bioText = bioTextView.text
         user.firstName = firstNameTextField.text
         user.lastName = lastNameTextField.text
-        //        user.gender =
-        //        user.birthDay =
+        user.birthDay = self.birthDayPicker.date
         user.telNo = telTextField.text
         user.address = addressTextField.text
-        
-        DBController.save()
-        
-        ApiController.editUser(user, done: { (error) -> Void in
-            
-        })
     }
     
     func imageViewTapped(isAvatar:Bool) {
@@ -120,6 +134,8 @@ extension AccountEditViewController: UITableViewDelegate {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+//        let cell = tableView.cellForRowAtIndexPath(indexPath)
         
     }
 }
@@ -168,4 +184,54 @@ extension AccountEditViewController: DBCameraViewControllerDelegate {
         self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
         cameraViewController.restoreFullScreenMode()
     }
+}
+
+extension AccountEditViewController:UIPickerViewDelegate{
+    
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {
+        
+        if pickerView == genderPicker {
+            var pickerLabel:UILabel!
+            
+            if let label = view as? UILabel {
+                
+                pickerLabel = label
+                
+            } else {
+                
+                pickerLabel = UILabel()
+                
+            }
+            
+            pickerLabel.textAlignment = .Right
+            pickerLabel.font = UIFont.systemFontOfSize(14)
+            pickerLabel.text = row == 0 ? "男" : "女"
+            
+            return pickerLabel
+        }
+        
+        return view
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
+        
+        user.gender = row == 0 ? "男" : "女"
+    }
+}
+
+extension AccountEditViewController:UIPickerViewDataSource{
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
+        if pickerView == genderPicker {
+            return 2
+        }
+        return 0
+    }
+    
+    
 }

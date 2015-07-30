@@ -90,7 +90,7 @@ extension ProfileViewController {
         
         fullNameLabel.text = user?.fullName()
         
-        genderLabel.text = user?.genderText()
+        genderLabel.text = user?.gender
         
         //        birthDayLabel.text = user?.birthDay.
         
