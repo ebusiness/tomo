@@ -12,6 +12,7 @@ class BaseTableViewController: UITableViewController {
     
     var topConstraint:NSLayoutConstraint?
     var headerHeight:CGFloat = 160 - 64
+    var navigationImageView:UIImageView?
 
     var whenShowNavigationBar : ( (CGFloat)->() )?
     var whenHideNavigationBar : ( (CGFloat)->() )?
@@ -129,32 +130,52 @@ extension BaseTableViewController {
     
     func setNavigationBarBackgroundImage (image:UIImage?,alpha:CGFloat){
         
-        if let naviSubViews = self.navigationController?.navigationBar.subviews {
+        if navigationImageView == nil {
             
-            naviSubViews.map{ (v) -> () in
+            if let naviSubViews = self.navigationController?.navigationBar.subviews {
                 
-                if let imageview = v as? UIImageView
-                    where imageview.frame.size.width == self.navigationController?.navigationBar.frame.size.width
-                {
+                naviSubViews.map{ (v) -> () in
                     
-                    imageview.image = image
-                    imageview.alpha = alpha
-                    if imageview.tag != 1 {
+                    if let imageview = v as? UIImageView
+                        where imageview.frame.size.width == self.navigationController?.navigationBar.frame.size.width
+                    {
                         
-                        imageview.tag = 1
                         imageview.contentMode = UIViewContentMode.ScaleAspectFill
                         imageview.clipsToBounds = true
                         
-                        let textProtectionImageview = UIImageView(frame: CGRectMake(0, 0, imageview.frame.size.width, imageview.frame.size.height))
-                        textProtectionImageview.image = UIImage(named: "text_protection")
-                        textProtectionImageview.contentMode = UIViewContentMode.ScaleToFill
-                        textProtectionImageview.clipsToBounds = true
-                        
-                        imageview.addSubview(textProtectionImageview)
-                        
+                        self.navigationImageView = imageview
                     }
                 }
             }
+        }
+        
+        if let imageview = navigationImageView,image = image {
+            
+            if self.navigationImageView?.subviews.count < 1 {
+                
+                let textProtectionImageview = UIImageView(frame: CGRectMake(0, 0, imageview.frame.size.width, imageview.frame.size.height))
+                textProtectionImageview.image = UIImage(named: "text_protection")
+                textProtectionImageview.contentMode = UIViewContentMode.ScaleToFill
+                textProtectionImageview.clipsToBounds = true
+                
+                imageview.addSubview(textProtectionImageview)
+                
+            }
+            imageview.image = image
+            imageview.alpha = alpha
+            
+        } else {
+            
+            if let subv = self.navigationImageView?.subviews {
+                
+                for v in subv {
+                    v.removeFromSuperview()
+                }
+            }
+            
+            self.navigationImageView?.image = nil
+            self.navigationImageView?.alpha = 1
+            
         }
         
     }
