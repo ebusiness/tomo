@@ -11,7 +11,8 @@ import UIKit
 enum TabItem: Int {
     case Home, Chat, Group, Map, Setting
     
-    static let items = [Home, Chat, Group, Map, Setting]
+//    static let items = [Home, Chat, Group, Map, Setting]
+    static let items = [Home, Chat, Map, Setting]
     
     func storyBoardName() -> String {
         switch self {
@@ -111,11 +112,11 @@ class TabBarController: UITabBarController {
         
         let unreadAnnouncementsCount = DBController.unreadAnnouncementsCount()
         if unreadAnnouncementsCount > 0 {
-            if let vc = viewControllers?[4] as? UIViewController {
+            if let vc = viewControllers?[3] as? UIViewController {
                 vc.tabBarItem.badgeValue = String(unreadAnnouncementsCount)
             }
         } else {
-            if let vc = viewControllers?[4] as? UIViewController {
+            if let vc = viewControllers?[3] as? UIViewController {
                 vc.tabBarItem.badgeValue = nil
             }
         }

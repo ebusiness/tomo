@@ -1,5 +1,5 @@
 @objc(Post)
-class Post: _Post {
+class Post: _Post, MKAnnotation {
 
 //    func sortedComments() -> [Comments] {
 //        let sd = NSSortDescriptor(key: "createDate", ascending: false)
@@ -30,6 +30,18 @@ class Post: _Post {
         get {
             return owner?.id == Defaults["myId"].string
         }
+    }
+    
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2DMake(35.6556659999999965, 139.7567469999999901)
+    }
+    
+    var title: String! {
+        return owner?.nickName
+    }
+    
+    var subtitle: String! {
+        return content
     }
     
     func delete() {

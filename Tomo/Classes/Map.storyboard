@@ -18,7 +18,28 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKM-D9-brj">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <connections>
+                                    <outlet property="delegate" destination="OpP-6Y-mbl" id="Izv-tq-Wk5"/>
+                                </connections>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h5e-uw-BW1">
+                                <rect key="frame" x="231" y="473" width="61" height="30"/>
+                                <state key="normal" title="building">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="toggleBuilding" destination="OpP-6Y-mbl" eventType="touchUpInside" id="5CP-jf-Yfu"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ws5-Aq-GDW">
+                                <rect key="frame" x="233" y="426" width="59" height="30"/>
+                                <state key="normal" title="interest">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="toggleInterest" destination="OpP-6Y-mbl" eventType="touchUpInside" id="KoE-nJ-flF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -29,6 +50,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="地图" id="KKw-VS-iwT"/>
+                    <connections>
+                        <outlet property="mapView" destination="UKM-D9-brj" id="omH-2J-6xe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lyR-37-tdo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

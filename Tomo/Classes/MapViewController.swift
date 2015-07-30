@@ -10,96 +10,148 @@ import UIKit
 
 class MapViewController: BaseViewController {
     
+    let locationManager = CLLocationManager()
+    
+    @IBOutlet weak var mapView: MKMapView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
-// MARK: - Common
-extension MapViewController {
-    // MARK: - query param
-    func urlComponentsToDict(url:NSURL) -> Dictionary<String, String> {
         
-        let comp: NSURLComponents? = NSURLComponents(URL: url, resolvingAgainstBaseURL: true)
+        setupMapping()
         
-        var dict:Dictionary<String, String> = Dictionary<String, String>()
-        
-        for (var i=0; i < comp?.queryItems?.count; i++) {
-            let item = comp?.queryItems?[i] as! NSURLQueryItem
-            dict[item.name] = item.value
+        RKObjectManager.sharedManager().getObjectsAtPath("/newsfeed", parameters: nil, success: { (operation, result) -> Void in
+            self.mapView.addAnnotations(result.array())
+        }) { (operation, err) -> Void in
+            println(err)
         }
-        return dict
-    }
-    
-    func schemeResolve(url:NSURL){
-        if let host = url.host {
-            
-            let param = urlComponentsToDict(url);
-            
-            switch host {
-            case"groups":
-                self.hostGroups(param);
-                break;
-            case"users":
-                self.hostUsers(param);
-                break;
-            case"posts":
-                self.hostPosts(param);
-                break;
-            default:
-                break;
-            }
-        }
-    }
-    
-}
 
-// MARK: - Action
-extension MapViewController {
-    // group
-    func hostGroups(param:Dictionary<String, String>){
-//        let vc = Util.createViewControllerWithIdentifier("GroupListViewController", storyboardName: "Group") as! GroupListViewController
-//        vc.station = param["station._id"]!;
-//        Util.showHUD(maskType: .None)
-//        ApiController.getGroups(param, done: { (error) -> Void in
-//            self.navigationController?.pushViewController(vc, animated: true)
-//        })
-    }
-    // users
-    func hostUsers(param:Dictionary<String, String>){
-
-//        Util.showHUD(maskType: .None)
-//        var searchKey = SearchType.Station.searchKey();
-//        
-//        ApiController.getUsers(key: searchKey, value: param[searchKey]!, done: { (users, error) -> Void in
-//            if let users = users {
-//                if users.count > 0 {
-//                    let vc = Util.createViewControllerWithIdentifier("FriendListViewController", storyboardName: "Chat") as! FriendListViewController
-//                    vc.displayMode = .SearchResult
-//                    vc.users = users
-//                    self.navigationController?.pushViewController(vc, animated: true)
-//                    return
+//        RKObjectManager.sharedManager().getObjectsAtPath("/newsfeed", parameters: nil,
+//            success: { (_, results) -> Void in
+//                if let results = results {
+//                    var posts = results.array() as! [Post]
+//                    self.mapView.addAnnotation(posts[0])
 //                }
-//            }
-//            
-//            Util.showInfo("見つかりませんでした。")
-//        })
+//            },
+//            failure: { (_, error) -> Void in } )
+
     }
-    // posts
-    func hostPosts(param:Dictionary<String, String>){
-//        let vc = Util.createViewControllerWithIdentifier("NewsfeedViewController", storyboardName: "Newsfeed") as! NewsfeedViewController
-//        vc.displayMode = .Station
-//        vc.stationCondition = param
-//        self.navigationController?.pushViewController(vc, animated: true)
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        let authStatus = CLLocationManager.authorizationStatus()
+        
+        switch authStatus {
+        case .NotDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .Denied, .Restricted:
+            showLocationServiceDisabledAlert()
+        default:
+            return
+        }
+        
+    }
+    
+}
+
+// MARK: Action
+extension MapViewController {
+    
+    @IBAction func showUser() {
+        turnTo3DMap(mapView.userLocation.coordinate)
+    }
+    
+    @IBAction func toggleInterest() {
+        mapView.showsPointsOfInterest = !mapView.showsPointsOfInterest
+    }
+    
+    @IBAction func toggleBuilding() {
+        mapView.showsBuildings = !mapView.showsBuildings
+    }
+    
+}
+
+// MARK: MapView Delegate
+extension MapViewController: MKMapViewDelegate {
+    
+    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
+        
+        let userCoordinate = userLocation.coordinate
+        let region = MKCoordinateRegionMakeWithDistance(userCoordinate, 1500, 1500)
+        
+        UIView.animateWithDuration(2.0, animations: { () -> Void in
+            self.mapView.setRegion(mapView.regionThatFits(region), animated: true)
+        }) { (_) -> Void in
+            self.mapView.showsUserLocation = false
+            self.turnTo3DMap(userCoordinate)
+        }
+    }
+    
+    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView? {
+        
+        if let annotation = annotation as? PostEntity {
+            println(annotation)
+            let annotationView = PostAnnotationView(annotation: annotation, reuseIdentifier: "PostAnnotationView")
+            return annotationView
+        } else {
+            return nil
+        }
+    }
+}
+
+// MARK: Private function
+extension MapViewController {
+    
+    private func setupMapping() {
+        
+        let userMapping = RKObjectMapping(forClass: UserEntity.self)
+        userMapping.addAttributeMappingsFromDictionary([
+            "_id": "id",
+            "nickName": "nickName",
+            "photo_ref": "photo"
+        ])
+        
+        let postMapping = RKObjectMapping(forClass: PostEntity.self)
+        postMapping.addAttributeMappingsFromDictionary([
+            "_id": "id",
+            "content": "content",
+            "coordinate": "coordinateRawValue",
+            "createDate": "createDate"
+        ])
+        
+        let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping)
+        
+        postMapping.addPropertyMapping(ownerRelationshipMapping)
+        
+        let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        
+        RKObjectManager.sharedManager().addResponseDescriptor(responseDescriptor)
+        
+    }
+    
+    private func showLocationServiceDisabledAlert() {
+        
+        let alert = UIAlertController(title: "请启用定位服务", message: "设置隐私定位服务", preferredStyle: .Alert)
+        
+        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        
+        alert.addAction(action)
+        
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    private func turnTo3DMap(coordinate: CLLocationCoordinate2D) {
+        
+        let lat = coordinate.latitude
+        let log = coordinate.longitude
+        
+        let from = CLLocationCoordinate2DMake(lat, log - 0.1)
+        
+        let camera = MKMapCamera(lookingAtCenterCoordinate: coordinate, fromEyeCoordinate: from, eyeAltitude: 500)
+        camera.heading = CLLocationDirection.abs(0)
+        
+        UIView.animateWithDuration(1.0, animations: { () -> Void in
+            self.mapView.camera = camera
+        })
+        
     }
 }
