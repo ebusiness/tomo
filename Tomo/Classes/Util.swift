@@ -183,7 +183,7 @@ extension Util {
         )
     }
     
-    class func imageWithColor(rgbValue: UInt,alpha:CGFloat) -> UIImage {
+    class func imageWithColor(rgbValue: UInt,alpha:CGFloat,size:CGSize = CGSizeMake(320, 64)) -> UIImage {
         
         var rect = CGRectMake(0.0, 0.0, 320.0, 64.0)
         var color = Util.UIColorFromRGB(rgbValue, alpha: alpha)
