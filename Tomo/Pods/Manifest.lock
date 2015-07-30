@@ -19,7 +19,6 @@ PODS:
   - MagicalRecord/Core (2.2)
   - MHVideoPhotoGallery (1.6.7):
     - SDWebImage
-  - MJExtension (2.5.2)
   - NYXImagesKit (2.3)
   - RestKit (0.24.1):
     - RestKit/Core (= 0.24.1)
@@ -61,7 +60,6 @@ DEPENDENCIES:
   - JSQMessagesViewController (= 7.0.0)
   - MagicalRecord
   - MHVideoPhotoGallery
-  - MJExtension
   - NYXImagesKit
   - RestKit
   - SDWebImage
@@ -82,7 +80,6 @@ SPEC CHECKSUMS:
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   MagicalRecord: f8a56bb87ab6552f20c4bb8681a1958a197ea3cd
   MHVideoPhotoGallery: d6433bc1ec2caf227ad960ee709500b23949bbb2
-  MJExtension: 73e812aca0846e4a7b4d7aca34cfacf48d1f3310
   NYXImagesKit: 8163e3335a40eaa173ca5bbbf81fafb57d3947eb
   RestKit: 1987b5efef289c6b27bd980714d6ca48d3871b78
   RKValueTransformers: 66ac5e4f077fdbe3496e792d89eeff4c3eb67701

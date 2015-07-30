@@ -33,5 +33,3 @@
 #import "DBCameraViewController.h"
 #import "DBCameraContainerViewController.h"
 #import "DBCameraLibraryViewController.h"
-
-#import "MJExtension.h"
