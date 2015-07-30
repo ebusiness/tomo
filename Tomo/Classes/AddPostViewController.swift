@@ -19,6 +19,7 @@ class AddPostViewController: BaseViewController {
     @IBOutlet weak var groupButton: UIButton!
     @IBOutlet weak var stationButton: UIButton!
     
+    @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var headerHeight: NSLayoutConstraint!
     @IBOutlet weak var stationName: UILabel!
     @IBOutlet weak var groupName: UILabel!
@@ -27,10 +28,10 @@ class AddPostViewController: BaseViewController {
     var imageListSelected:[UIImage] = []
     var postContent: String?
     
-    var groupListVC: NewGroupListViewController?
-    var stationListVC: StationTableViewController?
-    var selectedGroup: Group?
-    var selectedStation: Station?
+//    var groupListVC: NewGroupListViewController?
+//    var stationListVC: StationTableViewController?
+//    var selectedGroup: Group?
+//    var selectedStation: Station?
     
     override func viewDidLoad() {
         
@@ -43,14 +44,15 @@ class AddPostViewController: BaseViewController {
         Util.changeImageColorForButton(stationButton,color: color)
         Util.changeImageColorForButton(groupButton,color: color)
         
-        if DBController.myStations().count == 0 {
-            stationButton.enabled = false
-        }
-        
-        if DBController.myUser()?.groups.count == 0 {
-            groupButton.enabled = false
-        }
-        getAllPhoto()
+//        if DBController.myStations().count == 0 {
+//            stationButton.enabled = false
+//        }
+//        
+//        if DBController.myUser()?.groups.count == 0 {
+//            groupButton.enabled = false
+//        }
+//        
+        self.getAllPhoto()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -65,13 +67,13 @@ class AddPostViewController: BaseViewController {
 //            self.stationName.text = ""
 //        }
         
-        if let stationListVC = stationListVC, selectedStation = stationListVC.selectedStation {
-            self.selectedStation = selectedStation
-            self.selectedGroup = nil
-            self.stationName.text = selectedStation.name
-            self.groupName.text = ""
-            self.stationListVC = nil
-        }
+//        if let stationListVC = stationListVC, selectedStation = stationListVC.selectedStation {
+//            self.selectedStation = selectedStation
+//            self.selectedGroup = nil
+//            self.stationName.text = selectedStation.name
+//            self.groupName.text = ""
+//            self.stationListVC = nil
+//        }
         self.postInput.becomeFirstResponder()
     }
     
@@ -84,7 +86,10 @@ class AddPostViewController: BaseViewController {
         Util.showHUD()
         // send post
         self.uploadToS3({ (imageNames, sizes) -> () in
-            ApiController.addPost(imageNames, sizes: sizes, content: self.postContent!, groupId: self.selectedGroup?.id, stationId: self.selectedStation?.id,location: nil, done: { (error) -> Void in
+            
+//            ApiController.addPost(imageNames, sizes: sizes, content: self.postContent!, groupId: self.selectedGroup?.id, stationId: self.selectedStation?.id,location: nil, done: { (error) -> Void in
+            
+            ApiController.addPost(imageNames, sizes: sizes, content: self.postContent!, groupId: nil, stationId: nil,location: nil, done: { (error) -> Void in
                 
                 Util.dismissHUD()
                 self.dismissViewControllerAnimated(true, completion: nil)
@@ -100,44 +105,78 @@ class AddPostViewController: BaseViewController {
     
     
     @IBAction func cameraOnClick(sender: AnyObject) {
-        DBCameraController.openCamera(self, delegate: self)
+        
+        var optional = Dictionary<String,((UIAlertAction!) -> Void)!>()
+        
+        
+        let avstatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+        if avstatus !=  .NotDetermined && avstatus !=  .Authorized {
+            Util.showInfo("请允许本App使用相机")
+        } else {
+            
+            optional["拍摄"] = { (_) -> () in
+                DBCameraController.openCamera(self, delegate: self)
+            }
+            
+        }
+        
+        let status = ALAssetsLibrary.authorizationStatus()
+        if status != .NotDetermined && status != .Authorized {
+            Util.showInfo("请允许本App访问相册")
+        } else {
+            
+            optional["从相册选择"] = { (_) -> () in
+                DBCameraController.openLibrary(self, delegate: self)
+            }
+//            getAllPhoto()
+            
+        }
+        
+        if optional.count > 0 {
+            
+            Util.alertActionSheet(self, optionalDict:optional)
+            
+        }
+        
     }
     
     @IBAction func groupTapped(sender: AnyObject) {
-        //select group
-        groupListVC = Util.createViewControllerWithIdentifier("GroupListViewController", storyboardName: "Group") as? NewGroupListViewController
-//        groupListVC!.showMyGroupOnly = true
-//        groupListVC!.selectedGroup = selectedGroup
-        
-        navigationController?.pushViewController(groupListVC!, animated: true)
+//        //select group
+//        groupListVC = Util.createViewControllerWithIdentifier("GroupListViewController", storyboardName: "Group") as? NewGroupListViewController
+////        groupListVC!.showMyGroupOnly = true
+////        groupListVC!.selectedGroup = selectedGroup
+//        
+//        navigationController?.pushViewController(groupListVC!, animated: true)
     }
     
     @IBAction func stationTapped(sender: AnyObject) {
-        //select station
-        stationListVC = StationTableViewController()
-        stationListVC?.displayMode = .MyStationOnly
-        
-        navigationController?.pushViewController(stationListVC!, animated: true)
+//        //select station
+//        stationListVC = StationTableViewController()
+//        stationListVC?.displayMode = .MyStationOnly
+//        
+//        navigationController?.pushViewController(stationListVC!, animated: true)
     }
     
     @IBAction func viewPanGesture(sender: UIPanGestureRecognizer) {
         
-        let point = sender.translationInView(self.view)
-        let h:CGFloat = self.imageList.count == 0 ? 88 : 204
-        
-        if sender.state == UIGestureRecognizerState.Began {
-
-        } else if sender.state == UIGestureRecognizerState.Changed {
-            var constant = h + point.y
-            headerHeight.constant = constant < 88 ? 88 : constant
-            
-        } else if sender.state == UIGestureRecognizerState.Ended {
-            
-            headerHeight.constant = h
-            UIView.animateWithDuration(0.2, animations: { () -> Void in
-                self.view.layoutIfNeeded()
-            })
-        }
+//        if self.imageList.count == 0 { return }
+//        
+//        let point = sender.translationInView(self.view)
+//        let h:CGFloat = 138
+//        
+//        if sender.state == UIGestureRecognizerState.Began {
+//
+//        } else if sender.state == UIGestureRecognizerState.Changed {
+//            var constant = h + point.y
+//            headerHeight.constant = constant < 44 ? 44 : constant
+//            
+//        } else if sender.state == UIGestureRecognizerState.Ended {
+//            
+//            headerHeight.constant = h
+//            UIView.animateWithDuration(0.2, animations: { () -> Void in
+//                self.view.layoutIfNeeded()
+//            })
+//        }
     }
 }
 
@@ -149,10 +188,10 @@ extension AddPostViewController {
         
         library.enumerateGroupsWithTypes(ALAssetsGroupSavedPhotos, usingBlock: {
             (group: ALAssetsGroup!, stop) in
-            if group != nil {
+            if let group = group {
                 var assetBlock : ALAssetsGroupEnumerationResultsBlock = { (result: ALAsset!, index: Int, stop) in
                     if result != nil && self.imageList.count < 10 {
-                        //var image = UIImage(CGImage:result.thumbnail().takeUnretainedValue())
+//                        var image = UIImage(CGImage:result.thumbnail().takeUnretainedValue())
                         var image = UIImage(CGImage:result.defaultRepresentation().fullScreenImage().takeUnretainedValue())
                         self.imageList.append(image!)
                     }
@@ -163,7 +202,8 @@ extension AddPostViewController {
                 self.setImageList()
             }
             }, failureBlock: { (fail) in
-                self.headerHeight.constant = self.imageList.count == 0 ? 88 : 204
+                
+                self.hideHeaderView(self.imageList.count == 0)
         })
         
     }
@@ -172,6 +212,10 @@ extension AddPostViewController {
         
         for imageview in imageListView.subviews {
             imageview.removeFromSuperview()
+        }
+        if imageList.count < 1 {
+            self.hideHeaderView(true,animated: false)
+            return
         }
         
         let height = imageListView.frame.size.height
@@ -184,7 +228,6 @@ extension AddPostViewController {
             
             let imgView = UIImageView(frame: CGRectZero )
             imgView.image = image
-            imgView.userInteractionEnabled = true
             
             imgView.contentMode = UIViewContentMode.ScaleAspectFill
             imgView.clipsToBounds = true
@@ -193,10 +236,11 @@ extension AddPostViewController {
                 imgView.layer.borderColor = UIColor.redColor().CGColor
                 imgView.layer.borderWidth = 2
             }
-            
-            let tap = UITapGestureRecognizer(target: self, action: Selector("imageViewTapped:"))
-            imgView.addGestureRecognizer(tap)
 
+            let tap = UITapGestureRecognizer(target: self, action: Selector("imageViewTapped:"))
+            imgView.userInteractionEnabled = true
+            imgView.addGestureRecognizer(tap)
+            
             imageListView.addSubview(imgView)
             
             imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -213,7 +257,6 @@ extension AddPostViewController {
         
         imageListView.contentSize.width = scrollWidth
     }
-    
     
     func imageViewTapped(sender: UITapGestureRecognizer) {
         
@@ -259,6 +302,18 @@ extension AddPostViewController {
         
     }
     
+    func hideHeaderView(hidden:Bool,animated:Bool = true){
+        
+        self.headerHeight.constant = hidden ? 44 : 138
+        
+        if animated {
+            UIView.animateWithDuration(0.2, animations: { () -> Void in
+                self.view.layoutIfNeeded()
+            })
+        }
+        
+    }
+    
 }
 
 extension AddPostViewController: UITextViewDelegate {
@@ -293,7 +348,9 @@ extension AddPostViewController: DBCameraViewControllerDelegate {
         
         self.imageList.insert(newImage, atIndex: 0)
         self.imageListSelected.append(newImage)
-//        self.imageList.append(newImage)
+        
+        self.hideHeaderView(false)
+        
         self.setImageList()
         self.imageListView.setContentOffset(CGPointZero, animated: true)
         self.dismissCamera(cameraViewController)
@@ -303,13 +360,5 @@ extension AddPostViewController: DBCameraViewControllerDelegate {
     func dismissCamera(cameraViewController: AnyObject!) {
         self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
         cameraViewController.restoreFullScreenMode()
-    }
-}
-
-
-extension AddPostViewController: UIScrollViewDelegate {
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        
     }
 }

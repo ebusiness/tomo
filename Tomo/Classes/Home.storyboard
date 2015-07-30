@@ -384,7 +384,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qI9-FP-yh8">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="204"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="138"/>
                                 <subviews>
                                     <toolbar opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XFi-XH-vbm">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -412,20 +412,17 @@
                                         </items>
                                     </toolbar>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fKr-x5-RbW">
-                                        <rect key="frame" x="0.0" y="44" width="320" height="160"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="8nN-Dw-JJl" id="BBm-SV-cdF"/>
-                                        </connections>
+                                        <rect key="frame" x="0.0" y="44" width="320" height="94"/>
                                     </scrollView>
                                     <view hidden="YES" alpha="0.15000000596046448" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5jc-oX-dzr">
-                                        <rect key="frame" x="0.0" y="160" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="94" width="320" height="44"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="0Pg-g3-duJ"/>
                                         </constraints>
                                     </view>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="110-Dm-aFh">
-                                        <rect key="frame" x="0.0" y="160" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="94" width="320" height="44"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c6w-BX-SXR">
                                                 <rect key="frame" x="16" y="10" width="25" height="25"/>
@@ -497,11 +494,11 @@
                                     <constraint firstItem="XFi-XH-vbm" firstAttribute="leading" secondItem="qI9-FP-yh8" secondAttribute="leading" id="u2i-v8-2t3"/>
                                     <constraint firstAttribute="trailing" secondItem="fKr-x5-RbW" secondAttribute="trailing" id="z7T-Dn-JO8"/>
                                     <constraint firstItem="fKr-x5-RbW" firstAttribute="leading" secondItem="qI9-FP-yh8" secondAttribute="leading" id="zXw-tQ-nVK"/>
-                                    <constraint firstAttribute="height" constant="204" id="zxq-5u-Nbb"/>
+                                    <constraint firstAttribute="height" constant="138" id="zxq-5u-Nbb"/>
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="这一刻的想法..." translatesAutoresizingMaskIntoConstraints="NO" id="teY-c8-Nwq">
-                                <rect key="frame" x="0.0" y="204" width="320" height="320"/>
+                                <rect key="frame" x="0.0" y="138" width="320" height="386"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -529,6 +526,7 @@
                     <navigationItem key="navigationItem" id="Jg9-fY-iYy"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="cameraButton" destination="r1f-cH-8dc" id="yeW-wz-vP4"/>
                         <outlet property="groupButton" destination="c6w-BX-SXR" id="eSl-0q-ZVw"/>
                         <outlet property="groupName" destination="aZd-Tv-cwI" id="WS7-ON-HdY"/>
                         <outlet property="headerHeight" destination="zxq-5u-Nbb" id="WEw-X2-ddP"/>
