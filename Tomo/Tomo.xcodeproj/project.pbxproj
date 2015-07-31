@@ -184,7 +184,6 @@
 		29BE7E121AC54224008110B4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
 		29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E1A1AC54663008110B4 /* DBController.swift */; };
 		29BE7E1C1AC54663008110B4 /* DBController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E1A1AC54663008110B4 /* DBController.swift */; };
-		29BE7E231AC55A28008110B4 /* MultilineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E221AC55A28008110B4 /* MultilineLabel.swift */; };
 		29C1DA7A1AD36659009A02CC /* S3Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA781AD36659009A02CC /* S3Controller.swift */; };
 		29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */; };
 		29CA44151AD4C050009EB177 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
@@ -303,7 +302,6 @@
 		290135161AC3A78E00BBFE29 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		290135191AC3A79500BBFE29 /* _User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _User.swift; sourceTree = "<group>"; };
 		2901351C1AC3A90C00BBFE29 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Classes/Constants.swift; sourceTree = "<group>"; };
-		290144111ADE3BBD0048F3D8 /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
 		290144161ADF6D890048F3D8 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = Classes/MapViewController.swift; sourceTree = "<group>"; };
 		291ADF941AD229B3009D8BE3 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentCell.swift; path = Classes/CommentCell.swift; sourceTree = "<group>"; };
 		292B9CC71AE61A0D00604986 /* LineMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LineMapping.plist; sourceTree = "<group>"; };
@@ -357,7 +355,6 @@
 		29B00A5D1AE09E7E002AF208 /* NotificationMapping.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NotificationMapping.plist; sourceTree = "<group>"; };
 		29BE7E111AC54224008110B4 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = ../Classes/Util.swift; sourceTree = "<group>"; };
 		29BE7E1A1AC54663008110B4 /* DBController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBController.swift; path = Classes/DBController.swift; sourceTree = "<group>"; };
-		29BE7E221AC55A28008110B4 /* MultilineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultilineLabel.swift; path = ../Classes/MultilineLabel.swift; sourceTree = "<group>"; };
 		29C1DA781AD36659009A02CC /* S3Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3Controller.swift; path = Classes/S3Controller.swift; sourceTree = "<group>"; };
 		29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyUserDefaults.swift; sourceTree = "<group>"; };
 		29CA44191AD4CA48009EB177 /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Chat.storyboard; path = Classes/Chat.storyboard; sourceTree = "<group>"; };
@@ -650,8 +647,6 @@
 				2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */,
 				296040451ACE669900D2A338 /* Alamofire.swift */,
 				2994AF901B019AA100656C39 /* GCD.swift */,
-				29BE7E221AC55A28008110B4 /* MultilineLabel.swift */,
-				290144111ADE3BBD0048F3D8 /* SCLAlertView.swift */,
 				29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */,
 				29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */,
 				29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */,
@@ -1090,7 +1085,6 @@
 				1F60DD591B6B23320009C01B /* Group.swift in Sources */,
 				290134F81AC39F4600BBFE29 /* ApiController.swift in Sources */,
 				1F937FE81B58EE8B009722CE /* AccountEditViewController.swift in Sources */,
-				29BE7E231AC55A28008110B4 /* MultilineLabel.swift in Sources */,
 				1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */,
 				1F985E6C1B60C19F008D5369 /* Sequence.swift in Sources */,
 				1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */,

@@ -10,6 +10,8 @@ import UIKit
 
 class BaseTableViewController: UITableViewController {
     
+    let manager = RKObjectManager(baseURL: kAPIBaseURL)
+    
     var topConstraint:NSLayoutConstraint?
     var headerHeight:CGFloat = 160 - 64
     var navigationImageView:UIImageView?
@@ -140,42 +142,39 @@ extension BaseTableViewController {
     
     func setNavigationBarBackgroundImage (image:UIImage?){
         
-        if navigationImageView == nil {
+        if let naviSubViews = self.navigationController?.navigationBar.subviews where navigationImageView == nil {
             
-            if let naviSubViews = self.navigationController?.navigationBar.subviews {
+            naviSubViews.map{ (v) -> () in
                 
-                naviSubViews.map{ (v) -> () in
+                if let imageview = v as? UIImageView
+                    where imageview.frame.size.width == self.navigationController?.navigationBar.frame.size.width
+                {
+                    var frame = imageview.frame
+                    frame.origin = CGPointMake(0, 0)
                     
-                    if let imageview = v as? UIImageView
-                        where imageview.frame.size.width == self.navigationController?.navigationBar.frame.size.width
-                    {
-                        var frame = imageview.frame
-                        frame.origin = CGPointMake(0, 0)
-                        
-                        imageview.subviews.map{ (subimage) -> () in
-                            if let subimage = subimage as? UIImageView where subimage.tag == 1 {
-                                
-                                self.navigationImageView = subimage
-                                return
-                            }
+                    imageview.subviews.map{ (subimage) -> () in
+                        if let subimage = subimage as? UIImageView where subimage.tag == 1 {
+                            
+                            self.navigationImageView = subimage
+                            return
                         }
-                        if let navigationImageView = self.navigationImageView { return }
-                        
-                        self.navigationTextProtection = UIImageView(frame: frame)
-                        self.navigationTextProtection!.image = UIImage(named: "text_protection")
-                        self.navigationTextProtection!.contentMode = UIViewContentMode.ScaleToFill
-                        self.navigationTextProtection!.clipsToBounds = true
-                        self.navigationTextProtection!.alpha = 0
-                        
-                        self.navigationImageView = UIImageView(frame: frame)
-                        self.navigationImageView!.tag = 1
-                        self.navigationImageView!.image = UIImage()
-                        self.navigationImageView!.contentMode = UIViewContentMode.ScaleAspectFill
-                        self.navigationImageView!.clipsToBounds = true
-                        self.navigationImageView!.addSubview(self.navigationTextProtection!)
-                        
-                        imageview.insertSubview(self.navigationImageView!, atIndex: 0)
                     }
+                    if let navigationImageView = self.navigationImageView { return }
+                    
+                    self.navigationTextProtection = UIImageView(frame: frame)
+                    self.navigationTextProtection!.image = UIImage(named: "text_protection")
+                    self.navigationTextProtection!.contentMode = UIViewContentMode.ScaleToFill
+                    self.navigationTextProtection!.clipsToBounds = true
+                    self.navigationTextProtection!.alpha = 0
+                    
+                    self.navigationImageView = UIImageView(frame: frame)
+                    self.navigationImageView!.tag = 1
+                    self.navigationImageView!.image = UIImage()
+                    self.navigationImageView!.contentMode = UIViewContentMode.ScaleAspectFill
+                    self.navigationImageView!.clipsToBounds = true
+                    self.navigationImageView!.addSubview(self.navigationTextProtection!)
+                    
+                    imageview.insertSubview(self.navigationImageView!, atIndex: 0)
                 }
             }
         }

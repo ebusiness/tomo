@@ -50,23 +50,6 @@ class Util: NSObject {
         return NSArray(contentsOfFile: path!)!
     }
     
-    class func showWhatsnew(checkVersion: Bool? = true) {
-        if checkVersion == true {
-            if !Defaults.hasKey("version") || Defaults["version"].string != UIApplication.versionBuild() {
-                showWhatsnewAlert()
-                Defaults["version"] = UIApplication.versionBuild()
-            }
-        } else {
-            showWhatsnewAlert()
-        }
-    }
-    
-    private class func showWhatsnewAlert() {
-//        let array = arrayFromPlist("whatsnew")
-//        let subTitle = array.componentsJoinedByString("\n")
-//        SCLAlertView().showInfo("变更点", subTitle: subTitle, closeButtonTitle: "OK", duration: 0)
-    }
-    
     class func setupPush() {
         if iOS8() {
             var types: UIUserNotificationType = UIUserNotificationType.Badge |

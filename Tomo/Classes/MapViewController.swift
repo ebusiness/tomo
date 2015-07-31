@@ -11,7 +11,6 @@ import UIKit
 class MapViewController: BaseViewController {
     
     let locationManager = CLLocationManager()
-    let manager = RKObjectManager(baseURL: kAPIBaseURL)
     
     @IBOutlet weak var mapView: MKMapView!
     
