@@ -14,7 +14,10 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.manager.registerRequestOperationClass(RestKitErrorHanding.self)
         self.setupMapping()
+        
         println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
         
 //        if let setting_tag = Defaults["setting_tag"].string where setting_tag == "set" {

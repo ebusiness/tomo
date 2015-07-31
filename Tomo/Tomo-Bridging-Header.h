@@ -5,6 +5,7 @@
 #import "CoreData+MagicalRecord.h"
 #import "RestKit.h"
 #import "RKEntityCache.h"
+#import "RKObjectRequestOperation.h"
 
 #import "SVProgressHUD.h"
 #import "SDWebImage/UIImageView+WebCache.h"

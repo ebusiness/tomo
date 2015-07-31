@@ -34,8 +34,14 @@ class LoadingViewController: BaseViewController {
                 }
             },
             failure: { (errCode, errMessage) -> () in
-
+                
+                let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
+                Util.changeRootViewController(from: self, to: main)
+//                Util.showInfo("登录失败[\(errMessage)]")
             })
+    }
+    
+    override func setupMapping() {
     }
 
 }

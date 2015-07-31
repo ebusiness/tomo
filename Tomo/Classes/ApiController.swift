@@ -45,6 +45,7 @@ class ApiController: NSObject {
         let model = NSManagedObjectModel.mergedModelFromBundles(nil)
         let store = RKManagedObjectStore(managedObjectModel: model)
         RKObjectManager.sharedManager().managedObjectStore = store
+        RKObjectManager.sharedManager().registerRequestOperationClass(RestKitErrorHanding.self)
         
         store.createPersistentStoreCoordinator()
         let storePath = RKApplicationDataDirectory().stringByAppendingPathComponent("Tomo.sqlite")
