@@ -14,6 +14,7 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupMapping()
         println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
         
 //        if let setting_tag = Defaults["setting_tag"].string where setting_tag == "set" {
@@ -69,14 +70,13 @@ class BaseViewController: UIViewController {
         #endif
     }
     
-    func close() {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     deinit {
         println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
         
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
+    func setupMapping(){
+    
+    }
 }

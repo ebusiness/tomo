@@ -22,6 +22,7 @@ class BaseTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupMapping()
         println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
 
         self.setBackButton()
@@ -57,6 +58,10 @@ class BaseTableViewController: UITableViewController {
 
 extension BaseTableViewController {
     
+    func setupMapping(){
+        
+    }
+    
     func setBackButton() {
         
         let backitem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
@@ -82,9 +87,7 @@ extension BaseTableViewController {
                     break
                 }
             }
-            
         }
-        
     }
 }
 
@@ -95,43 +98,32 @@ extension BaseTableViewController {
         if self.automaticallyAdjustsScrollViewInsets { return } //nothing under the navigationBar
         
         if let topConstraint = self.topConstraint {
-            
             let y = scrollView.contentOffset.y
             
             if let whenHideNavigationBar = self.whenHideNavigationBar ,whenShowNavigationBar = self.whenShowNavigationBar {
                 
                 if y < 0 || self.headerHeight > y {
-                    
                     whenHideNavigationBar(y)
                     topConstraint.constant = y
-                    
                 } else {
-                    
                     whenShowNavigationBar(y)
-                    
                 }
                 
             } else {
                 
                 if y < 0 {
-                    
                     topConstraint.constant = y
                     navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-                    
                 } else {
                     
                     var image = Util.imageWithColor(0x673AB7, alpha: y/self.headerHeight)
                     navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
                     
                     if self.headerHeight <= y {
-                        
                         self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
-                        
                     } else {
-                        
                         self.navigationController?.navigationBar.shadowImage = UIImage()
                     }
-                    
                 }
             }
         }
@@ -180,21 +172,14 @@ extension BaseTableViewController {
         }
         
         if let imageview = navigationImageView where imageview.image != image {
-            
             if let image = image {
-                
                 self.navigationTextProtection?.alpha = 1
                 self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
-
             } else {
-                
                 self.navigationTextProtection?.alpha = 0
                 self.navigationController?.navigationBar.shadowImage = UIImage()
-                
             }
-            
             imageview.image = image
-            
         }
         
     }

@@ -17,8 +17,6 @@ class MapViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupMapping()
-        
         manager.getObjectsAtPath("/newsfeed", parameters: nil, success: { (operation, result) -> Void in
             self.mapView.addAnnotations(result.array())
         }) { (operation, err) -> Void in
@@ -39,6 +37,33 @@ class MapViewController: BaseViewController {
         default:
             return
         }
+        
+    }
+    
+    override func setupMapping() {
+        
+        let userMapping = RKObjectMapping(forClass: UserEntity.self)
+        userMapping.addAttributeMappingsFromDictionary([
+            "_id": "id",
+            "nickName": "nickName",
+            "photo_ref": "photo"
+            ])
+        
+        let postMapping = RKObjectMapping(forClass: PostEntity.self)
+        postMapping.addAttributeMappingsFromDictionary([
+            "_id": "id",
+            "content": "content",
+            "coordinate": "coordinateRawValue",
+            "createDate": "createDate"
+            ])
+        
+        let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping)
+        
+        postMapping.addPropertyMapping(ownerRelationshipMapping)
+        
+        let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        
+        manager.addResponseDescriptor(responseDescriptor)
         
     }
     
@@ -91,33 +116,6 @@ extension MapViewController: MKMapViewDelegate {
 
 // MARK: Private function
 extension MapViewController {
-    
-    private func setupMapping() {
-        
-        let userMapping = RKObjectMapping(forClass: UserEntity.self)
-        userMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "nickName": "nickName",
-            "photo_ref": "photo"
-        ])
-        
-        let postMapping = RKObjectMapping(forClass: PostEntity.self)
-        postMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "content": "content",
-            "coordinate": "coordinateRawValue",
-            "createDate": "createDate"
-        ])
-        
-        let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping)
-        
-        postMapping.addPropertyMapping(ownerRelationshipMapping)
-        
-        let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
-        
-        manager.addResponseDescriptor(responseDescriptor)
-        
-    }
     
     private func showLocationServiceDisabledAlert() {
         
