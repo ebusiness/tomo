@@ -67,7 +67,7 @@ class PostViewController : BaseTableViewController{
         if post.imagesmobile.count > 0 {
             
             self.setImageList()
-            self.headerHeight = self.listViewHeight
+            self.headerHeight = self.listViewHeight - 64
             
         }
         
@@ -82,6 +82,7 @@ class PostViewController : BaseTableViewController{
             self.automaticallyAdjustsScrollViewInsets = true
             var image = Util.imageWithColor(0x673AB7, alpha: 1)
             self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+            self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
             
             self.tableView.tableHeaderView?.frame.size.height = self.contentViewHeight.constant
         }

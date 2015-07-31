@@ -22,7 +22,7 @@ class ProfileBaseController: BaseTableViewController {
             
             self.whenShowNavigationBar = { (OffsetY)->() in
                 
-                self.setNavigationBarBackgroundImage(vc.coverImageView.image, alpha: 1)
+                self.setNavigationBarBackgroundImage(vc.coverImageView.image)
                 
             }
             self.whenHideNavigationBar = { (OffsetY)->() in
@@ -54,7 +54,7 @@ class ProfileBaseController: BaseTableViewController {
                 }
                 
                 //                let alpha = OffsetY / self.headerHeight
-                self.setNavigationBarBackgroundImage(nil, alpha: 0)
+                self.setNavigationBarBackgroundImage(nil)
                 
             }
 
