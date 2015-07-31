@@ -11,6 +11,7 @@ import UIKit
 class MapViewController: BaseViewController {
     
     let locationManager = CLLocationManager()
+    let manager = RKObjectManager(baseURL: kAPIBaseURL)
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -19,21 +20,12 @@ class MapViewController: BaseViewController {
         
         setupMapping()
         
-        RKObjectManager.sharedManager().getObjectsAtPath("/newsfeed", parameters: nil, success: { (operation, result) -> Void in
+        manager.getObjectsAtPath("/newsfeed", parameters: nil, success: { (operation, result) -> Void in
             self.mapView.addAnnotations(result.array())
         }) { (operation, err) -> Void in
             println(err)
         }
-
-//        RKObjectManager.sharedManager().getObjectsAtPath("/newsfeed", parameters: nil,
-//            success: { (_, results) -> Void in
-//                if let results = results {
-//                    var posts = results.array() as! [Post]
-//                    self.mapView.addAnnotation(posts[0])
-//                }
-//            },
-//            failure: { (_, error) -> Void in } )
-
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -124,7 +116,7 @@ extension MapViewController {
         
         let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
         
-        RKObjectManager.sharedManager().addResponseDescriptor(responseDescriptor)
+        manager.addResponseDescriptor(responseDescriptor)
         
     }
     
