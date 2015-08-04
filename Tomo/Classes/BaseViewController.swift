@@ -71,8 +71,6 @@ class BaseViewController: UIViewController {
             self.navigationController?.navigationBar.shadowImage = UIImage()
         }
     }
-    
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

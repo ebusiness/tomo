@@ -63,6 +63,10 @@ class MapViewController: BaseViewController {
         
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     override func setupMapping() {
         
         let userMapping = RKObjectMapping(forClass: UserEntity.self)
@@ -75,7 +79,7 @@ class MapViewController: BaseViewController {
         let postMapping = RKObjectMapping(forClass: PostEntity.self)
         postMapping.addAttributeMappingsFromDictionary([
             "_id": "id",
-            "content": "content",
+            "contentText": "content",
             "coordinate": "coordinate",
             "createDate": "createDate"
             ])
@@ -135,15 +139,8 @@ extension MapViewController: MKMapViewDelegate {
         }
         
         if let annotation = annotation as? PostAnnotation {
-            
-//            var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(MapViewController.PostAnnotationViewIdentifier)
-//            
-//            if annotationView == nil {
-//                annotationView = PostAnnotationView(annotation: annotation, reuseIdentifier: MapViewController.PostAnnotationViewIdentifier)
-//            }
-
             var annotationView = PostAnnotationView(annotation: annotation, reuseIdentifier: MapViewController.PostAnnotationViewIdentifier)
-            annotationView.canShowCallout = true
+//            annotationView.canShowCallout = true
             
             return annotationView
         } else {
@@ -174,6 +171,19 @@ extension MapViewController: MKMapViewDelegate {
                 }
             }
         }
+    }
+    
+    func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
+        
+//        if let annotation = view.annotation as? PostAnnotation {
+//            
+//            let postViewController = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
+//            
+//            postViewController.post = annotation.post!
+//            
+//            presentViewController(postViewController, animated: true, completion: nil)
+//            
+//        }
     }
 
 }
@@ -224,7 +234,7 @@ extension MapViewController {
         // Adjust this roughly based on the dimensions of your annotations views.
         // Bigger numbers more aggressively coalesce annotations (fewer annotations displayed but better performance).
         // Numbers too small result in overlapping annotations views and too many annotations on screen.
-        let bucketSize = 60.0;
+        let bucketSize = 160.0;
         
         // find all the annotations in the visible area + a wide margin to avoid popping annotation views in and out while panning the map.
         let visibleMapRect = mapView.visibleMapRect
@@ -270,6 +280,7 @@ extension MapViewController {
                         if let view = mapView.viewForAnnotation(annotationForGrid) as? PostAnnotationView {
                             view.updateBadge()
                         }
+            
                         
                         for annotation in allAnnotations {
                             
@@ -283,7 +294,7 @@ extension MapViewController {
                                 let actualCoordinate = annotation.coordinate
                                 
                                 UIView.animateWithDuration(0.3, animations: { () -> Void in
-                                    annotation.coordinate = annotationForGrid.coordinate
+                                    annotation.coordinate = annotation.clusterAnnotation!.coordinate
                                 }, completion: { [unowned self, annotation, actualCoordinate](finished) -> Void in
                                     annotation.coordinate = actualCoordinate
                                     self.mapView.removeAnnotation(annotation)
