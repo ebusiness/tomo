@@ -98,8 +98,33 @@ extension OpenidController {
                         //用户不存在 注册
                         self.getUserInfo()////授权OK 认证成功(access_token 2小时内有效 在有效期)
                     } else if (res?.statusCode == 200) {
+                        
                         let result = JSON as! Dictionary<String, AnyObject>
                         Defaults["myId"] = result["id"]
+                        
+                        if let id = result["id"] as? String,
+                            tomoid = result["tomoid"] as? String,
+                            nickName = result["nickName"] as? String{
+                                
+                                me.id = id
+                                me.tomoid = tomoid
+                                me.nickName = nickName
+                                
+                                me.gender = result["gender"] as? String
+                                me.photo = result["photo_ref"] as? String
+                                me.cover = result["cover_ref"] as? String
+                                me.bio = result["bioText"] as? String
+                                me.firstName = result["firstName"] as? String
+                                me.lastName = result["lastName"] as? String
+                                
+                                if let dateString = result["birthDay"] as? String {
+                                    me.birthDay = dateString.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+                                }
+                                me.telNo = result["telNo"] as? String
+                                me.address = result["address"] as? String
+                        }
+                        
+                        
                         self.showSuccess(result)
                     }
                 }

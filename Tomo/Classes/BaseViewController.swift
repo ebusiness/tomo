@@ -11,6 +11,7 @@ import UIKit
 class BaseViewController: UIViewController {
     
     let manager = RKObjectManager(baseURL: kAPIBaseURL)
+    var alwaysShowNavigationBar = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,9 +57,19 @@ class BaseViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.navigationController?.navigationBar.translucent = true
-        self.navigationController?.navigationBar.shadowImage = UIImage()
+        
+        if self.alwaysShowNavigationBar {
+            
+            self.extendedLayoutIncludesOpaqueBars = false
+            self.automaticallyAdjustsScrollViewInsets = true
+            var image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
+            self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+            self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
+        } else {
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            self.navigationController?.navigationBar.translucent = true
+            self.navigationController?.navigationBar.shadowImage = UIImage()
+        }
     }
     
     

@@ -28,6 +28,8 @@ let MaxWidth: CGFloat = 500
 let AvatarMaxWidth: CGFloat = 200
 let GroupImageWidth: CGFloat = 80
 
+let NavigationBarColorHex:UInt = 0x673AB7
+
 let mapPath = kAPIBaseURLString + "/mobile/map"
 
 let DefaultAvatarImage = UIImage(named: "avatar")!

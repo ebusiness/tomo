@@ -383,7 +383,7 @@
         <image name="avatar" width="80" height="80"/>
         <image name="delete_sign" width="25" height="25"/>
         <image name="desktop2" width="680" height="435"/>
-        <image name="desktop3" width="680" height="453"/>
+        <image name="desktop3" width="25" height="25"/>
         <image name="text_protection" width="320" height="160"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -8,7 +8,7 @@
 
 import UIKit
 
-var me:UserEntity!
+var me = UserEntity()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

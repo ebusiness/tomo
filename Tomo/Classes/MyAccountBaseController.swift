@@ -16,8 +16,6 @@ class MyAccountBaseController: BaseTableViewController {
         
         if let vc = segue.destinationViewController as? MyAccountHeaderViewController{
             
-            vc.user = DBController.myUser()
-            
             self.whenShowNavigationBar = { (OffsetY)->() in
                 
                 self.setNavigationBarBackgroundImage(vc.coverImageView.image)

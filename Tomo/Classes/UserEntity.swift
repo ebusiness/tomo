@@ -12,8 +12,34 @@ class UserEntity: NSObject {
     
     var id: String!
     
+    var tomoid: String!
+    
     var nickName: String!
+    
+    var gender: String?
     
     var photo: String?
     
+    var cover: String?
+    
+    var bio: String?
+    
+    var firstName: String?
+    
+    var lastName: String?
+    
+    var birthDay: NSDate?
+    
+    var telNo: String?
+    
+    var address: String?
+}
+
+extension UserEntity {
+    
+    func fullName() -> String {
+        let fName = firstName ?? ""
+        let lName = lastName ?? ""
+        return "\(fName) \(lName)"
+    }
 }

@@ -20,6 +20,8 @@ class BaseTableViewController: UITableViewController {
     var whenShowNavigationBar : ( (CGFloat)->() )?
     var whenHideNavigationBar : ( (CGFloat)->() )?
     
+    var alwaysShowNavigationBar = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,9 +38,18 @@ class BaseTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.navigationController?.navigationBar.translucent = true
-        self.navigationController?.navigationBar.shadowImage = UIImage()
+        if self.alwaysShowNavigationBar {
+            
+            self.extendedLayoutIncludesOpaqueBars = false
+            self.automaticallyAdjustsScrollViewInsets = true
+            var image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
+            self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+            self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
+        } else {
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            self.navigationController?.navigationBar.translucent = true
+            self.navigationController?.navigationBar.shadowImage = UIImage()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -119,7 +130,7 @@ extension BaseTableViewController {
                     navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
                 } else {
                     
-                    var image = Util.imageWithColor(0x673AB7, alpha: y/self.headerHeight)
+                    var image = Util.imageWithColor(NavigationBarColorHex, alpha: y/self.headerHeight)
                     navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
                     
                     if self.headerHeight <= y {

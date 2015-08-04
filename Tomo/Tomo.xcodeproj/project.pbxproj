@@ -144,6 +144,8 @@
 		D04608D01B6B9DA700D30B77 /* RestKitErrorHanding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04608CF1B6B9DA700D30B77 /* RestKitErrorHanding.swift */; };
 		D04608D21B6BA33F00D30B77 /* TestDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404B1ACE68C500D2A338 /* TestDataTests.swift */; };
 		D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D057BAF11B670687007D14D2 /* RequestFriendCell.swift */; };
+		D07793851B704F290056B7CB /* PickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07793841B704F290056B7CB /* PickerTableViewController.swift */; };
+		D07793871B704F410056B7CB /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07793861B704F410056B7CB /* DatePickerViewController.swift */; };
 		D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */; };
 		D0A0C02E1B5F594C00ABFA5F /* ProfileBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C02D1B5F594C00ABFA5F /* ProfileBaseController.swift */; };
 		D0A0C0301B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */; };
@@ -156,6 +158,7 @@
 		D0D7B6981B303AEE00692C2F /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D7B6971B303AEE00692C2F /* Tag.swift */; };
 		D0D7B69A1B303AF600692C2F /* _Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D7B6991B303AF600692C2F /* _Tag.swift */; };
 		D0E274ED1B58D830003FDC55 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E274EC1B58D830003FDC55 /* AddPostViewController.swift */; };
+		D0E788751B6F5BD3009255B9 /* AlamofireController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E788741B6F5BD3009255B9 /* AlamofireController.swift */; };
 		D0F44FAB1B5E4790009E12AA /* BookmarkedPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */; };
 		D0F44FAD1B5E534B009E12AA /* MyPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */; };
 		D0F44FAF1B5E540F009E12AA /* FriendListSendRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */; };
@@ -311,6 +314,8 @@
 		D00E0FD51B3D3B4D00AEB521 /* DBCameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBCameraController.swift; path = Classes/DBCameraController.swift; sourceTree = "<group>"; };
 		D04608CF1B6B9DA700D30B77 /* RestKitErrorHanding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestKitErrorHanding.swift; path = Classes/RestKitErrorHanding.swift; sourceTree = "<group>"; };
 		D057BAF11B670687007D14D2 /* RequestFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestFriendCell.swift; path = Classes/RequestFriendCell.swift; sourceTree = "<group>"; };
+		D07793841B704F290056B7CB /* PickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickerTableViewController.swift; path = Classes/PickerTableViewController.swift; sourceTree = "<group>"; };
+		D07793861B704F410056B7CB /* DatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DatePickerViewController.swift; path = Classes/DatePickerViewController.swift; sourceTree = "<group>"; };
 		D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Profile.storyboard; path = Classes/Profile.storyboard; sourceTree = "<group>"; };
 		D0A0C02D1B5F594C00ABFA5F /* ProfileBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileBaseController.swift; path = Classes/ProfileBaseController.swift; sourceTree = "<group>"; };
 		D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileHeaderViewController.swift; path = Classes/ProfileHeaderViewController.swift; sourceTree = "<group>"; };
@@ -323,6 +328,7 @@
 		D0D7B6971B303AEE00692C2F /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		D0D7B6991B303AF600692C2F /* _Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _Tag.swift; sourceTree = "<group>"; };
 		D0E274EC1B58D830003FDC55 /* AddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPostViewController.swift; path = Classes/AddPostViewController.swift; sourceTree = "<group>"; };
+		D0E788741B6F5BD3009255B9 /* AlamofireController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlamofireController.swift; path = Classes/AlamofireController.swift; sourceTree = "<group>"; };
 		D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BookmarkedPostsViewController.swift; path = Classes/BookmarkedPostsViewController.swift; sourceTree = "<group>"; };
 		D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyPostsViewController.swift; path = Classes/MyPostsViewController.swift; sourceTree = "<group>"; };
 		D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendListSendRequestController.swift; path = Classes/FriendListSendRequestController.swift; sourceTree = "<group>"; };
@@ -617,6 +623,7 @@
 				29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */,
 				D00E0FD51B3D3B4D00AEB521 /* DBCameraController.swift */,
 				D04608CF1B6B9DA700D30B77 /* RestKitErrorHanding.swift */,
+				D0E788741B6F5BD3009255B9 /* AlamofireController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -696,6 +703,7 @@
 		29CA44911AD4DEEA009EB177 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				D07793831B704EA00056B7CB /* picker */,
 				1F937FE71B58EE8B009722CE /* AccountEditViewController.swift */,
 				1F937FE51B58C2E3009722CE /* SettingViewController.swift */,
 				D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */,
@@ -725,6 +733,15 @@
 				B5997E727845063A13A5D63E /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		D07793831B704EA00056B7CB /* picker */ = {
+			isa = PBXGroup;
+			children = (
+				D07793841B704F290056B7CB /* PickerTableViewController.swift */,
+				D07793861B704F410056B7CB /* DatePickerViewController.swift */,
+			);
+			name = picker;
 			sourceTree = "<group>";
 		};
 		D4F3CDABDCA581BFF7D35DBA /* Frameworks */ = {
@@ -784,6 +801,7 @@
 		290134CA1AC3991C00BBFE29 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = "&#24373;&#24535;&#33775;";
 				TargetAttributes = {
@@ -987,6 +1005,7 @@
 				29C1DA7A1AD36659009A02CC /* S3Controller.swift in Sources */,
 				296D8BCE1B004C6B0058D400 /* MessageGroupViewController.swift in Sources */,
 				1712BE381ACE183C000A9C47 /* _Images.swift in Sources */,
+				D07793851B704F290056B7CB /* PickerTableViewController.swift in Sources */,
 				1F79C1B81B5E730E008800E1 /* NewSearchFriendViewController.swift in Sources */,
 				D0A0C0301B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift in Sources */,
 				296D8BAE1AFC5A020058D400 /* LoadingViewController.swift in Sources */,
@@ -1022,6 +1041,7 @@
 				1F985E6C1B60C19F008D5369 /* Sequence.swift in Sources */,
 				1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */,
 				29BE7E1B1AC54663008110B4 /* DBController.swift in Sources */,
+				D0E788751B6F5BD3009255B9 /* AlamofireController.swift in Sources */,
 				29A1AFF71AC4113000775765 /* _Post.swift in Sources */,
 				D00E0FD61B3D3B4D00AEB521 /* DBCameraController.swift in Sources */,
 				1F8BF0111B53639F00090079 /* PostImageCell.swift in Sources */,
@@ -1029,6 +1049,7 @@
 				290135171AC3A78E00BBFE29 /* User.swift in Sources */,
 				29A5D1DD1ACBE85C00D95B77 /* RegPageData.swift in Sources */,
 				292B9CCF1AE61C3F00604986 /* _Line.swift in Sources */,
+				D07793871B704F410056B7CB /* DatePickerViewController.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
 				D0F44FAB1B5E4790009E12AA /* BookmarkedPostsViewController.swift in Sources */,
 				D0B6EB121B5E7D09005A7E45 /* MyAccountHeaderViewController.swift in Sources */,

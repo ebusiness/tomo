@@ -18,22 +18,18 @@ class SettingViewController: MyAccountBaseController {
     
     @IBOutlet weak var logoutCell: UITableViewCell!
     
-    var user: User?
+    var user: UserEntity?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         Util.changeImageColorForButton(editButton,color: UIColor.whiteColor())        
         
-        ApiController.getMyInfo({ (error) -> Void in
-            if error == nil {
-                self.updateUI()
-            }
-        })
+        self.updateUI()
     }
     
     func updateUI() {
-        user = DBController.myUser()
+        user = me
         
         fullNameLabel.text = user?.fullName()
         genderLabel.text = user?.gender
@@ -50,19 +46,13 @@ class SettingViewController: MyAccountBaseController {
         
         if cell == logoutCell {
             
-            let alertController = UIAlertController(title: "退出账号", message: "真的要退出当前的账号吗？", preferredStyle: .Alert)
-            
-            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
-            let logoutAction = UIAlertAction(title: "退出", style: .Destructive, handler: {(_) -> () in
-                DBController.clearDBForLogout();
+            Util.alert(self, title: "退出账号", message: "真的要退出当前的账号吗？", action: { (_) -> Void in
+                DBController.clearDBForLogout()
+                
+                me = UserEntity()
                 let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
                 Util.changeRootViewController(from: self, to: main)
             })
-            
-            alertController.addAction(cancelAction)
-            alertController.addAction(logoutAction)
-            
-            presentViewController(alertController, animated: true, completion: nil)
             
         }
     }
