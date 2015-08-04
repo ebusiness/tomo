@@ -43,6 +43,8 @@
 		17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993181AF3712C00204E97 /* OpenidController.swift */; };
 		1F350B2B1B68D32800088C1E /* PostAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */; };
 		1F60DD591B6B23320009C01B /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F60DD581B6B23320009C01B /* Group.swift */; };
+		1F60DD5A1B6B24300009C01B /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F60DD581B6B23320009C01B /* Group.swift */; };
+		1F6AE7851B6F1A2300D7F488 /* PostAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */; };
 		1F79C1B21B5E0E22008800E1 /* NewFriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B11B5E0E22008800E1 /* NewFriendListViewController.swift */; };
 		1F79C1B41B5E10DC008800E1 /* NewFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B31B5E10DC008800E1 /* NewFriendCell.swift */; };
 		1F79C1B61B5E55D5008800E1 /* NewInvitationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B51B5E55D5008800E1 /* NewInvitationCell.swift */; };
@@ -195,6 +197,7 @@
 		17B993181AF3712C00204E97 /* OpenidController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidController.swift; path = Classes/OpenidController.swift; sourceTree = "<group>"; };
 		1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostAnnotationView.swift; path = Classes/PostAnnotationView.swift; sourceTree = "<group>"; };
 		1F60DD581B6B23320009C01B /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostAnnotation.swift; path = Classes/PostAnnotation.swift; sourceTree = "<group>"; };
 		1F79C1B11B5E0E22008800E1 /* NewFriendListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewFriendListViewController.swift; path = Classes/NewFriendListViewController.swift; sourceTree = "<group>"; };
 		1F79C1B31B5E10DC008800E1 /* NewFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewFriendCell.swift; path = Classes/NewFriendCell.swift; sourceTree = "<group>"; };
 		1F79C1B51B5E55D5008800E1 /* NewInvitationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewInvitationCell.swift; path = Classes/NewInvitationCell.swift; sourceTree = "<group>"; };
@@ -553,6 +556,7 @@
 				292B9CCB1AE61ACA00604986 /* StationTableViewController.swift */,
 				29446DC01B156C960062CA7F /* StationResultsTableViewController.swift */,
 				1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */,
+				1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -1042,6 +1046,7 @@
 				296D8BAC1AFC59F10058D400 /* TabBarController.swift in Sources */,
 				D0D7B69A1B303AF600692C2F /* _Tag.swift in Sources */,
 				29DF4CD41AE0EDB7003A4962 /* Notification.swift in Sources */,
+				1F6AE7851B6F1A2300D7F488 /* PostAnnotation.swift in Sources */,
 				29A1AFF41AC4112800775765 /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

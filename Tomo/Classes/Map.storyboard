@@ -22,35 +22,63 @@
                                     <outlet property="delegate" destination="OpP-6Y-mbl" id="Izv-tq-Wk5"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h5e-uw-BW1">
-                                <rect key="frame" x="231" y="473" width="61" height="30"/>
-                                <state key="normal" title="building">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h5e-uw-BW1">
+                                <rect key="frame" x="270" y="514" width="34" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="34" id="4Ba-ug-3zo"/>
+                                    <constraint firstAttribute="height" constant="34" id="SRP-2j-Q0H"/>
+                                </constraints>
+                                <state key="normal" image="building">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="toggleBuilding" destination="OpP-6Y-mbl" eventType="touchUpInside" id="5CP-jf-Yfu"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ws5-Aq-GDW">
-                                <rect key="frame" x="233" y="426" width="59" height="30"/>
-                                <state key="normal" title="interest">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ws5-Aq-GDW">
+                                <rect key="frame" x="270" y="472" width="34" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="34" id="hwh-Vc-Beu"/>
+                                    <constraint firstAttribute="height" constant="34" id="tew-Ml-I2Q"/>
+                                </constraints>
+                                <state key="normal" image="shop">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="toggleInterest" destination="OpP-6Y-mbl" eventType="touchUpInside" id="KoE-nJ-flF"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xi3-wd-alO">
+                                <rect key="frame" x="270" y="430" width="34" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="34" id="Eci-sG-t69"/>
+                                    <constraint firstAttribute="height" constant="34" id="eD9-HA-FUl"/>
+                                </constraints>
+                                <state key="normal" image="north_direction">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Cpn-4Z-PSd" firstAttribute="top" secondItem="h5e-uw-BW1" secondAttribute="bottom" constant="20" id="5On-n7-d2P"/>
                             <constraint firstItem="UKM-D9-brj" firstAttribute="leading" secondItem="wVk-fz-608" secondAttribute="leading" id="7B1-hi-sXs"/>
                             <constraint firstAttribute="trailing" secondItem="UKM-D9-brj" secondAttribute="trailing" id="DLL-Kd-ZdR"/>
+                            <constraint firstAttribute="trailing" secondItem="ws5-Aq-GDW" secondAttribute="trailing" constant="16" id="ELh-2d-CXn"/>
+                            <constraint firstAttribute="trailing" secondItem="xi3-wd-alO" secondAttribute="trailing" constant="16" id="I01-9z-agV"/>
                             <constraint firstItem="Cpn-4Z-PSd" firstAttribute="top" secondItem="UKM-D9-brj" secondAttribute="bottom" id="JDw-4z-CWG"/>
+                            <constraint firstItem="h5e-uw-BW1" firstAttribute="top" secondItem="ws5-Aq-GDW" secondAttribute="bottom" constant="8" id="bRZ-MZ-WSF"/>
+                            <constraint firstItem="h5e-uw-BW1" firstAttribute="top" secondItem="ws5-Aq-GDW" secondAttribute="bottom" constant="8" id="cpm-xX-ahT"/>
                             <constraint firstItem="UKM-D9-brj" firstAttribute="top" secondItem="wVk-fz-608" secondAttribute="top" id="dPd-0B-QQR"/>
+                            <constraint firstAttribute="trailing" secondItem="h5e-uw-BW1" secondAttribute="trailing" constant="16" id="lKF-VU-zwB"/>
+                            <constraint firstItem="ws5-Aq-GDW" firstAttribute="top" secondItem="xi3-wd-alO" secondAttribute="bottom" constant="8" id="rxY-QZ-CDx"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="地图" id="KKw-VS-iwT"/>
                     <connections>
+                        <outlet property="buildingToggleButton" destination="h5e-uw-BW1" id="Hel-90-8oc"/>
+                        <outlet property="currentLocationButton" destination="xi3-wd-alO" id="1f1-E9-EcU"/>
+                        <outlet property="interestToggleButton" destination="ws5-Aq-GDW" id="Tgo-VX-ipd"/>
                         <outlet property="mapView" destination="UKM-D9-brj" id="omH-2J-6xe"/>
                     </connections>
                 </viewController>
@@ -77,6 +105,11 @@
             <point key="canvasLocation" x="171" y="448"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="building" width="24" height="24"/>
+        <image name="north_direction" width="24" height="24"/>
+        <image name="shop" width="24" height="24"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

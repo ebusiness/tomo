@@ -18,8 +18,9 @@ class PostAnnotationView: MKAnnotationView {
     }
     */
     
-
-
+    var imageView: UIImageView!
+    var numberBadge: UILabel!
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -28,26 +29,48 @@ class PostAnnotationView: MKAnnotationView {
         super.init(frame: frame)
     }
     
-    override init!(annotation: MKAnnotation!, reuseIdentifier: String!) {
+    override init(annotation: MKAnnotation!, reuseIdentifier: String!) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
-        let post = annotation as! PostEntity
+        let postAnnotation = annotation as! PostAnnotation
         
         frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        clipsToBounds = true
-        contentMode = UIViewContentMode.ScaleAspectFill
         
-        layer.cornerRadius = frame.width / 2
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.orangeColor().CGColor
-        
-        var imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        imageView.layer.cornerRadius = imageView.frame.width / 2
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.orangeColor().CGColor
+        imageView.clipsToBounds = true
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
-        
-        imageView.sd_setImageWithURL(NSURL(string:  post.owner.photo!), placeholderImage: UIImage(named: "avatar"))
-        
+        imageView.sd_setImageWithURL(NSURL(string:  postAnnotation.post.owner.photo!), placeholderImage: UIImage(named: "avatar"))
         addSubview(imageView)
         
+        numberBadge = UILabel(frame: CGRect(x: 35, y: 0, width: 20, height: 20))
+        numberBadge.textColor = UIColor.whiteColor()
+        numberBadge.textAlignment = NSTextAlignment.Center
+        numberBadge.font = UIFont.systemFontOfSize(12)
+        numberBadge.layer.cornerRadius = 10
+        numberBadge.layer.borderWidth = 1
+        numberBadge.layer.borderColor = UIColor.whiteColor().CGColor
+        numberBadge.clipsToBounds = true
+        numberBadge.backgroundColor = UIColor.redColor()
+        
+        updateBadge()
+    }
+    
+    func updateBadge() {
+        
+        let postAnnotation = annotation as! PostAnnotation
+        
+        if let containedAnnotations = postAnnotation.containedAnnotations {
+            
+            if containedAnnotations.count > 0 {
+                numberBadge.text = "\(containedAnnotations.count + 1)"
+                addSubview(numberBadge)
+            } else {
+                numberBadge.removeFromSuperview()
+            }
+        }
     }
 
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PostEntity: NSObject, MKAnnotation {
+class PostEntity: NSObject {
     
     var id: String!
     
@@ -16,19 +16,11 @@ class PostEntity: NSObject, MKAnnotation {
     
     var content: String!
     
+    var coordinate: [Double]?
+    
     var createDate: NSDate!
     
-    var coordinateRawValue: [Double]?
-    
-    var coordinate: CLLocationCoordinate2D {
-        if let lat = coordinateRawValue?.get(0), long = coordinateRawValue?.get(1) {
-            return CLLocationCoordinate2DMake(lat, long)
-        } else {
-            return CLLocationCoordinate2DMake(33, 133)
-        }
-    }
-    
-    override init() {
-        super.init()
-    }
+//    override init() {
+//        super.init()
+//    }
 }
