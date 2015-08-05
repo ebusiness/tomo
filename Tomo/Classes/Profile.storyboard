@@ -316,16 +316,6 @@
                     <navigationItem key="navigationItem" id="0Nd-Ts-Fs6"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ezk-TE-1Rc" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="30X-fk-e9K">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <containerView key="tableHeaderView" opaque="NO" contentMode="scaleToFill" id="cEf-LO-Imf">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </containerView>
-                    <sections/>
-                </tableView>
             </objects>
             <point key="canvasLocation" x="712" y="1565"/>
         </scene>
@@ -455,6 +445,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="M2b-6g-mlH"/>
+        <segue reference="Nf0-wz-A8g"/>
     </inferredMetricsTieBreakers>
 </document>

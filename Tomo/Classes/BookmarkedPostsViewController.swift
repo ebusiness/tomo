@@ -102,7 +102,7 @@ extension BookmarkedPostsViewController: UITableViewDelegate {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
-//        vc.post = bookmarks[indexPath.row] as! PostEntity
+        vc.post = bookmarks[indexPath.row] as! PostEntity
         self.navigationController?.pushViewController(vc, animated: true)
         
     }

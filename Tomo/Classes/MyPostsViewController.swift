@@ -94,7 +94,7 @@ extension MyPostsViewController: UITableViewDelegate {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
-//        vc.post = frc.objectAtIndexPath(indexPath) as! Post
+        vc.post = posts[indexPath.row] as! PostEntity
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
