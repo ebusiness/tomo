@@ -31,13 +31,6 @@ class MyPostsViewController: MyAccountBaseController {
         loadMoreContent()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        if let indexPath = self.tableView.indexPathForSelectedRow() {
-            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
-        }
-    }
-    
     override func setupMapping() {
         
         let postMapping = RKObjectMapping(forClass: PostEntity.self)

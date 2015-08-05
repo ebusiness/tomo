@@ -37,6 +37,9 @@ class BaseTableViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if let indexPath = tableView.indexPathForSelectedRow() {
+            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+        }
         
         if self.alwaysShowNavigationBar {
             
@@ -49,6 +52,8 @@ class BaseTableViewController: UITableViewController {
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
             self.navigationController?.navigationBar.translucent = true
             self.navigationController?.navigationBar.shadowImage = UIImage()
+            self.setNavigationBarBackgroundImage(nil)
+            self.navigationTextProtection?.alpha = 1
         }
     }
     

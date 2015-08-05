@@ -43,12 +43,6 @@ final class HomeViewController: BaseTableViewController {
         
         loadMoreContent()
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        if let indexPath = tableView.indexPathForSelectedRow() {
-            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
-        }
-    }
 
     override func setupMapping() {
         
