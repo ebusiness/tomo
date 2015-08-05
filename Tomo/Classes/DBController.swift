@@ -174,8 +174,10 @@ class DBController: NSObject {
     
     // MARK: - Message
     
-    class func createMessage(user: User, text: String) {
+    class func createMessage(userid: String, text: String) {
         let message = Message.MR_createEntity() as! Message
+        let user = User()
+        user.id = userid
         message.to = NSOrderedSet(array: [user])
         message.content = text
         message.subject = "no subject"
@@ -245,8 +247,8 @@ class DBController: NSObject {
         save()
     }
     
-    class func messageWithUser(user: User) -> NSFetchedResultsController {
-        return Message.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "group = NULL AND (from=%@ OR ANY to.id=%@)", user, user.id!), sortedBy: "createDate", ascending: true)
+    class func messageWithUser(userid: String) -> NSFetchedResultsController {
+        return Message.MR_fetchAllGroupedBy(nil, withPredicate: NSPredicate(format: "group = NULL AND (from.id=%@ OR ANY to.id=%@)", userid, userid), sortedBy: "createDate", ascending: true)
     }
     
     class func messageWithGroup(group: Group) -> NSFetchedResultsController {

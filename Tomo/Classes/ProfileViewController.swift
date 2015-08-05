@@ -126,7 +126,7 @@ class ProfileViewController: ProfileBaseController {
         let vc = MessageViewController()
         vc.hidesBottomBarWhenPushed = true
         
-//        vc.friend = self.user
+        vc.friend = self.user
         
         self.navigationController?.pushViewController(vc, animated: true)
         

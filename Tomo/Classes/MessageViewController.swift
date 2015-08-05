@@ -14,22 +14,11 @@ class MessageViewController: JSQMessagesViewController {
     var initialized = false
     var messageSend = false
     
-//    var groupId: String!
-    var me: User! {
-        get {
-            return DBController.myUser()
-        }
-    }
-    
-    var users = [User]()
-    
-//    var messages = [JSQMessage]()
-    
     var avatars = Dictionary<String, JSQMessagesAvatarImage>()
     var avatarImageBlank: JSQMessagesAvatarImage!
     
     //Test
-    var friend: User!
+    var friend: UserEntity!
     
     var frc: NSFetchedResultsController!
     var count: Int! {
@@ -61,7 +50,7 @@ class MessageViewController: JSQMessagesViewController {
 
     func loadMessages() {
         
-        frc = DBController.messageWithUser(friend)
+        frc = DBController.messageWithUser(friend.id)
         frc.delegate = self
         
         ApiController.getMessage { (error) -> Void in
@@ -92,7 +81,7 @@ class MessageViewController: JSQMessagesViewController {
         super.viewWillDisappear(animated)
         
         if friend != nil {
-            DBController.makeAllMessageRead(friend.id!)
+            DBController.makeAllMessageRead(friend.id)
         }
         
         VoiceController.instance.stopPlayer()
@@ -103,7 +92,7 @@ class MessageViewController: JSQMessagesViewController {
     // MARK: - Notification
     
     func gotNewMessage() {
-        DBController.makeAllMessageRead(friend.id!)
+        DBController.makeAllMessageRead(friend.id)
     }
     
     func downloadMediaDone() {
@@ -143,7 +132,7 @@ class MessageViewController: JSQMessagesViewController {
     func sendMessage(text: String) {
         messageSend = true
 
-        DBController.createMessage(friend, text: text)
+        DBController.createMessage(friend.id, text: text)
         
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
         

@@ -141,7 +141,7 @@ class NewFriendListViewController: BaseTableViewController {
             let vc = MessageViewController()
             vc.hidesBottomBarWhenPushed = true
             
-//            vc.friend = friend
+            vc.friend = friend
             
             navigationController?.pushViewController(vc, animated: true)
             
