@@ -31,6 +31,7 @@ final class HomeViewController: BaseTableViewController {
         tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
         
         tableView.backgroundView = UIImageView(image: UIImage(named: "pattern"))
+        clearsSelectionOnViewWillAppear = false
 
         var refresh = UIRefreshControl()
         refresh.addTarget(self, action: "loadNewContent", forControlEvents: UIControlEvents.ValueChanged)
@@ -41,6 +42,12 @@ final class HomeViewController: BaseTableViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
         loadMoreContent()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if let indexPath = tableView.indexPathForSelectedRow() {
+            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+        }
     }
 
     override func setupMapping() {
@@ -166,7 +173,7 @@ extension HomeViewController {
 extension HomeViewController {
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let post: AnyObject = contents[indexPath.row]
         self.performSegueWithIdentifier("postdetail", sender: post)
     }

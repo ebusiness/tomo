@@ -26,7 +26,4 @@ class PostEntity: NSObject {
     
     var createDate: NSDate!
     
-//    override init() {
-//        super.init()
-//    }
 }

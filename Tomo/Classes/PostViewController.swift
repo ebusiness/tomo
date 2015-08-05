@@ -73,7 +73,7 @@ class PostViewController : BaseTableViewController{
         self.manager.getObject(nil, path: "/posts/\(self.post.id)", parameters: nil, success: { (operation, results) -> Void in
             
             if let results = results.firstObject as? PostEntity {
-                self.post = results
+                self.post.comments = results.comments
             }
             
         }, failure: nil)
