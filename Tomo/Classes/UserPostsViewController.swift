@@ -26,7 +26,16 @@ class UserPostsViewController: ProfileBaseController {
         var postImageCellNib = UINib(nibName: "PostImageCell", bundle: nil)
         self.tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
         
+        self.clearsSelectionOnViewWillAppear = false
+        
         loadMoreContent()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if let indexPath = self.tableView.indexPathForSelectedRow() {
+            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+        }
     }
     
     override func setupMapping() {
@@ -90,8 +99,6 @@ extension UserPostsViewController: UITableViewDataSource {
 extension UserPostsViewController: UITableViewDelegate {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
         vc.post = posts[indexPath.row] as! PostEntity
