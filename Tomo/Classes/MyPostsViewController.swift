@@ -10,37 +10,61 @@ import UIKit
 
 class MyPostsViewController: MyAccountBaseController {
     
-    var frc: NSFetchedResultsController!
-    var objectChanges = Dictionary<NSFetchedResultsChangeType, [NSIndexPath]>()
+    let screenHeight = UIScreen.mainScreen().bounds.height
+    let loadTriggerHeight = CGFloat(88.0)
+    
+    var posts = [AnyObject]()
+    var oldestContent: AnyObject?
+    var isLoading = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // load local post data
-        frc = DBController.myPosts()
-        frc.delegate = self
         
         var postCellNib = UINib(nibName: "PostCell", bundle: nil)
         self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "PostCell")
         
         var postImageCellNib = UINib(nibName: "PostImageCell", bundle: nil)
         self.tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
+        
+        loadMoreContent()
+    }
+    
+    override func setupMapping() {
+        
+        let postMapping = RKObjectMapping(forClass: PostEntity.self)
+        postMapping.addAttributeMappingsFromDictionary([
+            "_id": "id",
+            "contentText": "content",
+            "coordinate": "coordinate",
+            "images_mobile.name": "images",
+            "like": "like",
+            "createDate": "createDate"
+            ])
+        
+        let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/posts", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        
+        manager.addResponseDescriptor(responseDescriptor)
+        
     }
     
 }
 
+// MARK: UITableView DataSource
+
 extension MyPostsViewController: UITableViewDataSource {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return frc.fetchedObjects?.count ?? 0
+        return posts.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var post = frc.objectAtIndexPath(indexPath) as! Post
+        var post = posts[indexPath.row] as! PostEntity
+        post.owner = me
+        
         var cell: PostCell!
         
-        if post.imagesmobile.count > 0 {
+        if post.images?.count > 0 {
             
             cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell", forIndexPath: indexPath) as! PostImageCell
             
@@ -61,6 +85,8 @@ extension MyPostsViewController: UITableViewDataSource {
     }
 }
 
+// MARK: UITableView Delegate
+
 extension MyPostsViewController: UITableViewDelegate {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -68,62 +94,93 @@ extension MyPostsViewController: UITableViewDelegate {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
-        vc.post = frc.objectAtIndexPath(indexPath) as! Post
+//        vc.post = frc.objectAtIndexPath(indexPath) as! Post
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
     
     override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if let content = posts.get(indexPath.row) as? PostEntity {
+            
+            if content.images?.count > 0 {
+                return 334
+            } else {
+                return 131
+            }
+        }
+        
         return UITableViewAutomaticDimension
     }
     
 }
 
-// MARK: - NSFetchedResultsControllerDelegate
+// MARK: UIScrollView Delegate
 
-extension MyPostsViewController: NSFetchedResultsControllerDelegate {
+extension MyPostsViewController {
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        objectChanges.removeAll(keepCapacity: false)
-    }
-    
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
         
-        if objectChanges[type] == nil {
-            objectChanges[type] = [NSIndexPath]()
-        }
+        super.scrollViewDidScroll(scrollView)
         
-        switch type {
-        case .Insert:
-            if let newIndexPath = newIndexPath {
-                objectChanges[type]!.append(newIndexPath)
-            }
-        case .Delete:
-            if let indexPath = indexPath {
-                objectChanges[type]!.append(indexPath)
-            }
-        case .Update:
-            if let indexPath = indexPath {
-                objectChanges[type]!.append(indexPath)
-            }
-        case .Move:
-            // TODO:
-            println("move")
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        
+        if (contentHeight - screenHeight - loadTriggerHeight) < offsetY {
+            loadMoreContent()
         }
+
     }
-    
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        // TODO: move,update,delete
-        //        let insertedItems = self.objectChanges[.Insert]
-        //        if insertedItems?.count > 0 {
-        //            self.tableView.insertItemsAtIndexPaths(insertedItems!)
-        //        }
-        //
-        //        let deleteItems = self.objectChanges[.Delete]
-        //        if deleteItems?.count > 0 {
-        //            self.tableView.deleteItemsAtIndexPaths(deleteItems!)
-        //        }
-    }
-    
 }
 
+// MARK: Private methods
+
+extension MyPostsViewController {
+    
+    private func loadMoreContent() {
+        
+        // skip if already in loading
+        if isLoading {
+            return
+        }
+        
+        isLoading = true
+        
+        var params = Dictionary<String, NSTimeInterval>()
+        
+        if let oldestContent = oldestContent as? PostEntity {
+            params["before"] = oldestContent.createDate.timeIntervalSince1970
+        }
+        
+        manager.getObjectsAtPath("/posts", parameters: params, success: { (operation, result) -> Void in
+            
+            self.posts += result.array()
+            self.appendRows(Int(result.count))
+            
+            self.isLoading = false
+            }) { (operation, err) -> Void in
+                println(err)
+                self.isLoading = false
+        }
+    }
+    
+    private func appendRows(rows: Int) {
+        
+        let firstIndex = posts.count - rows
+        let lastIndex = posts.count
+        
+        var indexPathes = [NSIndexPath]()
+        
+        for index in firstIndex..<lastIndex {
+            indexPathes.push(NSIndexPath(forRow: index, inSection: 0))
+        }
+        
+        // hold the oldest content for pull-up loading
+        oldestContent = posts.last
+        
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: UITableViewRowAnimation.Middle)
+        tableView.endUpdates()
+        
+    }
+}

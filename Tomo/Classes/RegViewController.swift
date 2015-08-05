@@ -139,7 +139,33 @@ class RegViewController: BaseViewController {
         Manager.sharedInstance.request(.GET, tomo_test_login, parameters: param, encoding: ParameterEncoding.URL)
             .responseJSON { (_, res, JSON, _) in
                 
-                println(res)
+                let result = JSON as! Dictionary<String, AnyObject>
+                
+                if let id = result["id"] as? String,
+                    tomoid = result["tomoid"] as? String,
+                    nickName = result["nickName"] as? String{
+                        me.id = id
+                        me.tomoid = tomoid
+                        me.nickName = nickName
+                        
+                        me.gender = result["gender"] as? String
+                        me.photo = result["photo_ref"] as? String
+                        me.cover = result["cover_ref"] as? String
+                        me.bio = result["bioText"] as? String
+                        me.firstName = result["firstName"] as? String
+                        me.lastName = result["lastName"] as? String
+                        
+                        if let dateString = result["birthDay"] as? String {
+                            me.birthDay = dateString.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+                        }
+                        
+                        me.friends = result["friends"] as? [String]
+                        me.invited = result["invited"] as? [String]
+                        
+                        me.telNo = result["telNo"] as? String
+                        me.address = result["address"] as? String
+                
+                }
                 
                 ApiController.getMyInfo({ (error) -> Void in
                     if let err = error{
