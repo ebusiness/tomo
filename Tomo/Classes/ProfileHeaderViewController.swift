@@ -19,7 +19,7 @@ class ProfileHeaderViewController: BaseViewController {
     var photoImageViewTapped : ((sender: UITapGestureRecognizer)->())?
     var coverImageViewTapped : ((sender: UITapGestureRecognizer)->())?
     
-    var user:User! {
+    var user:UserEntity! {
         didSet {
             self.updateUI()
         }
@@ -62,15 +62,15 @@ extension ProfileHeaderViewController {
         photoImageView.layer.borderWidth = 1
         photoImageView.layer.borderColor = UIColor.whiteColor().CGColor
         
-        if let photo_ref = user.photo_ref {
-            photoImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
+        if let photo = user.photo {
+            photoImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
         }
         
-        if let cover_ref = user.cover_ref {
-            coverImageView.sd_setImageWithURL(NSURL(string: cover_ref), placeholderImage: DefaultAvatarImage)
+        if let cover = user.cover {
+            coverImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: DefaultAvatarImage)
         }
         nickNameLabel.text = user.nickName
-        bioLabel.text = user.bioText
+        bioLabel.text = user.bio ?? "这家伙很懒,什么都没写."
     }
     
 }

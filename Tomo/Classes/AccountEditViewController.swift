@@ -97,7 +97,8 @@ class AccountEditViewController: MyAccountBaseController {
         }
     }
     
-    override func setupMapping() {        
+    
+    override func setupMapping() {
         
         let userMapping = RKObjectMapping(forClass: UserEntity.self)
         userMapping.addAttributeMappingsFromDictionary([
@@ -116,9 +117,14 @@ class AccountEditViewController: MyAccountBaseController {
             ])
         // edit user
         let responseDescriptor = RKResponseDescriptor(mapping: userMapping, method: .PATCH, pathPattern: "/users/:id", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
-        
         self.manager.addResponseDescriptor(responseDescriptor)
         
+        
+        let inverseMapping = userMapping.inverseMapping()
+        inverseMapping.addAttributeMappingsFromDictionary(["photo":"photo","cover":"cover"])
+        println(inverseMapping)
+        let requestDescriptor = RKRequestDescriptor(mapping: inverseMapping, objectClass: UserEntity.self, rootKeyPath: nil, method: RKRequestMethod.Any)
+        self.manager.addRequestDescriptor(requestDescriptor)
     }
 
 }

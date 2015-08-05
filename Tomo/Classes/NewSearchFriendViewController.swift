@@ -14,39 +14,55 @@ class NewSearchFriendViewController: BaseTableViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var closeButton: UIButton!
     
-    var result = [User]()
+    var result:[UserEntity]?{
+        didSet{
+            self.tableView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         Util.changeImageColorForButton(closeButton,color: UIColor.whiteColor())
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func setupMapping() {
+        
+        let userMapping = RKObjectMapping(forClass: UserEntity.self)
+        userMapping.addAttributeMappingsFromDictionary([
+            "_id": "id",
+            "tomoid": "tomoid",
+            "nickName": "nickName",
+            "gender": "gender",
+            "photo_ref": "photo",
+            "cover_ref": "cover",
+            "bioText": "bio",
+            "firstName": "firstName",
+            "lastName": "lastName",
+            "birthDay": "birthDay",
+            "telNo": "telNo",
+            "address": "address",
+            ])
+        
+        let responseDescriptor = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/mobile/stations/users", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        self.manager.addResponseDescriptor(responseDescriptor)
+        
     }
 
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return result.count
+        return self.result?.count ?? 0
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("resultCell", forIndexPath: indexPath) as! UITableViewCell
-        var user = result[indexPath.row]
+        var user = self.result![indexPath.row]
         
         cell.textLabel?.text = user.nickName
         
-        if let photo_ref = user.photo_ref {
-            cell.imageView?.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
+        if let photo = user.photo {
+            cell.imageView?.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
  
             cell.imageView?.layer.cornerRadius = cell.imageView!.layer.bounds.width / 2
             cell.imageView?.layer.masksToBounds = true
@@ -63,8 +79,7 @@ class NewSearchFriendViewController: BaseTableViewController {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-        vc.user = result[indexPath.row]
-//        vc.readOnlyMode = true
+        vc.user = self.result![indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -77,17 +92,18 @@ extension NewSearchFriendViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         
-        if searchBar.text.length > 0 {
+        if searchBar.text.trimmed().length > 0 {
             
-            ApiController.getUsers(key: "tomoid", value: searchBar.text, done: { (users, error) -> Void in
+            var param = Dictionary<String, String>()
+            param["tomoid"] = searchBar.text + ".*"
+            
+            self.manager.getObjectsAtPath("/mobile/stations/users", parameters: param, success: { (_, results) -> Void in
                 
-                if let users = users {
-                    if users.count > 0 {
-                        self.result = users
-                        self.tableView.reloadData()
-                    }
+                if let users = results.array() as? [UserEntity] {
+                    self.result = users
                 }
-            })
+                
+            }, failure: nil)
         }
     }
     

@@ -10,7 +10,7 @@ import UIKit
 
 class ProfileBaseController: BaseTableViewController {
     
-    var user:User!
+    var user:UserEntity!
     
     // MARK: - segue for profile header
     

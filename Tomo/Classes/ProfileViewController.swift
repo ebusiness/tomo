@@ -21,18 +21,53 @@ class ProfileViewController: ProfileBaseController {
     
     @IBOutlet weak var invitedView: UIView!
     @IBOutlet weak var heightOfInvitedView: NSLayoutConstraint!
+    
+    var invitedId: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.updateUI()
+        if let friends = me.friends where friends.contains(self.user.id) {
+            
+            self.getUserInfo()
         
-        ApiController.getUserInfo(user.id!, done: { (error) -> Void in
-            if error == nil {
-                self.updateUI()
+        } else {
+            
+            var param = Dictionary<String, String>()
+            param["type"] = "friend-invited"
+            param["_from"] = self.user.id
+            request(.GET, kAPIBaseURLString + "/notifications/unconfirmed", parameters: param, encoding: .URL)
+                .responseJSON { (_, res, data, _) -> Void in
+                    
+                    if let arr = data as? NSArray ,dict = arr[0] as? Dictionary<String, AnyObject> , id = dict["_id"] as? String {
+                        self.invitedId = id
+                    }
+                    self.getUserInfo()
             }
-        })
+        }
         
+    }
+    
+    override func setupMapping() {
+        
+        let userMapping = RKObjectMapping(forClass: UserEntity.self)
+        userMapping.addAttributeMappingsFromDictionary([
+            "_id": "id",
+            "tomoid": "tomoid",
+            "nickName": "nickName",
+            "gender": "gender",
+            "photo_ref": "photo",
+            "cover_ref": "cover",
+            "bioText": "bio",
+            "firstName": "firstName",
+            "lastName": "lastName",
+            "birthDay": "birthDay",
+            "telNo": "telNo",
+            "address": "address",
+            ])
+        
+        let responseDescriptorUserInfo = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        self.manager.addResponseDescriptor(responseDescriptorUserInfo)
     }
     
     @IBAction func Approved(sender: UIButton) {
@@ -48,13 +83,20 @@ class ProfileViewController: ProfileBaseController {
     @IBAction func deleteFriend(sender: UIButton) {
         
         Util.alert(self, title: "删除好友", message: "确定删除该好友么?", action: { (_) -> Void in
-            ApiController.connectionsBreakUsers(self.user.id!, done: { (error) -> Void in
-                ApiController.getMyInfo({ (error) -> Void in
+            var param = Dictionary<String, String>()
+            param["id"] = self.user.id
+            
+            request(.PATCH, kAPIBaseURLString + "/connections/break", parameters: param, encoding: .URL)
+                .responseJSON { (_, _, _, error) -> Void in
                     
+                    if let error = error {
+                        
+                    } else {
+                        me.friends?.remove(self.user.id)
+                        Util.showSuccess("已删除好友")
+                    }
                     self.updateUI()
-                    Util.showSuccess("已删除好友")
-                })
-            })
+            }
         })
         
     }
@@ -62,13 +104,20 @@ class ProfileViewController: ProfileBaseController {
     @IBAction func addFriend(sender: UIButton) {
         
         Util.showHUD()
-        ApiController.invite(self.user.id!, done: { (error) -> Void in
-            if error == nil {
+        
+        var param = Dictionary<String, String>()
+        param["id"] = self.user.id
+        
+        request(.PATCH, kAPIBaseURLString + "/connections/invite", parameters: param, encoding: .URL)
+            .responseJSON { (_, _, _, _) -> Void in
                 
-                self.updateUI()
+                if me.invited == nil {
+                    me.invited = []
+                }
+                me.invited?.append(self.user.id)
                 Util.showSuccess("已发送交友请求")
-            }
-        })
+                self.updateUI()
+        }
         
     }
     
@@ -77,7 +126,7 @@ class ProfileViewController: ProfileBaseController {
         let vc = MessageViewController()
         vc.hidesBottomBarWhenPushed = true
         
-        vc.friend = self.user
+//        vc.friend = self.user
         
         self.navigationController?.pushViewController(vc, animated: true)
         
@@ -85,6 +134,21 @@ class ProfileViewController: ProfileBaseController {
 }
 
 extension ProfileViewController {
+    
+    func getUserInfo(){
+        
+        Util.showHUD()
+        self.manager.getObject(nil, path: "/users/\(self.user.id)", parameters: nil, success: { (operation, result) -> Void in
+            if let result = result.firstObject as? UserEntity {
+                
+                self.user = result
+                self.updateUI()
+                
+            }
+            Util.dismissHUD()
+            
+        }, failure: nil)
+    }
     
     func updateUI() {
         
@@ -101,20 +165,21 @@ extension ProfileViewController {
         self.sendMessageCell.hidden = true
         self.invitedView.hidden = true
         
-        
-        if DBController.isFriend(user) {
+        if let friends = me.friends where friends.contains(self.user.id) {
             
             self.deleteFriendButton.hidden = false
             self.sendMessageCell.hidden = false
             
         } else {
             
-            if let id = self.getInvitedNotificationId() {
+            if let id = self.invitedId {
                 
                 self.invitedView.hidden = false
+                self.changeHeaderView(height:44)
                 
-            } else if !DBController.isInvitedUser(user) && user.id != Defaults["myId"].string {
-                
+            } else if let invited = me.invited where invited.contains(self.user.id) {
+                //invited
+            } else if user.id != me.id {
                 self.addFriendButton.hidden = false
             }
             
@@ -122,46 +187,52 @@ extension ProfileViewController {
 
     }
     
-    func getInvitedNotificationId() -> String? {
-        let notifications = DBController.unconfirmedNotification(type: .FriendInvited)
+    func inviteAction(isApproved:Bool){
         
-        for notification in notifications {
-            if let from = notification.from where from == user {
-                return notification.id
+        if let id = self.invitedId {
+            
+            Util.showHUD()
+            var param = Dictionary<String, String>()
+            param["result"] = isApproved ? "approved" : "declined"
+            
+            
+            request(.PATCH, kAPIBaseURLString + "/notifications/\(id)", parameters: param, encoding: .URL)
+                .responseJSON { (_, _, _, _) -> Void in
+                    
+                    if isApproved {
+                        Util.showSuccess("已同意添加好友")
+                        
+                        if me.friends == nil {
+                            me.friends = []
+                        }
+                        me.friends?.append(self.user.id)
+                    } else {
+                        Util.showSuccess("已拒绝添加好友")
+                    }
+                    
+                    self.changeHeaderView(height:0,done: { () -> () in
+                        
+                        self.invitedId = nil
+                        self.updateUI()
+                    })
             }
+            
         }
-        return nil
         
     }
     
-    func inviteAction(isApproved:Bool){
+    func changeHeaderView(#height:CGFloat,done: ( ()->() )? = nil ){
         
-        if let id = self.getInvitedNotificationId() {
-            
-            Util.showHUD()
-            ApiController.friendInvite(id,isApproved: isApproved, done: { (error) -> Void in
-                
-                if isApproved {
-                    Util.showSuccess("已同意添加好友")
-                } else {
-                    Util.showSuccess("已拒绝添加好友")
-                }
-                
-                ApiController.unconfirmedNotification { (error) -> Void in
-                    
-                    self.heightOfInvitedView.constant = 0
-                    
-                    UIView.animateWithDuration(0.2, animations: { () -> Void in
-                        
-                        self.tableView.tableHeaderView?.frame.size.height = 240
-                        self.view.layoutIfNeeded()
-                        self.updateUI()
-                        
-                    })
-                }
-            })
-            
-        }
+        self.heightOfInvitedView.constant = height
+        let headerView = self.tableView.tableHeaderView as UIView!
         
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            
+            headerView.frame.size.height = 240 + height
+            self.tableView.tableHeaderView = headerView
+            self.tableView.layoutIfNeeded()
+            done?()
+            
+        })
     }
 }

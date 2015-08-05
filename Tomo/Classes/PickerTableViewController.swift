@@ -50,7 +50,7 @@ extension PickerTableViewController: UITableViewDelegate {
         self.tableView.reloadData()
         
         self.didSelected(selected: self.pickerData[indexPath.row])
-        self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
         
     }
     

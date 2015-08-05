@@ -120,6 +120,10 @@ extension OpenidController {
                                 if let dateString = result["birthDay"] as? String {
                                     me.birthDay = dateString.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
                                 }
+                                
+                                me.friends = result["friends"] as? [String]
+                                me.invited = result["invited"] as? [String]
+                                
                                 me.telNo = result["telNo"] as? String
                                 me.address = result["address"] as? String
                         }

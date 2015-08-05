@@ -33,6 +33,10 @@ class UserEntity: NSObject {
     var telNo: String?
     
     var address: String?
+    
+    var friends: [String]?
+    
+    var invited: [String]?
 }
 
 extension UserEntity {

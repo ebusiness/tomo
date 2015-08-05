@@ -17,7 +17,7 @@ class RestKitErrorHanding: RKObjectRequestOperation{
                 success(operation, mappingResult)
             }
         }, failure: { (operation, error) -> Void in
-            
+            Util.dismissHUD()
             let statusCode = operation.HTTPRequestOperation.response.statusCode
             
             if let window = UIApplication.sharedApplication().keyWindow

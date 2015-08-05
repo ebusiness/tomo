@@ -16,11 +16,11 @@ class RequestFriendCell: UITableViewCell {
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     
-    var user: User? {
+    var user: UserEntity? {
         didSet {
             
-            if let photo_ref = user?.photo_ref {
-                avatarImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
+            if let photo = user?.photo {
+                avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
             }
             
             userNameLabel.text = user?.nickName
