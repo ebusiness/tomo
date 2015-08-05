@@ -103,6 +103,21 @@ extension BaseTableViewController {
             }
         }
     }
+    
+    
+    func changeHeaderView(#height:CGFloat,done: ( ()->() )? = nil ){
+        
+        let headerView = self.tableView.tableHeaderView as UIView!
+        
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            
+            headerView.frame.size.height = height
+            self.tableView.tableHeaderView = headerView
+            self.tableView.layoutIfNeeded()
+            done?()
+            
+        })
+    }
 }
 
 extension BaseTableViewController {

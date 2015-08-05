@@ -175,7 +175,9 @@ extension ProfileViewController {
             if let id = self.invitedId {
                 
                 self.invitedView.hidden = false
-                self.changeHeaderView(height:44)
+                
+                self.heightOfInvitedView.constant = 44
+                self.changeHeaderView(height:284)
                 
             } else if let invited = me.invited where invited.contains(self.user.id) {
                 //invited
@@ -210,7 +212,8 @@ extension ProfileViewController {
                         Util.showSuccess("已拒绝添加好友")
                     }
                     
-                    self.changeHeaderView(height:0,done: { () -> () in
+                    self.heightOfInvitedView.constant = 0
+                    self.changeHeaderView(height:240,done: { () -> () in
                         
                         self.invitedId = nil
                         self.updateUI()
@@ -219,20 +222,5 @@ extension ProfileViewController {
             
         }
         
-    }
-    
-    func changeHeaderView(#height:CGFloat,done: ( ()->() )? = nil ){
-        
-        self.heightOfInvitedView.constant = height
-        let headerView = self.tableView.tableHeaderView as UIView!
-        
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
-            
-            headerView.frame.size.height = 240 + height
-            self.tableView.tableHeaderView = headerView
-            self.tableView.layoutIfNeeded()
-            done?()
-            
-        })
     }
 }

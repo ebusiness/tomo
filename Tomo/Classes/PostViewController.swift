@@ -63,7 +63,7 @@ class PostViewController : BaseTableViewController{
         
         updateUIForHeader()
         
-        if self.post.images?.count > 0 {
+        if ( self.post.images?.count ?? 0 ) > 0 {
             
             self.setImageList()
             self.headerHeight = self.listViewHeight - 64
@@ -84,14 +84,14 @@ class PostViewController : BaseTableViewController{
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if post.images?.count < 1 {
+        if ( post.images?.count ?? 0 ) < 1 {
             self.extendedLayoutIncludesOpaqueBars = false
             self.automaticallyAdjustsScrollViewInsets = true
             var image = Util.imageWithColor(0x673AB7, alpha: 1)
             self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
             self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
             
-            self.tableView.tableHeaderView?.frame.size.height = self.contentViewHeight.constant
+            self.changeHeaderView(height: self.contentViewHeight.constant)
         }
     }
     
@@ -236,7 +236,7 @@ class PostViewController : BaseTableViewController{
         param["content"] = commentContent;
 //        param["replyTo"] = "552220aa915a1dd84834731b";//コメントID
         
-        request(.POST, "/posts/\(self.post.id)/comments", parameters: param, encoding: .URL)
+        request(.POST, kAPIBaseURLString + "/posts/\(self.post.id)/comments", parameters: param, encoding: .URL)
             .responseJSON { (_, _,json, _) -> Void in
                 
                 Util.dismissHUD()
@@ -253,20 +253,6 @@ class PostViewController : BaseTableViewController{
                 
                 self.commentInput.resignFirstResponder()
                 self.commentInput.text = ""
-        }
-        
-        
-        ApiController.addComment(self.post.id!, content: commentContent!) { (error) -> Void in
-            Util.dismissHUD()
-            
-            if let error = error {
-                Util.showError(error)
-            } else {
-                //add comment
-            }
-            
-            self.commentInput.resignFirstResponder()
-            self.commentInput.text = ""
         }
 
     }
@@ -296,6 +282,15 @@ extension PostViewController {
             
             let image = Util.coloredImage(image, color: UIColor.redColor())
             likedBtn?.setImage(image, forState: .Normal)
+            
+        }
+        
+        let bookmarkimage = ( me.bookmark ?? [] ).contains(self.post.id) ? "star_filled" : "star"
+        
+        if let image = UIImage(named: bookmarkimage) {
+            
+            let image = Util.coloredImage(image, color: UIColor.orangeColor())
+            bookmarkBtn?.setImage(image, forState: .Normal)
             
         }
         
