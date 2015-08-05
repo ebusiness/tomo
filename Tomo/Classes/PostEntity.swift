@@ -16,6 +16,10 @@ class PostEntity: NSObject {
     
     var content: String!
     
+    var images: [String]?
+    
+    var like: [String]?
+    
     var coordinate: [Double]?
     
     var createDate: NSDate!

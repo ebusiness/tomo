@@ -8,45 +8,67 @@
 
 import UIKit
 
-class HomeViewController: BaseTableViewController {
+final class HomeViewController: BaseTableViewController {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var indicatorLabel: UILabel!
     
-    var frc: NSFetchedResultsController!
-    var objectChanges = Dictionary<NSFetchedResultsChangeType, [NSIndexPath]>()
+    let screenHeight = UIScreen.mainScreen().bounds.height
+    let loadTriggerHeight = CGFloat(88.0)
+    
+    var contents = [AnyObject]()
+    var latestContent: AnyObject?
+    var oldestContent: AnyObject?
+    var isLoading = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // load local post data
-        frc = DBController.newsfeeds()
-        frc.delegate = self
         
         var postCellNib = UINib(nibName: "PostCell", bundle: nil)
         tableView.registerNib(postCellNib, forCellReuseIdentifier: "PostCell")
         
         var postImageCellNib = UINib(nibName: "PostImageCell", bundle: nil)
         tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
+        
+        tableView.backgroundView = UIImageView(image: UIImage(named: "pattern"))
 
         var refresh = UIRefreshControl()
-        refresh.addTarget(self, action: "test", forControlEvents: UIControlEvents.ValueChanged)
+        refresh.addTarget(self, action: "loadNewContent", forControlEvents: UIControlEvents.ValueChanged)
         
         self.refreshControl = refresh
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
         
-        // load reomte data
-        ApiController.getNewsfeed() { (error) -> Void in
-            self.tableView.reloadData()
-        }
+        self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        
+        loadMoreContent()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func setupMapping() {
+        
+        let userMapping = RKObjectMapping(forClass: UserEntity.self)
+        userMapping.addAttributeMappingsFromDictionary([
+            "_id": "id",
+            "nickName": "nickName",
+            "photo_ref": "photo"
+            ])
+        
+        let postMapping = RKObjectMapping(forClass: PostEntity.self)
+        postMapping.addAttributeMappingsFromDictionary([
+            "_id": "id",
+            "contentText": "content",
+            "coordinate": "coordinate",
+            "images_mobile.name": "images",
+            "like": "like",
+            "createDate": "createDate"
+            ])
+        
+        let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping)
+        postMapping.addPropertyMapping(ownerRelationshipMapping)
+        
+        let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        
+        manager.addResponseDescriptor(responseDescriptor)
+        
     }
     
     // MARK: - Navigation
@@ -58,24 +80,6 @@ class HomeViewController: BaseTableViewController {
                 vc.post = post
             }
         }
-    }
-    
-    func test() {
-        
-        activityIndicator.startAnimating()
-        indicatorLabel.text = "正在加载"
-        
-        ApiController.getNewsfeed() { (error) -> Void in
-            self.tableView.reloadData()
-            self.refreshControl?.endRefreshing()
-            self.activityIndicator.stopAnimating()
-            self.activityIndicator.alpha = 0
-            self.indicatorLabel.alpha = 0
-            self.indicatorLabel.text = "向下拉动加载更多内容"
-        }
-        
-        return
-        
     }
     
 }
@@ -123,18 +127,20 @@ class HomeViewController: BaseTableViewController {
 //    }
 //}
 
+// MARK: UITableView datasource
+
 extension HomeViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return frc.fetchedObjects?.count ?? 0
+        return contents.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var post = frc.objectAtIndexPath(indexPath) as! Post
+        var post = contents[indexPath.row] as! PostEntity
         var cell: PostCell!
         
-        if post.imagesmobile.count > 0 {
+        if post.images?.count > 0 {
             
             cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell", forIndexPath: indexPath) as! PostImageCell
             
@@ -155,19 +161,33 @@ extension HomeViewController {
     }
 }
 
+// MARK: UITableView delegate
+
 extension HomeViewController {
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let post: AnyObject = frc.objectAtIndexPath(indexPath)
+        let post: AnyObject = contents[indexPath.row]
         self.performSegueWithIdentifier("postdetail", sender: post)
     }
     
     override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if let content = contents.get(indexPath.row) as? PostEntity {
+            
+            if content.images?.count > 0 {
+                return 334
+            } else {
+                return 131
+            }
+        }
+        
         return UITableViewAutomaticDimension
     }
     
 }
+
+// MARK: UIScrollView delegate
 
 extension HomeViewController {
     
@@ -176,59 +196,127 @@ extension HomeViewController {
         super.scrollViewDidScroll(scrollView)
         
         let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+
+        if (contentHeight - screenHeight - loadTriggerHeight) < offsetY {
+            loadMoreContent()
+        }
         
         if offsetY < 0 {
             indicatorLabel.alpha = abs(offsetY)/64
             activityIndicator.alpha = abs(offsetY)/64
         }
-        
     }
-
 }
 
-// MARK: - NSFetchedResultsControllerDelegate
+// MARK: Private methods
 
-extension HomeViewController: NSFetchedResultsControllerDelegate {
+extension HomeViewController {
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        objectChanges.removeAll(keepCapacity: false)
-    }
-    
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    private func loadMoreContent() {
         
-        if objectChanges[type] == nil {
-            objectChanges[type] = [NSIndexPath]()
+        // skip if already in loading
+        if isLoading {
+            return
+        }
+
+        isLoading = true
+        
+        var params = Dictionary<String, NSTimeInterval>()
+        
+        if let oldestContent = oldestContent as? PostEntity {
+            params["before"] = oldestContent.createDate.timeIntervalSince1970
         }
         
-        switch type {
-        case .Insert:
-            if let newIndexPath = newIndexPath {
-                objectChanges[type]!.append(newIndexPath)
+        manager.getObjectsAtPath("/newsfeed", parameters: params, success: { (operation, result) -> Void in
+            
+            self.contents += result.array()
+            self.appendRows(Int(result.count))
+            
+            self.isLoading = false
+        }) { (operation, err) -> Void in
+                println(err)
+                self.isLoading = false
             }
-        case .Delete:
-            if let indexPath = indexPath {
-                objectChanges[type]!.append(indexPath)
-            }
-        case .Update:
-            if let indexPath = indexPath {
-                objectChanges[type]!.append(indexPath)
-            }
-        case .Move:
-            // TODO:
-            println("move")
-        }
     }
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        // TODO: move,update,delete
-//        let insertedItems = self.objectChanges[.Insert]
-//        if insertedItems?.count > 0 {
-//            self.tableView.insertItemsAtIndexPaths(insertedItems!)
-//        }
-//        
-//        let deleteItems = self.objectChanges[.Delete]
-//        if deleteItems?.count > 0 {
-//            self.tableView.deleteItemsAtIndexPaths(deleteItems!)
-//        }
+    func loadNewContent() {
+        
+        // skip if already in loading
+        if isLoading {
+            return
+        }
+
+        isLoading = true
+        
+        activityIndicator.startAnimating()
+        indicatorLabel.text = "正在加载"
+        
+        var params = Dictionary<String, NSTimeInterval>()
+        
+        if let latestContent = latestContent as? PostEntity {
+            params["after"] = latestContent.createDate.timeIntervalSince1970
+        }
+        
+        manager.getObjectsAtPath("/newsfeed", parameters: params, success: { (operation, result) -> Void in
+            
+            self.contents = result.array() + self.contents
+            self.prependRows(Int(result.count))
+            
+            self.refreshControl?.endRefreshing()
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.alpha = 0
+            self.indicatorLabel.alpha = 0
+            self.indicatorLabel.text = "向下拉动加载更多内容"
+            self.isLoading = false
+            
+            }) { (operation, err) -> Void in
+                println(err)
+                self.isLoading = false
+        }
+        
+        return
+        
+    }
+
+    private func appendRows(rows: Int) {
+        
+        let firstIndex = contents.count - rows
+        let lastIndex = contents.count
+        
+        var indexPathes = [NSIndexPath]()
+        
+        for index in firstIndex..<lastIndex {
+            indexPathes.push(NSIndexPath(forRow: index, inSection: 0))
+        }
+        
+        // hold the oldest content for pull-up loading
+        oldestContent = contents.last
+        
+        // hold the latest content for pull-down loading
+        if firstIndex == 0 {
+            latestContent = contents.first
+        }
+        
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: UITableViewRowAnimation.Middle)
+        tableView.endUpdates()
+        
+    }
+    
+    private func prependRows(rows: Int) {
+        
+        var indexPathes = [NSIndexPath]()
+        
+        for index in 0..<rows {
+            indexPathes.push(NSIndexPath(forRow: index, inSection: 0))
+        }
+        
+        // hold the latest content for pull-up loading
+        latestContent = contents.first
+        
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: UITableViewRowAnimation.Middle)
+        tableView.endUpdates()
     }
 }

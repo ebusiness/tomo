@@ -10,6 +10,7 @@ import UIKit
 
 class PostCell: UITableViewCell {
 
+    @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var postContentLabel: UILabel!
@@ -17,10 +18,15 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var bookmarkButton: UIButton!
     
-    var post: Post!
+    var post: PostEntity!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        cardView.layer.cornerRadius = 5
+        cardView.layer.masksToBounds = true
+        cardView.layer.borderWidth = 1
+        cardView.layer.borderColor = Util.UIColorFromRGB(0xDDDDDD, alpha: 1).CGColor
         
         avatarImageView.layer.cornerRadius = 25.0
         avatarImageView.layer.masksToBounds = true
@@ -32,7 +38,7 @@ class PostCell: UITableViewCell {
         if let owner = post.owner {
             userNameLabel.text = owner.nickName
             
-            if let photo_ref = owner.photo_ref {
+            if let photo_ref = owner.photo {
                 avatarImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
             }
         } else {
@@ -63,8 +69,11 @@ class PostCell: UITableViewCell {
             postContentLabel.text = post.content
         }
         
-        likeButton.setTitle("\(post.liked.count)", forState: .Normal)
-        bookmarkButton.setTitle("\(post.bookmarked.count)", forState: .Normal)
+        if let like = post.like {
+            likeButton.setTitle("\(like.count)", forState: .Normal)
+        }
+        
+//        bookmarkButton.setTitle("\(post.bookmark?.count)", forState: .Normal)
         
         var likeimage = "hearts"
         var bookmarkimage = "star"
