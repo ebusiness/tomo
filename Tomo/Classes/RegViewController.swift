@@ -99,8 +99,8 @@ class RegViewController: BaseViewController {
     @IBAction func login_wechat(sender: AnyObject) {
         OpenidController.instance.wxCheckAuth(
             success: { (result) -> () in
-                self.loginCheck(result)
-            
+                Defaults["shouldAutoLogin"] = true
+                RegViewController.changeRootToTab(self)
             },
             failure: { (errCode, errMessage) -> () in
                 
@@ -167,35 +167,10 @@ class RegViewController: BaseViewController {
                 
                 }
                 
-                ApiController.getMyInfo({ (error) -> Void in
-                    if let err = error{
-                        Util.showError(err)
-                    } else {
-                        if let user = DBController.myUser() {//auto login
-                            Defaults["shouldAutoLogin"] = true
-                        }
-                        RegViewController.changeRootToTab(self)
-                    }
-                })
+                Defaults["shouldAutoLogin"] = true
+                RegViewController.changeRootToTab(self)
         }
         
-    }
-    
-    func loginCheck(result: Dictionary<String, AnyObject>){
-        Util.showHUD()
-        
-        if let uid = result["_id"] as? String {
-            ApiController.getMyInfo({ (error) -> Void in
-                if let err = error{
-                    Util.showError(err)
-                } else {
-                    if let user = DBController.myUser() {//auto login
-                        Defaults["shouldAutoLogin"] = true
-                    }
-                    RegViewController.changeRootToTab(self)
-                }
-            })
-        }
     }
     
     class func changeRootToTab(from:UIViewController){

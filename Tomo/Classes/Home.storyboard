@@ -65,6 +65,7 @@
                             <outlet property="delegate" destination="zbi-CG-oqX" id="ccK-rA-jAt"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="APc-61-gDU">
                         <barButtonItem key="rightBarButtonItem" image="create_new" id="zfo-hl-voi">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

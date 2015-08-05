@@ -28,11 +28,6 @@ class AddPostViewController: BaseViewController {
     var imageListSelected:[UIImage] = []
     var postContent: String?
     
-//    var groupListVC: NewGroupListViewController?
-//    var stationListVC: StationTableViewController?
-//    var selectedGroup: Group?
-//    var selectedStation: Station?
-    
     override func viewDidLoad() {
         
         self.navigationController?.navigationBarHidden = true
@@ -44,36 +39,12 @@ class AddPostViewController: BaseViewController {
         Util.changeImageColorForButton(stationButton,color: color)
         Util.changeImageColorForButton(groupButton,color: color)
         
-//        if DBController.myStations().count == 0 {
-//            stationButton.enabled = false
-//        }
-//        
-//        if DBController.myUser()?.groups.count == 0 {
-//            groupButton.enabled = false
-//        }
-//        
         self.getAllPhoto()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        
-//        if let groupListVC = groupListVC, selectedGroup = groupListVC.selectedGroup {
-//            self.selectedGroup = selectedGroup
-//            self.groupListVC = nil
-//            self.groupName.text = selectedGroup.name
-//            self.selectedStation = nil
-//            self.stationName.text = ""
-//        }
-        
-//        if let stationListVC = stationListVC, selectedStation = stationListVC.selectedStation {
-//            self.selectedStation = selectedStation
-//            self.selectedGroup = nil
-//            self.stationName.text = selectedStation.name
-//            self.groupName.text = ""
-//            self.stationListVC = nil
-//        }
         self.postInput.becomeFirstResponder()
     }
     
@@ -86,8 +57,6 @@ class AddPostViewController: BaseViewController {
         Util.showHUD()
         // send post
         self.uploadToS3({ (imageNames, sizes) -> () in
-            
-//            ApiController.addPost(imageNames, sizes: sizes, content: self.postContent!, groupId: self.selectedGroup?.id, stationId: self.selectedStation?.id,location: nil, done: { (error) -> Void in
             
             ApiController.addPost(imageNames, sizes: sizes, content: self.postContent!, groupId: nil, stationId: nil,location: nil, done: { (error) -> Void in
                 
@@ -128,8 +97,6 @@ class AddPostViewController: BaseViewController {
             optional["从相册选择"] = { (_) -> () in
                 DBCameraController.openLibrary(self, delegate: self)
             }
-//            getAllPhoto()
-            
         }
         
         if optional.count > 0 {
@@ -141,42 +108,15 @@ class AddPostViewController: BaseViewController {
     }
     
     @IBAction func groupTapped(sender: AnyObject) {
-//        //select group
-//        groupListVC = Util.createViewControllerWithIdentifier("GroupListViewController", storyboardName: "Group") as? NewGroupListViewController
-////        groupListVC!.showMyGroupOnly = true
-////        groupListVC!.selectedGroup = selectedGroup
-//        
-//        navigationController?.pushViewController(groupListVC!, animated: true)
+
     }
     
     @IBAction func stationTapped(sender: AnyObject) {
-//        //select station
-//        stationListVC = StationTableViewController()
-//        stationListVC?.displayMode = .MyStationOnly
-//        
-//        navigationController?.pushViewController(stationListVC!, animated: true)
+
     }
     
     @IBAction func viewPanGesture(sender: UIPanGestureRecognizer) {
         
-//        if self.imageList.count == 0 { return }
-//        
-//        let point = sender.translationInView(self.view)
-//        let h:CGFloat = 138
-//        
-//        if sender.state == UIGestureRecognizerState.Began {
-//
-//        } else if sender.state == UIGestureRecognizerState.Changed {
-//            var constant = h + point.y
-//            headerHeight.constant = constant < 44 ? 44 : constant
-//            
-//        } else if sender.state == UIGestureRecognizerState.Ended {
-//            
-//            headerHeight.constant = h
-//            UIView.animateWithDuration(0.2, animations: { () -> Void in
-//                self.view.layoutIfNeeded()
-//            })
-//        }
     }
 }
 
@@ -191,14 +131,12 @@ extension AddPostViewController {
             if let group = group {
                 var assetBlock : ALAssetsGroupEnumerationResultsBlock = { (result: ALAsset!, index: Int, stop) in
                     if result != nil && self.imageList.count < 10 {
-//                        var image = UIImage(CGImage:result.thumbnail().takeUnretainedValue())
                         var image = UIImage(CGImage:result.defaultRepresentation().fullScreenImage().takeUnretainedValue())
                         self.imageList.append(image!)
                     }
                 }
                 group.setAssetsFilter(ALAssetsFilter.allPhotos())
-                group.enumerateAssetsWithOptions(.Reverse, usingBlock: assetBlock)//descending
-//                group.enumerateAssetsUsingBlock(assetBlock)
+                group.enumerateAssetsWithOptions(.Reverse, usingBlock: assetBlock)
                 self.setImageList()
             }
             }, failureBlock: { (fail) in

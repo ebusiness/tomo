@@ -309,7 +309,7 @@ class DBController: NSObject {
         
         //remove device
         ApiController.setDeviceInfo(nil, done: { (error) -> Void in
-            Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/logout", parameters: nil, encoding: ParameterEncoding.URL)
+            Manager.sharedInstance.request(.GET, kAPIBaseURLString + "/logout", parameters: nil, encoding: ParameterEncoding.URL)
         })
     }
 }

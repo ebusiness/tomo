@@ -27,8 +27,6 @@ class BaseTableViewController: UITableViewController {
         
         self.manager.registerRequestOperationClass(RestKitErrorHanding.self)
         self.setupMapping()
-        
-        println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
 
         self.setBackButton()
         self.setTopConstraint()
@@ -57,19 +55,7 @@ class BaseTableViewController: UITableViewController {
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-        println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
-        
-        #if DEBUG
-            Util.showInfo("メモリー不足")
-        #endif
-    }
-    
     deinit {
-        println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
-        
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }

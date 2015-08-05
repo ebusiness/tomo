@@ -20,10 +20,14 @@ class MessageViewController: JSQMessagesViewController {
             return DBController.myUser()
         }
     }
+    
     var users = [User]()
+    
 //    var messages = [JSQMessage]()
+    
     var avatars = Dictionary<String, JSQMessagesAvatarImage>()
     var avatarImageBlank: JSQMessagesAvatarImage!
+    
     //Test
     var friend: User!
     
@@ -33,7 +37,8 @@ class MessageViewController: JSQMessagesViewController {
     }
     
     var selectedIndexPath: NSIndexPath?
-        var icon_speaker_normal:UIImage!
+    
+    var icon_speaker_normal:UIImage!
     var icon_speaker_highlighted:UIImage!
     var icon_keyboard_normal:UIImage!
     var icon_keyboard_highlighted:UIImage!
@@ -49,39 +54,12 @@ class MessageViewController: JSQMessagesViewController {
             navigationItem.title = friend.nickName
         }
         
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("gotNewMessage"), name: "GotNewMessage", object: nil)
-        
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: Selector("mediaMessageBtnTapped"))
-        
         avatarImageBlank = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(named: "avatar"), diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
         
         loadMessages()
     }
 
     func loadMessages() {
-        /*
-        let after = messages.last?.date
-        
-        let chats = ChatController.chatsByGroupId(groupId, after: after)
-        
-        var isIncoming = false
-        
-        for chat in chats {
-            let message = addMessage(chat)
-            if incoming(message) {
-                isIncoming = true
-            }
-        }
-        
-        if chats.count > 0 && initialized && isIncoming {
-            JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
-        }
-        
-        finishReceivingMessage()
-        scrollToBottomAnimated(false)
-        
-        initialized = true
-        */
         
         frc = DBController.messageWithUser(friend)
         frc.delegate = self
@@ -100,26 +78,10 @@ class MessageViewController: JSQMessagesViewController {
         }
     }
     
-    /*
-    func addMessage(chat: Chat) -> JSQMessage {
-        var jsqMessage: JSQMessage
-        
-        let user = chat.user
-        let name = user?.fullName()
-        
-        jsqMessage = JSQMessage(senderId: user!.id, senderDisplayName: name, date: chat.createdAt, text: chat.text)
-        users.append(user!)
-        
-        messages.append(jsqMessage)
-        
-        return jsqMessage
-    }
-    */
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        var image = Util.imageWithColor(0x673AB7, alpha: 1)
+        var image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
         navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("downloadMediaDone"), name: "NotificationDownloadMediaDone", object: nil)
@@ -136,16 +98,6 @@ class MessageViewController: JSQMessagesViewController {
         VoiceController.instance.stopPlayer()
         
         NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-        println("メモリー不足")
-        
-        #if DEBUG
-            Util.showInfo("メモリー不足")
-        #endif
     }
     
     // MARK: - Notification
@@ -207,7 +159,6 @@ class MessageViewController: JSQMessagesViewController {
     }
 
     deinit {
-        println("[\(String.fromCString(object_getClassName(self))!)][\(__LINE__)][\(__FUNCTION__)]")
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
@@ -273,27 +224,7 @@ extension MessageViewController: JSQMessagesCollectionViewDataSource {
         } else {
             return avatars[user.id!]
         }
-        
-        /*
-        let user = users[indexPath.item]
-        
-        if avatars[user.id!] == nil {
-            if let photo_ref = user.photo_ref {
-                SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: photo_ref), options: nil, progress: nil, completed: { (image, error, _, _, _) -> Void in
-                    if error == nil && image != nil {
-                        self.avatars[user.id!] = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.collectionView.reloadData()
-                        })
-                    }
-                })
-            } else {
-                return avatarImageBlank
-            }
-            return avatarImageBlank
-        } else {
-            return avatars[user.id!]
-        }*/
+
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
@@ -513,25 +444,4 @@ extension MessageViewController: UIImagePickerControllerDelegate, UINavigationCo
         })
     }
     
-//    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
-//        if picker.sourceType == .Camera {
-//            
-//        }
-//        let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
-//        
-//        let name = NSUUID().UUIDString
-//        let path = NSTemporaryDirectory() + name
-//        
-//        let newImage = image.normalizedImage()
-//        
-//        newImage.saveToPath(path)
-//        
-//        picker.dismissViewControllerAnimated(false, completion: { () -> Void in
-//            let vcNavi = Util.createViewControllerWithIdentifier(nil, storyboardName: "AddPost") as! UINavigationController
-//            
-//            let vc = vcNavi.topViewController as! AddPostViewController
-//            vc.imagePath = path
-//            self.presentViewController(vcNavi, animated: true, completion: nil)
-//        })
-//    }
 }

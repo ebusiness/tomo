@@ -18,30 +18,13 @@ class LoadingViewController: BaseViewController {
         OpenidController.instance.wxCheckAuth(
             
             success: { (res) -> () in
-            
-                if let uid = res["_id"] as? String {
-                    ApiController.getMyInfo({ (error) -> Void in
-                        if let err = error{
-                            Util.showError(err)
-                        } else {
-                            if let user = DBController.myUser() {//auto login
-                                Defaults["shouldAutoLogin"] = true
-                            }
-                            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-                            Util.changeRootViewController(from: self, to: tab)
-                        }
-                    })
-                }
+                let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+                Util.changeRootViewController(from: self, to: tab)
             },
             failure: { (errCode, errMessage) -> () in
-                
                 let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
                 Util.changeRootViewController(from: self, to: main)
-//                Util.showInfo("登录失败[\(errMessage)]")
             })
-    }
-    
-    override func setupMapping() {
     }
 
 }

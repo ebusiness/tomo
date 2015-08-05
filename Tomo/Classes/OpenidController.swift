@@ -129,6 +129,8 @@ extension OpenidController {
                                 me.bookmark = result["bookmark"] as? [String]
                         }
                         
+                        // get user notification
+                        
                         
                         self.showSuccess(result)
                     }
