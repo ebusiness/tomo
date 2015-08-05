@@ -130,7 +130,7 @@ class MessageViewController: JSQMessagesViewController {
         super.viewWillDisappear(animated)
         
         if friend != nil {
-            DBController.makeAllMessageRead(friend)
+            DBController.makeAllMessageRead(friend.id!)
         }
         
         VoiceController.instance.stopPlayer()
@@ -151,7 +151,7 @@ class MessageViewController: JSQMessagesViewController {
     // MARK: - Notification
     
     func gotNewMessage() {
-        DBController.makeAllMessageRead(friend)
+        DBController.makeAllMessageRead(friend.id!)
     }
     
     func downloadMediaDone() {
@@ -358,8 +358,7 @@ extension MessageViewController: JSQMessagesCollectionViewDelegateFlowLayout {
         let message = frc.objectAtIndexPath(indexPath) as! Message
         
         let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-        vc.user = message.from
-//        vc.readOnlyMode = true
+//        vc.user = message.from
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

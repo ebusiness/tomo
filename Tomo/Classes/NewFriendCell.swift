@@ -16,7 +16,7 @@ class NewFriendCell: UITableViewCell {
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     
-    var user: User?
+    var user: UserEntity?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,13 +36,13 @@ class NewFriendCell: UITableViewCell {
     
     func setupDisplay() {
         
-        if let photo_ref = user?.photo_ref {
-            avatarImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
+        if let photo = user?.photo {
+            avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
         }
         
         userNameLabel.text = user?.nickName
         
-        let count = DBController.unreadCount(user!)
+        let count = DBController.unreadCount(user!.id)
         
         if count > 0 {
             countLabel.hidden = false
@@ -51,7 +51,7 @@ class NewFriendCell: UITableViewCell {
             countLabel.hidden = true
         }
         
-        if let message = DBController.lastMessage(user!) {
+        if let message = DBController.lastMessage(user!.id) {
             if message.isMediaMessage() {
                 messageLabel.text = MediaMessage.messagePrefix(message.content!)
             } else {
@@ -61,7 +61,7 @@ class NewFriendCell: UITableViewCell {
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateStyle = .ShortStyle
             if let date = message.createDate {
-                timeLabel.text = dateFormatter.stringFromDate(date)
+                timeLabel.text = date.toString(dateStyle: .ShortStyle, timeStyle: .MediumStyle, doesRelativeDateFormatting: true)
             } else {
                 timeLabel.hidden = true
             }

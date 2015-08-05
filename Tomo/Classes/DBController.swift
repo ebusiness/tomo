@@ -67,8 +67,8 @@ class DBController: NSObject {
         if let me = myUser() {
             var friends = me.friends.array as! [User]
             friends.sort({if let date1 = $0.createDate, let date2 = $1.createDate {
-                let message1 = self.lastMessage($0)
-                let message2 = self.lastMessage($1)
+                let message1 = self.lastMessage($0.id!)
+                let message2 = self.lastMessage($1.id!)
                 if message1 == nil && message2 == nil {
                     return date1.timeIntervalSinceNow > date2.timeIntervalSinceNow
                 }
@@ -206,8 +206,8 @@ class DBController: NSObject {
         save()
     }
     
-    class func lastMessage(user: User) -> Message? {
-        return Message.MR_findFirstWithPredicate(NSPredicate(format: "group = NULL AND (from=%@ OR ANY to.id=%@)", user, user.id!), sortedBy: "createDate", ascending: false) as? Message
+    class func lastMessage(userid: String) -> Message? {
+        return Message.MR_findFirstWithPredicate(NSPredicate(format: "group = NULL AND (from.id=%@ OR ANY to.id=%@)", userid, userid), sortedBy: "createDate", ascending: false) as? Message
     }
     
     //for local notification
@@ -215,8 +215,8 @@ class DBController: NSObject {
         return Message.MR_findFirstWithPredicate(NSPredicate(format: "group = NULL"), sortedBy: "createDate", ascending: false) as? Message
     }
     
-    class func unreadCount(user: User) -> Int {
-        return Int(bitPattern: Message.MR_countOfEntitiesWithPredicate(NSPredicate(format: "group = NULL AND from=%@ AND isRead=NO", user)))
+    class func unreadCount(userid: String) -> Int {
+        return Int(bitPattern: Message.MR_countOfEntitiesWithPredicate(NSPredicate(format: "group = NULL AND from.id=%@ AND isRead=NO", userid)))
     }
     
     class func unreadCountTotal() -> Int {
@@ -227,8 +227,8 @@ class DBController: NSObject {
         return 0
     }
     
-    class func makeAllMessageRead(user: User) {
-        let messages = Message.MR_findAllWithPredicate(NSPredicate(format: "from=%@ AND group = NULL", user)) as! [Message]
+    class func makeAllMessageRead(userid: String) {
+        let messages = Message.MR_findAllWithPredicate(NSPredicate(format: "from.id=%@ AND group = NULL", userid)) as! [Message]
         for message in messages {
             message.isRead = true
         }
