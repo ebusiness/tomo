@@ -37,6 +37,8 @@ class UserEntity: NSObject {
     var friends: [String]?
     
     var invited: [String]?
+    
+    var bookmark: [String]?
 }
 
 extension UserEntity {

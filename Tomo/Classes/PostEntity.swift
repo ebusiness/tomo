@@ -20,6 +20,8 @@ class PostEntity: NSObject {
     
     var like: [String]?
     
+    var comments: [CommentEntity]?
+    
     var coordinate: [Double]?
     
     var createDate: NSDate!
