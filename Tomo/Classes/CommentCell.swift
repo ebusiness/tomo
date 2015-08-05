@@ -17,22 +17,22 @@ class CommentCell: UITableViewCell {
     
     var parentVC:UIViewController?
     
-    var comment: Comments! {
+    var comment: CommentEntity! {
         didSet {
-            if let photo_ref = comment.owner?.photo_ref {
-                avatarImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
+            if let photo = comment.owner.photo {
+                avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
             }
             
-            userNameLabel.text = comment.owner?.nickName
+            userNameLabel.text = comment.owner.nickName
             timeLabel.text = Util.displayDate(comment.createDate)
             contentLabel.text = comment.content
         }
     }
     
-    func height(comment: Comments, width: CGFloat) -> CGFloat {
+    func height(comment: CommentEntity, width: CGFloat) -> CGFloat {
         contentLabel.preferredMaxLayoutWidth = width - 8 - 36 - 8
         
-        userNameLabel.text = comment.owner?.nickName
+        userNameLabel.text = comment.owner.nickName
         timeLabel.text = Util.displayDate(comment.createDate)
         contentLabel.text = comment.content
         
@@ -60,7 +60,6 @@ class CommentCell: UITableViewCell {
     func avatarImageTapped(sender: UITapGestureRecognizer) {
         let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = comment.owner
-//        vc.readOnlyMode = true
         self.parentVC?.navigationController?.pushViewController(vc, animated: true)
     }
 

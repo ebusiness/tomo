@@ -32,7 +32,7 @@ class PostViewController : BaseTableViewController{
     var commentContent: String?
     var cellForHeight: CommentCell!
 
-    var post: Post! {
+    var post: PostEntity! {
         didSet {
             if let avatarImageView = avatarImageView {
                 updateUIForHeader()
@@ -40,9 +40,9 @@ class PostViewController : BaseTableViewController{
         }
     }
 
-    var comments: [Comments] {
+    var comments: [CommentEntity]? {
         get {
-            return post.comments.array as! [Comments]
+            return post.comments
         }
     }
 
@@ -55,8 +55,7 @@ class PostViewController : BaseTableViewController{
         avatarImageView.layer.masksToBounds = true
         
         Util.changeImageColorForButton(likedBtn,color: UIColor.redColor())
-        let color = Util.UIColorFromRGB(0xFF007AFF, alpha: 1)
-        Util.changeImageColorForButton(bookmarkBtn,color: color)
+        Util.changeImageColorForButton(bookmarkBtn,color: UIColor.orangeColor())
         
         commentInput.layer.borderColor = UIColor.grayColor().CGColor
         commentInput.layer.borderWidth = 0.5
@@ -64,12 +63,20 @@ class PostViewController : BaseTableViewController{
         
         updateUIForHeader()
         
-        if post.imagesmobile.count > 0 {
+        if self.post.images?.count > 0 {
             
             self.setImageList()
             self.headerHeight = self.listViewHeight - 64
             
         }
+        
+        self.manager.getObject(nil, path: "/posts/\(self.post.id)", parameters: nil, success: { (operation, results) -> Void in
+            
+            if let results = results.firstObject as? PostEntity {
+                self.post = results
+            }
+            
+        }, failure: nil)
         
         
     }
@@ -77,7 +84,7 @@ class PostViewController : BaseTableViewController{
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if post.imagesmobile.count < 1 {
+        if post.images?.count < 1 {
             self.extendedLayoutIncludesOpaqueBars = false
             self.automaticallyAdjustsScrollViewInsets = true
             var image = Util.imageWithColor(0x673AB7, alpha: 1)
@@ -89,9 +96,53 @@ class PostViewController : BaseTableViewController{
     }
     
     
+    
+    override func setupMapping() {
+        
+        let userMapping = RKObjectMapping(forClass: UserEntity.self)
+        userMapping.addAttributeMappingsFromDictionary([
+            "_id": "id",
+            "nickName": "nickName",
+            "photo_ref": "photo"
+            ])
+        
+        let commentMapping = RKObjectMapping(forClass: CommentEntity.self)
+        commentMapping.addAttributeMappingsFromDictionary([
+            "_id": "id",
+            "content": "content",
+            "createDate": "createDate"
+            ])
+        
+        let commentOwnerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping)
+        commentMapping.addPropertyMapping(commentOwnerRelationshipMapping)
+        
+        
+        let postMapping = RKObjectMapping(forClass: PostEntity.self)
+        postMapping.addAttributeMappingsFromDictionary([
+            "_id": "id",
+            "contentText": "content",
+            "coordinate": "coordinate",
+            "images_mobile.name": "images",
+            "like": "like",
+            "createDate": "createDate"
+            ])
+        
+        
+        let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping)
+        postMapping.addPropertyMapping(ownerRelationshipMapping)
+        
+        let commentRelationshipMapping = RKRelationshipMapping(fromKeyPath: "comments", toKeyPath: "comments", withMapping: commentMapping)
+        postMapping.addPropertyMapping(commentRelationshipMapping)
+        
+        
+        let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/posts/:id", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        
+        manager.addResponseDescriptor(responseDescriptor)
+        
+    }
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         
-        if post.imagesmobile.count > 0 {
+        if let images = post.images where images.count > 0 {
             super.scrollViewDidScroll(scrollView)
         }
     }
@@ -106,15 +157,31 @@ class PostViewController : BaseTableViewController{
     }
 
     @IBAction func likeBtnTapped(sender: AnyObject) {
-        ApiController.postLike(post.id!, done: { (error) -> Void in
+        
+        request(.PATCH, kAPIBaseURLString + "/posts/\(self.post.id)/like", parameters: nil, encoding: .URL)
+        .response { (_, _, _, _) -> Void in
+            
+            if let like = self.post.like {
+                like.contains(me.id) ? self.post.like!.remove(me.id) : self.post.like!.append(me.id)
+            } else {
+                self.post.like = [me.id]
+            }
             self.updateUIForHeader()
-        })
+        }
     }
 
     @IBAction func bookmarkBtnTapped(sender: AnyObject) {
-        ApiController.postBookmark(post.id!, done: { (error) -> Void in
-            self.updateUIForHeader()
-        })
+        
+        request(.PATCH, kAPIBaseURLString + "/posts/\(self.post.id)/bookmark", parameters: nil, encoding: .URL)
+            .response { (_, _, _, _) -> Void in
+                
+                if let bookmark = me.bookmark {
+                    bookmark.contains(self.post.id) ? me.bookmark!.remove(self.post.id) : me.bookmark!.append(self.post.id)
+                } else {
+                    me.bookmark = [self.post.id]
+                }
+                self.updateUIForHeader()
+        }
     }
 
     
@@ -140,16 +207,16 @@ class PostViewController : BaseTableViewController{
             OpenidController.instance.wxShare(1, img: shareImage, description: self.post.content!, url:shareUrl)
         }
         
-        if post.isMyPost {
+        if post.owner.id == me.id {
             optionalList["删除"] = { (_) -> Void in
                 
                 Util.alert(self, title: "删除帖子", message: "确定删除该帖子么?", action: { (action) -> Void in
-                    ApiController.postDelete(self.post.id!, done: { (error) -> Void in
-                    })
                     
-                    self.post.delete()
-                    Util.showInfo("帖子已删除")
-                    self.navigationController?.popViewControllerAnimated(true)
+                    request(.DELETE, "/posts/\(self.post.id)", parameters: nil, encoding: .URL)
+                        .response { (_, _, _, _) -> Void in
+                            Util.showInfo("帖子已删除")
+                            self.navigationController?.popViewControllerAnimated(true)
+                    }
                 })
             }
         }
@@ -165,13 +232,37 @@ class PostViewController : BaseTableViewController{
     @IBAction func sendCommentBtnTapped(sender: AnyObject) {
         Util.showHUD()
         
+        var param = Dictionary<String, String>();
+        param["content"] = commentContent;
+//        param["replyTo"] = "552220aa915a1dd84834731b";//コメントID
+        
+        request(.POST, "/posts/\(self.post.id)/comments", parameters: param, encoding: .URL)
+            .responseJSON { (_, _,json, _) -> Void in
+                
+                Util.dismissHUD()
+                
+                let comment = CommentEntity()
+                comment.owner = me
+                comment.content = self.commentContent
+                comment.createDate = NSDate()
+                
+                if self.comments == nil { self.post.comments = [] }
+                self.post.comments?.append(comment)
+                
+                self.tableView.reloadData()
+                
+                self.commentInput.resignFirstResponder()
+                self.commentInput.text = ""
+        }
+        
+        
         ApiController.addComment(self.post.id!, content: commentContent!) { (error) -> Void in
             Util.dismissHUD()
             
             if let error = error {
                 Util.showError(error)
             } else {
-                self.refreshPostDetail()
+                //add comment
             }
             
             self.commentInput.resignFirstResponder()
@@ -186,35 +277,25 @@ class PostViewController : BaseTableViewController{
 extension PostViewController {
 
     func updateUIForHeader(){
-        if let photo_ref = post.owner?.photo_ref {
-            avatarImageView.sd_setImageWithURL(NSURL(string: photo_ref), placeholderImage: DefaultAvatarImage)
+        
+        if let photo = self.post.owner.photo {
+            avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
         }
         
-        userName.text = post.owner?.nickName
+        userName.text = self.post.owner.nickName
         timeLabel.text = Util.displayDate(post.createDate)
         
         contentLabel.text = post.content
         
-        likedBtn.setTitle("\(post.liked.count)", forState: .Normal)
-        bookmarkBtn.setTitle("\(post.bookmarked.count)", forState: .Normal)
+        if let like = self.post.like {
+            likedBtn.setTitle("\(like.count)", forState: .Normal)
 
-        if let me = DBController.myUser() {
+        }
+        let likeimage = ( self.post.like ?? [] ).contains(me.id) ? "hearts_filled" : "hearts"
+        if let image = UIImage(named: likeimage) {
             
-            let likeimage = me.liked_posts.containsObject(post) ? "hearts_filled" : "hearts"
-            if let image = UIImage(named: likeimage) {
-                
-                let image = Util.coloredImage(image, color: UIColor.redColor())
-                likedBtn?.setImage(image, forState: .Normal)
-                
-            }
-            
-            let bookmarkimage = me.bookmarked_posts.containsObject(post) ? "star_filled" : "star"
-            if let image = UIImage(named: bookmarkimage) {
-                
-                let image = Util.coloredImage(image, color: UIColor.orangeColor())
-                bookmarkBtn?.setImage(image, forState: .Normal)
-                
-            }
+            let image = Util.coloredImage(image, color: UIColor.redColor())
+            likedBtn?.setImage(image, forState: .Normal)
             
         }
         
@@ -228,6 +309,8 @@ extension PostViewController {
             tableHeaderView.frame.size.height = tableHeaderView.frame.size.height + heightChange
         }
         
+        self.tableView.reloadData()
+        
     }
     
     func setImageList(){
@@ -240,12 +323,11 @@ extension PostViewController {
         self.tableView.tableHeaderView?.frame.size.height = contentViewHeight.constant + self.listViewHeight
 
         var scrollWidth:CGFloat = 0
-        
-        for i in 0..<post.imagesmobile.count{
-            
-            if let image = post.imagesmobile[i] as? Images{
+        if  let images = post.images where images.count > 0 {
+            for i in 0..<images.count{
+                
                 let imgView = UIImageView(frame: CGRectZero )
-                imgView.setImageWithURL(NSURL(string: image.name! ), completed: { (image, error, cacheType, url) -> Void in
+                imgView.setImageWithURL(NSURL(string: images[i] ), completed: { (image, error, cacheType, url) -> Void in
                     }, usingActivityIndicatorStyle: .Gray)
                 
                 imgView.userInteractionEnabled = true
@@ -261,7 +343,7 @@ extension PostViewController {
                 postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Height, relatedBy: .Equal, toItem: postImageList, attribute: .Height, multiplier: 1.0, constant: 0))
                 postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterY, relatedBy: .Equal, toItem: postImageList, attribute: .CenterY, multiplier: 1.0, constant: 0))
                 
-                if post.imagesmobile.count == 1 {
+                if images.count == 1 {
                     
                     postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: 0 ))
                     postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Trailing, relatedBy: .Equal, toItem: postImageList, attribute: .Trailing, multiplier: 1.0, constant: 0 ))
@@ -275,8 +357,8 @@ extension PostViewController {
                     scrollWidth += 5
                 }
                 scrollWidth += imageWidth
+                
             }
-            
         }
         
         postImageList.contentSize.width = scrollWidth
@@ -300,7 +382,7 @@ extension PostViewController {
             gallery.galleryItems = items
             gallery.presentationIndex = index
             
-            if post.imagesmobile.count == 1 {
+            if post.images?.count == 1 {
                 gallery.presentingFromImageView = imageView
             }
             
@@ -320,35 +402,19 @@ extension PostViewController {
         }
     }
     
-    func refreshPostDetail(){
-        
-        ApiController.getPost(post.id!, done: { (error) -> Void in
-            if error == nil {
-                self.post = DBController.postById(self.post.id!)
-                self.tableView.reloadData()
-            } else {
-                Util.showInfo("この投稿が削除されました。")
-                self.post.delete()
-                self.navigationController?.popViewControllerAnimated(true)
-            }
-        })
-    }
-
-    
 }
 
 
 extension PostViewController: UITableViewDataSource {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return post.comments.count
+        return self.comments?.count ?? 0
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as! CommentCell
-        let index = post.comments.count - indexPath.row - 1
-        let comment = comments[index ]
-        cell.comment = comment
+        let index = self.comments!.count - indexPath.row - 1
+        cell.comment = self.comments![index]
         cell.parentVC = self
         
         return cell
@@ -363,8 +429,8 @@ extension PostViewController: UITableViewDelegate {
             cellForHeight = tableView.dequeueReusableCellWithIdentifier("CommentCell") as! CommentCell
         }
         
-        let index = post.comments.count - indexPath.row - 1
-        return cellForHeight.height(comments[index], width: tableView.bounds.width)
+        let index = self.comments!.count - indexPath.row - 1
+        return cellForHeight.height(self.comments![index], width: tableView.bounds.width)
     }
     
 }

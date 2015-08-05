@@ -61,7 +61,7 @@ class NewFriendCell: UITableViewCell {
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateStyle = .ShortStyle
             if let date = message.createDate {
-                timeLabel.text = date.toString(dateStyle: .ShortStyle, timeStyle: .MediumStyle, doesRelativeDateFormatting: true)
+                timeLabel.text = date.toString(dateStyle: .ShortStyle, timeStyle: .ShortStyle, doesRelativeDateFormatting: true)
             } else {
                 timeLabel.hidden = true
             }

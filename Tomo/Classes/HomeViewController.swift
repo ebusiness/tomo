@@ -75,7 +75,7 @@ final class HomeViewController: BaseTableViewController {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "postdetail" {
-            if let post = sender as? Post {
+            if let post = sender as? PostEntity {
                 let vc = segue.destinationViewController as! PostViewController
                 vc.post = post
             }
