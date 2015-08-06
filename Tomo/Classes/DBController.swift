@@ -303,11 +303,7 @@ class DBController: NSObject {
     class func clearDBForLogout() {
         Openids.MR_truncateAll()
         save()
-        
-        Defaults["email"] = ""
-        Defaults["shouldAutoLogin"] = false
         Defaults.remove("didGetMessage")
-        Defaults["setting_tag"] = ""
         
         //remove device
         ApiController.setDeviceInfo(nil, done: { (error) -> Void in

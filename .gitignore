@@ -168,3 +168,6 @@ xcuserdata
 .idea/
 
 S3.swift
+
+#Carthage
+Carthage

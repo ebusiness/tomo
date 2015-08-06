@@ -49,6 +49,7 @@ class SettingViewController: MyAccountBaseController {
             Util.alert(self, title: "退出账号", message: "真的要退出当前的账号吗？", action: { (_) -> Void in
                 DBController.clearDBForLogout()
                 
+                Defaults.remove("openid")
                 me = UserEntity()
                 let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
                 Util.changeRootViewController(from: self, to: main)

@@ -46,7 +46,13 @@ class OpenidController: NSObject {
         if (!WXApi.isWXAppInstalled()) {
             Util.showInfo("微信没有安装")
         } else {
-            self.checkToken()
+            
+            if let openid = Defaults["openid"].string, accessToken = Defaults["access_token"].string, refreshToken = Defaults["refresh_token"].string {
+                self.checkToken()
+            } else {
+                self.wxSendAuth()
+            }
+            
         }
         
     }
@@ -55,7 +61,7 @@ class OpenidController: NSObject {
 //共通
 extension OpenidController {
     
-    func wxSendAuth(){
+    private func wxSendAuth(){
         
         var req = SendAuthReq()
         req.scope = "snsapi_userinfo"
@@ -64,78 +70,26 @@ extension OpenidController {
         WXApi.sendReq(req)
     }
     
-    
-    func getConfig()->Openids? {
+    private func checkToken() {
         
-        let config:AnyObject? = Openids.MR_findFirstByAttribute("type", withValue: "wechat")
+        var param = Dictionary<String, String>()
         
-        if let config = config as? Openids where config.access_token != nil && config.openid != nil && config.refresh_token != nil {
-            return config
-        } else {
-            self.wxSendAuth()
-        }
+        param["type"] = "wechat"
+        param["openid"] = Defaults["openid"].string
+        param["access_token"] = Defaults["access_token"].string
         
-        return nil
-    }
-    
-    func checkToken() {
-        
-        if let wxconfig = self.getConfig() {
-            
-            var param = Dictionary<String, String>()
-            
-            param["type"] = "wechat"
-            param["openid"] = wxconfig.openid!
-            param["access_token"] = wxconfig.access_token!
-            
-            Manager.sharedInstance.request(.POST, tomo_openid_login, parameters: param, encoding: ParameterEncoding.URL)
-                .responseJSON { (_, res, JSON, _) in
-                    
-                    if res?.statusCode == 401 {
-                        //token 失效 或token,openid信息不全
-                        self.refreshToken()//刷新access_token 延长access_token 有效期
-                    } else if res?.statusCode == 404 {
-                        //用户不存在 注册
-                        self.getUserInfo()////授权OK 认证成功(access_token 2小时内有效 在有效期)
-                    } else if (res?.statusCode == 200) {
-                        
-                        let result = JSON as! Dictionary<String, AnyObject>
-                        Defaults["myId"] = result["id"]
-                        
-                        if let id = result["id"] as? String,
-                            tomoid = result["tomoid"] as? String,
-                            nickName = result["nickName"] as? String{
-                                
-                                me.id = id
-                                me.tomoid = tomoid
-                                me.nickName = nickName
-                                
-                                me.gender = result["gender"] as? String
-                                me.photo = result["photo_ref"] as? String
-                                me.cover = result["cover_ref"] as? String
-                                me.bio = result["bioText"] as? String
-                                me.firstName = result["firstName"] as? String
-                                me.lastName = result["lastName"] as? String
-                                
-                                if let dateString = result["birthDay"] as? String {
-                                    me.birthDay = dateString.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
-                                }
-                                
-                                me.friends = result["friends"] as? [String]
-                                me.invited = result["invited"] as? [String]
-                                
-                                me.telNo = result["telNo"] as? String
-                                me.address = result["address"] as? String
-                                me.bookmark = result["bookmark"] as? [String]
-                        }
-                        
-                        // get user notification
-                        
-                        
-                        self.showSuccess(result)
-                    }
+        Manager.sharedInstance.request(.POST, tomo_openid_login, parameters: param, encoding: ParameterEncoding.URL)
+            .responseJSON { (_, res, JSON, _) in
+                
+                if res?.statusCode == 401 {
+                    self.refreshAccessToken()
+                } else if res?.statusCode == 404 {
+                    self.getUserInfo()
+                } else if (res?.statusCode == 200) {
+                    let result = JSON as! Dictionary<String, AnyObject>
+                    self.success(result)
                 }
-        }
+            }
     }
     
     private func getAccessToken(code:String){
@@ -150,114 +104,119 @@ extension OpenidController {
         Manager.sharedInstance.request(.GET, wx_url_access_token, parameters: params, encoding: ParameterEncoding.URL)
             .responseJSON {(_, _, JSON, _) in
                 let result = JSON as! Dictionary<String, AnyObject>
+                
                 if (!contains(result.keys, "errcode")) {
-                    self.setCoreDataSNSInfo(result)
+                    self.saveOpenId(result)
+                    self.checkToken()
                 } else {
                     let errcode = result["errcode"] as! Int
                     let errmsg = result["errmsg"] as! String
-                    self.showError(Int32(errcode), errMessage: errmsg + __FUNCTION__)
+                    self.failure(Int32(errcode), errMessage: errmsg + __FUNCTION__)
                 }
             }
     }
     
-    private func refreshToken() {
+    private func refreshAccessToken() {
         
-        if let wxconfig = self.getConfig() {
-            
-            var params = Dictionary<String, String>()
-
-            params["appid"] = wxAppid
-            params["grant_type"] = "refresh_token"
-            params["refresh_token"] = wxconfig.refresh_token!
-            
-            Manager.sharedInstance.request(.GET, wx_url_refresh_token, parameters: params, encoding: ParameterEncoding.URL)
-                .responseJSON { (_, _, JSON, _) in
-                    let result = JSON as! Dictionary<String, AnyObject>
-                    
-                    if (!contains(result.keys, "errcode")) {
-                        self.setCoreDataSNSInfo(result)
-                    } else {
-                        self.wxSendAuth()
-                    }
+        var params = Dictionary<String, String>()
+        
+        params["appid"] = wxAppid
+        params["grant_type"] = "refresh_token"
+        params["refresh_token"] = Defaults["refresh_token"].string
+        
+        Manager.sharedInstance.request(.GET, wx_url_refresh_token, parameters: params, encoding: ParameterEncoding.URL)
+            .responseJSON { (_, _, JSON, _) in
+                let result = JSON as! Dictionary<String, AnyObject>
+                
+                if (!contains(result.keys, "errcode")) {
+                    self.saveOpenId(result)
+                    self.checkToken()
+                } else {
+                    self.wxSendAuth()
                 }
-        }
+            }
     }
     
-    func getUserInfo() {
+    private func getUserInfo() {
 
-        if let wxconfig = self.getConfig() {
-            
-            var params = Dictionary<String, String>()
-            
-            params["openid"] = wxconfig.openid!
-            params["access_token"] = wxconfig.access_token!
-            
-            Manager.sharedInstance
-                .request(.GET, wx_url_userinfo, parameters: params, encoding: ParameterEncoding.URL)
-                .responseJSON {
-                    (_, _, JSON, _) in
-                    let result = JSON as! Dictionary<String, AnyObject>
+        var params = Dictionary<String, String>()
+        
+        params["openid"] = Defaults["openid"].string
+        params["access_token"] = Defaults["access_token"].string
+        
+        Manager.sharedInstance
+            .request(.GET, wx_url_userinfo, parameters: params, encoding: ParameterEncoding.URL)
+            .responseJSON {
+                (_, _, JSON, _) in
+                let result = JSON as! Dictionary<String, AnyObject>
+                
+                if (!contains(result.keys, "errcode")) {
                     
-                    if (!contains(result.keys, "errcode")) {
-                        
-                        ApiController.signUpWith(weChatUserInfo: result) {
-                            (error) -> Void in
-                            if let error = error {
-                                Util.showError(error)
-                            }
-                            
-                            Defaults["shouldAutoLogin"] = true
-                            
-                            self.checkToken()
-                            
+                    ApiController.signUpWith(weChatUserInfo: result) {
+                        (error) -> Void in
+                        if let error = error {
+                            Util.showError(error)
                         }
+                        self.success(result)
+                        
                     }
                 }
-        }
+            }
     }
     
-    func setCoreDataSNSInfo(result:AnyObject){
-        if let res = result as? Dictionary<String, AnyObject> {
-            
-            assert(NSThread.currentThread().isMainThread, "not main thread")
-            
-            Openids.MR_deleteAllMatchingPredicate(NSPredicate(format: "type = %@ ", "wechat"))
-            
-            var openids = Openids.MR_createEntity() as! Openids
-            openids.openid = result["openid"] as! String?
-            openids.access_token = result["access_token"] as! String?
-            openids.refresh_token = result["refresh_token"] as! String?
-            openids.type = "wechat"
-            DBController.save(done: { () -> Void in
-                self.checkToken()
-            })
-        }
+    private func saveOpenId(info: Dictionary<String, AnyObject>) {
+        Defaults["type"] = "wechat"
+        Defaults["openid"] = info["openid"] as! String?
+        Defaults["access_token"] = info["access_token"] as! String?
+        Defaults["refresh_token"] = info["refresh_token"] as! String?
     }
     
-    func fixShareMessage(img:UIImage?,_ description:String)->(UIImage?,String?,String?){
-        let desc = description.length > 128 ? description[0..<128] :description
-        
-        return (
-            img?.scaleToFitSize(CGSize(width: 100, height: 100)),
-            desc,
-            "@現場TOMO"
-        )
-    }
-    
-    /////////////////////////////////////////////////////////
-    ///////エラーを表示する/////////////////////////////////////
-    /////////////////////////////////////////////////////////
-    
-    func showError(errCode:Int32,errMessage:String?){
+    private func failure(errCode:Int32,errMessage:String?){
         if let msg = errMessage {
             Util.showInfo(msg)
         }
         self.whenfailure?(errCode:errCode,errMessage:errMessage)
     }
     
-    func showSuccess(result: Dictionary<String, AnyObject>){
+    private func success(result: Dictionary<String, AnyObject>){
+        
+        self.setMyInfo(result)
+        
+        // get user notification
+        
         Util.dismissHUD()
         self.whenSuccess?(res: result)
+    }
+    
+    private func setMyInfo(result: Dictionary<String, AnyObject>){
+        
+        if let id = result["id"] as? String,
+            tomoid = result["tomoid"] as? String,
+            nickName = result["nickName"] as? String{
+                
+                me.id = id
+                me.tomoid = tomoid
+                me.nickName = nickName
+                
+                me.gender = result["gender"] as? String
+                me.photo = result["photo_ref"] as? String
+                me.cover = result["cover_ref"] as? String
+                me.bio = result["bioText"] as? String
+                me.firstName = result["firstName"] as? String
+                me.lastName = result["lastName"] as? String
+                
+                if let dateString = result["birthDay"] as? String {
+                    me.birthDay = dateString.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+                }
+                
+                me.friends = result["friends"] as? [String]
+                me.invited = result["invited"] as? [String]
+                
+                me.telNo = result["telNo"] as? String
+                me.address = result["address"] as? String
+                me.bookmark = result["bookmark"] as? [String]
+        }
+        
     }
 }
 
@@ -324,6 +283,17 @@ extension OpenidController {
         
         return message
     }
+    
+    private func fixShareMessage(img:UIImage?,_ description:String)->(UIImage?,String?,String?){
+        let desc = description.length > 128 ? description[0..<128] :description
+        
+        return (
+            img?.scaleToFitSize(CGSize(width: 100, height: 100)),
+            desc,
+            "@現場TOMO"
+        )
+    }
+    
     //send request
     private func wxSendReq(message:WXMediaMessage,scence:Int32){
         let req = SendMessageToWXReq()
@@ -370,7 +340,7 @@ extension OpenidController: WXApiDelegate {
             if (0 == temp.errCode && csrf_state == temp.state) {
                 self.getAccessToken(temp.code)
             } else {
-                self.showError(temp.errCode, errMessage: temp.errStr)
+                self.failure(temp.errCode, errMessage: temp.errStr)
             }
         } else {
             
@@ -379,7 +349,7 @@ extension OpenidController: WXApiDelegate {
     
 }
 
-extension OpenidController{
+extension OpenidController {
     func handleOpenURL(url:NSURL)->Bool{
         println(url)
         return WXApi.handleOpenURL(url, delegate: OpenidController.instance)

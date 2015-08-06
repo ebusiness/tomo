@@ -99,7 +99,6 @@ class RegViewController: BaseViewController {
     @IBAction func login_wechat(sender: AnyObject) {
         OpenidController.instance.wxCheckAuth(
             success: { (result) -> () in
-                Defaults["shouldAutoLogin"] = true
                 RegViewController.changeRootToTab(self)
             },
             failure: { (errCode, errMessage) -> () in
@@ -167,7 +166,6 @@ class RegViewController: BaseViewController {
                 
                 }
                 
-                Defaults["shouldAutoLogin"] = true
                 RegViewController.changeRootToTab(self)
         }
         
