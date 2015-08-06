@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         ApiController.setup()
         
-        if Defaults["shouldAutoLogin"].bool == true {
+        if Defaults["openid"] != true {
             let vc = Util.createViewControllerWithIdentifier("LoadingViewController", storyboardName: "Main")
             self.window?.rootViewController = vc
         }
