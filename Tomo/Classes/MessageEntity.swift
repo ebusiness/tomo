@@ -12,6 +12,8 @@ class MessageEntity: NSObject {
     
     var id: String!
     
+    var owner: UserEntity!
+    
     var from: UserEntity!
     
     var content: String!

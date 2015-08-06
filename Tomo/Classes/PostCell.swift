@@ -105,6 +105,7 @@ class PostCell: UITableViewCell {
                     self.post.like = [me.id]
                 }
                 self.setupDisplay()
+                self.likeButton.pulse(nil)
         }
     }
 

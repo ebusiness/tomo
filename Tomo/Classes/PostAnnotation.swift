@@ -16,25 +16,8 @@ class PostAnnotation: NSObject, MKAnnotation {
     
     var clusterAnnotation: PostAnnotation?
     
-//    var coordinateTemp: CLLocationCoordinate2D?
-    
     var coordinate: CLLocationCoordinate2D
-//    {
-//        
-//        get {
-//            if let coordinateTemp = coordinateTemp {
-//                return coordinateTemp
-//            }else if let lat = post.coordinate?.get(0), long = post.coordinate?.get(1) {
-//                return CLLocationCoordinate2DMake(lat, long)
-//            } else {
-//                return CLLocationCoordinate2DMake(33, 133)
-//            }
-//        }
-//        set {
-//            self.coordinateTemp = newValue
-//        }
-//    }
-//    
+
     var title: String {
         return post.owner.nickName
     }
