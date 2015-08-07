@@ -25,11 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         ApiController.setup()
         
-        if Defaults["openid"] != true {
+        if Defaults["openid"].string != nil {
             let vc = Util.createViewControllerWithIdentifier("LoadingViewController", storyboardName: "Main")
             self.window?.rootViewController = vc
         }
-        
         
         return true
     }
