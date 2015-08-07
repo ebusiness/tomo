@@ -34,7 +34,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(application: UIApplication) {
-        application.applicationIconBadgeNumber = DBController.unreadCountTotal()
+        
+        Manager.sharedInstance.request(.GET, kAPIBaseURLString + "/messages/unread/count")
+        .responseJSON { (_, _, data, _) -> Void in
+            if let data: AnyObject = data {
+                
+                let result = JSON(data)
+                application.applicationIconBadgeNumber = result["count"].int ?? 0
+            }
+        }
         
         backgroundTask = application.beginBackgroundTaskWithExpirationHandler { () -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
