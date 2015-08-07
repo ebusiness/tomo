@@ -48,6 +48,8 @@ class PostViewController : BaseTableViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.postImageList.scrollsToTop = false
+        self.commentInput.scrollsToTop = false
         
         navigationItem.title = "詳細"
         
@@ -296,12 +298,14 @@ extension PostViewController {
         
         if let tableHeaderView = self.tableView.tableHeaderView
             where contentViewHeight.constant == self.contentViewInitialHeight {
+                
+            self.contentLabel.bounds.size.width = UIScreen.mainScreen().bounds.size.width - 16 * 2
             let contentSize = self.contentLabel.sizeThatFits(self.contentLabel.bounds.size)
-            let heightChange = contentSize.height - self.contentLabel.frame.size.height
-            
-            contentViewHeight.constant = self.contentViewInitialHeight + heightChange
-    
-            tableHeaderView.frame.size.height = tableHeaderView.frame.size.height + heightChange
+            let newConstant = contentSize.height - self.contentLabel.frame.size.height + self.contentViewInitialHeight
+
+            self.changeHeaderView(height: self.listViewHeight + newConstant, done: nil)
+                
+            contentViewHeight.constant = newConstant
         }
         
         self.tableView.reloadData()

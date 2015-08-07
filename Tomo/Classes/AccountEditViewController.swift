@@ -28,7 +28,6 @@ class AccountEditViewController: MyAccountBaseController {
             firstNameTextField.text = user.firstName
             lastNameTextField.text = user.lastName
             addressTextField.text = user.address
-            //        stationLabel.text = (user.stations.array.last as? Station)?.name
             telTextField.text = user.telNo
             bioTextView.text = user.bio
             genderLabel.text = user.gender
@@ -122,7 +121,7 @@ class AccountEditViewController: MyAccountBaseController {
         
         let inverseMapping = userMapping.inverseMapping()
         inverseMapping.addAttributeMappingsFromDictionary(["photo":"photo","cover":"cover"])
-        println(inverseMapping)
+
         let requestDescriptor = RKRequestDescriptor(mapping: inverseMapping, objectClass: UserEntity.self, rootKeyPath: nil, method: RKRequestMethod.Any)
         self.manager.addRequestDescriptor(requestDescriptor)
     }
@@ -170,14 +169,7 @@ extension AccountEditViewController{
 
 
 extension AccountEditViewController: UITableViewDelegate {
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
-//        let cell = tableView.cellForRowAtIndexPath(indexPath)
-        
-    }
+
 }
 
 // MARK: - DBCameraViewControllerDelegate

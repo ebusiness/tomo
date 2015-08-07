@@ -16,6 +16,11 @@ class PostImageCell: PostCell {
     let leftOffset = CGFloat(0)
     let placeHolder = UIImage(named: "white")
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.scrollView.scrollsToTop = false
+    }
+    
     override func setupDisplay() {
         
         super.setupDisplay()

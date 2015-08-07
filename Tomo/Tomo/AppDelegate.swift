@@ -111,7 +111,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var deviceTokenString: String = ( deviceToken.description as NSString )
             .stringByTrimmingCharactersInSet( characterSet )
             .stringByReplacingOccurrencesOfString( " ", withString: "" ) as String
-
+        
+        Defaults["deviceToken"] = deviceTokenString
+        
         ApiController.setDeviceInfo(deviceTokenString, done: { (error) -> Void in
             println("didRegisterForRemoteNotificationsWithDeviceToken")
         })
