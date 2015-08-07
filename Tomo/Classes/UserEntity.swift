@@ -12,7 +12,7 @@ class UserEntity: NSObject {
     
     var id: String!
     
-    var tomoid: String!
+    var tomoid: String?
     
     var nickName: String!
     

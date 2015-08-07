@@ -145,20 +145,23 @@ extension OpenidController {
         params["access_token"] = Defaults["access_token"].string
         
         Manager.sharedInstance
-            .request(.GET, wx_url_userinfo, parameters: params, encoding: ParameterEncoding.URL)
+            .request(.GET, wx_url_userinfo, parameters: params)
             .responseJSON {
                 (_, _, JSON, _) in
-                let result = JSON as! Dictionary<String, AnyObject>
+                var result = JSON as! Dictionary<String, AnyObject>
                 
                 if (!contains(result.keys, "errcode")) {
+                    if let gender = result["sex"] as? String where gender == "2" {
+                        result["sex"] = "女"
+                    } else {
+                        result["sex"] = "男"
+                    }
                     
-                    ApiController.signUpWith(weChatUserInfo: result) {
-                        (error) -> Void in
-                        if let error = error {
-                            Util.showError(error)
+                    Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/mobile/user/regist" , parameters: result)
+                    .responseJSON{(_, _, userinfo, _) in
+                        if let userinfo = userinfo as? Dictionary<String, AnyObject> {
+                            self.success(userinfo)
                         }
-                        self.success(result)
-                        
                     }
                 }
             }
@@ -191,13 +194,12 @@ extension OpenidController {
     private func setMyInfo(result: Dictionary<String, AnyObject>){
         
         if let id = result["id"] as? String,
-            tomoid = result["tomoid"] as? String,
             nickName = result["nickName"] as? String{
                 
                 me.id = id
-                me.tomoid = tomoid
                 me.nickName = nickName
                 
+                me.tomoid = result["tomoid"] as? String
                 me.gender = result["gender"] as? String
                 me.photo = result["photo_ref"] as? String
                 me.cover = result["cover_ref"] as? String

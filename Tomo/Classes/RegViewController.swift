@@ -141,12 +141,11 @@ class RegViewController: BaseViewController {
                 let result = JSON as! Dictionary<String, AnyObject>
                 
                 if let id = result["id"] as? String,
-                    tomoid = result["tomoid"] as? String,
                     nickName = result["nickName"] as? String{
                         me.id = id
-                        me.tomoid = tomoid
                         me.nickName = nickName
                         
+                        me.tomoid = result["tomoid"] as? String
                         me.gender = result["gender"] as? String
                         me.photo = result["photo_ref"] as? String
                         me.cover = result["cover_ref"] as? String
