@@ -95,24 +95,13 @@ class TabBarController: UITabBarController {
     // MARK: - Notification
     
     func updateBadgeNumber() {
-        let count = DBController.unreadCountTotal()
-        if count > 0 {
+
+        if me.notificationCount > 0 {
             if let vc = viewControllers?[1] as? UIViewController {
-                vc.tabBarItem.badgeValue = String(count)
+                vc.tabBarItem.badgeValue = String(me.notificationCount)
             }
         } else {
             if let vc = viewControllers?[1] as? UIViewController {
-                vc.tabBarItem.badgeValue = nil
-            }
-        }
-        
-        let unreadAnnouncementsCount = DBController.unreadAnnouncementsCount()
-        if unreadAnnouncementsCount > 0 {
-            if let vc = viewControllers?[3] as? UIViewController {
-                vc.tabBarItem.badgeValue = String(unreadAnnouncementsCount)
-            }
-        } else {
-            if let vc = viewControllers?[3] as? UIViewController {
                 vc.tabBarItem.badgeValue = nil
             }
         }

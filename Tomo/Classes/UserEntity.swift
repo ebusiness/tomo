@@ -39,6 +39,8 @@ class UserEntity: NSObject {
     var invited: [String]?
     
     var bookmark: [String]?
+    
+    var notificationCount: Int!
 }
 
 extension UserEntity {

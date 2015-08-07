@@ -215,6 +215,7 @@ extension OpenidController {
                 me.telNo = result["telNo"] as? String
                 me.address = result["address"] as? String
                 me.bookmark = result["bookmark"] as? [String]
+                me.notificationCount = result["notificationCount"] as? Int
         }
         
     }

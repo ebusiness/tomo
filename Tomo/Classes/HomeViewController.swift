@@ -19,7 +19,9 @@ final class HomeViewController: BaseTableViewController {
     var contents = [AnyObject]()
     var latestContent: AnyObject?
     var oldestContent: AnyObject?
+    
     var isLoading = false
+    var isExhausted = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -217,7 +219,7 @@ extension HomeViewController {
     private func loadMoreContent() {
         
         // skip if already in loading
-        if isLoading {
+        if isLoading || isExhausted {
             return
         }
 
@@ -236,9 +238,10 @@ extension HomeViewController {
             
             self.isLoading = false
         }) { (operation, err) -> Void in
-                println(err)
-                self.isLoading = false
-            }
+            println(err)
+            self.isLoading = false
+            self.isExhausted = true
+        }
     }
     
     func loadNewContent() {
@@ -256,28 +259,32 @@ extension HomeViewController {
         var params = Dictionary<String, NSTimeInterval>()
         
         if let latestContent = latestContent as? PostEntity {
-            params["after"] = latestContent.createDate.timeIntervalSince1970
+            // TODO - This is a dirty solution
+            params["after"] = latestContent.createDate.timeIntervalSince1970 + 1
         }
         
         manager.getObjectsAtPath("/newsfeed", parameters: params, success: { (operation, result) -> Void in
             
             self.contents = result.array() + self.contents
             self.prependRows(Int(result.count))
-            
-            self.refreshControl?.endRefreshing()
-            self.activityIndicator.stopAnimating()
-            self.activityIndicator.alpha = 0
-            self.indicatorLabel.alpha = 0
-            self.indicatorLabel.text = "向下拉动加载更多内容"
-            self.isLoading = false
-            
-            }) { (operation, err) -> Void in
-                println(err)
-                self.isLoading = false
+            self.endRefreshing()
+        }) { (operation, err) -> Void in
+            println(err)
+            self.endRefreshing()
         }
         
         return
         
+    }
+    
+    private func endRefreshing() {
+        
+        self.isLoading = false
+        self.refreshControl?.endRefreshing()
+        self.activityIndicator.stopAnimating()
+        self.activityIndicator.alpha = 0
+        self.indicatorLabel.alpha = 0
+        self.indicatorLabel.text = "向下拉动加载更多内容"
     }
 
     private func appendRows(rows: Int) {
