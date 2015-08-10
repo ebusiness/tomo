@@ -48,20 +48,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .stringByTrimmingCharactersInSet( characterSet )
             .stringByReplacingOccurrencesOfString( " ", withString: "" ) as String
         
-        Defaults["deviceToken"] = deviceTokenString
-        
-        ApiController.setDeviceInfo(deviceTokenString, done: { (error) -> Void in
-            println("didRegisterForRemoteNotificationsWithDeviceToken")
-        })
+        if let deviceToken = Defaults["deviceToken"].string where deviceTokenString == deviceToken {
+            
+        } else {
+            Defaults["deviceToken"] = deviceTokenString
+            
+            var param = Dictionary<String, String>();
+            param["name"] = UIDevice.currentDevice().name
+            param["token"] = deviceTokenString;
+            
+            Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/mobile/user/device", parameters: param)
+
+        }
     }
-    //////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////
+    
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
-        //SDK_QQhelper.getCallbakc(url)
-        return OpenidController.instance.handleOpenURL(url)
+        return self.application(application, openURL: url, sourceApplication: nil, annotation: nil)
     }
+    
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-        //SDK_QQhelper.getCallbakc(url)
         return OpenidController.instance.handleOpenURL(url)
     }
 }
