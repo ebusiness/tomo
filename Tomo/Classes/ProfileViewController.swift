@@ -36,7 +36,7 @@ class ProfileViewController: ProfileBaseController {
             var param = Dictionary<String, String>()
             param["type"] = "friend-invited"
             param["_from"] = self.user.id
-            request(.GET, kAPIBaseURLString + "/notifications/unconfirmed", parameters: param, encoding: .URL)
+            Manager.sharedInstance.request(.GET, kAPIBaseURLString + "/notifications/unconfirmed", parameters: param)
                 .responseJSON { (_, res, data, _) -> Void in
                     
                     if let arr = data as? NSArray ,dict = arr[0] as? Dictionary<String, AnyObject> , id = dict["_id"] as? String {
@@ -86,7 +86,7 @@ class ProfileViewController: ProfileBaseController {
             var param = Dictionary<String, String>()
             param["id"] = self.user.id
             
-            request(.PATCH, kAPIBaseURLString + "/connections/break", parameters: param, encoding: .URL)
+            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/connections/break", parameters: param)
                 .responseJSON { (_, _, _, error) -> Void in
                     
                     if let error = error {
@@ -108,7 +108,7 @@ class ProfileViewController: ProfileBaseController {
         var param = Dictionary<String, String>()
         param["id"] = self.user.id
         
-        request(.PATCH, kAPIBaseURLString + "/connections/invite", parameters: param, encoding: .URL)
+        Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/connections/invite", parameters: param)
             .responseJSON { (_, _, _, _) -> Void in
                 
                 if me.invited == nil {
@@ -198,7 +198,7 @@ extension ProfileViewController {
             param["result"] = isApproved ? "approved" : "declined"
             
             
-            request(.PATCH, kAPIBaseURLString + "/notifications/\(id)", parameters: param, encoding: .URL)
+            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/notifications/\(id)", parameters: param)
                 .responseJSON { (_, _, _, _) -> Void in
                     
                     if isApproved {

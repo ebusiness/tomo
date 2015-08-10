@@ -166,7 +166,7 @@ class PostViewController : BaseTableViewController{
 
     @IBAction func likeBtnTapped(sender: AnyObject) {
         
-        request(.PATCH, kAPIBaseURLString + "/posts/\(self.post.id)/like", parameters: nil, encoding: .URL)
+        Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/posts/\(self.post.id)/like")
         .response { (_, _, _, _) -> Void in
             
             if let like = self.post.like {
@@ -180,7 +180,7 @@ class PostViewController : BaseTableViewController{
 
     @IBAction func bookmarkBtnTapped(sender: AnyObject) {
         
-        request(.PATCH, kAPIBaseURLString + "/posts/\(self.post.id)/bookmark", parameters: nil, encoding: .URL)
+        Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/posts/\(self.post.id)/bookmark")
             .response { (_, _, _, _) -> Void in
                 
                 if let bookmark = me.bookmark {
@@ -220,7 +220,7 @@ class PostViewController : BaseTableViewController{
                 
                 Util.alert(self, title: "删除帖子", message: "确定删除该帖子么?", action: { (action) -> Void in
                     
-                    request(.DELETE, "/posts/\(self.post.id)", parameters: nil, encoding: .URL)
+                    Manager.sharedInstance.request(.DELETE, "/posts/\(self.post.id)")
                         .response { (_, _, _, _) -> Void in
                             Util.showInfo("帖子已删除")
                             self.navigationController?.popViewControllerAnimated(true)
@@ -244,7 +244,7 @@ class PostViewController : BaseTableViewController{
         param["content"] = commentContent;
 //        param["replyTo"] = "552220aa915a1dd84834731b";//コメントID
         
-        request(.POST, kAPIBaseURLString + "/posts/\(self.post.id)/comments", parameters: param, encoding: .URL)
+        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/posts/\(self.post.id)/comments", parameters: param)
             .responseJSON { (_, _,json, _) -> Void in
                 
                 Util.dismissHUD()

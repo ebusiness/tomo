@@ -196,7 +196,7 @@ extension MessageViewController {
         params["subject"] = "no subject"
         params["content"] = text
         
-        request(.POST, kAPIBaseURLString + "/messages", parameters: params, encoding: .URL).responseJSON { (_, _, result, error) -> Void in
+        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/messages", parameters: params).responseJSON { (_, _, result, error) -> Void in
             
             if error == nil {
                 
@@ -302,11 +302,11 @@ extension MessageViewController {
                         VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(fileName).path!)
                     } else {
                         Util.showHUD()
-                        download(.GET, MediaMessage.fullPath(content), { (tempUrl, res) -> (NSURL) in
+                        Manager.sharedInstance.download(.GET, MediaMessage.fullPath(content)) { (tempUrl, res) -> (NSURL) in
                             gcd.async(.Main, closure: { () -> () in
                                 Util.dismissHUD()
                                 VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(fileName).path!)
-                            })
+                            }
                             return FCFileManager.urlForItemAtPath(fileName)
                         })
                     }

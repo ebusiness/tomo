@@ -87,7 +87,7 @@ class PostCell: UITableViewCell {
     }
     
     @IBAction func likePost() {
-        request(.PATCH, kAPIBaseURLString + "/posts/\(self.post.id)/like", parameters: nil, encoding: .URL)
+        Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/posts/\(self.post.id)/like")
             .response { (_, _, _, _) -> Void in
                 
                 if let like = self.post.like {
@@ -102,7 +102,7 @@ class PostCell: UITableViewCell {
 
     @IBAction func bookmarkPost(sender: AnyObject) {
         
-        request(.PATCH, kAPIBaseURLString + "/posts/\(self.post.id)/bookmark", parameters: nil, encoding: .URL)
+        Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/posts/\(self.post.id)/bookmark")
             .response { (_, _, _, _) -> Void in
                 
                 if let bookmark = me.bookmark {

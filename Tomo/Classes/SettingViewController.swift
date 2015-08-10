@@ -50,7 +50,7 @@ class SettingViewController: MyAccountBaseController {
                 
                 var param = Dictionary<String, String>();
                 param["token"] = Defaults["deviceToken"].string
-                Manager.sharedInstance.request(.GET, kAPIBaseURLString + "/logout", parameters: param, encoding: ParameterEncoding.URL)
+                Manager.sharedInstance.request(.GET, kAPIBaseURLString + "/logout", parameters: param)
                 
                 Defaults.remove("openid")
                 Defaults.remove("deviceToken")

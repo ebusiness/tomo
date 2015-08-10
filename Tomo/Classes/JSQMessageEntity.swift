@@ -68,12 +68,12 @@ class JSQMessageEntity:NSObject, JSQMessageData {
             } else {
                 //do not download voice and video
                 if MediaMessage.mediaMessage(message.content) == .Image {
-                    download(.GET, MediaMessage.fullPath(message.content), { (tempUrl, res) -> (NSURL) in
+                    Manager.sharedInstance.download(.GET, MediaMessage.fullPath(message.content)) { (tempUrl, res) -> (NSURL) in
                         gcd.async(.Main, closure: { () -> () in
                             NSNotificationCenter.defaultCenter().postNotificationName("NotificationDownloadMediaDone", object: nil)
                         })
                         return FCFileManager.urlForItemAtPath(name)
-                    })
+                    }
                 }
                 
                 var item: JSQMediaItem!

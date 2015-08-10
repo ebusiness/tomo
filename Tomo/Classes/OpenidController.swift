@@ -78,7 +78,7 @@ extension OpenidController {
         param["openid"] = Defaults["openid"].string
         param["access_token"] = Defaults["access_token"].string
         
-        Manager.sharedInstance.request(.POST, tomo_openid_login, parameters: param, encoding: ParameterEncoding.URL)
+        Manager.sharedInstance.request(.POST, tomo_openid_login, parameters: param)
             .responseJSON { (_, res, JSON, _) in
                 
                 if res?.statusCode == 401 {
@@ -101,7 +101,7 @@ extension OpenidController {
         params["secret"] = wxAppSecret
         params["grant_type"] = "authorization_code"
         
-        Manager.sharedInstance.request(.GET, wx_url_access_token, parameters: params, encoding: ParameterEncoding.URL)
+        Manager.sharedInstance.request(.GET, wx_url_access_token, parameters: params)
             .responseJSON {(_, _, JSON, _) in
                 let result = JSON as! Dictionary<String, AnyObject>
                 
@@ -124,7 +124,7 @@ extension OpenidController {
         params["grant_type"] = "refresh_token"
         params["refresh_token"] = Defaults["refresh_token"].string
         
-        Manager.sharedInstance.request(.GET, wx_url_refresh_token, parameters: params, encoding: ParameterEncoding.URL)
+        Manager.sharedInstance.request(.GET, wx_url_refresh_token, parameters: params)
             .responseJSON { (_, _, JSON, _) in
                 let result = JSON as! Dictionary<String, AnyObject>
                 
