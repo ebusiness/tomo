@@ -479,7 +479,7 @@ extension ApiController {
         param["telNo"] = user.telNo
         param["firstName"] = user.firstName
         param["lastName"] = user.lastName
-        param["birthDay"] = user.birthDay?.toString(format: DateFormat.Custom("yyyy/MM/dd"))
+//        param["birthDay"] = user.birthDay?.toString(format: DateFormat.Custom("yyyy/MM/dd"))
         param["gender"] = user.gender
         
         if user.stations.count == 0 {

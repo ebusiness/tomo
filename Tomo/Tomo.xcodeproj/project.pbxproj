@@ -97,7 +97,6 @@
 		295466E41B0C7FA300AAD608 /* _Announcements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295466E31B0C7FA300AAD608 /* _Announcements.swift */; };
 		295466E61B0C7FB500AAD608 /* Announcements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295466E51B0C7FB500AAD608 /* Announcements.swift */; };
 		296040401ACE46E000D2A338 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901351C1AC3A90C00BBFE29 /* Constants.swift */; };
-		2960404F1ACE75C500D2A338 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */; };
 		296D8BAB1AFC59F10058D400 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BA91AFC59F10058D400 /* BaseViewController.swift */; };
 		296D8BAC1AFC59F10058D400 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BAA1AFC59F10058D400 /* TabBarController.swift */; };
 		296D8BAE1AFC5A020058D400 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BAD1AFC5A020058D400 /* LoadingViewController.swift */; };
@@ -151,6 +150,8 @@
 		D0A0C0301B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */; };
 		D0A0C0321B5F5BF900ABFA5F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C0311B5F5BF900ABFA5F /* ProfileViewController.swift */; };
 		D0A0C0341B5F5D0500ABFA5F /* UserPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C0331B5F5D0500ABFA5F /* UserPostsViewController.swift */; };
+		D0B40BBF1B78AF0400685D67 /* ExNSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B40BBE1B78AF0400685D67 /* ExNSDate.swift */; };
+		D0B40BC01B78B8FA00685D67 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */; };
 		D0B6EB121B5E7D09005A7E45 /* MyAccountHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */; };
 		D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */; };
 		D0BA8DE71B55375A00271F2B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BA8DE61B55375A00271F2B /* PostViewController.swift */; };
@@ -266,7 +267,6 @@
 		296040421ACE644800D2A338 /* TestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestData.swift; path = ../Classes/TestData.swift; sourceTree = "<group>"; };
 		296040451ACE669900D2A338 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
 		2960404B1ACE68C500D2A338 /* TestDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataTests.swift; sourceTree = "<group>"; };
-		2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFDateExtension.swift; sourceTree = "<group>"; };
 		296D8BA91AFC59F10058D400 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseViewController.swift; path = Classes/BaseViewController.swift; sourceTree = "<group>"; };
 		296D8BAA1AFC59F10058D400 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarController.swift; path = Classes/TabBarController.swift; sourceTree = "<group>"; };
 		296D8BAD1AFC5A020058D400 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingViewController.swift; path = Classes/LoadingViewController.swift; sourceTree = "<group>"; };
@@ -323,6 +323,7 @@
 		D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileHeaderViewController.swift; path = Classes/ProfileHeaderViewController.swift; sourceTree = "<group>"; };
 		D0A0C0311B5F5BF900ABFA5F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = Classes/ProfileViewController.swift; sourceTree = "<group>"; };
 		D0A0C0331B5F5D0500ABFA5F /* UserPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserPostsViewController.swift; path = Classes/UserPostsViewController.swift; sourceTree = "<group>"; };
+		D0B40BBE1B78AF0400685D67 /* ExNSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExNSDate.swift; path = Classes/ExNSDate.swift; sourceTree = SOURCE_ROOT; };
 		D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountHeaderViewController.swift; path = Classes/MyAccountHeaderViewController.swift; sourceTree = "<group>"; };
 		D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountBaseController.swift; path = Classes/MyAccountBaseController.swift; sourceTree = "<group>"; };
 		D0BA8DE61B55375A00271F2B /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostViewController.swift; path = Classes/PostViewController.swift; sourceTree = "<group>"; };
@@ -594,7 +595,6 @@
 				2987F1EB1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.h */,
 				293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */,
 				2987F1EC1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m */,
-				2960404D1ACE6E5B00D2A338 /* AFDateExtension.swift */,
 				296040451ACE669900D2A338 /* Alamofire.swift */,
 				2994AF901B019AA100656C39 /* GCD.swift */,
 				29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */,
@@ -602,6 +602,7 @@
 				29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */,
 				299389421AD3B33800043D91 /* AmazonS3RequestManager */,
 				17B992FE1AF353C200204E97 /* opencore-amr */,
+				D0B40BBE1B78AF0400685D67 /* ExNSDate.swift */,
 			);
 			path = Vendors;
 			sourceTree = "<group>";
@@ -997,7 +998,6 @@
 				29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */,
 				29539C791B13175D00545509 /* VoiceMessageController.swift in Sources */,
 				2994AF911B019AA100656C39 /* GCD.swift in Sources */,
-				2960404F1ACE75C500D2A338 /* AFDateExtension.swift in Sources */,
 				1F985E5C1B60C19F008D5369 /* Double.swift in Sources */,
 				296D8BAB1AFC59F10058D400 /* BaseViewController.swift in Sources */,
 				292B9CD31AE61C4800604986 /* Line.swift in Sources */,
@@ -1032,6 +1032,7 @@
 				17B993131AF36CB200204E97 /* Openids.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				1F79C1B41B5E10DC008800E1 /* NewFriendCell.swift in Sources */,
+				D0B40BBF1B78AF0400685D67 /* ExNSDate.swift in Sources */,
 				2987F1ED1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m in Sources */,
 				1F79C1B21B5E0E22008800E1 /* NewFriendListViewController.swift in Sources */,
 				29539C781B13175D00545509 /* VoiceController.swift in Sources */,
@@ -1081,6 +1082,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0B40BC01B78B8FA00685D67 /* AmazonS3SignatureHelpers.m in Sources */,
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
 				D04608D21B6BA33F00D30B77 /* TestDataTests.swift in Sources */,
 			);

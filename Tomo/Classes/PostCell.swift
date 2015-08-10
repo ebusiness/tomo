@@ -45,17 +45,8 @@ class PostCell: UITableViewCell {
             userNameLabel.text = nil
         }
         
-        let now = NSDate()
         if let date = post.createDate {
-            if !date.isToday() {
-                postDateLabel.text = date.toString()
-            } else if date.hoursBeforeDate(now) > 0 {
-                postDateLabel.text = "\(date.hoursBeforeDate(now))時"
-            } else if date.minutesBeforeDate(now) > 0 {
-                postDateLabel.text = "\(date.minutesBeforeDate(now))分"
-            } else {
-                postDateLabel.text = "\(date.seconds())秒"
-            }
+            postDateLabel.text = date.relativeTimeToString()
         }
         
         if post.content?.length > 150 {

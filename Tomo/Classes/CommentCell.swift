@@ -24,7 +24,7 @@ class CommentCell: UITableViewCell {
             }
             
             userNameLabel.text = comment.owner.nickName
-            timeLabel.text = Util.displayDate(comment.createDate)
+            timeLabel.text = comment.createDate.relativeTimeToString()
             contentLabel.text = comment.content
         }
     }
@@ -33,7 +33,7 @@ class CommentCell: UITableViewCell {
         contentLabel.preferredMaxLayoutWidth = width - 8 - 36 - 8
         
         userNameLabel.text = comment.owner.nickName
-        timeLabel.text = Util.displayDate(comment.createDate)
+        timeLabel.text = comment.createDate.relativeTimeToString()
         contentLabel.text = comment.content
         
         let size = contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize) as CGSize

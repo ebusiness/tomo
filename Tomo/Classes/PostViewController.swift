@@ -277,7 +277,7 @@ extension PostViewController {
         }
         
         userName.text = self.post.owner.nickName
-        timeLabel.text = Util.displayDate(post.createDate)
+        timeLabel.text = post.createDate.relativeTimeToString()
         
         contentLabel.text = post.content
         

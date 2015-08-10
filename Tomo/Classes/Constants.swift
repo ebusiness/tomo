@@ -30,16 +30,7 @@ let GroupImageWidth: CGFloat = 80
 
 let NavigationBarColorHex:UInt = 0x673AB7
 
-let mapPath = kAPIBaseURLString + "/mobile/map"
-
 let DefaultAvatarImage = UIImage(named: "avatar")!
-
-//birthday
-let kBirthdayDefault = NSDate(fromString: "1980/01/01", format: DateFormat.Custom("yyyy/MM/dd"))
-//min
-let kBirthdayMin = NSDate(fromString: "1940/01/01", format: DateFormat.Custom("yyyy/MM/dd"))
-//max
-let kBirthdayMax = NSDate()
 
 enum MediaMessage: Int {
     case Image, Voice, Video
