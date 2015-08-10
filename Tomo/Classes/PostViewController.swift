@@ -76,6 +76,7 @@ class PostViewController : BaseTableViewController{
             
             if let results = results.firstObject as? PostEntity {
                 self.post.comments = results.comments
+                self.updateUIForHeader()
             }
             
         }, failure: nil)
@@ -151,10 +152,15 @@ class PostViewController : BaseTableViewController{
     
     @IBAction func avatarImageTapped(sender: UITapGestureRecognizer) {
         
-        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-        vc.user = post.owner
         
-        self.navigationController?.pushViewController(vc, animated: true)
+        if let childvcs = self.navigationController?.childViewControllers where childvcs.count > 4 {
+            self.navigationController?.popViewControllerAnimated(true)
+        } else {
+            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+            vc.user = post.owner
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
         
     }
 

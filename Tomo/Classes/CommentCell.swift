@@ -50,14 +50,15 @@ class CommentCell: UITableViewCell {
 //        avatarImageView.userInteractionEnabled = true
         avatarImageView.addGestureRecognizer(tap)
     }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
     func avatarImageTapped(sender: UITapGestureRecognizer) {
+ 
+        if let childvcs = self.parentVC?.navigationController?.childViewControllers where childvcs.count > 4 {
+            for index in 1..(childvcs.count-1) {
+                childvcs[index].removeFromParentViewController()
+            }
+        }
+
         let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = comment.owner
         self.parentVC?.navigationController?.pushViewController(vc, animated: true)
