@@ -14,7 +14,7 @@ class PostImageCell: PostCell {
     
     let gapOffset = CGFloat(5)
     let leftOffset = CGFloat(0)
-    let placeHolder = UIImage(named: "white")
+    let placeHolder = UIImage(named: "placeholder")
     
     override func awakeFromNib() {
         super.awakeFromNib()

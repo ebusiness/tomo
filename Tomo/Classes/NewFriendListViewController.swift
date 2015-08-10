@@ -8,16 +8,13 @@
 
 import UIKit
 
-class NewFriendListViewController: BaseTableViewController {
+final class NewFriendListViewController: BaseTableViewController {
     
     @IBOutlet weak var addFriendButton: UIButton!
     
     var friendInvitedNotifications = [Notification]()
-    var users:[UserEntity]? {
-        didSet{
-            self.tableView.reloadData()
-        }
-    }
+    
+    var friends = [UserEntity]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,22 +29,14 @@ class NewFriendListViewController: BaseTableViewController {
         updateBadgeNumber()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        ApiController.unconfirmedNotification { (error) -> Void in
-            ApiController.getMyInfo({ (error) -> Void in
-                ApiController.getFriends { (error) -> Void in
-                    ApiController.getMessage({ (error) -> Void in
-                        self.updateBadgeNumber()
-                    })
-                }
-            })
-        }
-        
-    }
-    
     override func setupMapping() {
+        
+        let messageMapping = RKObjectMapping(forClass: MessageEntity.self)
+        messageMapping.addAttributeMappingsFromDictionary([
+            "_id": "id",
+            "content": "content",
+            "createDate": "createDate"
+            ])
         
         let userMapping = RKObjectMapping(forClass: UserEntity.self)
         userMapping.addAttributeMappingsFromDictionary([
@@ -65,12 +54,63 @@ class NewFriendListViewController: BaseTableViewController {
             "address": "address",
             ])
         
+        let messageRelationshipMapping = RKRelationshipMapping(fromKeyPath: "lastMessage", toKeyPath: "lastMessage", withMapping: messageMapping)
+        userMapping.addPropertyMapping(messageRelationshipMapping)
+        
         let responseDescriptorUserInfo = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/connections/friends", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
         self.manager.addResponseDescriptor(responseDescriptorUserInfo)
     }
 
-    // MARK: - Table view data source
+}
 
+// MARK: - Private Methodes 
+
+extension NewFriendListViewController {
+    
+    func getFriends(){
+        self.manager.getObjectsAtPath("/connections/friends", parameters: nil, success: { (operation, result) -> Void in
+            self.friends = result.array() as! [UserEntity]
+            self.friends.sort({
+                
+                if let msg1 = $0.lastMessage, msg2 = $1.lastMessage {
+                    return msg1.createDate.timeIntervalSinceNow > msg2.createDate.timeIntervalSinceNow
+                }
+                
+                if $0.lastMessage == nil && $1.lastMessage != nil {
+                    return false
+                }
+                
+                if $0.lastMessage != nil && $1.lastMessage == nil {
+                    return true
+                }
+                
+                return false
+            })
+            self.tableView.reloadData()
+        }) { (operation, error) -> Void in
+            println(error)
+        }
+    }
+    
+    func updateBadgeNumber() {
+//        self.getFriends()
+//        friendInvitedNotifications = DBController.unconfirmedNotification(type: .FriendInvited)
+//        tableView.reloadData()
+//        
+//        (navigationController?.tabBarController as? TabBarController)?.updateBadgeNumber()
+    }
+    
+    func becomeActive() {
+        ApiController.getMessage({ (error) -> Void in
+            self.updateBadgeNumber()
+        })
+    }
+}
+
+// MARK: - UITableView DataSource
+
+extension NewFriendListViewController {
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
@@ -78,23 +118,23 @@ class NewFriendListViewController: BaseTableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if section == 0 {
-            return friendInvitedNotifications.count
+            return me.friendInvitations!.count
         }
         
         if section == 1 {
-            return self.users?.count ?? 0
+            return self.friends.count
         }
         
         return 0
         
     }
-
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("InvitationCell", forIndexPath: indexPath) as! NewInvitationCell
-            cell.friendInvitedNotification = friendInvitedNotifications[indexPath.row]
+            cell.friendInvitedNotification = me.friendInvitations?.get(indexPath.item)
             cell.delegate = self
             
             cell.setupDisplay()
@@ -105,13 +145,19 @@ class NewFriendListViewController: BaseTableViewController {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! NewFriendCell
             
-            cell.user = self.users?[indexPath.row]
+            cell.user = self.friends[indexPath.row]
             
             cell.setupDisplay()
             
             return cell
         }
     }
+    
+}
+
+// MARK: - UITableView Delegate
+
+extension NewFriendListViewController {
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 66
@@ -125,17 +171,19 @@ class NewFriendListViewController: BaseTableViewController {
             
             let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
             
-//            vc.user = friendInvitedNotifications[indexPath.row].from
+            vc.user = me.friendInvitations!.get(indexPath.item)!.from
+            
             self.navigationController?.pushViewController(vc, animated: true)
             
         } else if indexPath.section == 1 {
-        
-            let friend = self.users![indexPath.row]
+            
+            let friend = self.friends[indexPath.row]
             
             DBController.makeAllMessageRead(friend.id)
-//            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? RecentlyFriendCell {
-//                cell.clearBadge()
-//            }
+            //            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? RecentlyFriendCell {
+            //                cell.clearBadge()
+            //            }
+            
             (self.navigationController?.tabBarController as? TabBarController)?.updateBadgeNumber()
             
             let vc = MessageViewController()
@@ -146,49 +194,11 @@ class NewFriendListViewController: BaseTableViewController {
             navigationController?.pushViewController(vc, animated: true)
             
         }
-    
-    }
-    
-    func getFriends(){
         
-        self.manager.getObjectsAtPath("/connections/friends", parameters: nil, success: { (_, results) -> Void in
-            
-            if let friends = results.array() as? [UserEntity] {
-                
-                self.users = friends.sorted({if let uid1 = $0.id, let uid2 = $1.id {
-                    let message1 = DBController.lastMessage(uid1)
-                    let message2 = DBController.lastMessage(uid2)
-                    if message1 == nil && message2 == nil {
-                        return true
-                    }
-                    
-                    return message1?.createDate?.timeIntervalSinceNow > message2?.createDate?.timeIntervalSinceNow
-                    }
-                    
-                    return false
-                })
-            }
-            
-        }, failure: nil)
     }
-    
-    func updateBadgeNumber() {
-        self.getFriends()
-        friendInvitedNotifications = DBController.unconfirmedNotification(type: .FriendInvited)
-        tableView.reloadData()
-        
-        (navigationController?.tabBarController as? TabBarController)?.updateBadgeNumber()
-    }
-    
-    func becomeActive() {
-        ApiController.getMessage({ (error) -> Void in
-            self.updateBadgeNumber()
-        })
-    }
-
 }
 
-// MARK: - FriendInvitationCellDelegate
+// MARK: - FriendInvitationCell Delegate
 
 extension NewFriendListViewController: FriendInvitationCellDelegate {
     

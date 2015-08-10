@@ -16,8 +16,6 @@ class NotificationEntity: NSObject {
     
     var type: String!
     
-    var message: String?
-    
     var createDate: NSDate!
     
 }

@@ -40,7 +40,11 @@ class UserEntity: NSObject {
     
     var bookmark: [String]?
     
-    var notificationCount: Int!
+    var friendInvitations: [NotificationEntity]?
+    
+    var newMessages: [MessageEntity]?
+    
+    var lastMessage: MessageEntity?
 }
 
 extension UserEntity {

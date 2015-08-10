@@ -162,7 +162,31 @@ class RegViewController: BaseViewController {
                         
                         me.telNo = result["telNo"] as? String
                         me.address = result["address"] as? String
+//                        me.notificationCount = result["notificationCount"] as? Int
                 
+                        var messages = [MessageEntity]()
+                        
+                        if let newMessages = result["newMessages"] as? Array<AnyObject> {
+                            
+                            for obj in newMessages {
+                                
+                                if let messageRaw = obj as? Dictionary<String, String> {
+                                    
+                                    let message = MessageEntity()
+                                    message.id = messageRaw["_id"]
+                                    message.createDate = messageRaw["createDate"]?.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+                                    
+                                    let from = UserEntity()
+                                    from.id = messageRaw["_from"]
+                                    
+                                    message.from = from
+                                    
+                                    messages.push(message)
+                                }
+                            }
+                        }
+                        
+                        me.newMessages = messages
                 }
                 
                 RegViewController.changeRootToTab(self)

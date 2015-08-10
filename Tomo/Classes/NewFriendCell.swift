@@ -42,7 +42,13 @@ class NewFriendCell: UITableViewCell {
         
         userNameLabel.text = user?.nickName
         
-        let count = DBController.unreadCount(user!.id)
+        let count = me.newMessages!.reduce(0, combine: { (count, message) -> Int in
+            if message.from.id == user!.id {
+                return count + 1
+            } else {
+                return count
+            }
+        })
         
         if count > 0 {
             countLabel.hidden = false
@@ -51,23 +57,14 @@ class NewFriendCell: UITableViewCell {
             countLabel.hidden = true
         }
         
-        if let message = DBController.lastMessage(user!.id) {
-            if message.isMediaMessage() {
-                messageLabel.text = MediaMessage.messagePrefix(message.content!)
-            } else {
-                messageLabel.text = message.content
-            }
-            
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateStyle = .ShortStyle
-            if let date = message.createDate {
-                timeLabel.text = date.toString(dateStyle: .ShortStyle, timeStyle: .ShortStyle, doesRelativeDateFormatting: true)
-            } else {
-                timeLabel.hidden = true
-            }
+        if let message = user?.lastMessage {
+            messageLabel.text = message.content
+            timeLabel.text = message.createDate.toString(dateStyle: .ShortStyle, timeStyle: .ShortStyle, doesRelativeDateFormatting: true)
         } else {
             messageLabel.hidden = true
+            timeLabel.hidden = true
         }
+        
     }
 
 }

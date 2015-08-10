@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidEnterBackground(application: UIApplication) {
         
-        application.applicationIconBadgeNumber = me.notificationCount
+//        application.applicationIconBadgeNumber = me.notificationCount
         
     }
     
