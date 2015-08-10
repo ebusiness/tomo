@@ -28,11 +28,16 @@ class AddPostViewController: BaseViewController {
     var imageListSelected:[UIImage] = []
     var postContent: String?
     
+    private var locationManager: CLLocationManager?
+    private var location: CLLocation?
+    
     override func viewDidLoad() {
         
         self.navigationController?.navigationBarHidden = true
         self.postInput.becomeFirstResponder()
         submitButton.enabled = false
+        
+        self.setLocationManager()
         
         
         let color = Util.UIColorFromRGB(0xFF007AFF, alpha: 1)
@@ -53,13 +58,24 @@ class AddPostViewController: BaseViewController {
     }
     
     @IBAction func post(sender: AnyObject) {
-        
         Util.showHUD()
         // send post
         self.uploadToS3({ (imageNames, sizes) -> () in
             
-            ApiController.addPost(imageNames, sizes: sizes, content: self.postContent!, groupId: nil, stationId: nil,location: nil, done: { (error) -> Void in
-                
+            var param = Dictionary<String, AnyObject>()
+            param["content"] = self.postContent!
+            
+            for i in 0..<imageNames.count {
+                param["images[\(i)][name]"] = imageNames[i]
+                param["images[\(i)][size][width]"] = "\(sizes[i].width)"
+                param["images[\(i)][size][height]"] = "\(sizes[i].height)"
+            }
+            if let location = self.location {
+                param["coordinate"] = [String(stringInterpolationSegment: location.coordinate.latitude),String(stringInterpolationSegment: location.coordinate.longitude)];
+            }
+            
+            Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/mobile/posts" , parameters: param,encoding: ParameterEncoding.JSON)
+            .response({ (_, _, _, _) -> Void in
                 Util.dismissHUD()
                 self.dismissViewControllerAnimated(true, completion: nil)
             })
@@ -299,4 +315,45 @@ extension AddPostViewController: DBCameraViewControllerDelegate {
         self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
         cameraViewController.restoreFullScreenMode()
     }
+}
+
+extension AddPostViewController:CLLocationManagerDelegate{
+    
+    func setLocationManager() {
+        
+        self.locationManager = CLLocationManager()
+        self.locationManager!.delegate = self
+        
+        //check for description key and ask permissions
+        if (NSBundle.mainBundle().objectForInfoDictionaryKey("NSLocationWhenInUseUsageDescription") != nil) {
+            self.locationManager!.requestWhenInUseAuthorization()
+        } else if (NSBundle.mainBundle().objectForInfoDictionaryKey("NSLocationAlwaysUsageDescription") != nil) {
+            self.locationManager!.requestAlwaysAuthorization()
+        } else {
+            fatalError("To use location in iOS8 you need to define either NSLocationWhenInUseUsageDescription or NSLocationAlwaysUsageDescription in the app bundle's Info.plist file")
+        }
+        
+    }
+    
+    //location authorization status changed
+    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        switch status {
+        case .AuthorizedWhenInUse,.AuthorizedAlways:
+            manager.startUpdatingLocation()
+        case .Denied:
+            break
+        default:
+            break
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        
+        if let location = locations[0] as? CLLocation {
+            self.location = location
+        } else {
+            println("can not get location")
+        }
+    }
+    
 }
