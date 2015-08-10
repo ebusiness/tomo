@@ -306,9 +306,9 @@ extension MessageViewController {
                             gcd.async(.Main, closure: { () -> () in
                                 Util.dismissHUD()
                                 VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(fileName).path!)
-                            }
+                            })
                             return FCFileManager.urlForItemAtPath(fileName)
-                        })
+                        }
                     }
                 }
             }
