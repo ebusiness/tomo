@@ -193,8 +193,6 @@ extension OpenidController {
     
     private func setMyInfo(result: Dictionary<String, AnyObject>){
         
-        println(result)
-        
         if let id = result["id"] as? String,
             nickName = result["nickName"] as? String{
                 
@@ -375,7 +373,7 @@ extension OpenidController: WXApiDelegate {
     func onReq(req:BaseReq){
         if let temp = req as? GetMessageFromWXReq {
             // 微信请求App提供内容， 需要app提供内容后使用sendRsp返回
-            println(temp.openID)
+//            println(temp.openID)
             
         } else if let temp = req as? ShowMessageFromWXReq {
             let msg = temp.message
@@ -413,7 +411,6 @@ extension OpenidController: WXApiDelegate {
 
 extension OpenidController {
     func handleOpenURL(url:NSURL)->Bool{
-        println(url)
         return WXApi.handleOpenURL(url, delegate: OpenidController.instance)
     }
 }

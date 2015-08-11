@@ -39,7 +39,6 @@ class AddPostViewController: BaseViewController {
         
         self.setLocationManager()
         
-        
         let color = Util.UIColorFromRGB(0xFF007AFF, alpha: 1)
         Util.changeImageColorForButton(stationButton,color: color)
         Util.changeImageColorForButton(groupButton,color: color)

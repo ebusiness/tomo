@@ -411,9 +411,6 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
-                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="bioLabel" destination="aUu-0P-Hmh" id="9fT-NJ-HS8"/>
                         <outlet property="coverImageView" destination="9n7-35-5av" id="8Bn-hD-onz"/>

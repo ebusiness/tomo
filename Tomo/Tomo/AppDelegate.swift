@@ -14,10 +14,6 @@ var me = UserEntity()
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-    var backgroundTask: UIBackgroundTaskIdentifier?
-    var backgroundTimer: NSTimer?
-    var didShowDisconnectionWarning = false
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
