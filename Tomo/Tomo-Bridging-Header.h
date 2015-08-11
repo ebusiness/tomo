@@ -2,7 +2,6 @@
 //  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
-#import "CoreData+MagicalRecord.h"
 #import "RestKit.h"
 #import "RKEntityCache.h"
 #import "RKObjectRequestOperation.h"
@@ -21,8 +20,6 @@
 #include "interf_dec.h"
 #include "interf_enc.h"
 #include "amrFileCodec.h"
-
-#import "JSBadgeView.h"
 
 #import "FCFileManager.h"
 #import "JSQPhotoMediaItem.h"

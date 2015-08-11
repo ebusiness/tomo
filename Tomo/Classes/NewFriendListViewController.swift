@@ -19,7 +19,6 @@ final class NewFriendListViewController: BaseTableViewController {
         
         Util.changeImageColorForButton(addFriendButton,color: UIColor.whiteColor())
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("updateBadgeNumber"), name: kNotificationGotNewMessage, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
         
         self.getFriends()
@@ -97,9 +96,7 @@ extension NewFriendListViewController {
     }
     
     func becomeActive() {
-        ApiController.getMessage({ (error) -> Void in
-            self.updateBadgeNumber()
-        })
+        // recalculate badge number
     }
 }
 

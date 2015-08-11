@@ -248,6 +248,7 @@
                             <outlet property="delegate" destination="3I6-mu-eq3" id="xlI-2S-7t5"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="2pT-iK-RWo"/>
                     <connections>
                         <outlet property="addFriendButton" destination="FvK-sk-tJZ" id="zfa-fN-gtv"/>
@@ -313,6 +314,7 @@
                         </view>
                         <sections/>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="0Nd-Ts-Fs6"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ezk-TE-1Rc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -445,6 +447,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Nf0-wz-A8g"/>
+        <segue reference="M2b-6g-mlH"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -19,9 +19,6 @@ enum SocketEvent: String {
     }
 }
 
-let kNotificationGotNewMessage = "kNotificationGotNewMessage"
-let kNotificationGotNewAnnouncement = "kNotificationGotNewAnnouncement"
-
 final class SocketController {
     
     class var sharedInstance : SocketController {
@@ -43,7 +40,7 @@ final class SocketController {
                 gcd.async(.Default, closure: { () -> () in
                     let data = data as? [NSObject : AnyObject]
                     NSNotificationCenter.defaultCenter().postNotificationName(event.getNotificationName(), object: nil, userInfo: data)
-                    Util.showLocalNotificationGotSocketEvent(event)
+                    Util.showLocalNotificationGotSocketEvent(event, data: data!)
                 })
             }
         }

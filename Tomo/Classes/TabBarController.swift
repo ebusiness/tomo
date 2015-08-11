@@ -77,17 +77,11 @@ class TabBarController: UITabBarController {
         
         //local
         updateBadgeNumber()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("updateBadgeNumber"), name: kNotificationGotNewMessage, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("updateBadgeNumber"), name: kNotificationGotNewAnnouncement, object: nil)
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
 
         Util.setupPush()
         
-        //update
-        ApiController.getMessage { (error) -> Void in
-            self.updateBadgeNumber()
-        }
     }
     
     // MARK: - Notification
@@ -107,9 +101,7 @@ class TabBarController: UITabBarController {
     }
     
     func becomeActive() {
-        ApiController.getMessage({ (error) -> Void in
-            self.updateBadgeNumber()
-        })
+        // recalculate badge number
     }
     
     deinit {

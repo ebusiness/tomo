@@ -73,7 +73,6 @@ final class MessageViewController: JSQMessagesViewController {
         super.viewWillAppear(animated)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("downloadMediaDone"), name: "NotificationDownloadMediaDone", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("gotNewMessage"), name: kNotificationGotNewMessage, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -82,12 +81,6 @@ final class MessageViewController: JSQMessagesViewController {
         VoiceController.instance.stopPlayer()
         
         NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-    // MARK: - Notification
-    
-    func gotNewMessage() {
-
     }
     
     func downloadMediaDone() {

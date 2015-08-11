@@ -229,6 +229,7 @@
                             <outlet property="delegate" destination="3I6-mu-eq3" id="xlI-2S-7t5"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="2pT-iK-RWo">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="bMk-sE-mp1">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="MGR-is-INj">
@@ -761,6 +762,7 @@
                             </tableViewCell>
                         </prototypes>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="gjs-cY-vxX"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="op5-ps-9Yg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -907,6 +909,7 @@
                         </view>
                         <sections/>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="0Nd-Ts-Fs6"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ezk-TE-1Rc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -942,6 +945,7 @@
                         </view>
                         <sections/>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="pKa-iG-Fbl"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g66-jo-shb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -962,6 +966,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="TOo-XU-L5q"/>
+        <segue reference="PG0-av-tgF"/>
     </inferredMetricsTieBreakers>
 </document>

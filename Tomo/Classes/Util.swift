@@ -100,7 +100,7 @@ class Util: NSObject {
         SVProgressHUD.dismiss()
     }
         
-    class func showLocalNotificationGotSocketEvent(event: SocketEvent) {
+    class func showLocalNotificationGotSocketEvent(event: SocketEvent, data: AnyObject) {
         if UIApplication.sharedApplication().applicationState == .Background {
             let notification = UILocalNotification()
             notification.soundName = UILocalNotificationDefaultSoundName
@@ -109,9 +109,11 @@ class Util: NSObject {
             switch event {
                 
             case .Message:
-                if let message = DBController.latestMessage() {
-                    notification.alertBody = message.from!.nickName! + " : " + message.content!
-                }
+                fallthrough
+                // TODO: - todo
+//                if let message = JSON(data)[0] {
+//                    notification.alertBody = message.from!.nickName! + " : " + message.content!
+//                }
                 
             case .Announcement:
                 notification.alertBody = "現場TOMOからのお知らせ"

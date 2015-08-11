@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.backgroundColor = UIColor.whiteColor()
         
-        ApiController.setup()
+        //ApiController.setup()
         
         if Defaults["openid"].string != nil {
             let vc = Util.createViewControllerWithIdentifier("LoadingViewController", storyboardName: "Main")
