@@ -13,64 +13,64 @@ enum SocketEvent: String {
     case Message = "message-new"
     case FriendApproved = "friend-approved"
     case FriendDeclined = "friend-declined"
+    
+    func getNotificationName() -> String{
+        return "kNotification-" + self.rawValue
+    }
 }
 
 let kNotificationGotNewMessage = "kNotificationGotNewMessage"
 let kNotificationGotNewAnnouncement = "kNotificationGotNewAnnouncement"
 
-class SocketController {
+final class SocketController {
     
-    private static let instance = SocketController()
-    private var socket:AZSocketIO!
+    class var sharedInstance : SocketController {
+        struct Static {
+            static let instance : SocketController = SocketController()
+        }
+        return Static.instance
+    }
+    
+    private var socket: AZSocketIO!
+    private var observers = [String:AnyObject]()
     
     private init() {
         socket = AZSocketIO(host: "tomo.e-business.co.jp", andPort: SocketPort, secure: false)
-    }
-    
-    private func setup() {
+        
         socket.eventRecievedBlock = { (name, data) -> Void in
             if let event = SocketEvent(rawValue: name) {
-                self.dealWithEvent(event)
+                
+                gcd.async(.Default, closure: { () -> () in
+                    let data = data as? [NSObject : AnyObject]
+                    NSNotificationCenter.defaultCenter().postNotificationName(event.getNotificationName(), object: nil, userInfo: data)
+                    Util.showLocalNotificationGotSocketEvent(event)
+                })
             }
         }
         
         socket.connectWithSuccess({ () -> Void in
             println("connectWithSuccess")
-            }, andFailure: { (error) -> Void in
-                println(error)
+        }, andFailure: { (error) -> Void in
+            println(error)
         })
+        
+    }
+    func addObserverForEvent(observer: AnyObject, selector aSelector: Selector, event aEvent: SocketEvent){
+        NSNotificationCenter.defaultCenter().addObserver(observer, selector: aSelector, name: aEvent.getNotificationName(), object: nil)
     }
     
-    class func start() {
-        instance.setup()
+    
+    func addObserverForEvent(observer: UIViewController, event: SocketEvent, usingBlock block: (NSNotification!) -> Void){
+
+        if let observer: AnyObject = observers[observer.description] {
+            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        }
+        
+        observers[observer.description] = NSNotificationCenter.defaultCenter().addObserverForName(event.getNotificationName(), object: nil, queue: nil, usingBlock: block )
+        
     }
     
     class func stop() {
-        instance.socket.disconnect()
-    }
-    
-    private func dealWithEvent(event: SocketEvent) {
-        switch event {
-        case .Announcement:
-            ApiController.getAnnouncements({ (error) -> Void in
-                if error == nil {
-                    //post notification
-                    NSNotificationCenter.defaultCenter().postNotificationName(kNotificationGotNewAnnouncement, object: nil)
-                    Util.showLocalNotificationGotSocketEvent(event)
-                }
-            })
-            
-        case .Message:
-            ApiController.getMessage({ (error) -> Void in
-                if error == nil {
-                    //post notification
-                    NSNotificationCenter.defaultCenter().postNotificationName(kNotificationGotNewMessage, object: nil)
-                    Util.showLocalNotificationGotSocketEvent(event)
-                }
-            })
-            
-        default:
-            println("todo")
-        }
+        sharedInstance.socket.disconnect()
     }
 }

@@ -222,8 +222,8 @@ public class gcd
     *  @param GCDApplyClosure :  the block will be run
     *
     */
-    public class func apply(queueType: QueueType, interators: Int, closure: GCDApplyClosure) {
-        dispatch_apply(interators, queueType.getQueue(), closure)
+    public class func apply(queueType: QueueType, interators: UInt, closure: GCDApplyClosure) {
+        dispatch_apply(Int(interators), queueType.getQueue(), closure)
     }
     
     /**
