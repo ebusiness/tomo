@@ -21,6 +21,9 @@ final class NewFriendListViewController: BaseTableViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
         
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveMessage:"), event: .Message)
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendInvited:"), event: .FriendInvited)
+        
         self.getFriends()
         
         updateBadgeNumber()
@@ -93,10 +96,6 @@ extension NewFriendListViewController {
         if let tabBarController = navigationController?.tabBarController as? TabBarController {
             tabBarController.updateBadgeNumber()
         }
-    }
-    
-    func becomeActive() {
-        // recalculate badge number
     }
 }
 
@@ -172,7 +171,7 @@ extension NewFriendListViewController {
             
             let friend = self.friends[indexPath.row]
             
-            request(.PUT, kAPIBaseURLString + "/chat/\(friend.id)/open", parameters: nil, encoding: .URL)
+            Manager.sharedInstance.request(.PUT, kAPIBaseURLString + "/chat/\(friend.id)/open", parameters: nil, encoding: .URL)
                 .responseJSON { (_, _, result, error) -> Void in
                     
                     if error != nil {
@@ -202,6 +201,7 @@ extension NewFriendListViewController {
         }
         
     }
+    
 }
 
 // MARK: - FriendInvitationCell Delegate
@@ -210,50 +210,104 @@ extension NewFriendListViewController: FriendInvitationCellDelegate {
     
     func friendInvitationAccept(cell: NewInvitationCell) {
         
-        if let indexPath = tableView.indexPathForCell(cell) {
-            
-            if let invitation = me.friendInvitations?.removeAtIndex(indexPath.row) {
-                
-                request(.PATCH, kAPIBaseURLString + "/notifications/\(invitation.id)", parameters: ["result": "approved"], encoding: .URL)
-                    .responseJSON { (_, _, result, error) -> Void in
-                        if error != nil {
-                            println(error)
-                            return
-                        }
-                        
-                        me.friendInvitations?.remove(invitation)
-                        self.friends.insert(invitation.from, atIndex: 0)
-                        
-                        self.updateBadgeNumber()
-                        
-                        self.tableView.beginUpdates()
-                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
-                        self.tableView.endUpdates()
+        if let indexPath = tableView.indexPathForCell(cell), invitation = me.friendInvitations?.removeAtIndex(indexPath.row) {
+            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/notifications/\(invitation.id)", parameters: ["result": "approved"], encoding: .URL)
+                .responseJSON { (_, _, result, error) -> Void in
+                    if error != nil {
+                        println(error)
+                        return
                     }
+                    self.friends.insert(invitation.from, atIndex: 0)
+                    
+                    self.updateBadgeNumber()
+                    
+                    self.tableView.beginUpdates()
+                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                    self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
+                    self.tableView.endUpdates()
             }
         }
     }
     
     func friendInvitationDeclined(cell: NewInvitationCell) {
         
-        if let indexPath = tableView.indexPathForCell(cell) {
-            
-            if let invitation = me.friendInvitations?.removeAtIndex(indexPath.row) {
-                
-                request(.PATCH, kAPIBaseURLString + "/notifications/\(invitation.id)", parameters: ["result": "declined"], encoding: .URL)
-                    .responseJSON { (_, _, result, error) -> Void in
-                        if error != nil {
-                            println(error)
-                            return
-                        }
-                        
-                        me.friendInvitations?.remove(invitation)
-                        self.updateBadgeNumber()
-                        
-                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        if let indexPath = tableView.indexPathForCell(cell), invitation = me.friendInvitations?.removeAtIndex(indexPath.row) {
+            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/notifications/\(invitation.id)", parameters: ["result": "declined"], encoding: .URL)
+                .responseJSON { (_, _, result, error) -> Void in
+                    if error != nil {
+                        println(error)
+                        return
                     }
+                    
+                    self.updateBadgeNumber()
+                    
+                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
         }
+    }
+}
+
+// MARK: - NSNotificationCenter
+
+extension NewFriendListViewController {
+    
+    
+    func becomeActive() {
+        // recalculate badge number
+    }
+    
+    func receiveMessage(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            let json = JSON(userInfo)
+            
+            let user = self.friends.find{ $0.id == json["_from"]["_id"].stringValue }
+            
+            if let user = user {
+                
+                let message = MessageEntity()
+                message.id = json["_id"].stringValue
+                message.content = json["content"].stringValue
+                message.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+                
+//                message.owner = me
+                message.from = user
+                user.lastMessage = message
+                me.newMessages?.insert(message, atIndex: 0)
+                
+                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.friends.indexOf(user)!, inSection: 1)], withRowAnimation: .Automatic)
+                
+                self.updateBadgeNumber() // TODO - optimization
+            }
+        }
+    }
+    
+    func receiveFriendInvited(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            let json = JSON(userInfo)
+            
+            let notification = NotificationEntity()
+            notification.id = json["_id"].stringValue
+            notification.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+            
+            let user = json["_from"]
+            
+            let from = UserEntity()
+            from.id = user["_id"].stringValue
+            from.photo = user["photo"].stringValue
+            from.nickName = user["nickName"].stringValue
+            
+            notification.from = from
+            
+//            me.friendInvitations = ( me.friendInvitations ?? [NotificationEntity]() )
+//            me.friendInvitations!.insert(notification, atIndex: 0)
+            me.friendInvitations?.insert(notification, atIndex: 0)
+            
+//            self.tableView.beginUpdates()
+            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation:  .Automatic)
+//            self.tableView.endUpdates()
+            
+            self.updateBadgeNumber()
+        }
+
     }
 }

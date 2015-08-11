@@ -75,6 +75,8 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        SocketController.connect()
+        
         //local
         updateBadgeNumber()
 
@@ -105,7 +107,7 @@ class TabBarController: UITabBarController {
     }
     
     deinit {
-        SocketController.stop()
+        SocketController.disconnect()
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }

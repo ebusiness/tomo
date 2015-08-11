@@ -99,7 +99,7 @@ class RegViewController: BaseViewController {
     @IBAction func login_wechat(sender: AnyObject) {
         OpenidController.instance.wxCheckAuth(
             success: { (result) -> () in
-                RegViewController.changeRootToTab(self)
+                self.changeRootToTab()
             },
             failure: { (errCode, errMessage) -> () in
                 
@@ -221,15 +221,15 @@ class RegViewController: BaseViewController {
                         me.newMessages = messages
                 }
                 
-                RegViewController.changeRootToTab(self)
+                self.changeRootToTab()
         }
         
     }
     
-    class func changeRootToTab(from:UIViewController){
+    func changeRootToTab(){
         Util.dismissHUD()
         let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-        Util.changeRootViewController(from: from, to: tab)
+        Util.changeRootViewController(from: self, to: tab)
     }
 
 }
