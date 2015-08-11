@@ -109,18 +109,15 @@ enum MediaMessage: Int {
 class Constants: NSObject {
    
     class func postPath(#fileName: String) -> String {
-        let myId = Defaults["myId"].string!
-        return "/users/\(myId)/post/\(fileName)"
+        return "/users/\(me.id)/post/\(fileName)"
     }
     
     class func avatarPath(#fileName: String) -> String {
-        let myId = Defaults["myId"].string!
-        return "/users/\(myId)/photo/\(fileName)"
+        return "/users/\(me.id)/photo/\(fileName)"
     }
     
     class func coverPath(#fileName: String) -> String {
-        let myId = Defaults["myId"].string!
-        return "/users/\(myId)/cover/\(fileName)"
+        return "/users/\(me.id)/cover/\(fileName)"
     }
     
     class func groupCoverPath(#groupId: String, fileName: String) -> String {

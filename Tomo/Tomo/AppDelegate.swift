@@ -14,12 +14,10 @@ var me = UserEntity()
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
+
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         window?.backgroundColor = UIColor.whiteColor()
-        
-        //ApiController.setup()
         
         if Defaults["openid"].string != nil {
             let vc = Util.createViewControllerWithIdentifier("LoadingViewController", storyboardName: "Main")

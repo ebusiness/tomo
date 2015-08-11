@@ -115,19 +115,14 @@ class RegViewController: BaseViewController {
         switch testSegment.selectedSegmentIndex
         {
         case 0:
-            Defaults["myId"] = "55a319577b6eb5a66e91edaa"
             param["id"] = "55a319577b6eb5a66e91edaa"
         case 1:
-            Defaults["myId"] = "55a31bc959a1af7373c1d099"
             param["id"] = "55a31bc959a1af7373c1d099"
         case 2:
-            Defaults["myId"] = "55a31c7759a1af7373c1d09e"
             param["id"] = "55a31c7759a1af7373c1d09e"
         case 3:
-            Defaults["myId"] = "55a31d0a59a1af7373c1d0a3"
             param["id"] = "55a31d0a59a1af7373c1d0a3"
         case 4:
-            Defaults["myId"] = "55a31dcb59a1af7373c1d0a8"
             param["id"] = "55a31dcb59a1af7373c1d0a8"
         default:
             break;

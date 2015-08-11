@@ -18,7 +18,6 @@ final class MessageViewController: JSQMessagesViewController {
     var icon_keyboard_normal:UIImage!
     var icon_keyboard_highlighted:UIImage!
     
-    // chat opponent
     var friend: UserEntity!
 
     let selink = RKObjectManager(baseURL: kAPIBaseURL)
@@ -36,7 +35,10 @@ final class MessageViewController: JSQMessagesViewController {
     
     var messages = [JSQMessageEntity]()
     
-    var params = Dictionary<String, String>()
+    var oldestMessage: MessageEntity?
+    
+    var isLoading = false
+    var isExhausted = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +68,7 @@ final class MessageViewController: JSQMessagesViewController {
         
         // load message data
         setupMapping()
+        
         loadMessages()
     }
     
@@ -135,9 +138,19 @@ extension MessageViewController {
     
     private func loadMessages() {
         
-        params["userId"] = friend.id
+        if isLoading || isExhausted {
+            return
+        }
         
-        selink.getObjectsAtPath("/chat/\(friend.id)", parameters: nil, success: { (operation, result) -> Void in
+        isLoading = true
+        
+        var params = Dictionary<String, NSTimeInterval>()
+        
+        if let oldestMessage = oldestMessage {
+            params["before"] = oldestMessage.createDate.timeIntervalSince1970
+        }
+        
+        selink.getObjectsAtPath("/chat/\(friend.id)", parameters: params, success: { (operation, result) -> Void in
             
             for message in result.array() {
                 
@@ -146,23 +159,44 @@ extension MessageViewController {
                     if message.from != me.id {
                         message.from = self.friend
                         message.owner = me
-//                        self.messages.insert(JSQMessage(senderId: self.friend.id, senderDisplayName: self.friend.nickName, date: message.createDate, text: message.content), atIndex: 0)
                     } else {
                         message.from = me
                         message.owner = self.friend
-//                        self.messages.insert(JSQMessage(senderId: me.id, senderDisplayName: me.nickName, date: message.createDate, text: message.content), atIndex: 0)
                     }
                     self.messages.insert(JSQMessageEntity(message: message), atIndex: 0)
                 }
             }
             
-            self.collectionView.reloadData()
-            self.scrollToBottomAnimated(false)
+            if self.oldestMessage == nil {
+                self.collectionView.reloadData()
+                self.scrollToBottomAnimated(false)
+            } else {
+                self.prependRows(result.array().count)
+            }
             
-            }) { (operation, err) -> Void in
-                println(err)
+            self.oldestMessage = result.array().last as? MessageEntity
+            self.isLoading = false
+            
+        }) { (operation, err) -> Void in
+            println(err)
+            
+            self.isLoading = false
+            self.isExhausted = true
         }
     }
+    
+    private func prependRows(rows: Int) {
+        
+        var indexPathes = [NSIndexPath]()
+        
+        for index in 0..<rows {
+            indexPathes.push(NSIndexPath(forRow: index, inSection: 0))
+        }
+        
+        collectionView.insertItemsAtIndexPaths(indexPathes)
+        
+    }
+    
 }
 
 // MARK: - JSQMessageViewController overrides
@@ -194,7 +228,7 @@ extension MessageViewController {
             if error == nil {
                 
                 JSQSystemSoundPlayer.jsq_playMessageSentSound()
-                
+                                                                       
                 self.messages.append(newMessage)
                 self.finishSendingMessageAnimated(true)
                 
@@ -202,7 +236,18 @@ extension MessageViewController {
                 // handle error
             }
         }
-        
+    }
+    
+}
+
+// MARK: - ScrollView Delegate
+
+extension MessageViewController {
+    
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < -176 {
+            self.loadMessages()
+        }
     }
 }
 
