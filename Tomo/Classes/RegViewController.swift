@@ -163,7 +163,39 @@ class RegViewController: BaseViewController {
                         me.telNo = result["telNo"] as? String
                         me.address = result["address"] as? String
 //                        me.notificationCount = result["notificationCount"] as? Int
-                
+                        
+                        var invitations = [NotificationEntity]()
+                        
+                        if let friendInvitations = result["friendInvitations"] as? Array<AnyObject> {
+                            
+                            for obj in friendInvitations {
+                                
+                                if let invitationRaw = obj as? Dictionary<String, AnyObject> {
+                                    
+                                    let notification = NotificationEntity()
+                                    notification.id = invitationRaw["_id"] as? String
+                                    
+                                    if let dateString = result["createDate"] as? String {
+                                        notification.createDate = dateString.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+                                    }
+                                    
+                                    if let fromRaw = invitationRaw["_from"] as? Dictionary<String, String> {
+                                        
+                                        let from = UserEntity()
+                                        from.id = fromRaw["_id"]
+                                        from.photo = fromRaw["photo_ref"]
+                                        from.nickName = fromRaw["nickName"]
+                                        
+                                        notification.from = from
+                                    }
+                                    
+                                    invitations.push(notification)
+                                }
+                            }
+                        }
+                        
+                        me.friendInvitations = invitations
+                        
                         var messages = [MessageEntity]()
                         
                         if let newMessages = result["newMessages"] as? Array<AnyObject> {

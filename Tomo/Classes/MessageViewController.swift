@@ -87,7 +87,7 @@ final class MessageViewController: JSQMessagesViewController {
     // MARK: - Notification
     
     func gotNewMessage() {
-        DBController.makeAllMessageRead(friend.id)
+
     }
     
     func downloadMediaDone() {

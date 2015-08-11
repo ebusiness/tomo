@@ -307,7 +307,7 @@ extension HomeViewController {
         }
         
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: UITableViewRowAnimation.Middle)
+        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Middle)
         tableView.endUpdates()
         
     }
@@ -324,7 +324,7 @@ extension HomeViewController {
         latestContent = contents.first
         
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: UITableViewRowAnimation.Middle)
+        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Middle)
         tableView.endUpdates()
     }
 }

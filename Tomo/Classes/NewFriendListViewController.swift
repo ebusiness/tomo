@@ -12,8 +12,6 @@ final class NewFriendListViewController: BaseTableViewController {
     
     @IBOutlet weak var addFriendButton: UIButton!
     
-    var friendInvitedNotifications = [Notification]()
-    
     var friends = [UserEntity]()
     
     override func viewDidLoad() {
@@ -93,11 +91,9 @@ extension NewFriendListViewController {
     }
     
     func updateBadgeNumber() {
-//        self.getFriends()
-//        friendInvitedNotifications = DBController.unconfirmedNotification(type: .FriendInvited)
-//        tableView.reloadData()
-//        
-//        (navigationController?.tabBarController as? TabBarController)?.updateBadgeNumber()
+        if let tabBarController = navigationController?.tabBarController as? TabBarController {
+            tabBarController.updateBadgeNumber()
+        }
     }
     
     func becomeActive() {
@@ -179,12 +175,25 @@ extension NewFriendListViewController {
             
             let friend = self.friends[indexPath.row]
             
-            DBController.makeAllMessageRead(friend.id)
-            //            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? RecentlyFriendCell {
-            //                cell.clearBadge()
-            //            }
+            request(.PUT, kAPIBaseURLString + "/chat/\(friend.id)/open", parameters: nil, encoding: .URL)
+                .responseJSON { (_, _, result, error) -> Void in
+                    
+                    if error != nil {
+                        println(error)
+                        return
+                    }
+                    
+                    me.newMessages?.filter({ (message) -> Bool in
+                        if message.from.id == friend.id {
+                            me.newMessages?.remove(message)
+                        }
+                        return true
+                    })
+                    
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                    self.updateBadgeNumber()
+                }
             
-            (self.navigationController?.tabBarController as? TabBarController)?.updateBadgeNumber()
             
             let vc = MessageViewController()
             vc.hidesBottomBarWhenPushed = true
@@ -203,22 +212,51 @@ extension NewFriendListViewController {
 extension NewFriendListViewController: FriendInvitationCellDelegate {
     
     func friendInvitationAccept(cell: NewInvitationCell) {
+        
         if let indexPath = tableView.indexPathForCell(cell) {
-            friendInvitedNotifications.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            
+            if let invitation = me.friendInvitations?.removeAtIndex(indexPath.row) {
+                
+                request(.PATCH, kAPIBaseURLString + "/notifications/\(invitation.id)", parameters: ["result": "approved"], encoding: .URL)
+                    .responseJSON { (_, _, result, error) -> Void in
+                        if error != nil {
+                            println(error)
+                            return
+                        }
+                        
+                        me.friendInvitations?.remove(invitation)
+                        self.friends.insert(invitation.from, atIndex: 0)
+                        
+                        self.updateBadgeNumber()
+                        
+                        self.tableView.beginUpdates()
+                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
+                        self.tableView.endUpdates()
+                    }
+            }
         }
-        ApiController.friendInvite(cell.friendInvitedNotification!.id!,isApproved: true, done: { (error) -> Void in
-            self.updateBadgeNumber()
-        })
     }
     
     func friendInvitationDeclined(cell: NewInvitationCell) {
+        
         if let indexPath = tableView.indexPathForCell(cell) {
-            friendInvitedNotifications.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            
+            if let invitation = me.friendInvitations?.removeAtIndex(indexPath.row) {
+                
+                request(.PATCH, kAPIBaseURLString + "/notifications/\(invitation.id)", parameters: ["result": "declined"], encoding: .URL)
+                    .responseJSON { (_, _, result, error) -> Void in
+                        if error != nil {
+                            println(error)
+                            return
+                        }
+                        
+                        me.friendInvitations?.remove(invitation)
+                        self.updateBadgeNumber()
+                        
+                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                    }
+            }
         }
-        ApiController.friendInvite(cell.friendInvitedNotification!.id!,isApproved:false, done: { (error) -> Void in
-            self.updateBadgeNumber()
-        })
     }
 }
