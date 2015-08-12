@@ -46,6 +46,9 @@ final class MessageViewController: JSQMessagesViewController {
         // custom navigationBar
         navigationController?.navigationBar.setBackgroundImage(navigationBarImage, forBarMetrics: .Default)
         
+        //receive message realtime
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveMessage:"), event: .Message)
+        
         // page title
         title = friend.nickName
         
@@ -206,6 +209,29 @@ extension MessageViewController {
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
 
         self.sendMessage(text)
+    }
+    
+    func receiveMessage(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            let json = JSON(userInfo)
+            
+            if friend.id == json["_from"]["_id"].stringValue {
+                
+                let newMessage = JSQMessageEntity()
+                newMessage.message.id = json["_id"].stringValue
+                newMessage.message.owner = me
+                newMessage.message.from = friend
+                newMessage.message.content = json["content"].stringValue
+                newMessage.message.isOpened = true
+                newMessage.message.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+
+                self.messages.append(newMessage)
+                friend.lastMessage = newMessage.message
+                
+                JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
+                self.finishReceivingMessageAnimated(true)
+            }
+        }
     }
     
     func sendMessage(text: String) {
