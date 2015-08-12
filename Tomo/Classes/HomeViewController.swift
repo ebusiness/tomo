@@ -85,6 +85,10 @@ final class HomeViewController: BaseTableViewController {
         }
     }
     
+    @IBAction func addedPost(segue: UIStoryboardSegue) {
+        // exit addPostView
+    }
+    
 }
 
 //extension HomeViewController: UIScrollViewDelegate {

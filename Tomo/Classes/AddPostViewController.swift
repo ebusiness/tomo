@@ -59,34 +59,57 @@ class AddPostViewController: BaseViewController {
     @IBAction func post(sender: AnyObject) {
         Util.showHUD()
         // send post
-        self.uploadToS3({ (imageNames, sizes) -> () in
+        self.uploadToS3 { (imagelist) -> () in
             
             var param = Dictionary<String, AnyObject>()
             param["content"] = self.postContent!
+            param["images"] = imagelist
             
-            for i in 0..<imageNames.count {
-                param["images[\(i)][name]"] = imageNames[i]
-                param["images[\(i)][size][width]"] = "\(sizes[i].width)"
-                param["images[\(i)][size][height]"] = "\(sizes[i].height)"
-            }
             if let location = self.location {
                 param["coordinate"] = [String(stringInterpolationSegment: location.coordinate.latitude),String(stringInterpolationSegment: location.coordinate.longitude)];
             }
             
             Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/mobile/posts" , parameters: param,encoding: ParameterEncoding.JSON)
-            .response({ (_, _, _, _) -> Void in
+            .responseJSON { (_, _, post, _) -> Void in
                 Util.dismissHUD()
-                self.dismissViewControllerAnimated(true, completion: nil)
-            })
-        })
+                self.performSegueWithIdentifier("addedPost", sender: post)
+//                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
         
     }
     
     @IBAction func cancel(sender: AnyObject) {
         self.postInput.resignFirstResponder()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.performSegueWithIdentifier("addedPost", sender: nil)
+//        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "addedPost" {
+            if let sender: AnyObject = sender, home = segue.destinationViewController as? HomeViewController {
+                
+                let json = JSON(sender)
+                
+                var post = PostEntity()
+                post.id = json["_id"].stringValue
+                post.content = json["contentText"].stringValue
+                post.coordinate = json["coordinate"].arrayObject as? [Double]
+                json["images_mobile"].array?.map { (image) -> () in
+                    post.images = post.images ?? [String]()
+                    post.images?.append(image["name"].stringValue)
+                }
+//                post.like = json["like"].arrayObject as? [String]
+                post.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+                post.owner = me
+                
+                
+                home.contents.insert(post, atIndex: 0)
+                home.latestContent = post
+                home.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Middle)
+            }
+        }
+    }
     
     @IBAction func cameraOnClick(sender: AnyObject) {
         
@@ -230,11 +253,10 @@ extension AddPostViewController {
     }
 
     
-    func uploadToS3(completion:(imageNames: [String], sizes: [CGSize])->()){
-        var names: [String] = []
-        var sizes: [CGSize] = []
+    func uploadToS3(completion:(imagelist: AnyObject)->()){
+        var imagelist = [[String:AnyObject]]()
         if imageListSelected.count == 0 {
-            completion(imageNames: names,sizes: sizes)
+            completion(imagelist: imagelist)
             return
         }
         for image in imageListSelected {
@@ -245,10 +267,18 @@ extension AddPostViewController {
             let remotePath = Constants.postPath(fileName: name)
             
             S3Controller.uploadFile(name: name, localPath: imagePath, remotePath: remotePath, done: { (error) -> Void in
-                names.append(name)
-                sizes.append(image.size)
-                if error == nil && sizes.count == self.imageListSelected.count {
-                    completion(imageNames: names,sizes: sizes)
+                
+                let imageinfo:[String:AnyObject] = [
+                    "name":name,
+                    "size":[
+                        "width":image.size.width,
+                        "height":image.size.height
+                    ]
+                ]
+                imagelist.append(imageinfo)
+                
+                if error == nil && imagelist.count == self.imageListSelected.count {
+                    completion(imagelist: imagelist)
                 }
             })
         }
