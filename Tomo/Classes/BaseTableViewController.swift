@@ -22,12 +22,15 @@ class BaseTableViewController: UITableViewController {
     
     var alwaysShowNavigationBar = false
     
+    override func loadView() {
+        super.loadView()
+        self.manager.registerRequestOperationClass(RestKitErrorHanding.self)
+        self.setupMapping()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.manager.registerRequestOperationClass(RestKitErrorHanding.self)
-        self.setupMapping()
-
         self.setBackButton()
         self.setTopConstraint()
         

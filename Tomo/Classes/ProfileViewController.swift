@@ -28,9 +28,7 @@ class ProfileViewController: ProfileBaseController {
         super.viewDidLoad()
         
         if let friends = me.friends where friends.contains(self.user.id) {
-            
-            self.getUserInfo()
-        
+
         } else {
             
             var param = Dictionary<String, String>()
@@ -42,32 +40,47 @@ class ProfileViewController: ProfileBaseController {
                     if let arr = data as? NSArray ,dict = arr[0] as? Dictionary<String, AnyObject> , id = dict["_id"] as? String {
                         self.invitedId = id
                     }
-                    self.getUserInfo()
             }
         }
         
     }
     
-    override func setupMapping() {
+    override func updateUI() {
         
-        let userMapping = RKObjectMapping(forClass: UserEntity.self)
-        userMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "tomoid": "tomoid",
-            "nickName": "nickName",
-            "gender": "gender",
-            "photo_ref": "photo",
-            "cover_ref": "cover",
-            "bioText": "bio",
-            "firstName": "firstName",
-            "lastName": "lastName",
-            "birthDay": "birthDay",
-            "telNo": "telNo",
-            "address": "address",
-            ])
+        fullNameLabel.text = user?.fullName()
         
-        let responseDescriptorUserInfo = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
-        self.manager.addResponseDescriptor(responseDescriptorUserInfo)
+        genderLabel.text = user?.gender
+        
+        birthDayLabel.text = user?.birthDay?.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
+        addressLabel.text = user?.address
+        
+        self.addFriendButton.hidden = true
+        self.deleteFriendButton.hidden = true
+        self.sendMessageCell.hidden = true
+        self.invitedView.hidden = true
+        
+        if let friends = me.friends where friends.contains(self.user.id) {
+            
+            self.deleteFriendButton.hidden = false
+            self.sendMessageCell.hidden = false
+            
+        } else {
+            
+            if let id = self.invitedId {
+                
+                self.invitedView.hidden = false
+                
+                self.heightOfInvitedView.constant = 44
+                self.changeHeaderView(height:284)
+                
+            } else if let invited = me.invited where invited.contains(self.user.id) {
+                //invited
+            } else if user.id != me.id {
+                self.addFriendButton.hidden = false
+            }
+            
+        }
+        
     }
     
     @IBAction func Approved(sender: UIButton) {
@@ -134,60 +147,6 @@ class ProfileViewController: ProfileBaseController {
 }
 
 extension ProfileViewController {
-    
-    func getUserInfo(){
-        
-        Util.showHUD()
-        self.manager.getObject(nil, path: "/users/\(self.user.id)", parameters: nil, success: { (operation, result) -> Void in
-            if let result = result.firstObject as? UserEntity {
-                
-                self.user = result
-                self.updateUI()
-                
-            }
-            Util.dismissHUD()
-            
-        }, failure: nil)
-    }
-    
-    func updateUI() {
-        
-        fullNameLabel.text = user?.fullName()
-        
-        genderLabel.text = user?.gender
-        
-        //        birthDayLabel.text = user?.birthDay.
-        
-        addressLabel.text = user?.address
-        
-        self.addFriendButton.hidden = true
-        self.deleteFriendButton.hidden = true
-        self.sendMessageCell.hidden = true
-        self.invitedView.hidden = true
-        
-        if let friends = me.friends where friends.contains(self.user.id) {
-            
-            self.deleteFriendButton.hidden = false
-            self.sendMessageCell.hidden = false
-            
-        } else {
-            
-            if let id = self.invitedId {
-                
-                self.invitedView.hidden = false
-                
-                self.heightOfInvitedView.constant = 44
-                self.changeHeaderView(height:284)
-                
-            } else if let invited = me.invited where invited.contains(self.user.id) {
-                //invited
-            } else if user.id != me.id {
-                self.addFriendButton.hidden = false
-            }
-            
-        }
-
-    }
     
     func inviteAction(isApproved:Bool){
         

@@ -17,8 +17,13 @@ class ProfileBaseController: BaseTableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if let vc = segue.destinationViewController as? ProfileHeaderViewController {
-            vc.user = self.user
             
+            vc.user = self.user
+            if let parent = segue.sourceViewController as? ProfileViewController {
+                self.getUserInfo({ () -> () in
+                    vc.user = self.user
+                })
+            }
             
             self.whenShowNavigationBar = { (OffsetY)->() in
                 
@@ -62,6 +67,51 @@ class ProfileBaseController: BaseTableViewController {
         } else if let vc = segue.destinationViewController as? ProfileBaseController {
             vc.user = self.user
         }
+        
+    }
+    
+    override func setupMapping() {
+        
+        let userMapping = RKObjectMapping(forClass: UserEntity.self)
+        userMapping.addAttributeMappingsFromDictionary([
+            "_id": "id",
+            "tomoid": "tomoid",
+            "nickName": "nickName",
+            "gender": "gender",
+            "photo_ref": "photo",
+            "cover_ref": "cover",
+            "bioText": "bio",
+            "firstName": "firstName",
+            "lastName": "lastName",
+            "birthDay": "birthDay",
+            "telNo": "telNo",
+            "address": "address",
+            ])
+        
+        let responseDescriptorUserInfo = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        self.manager.addResponseDescriptor(responseDescriptorUserInfo)
+    }
+}
+
+extension ProfileBaseController {
+    
+    func getUserInfo(done: (()->()) ){
+        
+        Util.showHUD()
+        
+        self.manager.getObject(nil, path: "/users/\(self.user.id)", parameters: nil, success: { (operation, result) -> Void in
+            if let result = result.firstObject as? UserEntity {
+                self.user = result
+                done()
+                self.updateUI()
+                
+            }
+            Util.dismissHUD()
+            
+            }, failure: nil)
+    }
+    
+    func updateUI() {
         
     }
 }
