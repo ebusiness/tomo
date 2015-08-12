@@ -74,7 +74,6 @@
 		296D8BC41AFC5A680058D400 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 296D8BBD1AFC5A680058D400 /* Main.storyboard */; };
 		296D8BC81AFC5A680058D400 /* RegPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 296D8BC11AFC5A680058D400 /* RegPageView.xib */; };
 		296D8BCA1AFC5A7F0058D400 /* RegPageData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 296D8BC91AFC5A7F0058D400 /* RegPageData.plist */; };
-		2987F1ED1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2987F1EC1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m */; };
 		29925BAA1AD6693F00F98BD7 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296040451ACE669900D2A338 /* Alamofire.swift */; };
 		299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299389441AD3B33800043D91 /* AmazonS3RequestManager.swift */; };
 		2993894A1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */; };
@@ -198,8 +197,6 @@
 		296D8BC11AFC5A680058D400 /* RegPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RegPageView.xib; path = Classes/RegPageView.xib; sourceTree = "<group>"; };
 		296D8BC91AFC5A7F0058D400 /* RegPageData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegPageData.plist; path = Classes/RegPageData.plist; sourceTree = SOURCE_ROOT; };
 		296D8BCD1B004C6B0058D400 /* MessageGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageGroupViewController.swift; path = Classes/MessageGroupViewController.swift; sourceTree = "<group>"; };
-		2987F1EB1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObjectContext+Tomo.h"; path = "Classes/NSManagedObjectContext+Tomo.h"; sourceTree = SOURCE_ROOT; };
-		2987F1EC1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObjectContext+Tomo.m"; path = "Classes/NSManagedObjectContext+Tomo.m"; sourceTree = SOURCE_ROOT; };
 		299389431AD3B33800043D91 /* AmazonS3RequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonS3RequestManager.h; sourceTree = "<group>"; };
 		299389441AD3B33800043D91 /* AmazonS3RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestManager.swift; sourceTree = "<group>"; };
 		299389451AD3B33800043D91 /* AmazonS3SignatureHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonS3SignatureHelpers.h; sourceTree = "<group>"; };
@@ -449,9 +446,7 @@
 			children = (
 				1F985E441B60C19F008D5369 /* ExSwift */,
 				293EB4231B132B06006BAF27 /* JSQVoiceMediaItem.h */,
-				2987F1EB1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.h */,
 				293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */,
-				2987F1EC1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m */,
 				296040451ACE669900D2A338 /* Alamofire.swift */,
 				2994AF901B019AA100656C39 /* GCD.swift */,
 				29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */,
@@ -839,7 +834,6 @@
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				1F79C1B41B5E10DC008800E1 /* NewFriendCell.swift in Sources */,
 				D0B40BBF1B78AF0400685D67 /* ExNSDate.swift in Sources */,
-				2987F1ED1AD7BB8400AA39CE /* NSManagedObjectContext+Tomo.m in Sources */,
 				1F79C1B21B5E0E22008800E1 /* NewFriendListViewController.swift in Sources */,
 				29539C781B13175D00545509 /* VoiceController.swift in Sources */,
 				2993894A1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,

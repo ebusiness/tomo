@@ -12,7 +12,6 @@
 #import "NYXImagesKit.h"
 #import "AmazonS3SignatureHelpers.h"
 #import "JSQMessages.h"
-#import "NSManagedObjectContext+Tomo.h"
 #import "AZSocketIO.h"
 
 #import "WXApi.h"
