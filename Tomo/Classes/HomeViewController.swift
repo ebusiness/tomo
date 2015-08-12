@@ -183,9 +183,9 @@ extension HomeViewController {
         if let content = contents.get(indexPath.row) as? PostEntity {
             
             if content.images?.count > 0 {
-                return 334
+                return 336
             } else {
-                return 131
+                return 133
             }
         }
         

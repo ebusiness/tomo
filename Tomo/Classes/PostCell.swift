@@ -23,6 +23,9 @@ class PostCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.mainScreen().scale
+        
         cardView.layer.cornerRadius = 5
         cardView.layer.masksToBounds = true
         cardView.layer.borderWidth = 1
