@@ -68,7 +68,7 @@ class TabBarController: UITabBarController {
             viewControllers.append(vc)
         }
         self.tabBar.barTintColor = UIColor.whiteColor()
-        self.tabBar.tintColor = Util.UIColorFromRGB(0xFF5722, alpha: 1)
+        self.tabBar.tintColor = Util.UIColorFromRGB(0x1976D2, alpha: 1)
         self.viewControllers = viewControllers
         
     }

@@ -28,7 +28,7 @@ class MapViewController: BaseViewController {
         decorateButton(buildingToggleButton)
         decorateButton(currentLocationButton)
         
-        manager.getObjectsAtPath("/newsfeed", parameters: nil, success: { (operation, result) -> Void in
+        manager.getObjectsAtPath("/mapnews", parameters: nil, success: { (operation, result) -> Void in
             
             for annotation in result.array() {
                 if let annotation = annotation as? PostAnnotation {
@@ -91,7 +91,7 @@ class MapViewController: BaseViewController {
         let postRelationshipMapping = RKRelationshipMapping(fromKeyPath: nil, toKeyPath: "post", withMapping: postMapping)
         postAnnotationMapping.addPropertyMapping(postRelationshipMapping)
         
-        let responseDescriptor = RKResponseDescriptor(mapping: postAnnotationMapping, method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        let responseDescriptor = RKResponseDescriptor(mapping: postAnnotationMapping, method: .GET, pathPattern: "/mapnews", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
         
         manager.addResponseDescriptor(responseDescriptor)
         

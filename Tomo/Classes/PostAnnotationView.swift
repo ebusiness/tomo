@@ -35,25 +35,19 @@ class PostAnnotationView: MKAnnotationView {
         
         let postAnnotation = annotation as! PostAnnotation
         
-        frame = CGRect(x: 0, y: 0, width: 200, height: 60)
-        backgroundColor = UIColor.whiteColor()
-        clipsToBounds = true
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.orangeColor().CGColor
-        layer.cornerRadius = 10
+        frame = CGRect(x: 0, y: 0, width: 60, height: 60)
+
         
         imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         imageView.sd_setImageWithURL(NSURL(string:  postAnnotation.post.owner.photo!), placeholderImage: UIImage(named: "avatar"))
+        imageView.clipsToBounds = true
+        imageView.layer.borderWidth = 3
+        imageView.layer.borderColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 1).CGColor
+        imageView.layer.cornerRadius = imageView.frame.width / 2
         addSubview(imageView)
         
-        contentLabel = UILabel(frame: CGRect(x: 70, y: 0, width: 120, height: 60))
-        contentLabel.font = UIFont.systemFontOfSize(12)
-        contentLabel.numberOfLines = 0
-        contentLabel.text = postAnnotation.post.content
-        addSubview(contentLabel)
-        
-        numberBadge = UILabel(frame: CGRect(x: 185, y: 0, width: 20, height: 20))
+        numberBadge = UILabel(frame: CGRect(x: 45, y: 0, width: 20, height: 20))
         numberBadge.textColor = UIColor.whiteColor()
         numberBadge.textAlignment = NSTextAlignment.Center
         numberBadge.font = UIFont.systemFontOfSize(12)

@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKM-D9-brj">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                                 <connections>
                                     <outlet property="delegate" destination="OpP-6Y-mbl" id="Izv-tq-Wk5"/>
                                 </connections>
@@ -66,10 +66,10 @@
                             <constraint firstAttribute="trailing" secondItem="UKM-D9-brj" secondAttribute="trailing" id="DLL-Kd-ZdR"/>
                             <constraint firstAttribute="trailing" secondItem="ws5-Aq-GDW" secondAttribute="trailing" constant="16" id="ELh-2d-CXn"/>
                             <constraint firstAttribute="trailing" secondItem="xi3-wd-alO" secondAttribute="trailing" constant="16" id="I01-9z-agV"/>
+                            <constraint firstItem="UKM-D9-brj" firstAttribute="top" secondItem="cbP-3X-ubl" secondAttribute="bottom" id="J2G-md-lnb"/>
                             <constraint firstItem="Cpn-4Z-PSd" firstAttribute="top" secondItem="UKM-D9-brj" secondAttribute="bottom" id="JDw-4z-CWG"/>
                             <constraint firstItem="h5e-uw-BW1" firstAttribute="top" secondItem="ws5-Aq-GDW" secondAttribute="bottom" constant="8" id="bRZ-MZ-WSF"/>
                             <constraint firstItem="h5e-uw-BW1" firstAttribute="top" secondItem="ws5-Aq-GDW" secondAttribute="bottom" constant="8" id="cpm-xX-ahT"/>
-                            <constraint firstItem="UKM-D9-brj" firstAttribute="top" secondItem="wVk-fz-608" secondAttribute="top" id="dPd-0B-QQR"/>
                             <constraint firstAttribute="trailing" secondItem="h5e-uw-BW1" secondAttribute="trailing" constant="16" id="lKF-VU-zwB"/>
                             <constraint firstItem="ws5-Aq-GDW" firstAttribute="top" secondItem="xi3-wd-alO" secondAttribute="bottom" constant="8" id="rxY-QZ-CDx"/>
                         </constraints>
@@ -84,7 +84,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lyR-37-tdo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="703" y="448"/>
+            <point key="canvasLocation" x="705" y="448"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="MOJ-Y9-CVB">
