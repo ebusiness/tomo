@@ -51,8 +51,6 @@ class PostViewController : BaseTableViewController{
         self.postImageList.scrollsToTop = false
         self.commentInput.scrollsToTop = false
         
-        navigationItem.title = "詳細"
-        
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
         avatarImageView.layer.masksToBounds = true
         

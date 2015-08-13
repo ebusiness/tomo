@@ -54,4 +54,21 @@ extension UserEntity {
         let lName = lastName ?? ""
         return "\(fName) \(lName)"
     }
+    
+    func addFriend(uid: String){
+        
+        self.invited?.remove(uid)
+        if let friends = self.friends where friends.contains(uid) {
+
+        } else {
+            self.friends = self.friends ?? []
+            self.friends?.append(uid)
+        }
+    }
+    
+    func removeFriend(uid: String){
+        
+        self.invited?.remove(uid)
+        self.friends?.remove(uid)
+    }
 }

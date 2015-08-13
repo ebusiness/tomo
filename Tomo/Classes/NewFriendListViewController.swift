@@ -32,11 +32,31 @@ final class NewFriendListViewController: BaseTableViewController {
     
     override func viewWillAppear(animated: Bool) {
         if let indexPath = tableView.indexPathForSelectedRow() {
-            if let friend = me.friends where friend.contains(self.friends[indexPath.row].id) {
-            } else {
-                self.friends.removeAtIndex(indexPath.row)
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Middle)
-                return
+            let myfriends = me.friends ?? []
+            
+            if indexPath.section == 0 {
+                
+                let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! NewInvitationCell
+                let myFriendInvitations = me.friendInvitations ?? []
+                
+                if let notification = cell.friendInvitedNotification where notification != myFriendInvitations.get(indexPath.row) { // approved or declined
+                    
+                    self.updateBadgeNumber()
+                    self.tableView.beginUpdates()
+                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                    if myfriends.contains(notification.from.id) {
+                        self.friends.insert(notification.from, atIndex: 0)
+                        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
+                    }
+                    self.tableView.endUpdates()
+                }
+            } else if indexPath.section == 1 {
+                
+                if !myfriends.contains(self.friends[indexPath.row].id) { // remove friend
+                    self.friends.removeAtIndex(indexPath.row)
+                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Middle)
+                    return
+                }
             }
         }
         super.viewWillAppear(animated)
@@ -139,7 +159,7 @@ extension NewFriendListViewController {
         if indexPath.section == 0 {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("InvitationCell", forIndexPath: indexPath) as! NewInvitationCell
-            cell.friendInvitedNotification = me.friendInvitations?.get(indexPath.item)
+            cell.friendInvitedNotification = me.friendInvitations?.get(indexPath.row)
             cell.delegate = self
             
             cell.setupDisplay()
@@ -210,6 +230,9 @@ extension NewFriendListViewController: FriendInvitationCellDelegate {
                     }
                     self.friends.insert(invitation.from, atIndex: 0)
                     
+                    me.friends?.append(invitation.from.id)
+                    me.invited?.remove(invitation.from.id)
+                    
                     self.updateBadgeNumber()
                     
                     self.tableView.beginUpdates()
@@ -229,6 +252,7 @@ extension NewFriendListViewController: FriendInvitationCellDelegate {
                         println(error)
                         return
                     }
+                    me.invited?.remove(invitation.from.id)
                     
                     self.updateBadgeNumber()
                     
@@ -311,18 +335,14 @@ extension NewFriendListViewController {
         if let userInfo = notification.userInfo {
             let json = JSON(userInfo)
             
-            let nid = json["_id"].stringValue
             let user = json["_from"]
-            
             let from = UserEntity()
             from.id = user["_id"].stringValue
             from.nickName = user["nickName"].stringValue
             from.photo = user["photo_ref"].string
             
             self.friends.insert(from, atIndex: 0)
-            
-            me.friends?.append(from.id)
-            me.invited?.remove(from.id)
+            me.addFriend(from.id)
             
             var indexPaths:[NSIndexPath]?
             let nvitationIndex = me.friendInvitations?.indexOf{$0.from.id == from.id}

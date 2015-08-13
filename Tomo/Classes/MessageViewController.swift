@@ -44,7 +44,7 @@ final class MessageViewController: JSQMessagesViewController {
         super.viewDidLoad()
         
         // custom navigationBar
-        navigationController?.navigationBar.setBackgroundImage(navigationBarImage, forBarMetrics: .Default)
+        self.setNavigationBar()
         
         //receive message realtime
         SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveMessage:"), event: .Message)
@@ -113,6 +113,21 @@ final class MessageViewController: JSQMessagesViewController {
 // MARK: - Private Methods
 
 extension MessageViewController {
+    
+    private func setNavigationBar() {
+        navigationController?.navigationBar.setBackgroundImage(navigationBarImage, forBarMetrics: .Default)
+        
+        let backitem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = backitem
+        
+        let backimage = UIImage(named: "back")!
+        navigationController?.navigationBar.backIndicatorImage = backimage
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = backimage
+        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
+        navigationController?.navigationBar.barStyle = .Black
+        
+    }
     
     private func loadAvatars() {
         avatarBlank = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(named: "avatar"), diameter: UInt (kJSQMessagesCollectionViewAvatarSizeDefault))

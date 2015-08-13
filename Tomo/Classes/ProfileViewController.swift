@@ -27,6 +27,11 @@ class ProfileViewController: ProfileBaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendInvited:"), event: .FriendInvited)
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendApproved:"), event: .FriendApproved)
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendDeclined:"), event: .FriendDeclined)
+        
+        
         if let friends = me.friends where friends.contains(self.user.id) {
 
         } else {
@@ -157,30 +162,86 @@ extension ProfileViewController {
             var param = Dictionary<String, String>()
             param["result"] = isApproved ? "approved" : "declined"
             
+            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/notifications/\(id)", parameters: param).response({ (_, _, _, _) -> Void in
+                self.addFriendToMe(isApproved,isComeFromSocket: false)
+                me.friendInvitations = me.friendInvitations?.filter{ $0.from.id != self.user.id }
+            })
+        }
+    }
+    
+    func addFriendToMe(isApproved:Bool,isComeFromSocket: Bool = true){
+        
+        if isApproved {
             
-            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/notifications/\(id)", parameters: param)
-                .responseJSON { (_, _, _, _) -> Void in
-                    
-                    if isApproved {
-                        Util.showSuccess("已同意添加好友")
-                        
-                        if me.friends == nil {
-                            me.friends = []
-                        }
-                        me.friends?.append(self.user.id)
-                    } else {
-                        Util.showSuccess("已拒绝添加好友")
-                    }
-                    
-                    self.heightOfInvitedView.constant = 0
-                    self.changeHeaderView(height:240,done: { () -> () in
-                        
-                        self.invitedId = nil
-                        self.updateUI()
-                    })
+            Util.showSuccess(self.user.nickName + " 已成为您的好友")
+//                me.friendInvitations = me.friendInvitations?.filter{ $0.from.id != self.user.id } //already do it in the friendlistViewController when called by NSNotificationCenter
+            me.addFriend(self.user.id)
+            
+        } else {
+            me.invited?.remove(self.user.id)
+            if isComeFromSocket {
+                Util.showSuccess(self.user.nickName + " 拒绝了您的好友邀请")
+            } else {
+                Util.showSuccess("您拒绝了 " + self.user.nickName + " 的好友邀请")
             }
-            
         }
         
+        self.heightOfInvitedView.constant = 0
+        self.changeHeaderView(height:240,done: { () -> () in
+            
+            self.invitedId = nil
+            self.updateUI()
+        })
+    }
+}
+
+// MARK: - NSNotificationCenter
+
+extension ProfileViewController {
+    
+    
+    func becomeActive() {
+        // check relationship
+    }
+    
+    func receiveFriendInvited(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            
+            let json = JSON(userInfo)
+            if self.user.id == json["_from"]["_id"].stringValue {
+                
+                self.invitedId = json["_id"].stringValue
+                
+                gcd.sync(.Main, closure: { () -> () in
+                    self.updateUI()
+                })
+            }
+        }
+    }
+    
+    func receiveFriendApproved(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            
+            let json = JSON(userInfo)
+            if self.user.id == json["_from"]["_id"].stringValue {
+                
+                gcd.sync(.Main, closure: { () -> () in
+                    self.addFriendToMe(true)
+                })
+            }
+        }
+    }
+    
+    func receiveFriendDeclined(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            let json = JSON(userInfo)
+            
+            if self.user.id == json["_from"]["_id"].stringValue {
+                
+                gcd.sync(.Main, closure: { () -> () in
+                    self.addFriendToMe(false)
+                })
+            }
+        }
     }
 }
