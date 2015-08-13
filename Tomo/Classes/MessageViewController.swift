@@ -77,8 +77,12 @@ final class MessageViewController: JSQMessagesViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("downloadMediaDone"), name: "NotificationDownloadMediaDone", object: nil)
+        if let friend = me.friends where friend.contains(self.friend.id) {
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("downloadMediaDone"), name: "NotificationDownloadMediaDone", object: nil)
+        } else {
+            self.navigationController?.popViewControllerAnimated(true)
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {

@@ -14,10 +14,20 @@ enum SocketEvent: String {
     case FriendApproved = "friend-approved"
     case FriendDeclined = "friend-declined"
     case FriendInvited = "friend-invited"
+    case FriendBreak = "friend-break"
+    
+    case PostNew = "post-new"
     
     
     func getNotificationName() -> String{
         return "tomoNotification-" + self.rawValue
+    }
+    
+    func receive(data:[NSObject : AnyObject]){
+        // TODO - Should add new message into me.newMessage
+        // TODO - Should add friend-approved into me.friends
+        NSNotificationCenter.defaultCenter().postNotificationName(self.getNotificationName(), object: nil, userInfo: data)
+        Util.showLocalNotificationGotSocketEvent(self, data: data)
     }
 }
 
@@ -37,15 +47,13 @@ final class SocketController {
         socket = AZSocketIO(host: "tomo.e-business.co.jp", andPort: SocketPort, secure: false)
         
         socket.eventRecievedBlock = { (name, data) -> Void in
-            if let event = SocketEvent(rawValue: name) {
+            gcd.async(.Default, closure: { () -> () in
                 
-                gcd.async(.Default, closure: { () -> () in
-                    if let data = data as? NSArray, result = data[0] as? [NSObject : AnyObject]{
-                        NSNotificationCenter.defaultCenter().postNotificationName(event.getNotificationName(), object: nil, userInfo: result)
-                        Util.showLocalNotificationGotSocketEvent(event, data: result)
-                    }
-                })
-            }
+                if let event = SocketEvent(rawValue: name), data = data as? NSArray, result = data[0] as? [NSObject : AnyObject] {
+                        
+                    event.receive(result)
+                }
+            })
         }
     }
     

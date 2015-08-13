@@ -17,6 +17,12 @@ final class NewFriendListViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveMessage:"), event: .Message)
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendInvited:"), event: .FriendInvited)
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendApproved:"), event: .FriendApproved)
+        
         Util.changeImageColorForButton(addFriendButton,color: UIColor.whiteColor())
         
         self.getFriends()
@@ -25,18 +31,15 @@ final class NewFriendListViewController: BaseTableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        if let indexPath = tableView.indexPathForSelectedRow() {
+            if let friend = me.friends where friend.contains(self.friends[indexPath.row].id) {
+            } else {
+                self.friends.removeAtIndex(indexPath.row)
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Middle)
+                return
+            }
+        }
         super.viewWillAppear(animated)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
-        
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveMessage:"), event: .Message)
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendInvited:"), event: .FriendInvited)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     override func setupMapping() {
@@ -261,7 +264,7 @@ extension NewFriendListViewController {
                 message.from = user
                 user.lastMessage = message
                 
-                me.newMessages?.insert(message, atIndex: 0)
+                me.newMessages?.insert(message, atIndex: 0) // TODO - optimization
                 
                 gcd.sync(.Main, closure: { () -> () in
                     
@@ -294,12 +297,51 @@ extension NewFriendListViewController {
 //            me.friendInvitations!.insert(notification, atIndex: 0)
             me.friendInvitations?.insert(notification, atIndex: 0)
             
-//            self.tableView.beginUpdates()
-            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation:  .Automatic)
-//            self.tableView.endUpdates()
+            gcd.sync(.Main, closure: { () -> () in
+                self.updateBadgeNumber()
+//                self.tableView.beginUpdates()
+                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation:  .Automatic)
+//                self.tableView.endUpdates()
+            })
             
-            self.updateBadgeNumber()
         }
-
+    }
+    
+    func receiveFriendApproved(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            let json = JSON(userInfo)
+            
+            let nid = json["_id"].stringValue
+            let user = json["_from"]
+            
+            let from = UserEntity()
+            from.id = user["_id"].stringValue
+            from.nickName = user["nickName"].stringValue
+            from.photo = user["photo_ref"].string
+            
+            self.friends.insert(from, atIndex: 0)
+            
+            me.friends?.append(from.id)
+            me.invited?.remove(from.id)
+            
+            var indexPaths:[NSIndexPath]?
+            let nvitationIndex = me.friendInvitations?.indexOf{$0.from.id == from.id}
+            if let nvitationIndex = nvitationIndex {
+                
+                me.friendInvitations?.removeAtIndex(nvitationIndex)
+                indexPaths = [NSIndexPath(forRow: nvitationIndex, inSection: 0)]
+            }
+//            me.friendInvitations = me.friendInvitations?.filter{ $0.from.id != from.id }
+            
+            gcd.sync(.Main, closure: { () -> () in
+                self.updateBadgeNumber()
+                self.tableView.beginUpdates()
+                if let indexPaths = indexPaths {
+                    self.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+                }
+                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
+                self.tableView.endUpdates()
+            })
+        }
     }
 }

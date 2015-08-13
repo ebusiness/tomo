@@ -53,7 +53,7 @@ class NewFriendCell: UITableViewCell {
         
         if let message = user?.lastMessage {
             messageLabel.text = message.content
-            timeLabel.text = message.createDate.toString(dateStyle: .ShortStyle, timeStyle: .ShortStyle, doesRelativeDateFormatting: true)
+            timeLabel.text = message.createDate.relativeTimeToString()
         } else {
             messageLabel.hidden = true
             timeLabel.hidden = true

@@ -107,6 +107,7 @@ class ProfileViewController: ProfileBaseController {
                     } else {
                         me.friends?.remove(self.user.id)
                         Util.showSuccess("已删除好友")
+//                        self.navigationController?.popViewControllerAnimated(true)
                     }
                     self.updateUI()
             }
