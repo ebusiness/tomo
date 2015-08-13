@@ -19,10 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.backgroundColor = UIColor.whiteColor()
         
-        if Defaults["openid"].string != nil {
-            let vc = Util.createViewControllerWithIdentifier("LoadingViewController", storyboardName: "Main")
-            self.window?.rootViewController = vc
-        }
+//        if Defaults["openid"].string != nil {
+//            let vc = Util.createViewControllerWithIdentifier("LoadingViewController", storyboardName: "Main")
+//            self.window?.rootViewController = vc
+//        }
         
         return true
     }

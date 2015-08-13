@@ -99,7 +99,7 @@ class PostCell: UITableViewCell {
                     self.post.like = [me.id]
                 }
                 self.setupDisplay()
-                self.likeButton.pulse(nil)
+                self.likeButton.bounce(nil)
         }
     }
 
@@ -114,6 +114,7 @@ class PostCell: UITableViewCell {
                     me.bookmark = [self.post.id]
                 }
                 self.setupDisplay()
+                self.bookmarkButton.tada(nil)
         }
 
     }

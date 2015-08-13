@@ -12,18 +12,19 @@ class BaseTableViewController: UITableViewController {
     
     let manager = RKObjectManager(baseURL: kAPIBaseURL)
     
-    var topConstraint:NSLayoutConstraint?
-    var headerHeight:CGFloat = 160 - 64
-    var navigationImageView:UIImageView?
-    var navigationTextProtection:UIImageView?
+    var topConstraint: NSLayoutConstraint?
+    var headerHeight: CGFloat = 160 - 64
+    var navigationImageView: UIImageView?
+    var navigationTextProtection: UIImageView?
 
-    var whenShowNavigationBar : ( (CGFloat)->() )?
-    var whenHideNavigationBar : ( (CGFloat)->() )?
+    var whenShowNavigationBar: ( (CGFloat)->() )?
+    var whenHideNavigationBar: ( (CGFloat)->() )?
     
     var alwaysShowNavigationBar = false
     
     override func loadView() {
         super.loadView()
+        
         self.manager.registerRequestOperationClass(RestKitErrorHanding.self)
         self.setupMapping()
     }
@@ -33,11 +34,11 @@ class BaseTableViewController: UITableViewController {
         
         self.setBackButton()
         self.setTopConstraint()
-        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         if let indexPath = tableView.indexPathForSelectedRow() {
             tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
         }
@@ -49,6 +50,7 @@ class BaseTableViewController: UITableViewController {
             var image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
             self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
             self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
+            
         } else {
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
             self.navigationController?.navigationBar.translucent = true
@@ -63,6 +65,7 @@ class BaseTableViewController: UITableViewController {
     }
 }
 
+// MARK: - Internal Methods
 
 extension BaseTableViewController {
     
@@ -81,7 +84,6 @@ extension BaseTableViewController {
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         navigationController?.navigationBar.barStyle = .Black
-        
     }
     
     func setTopConstraint() {
@@ -98,8 +100,7 @@ extension BaseTableViewController {
         }
     }
     
-    
-    func changeHeaderView(#height:CGFloat,done: ( ()->() )? = nil ){
+    func changeHeaderView(#height: CGFloat, done: ( ()->() )? = nil ){
         
         let headerView = self.tableView.tableHeaderView as UIView!
         
@@ -109,10 +110,63 @@ extension BaseTableViewController {
             self.tableView.tableHeaderView = headerView
             self.tableView.layoutIfNeeded()
             done?()
-            
         })
     }
+    
+    func setNavigationBarBackgroundImage(image: UIImage?){
+        
+        if let naviSubViews = self.navigationController?.navigationBar.subviews where navigationImageView == nil {
+            
+            naviSubViews.map{ (v) -> () in
+                
+                if let imageview = v as? UIImageView
+                    where imageview.frame.size.width == self.navigationController?.navigationBar.frame.size.width
+                {
+                    var frame = imageview.frame
+                    frame.origin = CGPointMake(0, 0)
+                    
+                    imageview.subviews.map{ (subimage) -> () in
+                        if let subimage = subimage as? UIImageView where subimage.tag == 1 {
+                            
+                            self.navigationImageView = subimage
+                            return
+                        }
+                    }
+                    if let navigationImageView = self.navigationImageView { return }
+                    
+                    self.navigationTextProtection = UIImageView(frame: frame)
+                    self.navigationTextProtection!.image = UIImage(named: "text_protection")
+                    self.navigationTextProtection!.contentMode = UIViewContentMode.ScaleToFill
+                    self.navigationTextProtection!.clipsToBounds = true
+                    self.navigationTextProtection!.alpha = 0
+                    
+                    self.navigationImageView = UIImageView(frame: frame)
+                    self.navigationImageView!.tag = 1
+                    self.navigationImageView!.image = UIImage()
+                    self.navigationImageView!.contentMode = UIViewContentMode.ScaleAspectFill
+                    self.navigationImageView!.clipsToBounds = true
+//                    self.navigationImageView!.addSubview(self.navigationTextProtection!)
+                    
+                    imageview.insertSubview(self.navigationImageView!, atIndex: 0)
+                }
+            }
+        }
+        
+        if let imageview = navigationImageView where imageview.image != image {
+            if let image = image {
+                self.navigationTextProtection?.alpha = 1
+                self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
+            } else {
+                self.navigationTextProtection?.alpha = 0
+                self.navigationController?.navigationBar.shadowImage = UIImage()
+            }
+            imageview.image = image
+        }
+        
+    }
 }
+
+// MARK: - ScrollView Delegate
 
 extension BaseTableViewController {
     
@@ -152,60 +206,3 @@ extension BaseTableViewController {
         }
     }
 }
-
-extension BaseTableViewController {
-    
-    func setNavigationBarBackgroundImage (image:UIImage?){
-        
-        if let naviSubViews = self.navigationController?.navigationBar.subviews where navigationImageView == nil {
-            
-            naviSubViews.map{ (v) -> () in
-                
-                if let imageview = v as? UIImageView
-                    where imageview.frame.size.width == self.navigationController?.navigationBar.frame.size.width
-                {
-                    var frame = imageview.frame
-                    frame.origin = CGPointMake(0, 0)
-                    
-                    imageview.subviews.map{ (subimage) -> () in
-                        if let subimage = subimage as? UIImageView where subimage.tag == 1 {
-                            
-                            self.navigationImageView = subimage
-                            return
-                        }
-                    }
-                    if let navigationImageView = self.navigationImageView { return }
-                    
-                    self.navigationTextProtection = UIImageView(frame: frame)
-                    self.navigationTextProtection!.image = UIImage(named: "text_protection")
-                    self.navigationTextProtection!.contentMode = UIViewContentMode.ScaleToFill
-                    self.navigationTextProtection!.clipsToBounds = true
-                    self.navigationTextProtection!.alpha = 0
-                    
-                    self.navigationImageView = UIImageView(frame: frame)
-                    self.navigationImageView!.tag = 1
-                    self.navigationImageView!.image = UIImage()
-                    self.navigationImageView!.contentMode = UIViewContentMode.ScaleAspectFill
-                    self.navigationImageView!.clipsToBounds = true
-                    self.navigationImageView!.addSubview(self.navigationTextProtection!)
-                    
-                    imageview.insertSubview(self.navigationImageView!, atIndex: 0)
-                }
-            }
-        }
-        
-        if let imageview = navigationImageView where imageview.image != image {
-            if let image = image {
-                self.navigationTextProtection?.alpha = 1
-                self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
-            } else {
-                self.navigationTextProtection?.alpha = 0
-                self.navigationController?.navigationBar.shadowImage = UIImage()
-            }
-            imageview.image = image
-        }
-        
-    }
-    
-}
-

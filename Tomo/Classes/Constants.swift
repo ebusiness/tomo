@@ -28,7 +28,7 @@ let MaxWidth: CGFloat = 500
 let AvatarMaxWidth: CGFloat = 200
 let GroupImageWidth: CGFloat = 80
 
-let NavigationBarColorHex:UInt = 0x673AB7
+let NavigationBarColorHex:UInt = 0xFF5722
 
 let DefaultAvatarImage = UIImage(named: "avatar")!
 

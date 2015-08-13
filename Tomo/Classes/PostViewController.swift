@@ -90,7 +90,7 @@ class PostViewController : BaseTableViewController{
         if ( post.images?.count ?? 0 ) < 1 {
             self.extendedLayoutIncludesOpaqueBars = false
             self.automaticallyAdjustsScrollViewInsets = true
-            var image = Util.imageWithColor(0x673AB7, alpha: 1)
+            var image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
             self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
             self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
             

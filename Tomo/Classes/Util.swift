@@ -150,9 +150,11 @@ extension Util {
         )
     }
     
-    class func imageWithColor(rgbValue: UInt,alpha:CGFloat,size:CGSize = CGSizeMake(320, 64)) -> UIImage {
+    class func imageWithColor(rgbValue: UInt, alpha: CGFloat, size: CGSize = CGSizeMake(320, 64)) -> UIImage {
         
-        var rect = CGRectMake(0.0, 0.0, 320.0, 64.0)
+        var rect = CGRectZero
+        rect.size = size
+        
         var color = Util.UIColorFromRGB(rgbValue, alpha: alpha)
         
         UIGraphicsBeginImageContext(rect.size)
