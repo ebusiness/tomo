@@ -1,5 +1,5 @@
 //
-//  NewSearchFriendViewController.swift
+//  SearchFriendViewController.swift
 //  Tomo
 //
 //  Created by ebuser on 2015/07/21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewSearchFriendViewController: BaseTableViewController {
+class SearchFriendViewController: BaseTableViewController {
     
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -88,7 +88,7 @@ class NewSearchFriendViewController: BaseTableViewController {
     }
 }
 
-extension NewSearchFriendViewController: UISearchBarDelegate {
+extension SearchFriendViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         

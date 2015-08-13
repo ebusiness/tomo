@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewFriendCell: UITableViewCell {
+class FriendCell: UITableViewCell {
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!

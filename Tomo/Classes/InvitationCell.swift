@@ -1,5 +1,5 @@
 //
-//  NewInvitationCell.swift
+//  InvitationCell.swift
 //  Tomo
 //
 //  Created by ebuser on 2015/07/21.
@@ -10,11 +10,11 @@ import UIKit
 
 @objc protocol FriendInvitationCellDelegate {
     
-    func friendInvitationAccept(cell: NewInvitationCell)
-    func friendInvitationDeclined(cell: NewInvitationCell)
+    func friendInvitationAccept(cell: InvitationCell)
+    func friendInvitationDeclined(cell: InvitationCell)
 }
 
-class NewInvitationCell: UITableViewCell {
+class InvitationCell: UITableViewCell {
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!

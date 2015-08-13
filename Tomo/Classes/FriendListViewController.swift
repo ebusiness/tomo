@@ -1,5 +1,5 @@
 //
-//  NewFriendListViewController.swift
+//  FriendListViewController.swift
 //  Tomo
 //
 //  Created by ebuser on 2015/07/21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class NewFriendListViewController: BaseTableViewController {
+final class FriendListViewController: BaseTableViewController {
     
     @IBOutlet weak var addFriendButton: UIButton!
     
@@ -36,7 +36,7 @@ final class NewFriendListViewController: BaseTableViewController {
             
             if indexPath.section == 0 {
                 
-                let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! NewInvitationCell
+                let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! InvitationCell
                 let myFriendInvitations = me.friendInvitations ?? []
                 
                 if let notification = cell.friendInvitedNotification where notification != myFriendInvitations.get(indexPath.row) { // approved or declined
@@ -98,7 +98,7 @@ final class NewFriendListViewController: BaseTableViewController {
 
 // MARK: - Private Methodes 
 
-extension NewFriendListViewController {
+extension FriendListViewController {
     
     func getFriends(){
         self.manager.getObjectsAtPath("/connections/friends", parameters: nil, success: { (operation, result) -> Void in
@@ -134,7 +134,7 @@ extension NewFriendListViewController {
 
 // MARK: - UITableView DataSource
 
-extension NewFriendListViewController {
+extension FriendListViewController {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
@@ -158,7 +158,7 @@ extension NewFriendListViewController {
         
         if indexPath.section == 0 {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("InvitationCell", forIndexPath: indexPath) as! NewInvitationCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("InvitationCell", forIndexPath: indexPath) as! InvitationCell
             cell.friendInvitedNotification = me.friendInvitations?.get(indexPath.row)
             cell.delegate = self
             
@@ -168,7 +168,7 @@ extension NewFriendListViewController {
             
         } else {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! NewFriendCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! FriendCell
             
             cell.user = self.friends[indexPath.row]
             
@@ -182,7 +182,7 @@ extension NewFriendListViewController {
 
 // MARK: - UITableView Delegate
 
-extension NewFriendListViewController {
+extension FriendListViewController {
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 66
@@ -217,9 +217,9 @@ extension NewFriendListViewController {
 
 // MARK: - FriendInvitationCell Delegate
 
-extension NewFriendListViewController: FriendInvitationCellDelegate {
+extension FriendListViewController: FriendInvitationCellDelegate {
     
-    func friendInvitationAccept(cell: NewInvitationCell) {
+    func friendInvitationAccept(cell: InvitationCell) {
         
         if let indexPath = tableView.indexPathForCell(cell), invitation = me.friendInvitations?.removeAtIndex(indexPath.row) {
             Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/notifications/\(invitation.id)", parameters: ["result": "approved"], encoding: .URL)
@@ -243,7 +243,7 @@ extension NewFriendListViewController: FriendInvitationCellDelegate {
         }
     }
     
-    func friendInvitationDeclined(cell: NewInvitationCell) {
+    func friendInvitationDeclined(cell: InvitationCell) {
         
         if let indexPath = tableView.indexPathForCell(cell), invitation = me.friendInvitations?.removeAtIndex(indexPath.row) {
             Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/notifications/\(invitation.id)", parameters: ["result": "declined"], encoding: .URL)
@@ -264,7 +264,7 @@ extension NewFriendListViewController: FriendInvitationCellDelegate {
 
 // MARK: - NSNotificationCenter
 
-extension NewFriendListViewController {
+extension FriendListViewController {
     
     
     func becomeActive() {
