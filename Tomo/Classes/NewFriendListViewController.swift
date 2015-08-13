@@ -19,14 +19,24 @@ final class NewFriendListViewController: BaseTableViewController {
         
         Util.changeImageColorForButton(addFriendButton,color: UIColor.whiteColor())
         
+        self.getFriends()
+        
+        updateBadgeNumber()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
         
         SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveMessage:"), event: .Message)
         SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendInvited:"), event: .FriendInvited)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        self.getFriends()
-        
-        updateBadgeNumber()
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     override func setupMapping() {
@@ -157,7 +167,7 @@ extension NewFriendListViewController {
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         if indexPath.section == 0 {
             
@@ -169,32 +179,10 @@ extension NewFriendListViewController {
             
         } else if indexPath.section == 1 {
             
-            let friend = self.friends[indexPath.row]
-            
-            Manager.sharedInstance.request(.PUT, kAPIBaseURLString + "/chat/\(friend.id)/open", parameters: nil, encoding: .URL)
-                .responseJSON { (_, _, result, error) -> Void in
-                    
-                    if error != nil {
-                        println(error)
-                        return
-                    }
-                    
-                    me.newMessages?.filter({ (message) -> Bool in
-                        if message.from.id == friend.id {
-                            me.newMessages?.remove(message)
-                        }
-                        return true
-                    })
-                    
-                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
-                    self.updateBadgeNumber()
-                }
-            
-            
             let vc = MessageViewController()
             vc.hidesBottomBarWhenPushed = true
             
-            vc.friend = friend
+            vc.friend = self.friends[indexPath.row]
             
             navigationController?.pushViewController(vc, animated: true)
             
@@ -272,6 +260,7 @@ extension NewFriendListViewController {
 //                message.owner = me
                 message.from = user
                 user.lastMessage = message
+                
                 me.newMessages?.insert(message, atIndex: 0)
                 
                 self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.friends.indexOf(user)!, inSection: 1)], withRowAnimation: .Automatic)

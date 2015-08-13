@@ -173,6 +173,17 @@ extension MessageViewController {
             if self.oldestMessage == nil {
                 self.collectionView.reloadData()
                 self.scrollToBottomAnimated(false)
+                
+                me.newMessages?.filter({ (message) -> Bool in
+                    if message.from.id == self.friend.id {
+                        me.newMessages?.remove(message)
+                    }
+                    
+                    if let tabBarController = self.navigationController?.tabBarController as? TabBarController {
+                        tabBarController.updateBadgeNumber()
+                    }
+                    return true
+                })
             } else {
                 self.prependRows(result.array().count)
             }
@@ -243,6 +254,8 @@ extension MessageViewController {
         newMessage.message.content = text
         newMessage.message.isOpened = true
         newMessage.message.createDate = NSDate()
+        
+        friend.lastMessage = newMessage.message
         
         var params = Dictionary<String, String>()
         params["recipient"] = friend.id
