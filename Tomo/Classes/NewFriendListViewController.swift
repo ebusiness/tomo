@@ -263,9 +263,12 @@ extension NewFriendListViewController {
                 
                 me.newMessages?.insert(message, atIndex: 0)
                 
-                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.friends.indexOf(user)!, inSection: 1)], withRowAnimation: .Automatic)
-                
-                self.updateBadgeNumber() // TODO - optimization
+                gcd.sync(.Main, closure: { () -> () in
+                    
+                    self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.friends.indexOf(user)!, inSection: 1)], withRowAnimation: .Automatic)
+                    
+                    self.updateBadgeNumber() // TODO - optimization
+                })
             }
         }
     }

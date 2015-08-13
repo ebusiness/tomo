@@ -239,8 +239,11 @@ extension MessageViewController {
                 self.messages.append(newMessage)
                 friend.lastMessage = newMessage.message
                 
-                JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
-                self.finishReceivingMessageAnimated(true)
+                gcd.sync(.Main, closure: { () -> () in
+                    
+                    JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
+                    self.finishReceivingMessageAnimated(true)
+                })
             }
         }
     }
