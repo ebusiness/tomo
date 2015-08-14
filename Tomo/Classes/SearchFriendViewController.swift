@@ -94,11 +94,13 @@ extension SearchFriendViewController: UISearchBarDelegate {
         
         if searchBar.text.trimmed().length > 0 {
             
+            self.searchBar.resignFirstResponder()
+            Util.showHUD()
             var param = Dictionary<String, String>()
             param["tomoid"] = searchBar.text + ".*"
             
             self.manager.getObjectsAtPath("/mobile/stations/users", parameters: param, success: { (_, results) -> Void in
-                
+                Util.dismissHUD()
                 if let users = results.array() as? [UserEntity] {
                     self.result = users
                 }
