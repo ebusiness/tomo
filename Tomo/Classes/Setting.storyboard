@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Setting View Controller-->
+        <!--账号信息-->
         <scene sceneID="RX6-cy-JLs">
             <objects>
                 <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="3I6-mu-eq3" customClass="SettingViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -163,7 +163,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="收藏" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CKN-HJ-kCX">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="我的收藏" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CKN-HJ-kCX">
                                                     <rect key="frame" x="15" y="0.0" width="270" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -230,7 +230,7 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" id="2pT-iK-RWo">
+                    <navigationItem key="navigationItem" title="账号信息" id="2pT-iK-RWo">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="bMk-sE-mp1">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="MGR-is-INj">
                                 <rect key="frame" x="279" y="119" width="25" height="25"/>
@@ -260,7 +260,7 @@
             </objects>
             <point key="canvasLocation" x="180" y="1565"/>
         </scene>
-        <!--Account Edit View Controller-->
+        <!--个人信息编辑-->
         <scene sceneID="lNe-hC-UKy">
             <objects>
                 <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="aXi-4j-mPv" customClass="AccountEditViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -549,7 +549,7 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" id="dW1-TE-8zb">
+                    <navigationItem key="navigationItem" title="个人信息编辑" id="dW1-TE-8zb">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="3lx-rp-YwE">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4h5-hh-O5V">
                                 <rect key="frame" x="295" y="9" width="25" height="25"/>
@@ -689,7 +689,7 @@
             </objects>
             <point key="canvasLocation" x="-314" y="1565"/>
         </scene>
-        <!--Friend List Send Request Controller-->
+        <!--已发送的邀请-->
         <scene sceneID="80z-qw-EeM">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="FZe-jy-2oB" customClass="FriendListSendRequestController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -763,7 +763,7 @@
                         </prototypes>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" id="gjs-cY-vxX"/>
+                    <navigationItem key="navigationItem" title="已发送的邀请" id="gjs-cY-vxX"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="op5-ps-9Yg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -880,7 +880,7 @@
             </objects>
             <point key="canvasLocation" x="514" y="3059"/>
         </scene>
-        <!--My Posts View Controller-->
+        <!--我的投稿-->
         <scene sceneID="bgS-MN-1Vk">
             <objects>
                 <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="brH-29-FIA" customClass="MyPostsViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -910,13 +910,13 @@
                         <sections/>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" id="0Nd-Ts-Fs6"/>
+                    <navigationItem key="navigationItem" title="我的投稿" id="0Nd-Ts-Fs6"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ezk-TE-1Rc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-314" y="2404"/>
         </scene>
-        <!--Bookmarked Posts View Controller-->
+        <!--我的收藏-->
         <scene sceneID="pIL-r6-R69">
             <objects>
                 <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="UMK-D6-kCx" customClass="BookmarkedPostsViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -946,7 +946,7 @@
                         <sections/>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" id="pKa-iG-Fbl"/>
+                    <navigationItem key="navigationItem" title="我的收藏" id="pKa-iG-Fbl"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g66-jo-shb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -966,6 +966,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="PG0-av-tgF"/>
+        <segue reference="TOo-XU-L5q"/>
     </inferredMetricsTieBreakers>
 </document>

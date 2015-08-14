@@ -32,6 +32,7 @@
 		1F79C1B81B5E730E008800E1 /* SearchFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */; };
 		1F8BF0111B53639F00090079 /* PostImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8BF0101B53639F00090079 /* PostImageCell.swift */; };
 		1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8BF0121B536D9500090079 /* PostImageCell.xib */; };
+		1F902D771B7D9C2800F6DC2D /* EmptyFriends.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F902D761B7D9C2800F6DC2D /* EmptyFriends.xib */; };
 		1F937FE61B58C2E3009722CE /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F937FE51B58C2E3009722CE /* SettingViewController.swift */; };
 		1F937FE81B58EE8B009722CE /* AccountEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F937FE71B58EE8B009722CE /* AccountEditViewController.swift */; };
 		1F985E541B60C19F008D5369 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E451B60C19F008D5369 /* Array.swift */; };
@@ -138,6 +139,7 @@
 		1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchFriendViewController.swift; path = Classes/SearchFriendViewController.swift; sourceTree = "<group>"; };
 		1F8BF0101B53639F00090079 /* PostImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostImageCell.swift; path = Classes/PostImageCell.swift; sourceTree = "<group>"; };
 		1F8BF0121B536D9500090079 /* PostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostImageCell.xib; path = Classes/PostImageCell.xib; sourceTree = "<group>"; };
+		1F902D761B7D9C2800F6DC2D /* EmptyFriends.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptyFriends.xib; path = Classes/EmptyFriends.xib; sourceTree = "<group>"; };
 		1F937FE51B58C2E3009722CE /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingViewController.swift; path = Classes/SettingViewController.swift; sourceTree = "<group>"; };
 		1F937FE71B58EE8B009722CE /* AccountEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountEditViewController.swift; path = Classes/AccountEditViewController.swift; sourceTree = "<group>"; };
 		1F985E451B60C19F008D5369 /* Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 				296D8BBC1AFC5A680058D400 /* LaunchScreen.xib */,
 				1FEE80EB1B4E5C540061B913 /* PostCell.xib */,
 				1F8BF0121B536D9500090079 /* PostImageCell.xib */,
+				1F902D761B7D9C2800F6DC2D /* EmptyFriends.xib */,
 			);
 			name = xib;
 			sourceTree = "<group>";
@@ -673,6 +676,7 @@
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
 				296D8BC31AFC5A680058D400 /* LaunchScreen.xib in Resources */,
 				29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */,
+				1F902D771B7D9C2800F6DC2D /* EmptyFriends.xib in Resources */,
 				1FEE80EC1B4E5C540061B913 /* PostCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

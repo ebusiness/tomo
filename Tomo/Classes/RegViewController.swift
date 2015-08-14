@@ -18,7 +18,7 @@ final class RegViewController: BaseViewController {
         
         super.viewDidLoad()
         
-        testSegment.hidden = true
+//        testSegment.hidden = true
         buttonView.hidden = true
         
         loginButton.layer.borderColor = UIColor.whiteColor().CGColor
@@ -100,6 +100,10 @@ extension RegViewController {
             param["id"] = "55a31d0a59a1af7373c1d0a3"
         case 4:
             param["id"] = "55a31dcb59a1af7373c1d0a8"
+        case 5:
+            param["id"] = "55c86fd3a96768e7609cdf25"
+        case 6:
+            param["id"] = "55c870e3a96768e7609cdf2a"
         default:
             break;
         }

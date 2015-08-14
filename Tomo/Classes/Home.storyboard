@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--Home View Controller-->
+        <!--現場动态-->
         <scene sceneID="fIl-ZA-ShE">
             <objects>
                 <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="zbi-CG-oqX" customClass="HomeViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -19,7 +19,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Bl-YQ-lyY">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="party" translatesAutoresizingMaskIntoConstraints="NO" id="MgT-Bi-fav">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash10" translatesAutoresizingMaskIntoConstraints="NO" id="MgT-Bi-fav">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
                                         </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text_protection" translatesAutoresizingMaskIntoConstraints="NO" id="lkS-jj-PgW">
@@ -66,7 +66,7 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" id="APc-61-gDU">
+                    <navigationItem key="navigationItem" title="現場动态" id="APc-61-gDU">
                         <barButtonItem key="rightBarButtonItem" image="create_new" id="zfo-hl-voi">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -547,9 +547,9 @@
         <image name="group" width="25" height="25"/>
         <image name="hearts" width="25" height="25"/>
         <image name="more" width="25" height="25"/>
-        <image name="party" width="680" height="453"/>
         <image name="railway_station" width="25" height="25"/>
         <image name="screenshot" width="25" height="25"/>
+        <image name="splash10" width="1000" height="666"/>
         <image name="star" width="25" height="25"/>
         <image name="text_protection" width="320" height="160"/>
     </resources>

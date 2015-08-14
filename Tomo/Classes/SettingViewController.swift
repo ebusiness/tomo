@@ -18,7 +18,7 @@ class SettingViewController: MyAccountBaseController {
     
     @IBOutlet weak var logoutCell: UITableViewCell!
     
-    var user: UserEntity?
+    var user: UserEntity!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,10 +31,21 @@ class SettingViewController: MyAccountBaseController {
     func updateUI() {
         user = me
         
-        fullNameLabel.text = user?.fullName()
-        genderLabel.text = user?.gender
-        birthDayLabel.text = user?.birthDay?.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
-        addressLabel.text = user?.address
+        if let firstName = user.firstName, lastName = user.lastName {
+            fullNameLabel.text = user.fullName()
+        }
+        
+        if let gender = user.gender {
+            genderLabel.text = gender
+        }
+        
+        if let birthDay = user.birthDay {
+            birthDayLabel.text = birthDay.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
+        }
+        
+        if let address = user.address {
+            addressLabel.text = address
+        }
 
     }
 

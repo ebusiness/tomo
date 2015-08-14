@@ -67,7 +67,7 @@ extension ProfileHeaderViewController {
         }
         
         if let cover = user.cover {
-            coverImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: DefaultAvatarImage)
+            coverImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: UIImage(named: "placeholder"))
         }
         nickNameLabel.text = user.nickName
         bioLabel.text = (user.bio ?? "" ).length > 0 ? user.bio : "这家伙很懒,什么都没写."

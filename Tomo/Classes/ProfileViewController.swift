@@ -52,12 +52,28 @@ class ProfileViewController: ProfileBaseController {
     
     override func updateUI() {
         
-        fullNameLabel.text = user?.fullName()
+        if let firstName = user.firstName, lastName = user.lastName {
+            fullNameLabel.text = user.fullName()
+        }
         
-        genderLabel.text = user?.gender
+        if let gender = user.gender {
+            genderLabel.text = gender
+        }
         
-        birthDayLabel.text = user?.birthDay?.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
-        addressLabel.text = user?.address
+        if let birthDay = user.birthDay {
+            birthDayLabel.text = birthDay.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
+        }
+        
+        if let address = user.address {
+            addressLabel.text = address
+        }
+        
+//        fullNameLabel.text = user?.fullName()
+//        
+//        genderLabel.text = user?.gender
+//        
+//        birthDayLabel.text = user?.birthDay?.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
+//        addressLabel.text = user?.address
         
         self.addFriendButton.hidden = true
         self.deleteFriendButton.hidden = true

@@ -121,7 +121,13 @@ extension FriendListViewController {
             })
             self.tableView.reloadData()
         }) { (operation, error) -> Void in
-            println(error)
+            let emptyView = Util.createViewWithNibName("EmptyFriends")
+            self.tableView.backgroundView = emptyView
+//            self.view.addSubview(emptyView)
+//            self.view.addConstraint(NSLayoutConstraint(item: emptyView, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1.0, constant: 0))
+//            self.view.addConstraint(NSLayoutConstraint(item: emptyView, attribute: .Bottom, relatedBy: .Equal, toItem: self.view, attribute: .Bottom, multiplier: 1.0, constant: 0))
+//            self.view.addConstraint(NSLayoutConstraint(item: emptyView, attribute: .Leading, relatedBy: .Equal, toItem: self.view, attribute: .Leading, multiplier: 1.0, constant: 0))
+//            self.view.addConstraint(NSLayoutConstraint(item: emptyView, attribute: .Trailing, relatedBy: .Equal, toItem: self.view, attribute: .Trailing, multiplier: 1.0, constant: 0))
         }
     }
     
