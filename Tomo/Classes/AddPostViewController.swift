@@ -24,6 +24,7 @@ class AddPostViewController: BaseViewController {
     @IBOutlet weak var stationName: UILabel!
     @IBOutlet weak var groupName: UILabel!
     
+    var assetUrlList: [NSURL?] = []
     var imageList:[UIImage] = []
     var imageListSelected:[UIImage] = []
     var postContent: String?
@@ -168,8 +169,10 @@ extension AddPostViewController {
             (group: ALAssetsGroup!, stop) in
             if let group = group {
                 var assetBlock : ALAssetsGroupEnumerationResultsBlock = { (result: ALAsset!, index: Int, stop) in
-                    if result != nil && self.imageList.count < 10 {
-                        var image = UIImage(CGImage:result.defaultRepresentation().fullScreenImage().takeUnretainedValue())
+                    if result != nil && self.assetUrlList.count < 20 {
+                        self.assetUrlList.append(result.defaultRepresentation().url())
+//                        var image = UIImage(CGImage:result.defaultRepresentation().fullScreenImage().takeUnretainedValue())
+                        var image = UIImage(CGImage:result.thumbnail().takeUnretainedValue())
                         self.imageList.append(image!)
                     }
                 }
@@ -189,7 +192,7 @@ extension AddPostViewController {
         for imageview in imageListView.subviews {
             imageview.removeFromSuperview()
         }
-        if imageList.count < 1 {
+        if self.imageList.count < 1 {
             self.hideHeaderView(true,animated: false)
             return
         }
@@ -199,11 +202,12 @@ extension AddPostViewController {
         
         var scrollWidth:CGFloat = 0
         
-        for i in 0..<imageList.count{
-            let image = imageList[ i ]
+        for i in 0..<self.imageList.count{
+            let image = self.imageList[ i ]
             
             let imgView = UIImageView(frame: CGRectZero )
             imgView.image = image
+            imgView.tag = i
             
             imgView.contentMode = UIViewContentMode.ScaleAspectFill
             imgView.clipsToBounds = true
@@ -237,17 +241,28 @@ extension AddPostViewController {
     func imageViewTapped(sender: UITapGestureRecognizer) {
         
         
-        if let imageView = sender.view as? UIImageView,image = imageView.image {
+        if let imageView = sender.view as? UIImageView where self.assetUrlList.count > imageView.tag {
             
-            imageView.layer.borderColor = UIColor.redColor().CGColor
+            if let url = self.assetUrlList[imageView.tag] {
             
-            if imageListSelected.contains(image) {
-                imageListSelected.remove(image)
-                imageView.layer.borderWidth = 0
-            } else {
-                imageView.layer.borderWidth = 2
-                imageListSelected.append(image)
-                
+            let library = ALAssetsLibrary()
+                library.assetForURL(url, resultBlock: { (asset) -> Void in
+                    
+                    let image = UIImage(CGImage:asset.defaultRepresentation().fullScreenImage().takeUnretainedValue())!
+                    
+                    imageView.layer.borderColor = UIColor.redColor().CGColor
+                    
+                    if self.imageListSelected.contains(image) {
+                        self.imageListSelected.remove(image)
+                        imageView.layer.borderWidth = 0
+                    } else {
+                        imageView.layer.borderWidth = 2
+                        self.imageListSelected.append(image)
+                        
+                    }
+                    }, failureBlock: { (error) -> Void in
+                        
+                })
             }
         }
     }
@@ -330,12 +345,11 @@ extension AddPostViewController: DBCameraViewControllerDelegate {
         let newImage = image.normalizedImage()
         
         self.imageList.insert(newImage, atIndex: 0)
+        self.assetUrlList.insert(nil, atIndex: 0)
         self.imageListSelected.append(newImage)
-        
+        self.insertIntoImageListView (image: newImage)
         self.hideHeaderView(false)
         
-        self.setImageList()
-        self.imageListView.setContentOffset(CGPointZero, animated: true)
         self.dismissCamera(cameraViewController)
         
     }
@@ -343,6 +357,43 @@ extension AddPostViewController: DBCameraViewControllerDelegate {
     func dismissCamera(cameraViewController: AnyObject!) {
         self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
         cameraViewController.restoreFullScreenMode()
+    }
+    
+    func insertIntoImageListView (#image: UIImage!){
+        
+        self.imageListView.setContentOffset(CGPointZero, animated: true)
+        
+        let height = imageListView.frame.size.height
+        let width = height / 3 * 4
+        
+        let constraints = self.imageListView.constraints().filter{ $0.firstAttribute == .Leading }
+        
+        for constraint in constraints {
+            if let constraint = constraint as? NSLayoutConstraint {
+                constraint.constant = constraint.constant + width + 5
+            }
+        }
+        
+        let imgView = UIImageView(frame: CGRectZero )
+        imgView.image = image
+        imgView.contentMode = UIViewContentMode.ScaleAspectFill
+        imgView.clipsToBounds = true
+        imgView.layer.borderColor = UIColor.redColor().CGColor
+        imgView.layer.borderWidth = 2
+        let tap = UITapGestureRecognizer(target: self, action: Selector("imageViewTapped:"))
+        imgView.userInteractionEnabled = true
+        imgView.addGestureRecognizer(tap)
+        
+        self.imageListView.addSubview(imgView)
+        
+        imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
+        imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: width))
+        imageListView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: imageListView, attribute: .Leading, multiplier: 1.0, constant: 0 ))
+        imageListView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Height, relatedBy: .Equal, toItem: imageListView, attribute: .Height, multiplier: 1.0, constant: 0))
+        imageListView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterY, relatedBy: .Equal, toItem: imageListView, attribute: .CenterY, multiplier: 1.0, constant: 0))
+        
+        imageListView.contentSize.width = imageListView.contentSize.width + width + 5
     }
 }
 
