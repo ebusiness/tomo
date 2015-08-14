@@ -52,15 +52,9 @@ class PostCell: UITableViewCell {
             postDateLabel.text = date.relativeTimeToString()
         }
         
-        if post.content?.length > 150 {
-            
-            let index = advance(post.content!.startIndex, 150)
-            let display = post.content?.substringToIndex(index)
-            
-            postContentLabel.text = String(format: "%@...", display!)
-            
-        } else {
-            postContentLabel.text = post.content
+        if let contentRaw = post.content {
+            var content = contentRaw.trimmed()
+            postContentLabel.text = content
         }
         
         if let like = post.like {
