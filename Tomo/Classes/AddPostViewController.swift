@@ -25,6 +25,7 @@ class AddPostViewController: BaseViewController {
     @IBOutlet weak var groupName: UILabel!
     
     var assetUrlList: [NSURL?] = []
+    var assetSelectedUrlList: [NSURL] = []
     var imageList:[UIImage] = []
     var imageListSelected:[UIImage] = []
     var postContent: String?
@@ -60,7 +61,7 @@ class AddPostViewController: BaseViewController {
     @IBAction func post(sender: AnyObject) {
         Util.showHUD()
         // send post
-        self.uploadToS3 { (imagelist) -> () in
+        self.getAssetAndUploadToS3 { (imagelist) -> () in
             
             var param = Dictionary<String, AnyObject>()
             param["content"] = self.postContent!
@@ -240,35 +241,60 @@ extension AddPostViewController {
     
     func imageViewTapped(sender: UITapGestureRecognizer) {
         
-        
         if let imageView = sender.view as? UIImageView where self.assetUrlList.count > imageView.tag {
             
-            if let url = self.assetUrlList[imageView.tag] {
-            
-            let library = ALAssetsLibrary()
-                library.assetForURL(url, resultBlock: { (asset) -> Void in
+            if self.imageListSelected.contains(imageView.image!) {
+                self.imageListSelected.remove(imageView.image!)
+                imageView.layer.borderWidth = 0
+            } else {
+                
+                if let url = self.assetUrlList[imageView.tag] {
                     
-                    let image = UIImage(CGImage:asset.defaultRepresentation().fullScreenImage().takeUnretainedValue())!
-                    
-                    imageView.layer.borderColor = UIColor.redColor().CGColor
-                    
-                    if self.imageListSelected.contains(image) {
-                        self.imageListSelected.remove(image)
+                    if self.assetSelectedUrlList.contains(url) {
+                        self.assetSelectedUrlList.remove(url)
                         imageView.layer.borderWidth = 0
                     } else {
+                        imageView.layer.borderColor = UIColor.redColor().CGColor
                         imageView.layer.borderWidth = 2
-                        self.imageListSelected.append(image)
-                        
+                        self.assetSelectedUrlList.append(url)
                     }
-                    }, failureBlock: { (error) -> Void in
-                        
-                })
+                    
+                } else {
+                    imageView.layer.borderColor = UIColor.redColor().CGColor
+                    imageView.layer.borderWidth = 2
+                    self.imageListSelected.append(imageView.image!)
+                }
             }
         }
     }
 
+    func getAssetAndUploadToS3(completion:(imagelist: AnyObject)->()){
+        
+        if assetSelectedUrlList.count < 1 {
+            self.uploadToS3(completion)
+            return
+        }
+        var tempList = self.assetSelectedUrlList
+        let library = ALAssetsLibrary()
+        
+        for url in self.assetSelectedUrlList {
+            library.assetForURL(url, resultBlock: { (asset) -> Void in
+                
+                let image = UIImage(CGImage:asset.defaultRepresentation().fullScreenImage().takeUnretainedValue())!
+                self.imageListSelected.append(image)
+                tempList.remove(url)
+                
+                if tempList.count < 1 {
+                    self.uploadToS3(completion)
+                }
+            }, failureBlock: { (error) -> Void in
+            })
+        }
+        
+    }
     
     func uploadToS3(completion:(imagelist: AnyObject)->()){
+        
         var imagelist = [[String:AnyObject]]()
         if imageListSelected.count == 0 {
             completion(imagelist: imagelist)
