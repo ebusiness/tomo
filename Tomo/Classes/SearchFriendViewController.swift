@@ -97,7 +97,7 @@ extension SearchFriendViewController: UISearchBarDelegate {
             self.searchBar.resignFirstResponder()
             Util.showHUD()
             var param = Dictionary<String, String>()
-            param["tomoid"] = searchBar.text + ".*"
+            param["nickName"] = ".*?\(searchBar.text).*"
             
             self.manager.getObjectsAtPath("/mobile/stations/users", parameters: param, success: { (_, results) -> Void in
                 Util.dismissHUD()
