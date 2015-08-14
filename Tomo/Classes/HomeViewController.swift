@@ -182,12 +182,23 @@ extension HomeViewController {
     
     override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        if let content = contents.get(indexPath.row) as? PostEntity {
+        if let post = contents.get(indexPath.row) as? PostEntity {
             
-            if content.images?.count > 0 {
-                return 336
+            var textHeight = 0
+            
+            if post.content.length > 150 {
+                // one character take 18 points height, 
+                // and 150 characters will take 7 rows
+                textHeight = 18 * 7
             } else {
-                return 133
+                // one row have 24 characters
+                textHeight = post.content.length / 24 * 18
+            }
+            
+            if post.images?.count > 0 {
+                return CGFloat(300 + textHeight)
+            } else {
+                return CGFloat(108 + textHeight)
             }
         }
         
@@ -313,7 +324,7 @@ extension HomeViewController {
         }
         
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Middle)
+        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
         tableView.endUpdates()
         
     }
@@ -330,7 +341,7 @@ extension HomeViewController {
         latestContent = contents.first
         
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Middle)
+        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
         tableView.endUpdates()
     }
 }

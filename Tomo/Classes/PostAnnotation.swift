@@ -16,7 +16,7 @@ class PostAnnotation: NSObject, MKAnnotation {
     
     var clusterAnnotation: PostAnnotation?
     
-    var coordinate: CLLocationCoordinate2D
+    dynamic var coordinate: CLLocationCoordinate2D
 
     var title: String {
         return post.owner.nickName

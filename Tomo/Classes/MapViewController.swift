@@ -14,10 +14,13 @@ class MapViewController: BaseViewController {
     let locationManager = CLLocationManager()
     var allAnnotationMapView: MKMapView!
     
+    var contents = [AnyObject]()
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var interestToggleButton: UIButton!
     @IBOutlet weak var buildingToggleButton: UIButton!
     @IBOutlet weak var currentLocationButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +30,14 @@ class MapViewController: BaseViewController {
         decorateButton(interestToggleButton)
         decorateButton(buildingToggleButton)
         decorateButton(currentLocationButton)
+        
+        var postCellNib = UINib(nibName: "PostCell", bundle: nil)
+        tableView.registerNib(postCellNib, forCellReuseIdentifier: "PostCell")
+        
+        var postImageCellNib = UINib(nibName: "PostImageCell", bundle: nil)
+        tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
+        
+        tableView.backgroundColor = UIColor.clearColor()
         
         manager.getObjectsAtPath("/mapnews", parameters: nil, success: { (operation, result) -> Void in
             
@@ -81,6 +92,8 @@ class MapViewController: BaseViewController {
             "_id": "id",
             "contentText": "content",
             "coordinate": "coordinate",
+            "images_mobile.name": "images",
+            "like": "like",
             "createDate": "createDate"
             ])
         
@@ -116,6 +129,55 @@ extension MapViewController {
     
 }
 
+extension MapViewController: UITableViewDataSource {
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return contents.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var post = contents[indexPath.row] as! PostEntity
+        var cell: PostCell!
+        
+        if post.images?.count > 0 {
+            
+            cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell", forIndexPath: indexPath) as! PostImageCell
+            
+            let subviews = (cell as! PostImageCell).scrollView.subviews
+            
+            for subview in subviews {
+                subview.removeFromSuperview()
+            }
+            
+        } else {
+            cell = tableView.dequeueReusableCellWithIdentifier("PostCell", forIndexPath: indexPath) as! PostCell
+        }
+        
+        cell.post = post
+        cell.setupDisplay()
+        
+        return cell
+    }
+}
+
+extension MapViewController: UITableViewDelegate {
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if let content = contents.get(indexPath.row) as? PostEntity {
+            
+            if content.images?.count > 0 {
+                return 336
+            } else {
+                return 133
+            }
+        }
+        
+        return UITableViewAutomaticDimension
+    }
+}
+
 // MARK: MapView Delegate
 extension MapViewController: MKMapViewDelegate {
     
@@ -140,8 +202,6 @@ extension MapViewController: MKMapViewDelegate {
         
         if let annotation = annotation as? PostAnnotation {
             var annotationView = PostAnnotationView(annotation: annotation, reuseIdentifier: MapViewController.PostAnnotationViewIdentifier)
-//            annotationView.canShowCallout = true
-            
             return annotationView
         } else {
             return nil
@@ -175,15 +235,36 @@ extension MapViewController: MKMapViewDelegate {
     
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
         
-//        if let annotation = view.annotation as? PostAnnotation {
-//            
-//            let postViewController = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
-//            
-//            postViewController.post = annotation.post!
-//            
-//            presentViewController(postViewController, animated: true, completion: nil)
-//            
-//        }
+        if let annotation = view.annotation as? PostAnnotation {
+            
+            let post = annotation.post!
+            
+            var tableViewHeight = 0
+            var textHeight = 0
+            
+            if post.content.length > 150 {
+                // one character take 18 points height,
+                // and 150 characters will take 7 rows
+                textHeight = 18 * 7
+            } else {
+                // one row have 24 characters
+                textHeight = post.content.length / 24 * 18
+            }
+            
+            if post.images?.count > 0 {
+                tableViewHeight = 318 + textHeight
+            } else {
+                tableViewHeight = 108 + textHeight
+            }
+
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.tableView.frame = CGRectMake(0.0, 0.0, self.tableView.frame.width, CGFloat(tableViewHeight))
+            }, completion: { (finish) -> Void in
+                self.contents = [post]
+                self.tableView.reloadData()
+            })
+            
+        }
     }
 
 }
@@ -234,7 +315,7 @@ extension MapViewController {
         // Adjust this roughly based on the dimensions of your annotations views.
         // Bigger numbers more aggressively coalesce annotations (fewer annotations displayed but better performance).
         // Numbers too small result in overlapping annotations views and too many annotations on screen.
-        let bucketSize = 160.0;
+        let bucketSize = 60.0;
         
         // find all the annotations in the visible area + a wide margin to avoid popping annotation views in and out while panning the map.
         let visibleMapRect = mapView.visibleMapRect
