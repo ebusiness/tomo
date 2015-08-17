@@ -408,9 +408,3 @@ extension OpenidController: WXApiDelegate {
     }
     
 }
-
-extension OpenidController {
-    func handleOpenURL(url:NSURL)->Bool{
-        return WXApi.handleOpenURL(url, delegate: OpenidController.instance)
-    }
-}

@@ -104,6 +104,7 @@
 		D0A0C0341B5F5D0500ABFA5F /* UserPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C0331B5F5D0500ABFA5F /* UserPostsViewController.swift */; };
 		D0B40BBF1B78AF0400685D67 /* ExNSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B40BBE1B78AF0400685D67 /* ExNSDate.swift */; };
 		D0B40BC01B78B8FA00685D67 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */; };
+		D0B6364E1B81A9C70012C4E8 /* URLSchemesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */; };
 		D0B6EB121B5E7D09005A7E45 /* MyAccountHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */; };
 		D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */; };
 		D0BA8DE71B55375A00271F2B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BA8DE61B55375A00271F2B /* PostViewController.swift */; };
@@ -223,6 +224,7 @@
 		D0A0C0311B5F5BF900ABFA5F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = Classes/ProfileViewController.swift; sourceTree = "<group>"; };
 		D0A0C0331B5F5D0500ABFA5F /* UserPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserPostsViewController.swift; path = Classes/UserPostsViewController.swift; sourceTree = "<group>"; };
 		D0B40BBE1B78AF0400685D67 /* ExNSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExNSDate.swift; path = Classes/ExNSDate.swift; sourceTree = SOURCE_ROOT; };
+		D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLSchemesController.swift; path = Classes/URLSchemesController.swift; sourceTree = "<group>"; };
 		D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountHeaderViewController.swift; path = Classes/MyAccountHeaderViewController.swift; sourceTree = "<group>"; };
 		D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountBaseController.swift; path = Classes/MyAccountBaseController.swift; sourceTree = "<group>"; };
 		D0BA8DE61B55375A00271F2B /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostViewController.swift; path = Classes/PostViewController.swift; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 				D00E0FD51B3D3B4D00AEB521 /* DBCameraController.swift */,
 				D04608CF1B6B9DA700D30B77 /* RestKitErrorHanding.swift */,
 				D0E788741B6F5BD3009255B9 /* AlamofireController.swift */,
+				D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -797,6 +800,7 @@
 				29539C791B13175D00545509 /* VoiceMessageController.swift in Sources */,
 				2994AF911B019AA100656C39 /* GCD.swift in Sources */,
 				1F985E5C1B60C19F008D5369 /* Double.swift in Sources */,
+				D0B6364E1B81A9C70012C4E8 /* URLSchemesController.swift in Sources */,
 				296D8BAB1AFC59F10058D400 /* BaseViewController.swift in Sources */,
 				D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */,
 				1F985E6E1B60C19F008D5369 /* String.swift in Sources */,

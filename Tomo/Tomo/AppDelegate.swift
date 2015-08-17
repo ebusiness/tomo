@@ -9,6 +9,7 @@
 import UIKit
 
 var me = UserEntity()
+var notificationTask: [[NSObject : AnyObject]] = []
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,10 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.backgroundColor = UIColor.whiteColor()
         
-//        if Defaults["openid"].string != nil {
-//            let vc = Util.createViewControllerWithIdentifier("LoadingViewController", storyboardName: "Main")
-//            self.window?.rootViewController = vc
-//        }
+        if let launchOpts = launchOptions, userInfo = launchOpts[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject] {
+            URLSchemesController.instance.handleOpenURLForRemotePush(userInfo)
+        }
         
         return true
     }
@@ -56,12 +56,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        URLSchemesController.instance.handleOpenURLForRemotePush(userInfo)
+    }
+    
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
         return self.application(application, openURL: url, sourceApplication: nil, annotation: nil)
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-        return OpenidController.instance.handleOpenURL(url)
+        return URLSchemesController.instance.handleOpenURL(url)
     }
 }
 

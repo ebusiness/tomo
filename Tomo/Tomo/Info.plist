@@ -49,7 +49,7 @@
 			<string>tomo</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>genbatomo</string>
+				<string>tomo</string>
 			</array>
 		</dict>
 	</array>

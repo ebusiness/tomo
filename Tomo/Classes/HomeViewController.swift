@@ -57,6 +57,16 @@ final class HomeViewController: BaseTableViewController {
             "photo_ref": "photo"
             ])
         
+        let commentMapping = RKObjectMapping(forClass: CommentEntity.self)
+        commentMapping.addAttributeMappingsFromDictionary([
+            "_id": "id",
+            "content": "content",
+            "createDate": "createDate"
+            ])
+        
+        let commentOwnerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping)
+        commentMapping.addPropertyMapping(commentOwnerRelationshipMapping)
+        
         let postMapping = RKObjectMapping(forClass: PostEntity.self)
         postMapping.addAttributeMappingsFromDictionary([
             "_id": "id",
@@ -69,6 +79,9 @@ final class HomeViewController: BaseTableViewController {
         
         let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping)
         postMapping.addPropertyMapping(ownerRelationshipMapping)
+        
+        let commentRelationshipMapping = RKRelationshipMapping(fromKeyPath: "comments", toKeyPath: "comments", withMapping: commentMapping)
+        postMapping.addPropertyMapping(commentRelationshipMapping)
         
         let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
         

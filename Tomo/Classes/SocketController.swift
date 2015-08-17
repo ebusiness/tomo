@@ -17,6 +17,10 @@ enum SocketEvent: String {
     case FriendBreak = "friend-break"
     
     case PostNew = "post-new"
+    case PostLiked = "post-liked"
+    case PostCommented = "post-commented"
+    
+    case CommentReplied = "comment-replied"
     
     
     func getNotificationName() -> String{

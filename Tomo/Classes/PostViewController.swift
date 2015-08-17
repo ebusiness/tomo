@@ -68,18 +68,7 @@ class PostViewController : BaseTableViewController{
             self.setImageList()
             self.headerHeight = self.listViewHeight - 64
             
-        }
-        
-        self.manager.getObject(nil, path: "/posts/\(self.post.id)", parameters: nil, success: { (operation, results) -> Void in
-            
-            if let results = results.firstObject as? PostEntity {
-                self.post.comments = results.comments
-                self.updateUIForHeader()
-            }
-            
-        }, failure: nil)
-        
-        
+        }        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -96,51 +85,6 @@ class PostViewController : BaseTableViewController{
         }
     }
     
-    
-    
-    override func setupMapping() {
-        
-        let userMapping = RKObjectMapping(forClass: UserEntity.self)
-        userMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "nickName": "nickName",
-            "photo_ref": "photo"
-            ])
-        
-        let commentMapping = RKObjectMapping(forClass: CommentEntity.self)
-        commentMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "content": "content",
-            "createDate": "createDate"
-            ])
-        
-        let commentOwnerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping)
-        commentMapping.addPropertyMapping(commentOwnerRelationshipMapping)
-        
-        
-        let postMapping = RKObjectMapping(forClass: PostEntity.self)
-        postMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "contentText": "content",
-            "coordinate": "coordinate",
-            "images_mobile.name": "images",
-            "like": "like",
-            "createDate": "createDate"
-            ])
-        
-        
-        let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping)
-        postMapping.addPropertyMapping(ownerRelationshipMapping)
-        
-        let commentRelationshipMapping = RKRelationshipMapping(fromKeyPath: "comments", toKeyPath: "comments", withMapping: commentMapping)
-        postMapping.addPropertyMapping(commentRelationshipMapping)
-        
-        
-        let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/posts/:id", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
-        
-        manager.addResponseDescriptor(responseDescriptor)
-        
-    }
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         
         if let images = post.images where images.count > 0 {
@@ -149,8 +93,7 @@ class PostViewController : BaseTableViewController{
     }
     
     @IBAction func avatarImageTapped(sender: UITapGestureRecognizer) {
-        
-        
+
         if let childvcs = self.navigationController?.childViewControllers where childvcs.count > 4 {
             self.navigationController?.popViewControllerAnimated(true)
         } else {
@@ -190,7 +133,6 @@ class PostViewController : BaseTableViewController{
         }
     }
 
-    
     @IBAction func moreBtnTapped(sender: AnyObject) {
         
         let shareUrl = kAPIBaseURLString + "/mobile/share/post/" + self.post.id!
@@ -236,29 +178,30 @@ class PostViewController : BaseTableViewController{
     }
 
     @IBAction func sendCommentBtnTapped(sender: AnyObject) {
+        
         Util.showHUD()
         
         var param = Dictionary<String, String>();
         param["content"] = commentContent;
 //        param["replyTo"] = "552220aa915a1dd84834731b";//コメントID
         
-        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/posts/\(self.post.id)/comments", parameters: param)
-            .responseJSON { (_, _,json, _) -> Void in
-                
-                Util.dismissHUD()
-                
-                let comment = CommentEntity()
-                comment.owner = me
-                comment.content = self.commentContent
-                comment.createDate = NSDate()
-                
-                if self.comments == nil { self.post.comments = [] }
-                self.post.comments?.append(comment)
-                
-                self.tableView.reloadData()
-                
-                self.commentInput.resignFirstResponder()
-                self.commentInput.text = ""
+        self.commentInput.resignFirstResponder()
+        self.commentInput.text = ""
+        self.commentContent = ""
+        self.sendBtn.enabled = false
+        
+        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/posts/\(self.post.id)/comments", parameters: param).responseJSON { (_, _,json, _) -> Void in
+            
+            Util.dismissHUD()
+            
+            let comment = CommentEntity()
+            comment.owner = me
+            comment.content = param["content"]
+            comment.createDate = NSDate()
+            
+            if self.comments == nil { self.post.comments = [] }
+            self.post.comments?.append(comment)
+            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)], withRowAnimation: .Automatic)
         }
 
     }
@@ -311,9 +254,6 @@ extension PostViewController {
                 
             contentViewHeight.constant = newConstant
         }
-        
-        self.tableView.reloadData()
-        
     }
     
     func setImageList(){
