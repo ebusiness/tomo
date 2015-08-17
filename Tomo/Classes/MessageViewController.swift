@@ -23,6 +23,7 @@ final class MessageViewController: JSQMessagesViewController {
     let selink = RKObjectManager(baseURL: kAPIBaseURL)
     
     let navigationBarImage = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
+    let defaultAvatar = JSQMessagesAvatarImageFactory.avatarImageWithImage(DefaultAvatarImage, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
     
     let avatarSize = CGSize(width: 50, height: 50)
     var avatarMe: JSQMessagesAvatarImage!
@@ -134,12 +135,20 @@ extension MessageViewController {
         
         SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: me.photo!), options: nil, progress: nil) {
             (image, error, _, _, _) -> Void in
-            self.avatarMe = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+            if let image = image {
+                self.avatarMe = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+            } else {
+                self.avatarMe = self.defaultAvatar
+            }
         }
         
         SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: friend.photo!), options: nil, progress: nil) {
             (image, error, _, _, _) -> Void in
-            self.avatarFriend = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+            if let image = image {
+                self.avatarFriend = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+            } else {
+                self.avatarFriend = self.defaultAvatar
+            }
         }
     }
     
