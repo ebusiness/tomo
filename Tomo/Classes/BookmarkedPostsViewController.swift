@@ -16,6 +16,7 @@ class BookmarkedPostsViewController: MyAccountBaseController {
     var bookmarks = [AnyObject]()
     var oldestContent: AnyObject?
     var isLoading = false
+    var isExhausted = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,7 +148,7 @@ extension BookmarkedPostsViewController {
     private func loadMoreContent() {
         
         // skip if already in loading
-        if isLoading {
+        if isLoading || isExhausted {
             return
         }
         
@@ -168,6 +169,7 @@ extension BookmarkedPostsViewController {
             }) { (operation, err) -> Void in
                 println(err)
                 self.isLoading = false
+                self.isExhausted = true
         }
     }
     

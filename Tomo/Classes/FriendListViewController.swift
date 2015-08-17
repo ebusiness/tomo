@@ -289,12 +289,17 @@ extension FriendListViewController {
                 message.id = json["_id"].stringValue
                 message.content = json["content"].stringValue
                 message.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+                message.isOpened = false
                 
 //                message.owner = me
                 message.from = user
                 user.lastMessage = message
                 
-                me.newMessages?.insert(message, atIndex: 0) // TODO - optimization
+                if let vc = self.navigationController?.childViewControllers.last as? MessageViewController where vc.friend.id == user.id {
+                    message.isOpened = true
+                } else {
+                    me.newMessages?.insert(message, atIndex: 0)
+                }
                 
                 gcd.sync(.Main, closure: { () -> () in
                     

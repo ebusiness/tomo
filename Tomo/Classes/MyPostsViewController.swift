@@ -16,6 +16,7 @@ class MyPostsViewController: MyAccountBaseController {
     var posts = [AnyObject]()
     var oldestContent: AnyObject?
     var isLoading = false
+    var isExhausted = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,7 +143,7 @@ extension MyPostsViewController {
     private func loadMoreContent() {
         
         // skip if already in loading
-        if isLoading {
+        if isLoading || isExhausted {
             return
         }
         
@@ -163,6 +164,7 @@ extension MyPostsViewController {
             }) { (operation, err) -> Void in
                 println(err)
                 self.isLoading = false
+                self.isExhausted = true
         }
     }
     
