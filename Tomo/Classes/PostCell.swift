@@ -94,8 +94,9 @@ class PostCell: UITableViewCell {
                 } else {
                     self.post.like = [me.id]
                 }
-                self.setupDisplay()
-                self.likeButton.bounce(nil)
+                self.likeButton.bounce({ () -> Void in
+                    self.setupDisplay()
+                })
         }
     }
 

@@ -115,8 +115,10 @@ class PostViewController : BaseTableViewController{
             } else {
                 self.post.like = [me.id]
             }
-            self.updateUIForHeader()
-            self.likedBtn.bounce(nil)
+            
+            self.likedBtn.bounce({ () -> Void in
+                self.updateUIForHeader()
+            })
         }
     }
 
