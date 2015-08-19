@@ -180,7 +180,7 @@ extension ProfileViewController {
             
             Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/notifications/\(id)", parameters: param).response({ (_, _, _, _) -> Void in
                 self.addFriendToMe(isApproved,isComeFromSocket: false)
-                me.friendInvitations = me.friendInvitations?.filter{ $0.from.id != self.user.id }
+                me.friendInvitations = me.friendInvitations.filter{ $0.from.id != self.user.id }
             })
         }
     }

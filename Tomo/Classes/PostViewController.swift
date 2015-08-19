@@ -224,10 +224,12 @@ extension PostViewController {
         
         contentLabel.text = post.content
         
-        if let like = self.post.like {
+        if let like = self.post.like where like.count > 0 {
             likedBtn.setTitle("\(like.count)", forState: .Normal)
-
+        } else {
+            likedBtn.setTitle("", forState: .Normal)
         }
+        
         let likeimage = ( self.post.like ?? [] ).contains(me.id) ? "hearts_filled" : "hearts"
         if let image = UIImage(named: likeimage) {
             

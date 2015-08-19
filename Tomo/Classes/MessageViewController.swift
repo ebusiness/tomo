@@ -154,13 +154,17 @@ extension MessageViewController {
     
     private func setupMapping() {
         
+        let userMapping = RKObjectMapping(forClass: UserEntity.self)
+        userMapping.addPropertyMapping(RKAttributeMapping(fromKeyPath: nil, toKeyPath: "id"))
+        let propertyMapping = RKRelationshipMapping(fromKeyPath: "_from", toKeyPath: "from", withMapping: userMapping)
+        
         let messageMapping = RKObjectMapping(forClass: MessageEntity.self)
         messageMapping.addAttributeMappingsFromDictionary([
             "_id": "id",
-            "_from": "from",
             "content": "content",
             "createDate": "createDate"
             ])
+        messageMapping.addPropertyMapping(propertyMapping)
         
         let responseDescriptor = RKResponseDescriptor(mapping: messageMapping, method: .GET, pathPattern: "/chat/:userId", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
         
@@ -187,7 +191,7 @@ extension MessageViewController {
                 
                 if let message = message as? MessageEntity {
                     
-                    if message.from != me.id {
+                    if message.from.id != me.id {
                         message.from = self.friend
                         message.owner = me
                     } else {
@@ -202,9 +206,9 @@ extension MessageViewController {
                 self.collectionView.reloadData()
                 self.scrollToBottomAnimated(false)
                 
-                me.newMessages?.filter({ (message) -> Bool in
+                me.newMessages.filter({ (message) -> Bool in
                     if message.from.id == self.friend.id {
-                        me.newMessages?.remove(message)
+                        me.newMessages.remove(message)
                     }
                     
                     if let tabBarController = self.navigationController?.tabBarController as? TabBarController {
@@ -246,7 +250,7 @@ extension MessageViewController {
 extension MessageViewController {
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
-
+        button.enabled = false
         self.sendMessage(text)
     }
     

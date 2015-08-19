@@ -36,7 +36,7 @@ class FriendCell: UITableViewCell {
         
         userNameLabel.text = user?.nickName
         
-        let count = me.newMessages!.reduce(0, combine: { (count, message) -> Int in
+        let count = me.newMessages.reduce(0, combine: { (count, message) -> Int in
             if message.from.id == user!.id {
                 return count + 1
             } else {

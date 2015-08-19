@@ -37,9 +37,8 @@ final class FriendListViewController: BaseTableViewController {
             if indexPath.section == 0 {
                 
                 let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! InvitationCell
-                let myFriendInvitations = me.friendInvitations ?? []
                 
-                if let notification = cell.friendInvitedNotification where notification != myFriendInvitations.get(indexPath.row) { // approved or declined
+                if let notification = cell.friendInvitedNotification where notification != me.friendInvitations.get(indexPath.row) { // approved or declined
                     
                     self.updateBadgeNumber()
                     self.tableView.beginUpdates()
@@ -149,7 +148,7 @@ extension FriendListViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if section == 0 {
-            return me.friendInvitations!.count
+            return me.friendInvitations.count
         }
         
         if section == 1 {
@@ -165,7 +164,7 @@ extension FriendListViewController {
         if indexPath.section == 0 {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("InvitationCell", forIndexPath: indexPath) as! InvitationCell
-            cell.friendInvitedNotification = me.friendInvitations?.get(indexPath.row)
+            cell.friendInvitedNotification = me.friendInvitations.get(indexPath.row)
             cell.delegate = self
             
             cell.setupDisplay()
@@ -202,7 +201,7 @@ extension FriendListViewController {
             
             let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
             
-            vc.user = me.friendInvitations!.get(indexPath.item)!.from
+            vc.user = me.friendInvitations.get(indexPath.item)!.from
             
             self.navigationController?.pushViewController(vc, animated: true)
             
@@ -227,7 +226,8 @@ extension FriendListViewController: FriendInvitationCellDelegate {
     
     func friendInvitationAccept(cell: InvitationCell) {
         
-        if let indexPath = tableView.indexPathForCell(cell), invitation = me.friendInvitations?.removeAtIndex(indexPath.row) {
+        if let indexPath = tableView.indexPathForCell(cell) {
+            let invitation = me.friendInvitations.removeAtIndex(indexPath.row)
             Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/notifications/\(invitation.id)", parameters: ["result": "approved"], encoding: .URL)
                 .responseJSON { (_, _, result, error) -> Void in
                     if error != nil {
@@ -251,7 +251,8 @@ extension FriendListViewController: FriendInvitationCellDelegate {
     
     func friendInvitationDeclined(cell: InvitationCell) {
         
-        if let indexPath = tableView.indexPathForCell(cell), invitation = me.friendInvitations?.removeAtIndex(indexPath.row) {
+        if let indexPath = tableView.indexPathForCell(cell) {
+            let invitation = me.friendInvitations.removeAtIndex(indexPath.row)
             Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/notifications/\(invitation.id)", parameters: ["result": "declined"], encoding: .URL)
                 .responseJSON { (_, _, result, error) -> Void in
                     if error != nil {
@@ -295,7 +296,7 @@ extension FriendListViewController {
                 if let vc = self.navigationController?.childViewControllers.last as? MessageViewController where vc.friend.id == user.id {
                     message.isOpened = true
                 } else {
-                    me.newMessages?.insert(message, atIndex: 0)
+                    me.newMessages.insert(message, atIndex: 0)
                 }
                 
                 gcd.sync(.Main, closure: { () -> () in
@@ -314,7 +315,7 @@ extension FriendListViewController {
 
 //            me.friendInvitations = ( me.friendInvitations ?? [NotificationEntity]() )
 //            me.friendInvitations!.insert(notification, atIndex: 0)
-            me.friendInvitations?.insert(notification, atIndex: 0)
+            me.friendInvitations.insert(notification, atIndex: 0)
             
             gcd.sync(.Main, closure: { () -> () in
                 self.updateBadgeNumber()
@@ -335,10 +336,10 @@ extension FriendListViewController {
             me.addFriend(from.id)
             
             var indexPaths:[NSIndexPath]?
-            let nvitationIndex = me.friendInvitations?.indexOf{$0.from.id == from.id}
+            let nvitationIndex = me.friendInvitations.indexOf{$0.from.id == from.id}
             if let nvitationIndex = nvitationIndex {
                 
-                me.friendInvitations?.removeAtIndex(nvitationIndex)
+                me.friendInvitations.removeAtIndex(nvitationIndex)
                 indexPaths = [NSIndexPath(forRow: nvitationIndex, inSection: 0)]
             }
 //            me.friendInvitations = me.friendInvitations?.filter{ $0.from.id != from.id }

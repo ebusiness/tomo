@@ -40,9 +40,9 @@ class UserEntity: NSObject {
     
     var bookmark: [String]?
     
-    var friendInvitations: [NotificationEntity]?
+    var friendInvitations: [NotificationEntity]!
     
-    var newMessages: [MessageEntity]?
+    var newMessages: [MessageEntity]!
     
     var lastMessage: MessageEntity?
     
@@ -50,11 +50,11 @@ class UserEntity: NSObject {
         super.init()
     }
     
-    required convenience init(_ respunse: AnyObject) {
+    convenience init(_ respunse: AnyObject) {
         self.init(JSON(respunse))
     }
     
-    required init(_ json: JSON) {
+    init(_ json: JSON) {
         super.init()
         self.id = json["_id"].stringValue
         self.tomoid = json["tomoid"].string
@@ -75,17 +75,17 @@ class UserEntity: NSObject {
         self.invited = json["invited"].arrayObject as? [String]
         self.bookmark = json["firstName"].arrayObject as? [String]
         
+        self.friendInvitations = []
         if let invitations = json["friendInvitations"].array {
-            self.friendInvitations = []
             invitations.map { (invitation) -> () in
-                self.friendInvitations!.append( NotificationEntity(invitation.object) )
+                self.friendInvitations.append( NotificationEntity(invitation.object) )
             }
         }
         
+        self.newMessages = []
         if let messages = json["newMessages"].array {
-            self.newMessages = []
             messages.map { (message) -> () in
-                self.newMessages!.append( MessageEntity(message.object) )
+                self.newMessages.append( MessageEntity(message.object) )
             }
         }
         

@@ -22,11 +22,11 @@ class NotificationEntity: NSObject {
         super.init()
     }
     
-    required convenience init(_ respunse: AnyObject) {
+    convenience init(_ respunse: AnyObject) {
         self.init(JSON(respunse))
     }
     
-    required init(_ json: JSON) {
+    init(_ json: JSON) {
         super.init()
         self.id = json["_id"].stringValue
         self.from = UserEntity(json["_from"].object)

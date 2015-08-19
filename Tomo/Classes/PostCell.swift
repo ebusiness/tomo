@@ -57,8 +57,10 @@ class PostCell: UITableViewCell {
             postContentLabel.text = content
         }
         
-        if let like = post.like {
+        if let like = post.like where like.count > 0 {
             likeButton.setTitle("\(like.count)", forState: .Normal)
+        } else {
+            likeButton.setTitle("", forState: .Normal)
         }
         
 //        bookmarkButton.setTitle("\(post.bookmark?.count)", forState: .Normal)
