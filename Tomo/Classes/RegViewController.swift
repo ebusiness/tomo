@@ -18,7 +18,11 @@ final class RegViewController: BaseViewController {
         
         super.viewDidLoad()
         
-//        testSegment.hidden = true
+        testSegment.hidden = true
+        #if DEBUG
+            testSegment.hidden = false
+        #endif
+        
         buttonView.hidden = true
         
         loginButton.layer.borderColor = UIColor.whiteColor().CGColor
