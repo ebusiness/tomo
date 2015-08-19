@@ -86,6 +86,10 @@ class TabBarController: UITabBarController {
         Util.setupPush()
         
     }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        URLSchemesController.instance.runTask()
+    }
     
     // MARK: - Notification
     

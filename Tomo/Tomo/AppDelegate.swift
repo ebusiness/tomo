@@ -9,7 +9,6 @@
 import UIKit
 
 var me = UserEntity()
-var notificationTask: [[NSObject : AnyObject]] = []
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

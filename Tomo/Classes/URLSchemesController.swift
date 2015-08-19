@@ -9,6 +9,7 @@
 class URLSchemesController {
     
     var tabBarController: TabBarController!
+    var taskURL: NSURL?
     
     // static initialize
     class var instance : URLSchemesController {
@@ -60,9 +61,19 @@ class URLSchemesController {
                 }
             } else {
                 // TODO -> add to task
+                self.taskURL = url
             }
         }
         return false
+    }
+    
+    func runTask()->Bool{
+        if let url = self.taskURL {
+            self.taskURL = nil
+            return handleOpenURL(url)
+        } else {
+            return false
+        }
     }
 }
 
