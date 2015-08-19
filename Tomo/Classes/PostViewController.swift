@@ -116,6 +116,7 @@ class PostViewController : BaseTableViewController{
                 self.post.like = [me.id]
             }
             self.updateUIForHeader()
+            self.likedBtn.bounce(nil)
         }
     }
 
@@ -130,6 +131,7 @@ class PostViewController : BaseTableViewController{
                     me.bookmark = [self.post.id]
                 }
                 self.updateUIForHeader()
+                self.bookmarkBtn.tada(nil)
         }
     }
 

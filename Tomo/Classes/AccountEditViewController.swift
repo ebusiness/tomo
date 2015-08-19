@@ -25,15 +25,31 @@ class AccountEditViewController: MyAccountBaseController {
         didSet{
             
             nickNameTextField.text = user.nickName
-            firstNameTextField.text = user.firstName
-            lastNameTextField.text = user.lastName
-            addressTextField.text = user.address
-            telTextField.text = user.telNo
-            bioTextView.text = user.bio
-            genderLabel.text = user.gender
+            
+            if let bio = user.bio where bio.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
+                bioTextView.text = bio
+            }
+            
+            if let lastName = user.lastName {
+                lastNameTextField.text = lastName.trimmed()
+            }
+            
+            if let firstName = user.firstName {
+                firstNameTextField.text = firstName.trimmed()
+            }
+            
+            genderLabel.text = user.gender ?? "男"
             
             if let birthDay = user.birthDay {
-                birthDayLabel.text = user.birthDay?.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
+                birthDayLabel.text = birthDay.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
+            }
+            
+            if let telNo = user.telNo {
+                telTextField.text = telNo
+            }
+            
+            if let address = user.address {
+                addressTextField.text = address.trimmed()
             }
         }
     }
@@ -128,7 +144,75 @@ class AccountEditViewController: MyAccountBaseController {
 
 }
 
-extension AccountEditViewController{
+extension AccountEditViewController {
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) where cell.subviews.count > 0 {
+            
+            let views: AnyObject? = cell.subviews[0].subviews.filter { $0 is UITextView || $0 is UITextField }
+            if let views = views as? [UIView], lastView = views.last {
+                lastView.becomeFirstResponder()
+            }
+        }
+    }
+    
+}
+
+extension AccountEditViewController: UITextViewDelegate {
+    var defaultbio:String {
+        get {
+            return "一个彰显个性的签名"
+        }
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        if textView.text == defaultbio {
+            textView.text = ""
+            textView.textColor = UIColor.blackColor()
+        }
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        if textView.markedTextRange == nil {
+            let max = self.getMaxLength(textView)
+            if textView.text.length > max {
+                textView.text = textView.text.substringToIndex(advance(textView.text.startIndex, max))
+            }
+            
+            self.setLengthToLabel(textView)
+            
+        }
+    }
+}
+
+extension AccountEditViewController:UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        if NSStringFromClass(touch.view.classForCoder) == "UITableViewCellContentView" {
+            return false
+        }
+        return true
+    }
+    
+}
+
+extension AccountEditViewController {
+    
+    @IBAction func textFieldDidChange(sender: UITextField) {
+        
+        if sender.markedTextRange == nil {
+            let max = self.getMaxLength(sender)
+            if sender.text.length > max {
+                sender.text = sender.text.substringToIndex(advance(sender.text.startIndex, max))
+            }
+            
+            self.setLengthToLabel(sender)
+        }
+    }
+    
+    @IBAction func tableTapped(sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
     
     func imageViewTapped(isAvatar:Bool) {
         
@@ -167,9 +251,33 @@ extension AccountEditViewController{
     }
 }
 
+extension AccountEditViewController {
+    
+    func getMaxLength(inputView: UIView) -> Int{
+        
+        let views = inputView.superview?.subviews.filter { $0 is UILabel && $0.tag == 2 }
+        
+        if let views = views, label = views.last as? UILabel ,count = label.text?.toInt(){
+            return count
+        }
+        
+        return Int.max
+    }
 
-extension AccountEditViewController: UITableViewDelegate {
-
+    func setLengthToLabel(inputView: UIView){
+        let views = inputView.superview?.subviews.filter { $0 is UILabel && $0.tag == 1 }
+        
+        if let views = views, label = views.last as? UILabel {
+            var textCount = 0
+            if let inputView = inputView as? UITextView {
+                textCount = (inputView.text ?? "" ).length
+            } else if let inputView = inputView as? UITextField {
+                textCount = (inputView.text ?? "" ).length
+            }
+            label.text = toString( textCount )
+        }
+    }
+    
 }
 
 // MARK: - DBCameraViewControllerDelegate

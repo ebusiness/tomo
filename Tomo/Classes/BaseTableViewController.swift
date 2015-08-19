@@ -60,6 +60,11 @@ class BaseTableViewController: UITableViewController {
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.scrollViewDidScroll(self.tableView)
+    }
+    
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
