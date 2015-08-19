@@ -111,10 +111,7 @@ extension URLSchemesController{
         getInformation("/users/\(id)", done: { (json) -> () in
             let vc = MessageViewController()
             vc.hidesBottomBarWhenPushed = true
-            vc.friend = UserEntity()
-            vc.friend.id = json["_id"].string
-            vc.friend.nickName = json["nickName"].string
-            vc.friend.photo = json["photo_ref"].string
+            vc.friend = UserEntity(json)
             
             self.pushViewController(1, viewController: vc, animated: true)
         })
@@ -140,44 +137,9 @@ extension URLSchemesController{
     private func receivePostNew(id: String){
         
         getInformation("/posts/\(id)", done: { (json) -> () in
-            
-            var post = PostEntity()
-            post.id = json["_id"].stringValue
-            post.content = json["contentText"].stringValue
-            post.like = json["like"].arrayObject as? [String]
-            post.coordinate = json["coordinate"].arrayObject as? [Double]
-            post.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
-            
-            json["images_mobile"].array?.map { (image) -> () in
-                post.images = post.images ?? [String]()
-                post.images?.append(image["name"].stringValue)
-            }
-            
-            let postOwner = json["_owner"]
-            post.owner = UserEntity()
-            post.owner.id = postOwner["_id"].stringValue
-            post.owner.nickName = postOwner["nickName"].stringValue
-            post.owner.photo = postOwner["photo_ref"].string
 
-            post.comments = []
-            let postComments = json["comments"].array
-            json["comments"].array?.map { (commentJson) -> () in
-                
-                var comment = CommentEntity()
-                comment.id = commentJson["_id"].stringValue
-                comment.content = commentJson["content"].stringValue
-                comment.createDate = commentJson["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
-                
-                let commentOwner = commentJson["_owner"]
-                comment.owner = UserEntity()
-                comment.owner.id = commentOwner["_id"].stringValue
-                comment.owner.nickName = commentOwner["nickName"].stringValue
-                comment.owner.photo = commentOwner["photo_ref"].string
-                post.comments?.append(comment)
-            }
-            
             let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
-            vc.post = post
+            vc.post = PostEntity(json)
             
             self.pushViewController(0, viewController: vc, animated: true)
             

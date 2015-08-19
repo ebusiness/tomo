@@ -22,4 +22,22 @@ class CommentEntity: NSObject {
     
     var createDate: NSDate!
     
+    override init() {
+        super.init()
+    }
+    
+    required convenience init(_ respunse: AnyObject) {
+        self.init(JSON(respunse))
+    }
+    
+    required init(_ json: JSON) {
+        super.init()
+        self.id = json["_id"].stringValue
+        self.owner = UserEntity(json["_owner"].object)
+        self.replyTo = json["replyTo"].string
+        self.content = json["content"].stringValue
+        self.like = json["like"].arrayObject as? [String]
+        self.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+        
+    }
 }

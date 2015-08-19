@@ -285,10 +285,7 @@ extension FriendListViewController {
             
             if let user = user {
                 
-                let message = MessageEntity()
-                message.id = json["_id"].stringValue
-                message.content = json["content"].stringValue
-                message.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+                let message = MessageEntity(json)
                 message.isOpened = false
                 
 //                message.owner = me
@@ -313,21 +310,8 @@ extension FriendListViewController {
     
     func receiveFriendInvited(notification: NSNotification) {
         if let userInfo = notification.userInfo {
-            let json = JSON(userInfo)
-            
-            let notification = NotificationEntity()
-            notification.id = json["_id"].stringValue
-            notification.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
-            
-            let user = json["_from"]
-            
-            let from = UserEntity()
-            from.id = user["_id"].stringValue
-            from.photo = user["photo"].stringValue
-            from.nickName = user["nickName"].stringValue
-            
-            notification.from = from
-            
+            let notification = NotificationEntity(userInfo)
+
 //            me.friendInvitations = ( me.friendInvitations ?? [NotificationEntity]() )
 //            me.friendInvitations!.insert(notification, atIndex: 0)
             me.friendInvitations?.insert(notification, atIndex: 0)
@@ -344,13 +328,8 @@ extension FriendListViewController {
     
     func receiveFriendApproved(notification: NSNotification) {
         if let userInfo = notification.userInfo {
-            let json = JSON(userInfo)
             
-            let user = json["_from"]
-            let from = UserEntity()
-            from.id = user["_id"].stringValue
-            from.nickName = user["nickName"].stringValue
-            from.photo = user["photo_ref"].string
+            let from = UserEntity(userInfo)
             
             self.friends.insert(from, atIndex: 0)
             me.addFriend(from.id)

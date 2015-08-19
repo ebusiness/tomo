@@ -45,6 +45,54 @@ class UserEntity: NSObject {
     var newMessages: [MessageEntity]?
     
     var lastMessage: MessageEntity?
+    
+    override init() {
+        super.init()
+    }
+    
+    required convenience init(_ respunse: AnyObject) {
+        self.init(JSON(respunse))
+    }
+    
+    required init(_ json: JSON) {
+        super.init()
+        self.id = json["_id"].stringValue
+        self.tomoid = json["tomoid"].string
+        self.nickName = json["nickName"].stringValue
+        self.gender = json["gender"].string
+        self.photo = json["photo_ref"].string ?? json["photo"].string
+        self.cover = json["cover_ref"].string ?? json["cover"].string
+        self.bio = json["bioText"].string ?? json["bio"].string 
+        self.firstName = json["firstName"].string
+        self.lastName = json["lastName"].string
+        
+        if let birthDay = json["birthDay"].string {
+            self.birthDay = birthDay.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+        }
+        self.telNo = json["telNo"].string
+        self.address = json["address"].string
+        self.friends = json["friends"].arrayObject as? [String]
+        self.invited = json["invited"].arrayObject as? [String]
+        self.bookmark = json["firstName"].arrayObject as? [String]
+        
+        if let invitations = json["friendInvitations"].array {
+            self.friendInvitations = []
+            invitations.map { (invitation) -> () in
+                self.friendInvitations!.append( NotificationEntity(invitation.object) )
+            }
+        }
+        
+        if let messages = json["newMessages"].array {
+            self.newMessages = []
+            messages.map { (message) -> () in
+                self.newMessages!.append( MessageEntity(message.object) )
+            }
+        }
+        
+        if !( json["lastMessage"].object is NSNull ) {
+            self.lastMessage = MessageEntity(json["lastMessage"].object)
+        }
+    }
 }
 
 extension UserEntity {

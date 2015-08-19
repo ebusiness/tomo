@@ -256,16 +256,15 @@ extension MessageViewController {
             
             if friend.id == json["_from"]["_id"].stringValue {
                 
-                let newMessage = JSQMessageEntity()
-                newMessage.message.id = json["_id"].stringValue
-                newMessage.message.owner = me
-                newMessage.message.from = friend
-                newMessage.message.content = json["content"].stringValue
-                newMessage.message.isOpened = true
-                newMessage.message.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+                let message = MessageEntity(json)
+                message.isOpened = true
+                message.owner = me
+                message.from = friend
+                
+                let newMessage = JSQMessageEntity(message: message)
 
                 self.messages.append(newMessage)
-                friend.lastMessage = newMessage.message
+                friend.lastMessage = message
                 
                 gcd.sync(.Main, closure: { () -> () in
                     
@@ -293,7 +292,7 @@ extension MessageViewController {
         params["subject"] = "no subject"
         params["content"] = text
         
-        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/messages", parameters: params).responseJSON { (_, _, result, error) -> Void in
+        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/messages", parameters: params).responseJSON { (_, _, _, error) -> Void in
             
             if error == nil {
                 

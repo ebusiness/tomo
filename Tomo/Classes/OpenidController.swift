@@ -79,14 +79,14 @@ extension OpenidController {
         param["access_token"] = Defaults["access_token"].string
         
         Manager.sharedInstance.request(.POST, tomo_openid_login, parameters: param)
-            .responseJSON { (_, res, JSON, _) in
+            .responseJSON { (_, res, json, _) in
                 
                 if res?.statusCode == 401 {
                     self.refreshAccessToken()
                 } else if res?.statusCode == 404 {
                     self.getUserInfo()
                 } else if (res?.statusCode == 200) {
-                    let result = JSON as! Dictionary<String, AnyObject>
+                    let result = json as! Dictionary<String, AnyObject>
                     self.success(result)
                 }
             }
@@ -102,8 +102,8 @@ extension OpenidController {
         params["grant_type"] = "authorization_code"
         
         Manager.sharedInstance.request(.GET, wx_url_access_token, parameters: params)
-            .responseJSON {(_, _, JSON, _) in
-                let result = JSON as! Dictionary<String, AnyObject>
+            .responseJSON {(_, _, json, _) in
+                let result = json as! Dictionary<String, AnyObject>
                 
                 if (!contains(result.keys, "errcode")) {
                     self.saveOpenId(result)
@@ -125,8 +125,8 @@ extension OpenidController {
         params["refresh_token"] = Defaults["refresh_token"].string
         
         Manager.sharedInstance.request(.GET, wx_url_refresh_token, parameters: params)
-            .responseJSON { (_, _, JSON, _) in
-                let result = JSON as! Dictionary<String, AnyObject>
+            .responseJSON { (_, _, json, _) in
+                let result = json as! Dictionary<String, AnyObject>
                 
                 if (!contains(result.keys, "errcode")) {
                     self.saveOpenId(result)
@@ -146,9 +146,8 @@ extension OpenidController {
         
         Manager.sharedInstance
             .request(.GET, wx_url_userinfo, parameters: params)
-            .responseJSON {
-                (_, _, JSON, _) in
-                var result = JSON as! Dictionary<String, AnyObject>
+            .responseJSON { (_, _, json, _) in
+                var result = json as! Dictionary<String, AnyObject>
                 
                 if (!contains(result.keys, "errcode")) {
                     if let gender = result["sex"] as? String where gender == "2" {
@@ -196,85 +195,7 @@ extension OpenidController {
         if let id = result["id"] as? String,
             nickName = result["nickName"] as? String{
                 
-                me.id = id
-                me.nickName = nickName
-                
-                me.tomoid = result["tomoid"] as? String
-                me.gender = result["gender"] as? String
-                me.photo = result["photo_ref"] as? String
-                me.cover = result["cover_ref"] as? String
-                me.bio = result["bioText"] as? String
-                me.firstName = result["firstName"] as? String
-                me.lastName = result["lastName"] as? String
-                
-                if let dateString = result["birthDay"] as? String {
-                    me.birthDay = dateString.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
-                }
-                
-                me.friends = result["friends"] as? [String]
-                me.invited = result["invited"] as? [String]
-                
-                me.telNo = result["telNo"] as? String
-                me.address = result["address"] as? String
-                me.bookmark = result["bookmark"] as? [String]
-//                me.notificationCount = result["notificationCount"] as? Int
-                
-                var invitations = [NotificationEntity]()
-                
-                if let friendInvitations = result["friendInvitations"] as? Array<AnyObject> {
-                    
-                    for obj in friendInvitations {
-                        
-                        if let invitationRaw = obj as? Dictionary<String, AnyObject> {
-                            
-                            let notification = NotificationEntity()
-                            notification.id = invitationRaw["_id"] as? String
-                            
-                            if let dateString = result["createDate"] as? String {
-                                notification.createDate = dateString.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
-                            }
-                            
-                            if let fromRaw = invitationRaw["_from"] as? Dictionary<String, String> {
-                                
-                                let from = UserEntity()
-                                from.id = fromRaw["_id"]
-                                from.photo = fromRaw["photo_ref"]
-                                from.nickName = fromRaw["nickName"]
-                                
-                                notification.from = from
-                            }
-                            
-                            invitations.push(notification)
-                        }
-                    }
-                }
-                
-                me.friendInvitations = invitations
-                
-                var messages = [MessageEntity]()
-                
-                if let newMessages = result["newMessages"] as? Array<AnyObject> {
-                 
-                    for obj in newMessages {
-                        
-                        if let messageRaw = obj as? Dictionary<String, String> {
-
-                            let message = MessageEntity()
-                            message.id = messageRaw["_id"]
-                            message.createDate = messageRaw["createDate"]?.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
-                            
-                            let from = UserEntity()
-                            from.id = messageRaw["_from"]
-                            
-                            message.from = from
-                            
-                            messages.push(message)
-                        }
-                    }
-                }
-                
-                me.newMessages = messages
-                
+                me = UserEntity(result)                
         }
         
     }

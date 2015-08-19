@@ -192,7 +192,7 @@ class PostViewController : BaseTableViewController{
         self.commentContent = ""
         self.sendBtn.enabled = false
         
-        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/posts/\(self.post.id)/comments", parameters: param).responseJSON { (_, _,json, _) -> Void in
+        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/posts/\(self.post.id)/comments", parameters: param).responseJSON { (_, _,_, _) -> Void in
             
             Util.dismissHUD()
             

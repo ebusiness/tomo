@@ -18,4 +18,20 @@ class NotificationEntity: NSObject {
     
     var createDate: NSDate!
     
+    override init() {
+        super.init()
+    }
+    
+    required convenience init(_ respunse: AnyObject) {
+        self.init(JSON(respunse))
+    }
+    
+    required init(_ json: JSON) {
+        super.init()
+        self.id = json["_id"].stringValue
+        self.from = UserEntity(json["_from"].object)
+        self.type = json["type"].stringValue
+        self.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+        
+    }
 }

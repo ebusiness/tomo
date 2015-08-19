@@ -22,4 +22,22 @@ class MessageEntity: NSObject {
     
     var createDate: NSDate!
     
+    override init() {
+        super.init()
+    }
+    
+    required convenience init(_ respunse: AnyObject) {
+        self.init(JSON(respunse))
+    }
+    
+    required init(_ json: JSON) {
+        super.init()
+        self.id = json["_id"].stringValue
+        self.owner = UserEntity(json["_owner"].object)
+        self.from = UserEntity(json["_from"].object)
+        self.content = json["content"].stringValue
+        self.isOpened = json["isOpened"].boolValue
+        self.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+        
+    }
 }

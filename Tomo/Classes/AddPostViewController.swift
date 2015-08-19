@@ -93,18 +93,8 @@ class AddPostViewController: BaseViewController {
                 
                 let json = JSON(sender)
                 
-                var post = PostEntity()
-                post.id = json["_id"].stringValue
-                post.content = json["contentText"].stringValue
-                post.coordinate = json["coordinate"].arrayObject as? [Double]
-                json["images_mobile"].array?.map { (image) -> () in
-                    post.images = post.images ?? [String]()
-                    post.images?.append(image["name"].stringValue)
-                }
-//                post.like = json["like"].arrayObject as? [String]
-                post.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+                var post = PostEntity(sender)
                 post.owner = me
-                
                 
                 home.contents.insert(post, atIndex: 0)
                 home.latestContent = post

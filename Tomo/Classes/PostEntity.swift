@@ -26,4 +26,40 @@ class PostEntity: NSObject {
     
     var createDate: NSDate!
     
+    override init() {
+        super.init()
+    }
+    
+    required convenience init(_ respunse: AnyObject) {
+        self.init(JSON(respunse))
+    }
+    
+    required init(_ json: JSON) {
+        super.init()
+        self.id = json["_id"].stringValue
+        self.owner = UserEntity(json["_owner"].object)
+        self.content = json["contentText"].stringValue
+        
+        if let imagesArray = json["images_mobile"].array {
+            self.images = []
+            imagesArray.map { (image) -> () in
+                self.images!.append(image["name"].stringValue)
+            }
+        }
+        
+        self.like = json["like"].arrayObject as? [String]
+        
+        if let postComments = json["comments"].array {
+            self.comments = []
+            postComments.map { (commentJson) -> () in
+                var comment = CommentEntity(commentJson.object)
+                self.comments!.append(comment)
+            }
+        }
+        
+        self.coordinate = json["coordinate"].arrayObject as? [Double]
+        self.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+        
+        
+    }
 }
