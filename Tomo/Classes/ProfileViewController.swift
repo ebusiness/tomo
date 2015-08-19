@@ -30,27 +30,11 @@ class ProfileViewController: ProfileBaseController {
         SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendInvited:"), event: .FriendInvited)
         SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendApproved:"), event: .FriendApproved)
         SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendDeclined:"), event: .FriendDeclined)
-        
-        
-        if let friends = me.friends where friends.contains(self.user.id) {
 
-        } else {
-            
-            var param = Dictionary<String, String>()
-            param["type"] = "friend-invited"
-            param["_from"] = self.user.id
-            Manager.sharedInstance.request(.GET, kAPIBaseURLString + "/notifications/unconfirmed", parameters: param)
-                .responseJSON { (_, res, data, _) -> Void in
-                    
-                    if let arr = data as? NSArray ,dict = arr[0] as? Dictionary<String, AnyObject> , id = dict["_id"] as? String {
-                        self.invitedId = id
-                    }
-            }
-        }
-        
     }
     
     override func updateUI() {
+        super.updateUI()
         
         if let firstName = user.firstName, lastName = user.lastName {
             fullNameLabel.text = user.fullName()

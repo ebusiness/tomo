@@ -20,8 +20,9 @@ class ProfileBaseController: BaseTableViewController {
             
             vc.user = self.user
             if let parent = segue.sourceViewController as? ProfileViewController {
-                self.getUserInfo({ () -> () in
+                self.getUserInfo({ (id) -> () in
                     vc.user = self.user
+                    parent.invitedId = id
                 })
             }
             
@@ -95,23 +96,35 @@ class ProfileBaseController: BaseTableViewController {
 
 extension ProfileBaseController {
     
-    func getUserInfo(done: (()->()) ){
+    func getUserInfo(done: ((String?)->()) ){
         
         Util.showHUD()
         
         self.manager.getObject(nil, path: "/users/\(self.user.id)", parameters: nil, success: { (operation, result) -> Void in
             if let result = result.firstObject as? UserEntity {
                 self.user = result
-                done()
-                self.updateUI()
                 
+                if let friends = me.friends where friends.contains(self.user.id) {
+                    self.updateUI()
+                } else {
+                    var param = Dictionary<String, String>()
+                    param["type"] = "friend-invited"
+                    param["_from"] = self.user.id
+                    Manager.sharedInstance.request(.GET, kAPIBaseURLString + "/notifications/unconfirmed", parameters: param).responseJSON { (_, res, data, _) -> Void in
+                        if let arr = data as? NSArray ,dict = arr[0] as? Dictionary<String, AnyObject> , id = dict["_id"] as? String {
+                            done(id)
+                        } else {
+                            done(nil)
+                        }
+                        self.updateUI()
+                    }
+                }
             }
-            Util.dismissHUD()
             
             }, failure: nil)
     }
     
     func updateUI() {
-        
+        Util.dismissHUD()
     }
 }
