@@ -102,12 +102,10 @@ extension MessageViewController {
         btn_voice?.layer.borderColor = l.borderColor//UIColor.lightGrayColor().CGColor;
         btn_voice?.layer.cornerRadius = l.cornerRadius//6.0;
         
-        //btn_voice?.titleLabel?.text = "押したまま話す"
-        
         let rect = btn_voice?.bounds
         let label = UILabel(frame: rect!)
         label.textAlignment = NSTextAlignment.Center
-        label.text = "押したまま話す"
+        label.text = "按住说话"
         btn_voice?.addSubview(label)
         
         btn_voice?.backgroundColor = UIColor(white: 0.85, alpha: 1.0)

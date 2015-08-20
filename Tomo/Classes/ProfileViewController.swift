@@ -52,13 +52,6 @@ class ProfileViewController: ProfileBaseController {
             addressLabel.text = address
         }
         
-//        fullNameLabel.text = user?.fullName()
-//        
-//        genderLabel.text = user?.gender
-//        
-//        birthDayLabel.text = user?.birthDay?.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
-//        addressLabel.text = user?.address
-        
         self.addFriendButton.hidden = true
         self.deleteFriendButton.hidden = true
         self.sendMessageCell.hidden = true
@@ -83,9 +76,7 @@ class ProfileViewController: ProfileBaseController {
             } else if user.id != me.id {
                 self.addFriendButton.hidden = false
             }
-            
         }
-        
     }
     
     @IBAction func Approved(sender: UIButton) {

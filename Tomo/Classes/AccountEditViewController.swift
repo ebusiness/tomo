@@ -178,9 +178,15 @@ extension AccountEditViewController: UITextViewDelegate {
             if textView.text.length > max {
                 textView.text = textView.text.substringToIndex(advance(textView.text.startIndex, max))
             }
-            
             self.setLengthToLabel(textView)
+        }
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if textView.text.trimmed().length == 0 {
             
+            textView.textColor = UIColor.lightGrayColor()
+            textView.text = defaultbio
         }
     }
 }
