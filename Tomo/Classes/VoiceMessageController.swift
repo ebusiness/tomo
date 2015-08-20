@@ -54,24 +54,46 @@ extension MessageViewController {
             return
         }
         
+        let block:CameraController.CameraBlock = { (image,videoPath) ->() in
+            var name: String!
+            var localURL: NSURL!
+            var remotePath: String!
+            
+            if let path = videoPath {
+                name = NSUUID().UUIDString + ".MP4"
+                localURL = FCFileManager.urlForItemAtPath(name)
+                FCFileManager.copyItemAtPath(path, toPath: localURL.path)
+                
+                remotePath = MediaMessage.remotePath(fileName: name, type: .Video)
+                
+                self.sendMessage(MediaMessage.mediaMessageStr(fileName: name, type: .Video))
+                
+            } else {
+                name = NSUUID().UUIDString
+                
+                localURL = FCFileManager.urlForItemAtPath(name)
+                
+                let image = image!.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
+                
+                image.saveToURL(localURL)
+                
+                remotePath = MediaMessage.remotePath(fileName: name, type: .Image)
+                
+                self.sendMessage(MediaMessage.mediaMessageStr(fileName: name, type: .Image))
+            }
+            
+            S3Controller.uploadFile(name: name, localPath: localURL.path!, remotePath: remotePath, done: { (error) -> Void in
+                println("done")
+                println(error)
+            })
+        }
+        
         Util.alertActionSheet(self, optionalDict: [
             "拍摄/视频":{ (_) -> Void in
-                let picker = UIImagePickerController()
-                picker.sourceType = .Camera
-                //            picker.allowsEditing = true
-                picker.delegate = self
-                picker.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(.Camera)!
-                picker.videoMaximumDuration = 10
-                self.presentViewController(picker, animated: true, completion: nil)
+                CameraController.sharedInstance.open(self, sourceType: .Camera, withVideo: true, completion: block)
             },
             "从相册选择":{ (_) -> Void in
-                let picker = UIImagePickerController()
-                picker.sourceType = .PhotoLibrary
-                //            picker.allowsEditing = true
-                picker.mediaTypes = UIImagePickerController.availableMediaTypesForSourceType(.PhotoLibrary)!
-                picker.delegate = self
-                self.presentViewController(picker, animated: true, completion: nil)
-                
+                CameraController.sharedInstance.open(self, sourceType: .PhotoLibrary, completion: block)  
             },
             "语音输入":{ (_) -> Void in
                 if btn_voice == nil {

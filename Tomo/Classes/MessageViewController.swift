@@ -79,8 +79,6 @@ final class MessageViewController: JSQMessagesViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if let friend = me.friends where friend.contains(self.friend.id) {
-            
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("downloadMediaDone"), name: "NotificationDownloadMediaDone", object: nil)
         } else {
             self.navigationController?.popViewControllerAnimated(true)
         }
@@ -92,10 +90,6 @@ final class MessageViewController: JSQMessagesViewController {
         VoiceController.instance.stopPlayer()
         
         NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-    func downloadMediaDone() {
-        collectionView.reloadData()
     }
     
     // MARK: - Navigation
@@ -329,6 +323,12 @@ extension MessageViewController {
 extension MessageViewController {
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
+        
+        let item = messages[indexPath.item]
+        item.download { () -> () in
+            self.collectionView.reloadItemsAtIndexPaths([indexPath])
+        }
+        
         return messages[indexPath.item]
     }
     
@@ -404,51 +404,70 @@ extension MessageViewController {
         if let content = message.text() {
             
             if MediaMessage.mediaMessage(content) == .Image || MediaMessage.mediaMessage(content) == .Video {
-                showGalleryView(indexPath, message: message)
+                if let broken = message.brokenImage {
+//                    let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! JSQMessagesCollectionViewCell
+//                    cell.mediaView = UIImageView(image: broken)
+                    
+                    message.reload({ () -> () in
+                        self.collectionView.reloadItemsAtIndexPaths([indexPath])
+                    })
+                } else {
+                
+                    showGalleryView(indexPath, message: message)
+                }
             }
             
-            if MediaMessage.mediaMessage(content) == .Voice {
-                if let fileName = MediaMessage.fileNameOfMessage(content) {
-                    if FCFileManager.existsItemAtPath(fileName) {
-                        VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(fileName).path!)
-                    } else {
-                        Util.showHUD()
-                        Manager.sharedInstance.download(.GET, MediaMessage.fullPath(content)) { (tempUrl, res) -> (NSURL) in
-                            gcd.async(.Main, closure: { () -> () in
-                                Util.dismissHUD()
-                                VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(fileName).path!)
-                            })
-                            return FCFileManager.urlForItemAtPath(fileName)
+            if let fileName = MediaMessage.fileNameOfMessage(content) where MediaMessage.mediaMessage(content) == .Voice {
+                
+                if FCFileManager.existsItemAtPath(fileName) {
+                    VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(fileName).path!)
+                } else {
+                    Util.showHUD()
+                    Manager.sharedInstance.download(.GET, MediaMessage.fullPath(content)) { (tempUrl, res) -> (NSURL) in
+                        return FCFileManager.urlForItemAtPath(fileName)
+                    }.response { (_, _, _, error) -> Void in
+                        Util.dismissHUD()
+                        if error == nil {
+                            VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(fileName).path!)
                         }
                     }
                 }
+
             }
         }
     }
     
     func showGalleryView(indexPath: NSIndexPath, message: JSQMessageEntity) {
         let cell = collectionView.cellForItemAtIndexPath(indexPath) as? JSQMessagesCollectionViewCell
-        if let cell = cell {
-            let imageView = cell.mediaView as! UIImageView
-            
+        if let cell = cell, imageView = cell.mediaView as? UIImageView {
             var items = [MHGalleryItem]()
+            var index = 0
             
             for item in self.messages {
-                if let mediaItem = item.media() as? JSQMediaItem {
-                    var galleryItem: MHGalleryItem!
-                    if mediaItem is JSQPhotoMediaItem {
-                        galleryItem = MHGalleryItem(image: (mediaItem as! JSQPhotoMediaItem).image)
-                    } else if mediaItem is TomoVideoMediaItem {
-                        let videoPath = MediaMessage.fullPath(message.text())
-                        galleryItem = MHGalleryItem(URL: videoPath, galleryType: .Video)
-                        galleryItem.image = SDImageCache.sharedImageCache().imageFromDiskCacheForKey(videoPath)
-                    }
-                    items.append(galleryItem)
+                if let
+                    mediaItem = item.media() as? JSQMediaItem,
+                    media = MediaMessage.mediaMessage(item.message.content)
+                    
+                    where item.brokenImage == nil && (media == .Image || media == .Video) {
+                    
+                        if self.messages[indexPath.item] == item {
+                            index = items.count
+                        }
+                        var galleryItem: MHGalleryItem!
+                        if mediaItem is JSQPhotoMediaItem {
+                            galleryItem = MHGalleryItem(image: ( mediaItem as! JSQPhotoMediaItem).image)
+                        } else if mediaItem is TomoVideoMediaItem {
+                            let videoPath = MediaMessage.fullPath(message.text())
+                            galleryItem = MHGalleryItem(URL: videoPath, galleryType: .Video)
+                            galleryItem.image = SDImageCache.sharedImageCache().imageFromDiskCacheForKey(videoPath)
+                        }
+                        items.append(galleryItem)
                 }
             }
             
             let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.ImageViewerNavigationBarShown)
             gallery.galleryItems = items
+            gallery.presentationIndex = index
             gallery.presentingFromImageView = imageView
             
             gallery.UICustomization.useCustomBackButtonImageOnImageViewer = false
@@ -470,6 +489,8 @@ extension MessageViewController {
             self.automaticallyScrollsToMostRecentMessage = false
             selectedIndexPath = indexPath
             presentMHGalleryController(gallery, animated: true, completion: nil)
+        } else {
+            
         }
     }
 }
@@ -498,66 +519,4 @@ extension MessageViewController {
         
         return cell
     }
-}
-
-// MARK: - UIImagePickerControllerDelegate
-
-extension MessageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-        picker.dismissViewControllerAnimated(true, completion: nil)
-        
-        let mediaType = info["UIImagePickerControllerMediaType"] as! String
-
-        var name: String!
-        var localURL: NSURL!
-        var remotePath: String!
-        
-        if mediaType == kUTTypeMovie as! String {
-            name = NSUUID().UUIDString + ".MP4"
-            
-            let url = info[UIImagePickerControllerMediaURL] as? NSURL
-
-            if picker.sourceType == .Camera {
-                if let path = url?.path {
-                    UISaveVideoAtPathToSavedPhotosAlbum(path, self, nil, nil)
-                }
-            }
-            
-            localURL = FCFileManager.urlForItemAtPath(name)
-            FCFileManager.copyItemAtPath(url?.path, toPath: localURL.path)
-            
-            remotePath = MediaMessage.remotePath(fileName: name, type: .Video)
-        } else {
-            name = NSUUID().UUIDString
-            let orgImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-
-            if picker.sourceType == .Camera {
-                UIImageWriteToSavedPhotosAlbum(orgImage, nil, nil, nil)
-            }
-            
-//            var editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
-            
-            localURL = FCFileManager.urlForItemAtPath(name)
-            
-            var editedImage = orgImage.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
-            editedImage = editedImage.normalizedImage()
-            
-            editedImage.saveToURL(localURL)
-            
-            remotePath = MediaMessage.remotePath(fileName: name, type: .Image)
-        }
-        
-        if mediaType == kUTTypeMovie as! String {
-            sendMessage(MediaMessage.mediaMessageStr(fileName: name, type: .Video))
-        } else {
-            sendMessage(MediaMessage.mediaMessageStr(fileName: name, type: .Image))
-        }
-        
-        S3Controller.uploadFile(name: name, localPath: localURL.path!, remotePath: remotePath, done: { (error) -> Void in
-            println("done")
-            println(error)
-        })
-    }
-    
 }

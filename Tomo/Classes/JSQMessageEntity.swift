@@ -9,14 +9,19 @@
 
 class JSQMessageEntity:NSObject, JSQMessageData {
     
-    var message:MessageEntity!
+    var message: MessageEntity!
+    var brokenImage: UIImage?
+    
+    private let broken = UIImage(named: "file_broken")!
+    private var isTaskRunning: Bool = false
+    private var taskTryCount = 2
     
     override init() {
         super.init()
         self.message = MessageEntity()
     }
     
-    init(message:MessageEntity) {
+    init(message: MessageEntity) {
         self.message = message
     }
     
@@ -66,19 +71,9 @@ class JSQMessageEntity:NSObject, JSQMessageData {
                 
                 return item
             } else {
-                //do not download voice and video
-                if MediaMessage.mediaMessage(message.content) == .Image {
-                    Manager.sharedInstance.download(.GET, MediaMessage.fullPath(message.content)) { (tempUrl, res) -> (NSURL) in
-                        gcd.async(.Main, closure: { () -> () in
-                            NSNotificationCenter.defaultCenter().postNotificationName("NotificationDownloadMediaDone", object: nil)
-                        })
-                        return FCFileManager.urlForItemAtPath(name)
-                    }
-                }
-                
                 var item: JSQMediaItem!
                 if MediaMessage.mediaMessage(message.content) == .Image {
-                    item = JSQPhotoMediaItem(image: nil)
+                    item = JSQPhotoMediaItem(image: self.brokenImage)
                 } else if MediaMessage.mediaMessage(message.content) == .Voice {
                     let imageName = message.from.id == me.id ? "SenderVoiceNodePlaying" : "ReceiverVoiceNodePlaying"
                     item = JSQVoiceMediaItem(voice: nil, image: UIImage(named: imageName))
@@ -92,5 +87,47 @@ class JSQMessageEntity:NSObject, JSQMessageData {
         }
         
         return nil
+    }
+    
+    func download(completion: ()->() ){
+        if self.isTaskRunning || self.brokenImage != nil {
+            return
+        } else {
+            self.isTaskRunning = true
+        }
+        
+        if let name = MediaMessage.fileNameOfMessage(message.content) where MediaMessage.mediaMessage(message.content) == .Image && !FCFileManager.existsItemAtPath(name) {
+            
+            let url = MediaMessage.fullPath(message.content)
+            Manager.sharedInstance.download(.GET, url) { (tempUrl, res) -> (NSURL) in
+                if res.statusCode == 200 {
+                    return FCFileManager.urlForItemAtPath(name)
+                } else {
+                    return tempUrl
+                }
+            }.response { (_, _, _, error) -> Void in
+                self.isTaskRunning = false
+                
+                if let error = error {
+                    self.taskTryCount--
+                    if self.taskTryCount > 0 { //auto reload
+                        self.download(completion)
+                    } else {
+                        self.brokenImage = self.broken
+                        completion()
+                    }
+                } else {
+                    completion() // reload collectionView
+                }
+            }
+        }
+    }
+    
+    func reload(completion: ()->() ){
+        if self.taskTryCount < -2 {
+            return
+        }
+        self.brokenImage = nil
+        self.download(completion)
     }
 }
