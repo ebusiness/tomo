@@ -3,11 +3,8 @@ PODS:
   - AZSocketIO (0.0.5):
     - AFNetworking (~> 1.x)
     - SocketRocket (~> 0.x)
-  - DBCamera (2.3.16):
-    - GPUImage (~> 0.1)
   - DCAnimationKit (0.0.6)
   - FCFileManager (1.0.7)
-  - GPUImage (0.1.6)
   - ISO8601DateFormatterValueTransformer (0.6.0):
     - RKValueTransformers (~> 1.1.0)
   - JSQMessagesViewController (7.0.0):
@@ -49,7 +46,6 @@ PODS:
 
 DEPENDENCIES:
   - AZSocketIO (= 0.0.5)
-  - DBCamera (~> 2.3)
   - DCAnimationKit
   - FCFileManager
   - JSQMessagesViewController (= 7.0.0)
@@ -64,10 +60,8 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: cf8e418e16f0c9c7e5c3150d019a3c679d015018
   AZSocketIO: 0d9604933c1509fa2f6d755f8a4df235fe3eac6c
-  DBCamera: c88a0deea468d153f54196e56a423301c7092737
   DCAnimationKit: 7133bef877ce1aa113dcfeea1380ca67f91f7608
   FCFileManager: fd77211e8448b0e9713d51d4f75769d9dc4ceb58
-  GPUImage: 4675ce4a5370ca92fcea8623b2a08b8f0c51b940
   ISO8601DateFormatterValueTransformer: 3ac3a721381697cab4e792d8049ce2f2e9ad3036
   JSQMessagesViewController: 9fd7e9ac96e9fc91f2deca86928e2cc916aeebaa
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
@@ -83,4 +77,4 @@ SPEC CHECKSUMS:
   TransitionKit: 3a14b6acc7cf2d1dd3e454e24dbad1cfab9a1ef1
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
 
-COCOAPODS: 0.38.0
+COCOAPODS: 0.38.2

@@ -9,7 +9,7 @@ RESOURCES_TO_COPY=${PODS_ROOT}/resources-to-copy-${TARGETNAME}.txt
 XCASSET_FILES=()
 
 realpath() {
-  DIRECTORY=$(cd "${1%/*}" && pwd)
+  DIRECTORY="$(cd "${1%/*}" && pwd)"
   FILENAME="${1##*/}"
   echo "$DIRECTORY/$FILENAME"
 }
@@ -22,7 +22,7 @@ install_resource()
       ibtool --reference-external-strings-file --errors --warnings --notices --output-format human-readable-text --compile "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/`basename \"$1\" .storyboard`.storyboardc" "${PODS_ROOT}/$1" --sdk "${SDKROOT}"
       ;;
     *.xib)
-        echo "ibtool --reference-external-strings-file --errors --warnings --notices --output-format human-readable-text --compile ${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/`basename \"$1\" .xib`.nib ${PODS_ROOT}/$1 --sdk ${SDKROOT}"
+      echo "ibtool --reference-external-strings-file --errors --warnings --notices --output-format human-readable-text --compile ${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/`basename \"$1\" .xib`.nib ${PODS_ROOT}/$1 --sdk ${SDKROOT}"
       ibtool --reference-external-strings-file --errors --warnings --notices --output-format human-readable-text --compile "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/`basename \"$1\" .xib`.nib" "${PODS_ROOT}/$1" --sdk "${SDKROOT}"
       ;;
     *.framework)
@@ -58,26 +58,6 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "DBCamera/DBCamera/Resources/DBCameraImages.xcassets"
-  install_resource "DBCamera/DBCamera/Localizations/en.lproj"
-  install_resource "DBCamera/DBCamera/Localizations/es.lproj"
-  install_resource "DBCamera/DBCamera/Localizations/it.lproj"
-  install_resource "DBCamera/DBCamera/Localizations/pt.lproj"
-  install_resource "DBCamera/DBCamera/Localizations/ru.lproj"
-  install_resource "DBCamera/DBCamera/Localizations/sv-SE.lproj"
-  install_resource "DBCamera/DBCamera/Localizations/tr.lproj"
-  install_resource "DBCamera/DBCamera/Filters/1977.acv"
-  install_resource "DBCamera/DBCamera/Filters/amaro.acv"
-  install_resource "DBCamera/DBCamera/Filters/Hudson.acv"
-  install_resource "DBCamera/DBCamera/Filters/mayfair.acv"
-  install_resource "DBCamera/DBCamera/Filters/Nashville.acv"
-  install_resource "DBCamera/DBCamera/Filters/Valencia.acv"
-  install_resource "DBCamera/DBCamera/Filters/Vignette.acv"
-  install_resource "GPUImage/framework/Resources/lookup.png"
-  install_resource "GPUImage/framework/Resources/lookup_amatorka.png"
-  install_resource "GPUImage/framework/Resources/lookup_miss_etikate.png"
-  install_resource "GPUImage/framework/Resources/lookup_soft_elegance_1.png"
-  install_resource "GPUImage/framework/Resources/lookup_soft_elegance_2.png"
   install_resource "JSQMessagesViewController/JSQMessagesViewController/Assets/JSQMessagesAssets.bundle"
   install_resource "JSQMessagesViewController/JSQMessagesViewController/Controllers/JSQMessagesViewController.xib"
   install_resource "JSQMessagesViewController/JSQMessagesViewController/Views/JSQMessagesCollectionViewCellIncoming.xib"
@@ -124,26 +104,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "DBCamera/DBCamera/Resources/DBCameraImages.xcassets"
-  install_resource "DBCamera/DBCamera/Localizations/en.lproj"
-  install_resource "DBCamera/DBCamera/Localizations/es.lproj"
-  install_resource "DBCamera/DBCamera/Localizations/it.lproj"
-  install_resource "DBCamera/DBCamera/Localizations/pt.lproj"
-  install_resource "DBCamera/DBCamera/Localizations/ru.lproj"
-  install_resource "DBCamera/DBCamera/Localizations/sv-SE.lproj"
-  install_resource "DBCamera/DBCamera/Localizations/tr.lproj"
-  install_resource "DBCamera/DBCamera/Filters/1977.acv"
-  install_resource "DBCamera/DBCamera/Filters/amaro.acv"
-  install_resource "DBCamera/DBCamera/Filters/Hudson.acv"
-  install_resource "DBCamera/DBCamera/Filters/mayfair.acv"
-  install_resource "DBCamera/DBCamera/Filters/Nashville.acv"
-  install_resource "DBCamera/DBCamera/Filters/Valencia.acv"
-  install_resource "DBCamera/DBCamera/Filters/Vignette.acv"
-  install_resource "GPUImage/framework/Resources/lookup.png"
-  install_resource "GPUImage/framework/Resources/lookup_amatorka.png"
-  install_resource "GPUImage/framework/Resources/lookup_miss_etikate.png"
-  install_resource "GPUImage/framework/Resources/lookup_soft_elegance_1.png"
-  install_resource "GPUImage/framework/Resources/lookup_soft_elegance_2.png"
   install_resource "JSQMessagesViewController/JSQMessagesViewController/Assets/JSQMessagesAssets.bundle"
   install_resource "JSQMessagesViewController/JSQMessagesViewController/Controllers/JSQMessagesViewController.xib"
   install_resource "JSQMessagesViewController/JSQMessagesViewController/Views/JSQMessagesCollectionViewCellIncoming.xib"
@@ -190,8 +150,10 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle"
 fi
 
+mkdir -p "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 if [[ "${ACTION}" == "install" ]]; then
+  mkdir -p "${INSTALL_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
   rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${INSTALL_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 fi
 rm -f "$RESOURCES_TO_COPY"
