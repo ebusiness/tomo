@@ -24,6 +24,7 @@
 		17B993011AF353D000204E97 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B993001AF353D000204E97 /* amrFileCodec.m */; };
 		17B993081AF3540D00204E97 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17B993071AF3540D00204E97 /* libopencore-amrnb.a */; };
 		17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993181AF3712C00204E97 /* OpenidController.swift */; };
+		1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18B8331B844665003BD469 /* CreatePostViewController.swift */; };
 		1F350B2B1B68D32800088C1E /* PostAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */; };
 		1F6AE7851B6F1A2300D7F488 /* PostAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */; };
 		1F79C1B21B5E0E22008800E1 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B11B5E0E22008800E1 /* FriendListViewController.swift */; };
@@ -132,6 +133,7 @@
 		17B993051AF353F600204E97 /* interf_enc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interf_enc.h; path = "opencore-amr/include/opencore-amrnb/interf_enc.h"; sourceTree = "<group>"; };
 		17B993071AF3540D00204E97 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libopencore-amrnb.a"; path = "opencore-amr/lib/libopencore-amrnb.a"; sourceTree = "<group>"; };
 		17B993181AF3712C00204E97 /* OpenidController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidController.swift; path = Classes/OpenidController.swift; sourceTree = "<group>"; };
+		1F18B8331B844665003BD469 /* CreatePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreatePostViewController.swift; path = Classes/CreatePostViewController.swift; sourceTree = "<group>"; };
 		1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostAnnotationView.swift; path = Classes/PostAnnotationView.swift; sourceTree = "<group>"; };
 		1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostAnnotation.swift; path = Classes/PostAnnotation.swift; sourceTree = "<group>"; };
 		1F79C1B11B5E0E22008800E1 /* FriendListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendListViewController.swift; path = Classes/FriendListViewController.swift; sourceTree = "<group>"; };
@@ -523,6 +525,7 @@
 				1FEE80ED1B4E60850061B913 /* PostCell.swift */,
 				1F8BF0101B53639F00090079 /* PostImageCell.swift */,
 				D0BA8DE61B55375A00271F2B /* PostViewController.swift */,
+				1F18B8331B844665003BD469 /* CreatePostViewController.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -802,6 +805,7 @@
 				1F985E5C1B60C19F008D5369 /* Double.swift in Sources */,
 				D0B6364E1B81A9C70012C4E8 /* URLSchemesController.swift in Sources */,
 				296D8BAB1AFC59F10058D400 /* BaseViewController.swift in Sources */,
+				1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */,
 				D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */,
 				1F985E6E1B60C19F008D5369 /* String.swift in Sources */,
 				1FCA1E631B71D0C8000F2936 /* CommentEntity.swift in Sources */,

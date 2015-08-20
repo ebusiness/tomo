@@ -57,8 +57,6 @@
 	<string>0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>为了提供更好的服务，現場Tomo希望使用您的位置信息</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -75,5 +73,11 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>为了浏览照片，現場Tomo希望访问您的相册</string>
+	<key>NSCameraUsageDescription</key>
+	<string>为了拍照，現場Tomo希望访问您的相机</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>为了提供更好的服务，現場Tomo希望使用您的位置信息</string>
 </dict>
 </plist>

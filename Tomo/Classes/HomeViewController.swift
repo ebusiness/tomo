@@ -32,8 +32,6 @@ final class HomeViewController: BaseTableViewController {
         var postImageCellNib = UINib(nibName: "PostImageCell", bundle: nil)
         tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
         
-//        tableView.backgroundView = UIImageView(image: UIImage(named: "pattern"))
-//        tableView.backgroundView = UIImageView(image: Util.imageWithColor(0xFFCCBC, alpha: 1, size: UIScreen.mainScreen().bounds.size))
         tableView.backgroundColor = UIColor.groupTableViewBackgroundColor()
         clearsSelectionOnViewWillAppear = false
 
@@ -242,7 +240,7 @@ extension HomeViewController {
     }
 }
 
-// MARK: Private methods
+// MARK: Internal methods
 
 extension HomeViewController {
     
