@@ -6,6 +6,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <ImageIO/ImageIO.h>
+#import <sys/xattr.h>
 #import <UIKit/UIKit.h>
 
 @interface FCFileManager : NSObject
@@ -41,18 +43,32 @@
 
 +(BOOL)isDirectoryItemAtPath:(NSString *)path;
 +(BOOL)isDirectoryItemAtPath:(NSString *)path error:(NSError **)error;
+
 +(BOOL)isEmptyItemAtPath:(NSString *)path;
 +(BOOL)isEmptyItemAtPath:(NSString *)path error:(NSError **)error;
+
 +(BOOL)isFileItemAtPath:(NSString *)path;
 +(BOOL)isFileItemAtPath:(NSString *)path error:(NSError **)error;
+
 +(BOOL)isExecutableItemAtPath:(NSString *)path;
 +(BOOL)isReadableItemAtPath:(NSString *)path;
 +(BOOL)isWritableItemAtPath:(NSString *)path;
 
++(NSArray *)listDirectoriesInDirectoryAtPath:(NSString *)path;
++(NSArray *)listDirectoriesInDirectoryAtPath:(NSString *)path deep:(BOOL)deep;
+
 +(NSArray *)listFilesInDirectoryAtPath:(NSString *)path;
++(NSArray *)listFilesInDirectoryAtPath:(NSString *)path deep:(BOOL)deep;
+
 +(NSArray *)listFilesInDirectoryAtPath:(NSString *)path withExtension:(NSString *)extension;
++(NSArray *)listFilesInDirectoryAtPath:(NSString *)path withExtension:(NSString *)extension deep:(BOOL)deep;
+
 +(NSArray *)listFilesInDirectoryAtPath:(NSString *)path withPrefix:(NSString *)prefix;
++(NSArray *)listFilesInDirectoryAtPath:(NSString *)path withPrefix:(NSString *)prefix deep:(BOOL)deep;
+
 +(NSArray *)listFilesInDirectoryAtPath:(NSString *)path withSuffix:(NSString *)suffix;
++(NSArray *)listFilesInDirectoryAtPath:(NSString *)path withSuffix:(NSString *)suffix deep:(BOOL)deep;
+
 +(NSArray *)listItemsInDirectoryAtPath:(NSString *)path deep:(BOOL)deep;
 
 +(BOOL)moveItemAtPath:(NSString *)path toPath:(NSString *)toPath;
@@ -96,8 +112,8 @@
 +(UIImageView *)readFileAtPathAsImageView:(NSString *)path;
 +(UIImageView *)readFileAtPathAsImageView:(NSString *)path error:(NSError **)error;
 
-+(NSDictionary *)readFileAtPathAsJSON:(NSString *)path;
-+(NSDictionary *)readFileAtPathAsJSON:(NSString *)path error:(NSError **)error;
++(NSJSONSerialization *)readFileAtPathAsJSON:(NSString *)path;
++(NSJSONSerialization *)readFileAtPathAsJSON:(NSString *)path error:(NSError **)error;
 
 +(NSMutableArray *)readFileAtPathAsMutableArray:(NSString *)path;
 
@@ -111,10 +127,13 @@
 
 +(BOOL)removeFilesInDirectoryAtPath:(NSString *)path;
 +(BOOL)removeFilesInDirectoryAtPath:(NSString *)path error:(NSError **)error;
+
 +(BOOL)removeFilesInDirectoryAtPath:(NSString *)path withExtension:(NSString *)extension;
 +(BOOL)removeFilesInDirectoryAtPath:(NSString *)path withExtension:(NSString *)extension error:(NSError **)error;
+
 +(BOOL)removeFilesInDirectoryAtPath:(NSString *)path withPrefix:(NSString *)prefix;
 +(BOOL)removeFilesInDirectoryAtPath:(NSString *)path withPrefix:(NSString *)prefix error:(NSError **)error;
+
 +(BOOL)removeFilesInDirectoryAtPath:(NSString *)path withSuffix:(NSString *)suffix;
 +(BOOL)removeFilesInDirectoryAtPath:(NSString *)path withSuffix:(NSString *)suffix error:(NSError **)error;
 
@@ -127,6 +146,23 @@
 +(BOOL)renameItemAtPath:(NSString *)path withName:(NSString *)name;
 +(BOOL)renameItemAtPath:(NSString *)path withName:(NSString *)name error:(NSError **)error;
 
++(NSString *)sizeFormatted:(NSNumber *)size;
+
++(NSString *)sizeFormattedOfDirectoryAtPath:(NSString *)path;
++(NSString *)sizeFormattedOfDirectoryAtPath:(NSString *)path error:(NSError **)error;
+
++(NSString *)sizeFormattedOfFileAtPath:(NSString *)path;
++(NSString *)sizeFormattedOfFileAtPath:(NSString *)path error:(NSError **)error;
+
++(NSString *)sizeFormattedOfItemAtPath:(NSString *)path;
++(NSString *)sizeFormattedOfItemAtPath:(NSString *)path error:(NSError **)error;
+
++(NSNumber *)sizeOfDirectoryAtPath:(NSString *)path;
++(NSNumber *)sizeOfDirectoryAtPath:(NSString *)path error:(NSError **)error;
+
++(NSNumber *)sizeOfFileAtPath:(NSString *)path;
++(NSNumber *)sizeOfFileAtPath:(NSString *)path error:(NSError **)error;
+
 +(NSNumber *)sizeOfItemAtPath:(NSString *)path;
 +(NSNumber *)sizeOfItemAtPath:(NSString *)path error:(NSError **)error;
 
@@ -134,6 +170,16 @@
 
 +(BOOL)writeFileAtPath:(NSString *)path content:(NSObject *)content;
 +(BOOL)writeFileAtPath:(NSString *)path content:(NSObject *)content error:(NSError **)error;
+
++(NSDictionary *)metadataOfImageAtPath:(NSString *)path;
++(NSDictionary *)exifDataOfImageAtPath:(NSString *)path;
++(NSDictionary *)tiffDataOfImageAtPath:(NSString *)path;
+
++(NSDictionary *)xattrOfItemAtPath:(NSString *)path;
++(NSString *)xattrOfItemAtPath:(NSString *)path getValueForKey:(NSString *)key;
++(BOOL)xattrOfItemAtPath:(NSString *)path hasValueForKey:(NSString *)key;
++(BOOL)xattrOfItemAtPath:(NSString *)path removeValueForKey:(NSString *)key;
++(BOOL)xattrOfItemAtPath:(NSString *)path setValue:(NSString *)value forKey:(NSString *)key;
 
 @end
 

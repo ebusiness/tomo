@@ -274,7 +274,32 @@
 }
 
 
++(NSArray *)listDirectoriesInDirectoryAtPath:(NSString *)path
+{
+    return [self listDirectoriesInDirectoryAtPath:path deep:NO];
+}
+
+
++(NSArray *)listDirectoriesInDirectoryAtPath:(NSString *)path deep:(BOOL)deep
+{
+    NSArray *subpaths = [self listItemsInDirectoryAtPath:path deep:deep];
+    
+    return [subpaths filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        
+        NSString *subpath = (NSString *)evaluatedObject;
+        
+        return [self isDirectoryItemAtPath:subpath];
+    }]];
+}
+
+
 +(NSArray *)listFilesInDirectoryAtPath:(NSString *)path
+{
+    return [self listFilesInDirectoryAtPath:path deep:NO];
+}
+
+
++(NSArray *)listFilesInDirectoryAtPath:(NSString *)path deep:(BOOL)deep
 {
     NSArray *subpaths = [self listItemsInDirectoryAtPath:path deep:NO];
     
@@ -288,6 +313,12 @@
 
 
 +(NSArray *)listFilesInDirectoryAtPath:(NSString *)path withExtension:(NSString *)extension
+{
+    return [self listFilesInDirectoryAtPath:path withExtension:extension deep:NO];
+}
+
+
++(NSArray *)listFilesInDirectoryAtPath:(NSString *)path withExtension:(NSString *)extension deep:(BOOL)deep
 {
     NSArray *subpaths = [self listFilesInDirectoryAtPath:path];
     
@@ -304,6 +335,12 @@
 
 +(NSArray *)listFilesInDirectoryAtPath:(NSString *)path withPrefix:(NSString *)prefix
 {
+    return [self listFilesInDirectoryAtPath:path withPrefix:prefix deep:NO];
+}
+
+
++(NSArray *)listFilesInDirectoryAtPath:(NSString *)path withPrefix:(NSString *)prefix deep:(BOOL)deep
+{
     NSArray *subpaths = [self listFilesInDirectoryAtPath:path];
     
     return [subpaths filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
@@ -316,6 +353,12 @@
 
 
 +(NSArray *)listFilesInDirectoryAtPath:(NSString *)path withSuffix:(NSString *)suffix
+{
+    return [self listFilesInDirectoryAtPath:path withSuffix:suffix deep:NO];
+}
+
+
++(NSArray *)listFilesInDirectoryAtPath:(NSString *)path withSuffix:(NSString *)suffix deep:(BOOL)deep
 {
     NSArray *subpaths = [self listFilesInDirectoryAtPath:path];
     
@@ -574,13 +617,13 @@
 }
 
 
-+(NSDictionary *)readFileAtPathAsJSON:(NSString *)path
++(NSJSONSerialization *)readFileAtPathAsJSON:(NSString *)path
 {
     return [self readFileAtPathAsJSON:path error:nil];
 }
 
 
-+(NSDictionary *)readFileAtPathAsJSON:(NSString *)path error:(NSError **)error
++(NSJSONSerialization *)readFileAtPathAsJSON:(NSString *)path error:(NSError **)error
 {
     NSData *data = [self readFileAtPathAsData:path error:error];
     
@@ -590,7 +633,7 @@
         
         if([NSJSONSerialization isValidJSONObject:json])
         {
-            return (NSDictionary *)json;
+            return json;
         }
     }
     
@@ -746,6 +789,148 @@
 }
 
 
++(NSString *)sizeFormatted:(NSNumber *)size
+{
+    //TODO if OS X 10.8 or iOS 6
+    //return [NSByteCountFormatter stringFromByteCount:[size intValue] countStyle:NSByteCountFormatterCountStyleFile];
+    
+    double convertedValue = [size doubleValue];
+    int multiplyFactor = 0;
+    
+    NSArray *tokens = @[@"bytes", @"KB", @"MB", @"GB", @"TB"];
+    
+    while(convertedValue > 1024){
+        convertedValue /= 1024;
+        
+        multiplyFactor++;
+    }
+    
+    NSString *sizeFormat = ((multiplyFactor > 1) ? @"%4.2f %@" : @"%4.0f %@");
+    
+    return [NSString stringWithFormat:sizeFormat, convertedValue, tokens[multiplyFactor]];
+}
+
+
++(NSString *)sizeFormattedOfDirectoryAtPath:(NSString *)path
+{
+    return [self sizeFormattedOfDirectoryAtPath:path error:nil];
+}
+
+
++(NSString *)sizeFormattedOfDirectoryAtPath:(NSString *)path error:(NSError **)error
+{
+    NSNumber *size = [self sizeOfDirectoryAtPath:path error:error];
+    
+    if(size != nil && error == nil)
+    {
+        return [self sizeFormatted:size];
+    }
+    
+    return nil;
+}
+
+
++(NSString *)sizeFormattedOfFileAtPath:(NSString *)path
+{
+    return [self sizeFormattedOfFileAtPath:path error:nil];
+}
+
+
++(NSString *)sizeFormattedOfFileAtPath:(NSString *)path error:(NSError **)error
+{
+    NSNumber *size = [self sizeOfFileAtPath:path error:error];
+    
+    if(size != nil && error == nil)
+    {
+        return [self sizeFormatted:size];
+    }
+    
+    return nil;
+}
+
+
++(NSString *)sizeFormattedOfItemAtPath:(NSString *)path
+{
+    return [self sizeFormattedOfItemAtPath:path error:nil];
+}
+
+
++(NSString *)sizeFormattedOfItemAtPath:(NSString *)path error:(NSError **)error
+{
+    NSNumber *size = [self sizeOfItemAtPath:path error:error];
+    
+    if(size != nil && error == nil)
+    {
+        return [self sizeFormatted:size];
+    }
+    
+    return nil;
+}
+
+
++(NSNumber *)sizeOfDirectoryAtPath:(NSString *)path
+{
+    return [self sizeOfDirectoryAtPath:path error:nil];
+}
+
+
++(NSNumber *)sizeOfDirectoryAtPath:(NSString *)path error:(NSError **)error
+{
+    if([self isDirectoryItemAtPath:path error:error])
+    {
+        if(error == nil)
+        {
+            NSNumber *size = [self sizeOfItemAtPath:path error:error];
+            double sizeValue = [size doubleValue];
+            
+            if(error == nil)
+            {
+                NSArray *subpaths = [self listItemsInDirectoryAtPath:path deep:YES];
+                NSUInteger subpathsCount = [subpaths count];
+                
+                for(NSUInteger i = 0; i < subpathsCount; i++)
+                {
+                    NSString *subpath = [subpaths objectAtIndex:i];
+                    NSNumber *subpathSize = [self sizeOfItemAtPath:subpath error:error];
+                    
+                    if(error == nil)
+                    {
+                        sizeValue += [subpathSize doubleValue];
+                    }
+                    else {
+                        return nil;
+                    }
+                }
+                
+                return [NSNumber numberWithDouble:sizeValue];
+            }
+        }
+    }
+    
+    return nil;
+}
+
+
++(NSNumber *)sizeOfFileAtPath:(NSString *)path
+{
+    return [self sizeOfFileAtPath:path error:nil];
+}
+
+
++(NSNumber *)sizeOfFileAtPath:(NSString *)path error:(NSError **)error
+{
+    if([self isFileItemAtPath:path error:error])
+    {
+        if(error == nil)
+        {
+            return [self sizeOfItemAtPath:path error:error];
+        }
+    }
+    
+    return nil;
+}
+
+
 +(NSNumber *)sizeOfItemAtPath:(NSString *)path
 {
     return [self sizeOfItemAtPath:path error:nil];
@@ -836,6 +1021,143 @@
     }
 
     return YES;
+}
+
+
++(NSDictionary *)metadataOfImageAtPath:(NSString *)path
+{
+    if([self isFileItemAtPath:path])
+    {
+        //http://blog.depicus.com/getting-exif-data-from-images-on-ios/
+        
+        NSURL *url = [self urlForItemAtPath:path];
+        CGImageSourceRef sourceRef = CGImageSourceCreateWithURL((CFURLRef)url, NULL);
+        NSDictionary *metadata = (NSDictionary *)CFBridgingRelease(CGImageSourceCopyPropertiesAtIndex(sourceRef, 0, NULL));
+        
+        return metadata;
+    }
+    
+    return nil;
+}
+
+
++(NSDictionary *)exifDataOfImageAtPath:(NSString *)path
+{
+    NSDictionary *metadata = [self metadataOfImageAtPath:path];
+    
+    if(metadata)
+    {
+        return [metadata objectForKey:(NSString *)kCGImagePropertyExifDictionary];
+    }
+    
+    return nil;
+}
+
+
++(NSDictionary *)tiffDataOfImageAtPath:(NSString *)path
+{
+    NSDictionary *metadata = [self metadataOfImageAtPath:path];
+    
+    if(metadata)
+    {
+        return [metadata objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
+    }
+    
+    return nil;
+}
+
+
++(NSDictionary *)xattrOfItemAtPath:(NSString *)path
+{
+    NSMutableDictionary *values = [[NSMutableDictionary alloc] init];
+    
+    const char *upath = [path UTF8String];
+    
+    ssize_t ukeysSize = listxattr(upath, NULL, 0, 0);
+    
+    if( ukeysSize > 0 )
+    {
+        char *ukeys = malloc(ukeysSize);
+        
+        ukeysSize = listxattr(upath, ukeys, ukeysSize, 0);
+        
+        NSUInteger keyOffset = 0;
+        NSString *key;
+        NSString *value;
+        
+        while(keyOffset < ukeysSize)
+        {
+            key = [NSString stringWithUTF8String:(keyOffset + ukeys)];
+            keyOffset += ([key length] + 1);
+            
+            value = [self xattrOfItemAtPath:path getValueForKey:key];
+            [values setObject:value forKey:key];
+        }
+        
+        free(ukeys);
+    }
+    
+    return [NSDictionary dictionaryWithObjects:[values allKeys] forKeys:[values allValues]];
+}
+
+
++(NSString *)xattrOfItemAtPath:(NSString *)path getValueForKey:(NSString *)key
+{
+    NSString *value = nil;
+    
+    const char *ukey = [key UTF8String];
+    const char *upath = [path UTF8String];
+    
+    ssize_t uvalueSize = getxattr(upath, ukey, NULL, 0, 0, 0);
+    
+    if( uvalueSize > -1 )
+    {
+        if( uvalueSize == 0 )
+        {
+            value = @"";
+        }
+        else {
+            
+            char *uvalue = malloc(uvalueSize);
+            
+            if( uvalue )
+            {
+                getxattr(upath, ukey, uvalue, uvalueSize, 0, 0);
+                uvalue[uvalueSize] = '\0';
+                value = [NSString stringWithUTF8String:uvalue];
+                free(uvalue);
+            }
+        }
+    }
+    
+    return value;
+}
+
+
++(BOOL)xattrOfItemAtPath:(NSString *)path hasValueForKey:(NSString *)key
+{
+    return ([self xattrOfItemAtPath:path getValueForKey:key] != nil);
+}
+
+
++(BOOL)xattrOfItemAtPath:(NSString *)path removeValueForKey:(NSString *)key
+{
+    int result = removexattr([path UTF8String], [key UTF8String], 0);
+    
+    return (result == 0);
+}
+
+
++(BOOL)xattrOfItemAtPath:(NSString *)path setValue:(NSString *)value forKey:(NSString *)key
+{
+    if(value == nil)
+    {
+        return NO;
+    }
+    
+    int result = setxattr([path UTF8String], [key UTF8String], [value UTF8String], [value length], 0, 0);
+    
+    return (result == 0);
 }
 
 
