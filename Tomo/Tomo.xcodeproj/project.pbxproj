@@ -91,7 +91,6 @@
 		29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
-		D00E0FD61B3D3B4D00AEB521 /* DBCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00E0FD51B3D3B4D00AEB521 /* DBCameraController.swift */; };
 		D04608D01B6B9DA700D30B77 /* RestKitErrorHanding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04608CF1B6B9DA700D30B77 /* RestKitErrorHanding.swift */; };
 		D04608D21B6BA33F00D30B77 /* TestDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404B1ACE68C500D2A338 /* TestDataTests.swift */; };
 		D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D057BAF11B670687007D14D2 /* RequestFriendCell.swift */; };
@@ -215,7 +214,6 @@
 		29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTableViewController.swift; path = Classes/BaseTableViewController.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		D00E0FD51B3D3B4D00AEB521 /* DBCameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBCameraController.swift; path = Classes/DBCameraController.swift; sourceTree = "<group>"; };
 		D04608CF1B6B9DA700D30B77 /* RestKitErrorHanding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestKitErrorHanding.swift; path = Classes/RestKitErrorHanding.swift; sourceTree = "<group>"; };
 		D057BAF11B670687007D14D2 /* RequestFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestFriendCell.swift; path = Classes/RequestFriendCell.swift; sourceTree = "<group>"; };
 		D073E6F71B84C1BF00066F42 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraController.swift; path = Classes/CameraController.swift; sourceTree = "<group>"; };
@@ -474,7 +472,6 @@
 				17B993181AF3712C00204E97 /* OpenidController.swift */,
 				29C1DA781AD36659009A02CC /* S3Controller.swift */,
 				29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */,
-				D00E0FD51B3D3B4D00AEB521 /* DBCameraController.swift */,
 				D04608CF1B6B9DA700D30B77 /* RestKitErrorHanding.swift */,
 				D0E788741B6F5BD3009255B9 /* AlamofireController.swift */,
 				D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */,
@@ -842,7 +839,6 @@
 				1F985E6C1B60C19F008D5369 /* Sequence.swift in Sources */,
 				1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */,
 				D0E788751B6F5BD3009255B9 /* AlamofireController.swift in Sources */,
-				D00E0FD61B3D3B4D00AEB521 /* DBCameraController.swift in Sources */,
 				1F8BF0111B53639F00090079 /* PostImageCell.swift in Sources */,
 				D07793871B704F410056B7CB /* DatePickerViewController.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,

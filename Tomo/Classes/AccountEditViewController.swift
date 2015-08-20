@@ -53,7 +53,7 @@ class AccountEditViewController: MyAccountBaseController {
             }
         }
     }
-    var isAvatar = true
+    
     var headerView:MyAccountHeaderViewController! // for update image realtime when take a photo
     
     override func viewDidLoad() {
@@ -222,15 +222,40 @@ extension AccountEditViewController {
     
     func imageViewTapped(isAvatar:Bool) {
         
-        self.isAvatar = isAvatar
+        let block:CameraController.CameraBlock = { (image,_) ->() in
+            let image = image!.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
+            
+            let name = NSUUID().UUIDString
+            let path = NSTemporaryDirectory() + name
+            image.saveToPath(path)
+            
+            let remotePath =  isAvatar ? Constants.avatarPath(fileName: name) : Constants.coverPath(fileName: name)
+            
+            S3Controller.uploadFile(name: name, localPath: path, remotePath: remotePath, done: { (error) -> Void in
+                #if DEBUG
+                    println(error)
+                    println("done")
+                #endif
+                
+                if error == nil {
+                    if isAvatar {
+                        self.user.photo = name
+                    } else {
+                        self.user.cover = name
+                    }
+                    self.updateUser()
+                }
+            })
+
+        }
         
         Util.alertActionSheet(self, optionalDict: [
             
             "拍摄":{ (_) -> Void in
-                DBCameraController.openCamera(self, delegate: self,isQuad: isAvatar)
+                CameraController.sharedInstance.open(self, sourceType: .Camera, allowsEditing: isAvatar, completion: block)
             },
             "从相册选择":{ (_) -> () in
-                DBCameraController.openLibrary(self, delegate: self,isQuad: isAvatar)
+                CameraController.sharedInstance.open(self, sourceType: .SavedPhotosAlbum, allowsEditing: isAvatar, completion: block)
             }
             ])
     }
@@ -284,45 +309,4 @@ extension AccountEditViewController {
         }
     }
     
-}
-
-// MARK: - DBCameraViewControllerDelegate
-
-extension AccountEditViewController: DBCameraViewControllerDelegate {
-    
-    func camera(cameraViewController: AnyObject!, didFinishWithImage image: UIImage!, withMetadata metadata: [NSObject : AnyObject]!) {
-        let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
-        
-        let name = NSUUID().UUIDString
-        let path = NSTemporaryDirectory() + name
-        
-        let newImage = image.normalizedImage()
-        
-        newImage.saveToPath(path)
-        
-        self.presentedViewController?.dismissViewControllerAnimated(false, completion: { () -> Void in
-            let remotePath =  self.isAvatar ? Constants.avatarPath(fileName: name) : Constants.coverPath(fileName: name)
-            
-            S3Controller.uploadFile(name: name, localPath: path, remotePath: remotePath, done: { (error) -> Void in
-                #if DEBUG
-                    println(error)
-                    println("done")
-                #endif
-                
-                if error == nil {
-                    if self.isAvatar {
-                        self.user.photo = name
-                    } else {
-                        self.user.cover = name
-                    }
-                    self.updateUser()
-                }
-            })
-        })
-    }
-    
-    func dismissCamera(cameraViewController: AnyObject!) {
-        self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
-        cameraViewController.restoreFullScreenMode()
-    }
 }

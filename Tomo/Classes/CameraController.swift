@@ -81,14 +81,16 @@ extension CameraController: UIImagePickerControllerDelegate, UINavigationControl
             self.completion(image: nil, videoPath: path)
             
         } else {
-            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-                self.completion(image: image.normalizedImage(), videoPath: nil)
+            var imageTaked:UIImage!
+            if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+                imageTaked = image
             } else {
-                let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-                self.completion(image: image.normalizedImage(), videoPath: nil)
+                imageTaked = info[UIImagePickerControllerOriginalImage] as! UIImage
             }
+            if picker.sourceType == .Camera {
+                UIImageWriteToSavedPhotosAlbum(imageTaked, nil, nil, nil)
+            }
+            self.completion(image: imageTaked.normalizedImage(), videoPath: nil)
         }
     }
     

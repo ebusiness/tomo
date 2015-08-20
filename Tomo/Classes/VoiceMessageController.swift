@@ -93,7 +93,7 @@ extension MessageViewController {
                 CameraController.sharedInstance.open(self, sourceType: .Camera, withVideo: true, completion: block)
             },
             "从相册选择":{ (_) -> Void in
-                CameraController.sharedInstance.open(self, sourceType: .PhotoLibrary, completion: block)  
+                CameraController.sharedInstance.open(self, sourceType: .SavedPhotosAlbum, completion: block)  
             },
             "语音输入":{ (_) -> Void in
                 if btn_voice == nil {

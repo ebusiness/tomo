@@ -448,12 +448,17 @@ extension MessageViewController {
                     mediaItem = item.media() as? JSQMediaItem,
                     media = MediaMessage.mediaMessage(item.message.content)
                     
-                    where item.brokenImage == nil && (media == .Image || media == .Video) {
-                    
+                    where media == .Image || media == .Video {
+                        
+                        var galleryItem: MHGalleryItem!
+                        if let brokenImage = item.brokenImage {
+                            galleryItem = MHGalleryItem(image: brokenImage)
+                            items.append(galleryItem)
+                            continue
+                        }
                         if self.messages[indexPath.item] == item {
                             index = items.count
                         }
-                        var galleryItem: MHGalleryItem!
                         if mediaItem is JSQPhotoMediaItem {
                             galleryItem = MHGalleryItem(image: ( mediaItem as! JSQPhotoMediaItem).image)
                         } else if mediaItem is TomoVideoMediaItem {

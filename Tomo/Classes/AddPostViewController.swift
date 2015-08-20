@@ -105,35 +105,26 @@ class AddPostViewController: BaseViewController {
     
     @IBAction func cameraOnClick(sender: AnyObject) {
         
-        var optional = Dictionary<String,((UIAlertAction!) -> Void)!>()
         
-        
-        let avstatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
-        if avstatus !=  .NotDetermined && avstatus !=  .Authorized {
-            Util.showInfo("请允许本App使用相机")
-        } else {
+        let block:CameraController.CameraBlock = { (image,_) ->() in
+            let image = image!.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
             
-            optional["拍摄"] = { (_) -> () in
-                DBCameraController.openCamera(self, delegate: self)
+            self.imageList.insert(image, atIndex: 0)
+            self.assetUrlList.insert(nil, atIndex: 0)
+            self.imageListSelected.append(image)
+            self.insertIntoImageListView (image: image)
+            self.hideHeaderView(false)
+        }
+        
+        Util.alertActionSheet(self, optionalDict: [
+            
+            "拍摄":{ (_) -> Void in
+                CameraController.sharedInstance.open(self, sourceType: .Camera, completion: block)
+            },
+            "从相册选择":{ (_) -> () in
+                CameraController.sharedInstance.open(self, sourceType: .SavedPhotosAlbum, completion: block)
             }
-            
-        }
-        
-        let status = ALAssetsLibrary.authorizationStatus()
-        if status != .NotDetermined && status != .Authorized {
-            Util.showInfo("请允许本App访问相册")
-        } else {
-            
-            optional["从相册选择"] = { (_) -> () in
-                DBCameraController.openLibrary(self, delegate: self)
-            }
-        }
-        
-        if optional.count > 0 {
-            
-            Util.alertActionSheet(self, optionalDict:optional)
-            
-        }
+            ])
         
     }
     
@@ -227,6 +218,43 @@ extension AddPostViewController {
         }
         
         imageListView.contentSize.width = scrollWidth
+    }
+    
+    func insertIntoImageListView (#image: UIImage!){
+        
+        self.imageListView.setContentOffset(CGPointZero, animated: true)
+        
+        let height = imageListView.frame.size.height
+        let width = height / 3 * 4
+        
+        let constraints = self.imageListView.constraints().filter{ $0.firstAttribute == .Leading }
+        
+        for constraint in constraints {
+            if let constraint = constraint as? NSLayoutConstraint {
+                constraint.constant = constraint.constant + width + 5
+            }
+        }
+        
+        let imgView = UIImageView(frame: CGRectZero )
+        imgView.image = image
+        imgView.contentMode = UIViewContentMode.ScaleAspectFill
+        imgView.clipsToBounds = true
+        imgView.layer.borderColor = UIColor.redColor().CGColor
+        imgView.layer.borderWidth = 2
+        let tap = UITapGestureRecognizer(target: self, action: Selector("imageViewTapped:"))
+        imgView.userInteractionEnabled = true
+        imgView.addGestureRecognizer(tap)
+        
+        self.imageListView.addSubview(imgView)
+        
+        imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
+        imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: width))
+        imageListView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: imageListView, attribute: .Leading, multiplier: 1.0, constant: 0 ))
+        imageListView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Height, relatedBy: .Equal, toItem: imageListView, attribute: .Height, multiplier: 1.0, constant: 0))
+        imageListView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterY, relatedBy: .Equal, toItem: imageListView, attribute: .CenterY, multiplier: 1.0, constant: 0))
+        
+        imageListView.contentSize.width = imageListView.contentSize.width + width + 5
     }
     
     func imageViewTapped(sender: UITapGestureRecognizer) {
@@ -348,68 +376,6 @@ extension AddPostViewController: UITextViewDelegate {
         } else {
             submitButton.enabled = false
         }
-    }
-}
-
-
-
-extension AddPostViewController: DBCameraViewControllerDelegate {
-    
-    func camera(cameraViewController: AnyObject!, didFinishWithImage image: UIImage!, withMetadata metadata: [NSObject : AnyObject]!) {
-        let image = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth * image.size.height / image.size.width ))
-        
-        let newImage = image.normalizedImage()
-        
-        self.imageList.insert(newImage, atIndex: 0)
-        self.assetUrlList.insert(nil, atIndex: 0)
-        self.imageListSelected.append(newImage)
-        self.insertIntoImageListView (image: newImage)
-        self.hideHeaderView(false)
-        
-        self.dismissCamera(cameraViewController)
-        
-    }
-    
-    func dismissCamera(cameraViewController: AnyObject!) {
-        self.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
-        cameraViewController.restoreFullScreenMode()
-    }
-    
-    func insertIntoImageListView (#image: UIImage!){
-        
-        self.imageListView.setContentOffset(CGPointZero, animated: true)
-        
-        let height = imageListView.frame.size.height
-        let width = height / 3 * 4
-        
-        let constraints = self.imageListView.constraints().filter{ $0.firstAttribute == .Leading }
-        
-        for constraint in constraints {
-            if let constraint = constraint as? NSLayoutConstraint {
-                constraint.constant = constraint.constant + width + 5
-            }
-        }
-        
-        let imgView = UIImageView(frame: CGRectZero )
-        imgView.image = image
-        imgView.contentMode = UIViewContentMode.ScaleAspectFill
-        imgView.clipsToBounds = true
-        imgView.layer.borderColor = UIColor.redColor().CGColor
-        imgView.layer.borderWidth = 2
-        let tap = UITapGestureRecognizer(target: self, action: Selector("imageViewTapped:"))
-        imgView.userInteractionEnabled = true
-        imgView.addGestureRecognizer(tap)
-        
-        self.imageListView.addSubview(imgView)
-        
-        imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        
-        imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: width))
-        imageListView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: imageListView, attribute: .Leading, multiplier: 1.0, constant: 0 ))
-        imageListView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Height, relatedBy: .Equal, toItem: imageListView, attribute: .Height, multiplier: 1.0, constant: 0))
-        imageListView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterY, relatedBy: .Equal, toItem: imageListView, attribute: .CenterY, multiplier: 1.0, constant: 0))
-        
-        imageListView.contentSize.width = imageListView.contentSize.width + width + 5
     }
 }
 
