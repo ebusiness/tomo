@@ -119,4 +119,8 @@ extension UserEntity {
         self.invited?.remove(uid)
         self.friends?.remove(uid)
     }
+    
+    func getNotificationCount() -> Int {        
+        return me.friendInvitations.count + me.newMessages.count
+    }
 }

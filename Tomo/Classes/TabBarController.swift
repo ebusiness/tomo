@@ -95,12 +95,11 @@ class TabBarController: UITabBarController {
     
     func updateBadgeNumber() {
 
-        var invitationCount = me.friendInvitations.count ?? 0
-        var messageCount = me.newMessages.count
+        var notificationCount = me.getNotificationCount()
         
         if let vc = viewControllers?[1] as? UIViewController {
-            if invitationCount + messageCount > 0 {
-                vc.tabBarItem.badgeValue = String(invitationCount + messageCount)
+            if notificationCount > 0 {
+                vc.tabBarItem.badgeValue = String(notificationCount)
             } else {
                 vc.tabBarItem.badgeValue = nil
             }

@@ -28,8 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidEnterBackground(application: UIApplication) {
         
-//        application.applicationIconBadgeNumber = me.notificationCount
-        
+        if let rootvc = window?.rootViewController as? TabBarController{
+            application.applicationIconBadgeNumber = me.getNotificationCount()
+        }
     }
     
     func application( application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData ) {
