@@ -192,7 +192,7 @@ extension Util {
     }
     
     //ActionSheet
-    class func alertActionSheet(parentvc:UIViewController,optionalDict: Dictionary<String,((UIAlertAction!) -> Void)!>){
+    class func alertActionSheet(parentvc: UIViewController, optionalDict: Dictionary<String,((UIAlertAction!) -> Void)!>){
         
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
@@ -206,11 +206,11 @@ extension Util {
         parentvc.presentViewController(alertController, animated: true, completion: nil)
     }
     
-    class func alert(parentvc:UIViewController,title:String,message:String,action:((UIAlertAction!) -> Void)!){
+    class func alert(parentvc: UIViewController, title: String, message: String, cancel: String = "取消",ok: String = "确定", action:((UIAlertAction!) -> Void)!){
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         
-        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
-        let okAction = UIAlertAction(title: "确定", style: .Destructive, handler: action)
+        let cancelAction = UIAlertAction(title: cancel, style: .Cancel, handler: nil)
+        let okAction = UIAlertAction(title: ok, style: .Destructive, handler: action)
         
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)

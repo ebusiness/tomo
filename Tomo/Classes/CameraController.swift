@@ -8,6 +8,7 @@
 
 import UIKit
 import MobileCoreServices
+import Photos
 import AVFoundation
 
 class CameraController: NSObject {
@@ -15,6 +16,7 @@ class CameraController: NSObject {
     
     private let picker = UIImagePickerController()
     private var completion: CameraBlock!
+    private var vc:UIViewController!
     
     class var sharedInstance : CameraController {
         struct Static {
@@ -29,28 +31,67 @@ class CameraController: NSObject {
         picker.videoMaximumDuration = 10
     }
     
-    func open(vc:UIViewController,sourceType: UIImagePickerControllerSourceType, withVideo:Bool = false, allowsEditing: Bool = false, completion: CameraBlock ){
-        
-        if sourceType == .Camera {
-            let avstatus = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
-            if avstatus !=  .NotDetermined && avstatus !=  .Authorized {
-                Util.showInfo("请允许本App使用相机")
-                return
-            }
-        } else {
-            let status = ALAssetsLibrary.authorizationStatus()
-            if status != .NotDetermined && status != .Authorized {
-                Util.showInfo("请允许本App访问相册")
-                return
-            }
-        }
-        
+    func open(vc:UIViewController, sourceType: UIImagePickerControllerSourceType, withVideo:Bool = false, allowsEditing: Bool = false, completion: CameraBlock ){
         self.completion = completion
         picker.sourceType = sourceType
         picker.allowsEditing = allowsEditing
         picker.mediaTypes = [kUTTypeImage]
         if withVideo { picker.mediaTypes.append(kUTTypeMovie) }
-        vc.presentViewController(picker, animated: true, completion: nil)
+        self.vc = vc
+        
+        self.presentViewController()
+    }
+    
+    private func presentViewController(){
+        
+        let status = picker.sourceType == .Camera ?
+            AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo).rawValue : PHPhotoLibrary.authorizationStatus().rawValue
+        
+        switch status {
+        case 0://NotDetermined
+            self.requestAuthorization()
+        case 1://Restricted
+            fallthrough
+        case 2://Denied
+            showServiceDisabledAlert()
+        case 3://Authorized
+            if UIImagePickerController.isSourceTypeAvailable(picker.sourceType) {
+                vc.presentViewController(picker, animated: true, completion: nil)
+            }
+        default:
+            break
+        }
+    }
+    
+    private func requestAuthorization(){
+        if picker.sourceType == .Camera {
+            AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo) { granted in
+                if granted {
+                    self.presentViewController()
+                } else {
+                    self.showServiceDisabledAlert()
+                }
+            }
+        } else {
+            PHPhotoLibrary.requestAuthorization({ status in
+                if status == .Authorized {
+                    self.presentViewController()
+                } else {
+                    self.showServiceDisabledAlert()
+                }
+            })
+        }
+    }
+    
+    private func showServiceDisabledAlert() {
+        
+        let title = picker.sourceType == .Camera ? "現場Tomo需要访问您的相机" : "現場Tomo需要访问您的照片",
+        message = picker.sourceType == .Camera ? "为了能够拍照，请您允许現場Tomo访问您的相机" : "为了能够在您发表的帖子中加入照片，请您允许現場Tomo访问您的照片"
+        
+        Util.alert(vc, title: title, message: message, cancel: "不允许", ok: "允许") { _ in
+            let url = NSURL(string: UIApplicationOpenSettingsURLString)
+            UIApplication.sharedApplication().openURL(url!)
+        }
     }
 }
 

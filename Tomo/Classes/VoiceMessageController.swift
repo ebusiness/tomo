@@ -148,8 +148,7 @@ extension MessageViewController {
         btn_voice?.addSubview(label)
         
         btn_voice?.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
-        
-        
+
         btn_voice?.addGestureRecognizer(UILongPressGestureRecognizer(target: self,action:"record:"))
         //btn_voice?.addTarget(self, action: "holdOn", forControlEvents: UIControlEvents.TouchDown)
         //btn_voice?.addTarget(self, action: "sendVoice", forControlEvents: UIControlEvents.TouchUpInside)
