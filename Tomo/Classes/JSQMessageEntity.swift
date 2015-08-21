@@ -131,3 +131,78 @@ class JSQMessageEntity:NSObject, JSQMessageData {
         self.download(completion)
     }
 }
+
+
+enum MediaMessage: Int {
+    case Image, Voice, Video
+    
+    static let medias = [Image, Voice, Video]
+    
+    static func isMediaMessage(str: String) -> Bool {
+        for media in medias {
+            if str.hasPrefix(media.messagePrefix) {
+                return true
+            }
+        }
+        return false
+    }
+    
+    static func mediaMessage(str: String) -> MediaMessage? {
+        for media in medias {
+            if str.hasPrefix(media.messagePrefix) {
+                return media
+            }
+        }
+        
+        return nil
+    }
+    
+    static func fileNameOfMessage(str: String) -> String? {
+        for media in medias {
+            if str.hasPrefix(media.messagePrefix) {
+                return str.substringFromIndex(advance(str.startIndex, media.messagePrefix.length))
+            }
+        }
+        return nil
+    }
+    
+    static func messagePrefix(str: String) -> String? {
+        return mediaMessage(str)?.messagePrefix
+    }
+    
+    var messagePrefix: String {
+        get {
+            switch self {
+            case .Image:
+                return "[画像]"
+            case .Voice:
+                return "[音声]"
+            case .Video:
+                return "[動画]"
+            }
+        }
+    }
+    
+    static func remotePath(#fileName: String, type: MediaMessage) -> String {
+        switch type {
+        case .Image:
+            return "/messages/images/\(fileName)"
+        case .Voice:
+            return "/messages/voices/\(fileName)"
+        case .Video:
+            return "/messages/videos/\(fileName)"
+        }
+    }
+    
+    static func mediaMessageStr(#fileName: String, type: MediaMessage) -> String {
+        return "\(type.messagePrefix)\(fileName)"
+    }
+    
+    static func fullPath(str: String) -> String {
+        return kS3BasePath.stringByAppendingPathComponent(AmazonS3Bucket).stringByAppendingPathComponent(remotePath(fileName: fileNameOfMessage(str)!, type: mediaMessage(str)!))
+    }
+    
+    static func fullPath(#fileName: String, type: MediaMessage) -> String {
+        return kS3BasePath.stringByAppendingPathComponent(AmazonS3Bucket).stringByAppendingPathComponent(remotePath(fileName: fileName, type: type))
+    }
+}
