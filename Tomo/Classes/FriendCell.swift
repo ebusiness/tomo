@@ -52,7 +52,11 @@ class FriendCell: UITableViewCell {
         }
         
         if let message = user?.lastMessage {
-            messageLabel.text = message.content
+            if let media = MediaMessage.mediaMessage(message.content) {
+                messageLabel.text = media.messagePrefix
+            } else {
+                messageLabel.text = message.content
+            }
             timeLabel.text = message.createDate.relativeTimeToString()
         } else {
             messageLabel.hidden = true
