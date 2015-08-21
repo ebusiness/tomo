@@ -58,6 +58,7 @@ extension MessageViewController {
             var name: String!
             var localURL: NSURL!
             var remotePath: String!
+            var messageContent: String!
             
             if let path = videoPath {
                 name = NSUUID().UUIDString + ".MP4"
@@ -65,8 +66,7 @@ extension MessageViewController {
                 FCFileManager.copyItemAtPath(path, toPath: localURL.path)
                 
                 remotePath = MediaMessage.remotePath(fileName: name, type: .Video)
-                
-                self.sendMessage(MediaMessage.mediaMessageStr(fileName: name, type: .Video))
+                messageContent = MediaMessage.mediaMessageStr(fileName: name, type: .Video)
                 
             } else {
                 name = NSUUID().UUIDString
@@ -79,13 +79,30 @@ extension MessageViewController {
                 
                 remotePath = MediaMessage.remotePath(fileName: name, type: .Image)
                 
-                self.sendMessage(MediaMessage.mediaMessageStr(fileName: name, type: .Image))
+                messageContent = MediaMessage.mediaMessageStr(fileName: name, type: .Image)
             }
             
+            let indexPath = self.createMessage(messageContent)
+            
+            let progressView = UIProgressView(frame: CGRectZero)
+            progressView.tintColor = UIColor.greenColor()
+            
+            let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! JSQMessagesCollectionViewCell
+            cell.addSubview(progressView)
+            
+            progressView.setTranslatesAutoresizingMaskIntoConstraints(false)
+            cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[progressView(==1)]-0-|", options: nil, metrics: nil, views: ["progressView" : progressView]))
+            cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[progressView(==messageBubbleContainerView)]-0-[avatarContainerView]", options: nil, metrics: nil, views: ["messageBubbleContainerView" : cell.messageBubbleContainerView, "progressView" : progressView,"avatarContainerView":cell.avatarContainerView]))
+
             S3Controller.uploadFile(name: name, localPath: localURL.path!, remotePath: remotePath, done: { (error) -> Void in
-                println("done")
-                println(error)
-            })
+                self.sendMessage(messageContent){ ()->() in
+                    progressView.removeFromSuperview()
+                }
+            }).progress { _, sendBytes, totalBytes in
+                gcd.sync(.Main, closure: { () -> () in
+                    progressView.progress = Float(sendBytes)/Float(totalBytes)
+                })
+            }
         }
         
         Util.alertActionSheet(self, optionalDict: [

@@ -245,6 +245,8 @@ extension MessageViewController {
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
         button.enabled = false
+        
+        self.createMessage(text)
         self.sendMessage(text)
     }
     
@@ -273,7 +275,7 @@ extension MessageViewController {
         }
     }
     
-    func sendMessage(text: String) {
+    func createMessage(text: String) -> NSIndexPath {
         
         let newMessage = JSQMessageEntity()
         newMessage.message.id = ""
@@ -284,6 +286,15 @@ extension MessageViewController {
         newMessage.message.createDate = NSDate()
         
         friend.lastMessage = newMessage.message
+        self.messages.append(newMessage)
+        
+        let indexPath = NSIndexPath(forRow: self.messages.count - 1, inSection: 0)
+        self.collectionView.insertItemsAtIndexPaths([indexPath])
+        return indexPath
+
+    }
+    
+    func sendMessage(text: String, done: ( ()->() )? = nil ) {
         
         var params = Dictionary<String, String>()
         params["recipient"] = friend.id
@@ -295,13 +306,12 @@ extension MessageViewController {
             if error == nil {
                 
                 JSQSystemSoundPlayer.jsq_playMessageSentSound()
-                                                                       
-                self.messages.append(newMessage)
                 self.finishSendingMessageAnimated(true)
                 
             } else {
                 // handle error
             }
+            done?()
         }
     }
     
