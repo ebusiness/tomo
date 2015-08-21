@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AdSupport
 
 final class RegViewController: BaseViewController {
     
@@ -58,7 +59,7 @@ final class RegViewController: BaseViewController {
     }
 
     @IBAction func login_wechat(sender: AnyObject) {
-        
+
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.buttonView.alpha = 0
         }) { (_) -> Void in
@@ -74,6 +75,22 @@ final class RegViewController: BaseViewController {
                 println(errCode)
                 println(errMessage)
             })
+    }
+    
+    @IBAction func autoSignup(sender: AnyObject) {
+
+        var tomoid = ASIdentifierManager.sharedManager().advertisingIdentifier.UUIDString
+        
+        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/mobile/guest/login" , parameters: ["tomoid":tomoid]).responseJSON { (_, _, result, error) -> Void in
+            if error == nil {
+                let json = JSON(result!)
+                if let id = json["id"].string, nickName = json["nickName"].string {
+                    me = UserEntity(json)
+                    self.changeRootToTab()
+                    return
+                }
+            }
+        }
     }
     
     private func changeRootToTab(){
