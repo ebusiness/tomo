@@ -24,6 +24,7 @@ class SearchFriendViewController: BaseTableViewController {
         super.viewDidLoad()
         
         Util.changeImageColorForButton(closeButton,color: UIColor.whiteColor())
+        self.searchBar.becomeFirstResponder()
     }
     
     override func setupMapping() {
@@ -56,18 +57,10 @@ class SearchFriendViewController: BaseTableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("resultCell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("SearchFriendCell", forIndexPath: indexPath) as! SearchFriendCell
         var user = self.result![indexPath.row]
         
-        cell.textLabel?.text = user.nickName
-        
-        if let photo = user.photo {
-            cell.imageView?.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
- 
-            cell.imageView?.layer.cornerRadius = cell.imageView!.layer.bounds.width / 2
-            cell.imageView?.layer.masksToBounds = true
-        }
-
+        cell.user = self.result![indexPath.row]
         return cell
     }
     

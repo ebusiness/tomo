@@ -380,11 +380,15 @@ extension MessageViewController {
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
         
-        if indexPath.item % 3 == 0 {
-            let message = messages[indexPath.item]
-            return JSQMessagesTimestampFormatter.sharedFormatter().attributedTimestampForDate(message.date())
-        }
+        let jsqMessage = messages[indexPath.item]
+        if indexPath.item < 1 { return JSQMessagesTimestampFormatter.sharedFormatter().attributedTimestampForDate(jsqMessage.date()) }
         
+        let diff = jsqMessage.date().timeIntervalSince1970 - messages[indexPath.item - 1].date().timeIntervalSince1970
+        
+        if diff > 90 {
+            return JSQMessagesTimestampFormatter.sharedFormatter().attributedTimestampForDate(jsqMessage.date())
+        }
+
         return nil
     }
     
@@ -396,10 +400,9 @@ extension MessageViewController {
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
         
-        if indexPath.item % 3 == 0 {
+        if let topLabelText = self.collectionView(collectionView, attributedTextForCellTopLabelAtIndexPath: indexPath) {
             return 40
         }
-        
         return 0
     }
     

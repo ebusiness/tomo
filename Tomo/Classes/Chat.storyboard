@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="B3C-pe-LPj">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--通讯录-->
@@ -139,7 +140,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最近消息" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="emZ-LY-ySK">
-                                            <rect key="frame" x="74" y="35" width="190" height="17"/>
+                                            <rect key="frame" x="74" y="36" width="190" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -151,7 +152,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ic9-RH-PbK">
-                                            <rect key="frame" x="284" y="34" width="20" height="20"/>
+                                            <rect key="frame" x="284" y="35" width="20" height="20"/>
                                             <color key="backgroundColor" red="0.95686274510000002" green="0.26274509800000001" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="20" id="fDl-SE-H2P"/>
@@ -223,10 +224,10 @@
         <scene sceneID="Ec8-Xh-UT3">
             <objects>
                 <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="H9K-0P-MwR" customClass="SearchFriendViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="BBL-yB-RdG">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="BBL-yB-RdG">
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="69a-4B-Uxs">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -273,19 +274,47 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="resultCell" textLabel="fxj-eQ-ee8" style="IBUITableViewCellStyleDefault" id="hYQ-9u-V8i">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchFriendCell" rowHeight="66" id="Uu3-0c-sA5" customClass="SearchFriendCell" customModule="tomo" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hYQ-9u-V8i" id="VEV-FQ-3bg">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Uu3-0c-sA5" id="ytp-rp-Scs">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fxj-eQ-ee8">
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="M34-iK-lrC">
+                                            <rect key="frame" x="16" y="8" width="50" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="DTu-Nr-9bk"/>
+                                                <constraint firstAttribute="width" constant="50" id="f6h-CF-n9o"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="用户名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SQy-WC-KbA">
+                                            <rect key="frame" x="74" y="12" width="222" height="20"/>
+                                            <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这家伙很懒,什么都没写." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xa1-8c-wu4">
+                                            <rect key="frame" x="74" y="36" width="222" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="M34-iK-lrC" secondAttribute="centerY" id="B3H-Rh-iV1"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="SQy-WC-KbA" secondAttribute="trailing" constant="16" id="GRo-WU-BZV"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Xa1-8c-wu4" secondAttribute="trailing" constant="16" id="HhB-ld-gON"/>
+                                        <constraint firstItem="SQy-WC-KbA" firstAttribute="top" secondItem="ytp-rp-Scs" secondAttribute="top" constant="12" id="QCs-bd-QGC"/>
+                                        <constraint firstItem="Xa1-8c-wu4" firstAttribute="leading" secondItem="M34-iK-lrC" secondAttribute="trailing" constant="8" id="QbC-zp-iN7"/>
+                                        <constraint firstItem="M34-iK-lrC" firstAttribute="leading" secondItem="ytp-rp-Scs" secondAttribute="leading" constant="16" id="XMY-2x-IER"/>
+                                        <constraint firstItem="SQy-WC-KbA" firstAttribute="leading" secondItem="M34-iK-lrC" secondAttribute="trailing" constant="8" id="pTa-xD-zyA"/>
+                                        <constraint firstItem="Xa1-8c-wu4" firstAttribute="top" secondItem="SQy-WC-KbA" secondAttribute="bottom" constant="4" id="vE7-fg-cFM"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="avatarImageView" destination="M34-iK-lrC" id="GAw-W8-WsO"/>
+                                    <outlet property="bioLabel" destination="Xa1-8c-wu4" id="Vng-bl-HAY"/>
+                                    <outlet property="userNameLabel" destination="SQy-WC-KbA" id="dJG-HX-8n5"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
