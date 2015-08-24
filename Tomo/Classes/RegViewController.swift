@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AdSupport
 
 final class RegViewController: BaseViewController {
     
@@ -79,7 +78,7 @@ final class RegViewController: BaseViewController {
     
     @IBAction func autoSignup(sender: AnyObject) {
 
-        var tomoid = ASIdentifierManager.sharedManager().advertisingIdentifier.UUIDString
+        var tomoid = UIDevice.currentDevice().identifierForVendor.UUIDString
         
         Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/mobile/guest/login" , parameters: ["tomoid":tomoid]).responseJSON { (_, _, result, error) -> Void in
             if error == nil {
