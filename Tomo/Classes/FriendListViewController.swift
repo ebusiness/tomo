@@ -234,17 +234,15 @@ extension FriendListViewController: FriendInvitationCellDelegate {
                         println(error)
                         return
                     }
-                    self.friends.insert(invitation.from, atIndex: 0)
-                    
-                    me.friends?.append(invitation.from.id)
-                    me.invited?.remove(invitation.from.id)
-                    
-                    self.updateBadgeNumber()
                     
                     self.tableView.beginUpdates()
                     self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                    self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
+                    if me.addFriend(invitation.from.id) {
+                        self.friends.insert(invitation.from, atIndex: 0)
+                        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
+                    }
                     self.tableView.endUpdates()
+                    self.updateBadgeNumber()
             }
         }
     }
@@ -330,29 +328,32 @@ extension FriendListViewController {
     func receiveFriendApproved(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             
-            let from = UserEntity(userInfo)
+            let from = UserEntity(JSON(userInfo)["_from"])
             
-            self.friends.insert(from, atIndex: 0)
-            me.addFriend(from.id)
-            
-            var indexPaths:[NSIndexPath]?
             let nvitationIndex = me.friendInvitations.indexOf{$0.from.id == from.id}
+//            me.friendInvitations = me.friendInvitations?.filter{ $0.from.id != from.id }
             if let nvitationIndex = nvitationIndex {
                 
                 me.friendInvitations.removeAtIndex(nvitationIndex)
-                indexPaths = [NSIndexPath(forRow: nvitationIndex, inSection: 0)]
-            }
-//            me.friendInvitations = me.friendInvitations?.filter{ $0.from.id != from.id }
-            
-            gcd.sync(.Main, closure: { () -> () in
-                self.updateBadgeNumber()
-                self.tableView.beginUpdates()
-                if let indexPaths = indexPaths {
+                let indexPaths = [NSIndexPath(forRow: nvitationIndex, inSection: 0)]
+                
+                gcd.sync(.Main, closure: { () -> () in
+                    self.updateBadgeNumber()
+                    self.tableView.beginUpdates()
                     self.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-                }
-                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
-                self.tableView.endUpdates()
-            })
+                    self.tableView.endUpdates()
+                })
+            }
+            
+            if me.addFriend(from.id) {
+                self.friends.insert(from, atIndex: 0)
+                gcd.sync(.Main, closure: { () -> () in
+                    self.updateBadgeNumber()
+                    self.tableView.beginUpdates()
+                    self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
+                    self.tableView.endUpdates()
+                })
+            }
         }
     }
 }

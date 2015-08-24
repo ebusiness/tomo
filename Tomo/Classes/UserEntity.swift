@@ -103,14 +103,15 @@ extension UserEntity {
         return "\(fName) \(lName)"
     }
     
-    func addFriend(uid: String){
+    func addFriend(uid: String) -> Bool{
         
         self.invited?.remove(uid)
         if let friends = self.friends where friends.contains(uid) {
-
+            return false
         } else {
             self.friends = self.friends ?? []
             self.friends?.append(uid)
+            return true
         }
     }
     
