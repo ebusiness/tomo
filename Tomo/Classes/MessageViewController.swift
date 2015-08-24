@@ -78,10 +78,16 @@ final class MessageViewController: JSQMessagesViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         if let friend = me.friends where friend.contains(self.friend.id) {
         } else {
             self.navigationController?.popViewControllerAnimated(true)
         }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.navigationBar.setBackgroundImage(navigationBarImage, forBarMetrics: .Default)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -110,7 +116,7 @@ final class MessageViewController: JSQMessagesViewController {
 extension MessageViewController {
     
     private func setNavigationBar() {
-        navigationController?.navigationBar.setBackgroundImage(navigationBarImage, forBarMetrics: .Default)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "user_male_circle"), style: .Plain, target: self, action: "setting")
         
         let backitem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         self.navigationItem.backBarButtonItem = backitem
@@ -313,6 +319,14 @@ extension MessageViewController {
             }
             done?()
         }
+    }
+    
+    func setting(){
+        //push setting or prifile?
+        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+        vc.user = friend
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

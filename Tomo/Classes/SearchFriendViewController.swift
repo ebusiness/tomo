@@ -84,6 +84,7 @@ class SearchFriendViewController: BaseTableViewController {
     }
 
     @IBAction func close(sender: AnyObject) {
+        self.view.endEditing(true)
         dismissViewControllerAnimated(true, completion: nil)
     }
 }
