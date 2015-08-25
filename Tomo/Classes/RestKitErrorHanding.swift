@@ -17,14 +17,21 @@ class RestKitErrorHanding: RKObjectRequestOperation{
                 success(operation, mappingResult)
             }
         }, failure: { (operation, error) -> Void in
-            Util.dismissHUD()
-            let statusCode = operation.HTTPRequestOperation.response.statusCode
             
-            if let window = UIApplication.sharedApplication().keyWindow
-                where statusCode == 401 && NSStringFromClass(window.rootViewController!.classForCoder) != "tomo.LoadingViewController" {
-    
-                    window.rootViewController = Util.createViewControllerWithIdentifier("LoadingViewController", storyboardName: "Main")
+            Util.dismissHUD()
+            if let res = operation.HTTPRequestOperation.response {
+                
+                let statusCode = res.statusCode
+                
+                if let window = UIApplication.sharedApplication().keyWindow
+                    where statusCode == 401 && NSStringFromClass(window.rootViewController!.classForCoder) != "tomo.LoadingViewController" {
+                        
+                        window.rootViewController = Util.createViewControllerWithIdentifier("LoadingViewController", storyboardName: "Main")
+                }
+            } else {
+                // no response NSURLErrorDomain Code=-1001
             }
+            
             
             if let failure = failure {
                 failure(operation, error);
