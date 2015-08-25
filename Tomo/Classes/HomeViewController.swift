@@ -94,6 +94,7 @@ final class HomeViewController: BaseTableViewController {
             if let post = sender as? PostEntity {
                 let vc = segue.destinationViewController as! PostViewController
                 vc.post = post
+                vc.hidesBottomBarWhenPushed = true
             }
         }
     }

@@ -8,29 +8,34 @@
 
 import UIKit
 
-class PostViewController : BaseTableViewController{
+class PostViewController: BaseViewController{
 
-    
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var commentInput: UITextView!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var postImageList: UIScrollView!
     @IBOutlet weak var avatarImageView: UIImageView!
 
+    @IBOutlet weak var commentTextView: UITextView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     
-    @IBOutlet weak var sendBtn: UIButton!
+    @IBOutlet weak var commentBtn: UIButton!
     @IBOutlet weak var likedBtn: UIButton!
     @IBOutlet weak var bookmarkBtn: UIButton!
 
-    @IBOutlet weak var contentViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var commentInputViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var headerConstraint: NSLayoutConstraint!
     
-    let listViewHeight:CGFloat = 250
-    let contentViewInitialHeight:CGFloat = 230
+    var isKeyboardShown: Bool = false
+    
+    var listViewHeight:CGFloat = UIScreen.mainScreen().bounds.size.height * 0.618 //  250
+    let profileHeaderHeight:CGFloat = 100
 
     var commentContent: String?
     var cellForHeight: CommentCell!
+    
+    let commentBackgroundView = UIView()
 
     var post: PostEntity! {
         didSet {
@@ -48,47 +53,32 @@ class PostViewController : BaseTableViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.alwaysShowNavigationBar = ( self.post.images?.count ?? 0 ) < 1
         self.postImageList.scrollsToTop = false
-        self.commentInput.scrollsToTop = false
+        self.headerHeight = self.listViewHeight - 64
         
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
         avatarImageView.layer.masksToBounds = true
         
+        commentBtn.layer.cornerRadius = commentBtn.frame.size.width / 2
+        commentBtn.backgroundColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 1)
+        commentBtn.superview?.bringSubviewToFront(commentBtn)
+        Util.changeImageColorForButton(commentBtn,color: UIColor.whiteColor())
+        self.hideSendBtn(true)
+        
         Util.changeImageColorForButton(likedBtn,color: UIColor.redColor())
         Util.changeImageColorForButton(bookmarkBtn,color: UIColor.orangeColor())
         
-        commentInput.layer.borderColor = UIColor.grayColor().CGColor
-        commentInput.layer.borderWidth = 0.5
-        commentInput.layer.cornerRadius = 5
+        self.setPostContent()
+        self.updateUIForHeader()
         
-        updateUIForHeader()
-        
-        if ( self.post.images?.count ?? 0 ) > 0 {
-            
-            self.setImageList()
-            self.headerHeight = self.listViewHeight - 64
-            
-        }        
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if ( post.images?.count ?? 0 ) < 1 {
-            self.extendedLayoutIncludesOpaqueBars = false
-            self.automaticallyAdjustsScrollViewInsets = true
-            var image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
-            self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
-            self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
-            
-            self.changeHeaderView(height: self.contentViewHeight.constant)
-        }
+        self.registerForKeyboardNotifications()
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        
-        if let images = post.images where images.count > 0 {
-            super.scrollViewDidScroll(scrollView)
+        super.scrollViewDidScroll(scrollView)
+        if isKeyboardShown {
+            self.view.endEditing(true)
         }
     }
     
@@ -121,7 +111,7 @@ class PostViewController : BaseTableViewController{
             })
         }
     }
-
+    
     @IBAction func bookmarkBtnTapped(sender: AnyObject) {
         
         Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/posts/\(self.post.id)/bookmark")
@@ -178,7 +168,7 @@ class PostViewController : BaseTableViewController{
     }
     
     @IBAction func tableViewTapped(sender: UITapGestureRecognizer) {
-        self.commentInput.resignFirstResponder()
+        self.view.endEditing(true)
     }
 
     @IBAction func sendCommentBtnTapped(sender: AnyObject) {
@@ -189,10 +179,13 @@ class PostViewController : BaseTableViewController{
         param["content"] = commentContent;
 //        param["replyTo"] = "552220aa915a1dd84834731b";//コメントID
         
-        self.commentInput.resignFirstResponder()
-        self.commentInput.text = ""
-        self.commentContent = ""
-        self.sendBtn.enabled = false
+        self.commentContent = nil
+        self.commentTextView.text = "评论:"
+        self.commentTextView.textColor = UIColor.lightGrayColor()
+        commentInputViewConstraint.constant = 50
+
+        self.hideSendBtn(true)
+        self.view.endEditing(true)
         
         Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/posts/\(self.post.id)/comments", parameters: param).responseJSON { (_, _,_, _) -> Void in
             
@@ -214,9 +207,8 @@ class PostViewController : BaseTableViewController{
 // MARK:HeaderView - Action
 
 extension PostViewController {
-
-    func updateUIForHeader(){
-        
+    
+    func setPostContent(){
         if let photo = self.post.owner.photo {
             avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
         }
@@ -224,7 +216,33 @@ extension PostViewController {
         userName.text = self.post.owner.nickName
         timeLabel.text = post.createDate.relativeTimeToString()
         
+        if ( self.post.images?.count ?? 0 ) > 0 {
+            self.setImageList()
+        }
+        
         contentLabel.text = post.content
+        
+        self.contentLabel.bounds.size.width = UIScreen.mainScreen().bounds.size.width - 16 * 2
+        let contentSize = self.contentLabel.sizeThatFits(self.contentLabel.bounds.size)
+        
+        let headerView = self.tableView.tableHeaderView as UIView!
+        
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            
+            self.headerConstraint.constant = self.profileHeaderHeight + contentSize.height + 8 * 2
+            
+            if ( self.post.images?.count ?? 0 ) < 1 {
+                self.postImageList.hidden = true
+                headerView.frame.size.height = self.headerConstraint.constant
+            } else {
+                headerView.frame.size.height = self.headerConstraint.constant + self.listViewHeight
+            }
+            self.tableView.tableHeaderView = headerView
+            self.tableView.layoutIfNeeded()
+        })
+    }
+    
+    func updateUIForHeader(){
         
         if let like = self.post.like where like.count > 0 {
             likedBtn.setTitle("\(like.count)", forState: .Normal)
@@ -248,18 +266,6 @@ extension PostViewController {
             bookmarkBtn?.setImage(image, forState: .Normal)
             
         }
-        
-        if let tableHeaderView = self.tableView.tableHeaderView
-            where contentViewHeight.constant == self.contentViewInitialHeight {
-                
-            self.contentLabel.bounds.size.width = UIScreen.mainScreen().bounds.size.width - 16 * 2
-            let contentSize = self.contentLabel.sizeThatFits(self.contentLabel.bounds.size)
-            let newConstant = contentSize.height - self.contentLabel.frame.size.height + self.contentViewInitialHeight
-
-            self.changeHeaderView(height: self.listViewHeight + newConstant, done: nil)
-                
-            contentViewHeight.constant = newConstant
-        }
     }
     
     func setImageList(){
@@ -267,18 +273,18 @@ extension PostViewController {
         for imageview in postImageList.subviews {
             imageview.removeFromSuperview()
         }
-        
-        let imageWidth = self.listViewHeight / 3 * 4
-        self.tableView.tableHeaderView?.frame.size.height = contentViewHeight.constant + self.listViewHeight
+
+        var imageWidth = self.listViewHeight / 3 * 4
+        if imageWidth > UIScreen.mainScreen().bounds.size.width {
+            imageWidth = UIScreen.mainScreen().bounds.size.width
+        }
 
         var scrollWidth:CGFloat = 0
         if  let images = post.images where images.count > 0 {
             for i in 0..<images.count{
                 
                 let imgView = UIImageView(frame: CGRectZero )
-                imgView.setImageWithURL(NSURL(string: images[i] ), completed: { (image, error, cacheType, url) -> Void in
-                    }, usingActivityIndicatorStyle: .Gray)
-                
+                imgView.setImageWithURL(NSURL(string: images[i] ), completed: nil, usingActivityIndicatorStyle: .Gray)
                 imgView.userInteractionEnabled = true
                 
                 let tap = UITapGestureRecognizer(target: self, action: Selector("postImageViewTapped:"))
@@ -289,31 +295,39 @@ extension PostViewController {
                 
                 postImageList.addSubview(imgView)
                 
+                
                 postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Height, relatedBy: .Equal, toItem: postImageList, attribute: .Height, multiplier: 1.0, constant: 0))
                 postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterY, relatedBy: .Equal, toItem: postImageList, attribute: .CenterY, multiplier: 1.0, constant: 0))
                 
                 if images.count == 1 {
-                    
+
                     postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: 0 ))
                     postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Trailing, relatedBy: .Equal, toItem: postImageList, attribute: .Trailing, multiplier: 1.0, constant: 0 ))
                     postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterX, relatedBy: .Equal, toItem: postImageList, attribute: .CenterX, multiplier: 1.0, constant: 0 ))
-                    
+
                 } else {
                     
                     imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: imageWidth))
                     postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: scrollWidth ))
                     
-                    scrollWidth += 5
+                    if i != images.count - 1 {
+                        scrollWidth += 5
+                    }
                 }
+                
                 scrollWidth += imageWidth
                 
             }
+            postImageList.contentSize.width = scrollWidth
         }
         
-        postImageList.contentSize.width = scrollWidth
     }
 
     func postImageViewTapped(sender: UITapGestureRecognizer) {
+        if isKeyboardShown {
+            self.view.endEditing(true)
+            return
+        }
         if let imageView = sender.view as? UIImageView,image = imageView.image {
             
             var items = [MHGalleryItem]();
@@ -331,9 +345,9 @@ extension PostViewController {
             gallery.galleryItems = items
             gallery.presentationIndex = index
             
-            if post.images?.count == 1 {
+//            if post.images?.count == 1 {
                 gallery.presentingFromImageView = imageView
-            }
+//            }
             
             gallery.UICustomization.useCustomBackButtonImageOnImageViewer = false
             gallery.UICustomization.showOverView = false
@@ -356,11 +370,11 @@ extension PostViewController {
 
 extension PostViewController: UITableViewDataSource {
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.comments?.count ?? 0
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as! CommentCell
         let index = self.comments!.count - indexPath.row - 1
         cell.comment = self.comments![index]
@@ -373,7 +387,7 @@ extension PostViewController: UITableViewDataSource {
 
 extension PostViewController: UITableViewDelegate {
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if cellForHeight == nil {
             cellForHeight = tableView.dequeueReusableCellWithIdentifier("CommentCell") as! CommentCell
         }
@@ -385,6 +399,7 @@ extension PostViewController: UITableViewDelegate {
 }
 
 extension PostViewController: UITextViewDelegate {
+    
     func textViewDidBeginEditing(textView: UITextView) {
         if commentContent == nil || commentContent!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
             textView.text = nil
@@ -393,23 +408,83 @@ extension PostViewController: UITextViewDelegate {
     }
     
     func textViewDidEndEditing(textView: UITextView) {
+        
         if commentContent == nil || commentContent!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
             textView.text = "评论:"
             textView.textColor = UIColor.lightGrayColor()
+            self.hideSendBtn(true)
         }
-        
-
     }
     
     func textViewDidChange(textView: UITextView) {
+        
+        if textView.markedTextRange != nil{
+             self.hideSendBtn(true)
+            return
+        }
+        
         commentContent = textView.text
         if commentContent != nil && commentContent!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
-            sendBtn.enabled = true
+
+            self.hideSendBtn(false)
         } else {
-            sendBtn.enabled = false
+            
+            self.hideSendBtn(true)
         }
-        if let superView = textView.superview {
-            let viewheight = (textView.contentSize.height + 2 * 8)
+        let viewheight = textView.contentSize.height + 2 * 8
+        commentInputViewConstraint.constant = viewheight < 50 ? 50 : viewheight
+
+    }
+}
+
+
+extension PostViewController {
+    
+    func hideSendBtn(hidden: Bool){
+        if (self.commentBtn.transform.a == 1) != hidden {
+            return
+        }
+        
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            if hidden {
+                self.commentBtn.transform = CGAffineTransformMakeScale(0, 0)
+            } else {
+                self.commentBtn.transform = CGAffineTransformMakeScale(1, 1)
+            }
+            self.navigationController?.view.layoutIfNeeded()
+            })
+    }
+}
+// MARK - NSNotificationCenter
+extension PostViewController {
+    
+    private func registerForKeyboardNotifications() {
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        isKeyboardShown = true
+        if let info = notification.userInfo, keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height ,duration = info[UIKeyboardAnimationDurationUserInfoKey] as? NSTimeInterval {
+            
+            self.bottomConstraint.constant = keyboardHeight
+            UIView.animateWithDuration(duration, animations: { () -> Void in
+                self.view.layoutIfNeeded()
+            })
+            
         }
     }
+    
+    func keyboardWillBeHidden(notification: NSNotification) {
+        isKeyboardShown = false
+        if let info = notification.userInfo, duration = info[UIKeyboardAnimationDurationUserInfoKey] as? NSTimeInterval {
+            
+            self.bottomConstraint.constant = 0
+            UIView.animateWithDuration(duration, animations: { () -> Void in
+                self.view.layoutIfNeeded()
+            })
+        }
+    }
+
 }

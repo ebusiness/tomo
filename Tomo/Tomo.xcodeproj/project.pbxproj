@@ -110,7 +110,6 @@
 		D0B6EB121B5E7D09005A7E45 /* MyAccountHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */; };
 		D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */; };
 		D0BA8DE71B55375A00271F2B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BA8DE61B55375A00271F2B /* PostViewController.swift */; };
-		D0E274ED1B58D830003FDC55 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E274EC1B58D830003FDC55 /* AddPostViewController.swift */; };
 		D0E788751B6F5BD3009255B9 /* AlamofireController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E788741B6F5BD3009255B9 /* AlamofireController.swift */; };
 		D0F44FAB1B5E4790009E12AA /* BookmarkedPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */; };
 		D0F44FAD1B5E534B009E12AA /* MyPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */; };
@@ -232,7 +231,6 @@
 		D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountHeaderViewController.swift; path = Classes/MyAccountHeaderViewController.swift; sourceTree = "<group>"; };
 		D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountBaseController.swift; path = Classes/MyAccountBaseController.swift; sourceTree = "<group>"; };
 		D0BA8DE61B55375A00271F2B /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostViewController.swift; path = Classes/PostViewController.swift; sourceTree = "<group>"; };
-		D0E274EC1B58D830003FDC55 /* AddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPostViewController.swift; path = Classes/AddPostViewController.swift; sourceTree = "<group>"; };
 		D0E788741B6F5BD3009255B9 /* AlamofireController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlamofireController.swift; path = Classes/AlamofireController.swift; sourceTree = "<group>"; };
 		D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BookmarkedPostsViewController.swift; path = Classes/BookmarkedPostsViewController.swift; sourceTree = "<group>"; };
 		D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyPostsViewController.swift; path = Classes/MyPostsViewController.swift; sourceTree = "<group>"; };
@@ -523,7 +521,6 @@
 			isa = PBXGroup;
 			children = (
 				291ADF941AD229B3009D8BE3 /* CommentCell.swift */,
-				D0E274EC1B58D830003FDC55 /* AddPostViewController.swift */,
 				1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */,
 				1FEE80ED1B4E60850061B913 /* PostCell.swift */,
 				1F8BF0101B53639F00090079 /* PostImageCell.swift */,
@@ -786,7 +783,6 @@
 				D0A0C0341B5F5D0500ABFA5F /* UserPostsViewController.swift in Sources */,
 				1F985E661B60C19F008D5369 /* NSArray.swift in Sources */,
 				1F985E5A1B60C19F008D5369 /* Dictionary.swift in Sources */,
-				D0E274ED1B58D830003FDC55 /* AddPostViewController.swift in Sources */,
 				D08BFB0B1B744C2D00771F70 /* JSQMessageEntity.swift in Sources */,
 				29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */,
 				1FCA1E671B722260000F2936 /* MessageEntity.swift in Sources */,

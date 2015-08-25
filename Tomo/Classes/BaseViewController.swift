@@ -12,6 +12,8 @@ class BaseViewController: UIViewController {
     
     let manager = RKObjectManager(baseURL: kAPIBaseURL)
     var alwaysShowNavigationBar = false
+    var topConstraint: NSLayoutConstraint?
+    var headerHeight: CGFloat = 160 - 64
     
     override func loadView() {
         super.loadView()
@@ -20,7 +22,8 @@ class BaseViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
+        self.getTopConstraint()
         
         let backitem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         self.navigationItem.backBarButtonItem = backitem
@@ -56,5 +59,49 @@ class BaseViewController: UIViewController {
     
     func setupMapping(){
     
+    }
+}
+
+extension BaseViewController {
+    
+    func getTopConstraint() {
+        if let tableView = self.view.subviews.first as? UITableView, headerView = tableView.tableHeaderView where headerView.frame.size.height >=  self.headerHeight + 64 {
+            
+            for c in headerView.constraints() {
+                
+                if c.firstAttribute == .Top {
+                    self.topConstraint = c as? NSLayoutConstraint
+                    break
+                }
+            }
+        }
+    }
+}
+
+// MARK: - ScrollView Delegate
+
+extension BaseViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        if self.automaticallyAdjustsScrollViewInsets { return } //nothing under the navigationBar
+        
+        if let topConstraint = self.topConstraint {
+            let y = scrollView.contentOffset.y
+            
+            if y < 0 {
+                topConstraint.constant = y
+                navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            } else {
+                var image = Util.imageWithColor(NavigationBarColorHex, alpha: y/self.headerHeight)
+                navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+                
+                if self.headerHeight <= y {
+                    self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
+                } else {
+                    self.navigationController?.navigationBar.shadowImage = UIImage()
+                }
+            }
+        }
     }
 }
