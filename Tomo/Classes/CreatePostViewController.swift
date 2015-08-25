@@ -21,13 +21,23 @@ final class CreatePostViewController: UIViewController {
     var newPhotos = [UIImage]()
     
     let locationManager = CLLocationManager()
+    var locationError: NSError?
+    var location: CLLocation?
+    var updatingLocation = false
     
+    let geocoder = CLGeocoder()
+    var geocodeError: NSError?
+    var placemark: CLPlacemark?
+    var performGeocoding = false
+    
+    var timer: NSTimer?
+    
+    @IBOutlet weak var postButton: UIBarButtonItem!
     @IBOutlet weak var paperViewHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var paperView: UIView!
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var numberBadge: UILabel!
     
     override func viewDidLoad() {
@@ -38,6 +48,8 @@ final class CreatePostViewController: UIViewController {
         self.registerForKeyboardNotifications()
         
         self.postTextView.becomeFirstResponder()
+        
+        println(UIScreen.mainScreen().bounds)
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,6 +68,7 @@ final class CreatePostViewController: UIViewController {
     */
     
     deinit {
+        self.stopLocationManager()
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
@@ -80,10 +93,12 @@ extension CreatePostViewController {
         self.numberBadge.layer.masksToBounds = true
         self.numberBadge.hidden = true
         
+        self.locationLabel.hidden = true
+        
         self.collectionView.allowsMultipleSelection = true
         
         self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         self.locationManager.activityType = .Fitness
         
     }
@@ -131,6 +146,33 @@ extension CreatePostViewController {
         } else {
             self.numberBadge.text = String(0)
             self.numberBadge.hidden = true
+        }
+    }
+    
+    private func updateLocationLabel() {
+        
+        if let placemark = self.placemark {
+            
+            var address = ""
+            
+            if let province = placemark.administrativeArea {
+                address += province
+            }
+            
+            if let city = placemark.locality {
+                address += city
+            }
+            
+            if let street = placemark.thoroughfare {
+                address += street
+            }
+            
+            if let houseNumber = placemark.subThoroughfare {
+                address += houseNumber
+            }
+            
+            self.locationLabel.text = address
+            self.locationLabel.hidden = false
         }
     }
     
@@ -226,6 +268,156 @@ extension CreatePostViewController {
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
+    
+    func didTimeOut() {
+        println("***** Time Out")
+        
+        self.stopLocationManager()
+        self.updateLocationLabel()
+    }
+    
+    private func stopLocationManager() {
+        
+        if updatingLocation {
+            
+            if let timer = self.timer {
+                timer.invalidate()
+            }
+            
+            self.locationManager.stopUpdatingLocation()
+            self.updatingLocation = false
+        }
+    }
+    
+    private func uploadMeida(completion: (imagelist: AnyObject)->()) {
+        
+        if let selectedIndexes = collectionView.indexPathsForSelectedItems() as? [NSIndexPath] {
+            
+            var imagelist = [[String:AnyObject]]()
+            
+            for index in selectedIndexes {
+                
+                let name = NSUUID().UUIDString
+                let imagePath = NSTemporaryDirectory() + name
+                let remotePath = Constants.postPath(fileName: name)
+                
+                if index.item < self.newPhotos.count {
+                    let scaledImage = self.resize(self.newPhotos[index.item].normalizedImage())
+                    scaledImage.saveToPath(imagePath)
+                } else {
+                    
+                    let asset = self.photos?[index.item - self.newPhotos.count] as? PHAsset
+                    
+                    var options = PHImageRequestOptions()
+                    options.synchronous = true
+                    options.resizeMode = PHImageRequestOptionsResizeMode.Exact
+                    
+                    PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: PHImageManagerMaximumSize, contentMode: .AspectFill, options: options) { (image: UIImage!, info: [NSObject : AnyObject]!) -> Void in
+                        
+                        let scaledImage = self.resize(image)
+                        scaledImage.saveToPath(imagePath)
+                    }
+                }
+                
+                S3Controller.uploadFile(name: name, localPath: imagePath, remotePath: remotePath, done: { (error) -> Void in
+                    
+                    let imageinfo:[String:AnyObject] = [
+                        "name":name,
+                        "size":[
+                            "width":0,
+                            "height":0
+                        ]
+                    ]
+                    
+                    imagelist.append(imageinfo)
+                    
+                    if error == nil && imagelist.count == selectedIndexes.count {
+                        completion(imagelist: imagelist)
+                    }
+                })
+                
+            }
+        }
+        
+    }
+    
+    private func postContent(imageList: AnyObject?) {
+        
+        println(imageList)
+        
+        var param = Dictionary<String, AnyObject>()
+        
+        param["content"] = self.postTextView.text
+        
+        if let imageList: AnyObject = imageList {
+            param["images"] = imageList
+        }
+        
+        if let location = self.location {
+            param["coordinate"] = [String(stringInterpolationSegment: location.coordinate.latitude),String(stringInterpolationSegment: location.coordinate.longitude)];
+        }
+        
+        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/mobile/posts" , parameters: param,encoding: ParameterEncoding.JSON)
+            .responseJSON { (_, _, post, _) -> Void in
+                Util.dismissHUD()
+                //                                self.performSegueWithIdentifier("addedPost", sender: post)
+        }
+    }
+    
+    private func resize(image: UIImage) -> UIImage {
+        
+        var imageData = UIImageJPEGRepresentation(image, 1)
+        
+        if !(imageData.length/1024/1024 > 2) {
+            return image
+        }
+        
+        let resizeFactor = 1
+        
+        let widthBase = CGFloat(414 * resizeFactor)
+        let heigthBase = CGFloat(736 * resizeFactor)
+        
+        let cgImage = image.CGImage
+        
+        let width = CGFloat(CGImageGetWidth(cgImage))
+        let height = CGFloat(CGImageGetHeight(cgImage))
+        
+        var ratio = CGFloat(1)
+        
+        if width > widthBase && height > heigthBase {
+            
+            if width > height {
+                ratio = widthBase / width
+            } else {
+                ratio = heigthBase / height
+            }
+            
+        } else if width > widthBase && height <= heigthBase {
+            
+            ratio = widthBase / width
+            
+        } else if width <= widthBase && height > heigthBase {
+            
+            ratio = heigthBase / height
+            
+        }
+        
+        let resultSize = CGSize(width: width * ratio, height: height * ratio)
+        
+        let bitsPerComponent = CGImageGetBitsPerComponent(cgImage)
+        let bytesPerRow = CGImageGetBytesPerRow(cgImage)
+        let colorSpace = CGImageGetColorSpace(cgImage)
+        let bitmapInfo = CGImageGetBitmapInfo(cgImage)
+        
+        let context = CGBitmapContextCreate(nil, Int(width * ratio), Int(height * ratio), bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo)
+        
+        CGContextSetInterpolationQuality(context, kCGInterpolationHigh)
+        CGContextDrawImage(context, CGRect(origin: CGPointZero, size: resultSize), cgImage)
+        
+        let result = CGBitmapContextCreateImage(context)
+        
+        return UIImage(CGImage: result)!
+    }
 }
 
 // MARK: - Actions
@@ -235,6 +427,17 @@ extension CreatePostViewController {
     @IBAction func cancel(sender: AnyObject) {
         self.postTextView.resignFirstResponder()
         dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    @IBAction func post(sender: AnyObject) {
+        
+        Util.showHUD()
+        
+        if collectionView.indexPathsForSelectedItems().count > 0 {
+            self.uploadMeida(postContent)
+        } else {
+            self.postContent(nil)
+        }
     }
     
     @IBAction func choosePhoto() {
@@ -286,6 +489,43 @@ extension CreatePostViewController {
         
         if CLLocationManager.locationServicesEnabled() && locationServiceAuthorized() {
             
+            if self.updatingLocation {
+                self.stopLocationManager()
+                
+            } else {
+                
+                self.location = nil
+                self.locationError = nil
+                
+                self.placemark = nil
+                self.geocodeError = nil
+                
+                timer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: Selector("didTimeOut"), userInfo: nil, repeats: false)
+                
+                self.updatingLocation = true
+                self.locationManager.startUpdatingLocation()
+            }
+        }
+    }
+}
+
+// MARK: - UITextView Delegate
+
+extension CreatePostViewController: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        textView.text = nil
+        textView.textColor = UIColor.darkTextColor()
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        
+        let postContent = textView.text
+        
+        if postContent != nil && postContent!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
+            self.postButton.enabled = true
+        } else {
+            self.postButton.enabled = false
         }
     }
 }
@@ -320,7 +560,11 @@ extension CreatePostViewController: UICollectionViewDataSource {
         // or show the photo in photo library
         } else if let asset = self.photos?[indexPath.item - self.newPhotos.count] as? PHAsset {
             
-            PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(200, 200), contentMode: PHImageContentMode.AspectFill, options: PHImageRequestOptions()) { (image: UIImage!, info: [NSObject : AnyObject]!) -> Void in
+            var options = PHImageRequestOptions()
+            options.deliveryMode = .HighQualityFormat
+            options.resizeMode = .Exact
+            
+            PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(200, 200), contentMode: .AspectFill, options: options) { (image: UIImage!, info: [NSObject : AnyObject]!) -> Void in
                 cell.contentView.addSubview(UIImageView(image: image))
             }
         }
@@ -411,4 +655,80 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigatio
 
 extension CreatePostViewController: CLLocationManagerDelegate {
     
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        
+        // The location is currently unknown, but CoreLocation will keep trying
+        if error.code == CLError.LocationUnknown.rawValue {
+            return
+        }
+        
+        // or save the error and stop location manager
+        self.locationError = error
+        self.stopLocationManager()
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        
+        let newLocation = locations.last as! CLLocation
+        
+        // the location object was determine too long age, ignore it
+        if newLocation.timestamp.timeIntervalSinceNow < -5 {
+            return
+        }
+        
+        // horizontalAccuracy less than 0 is invalid result, ignore it
+        if newLocation.horizontalAccuracy < 0 {
+            return
+        }
+        
+        var distance = CLLocationDistance(DBL_MAX)
+        if let location = self.location {
+            distance = newLocation.distanceFromLocation(location)
+        }
+        
+        // new location object more accurate than previous one
+        if self.location == nil || self.location!.horizontalAccuracy > newLocation.horizontalAccuracy {
+            
+            // accept the result
+            self.locationError = nil
+            self.location = newLocation
+            
+            // accuracy better than desiredAccuracy, stop locating
+            if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy {
+                self.stopLocationManager()
+            }
+            
+            // start reverse geocoding
+            if !self.performGeocoding {
+                
+                self.performGeocoding = true
+                
+                self.geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+                    
+                    self.geocodeError = error
+                    
+                    if error == nil && !placemarks.isEmpty {
+                        self.placemark = placemarks.last as? CLPlacemark
+                    } else {
+                        self.placemark = nil
+                    }
+                    
+                    self.performGeocoding = false
+                    self.updateLocationLabel()
+                })
+            }
+            
+            // if the location didn't changed too much
+        } else if distance < 1.0 {
+            
+            let timeInterval = newLocation.timestamp.timeIntervalSinceDate(location!.timestamp)
+            
+            if timeInterval > 10 {
+                println("***** force done")
+                self.stopLocationManager()
+                self.updateLocationLabel()
+            }
+        }
+        
+    }
 }

@@ -70,7 +70,7 @@
                         <barButtonItem key="rightBarButtonItem" image="create_new" id="zfo-hl-voi">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="oj7-Fm-GgC" kind="modal" id="WU6-Kk-OEP"/>
+                                <segue destination="oj7-Fm-GgC" kind="modal" id="3HE-eG-GDV"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -641,13 +641,6 @@
                                             <action selector="choosePhoto" destination="Ik6-i5-RVe" eventType="touchUpInside" id="Ta2-C6-0qA"/>
                                         </connections>
                                     </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="想发布的内容……" translatesAutoresizingMaskIntoConstraints="NO" id="bJh-rp-AlG">
-                                        <rect key="frame" x="8" y="8" width="288" height="202"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j4o-c7-jdx">
                                         <rect key="frame" x="181" y="226" width="15" height="15"/>
                                         <color key="backgroundColor" red="0.27782971501739934" green="0.81861584595959602" blue="0.27741125714290832" alpha="1" colorSpace="calibratedRGB"/>
@@ -659,21 +652,40 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前位置" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="txH-zg-13Q">
+                                        <rect key="frame" x="16" y="232.5" width="134" height="17"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                        <color key="textColor" red="0.098039215686274508" green="0.46274509803921571" blue="0.82352941176470584" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="想发布的内容……" translatesAutoresizingMaskIntoConstraints="NO" id="bJh-rp-AlG">
+                                        <rect key="frame" x="8" y="8" width="288" height="202"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="Ik6-i5-RVe" id="FkQ-pE-fjh"/>
+                                        </connections>
+                                    </textView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="j4o-c7-jdx" firstAttribute="leading" secondItem="jEo-8l-Zpb" secondAttribute="trailing" constant="-15" id="3sD-c2-zuZ"/>
-                                    <constraint firstAttribute="bottom" secondItem="bJh-rp-AlG" secondAttribute="bottom" constant="62" id="9e1-h3-Xus"/>
                                     <constraint firstItem="96T-uc-31o" firstAttribute="leading" secondItem="IL8-UJ-c1Q" secondAttribute="trailing" constant="16" id="Bgs-9f-BO2"/>
                                     <constraint firstItem="IL8-UJ-c1Q" firstAttribute="leading" secondItem="jEo-8l-Zpb" secondAttribute="trailing" constant="16" id="EsE-8X-tiL"/>
+                                    <constraint firstItem="jEo-8l-Zpb" firstAttribute="centerY" secondItem="txH-zg-13Q" secondAttribute="centerY" id="Hh0-xo-tpo"/>
                                     <constraint firstAttribute="trailing" secondItem="bJh-rp-AlG" secondAttribute="trailing" constant="8" id="IbJ-M8-xZD"/>
                                     <constraint firstItem="bJh-rp-AlG" firstAttribute="top" secondItem="MKE-Yl-YVG" secondAttribute="top" constant="8" id="Khb-Ge-ww1"/>
                                     <constraint firstItem="jEo-8l-Zpb" firstAttribute="top" secondItem="j4o-c7-jdx" secondAttribute="bottom" constant="-15" id="XM3-8S-crM"/>
                                     <constraint firstItem="96T-uc-31o" firstAttribute="centerY" secondItem="IL8-UJ-c1Q" secondAttribute="centerY" id="XOn-5E-0RJ"/>
+                                    <constraint firstItem="jEo-8l-Zpb" firstAttribute="leading" secondItem="txH-zg-13Q" secondAttribute="trailing" constant="16" id="ZhB-Sn-1tF"/>
                                     <constraint firstAttribute="height" constant="272" id="aif-xa-oQp"/>
                                     <constraint firstAttribute="trailing" secondItem="96T-uc-31o" secondAttribute="trailing" constant="16" id="kz3-bZ-AcD"/>
+                                    <constraint firstItem="txH-zg-13Q" firstAttribute="leading" secondItem="MKE-Yl-YVG" secondAttribute="leading" constant="16" id="p9E-wP-GoM"/>
                                     <constraint firstItem="jEo-8l-Zpb" firstAttribute="centerY" secondItem="IL8-UJ-c1Q" secondAttribute="centerY" id="r0D-mv-jHa"/>
                                     <constraint firstAttribute="bottom" secondItem="96T-uc-31o" secondAttribute="bottom" constant="16" id="rNn-uv-bCt"/>
+                                    <constraint firstAttribute="bottom" secondItem="bJh-rp-AlG" secondAttribute="bottom" constant="62" id="txO-wI-4Pe"/>
                                     <constraint firstItem="bJh-rp-AlG" firstAttribute="leading" secondItem="MKE-Yl-YVG" secondAttribute="leading" constant="8" id="x0c-bn-hSI"/>
                                 </constraints>
                             </view>
@@ -696,13 +708,19 @@
                                 <action selector="cancel:" destination="Ik6-i5-RVe" id="OcT-mB-TJe"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="checkmark" id="n5X-rq-ks4"/>
+                        <barButtonItem key="rightBarButtonItem" image="checkmark" id="n5X-rq-ks4">
+                            <connections>
+                                <action selector="post:" destination="Ik6-i5-RVe" id="R4l-5y-Wqv"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="BF6-H9-c01" id="ach-Pg-USf"/>
+                        <outlet property="locationLabel" destination="txH-zg-13Q" id="w3t-8c-C4L"/>
                         <outlet property="numberBadge" destination="j4o-c7-jdx" id="NWt-4Z-AQ0"/>
                         <outlet property="paperView" destination="MKE-Yl-YVG" id="Uw5-ff-dcM"/>
                         <outlet property="paperViewHeight" destination="aif-xa-oQp" id="u0g-EE-gPK"/>
+                        <outlet property="postButton" destination="n5X-rq-ks4" id="2pR-X4-TWl"/>
                         <outlet property="postTextView" destination="bJh-rp-AlG" id="NVq-9z-DDq"/>
                     </connections>
                 </viewController>
