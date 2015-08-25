@@ -226,6 +226,7 @@ extension PostViewController {
         let contentSize = self.contentLabel.sizeThatFits(self.contentLabel.bounds.size)
         
         let headerView = self.tableView.tableHeaderView as UIView!
+        self.tableView.layoutIfNeeded()
         
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             
