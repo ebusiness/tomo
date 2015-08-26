@@ -235,9 +235,16 @@ extension PostViewController {
         }
         pageControl.numberOfPages = imageCount
         pageControl.hidden = imageCount < 2
+
+        let para = NSMutableParagraphStyle()
+        para.minimumLineHeight = 30
         
-        contentLabel.text = post.content
+        let attributeString = NSAttributedString(string: post.content, attributes: [
+            NSParagraphStyleAttributeName: para
+            ])
         
+        contentLabel.attributedText = attributeString
+
         self.contentLabel.bounds.size.width = UIScreen.mainScreen().bounds.size.width - 16 * 2
         let contentSize = self.contentLabel.sizeThatFits(self.contentLabel.bounds.size)
         

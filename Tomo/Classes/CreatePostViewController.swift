@@ -49,7 +49,8 @@ final class CreatePostViewController: UIViewController {
         
         self.postTextView.becomeFirstResponder()
         
-        println(UIScreen.mainScreen().bounds)
+        self.markLocation("")
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,15 +58,21 @@ final class CreatePostViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "postCreated" {
+            if let sender: AnyObject = sender, home = segue.destinationViewController as? HomeViewController {
+                
+                let json = JSON(sender)
+                
+                var post = PostEntity(sender)
+                post.owner = me
+                
+                home.contents.insert(post, atIndex: 0)
+                home.latestContent = post
+                home.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Middle)
+            }
+        }
     }
-    */
     
     deinit {
         self.stopLocationManager()
@@ -93,6 +100,8 @@ extension CreatePostViewController {
         self.numberBadge.layer.masksToBounds = true
         self.numberBadge.hidden = true
         
+        self.postButton.enabled = false
+        
         self.locationLabel.hidden = true
         
         self.collectionView.allowsMultipleSelection = true
@@ -105,11 +114,11 @@ extension CreatePostViewController {
     
     private func registerForKeyboardNotifications() {
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWasShown:", name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShown:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
-    func keyboardWasShown(notification: NSNotification) {
+    func keyboardWillShown(notification: NSNotification) {
         
         if let info = notification.userInfo {
             
@@ -360,20 +369,24 @@ extension CreatePostViewController {
         Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/mobile/posts" , parameters: param,encoding: ParameterEncoding.JSON)
             .responseJSON { (_, _, post, _) -> Void in
                 Util.dismissHUD()
-                //                                self.performSegueWithIdentifier("addedPost", sender: post)
+                self.performSegueWithIdentifier("postCreated", sender: post)
         }
     }
     
+    // TODO - refactor out
     private func resize(image: UIImage) -> UIImage {
         
         var imageData = UIImageJPEGRepresentation(image, 1)
         
-        if !(imageData.length/1024/1024 > 2) {
+        // if the image smaller than 1MB, do nothing
+        if !(imageData.length/1024/1024 > 1) {
             return image
         }
         
+        // modify this value to change result size
         let resizeFactor = 1
         
+        // based on iPhone6 plus screen
         let widthBase = CGFloat(414 * resizeFactor)
         let heigthBase = CGFloat(736 * resizeFactor)
         
@@ -382,36 +395,33 @@ extension CreatePostViewController {
         let width = CGFloat(CGImageGetWidth(cgImage))
         let height = CGFloat(CGImageGetHeight(cgImage))
         
+        // image initial ratio
         var ratio = CGFloat(1)
         
+        // calculate resize ratio by width and height
         if width > widthBase && height > heigthBase {
-            
             if width > height {
                 ratio = widthBase / width
             } else {
                 ratio = heigthBase / height
             }
-            
         } else if width > widthBase && height <= heigthBase {
-            
             ratio = widthBase / width
-            
         } else if width <= widthBase && height > heigthBase {
-            
             ratio = heigthBase / height
-            
         }
         
         let resultSize = CGSize(width: width * ratio, height: height * ratio)
         
+        // prepare redraw context
         let bitsPerComponent = CGImageGetBitsPerComponent(cgImage)
         let bytesPerRow = CGImageGetBytesPerRow(cgImage)
         let colorSpace = CGImageGetColorSpace(cgImage)
         let bitmapInfo = CGImageGetBitmapInfo(cgImage)
-        
         let context = CGBitmapContextCreate(nil, Int(width * ratio), Int(height * ratio), bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo)
-        
         CGContextSetInterpolationQuality(context, kCGInterpolationHigh)
+        
+        // redraw image by new size
         CGContextDrawImage(context, CGRect(origin: CGPointZero, size: resultSize), cgImage)
         
         let result = CGBitmapContextCreateImage(context)
@@ -470,10 +480,6 @@ extension CreatePostViewController {
 
             if let availableMediaTypes = UIImagePickerController.availableMediaTypesForSourceType(.Camera) as? [String] {
                 
-//                if find(availableMediaTypes, kUTTypeImage) == nil {
-//                    return
-//                }
-                
                 let picker = UIImagePickerController()
                 picker.sourceType = .Camera
                 picker.mediaTypes = [kUTTypeImage]
@@ -520,9 +526,9 @@ extension CreatePostViewController: UITextViewDelegate {
     
     func textViewDidChange(textView: UITextView) {
         
-        let postContent = textView.text
+        let postContent = textView.text.trimmed()
         
-        if postContent != nil && postContent!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
+        if postContent.length > 0 {
             self.postButton.enabled = true
         } else {
             self.postButton.enabled = false
@@ -632,12 +638,21 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigatio
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
             self.newPhotos.insert(image, atIndex: 0)
+            let insertPath = NSIndexPath(forItem: 0, inSection: 0)
             
             self.dismissViewControllerAnimated(true) {
-                let insertPath = NSIndexPath(forItem: 0, inSection: 0)
+                
                 self.collectionView.insertItemsAtIndexPaths([insertPath])
-                self.collectionView.selectItemAtIndexPath(insertPath, animated: true, scrollPosition: UICollectionViewScrollPosition.Left)
+                self.collectionView.selectItemAtIndexPath(insertPath, animated: true, scrollPosition: .Left)
                 self.updateNumberBadge()
+                
+                let cell = self.collectionView.cellForItemAtIndexPath(insertPath)!
+                UIView.animateWithDuration(0.1, animations: { () -> Void in
+                    cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+                }, completion: { (_) -> Void in
+                    let mark = UIImageView(image: UIImage(named: "ok"))
+                    cell.contentView.addSubview(mark)
+                })
             }
             
         } else {

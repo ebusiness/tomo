@@ -219,12 +219,6 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前位置" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="txH-zg-13Q">
-                                        <rect key="frame" x="16" y="233" width="134" height="17"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                        <color key="textColor" red="0.098039215686274508" green="0.46274509803921571" blue="0.82352941176470584" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="想发布的内容……" translatesAutoresizingMaskIntoConstraints="NO" id="bJh-rp-AlG">
                                         <rect key="frame" x="8" y="8" width="288" height="202"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -235,13 +229,19 @@
                                             <outlet property="delegate" destination="Ik6-i5-RVe" id="FkQ-pE-fjh"/>
                                         </connections>
                                     </textView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前位置" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="txH-zg-13Q">
+                                        <rect key="frame" x="16" y="239" width="134" height="17"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                        <color key="textColor" red="0.098039215686274508" green="0.46274509803921571" blue="0.82352941176470584" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="jEo-8l-Zpb" firstAttribute="bottom" secondItem="txH-zg-13Q" secondAttribute="bottom" id="03w-4R-N46"/>
                                     <constraint firstItem="j4o-c7-jdx" firstAttribute="leading" secondItem="jEo-8l-Zpb" secondAttribute="trailing" constant="-15" id="3sD-c2-zuZ"/>
                                     <constraint firstItem="96T-uc-31o" firstAttribute="leading" secondItem="IL8-UJ-c1Q" secondAttribute="trailing" constant="16" id="Bgs-9f-BO2"/>
                                     <constraint firstItem="IL8-UJ-c1Q" firstAttribute="leading" secondItem="jEo-8l-Zpb" secondAttribute="trailing" constant="16" id="EsE-8X-tiL"/>
-                                    <constraint firstItem="jEo-8l-Zpb" firstAttribute="centerY" secondItem="txH-zg-13Q" secondAttribute="centerY" id="Hh0-xo-tpo"/>
                                     <constraint firstAttribute="trailing" secondItem="bJh-rp-AlG" secondAttribute="trailing" constant="8" id="IbJ-M8-xZD"/>
                                     <constraint firstItem="bJh-rp-AlG" firstAttribute="top" secondItem="MKE-Yl-YVG" secondAttribute="top" constant="8" id="Khb-Ge-ww1"/>
                                     <constraint firstItem="jEo-8l-Zpb" firstAttribute="top" secondItem="j4o-c7-jdx" secondAttribute="bottom" constant="-15" id="XM3-8S-crM"/>
@@ -289,11 +289,13 @@
                         <outlet property="paperViewHeight" destination="aif-xa-oQp" id="u0g-EE-gPK"/>
                         <outlet property="postButton" destination="n5X-rq-ks4" id="2pR-X4-TWl"/>
                         <outlet property="postTextView" destination="bJh-rp-AlG" id="NVq-9z-DDq"/>
+                        <segue destination="qTh-eg-IWt" kind="unwind" identifier="postCreated" unwindAction="addedPost:" id="vSn-7E-ZHa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x9I-ee-JZQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="qTh-eg-IWt" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1861" y="692"/>
+            <point key="canvasLocation" x="1484" y="630"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3R8-aa-57H">
@@ -315,7 +317,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TQ5-Ot-kxU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1329" y="692"/>
+            <point key="canvasLocation" x="944" y="630"/>
         </scene>
         <!--Post View Controller-->
         <scene sceneID="5lg-JB-8UC">

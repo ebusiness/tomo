@@ -244,4 +244,9 @@ extension String {
         return regex?.firstMatchInString(self, options: nil, range: NSMakeRange(0, count(self))) != nil
     }
     
+    func isValidPassword() -> Bool {
+        let regex = NSRegularExpression(pattern: "(?=^.{8,}$)(?=.*\\d)(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$", options: nil, error: nil)
+        return regex?.firstMatchInString(self, options: nil, range: NSMakeRange(0, count(self))) != nil
+    }
+    
 }
