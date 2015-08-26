@@ -163,6 +163,10 @@ extension RegViewController {
             },
             failure: { (errCode, errMessage) -> () in
                 
+                self.inputArea.hidden = false
+                UIView.animateWithDuration(0.3) { () -> Void in
+                    self.inputArea.alpha = 1
+                }
                 println(errCode)
                 println(errMessage)
         })
