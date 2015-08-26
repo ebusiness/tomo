@@ -14,6 +14,7 @@ class PostViewController: BaseViewController{
     @IBOutlet weak var postImageList: UIScrollView!
     @IBOutlet weak var avatarImageView: UIImageView!
 
+    @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var commentTextView: UITextView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -79,6 +80,17 @@ class PostViewController: BaseViewController{
         super.scrollViewDidScroll(scrollView)
         if isKeyboardShown {
             self.view.endEditing(true)
+        }
+        if scrollView == self.postImageList && !pageControl.hidden && scrollView.subviews.count > 2{
+            
+            let page = scrollView.contentOffset.x / scrollView.frame.size.width
+            if page == 0 {
+                changeImageTo(scrollView.subviews[0].tag)
+            } else if page == 2 {
+                changeImageTo(scrollView.subviews[2].tag)
+            }
+            pageControl.currentPage = scrollView.subviews[1].tag
+
         }
     }
     
@@ -216,9 +228,13 @@ extension PostViewController {
         userName.text = self.post.owner.nickName
         timeLabel.text = post.createDate.relativeTimeToString()
         
-        if ( self.post.images?.count ?? 0 ) > 0 {
+        let imageCount = self.post.images?.count ?? 0
+        
+        if imageCount > 0 {
             self.setImageList()
         }
+        pageControl.numberOfPages = imageCount
+        pageControl.hidden = imageCount < 2
         
         contentLabel.text = post.content
         
@@ -269,59 +285,132 @@ extension PostViewController {
         }
     }
     
+    func getImageView(index: Int) -> UIImageView {
+        if  let images = post.images {
+            
+            let i = index > images.count ? index - images.count : index < 0 ? images.count + index : index
+            
+            let imgView = UIImageView(frame: CGRectZero )
+            imgView.setImageWithURL(NSURL(string: images[i] ), completed: nil, usingActivityIndicatorStyle: .Gray)
+            imgView.userInteractionEnabled = true
+            imgView.tag = i
+            let tap = UITapGestureRecognizer(target: self, action: Selector("postImageViewTapped:"))
+            imgView.addGestureRecognizer(tap)
+            imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
+            imgView.contentMode = UIViewContentMode.ScaleAspectFill
+            imgView.clipsToBounds = true
+            return imgView
+        }
+        return UIImageView()
+        
+    }
+    
     func setImageList(){
         
         for imageview in postImageList.subviews {
             imageview.removeFromSuperview()
         }
-
         var imageWidth = self.listViewHeight / 3 * 4
         if imageWidth > UIScreen.mainScreen().bounds.size.width {
             imageWidth = UIScreen.mainScreen().bounds.size.width
         }
-
-        var scrollWidth:CGFloat = 0
-        if  let images = post.images where images.count > 0 {
-            for i in 0..<images.count{
-                
-                let imgView = UIImageView(frame: CGRectZero )
-                imgView.setImageWithURL(NSURL(string: images[i] ), completed: nil, usingActivityIndicatorStyle: .Gray)
-                imgView.userInteractionEnabled = true
-                
-                let tap = UITapGestureRecognizer(target: self, action: Selector("postImageViewTapped:"))
-                imgView.addGestureRecognizer(tap)
-                imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
-                imgView.contentMode = UIViewContentMode.ScaleAspectFill
-                imgView.clipsToBounds = true
-                
-                postImageList.addSubview(imgView)
-                
-                
-                postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Height, relatedBy: .Equal, toItem: postImageList, attribute: .Height, multiplier: 1.0, constant: 0))
-                postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterY, relatedBy: .Equal, toItem: postImageList, attribute: .CenterY, multiplier: 1.0, constant: 0))
-                
-                if images.count == 1 {
-
-                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: 0 ))
-                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Trailing, relatedBy: .Equal, toItem: postImageList, attribute: .Trailing, multiplier: 1.0, constant: 0 ))
-                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterX, relatedBy: .Equal, toItem: postImageList, attribute: .CenterX, multiplier: 1.0, constant: 0 ))
-
-                } else {
-                    
-                    imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: imageWidth))
-                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: scrollWidth ))
-                    
-                    if i != images.count - 1 {
-                        scrollWidth += 5
-                    }
-                }
-                
-                scrollWidth += imageWidth
-                
-            }
-            postImageList.contentSize.width = scrollWidth
-        }
         
+        let centerImageView = getImageView (0)
+        var views = ["centerImageView": centerImageView, "postImageList": postImageList]
+        postImageList.addSubview(centerImageView)
+        
+        var constraint = NSLayoutConstraint.constraintsWithVisualFormat("V:|[centerImageView(==postImageList)]", options: nil, metrics: nil, views: views)
+        
+        if (post.images?.count ?? 0 ) == 1 {
+            postImageList.contentSize.width = imageWidth
+            constraint += NSLayoutConstraint.constraintsWithVisualFormat("H:|[centerImageView(==postImageList)]|", options: .AlignAllCenterX , metrics: nil, views: views)
+        } else {
+            postImageList.contentSize.width = imageWidth * 3
+            
+            let leftImageView = getImageView (-1)
+            let rightImageView = getImageView (1)
+            
+            postImageList.insertSubview(leftImageView, atIndex: 0)
+            postImageList.addSubview(rightImageView)
+            
+            views["leftImageView"] = leftImageView
+            views["rightImageView"] = rightImageView
+            
+            constraint += NSLayoutConstraint.constraintsWithVisualFormat("H:|[leftImageView(==centerImageView)][centerImageView(==imageWidth)][rightImageView(==centerImageView)]", options: .AlignAllTop | .AlignAllBottom, metrics: ["imageWidth": imageWidth], views: views)
+            postImageList.contentOffset.x = imageWidth
+        }
+        postImageList.addConstraints(constraint)
+        
+//
+//        for imageview in postImageList.subviews {
+//            imageview.removeFromSuperview()
+//        }
+//
+//        var imageWidth = self.listViewHeight / 3 * 4
+//        if imageWidth > UIScreen.mainScreen().bounds.size.width {
+//            imageWidth = UIScreen.mainScreen().bounds.size.width
+//        }
+//
+//        var scrollWidth:CGFloat = 0
+//        if  let images = post.images where images.count > 0 {
+//            for i in 0..<images.count{
+//                
+//                let imgView = UIImageView(frame: CGRectZero )
+//                imgView.setImageWithURL(NSURL(string: images[i] ), completed: nil, usingActivityIndicatorStyle: .Gray)
+//                imgView.userInteractionEnabled = true
+//                
+//                let tap = UITapGestureRecognizer(target: self, action: Selector("postImageViewTapped:"))
+//                imgView.addGestureRecognizer(tap)
+//                imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
+//                imgView.contentMode = UIViewContentMode.ScaleAspectFill
+//                imgView.clipsToBounds = true
+//                
+//                postImageList.addSubview(imgView)
+//                
+//                
+//                postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Height, relatedBy: .Equal, toItem: postImageList, attribute: .Height, multiplier: 1.0, constant: 0))
+//                postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterY, relatedBy: .Equal, toItem: postImageList, attribute: .CenterY, multiplier: 1.0, constant: 0))
+//                
+//                if images.count == 1 {
+//
+//                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: 0 ))
+//                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Trailing, relatedBy: .Equal, toItem: postImageList, attribute: .Trailing, multiplier: 1.0, constant: 0 ))
+//                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterX, relatedBy: .Equal, toItem: postImageList, attribute: .CenterX, multiplier: 1.0, constant: 0 ))
+//
+//                } else {
+//                    
+//                    imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: imageWidth))
+//                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: scrollWidth ))
+//                    
+////                    if i != images.count - 1 {
+////                        scrollWidth += 5
+////                    }
+//                }
+//                
+//                scrollWidth += imageWidth
+//                
+//            }
+//            postImageList.contentSize.width = scrollWidth
+//        }
+//        
+    }
+    
+    func changeImageTo(index: Int){
+        if let images = post.images where postImageList.subviews.count == 3 {
+            let left = postImageList.subviews[0] as! UIImageView
+            let center = postImageList.subviews[1] as! UIImageView
+            let right = postImageList.subviews[2] as! UIImageView
+            
+            left.tag = index == 0 ? images.count - 1 : index - 1
+            center.tag = index
+            right.tag = index == (images.count - 1) ? 0 : index + 1
+            
+            left.setImageWithURL(NSURL(string: images[left.tag] ), completed: nil, usingActivityIndicatorStyle: .Gray)
+            center.setImageWithURL(NSURL(string: images[center.tag] ), completed: nil, usingActivityIndicatorStyle: .Gray)
+            right.setImageWithURL(NSURL(string: images[right.tag] ), completed: nil, usingActivityIndicatorStyle: .Gray)
+            
+            postImageList.contentOffset.x = UIScreen.mainScreen().bounds.size.width//postImageList.frame.size.width
+        }
     }
 
     func postImageViewTapped(sender: UITapGestureRecognizer) {
@@ -329,22 +418,34 @@ extension PostViewController {
             self.view.endEditing(true)
             return
         }
-        if let imageView = sender.view as? UIImageView,image = imageView.image {
+        if let images = post.images, imageView = sender.view as? UIImageView, image = imageView.image where postImageList.subviews.count > 0 && images.count > 0 {
             
             var items = [MHGalleryItem]();
-            var index = 0
-            for i in 0..postImageList.subviews.count {
-                if let item = postImageList.subviews[i] as? UIImageView,image = item.image {
-                    if imageView == item {
-                        index = i
+            
+            if postImageList.subviews.count == 1 {
+                let image =  (postImageList.subviews.first as! UIImageView).image
+                items.append(MHGalleryItem(image: image))
+            } else {
+                let left =  (postImageList.subviews.first as! UIImageView)
+                let center =  (postImageList.subviews[1] as! UIImageView)
+                let right =  (postImageList.subviews.last as! UIImageView)
+                
+                for i in 0..images.count {
+                    if i == left.tag {
+                        items.append(MHGalleryItem(image: left.image!))
+                    } else if i == center.tag {
+                        items.append(MHGalleryItem(image: center.image!))
+                    } else if i == right.tag {
+                        items.append(MHGalleryItem(image: right.image!))
+                    } else {
+                        items.append(MHGalleryItem(URL: images[i], galleryType: .Image))
                     }
-                    items.append(MHGalleryItem(image: image))
                 }
             }
             
             let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.ImageViewerNavigationBarShown)
             gallery.galleryItems = items
-            gallery.presentationIndex = index
+            gallery.presentationIndex = imageView.tag
             
 //            if post.images?.count == 1 {
                 gallery.presentingFromImageView = imageView
