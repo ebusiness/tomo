@@ -229,6 +229,7 @@ COePvuWgtFRvbW8
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
                                             <connections>
+                                                <action selector="textFieldDidChange:" destination="S3k-TM-I3y" eventType="editingChanged" id="1tV-91-pL8"/>
                                                 <outlet property="delegate" destination="S3k-TM-I3y" id="Q6p-bk-0qB"/>
                                             </connections>
                                         </textField>
@@ -249,6 +250,7 @@ COePvuWgtFRvbW8
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
                                             <connections>
+                                                <action selector="textFieldDidChange:" destination="S3k-TM-I3y" eventType="editingChanged" id="CAV-Kn-oE1"/>
                                                 <outlet property="delegate" destination="S3k-TM-I3y" id="Xgf-6M-nH7"/>
                                             </connections>
                                         </textField>
@@ -268,6 +270,7 @@ COePvuWgtFRvbW8
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
                                             <connections>
+                                                <action selector="textFieldDidChange:" destination="S3k-TM-I3y" eventType="editingChanged" id="ORp-qb-MNw"/>
                                                 <outlet property="delegate" destination="S3k-TM-I3y" id="9NR-HZ-GKp"/>
                                             </connections>
                                         </textField>
@@ -287,6 +290,7 @@ COePvuWgtFRvbW8
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                             <connections>
+                                                <action selector="textFieldDidChange:" destination="S3k-TM-I3y" eventType="editingChanged" id="d81-Nj-APq"/>
                                                 <outlet property="delegate" destination="S3k-TM-I3y" id="Vw7-s6-skH"/>
                                             </connections>
                                         </textField>

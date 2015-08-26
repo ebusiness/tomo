@@ -129,9 +129,11 @@ extension SignUpViewController {
             if error == nil {
                 
                 let alert = UIAlertController(title: "感谢您注册現場Tomo", message: "认证邮件已发送至您的邮箱，请查收。激活您的帐号后即可开始使用現場Tomo", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "好", style: .Default, handler: nil))
+                alert.addAction(UIAlertAction(title: "好", style: .Default) {
+                    _ -> () in
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                })
                 self.presentViewController(alert, animated: true, completion: nil)
-                self.dismissViewControllerAnimated(true, completion: nil)
                 
             } else {
                 
@@ -147,13 +149,12 @@ extension SignUpViewController {
 // MARK: - TextField Delegate
 
 extension SignUpViewController: UITextFieldDelegate {
-    
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+
+    @IBAction func textFieldDidChange(sender: UITextField) {
         
-        if textField == self.nickNameTextField {
+        if sender == self.nickNameTextField {
             
-            var nickName = self.nickNameTextField.text as NSString
-            nickName = nickName.stringByReplacingCharactersInRange(range, withString: string).trimmed()
+            var nickName = self.nickNameTextField.text.trimmed()
             
             if nickName.length == 0 || nickName.length > 10 {
                 nickNameValid = false
@@ -164,10 +165,9 @@ extension SignUpViewController: UITextFieldDelegate {
             }
         }
         
-        if textField == self.emailTextField {
+        if sender == self.emailTextField {
             
-            var email = self.emailTextField.text as NSString
-            email = email.stringByReplacingCharactersInRange(range, withString: string)
+            var email = self.emailTextField.text
             
             if !String(email).isEmail() {
                 emailValid = false
@@ -178,12 +178,11 @@ extension SignUpViewController: UITextFieldDelegate {
             }
         }
         
-        if textField == self.passwordTextField {
+        if sender == self.passwordTextField {
             
             var repass = self.repassTextField.text
             
-            var password = self.passwordTextField.text as NSString
-            password = password.stringByReplacingCharactersInRange(range, withString: string)
+            var password = self.passwordTextField.text
             
             if !String(password).isValidPassword() {
                 passwordValid = false
@@ -202,12 +201,11 @@ extension SignUpViewController: UITextFieldDelegate {
             }
         }
         
-        if textField == self.repassTextField {
+        if sender == self.repassTextField {
             
             var password = self.passwordTextField.text
             
-            var repass = self.repassTextField.text as NSString
-            repass = repass.stringByReplacingCharactersInRange(range, withString: string)
+            var repass = self.repassTextField.text
             
             if repass != password {
                 repassValid = false
@@ -220,9 +218,9 @@ extension SignUpViewController: UITextFieldDelegate {
         
         if nickNameValid && emailValid && passwordValid && repassValid {
             self.signUpButton.enabled = true
+        } else {
+            self.signUpButton.enabled = false
         }
-        
-        return true
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
