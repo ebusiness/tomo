@@ -340,59 +340,6 @@ extension PostViewController {
             postImageList.contentOffset.x = imageWidth
         }
         postImageList.addConstraints(constraint)
-        
-//
-//        for imageview in postImageList.subviews {
-//            imageview.removeFromSuperview()
-//        }
-//
-//        var imageWidth = self.listViewHeight / 3 * 4
-//        if imageWidth > UIScreen.mainScreen().bounds.size.width {
-//            imageWidth = UIScreen.mainScreen().bounds.size.width
-//        }
-//
-//        var scrollWidth:CGFloat = 0
-//        if  let images = post.images where images.count > 0 {
-//            for i in 0..<images.count{
-//                
-//                let imgView = UIImageView(frame: CGRectZero )
-//                imgView.setImageWithURL(NSURL(string: images[i] ), completed: nil, usingActivityIndicatorStyle: .Gray)
-//                imgView.userInteractionEnabled = true
-//                
-//                let tap = UITapGestureRecognizer(target: self, action: Selector("postImageViewTapped:"))
-//                imgView.addGestureRecognizer(tap)
-//                imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
-//                imgView.contentMode = UIViewContentMode.ScaleAspectFill
-//                imgView.clipsToBounds = true
-//                
-//                postImageList.addSubview(imgView)
-//                
-//                
-//                postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Height, relatedBy: .Equal, toItem: postImageList, attribute: .Height, multiplier: 1.0, constant: 0))
-//                postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterY, relatedBy: .Equal, toItem: postImageList, attribute: .CenterY, multiplier: 1.0, constant: 0))
-//                
-//                if images.count == 1 {
-//
-//                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: 0 ))
-//                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Trailing, relatedBy: .Equal, toItem: postImageList, attribute: .Trailing, multiplier: 1.0, constant: 0 ))
-//                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .CenterX, relatedBy: .Equal, toItem: postImageList, attribute: .CenterX, multiplier: 1.0, constant: 0 ))
-//
-//                } else {
-//                    
-//                    imgView.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1.0, constant: imageWidth))
-//                    postImageList.addConstraint(NSLayoutConstraint(item: imgView, attribute: .Leading, relatedBy: .Equal, toItem: postImageList, attribute: .Leading, multiplier: 1.0, constant: scrollWidth ))
-//                    
-////                    if i != images.count - 1 {
-////                        scrollWidth += 5
-////                    }
-//                }
-//                
-//                scrollWidth += imageWidth
-//                
-//            }
-//            postImageList.contentSize.width = scrollWidth
-//        }
-//        
     }
     
     func changeImageTo(index: Int){
