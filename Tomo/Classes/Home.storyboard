@@ -423,7 +423,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="UxZ-3f-CRH" secondAttribute="trailing" constant="16" id="r1U-EG-TPC"/>
                                             </constraints>
                                         </view>
-                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="na4-bq-A9V">
+                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="na4-bq-A9V">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
                                             <connections>
                                                 <outlet property="delegate" destination="e0B-Bn-WF3" id="Fej-tO-XMS"/>
