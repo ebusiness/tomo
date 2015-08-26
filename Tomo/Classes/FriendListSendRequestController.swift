@@ -11,6 +11,10 @@ import UIKit
 
 class FriendListSendRequestController: MyAccountBaseController {
     
+    @IBOutlet weak var addFriendButton: UIButton!
+    
+    let emptyView = Util.createViewWithNibName("EmptyFriends")
+    
     var invitedUsers:[UserEntity]?{
         didSet{
             self.tableView.reloadData()
@@ -19,17 +23,26 @@ class FriendListSendRequestController: MyAccountBaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Util.changeImageColorForButton(addFriendButton,color: UIColor.whiteColor())
         
+        self.tableView.backgroundView = self.emptyView
+
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        Util.showHUD()
         self.manager.getObjectsAtPath("/mobile/user/invited", parameters: nil, success: { (operation, result) -> Void in
             
+            Util.dismissHUD()
             if let result = result.array() as? [UserEntity] {
                 self.invitedUsers = result
+                self.tableView.backgroundView = nil
             }
             
-        }) { (operation, error) -> Void in
-
+            }) { (operation, error) -> Void in
+                self.tableView.backgroundView = self.emptyView
         }
-
     }
     
     override func setupMapping() {
@@ -52,6 +65,11 @@ class FriendListSendRequestController: MyAccountBaseController {
         // edit user
         let responseDescriptor = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/mobile/user/invited", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
         self.manager.addResponseDescriptor(responseDescriptor)
+    }
+    
+    @IBAction func searchFriend(sender: AnyObject) {
+        let vc = Util.createViewControllerWithIdentifier("SearchFriend", storyboardName: "Chat")
+        self.presentViewController(vc, animated: true, completion: nil)
     }
     
 }

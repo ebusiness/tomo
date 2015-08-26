@@ -928,10 +928,10 @@
         <scene sceneID="80z-qw-EeM">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="FZe-jy-2oB" customClass="FriendListSendRequestController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="uyd-qY-FoV">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="uyd-qY-FoV">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="mm1-Y1-STj">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -998,7 +998,29 @@
                         </prototypes>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" title="已发送的邀请" id="gjs-cY-vxX"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="已发送的邀请" id="gjs-cY-vxX">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="DD8-fm-XPV">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Lx9-hF-C6g">
+                                <rect key="frame" x="279" y="119" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="T74-fa-aFX"/>
+                                    <constraint firstAttribute="height" constant="25" id="vkD-xn-d0M"/>
+                                </constraints>
+                                <state key="normal" image="add_user">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="searchFriend:" destination="FZe-jy-2oB" eventType="touchUpInside" id="VJ8-Hg-rNV"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="addFriendButton" destination="Lx9-hF-C6g" id="BIO-WM-dh9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="op5-ps-9Yg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1189,6 +1211,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="add_user" width="25" height="25"/>
         <image name="avatar" width="80" height="80"/>
         <image name="checkmark" width="25" height="25"/>
         <image name="edit_user" width="25" height="25"/>
@@ -1201,6 +1224,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="kfp-TM-OvH"/>
+        <segue reference="TOo-XU-L5q"/>
     </inferredMetricsTieBreakers>
 </document>
