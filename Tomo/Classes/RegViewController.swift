@@ -172,10 +172,6 @@ extension RegViewController {
         })
     }
     
-    func ohyeah() {
-        AudioServicesPlayAlertSound(UInt32(kSystemSoundID_Vibrate))
-    }
-    
     @IBAction func accountLogin(sender: AnyObject) {
         
         var params = [String:String]()
