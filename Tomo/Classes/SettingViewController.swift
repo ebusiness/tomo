@@ -27,7 +27,6 @@ final class SettingViewController: MyAccountBaseController {
             var badge: String? = nil
             if let notifications = notifications where notifications.count > 0 {
                 badge = String(notifications.count)
-                self.notificationCollectionView.reloadData()
                 if let timer = timer {
                     timer.invalidate()
                 }
@@ -38,6 +37,7 @@ final class SettingViewController: MyAccountBaseController {
                     self.timer = nil
                 }
             }
+            self.notificationCollectionView.reloadData()
             self.parentViewController!.tabBarItem.badgeValue = badge
         }
     }
