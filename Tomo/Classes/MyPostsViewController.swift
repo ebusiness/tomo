@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyPostsViewController: MyAccountBaseController {
+final class MyPostsViewController: MyAccountBaseController {
     
     let screenHeight = UIScreen.mainScreen().bounds.height
     let loadTriggerHeight = CGFloat(88.0)
@@ -28,6 +28,10 @@ class MyPostsViewController: MyAccountBaseController {
         self.tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
         
         self.clearsSelectionOnViewWillAppear = false
+        
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receivePostLiked:"), event: .PostLiked)
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receivePostCommented:"), event: .PostCommented)
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receivePostBookmarked:"), event: .PostBookmarked)
         
         loadMoreContent()
     }
@@ -187,4 +191,54 @@ extension MyPostsViewController {
         tableView.endUpdates()
         
     }
+}
+
+// MARK: - NSNotificationCenter
+
+extension MyPostsViewController {
+    
+    func receivePost(notification: NSNotification,done: (cell: PostCell,nickName: String)->() ){
+        
+        if let userInfo = notification.userInfo {
+            let json = JSON(userInfo)
+            let postid = json["targetPost"]["_id"].stringValue
+            let nickName = json["_from"]["nickName"].stringValue
+            
+            let cell: AnyObject? = self.tableView.visibleCells().find { ($0 as! PostCell).post.id == postid }
+            if let cell = cell as? PostCell {
+                cell.post.like = json["targetPost"]["like"].arrayObject as? [String]
+                gcd.sync(.Main, closure: { () -> () in
+                    done(cell: cell, nickName: nickName)
+                })
+            }
+        }
+
+    }
+    
+    func receivePostLiked(notification: NSNotification) {
+        self.receivePost(notification) { (cell, nickName) -> () in
+            
+            cell.likeButton.bounce({ () -> Void in
+                cell.setupDisplay()
+            })
+            Util.showInfo("\(nickName)赞了您的帖子")
+        }
+    }
+    
+    func receivePostCommented(notification: NSNotification) {
+        self.receivePost(notification) { (cell, nickName) -> () in
+            
+            cell.shake(nil)
+            Util.showInfo("\(nickName)评论了您的帖子")
+        }
+    }
+    
+    func receivePostBookmarked(notification: NSNotification) {
+        self.receivePost(notification) { (cell, nickName) -> () in
+            
+            cell.bookmarkButton.tada(nil)
+            Util.showInfo("\(nickName)收藏了您的帖子")
+        }
+    }
+    
 }

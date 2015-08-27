@@ -322,7 +322,7 @@
         <!--Post View Controller-->
         <scene sceneID="5lg-JB-8UC">
             <objects>
-                <viewController storyboardIdentifier="PostView" automaticallyAdjustsScrollViewInsets="NO" id="e0B-Bn-WF3" customClass="PostViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PostView" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="e0B-Bn-WF3" customClass="PostViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="81V-SD-pw9"/>
                         <viewControllerLayoutGuide type="bottom" id="xGW-7B-e2a"/>

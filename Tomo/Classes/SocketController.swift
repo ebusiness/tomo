@@ -19,6 +19,7 @@ enum SocketEvent: String {
     case PostNew = "post-new"
     case PostLiked = "post-liked"
     case PostCommented = "post-commented"
+    case PostBookmarked = "post-bookmarked"
     
     case CommentReplied = "comment-replied"
     
