@@ -65,6 +65,10 @@ class SettingViewController: MyAccountBaseController {
                 
                 Defaults.remove("openid")
                 Defaults.remove("deviceToken")
+                
+                Defaults.remove("email")
+                Defaults.remove("password")
+                
                 me = UserEntity()
                 let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
                 Util.changeRootViewController(from: self, to: main)

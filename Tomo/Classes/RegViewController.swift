@@ -133,6 +133,40 @@ extension RegViewController {
                     })
             })
             
+        } else if Defaults["email"].string != nil && Defaults["password"].string != nil {
+            
+            Util.showHUD()
+            
+            var params = [String:String]()
+            params["email"] = Defaults["email"].string
+            params["password"] = Defaults["password"].string
+            
+            Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/login" , parameters: params).validate().responseJSON { (_, _, result, error) -> Void in
+                
+                if error == nil {
+                    
+                    let json = JSON(result!)
+                    
+                    if let id = json["id"].string, nickName = json["nickName"].string {
+                        me = UserEntity(json)
+                        self.changeRootToTab()
+                    }
+                    
+                } else {
+                    
+                    self.inputArea.hidden = false
+                    
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        self.inputArea.alpha = 1
+                    })
+                    
+                    let alert = UIAlertController(title: "登录失败", message: "您的账号或密码已经变更，请输入新的账号和密码", preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "重试", style: .Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+            
+            
         } else {
             inputArea.hidden = false
         }
@@ -182,7 +216,11 @@ extension RegViewController {
             
             if error == nil {
                 
+                Defaults["email"] = params["email"]
+                Defaults["password"] = params["password"]
+                
                 let json = JSON(result!)
+                
                 if let id = json["id"].string, nickName = json["nickName"].string {
                     me = UserEntity(json)
                     self.changeRootToTab()
