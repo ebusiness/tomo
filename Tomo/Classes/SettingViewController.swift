@@ -54,12 +54,15 @@ final class SettingViewController: MyAccountBaseController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        Manager.sharedInstance.request(.GET, kAPIBaseURLString + "/mobile/notifications").validate().responseJSON { (_, _, result, error) -> Void in
-            if let result: AnyObject = result where error == nil {
-                if let array = JSON(result).array where array.count > 1 {
+        Manager.sharedInstance.request(.GET, kAPIBaseURLString + "/mobile/notifications").responseJSON { (_, _, result, error) -> Void in
+            
+            if let data: AnyObject = result where error == nil {
+                if let array = JSON(data).array where array.count > 0 {
                     self.notifications = array.map { return NotificationEntity($0.object) }
+                    return
                 }
             }
+            self.notifications = nil
         }
     }
     
@@ -185,7 +188,8 @@ extension SettingViewController: UICollectionViewDataSource {
 extension SettingViewController: UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        println(indexPath)
+        Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/mobile/notifications/open")
+        self.parentViewController!.tabBarItem.badgeValue = nil
     }
     
 }
