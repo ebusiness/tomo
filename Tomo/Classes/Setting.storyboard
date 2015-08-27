@@ -24,6 +24,61 @@
                                         <segue destination="gEZ-U0-8Hr" kind="embed" id="PG0-av-tgF"/>
                                     </connections>
                                 </containerView>
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="iGd-HG-ego">
+                                    <rect key="frame" x="154" y="112" width="150" height="40"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="O8h-wa-zcY"/>
+                                        <constraint firstAttribute="width" constant="150" id="k92-LT-sqw"/>
+                                    </constraints>
+                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="FVY-98-1Of">
+                                        <size key="itemSize" width="150" height="45"/>
+                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </collectionViewFlowLayout>
+                                    <cells>
+                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="3ma-Sg-k4w">
+                                            <rect key="frame" x="0.0" y="0.0" width="180" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                <rect key="frame" x="0.0" y="0.0" width="150" height="30"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h3g-BQ-TI3">
+                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="30" id="7AE-Jm-plt"/>
+                                                            <constraint firstAttribute="width" constant="30" id="BgE-wJ-H4L"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f3y-jp-yh8">
+                                                        <rect key="frame" x="38" y="7" width="104" height="15"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="f3y-jp-yh8" secondAttribute="trailing" constant="8" id="BIK-8M-k27"/>
+                                                <constraint firstItem="h3g-BQ-TI3" firstAttribute="centerY" secondItem="f3y-jp-yh8" secondAttribute="centerY" id="SoX-n0-PzG"/>
+                                                <constraint firstAttribute="centerY" secondItem="h3g-BQ-TI3" secondAttribute="centerY" id="ibV-GO-bV0"/>
+                                                <constraint firstItem="f3y-jp-yh8" firstAttribute="leading" secondItem="h3g-BQ-TI3" secondAttribute="trailing" constant="8" id="v3k-7z-RhM"/>
+                                                <constraint firstItem="h3g-BQ-TI3" firstAttribute="leading" secondItem="3ma-Sg-k4w" secondAttribute="leading" id="zzm-0h-8kG"/>
+                                            </constraints>
+                                            <size key="customSize" width="150" height="30"/>
+                                            <connections>
+                                                <segue destination="brH-29-FIA" kind="push" id="Bht-2t-dPM"/>
+                                            </connections>
+                                        </collectionViewCell>
+                                    </cells>
+                                    <connections>
+                                        <outlet property="dataSource" destination="3I6-mu-eq3" id="P4e-Au-Mgy"/>
+                                        <outlet property="delegate" destination="3I6-mu-eq3" id="5AJ-au-GEP"/>
+                                    </connections>
+                                </collectionView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -31,6 +86,8 @@
                                 <constraint firstAttribute="bottom" secondItem="LVR-ff-KNS" secondAttribute="bottom" id="R78-XJ-b9N"/>
                                 <constraint firstItem="LVR-ff-KNS" firstAttribute="top" secondItem="ztj-8j-Ud1" secondAttribute="top" id="WLK-Ta-egb"/>
                                 <constraint firstAttribute="trailing" secondItem="LVR-ff-KNS" secondAttribute="trailing" id="Wji-ak-bU2"/>
+                                <constraint firstAttribute="trailing" secondItem="iGd-HG-ego" secondAttribute="trailing" constant="16" id="feH-sK-Agn"/>
+                                <constraint firstAttribute="bottom" secondItem="iGd-HG-ego" secondAttribute="bottom" constant="88" id="sOH-gI-J8c"/>
                             </constraints>
                         </view>
                         <sections>
@@ -254,6 +311,7 @@
                         <outlet property="fullNameLabel" destination="pY4-IG-I22" id="gzf-bS-v2B"/>
                         <outlet property="genderLabel" destination="VLB-C2-sSj" id="6EO-z8-ITh"/>
                         <outlet property="logoutCell" destination="EoY-Cn-9EY" id="raF-Or-QVu"/>
+                        <outlet property="notificationCollectionView" destination="iGd-HG-ego" id="ooT-xw-4it"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bwx-Dy-Bpf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1224,6 +1282,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="TOo-XU-L5q"/>
+        <segue reference="yny-kN-W4L"/>
+        <segue reference="PG0-av-tgF"/>
     </inferredMetricsTieBreakers>
 </document>
