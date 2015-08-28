@@ -13,6 +13,64 @@ private var textView_text :String = ""
 private var btn_voice :UIButton?
 
 extension MessageViewController {
+    
+    //CameraBlock
+    
+    var pressAccessoryBlock: CameraController.CameraBlock! {
+        get {
+            return { (image,videoPath) ->() in
+                var name: String!
+                var localURL: NSURL!
+                var remotePath: String!
+                var messageContent: String!
+                
+                if let path = videoPath {
+                    name = NSUUID().UUIDString + ".MP4"
+                    localURL = FCFileManager.urlForItemAtPath(name)
+                    FCFileManager.copyItemAtPath(path, toPath: localURL.path)
+                    
+                    remotePath = MediaMessage.remotePath(fileName: name, type: .Video)
+                    messageContent = MediaMessage.mediaMessageStr(fileName: name, type: .Video)
+                    
+                } else {
+                    name = NSUUID().UUIDString
+                    
+                    localURL = FCFileManager.urlForItemAtPath(name)
+                    
+                    let image = image!.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
+                    
+                    image.saveToURL(localURL)
+                    
+                    remotePath = MediaMessage.remotePath(fileName: name, type: .Image)
+                    
+                    messageContent = MediaMessage.mediaMessageStr(fileName: name, type: .Image)
+                }
+                
+                let indexPath = self.createMessage(messageContent)
+                
+                let progressView = UIProgressView(frame: CGRectZero)
+                progressView.tintColor = UIColor.greenColor()
+                
+                let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! JSQMessagesCollectionViewCell
+                cell.addSubview(progressView)
+                
+                progressView.setTranslatesAutoresizingMaskIntoConstraints(false)
+                cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[progressView(==1)]-0-|", options: nil, metrics: nil, views: ["progressView" : progressView]))
+                cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[progressView(==messageBubbleContainerView)]-0-[avatarContainerView]", options: nil, metrics: nil, views: ["messageBubbleContainerView" : cell.messageBubbleContainerView, "progressView" : progressView,"avatarContainerView":cell.avatarContainerView]))
+                
+                S3Controller.uploadFile(name: name, localPath: localURL.path!, remotePath: remotePath, done: { (error) -> Void in
+                    self.sendMessage(messageContent){ ()->() in
+                        progressView.removeFromSuperview()
+                    }
+                }).progress { _, sendBytes, totalBytes in
+                    gcd.sync(.Main, closure: { () -> () in
+                        progressView.progress = Float(sendBytes)/Float(totalBytes)
+                    })
+                }
+            }
+        }
+    }
+    
     //
     // background
     //
@@ -54,63 +112,12 @@ extension MessageViewController {
             return
         }
         
-        let block:CameraController.CameraBlock = { (image,videoPath) ->() in
-            var name: String!
-            var localURL: NSURL!
-            var remotePath: String!
-            var messageContent: String!
-            
-            if let path = videoPath {
-                name = NSUUID().UUIDString + ".MP4"
-                localURL = FCFileManager.urlForItemAtPath(name)
-                FCFileManager.copyItemAtPath(path, toPath: localURL.path)
-                
-                remotePath = MediaMessage.remotePath(fileName: name, type: .Video)
-                messageContent = MediaMessage.mediaMessageStr(fileName: name, type: .Video)
-                
-            } else {
-                name = NSUUID().UUIDString
-                
-                localURL = FCFileManager.urlForItemAtPath(name)
-                
-                let image = image!.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
-                
-                image.saveToURL(localURL)
-                
-                remotePath = MediaMessage.remotePath(fileName: name, type: .Image)
-                
-                messageContent = MediaMessage.mediaMessageStr(fileName: name, type: .Image)
-            }
-            
-            let indexPath = self.createMessage(messageContent)
-            
-            let progressView = UIProgressView(frame: CGRectZero)
-            progressView.tintColor = UIColor.greenColor()
-            
-            let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! JSQMessagesCollectionViewCell
-            cell.addSubview(progressView)
-            
-            progressView.setTranslatesAutoresizingMaskIntoConstraints(false)
-            cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[progressView(==1)]-0-|", options: nil, metrics: nil, views: ["progressView" : progressView]))
-            cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[progressView(==messageBubbleContainerView)]-0-[avatarContainerView]", options: nil, metrics: nil, views: ["messageBubbleContainerView" : cell.messageBubbleContainerView, "progressView" : progressView,"avatarContainerView":cell.avatarContainerView]))
-
-            S3Controller.uploadFile(name: name, localPath: localURL.path!, remotePath: remotePath, done: { (error) -> Void in
-                self.sendMessage(messageContent){ ()->() in
-                    progressView.removeFromSuperview()
-                }
-            }).progress { _, sendBytes, totalBytes in
-                gcd.sync(.Main, closure: { () -> () in
-                    progressView.progress = Float(sendBytes)/Float(totalBytes)
-                })
-            }
-        }
-        
         Util.alertActionSheet(self, optionalDict: [
             "拍摄/视频":{ (_) -> Void in
-                CameraController.sharedInstance.open(self, sourceType: .Camera, withVideo: true, completion: block)
+                CameraController.sharedInstance.open(self, sourceType: .Camera, withVideo: true, completion: self.pressAccessoryBlock)
             },
             "从相册选择":{ (_) -> Void in
-                CameraController.sharedInstance.open(self, sourceType: .SavedPhotosAlbum, completion: block)  
+                CameraController.sharedInstance.open(self, sourceType: .SavedPhotosAlbum, completion: self.pressAccessoryBlock)
             },
             "语音输入":{ (_) -> Void in
                 if btn_voice == nil {
@@ -125,7 +132,7 @@ extension MessageViewController {
                     self.inputToolbar!.contentView.textView.resignFirstResponder()
                 }
             }
-            ])
+        ])
     }
     //
     // hold on button
