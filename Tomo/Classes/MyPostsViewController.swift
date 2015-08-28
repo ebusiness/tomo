@@ -29,9 +29,7 @@ final class MyPostsViewController: MyAccountBaseController {
         
         self.clearsSelectionOnViewWillAppear = false
         
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receivePostLiked:"), event: .PostLiked)
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receivePostCommented:"), event: .PostCommented)
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receivePostBookmarked:"), event: .PostBookmarked)
+        self.registerForNotifications()
         
         loadMoreContent()
     }
@@ -197,7 +195,13 @@ extension MyPostsViewController {
 
 extension MyPostsViewController {
     
-    func receivePost(notification: NSNotification,done: (cell: PostCell,nickName: String)->() ){
+    private func registerForNotifications() {
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receivePostLiked:"), event: .PostLiked)
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receivePostCommented:"), event: .PostCommented)
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receivePostBookmarked:"), event: .PostBookmarked)
+    }
+    
+    private func receivePost(notification: NSNotification,done: (cell: PostCell,nickName: String)->() ){
         
         if let userInfo = notification.userInfo {
             let json = JSON(userInfo)

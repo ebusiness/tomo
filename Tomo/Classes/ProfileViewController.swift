@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: ProfileBaseController {
+final class ProfileViewController: ProfileBaseController {
 
     @IBOutlet weak var genderLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
@@ -26,11 +26,7 @@ class ProfileViewController: ProfileBaseController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendInvited:"), event: .FriendInvited)
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendApproved:"), event: .FriendApproved)
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendDeclined:"), event: .FriendDeclined)
-
+        self.registerForNotifications()
     }
     
     override func updateUI() {
@@ -77,6 +73,13 @@ class ProfileViewController: ProfileBaseController {
                 self.addFriendButton.hidden = false
             }
         }
+    }
+    
+    override func becomeActive() {
+        // check relationship
+        self.getUserInfo({ (id) -> () in
+            self.invitedId = id
+        })
     }
     
     @IBAction func Approved(sender: UIButton) {
@@ -145,7 +148,7 @@ class ProfileViewController: ProfileBaseController {
 
 extension ProfileViewController {
     
-    func inviteAction(isApproved:Bool){
+    private func inviteAction(isApproved:Bool){
         
         if let id = self.invitedId {
             
@@ -160,7 +163,7 @@ extension ProfileViewController {
         }
     }
     
-    func addFriendToMe(isApproved:Bool,isComeFromSocket: Bool = true){
+    private func addFriendToMe(isApproved:Bool,isComeFromSocket: Bool = true){
         
         if isApproved {
             
@@ -190,49 +193,40 @@ extension ProfileViewController {
 
 extension ProfileViewController {
     
+    private func registerForNotifications() {
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendInvited:"), event: .FriendInvited)
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendApproved:"), event: .FriendApproved)
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendDeclined:"), event: .FriendDeclined)
+    }
     
-    func becomeActive() {
-        // check relationship
+    private func receive(notification: NSNotification, done: (json: JSON)->() ){
+        if let userInfo = notification.userInfo {
+            
+            let json = JSON(userInfo)
+            if self.user.id == json["_from"]["_id"].stringValue {
+                gcd.sync(.Main, closure: { () -> () in
+                    done(json: json)
+                })
+            }
+        }
     }
     
     func receiveFriendInvited(notification: NSNotification) {
-        if let userInfo = notification.userInfo {
-            
-            let json = JSON(userInfo)
-            if self.user.id == json["_from"]["_id"].stringValue {
-                
-                self.invitedId = json["_id"].stringValue
-                
-                gcd.sync(.Main, closure: { () -> () in
-                    self.updateUI()
-                })
-            }
-        }
+        self.receive(notification, done: { json in
+            self.invitedId = json["_id"].stringValue
+            self.updateUI()
+        })
     }
     
     func receiveFriendApproved(notification: NSNotification) {
-        if let userInfo = notification.userInfo {
-            
-            let json = JSON(userInfo)
-            if self.user.id == json["_from"]["_id"].stringValue {
-                
-                gcd.sync(.Main, closure: { () -> () in
-                    self.addFriendToMe(true)
-                })
-            }
-        }
+        self.receive(notification, done: { _ in
+            self.addFriendToMe(true)
+        })
     }
     
     func receiveFriendDeclined(notification: NSNotification) {
-        if let userInfo = notification.userInfo {
-            let json = JSON(userInfo)
-            
-            if self.user.id == json["_from"]["_id"].stringValue {
-                
-                gcd.sync(.Main, closure: { () -> () in
-                    self.addFriendToMe(false)
-                })
-            }
-        }
+        self.receive(notification, done: { _ in
+            self.addFriendToMe(false)
+        })
     }
 }

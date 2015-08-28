@@ -26,6 +26,7 @@ class BaseTableViewController: UITableViewController {
         super.loadView()
         
         self.manager.registerRequestOperationClass(RestKitErrorHanding.self)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
         self.setupMapping()
     }
     
@@ -73,6 +74,10 @@ class BaseTableViewController: UITableViewController {
 // MARK: - Internal Methods
 
 extension BaseTableViewController {
+    
+    func becomeActive() {
+    }
+    
     
     func setupMapping(){
         

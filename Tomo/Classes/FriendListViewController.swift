@@ -17,11 +17,7 @@ final class FriendListViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
-        
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveMessage:"), event: .Message)
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendInvited:"), event: .FriendInvited)
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendApproved:"), event: .FriendApproved)
+        self.registerForNotifications()
         
         Util.changeImageColorForButton(addFriendButton,color: UIColor.whiteColor())
         
@@ -92,6 +88,13 @@ final class FriendListViewController: BaseTableViewController {
         let responseDescriptorUserInfo = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/connections/friends", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
         self.manager.addResponseDescriptor(responseDescriptorUserInfo)
     }
+    
+    override func becomeActive() {
+        // recalculate badge number
+        self.getFriends()
+        
+        updateBadgeNumber()
+    }
 
 }
 
@@ -99,7 +102,7 @@ final class FriendListViewController: BaseTableViewController {
 
 extension FriendListViewController {
     
-    func getFriends(){
+    private func getFriends(){
         self.manager.getObjectsAtPath("/connections/friends", parameters: nil, success: { (operation, result) -> Void in
             self.friends = result.array() as! [UserEntity]
             self.friends.sort({
@@ -122,15 +125,10 @@ extension FriendListViewController {
         }) { (operation, error) -> Void in
             let emptyView = Util.createViewWithNibName("EmptyFriends")
             self.tableView.backgroundView = emptyView
-//            self.view.addSubview(emptyView)
-//            self.view.addConstraint(NSLayoutConstraint(item: emptyView, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1.0, constant: 0))
-//            self.view.addConstraint(NSLayoutConstraint(item: emptyView, attribute: .Bottom, relatedBy: .Equal, toItem: self.view, attribute: .Bottom, multiplier: 1.0, constant: 0))
-//            self.view.addConstraint(NSLayoutConstraint(item: emptyView, attribute: .Leading, relatedBy: .Equal, toItem: self.view, attribute: .Leading, multiplier: 1.0, constant: 0))
-//            self.view.addConstraint(NSLayoutConstraint(item: emptyView, attribute: .Trailing, relatedBy: .Equal, toItem: self.view, attribute: .Trailing, multiplier: 1.0, constant: 0))
         }
     }
     
-    func updateBadgeNumber() {
+    private func updateBadgeNumber() {
         if let tabBarController = navigationController?.tabBarController as? TabBarController {
             tabBarController.updateBadgeNumber()
         }
@@ -271,9 +269,10 @@ extension FriendListViewController: FriendInvitationCellDelegate {
 
 extension FriendListViewController {
     
-    
-    func becomeActive() {
-        // recalculate badge number
+    private func registerForNotifications() {
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveMessage:"), event: .Message)
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendInvited:"), event: .FriendInvited)
+        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendApproved:"), event: .FriendApproved)
     }
     
     func receiveMessage(notification: NSNotification) {
@@ -310,9 +309,6 @@ extension FriendListViewController {
     func receiveFriendInvited(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             let notification = NotificationEntity(userInfo)
-
-//            me.friendInvitations = ( me.friendInvitations ?? [NotificationEntity]() )
-//            me.friendInvitations!.insert(notification, atIndex: 0)
             me.friendInvitations.insert(notification, atIndex: 0)
             
             gcd.sync(.Main, closure: { () -> () in
@@ -331,7 +327,6 @@ extension FriendListViewController {
             let from = UserEntity(JSON(userInfo)["_from"])
             
             let nvitationIndex = me.friendInvitations.indexOf{$0.from.id == from.id}
-//            me.friendInvitations = me.friendInvitations?.filter{ $0.from.id != from.id }
             if let nvitationIndex = nvitationIndex {
                 
                 me.friendInvitations.removeAtIndex(nvitationIndex)

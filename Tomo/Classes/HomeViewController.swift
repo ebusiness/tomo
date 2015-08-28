@@ -87,6 +87,9 @@ final class HomeViewController: BaseTableViewController {
         
     }
     
+    override func becomeActive() {
+        self.loadNewContent()
+    }
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
