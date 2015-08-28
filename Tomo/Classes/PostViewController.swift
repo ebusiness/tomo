@@ -78,9 +78,6 @@ class PostViewController: BaseViewController{
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
-        if isKeyboardShown {
-            self.view.endEditing(true)
-        }
         if scrollView == self.postImageList && !pageControl.hidden && scrollView.subviews.count > 2{
             
             let page = scrollView.contentOffset.x / scrollView.frame.size.width
@@ -457,7 +454,7 @@ extension PostViewController: UITableViewDelegate {
 extension PostViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(textView: UITextView) {
-        if commentContent == nil || commentContent!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
+        if commentContent == nil || commentContent!.length == 0 {
             textView.text = nil
             textView.textColor = UIColor.blackColor()
         }
@@ -465,7 +462,7 @@ extension PostViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(textView: UITextView) {
         
-        if commentContent == nil || commentContent!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0 {
+        if commentContent == nil || commentContent!.length == 0 {
             textView.text = "评论:"
             textView.textColor = UIColor.lightGrayColor()
             self.hideSendBtn(true)
@@ -474,22 +471,20 @@ extension PostViewController: UITextViewDelegate {
     
     func textViewDidChange(textView: UITextView) {
         
-        if textView.markedTextRange != nil{
-             self.hideSendBtn(true)
-            return
-        }
-        
-        commentContent = textView.text
-        if commentContent != nil && commentContent!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
-
-            self.hideSendBtn(false)
-        } else {
-            
-            self.hideSendBtn(true)
-        }
         let viewheight = textView.contentSize.height + 2 * 8
         commentInputViewConstraint.constant = viewheight < 50 ? 50 : viewheight
-
+        
+        if textView.markedTextRange == nil {
+            commentContent = textView.text.trimmed()
+            
+            if commentContent!.length > 0 {
+                
+                self.hideSendBtn(false)
+            } else {
+                
+                self.hideSendBtn(true)
+            }
+        }
     }
 }
 
@@ -501,7 +496,7 @@ extension PostViewController {
             return
         }
         
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
             if hidden {
                 self.commentBtn.transform = CGAffineTransformMakeScale(0, 0)
             } else {
