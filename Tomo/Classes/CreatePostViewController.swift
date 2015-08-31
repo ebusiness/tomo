@@ -43,6 +43,8 @@ final class CreatePostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        paperView.frame.size.width = UIScreen.mainScreen().bounds.size.width - 8 * 2
+        
         self.setupAppearance()
         
         self.registerForKeyboardNotifications()
@@ -119,7 +121,6 @@ extension CreatePostViewController {
     }
     
     func keyboardWillShown(notification: NSNotification) {
-        
         if let info = notification.userInfo {
             
             if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
@@ -571,7 +572,8 @@ extension CreatePostViewController: UICollectionViewDataSource {
             options.resizeMode = .Exact
             
             PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(200, 200), contentMode: .AspectFill, options: options) { (image: UIImage!, info: [NSObject : AnyObject]!) -> Void in
-                cell.contentView.addSubview(UIImageView(image: image))
+                let imageView = UIImageView(image: image)
+                cell.contentView.insertSubview(imageView, atIndex: 0)
             }
         }
         
