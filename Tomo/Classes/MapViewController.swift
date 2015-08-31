@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MapViewController: BaseViewController {
+final class MapViewController: BaseViewController {
     
     static let PostAnnotationViewIdentifier = "PostAnnotationView"
     let locationManager = CLLocationManager()
@@ -16,46 +16,29 @@ class MapViewController: BaseViewController {
     
     var contents = [AnyObject]()
     
+    var zoomedIn = false
+    var lastViewRegion: MKCoordinateRegion?
+    
     @IBOutlet weak var mapView: MKMapView!
+    
+    @IBOutlet weak var chooseDateButton: UIButton!
     @IBOutlet weak var interestToggleButton: UIButton!
     @IBOutlet weak var buildingToggleButton: UIButton!
     @IBOutlet weak var currentLocationButton: UIButton!
-    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var postMapView: UIView!
+    @IBOutlet weak var postMapViewHeight: NSLayoutConstraint!
+    
+    var postMapViewController: PostMapViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        allAnnotationMapView = MKMapView(frame: CGRectZero)
+        self.setupAppearance()
         
-        decorateButton(interestToggleButton)
-        decorateButton(buildingToggleButton)
-        decorateButton(currentLocationButton)
+        self.allAnnotationMapView = MKMapView(frame: CGRectZero)
         
-        var postCellNib = UINib(nibName: "PostCell", bundle: nil)
-        tableView.registerNib(postCellNib, forCellReuseIdentifier: "PostCell")
-        
-        var postImageCellNib = UINib(nibName: "PostImageCell", bundle: nil)
-        tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
-        
-        tableView.backgroundColor = UIColor.clearColor()
-        
-        manager.getObjectsAtPath("/mapnews", parameters: nil, success: { (operation, result) -> Void in
-            
-            for annotation in result.array() {
-                if let annotation = annotation as? PostAnnotation {
-                    let post = annotation.post
-                    if let lat = post.coordinate?.get(0), log = post.coordinate?.get(1) {
-                        annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: log)
-                    }
-                }
-            }
-            
-            self.allAnnotationMapView.addAnnotations(result.array())
-            self.updateVisibleAnnotations()
-//            self.mapView.addAnnotations(result.array())
-        }) { (operation, err) -> Void in
-            println(err)
-        }
+        self.loadPostBefore(0)
         
     }
     
@@ -84,7 +67,8 @@ class MapViewController: BaseViewController {
         userMapping.addAttributeMappingsFromDictionary([
             "_id": "id",
             "nickName": "nickName",
-            "photo_ref": "photo"
+            "photo_ref": "photo",
+            "cover_ref": "cover"
             ])
         
         let postMapping = RKObjectMapping(forClass: PostEntity.self)
@@ -110,10 +94,32 @@ class MapViewController: BaseViewController {
         
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if let controller = segue.destinationViewController as? PostMapViewController {
+            self.postMapViewController = controller
+        }
+    }
+    
 }
 
 // MARK: Action
+
 extension MapViewController {
+    
+
+    @IBAction func chooseDate(sender: AnyObject) {
+        
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        alert.addAction(UIAlertAction(title: "今天", style: .Default, handler: nil))
+        alert.addAction(UIAlertAction(title: "昨天", style: .Default, handler: nil))
+        alert.addAction(UIAlertAction(title: "两天前", style: .Default, handler: nil))
+        alert.addAction(UIAlertAction(title: "test", style: .Default, handler: { (action) -> Void in
+            self.loadPostBefore(3)
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
     
     @IBAction func showUser() {
         turnTo3DMap(mapView.userLocation.coordinate)
@@ -129,56 +135,8 @@ extension MapViewController {
     
 }
 
-extension MapViewController: UITableViewDataSource {
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contents.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        var post = contents[indexPath.row] as! PostEntity
-        var cell: PostCell!
-        
-        if post.images?.count > 0 {
-            
-            cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell", forIndexPath: indexPath) as! PostImageCell
-            
-            let subviews = (cell as! PostImageCell).scrollView.subviews
-            
-            for subview in subviews {
-                subview.removeFromSuperview()
-            }
-            
-        } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("PostCell", forIndexPath: indexPath) as! PostCell
-        }
-        
-        cell.post = post
-        cell.setupDisplay()
-        
-        return cell
-    }
-}
-
-extension MapViewController: UITableViewDelegate {
-    
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        if let content = contents.get(indexPath.row) as? PostEntity {
-            
-            if content.images?.count > 0 {
-                return 336
-            } else {
-                return 133
-            }
-        }
-        
-        return UITableViewAutomaticDimension
-    }
-}
-
 // MARK: MapView Delegate
+
 extension MapViewController: MKMapViewDelegate {
     
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
@@ -209,7 +167,7 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
-        updateVisibleAnnotations()
+        self.updateVisibleAnnotations()
     }
     
     func mapView(mapView: MKMapView!, didAddAnnotationViews views: [AnyObject]!) {
@@ -228,55 +186,77 @@ extension MapViewController: MKMapViewDelegate {
                     UIView.animateWithDuration(0.3, animations: { () -> Void in
                         annotation.coordinate = actualCoordinate
                     })
-                }
+                }                
+//                view.expandIntoView(self.view, finished: nil)
             }
         }
     }
     
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
         
+        if !zoomedIn {
+            self.lastViewRegion = mapView.region
+            self.zoomedIn = !self.zoomedIn
+        }
+        
         if let annotation = view.annotation as? PostAnnotation {
             
+            let region = MKCoordinateRegionMakeWithDistance(annotation.coordinate, 10, 10)
+            
             let post = annotation.post!
+            self.postMapViewController?.configDisplay(post)
             
-            var tableViewHeight = 0
-            var textHeight = 0
-            
-            if post.content.length > 150 {
-                // one character take 18 points height,
-                // and 150 characters will take 7 rows
-                textHeight = 18 * 7
-            } else {
-                // one row have 24 characters
-                textHeight = post.content.length / 24 * 18
-            }
-            
-            if post.images?.count > 0 {
-                tableViewHeight = 318 + textHeight
-            } else {
-                tableViewHeight = 108 + textHeight
-            }
-
             UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.tableView.frame = CGRectMake(0.0, 0.0, self.tableView.frame.width, CGFloat(tableViewHeight))
-            }, completion: { (finish) -> Void in
-                self.contents = [post]
-                self.tableView.reloadData()
-            })
+                self.postMapViewHeight.constant = UIScreen.mainScreen().bounds.height / 3
+                self.view.layoutIfNeeded()
+            }) { (finish) -> Void in
+                self.mapView.setRegion(self.mapView.regionThatFits(region), animated: true)
+            }
+        }
+    }
+
+    @IBAction func mapTapped(sender: UITapGestureRecognizer) {
+        
+        var tapOn = sender.locationInView(self.mapView)
+        
+        if self.mapView.hitTest(tapOn, withEvent: nil) is PostAnnotationView {
+            return
+        } else {
             
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.postMapViewHeight.constant = 0.0
+                self.view.layoutIfNeeded()
+            }) { (finish) -> Void in
+                self.zoomedIn = false
+                if let region = self.lastViewRegion {
+                    self.mapView.setRegion(self.mapView.regionThatFits(region), animated: true)
+                }
+            }
         }
     }
 
 }
 
-// MARK: Private function
+// MARK: Internal Methods
+
 extension MapViewController {
     
-    private func decorateButton(button: UIButton) {
-        button.backgroundColor = UIColor.whiteColor()
-        button.layer.cornerRadius = interestToggleButton.frame.width / 2
-        button.layer.borderColor = UIColor.orangeColor().CGColor
-        button.layer.borderWidth = 1
+    private func setupAppearance() {
+        
+        self.chooseDateButton.setTitle(NSDate().toString(dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle, doesRelativeDateFormatting: false), forState: .Normal)
+        
+        func decorateButton(button: UIButton) {
+            button.backgroundColor = UIColor.whiteColor()
+            button.layer.cornerRadius = interestToggleButton.frame.width / 2
+            button.layer.borderColor = UIColor.orangeColor().CGColor
+            button.layer.borderWidth = 1
+        }
+        
+        decorateButton(interestToggleButton)
+        decorateButton(buildingToggleButton)
+        decorateButton(currentLocationButton)
+        
+        self.postMapViewHeight.constant = 0.0
     }
     
     private func showLocationServiceDisabledAlert() {
@@ -303,6 +283,30 @@ extension MapViewController {
         UIView.animateWithDuration(1.0, animations: { () -> Void in
             self.mapView.camera = camera
         })
+    }
+    
+    private func loadPostBefore(dayAgo: Int) {
+        
+        manager.getObjectsAtPath("/mapnews", parameters: ["day": dayAgo], success: { (operation, result) -> Void in
+            
+            for annotation in result.array() {
+                if let annotation = annotation as? PostAnnotation {
+                    let post = annotation.post
+                    if let lat = post.coordinate?.get(0), log = post.coordinate?.get(1) {
+                        annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: log)
+                    }
+                }
+            }
+            
+            self.allAnnotationMapView.removeAnnotations(self.allAnnotationMapView.annotations)
+            self.mapView.removeAnnotations(self.mapView.annotations)
+            
+            self.allAnnotationMapView.addAnnotations(result.array())
+            self.updateVisibleAnnotations()
+            
+            }) { (operation, err) -> Void in
+                println(err)
+        }
     }
     
     private func updateVisibleAnnotations() {
