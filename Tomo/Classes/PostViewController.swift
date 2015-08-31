@@ -314,10 +314,8 @@ extension PostViewController {
         for imageview in postImageList.subviews {
             imageview.removeFromSuperview()
         }
-        var imageWidth = self.listViewHeight / 3 * 4
-        if imageWidth > UIScreen.mainScreen().bounds.size.width {
-            imageWidth = UIScreen.mainScreen().bounds.size.width
-        }
+        
+        var imageWidth = UIScreen.mainScreen().bounds.size.width
         
         let centerImageView = getImageView (0)
         var views = ["centerImageView": centerImageView, "postImageList": postImageList]

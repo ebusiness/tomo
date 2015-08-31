@@ -25,17 +25,22 @@ class AccountEditViewController: MyAccountBaseController {
         didSet{
             
             nickNameTextField.text = user.nickName
+            self.setLengthToLabel(nickNameTextField)
             
             if let bio = user.bio where bio.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
                 bioTextView.text = bio
+                bioTextView.textColor = UIColor.blackColor()
+                self.setLengthToLabel(bioTextView)
             }
             
             if let lastName = user.lastName {
                 lastNameTextField.text = lastName.trimmed()
+                self.setLengthToLabel(lastNameTextField)
             }
             
             if let firstName = user.firstName {
                 firstNameTextField.text = firstName.trimmed()
+                self.setLengthToLabel(firstNameTextField)
             }
             
             genderLabel.text = user.gender ?? "男"
@@ -46,10 +51,12 @@ class AccountEditViewController: MyAccountBaseController {
             
             if let telNo = user.telNo {
                 telTextField.text = telNo
+                self.setLengthToLabel(telTextField)
             }
             
             if let address = user.address {
                 addressTextField.text = address.trimmed()
+                self.setLengthToLabel(addressTextField)
             }
         }
     }
