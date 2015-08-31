@@ -147,9 +147,9 @@ class AccountEditViewController: MyAccountBaseController {
 extension AccountEditViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) where cell.subviews.count > 0 {
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) where cell.contentView.subviews.count > 0 {
             
-            let views: AnyObject? = cell.subviews[0].subviews.filter { $0 is UITextView || $0 is UITextField }
+            let views: AnyObject? = cell.contentView.subviews.filter { $0 is UITextView || $0 is UITextField }
             if let views = views as? [UIView], lastView = views.last {
                 lastView.becomeFirstResponder()
             }

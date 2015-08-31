@@ -158,8 +158,8 @@ extension SettingViewController: UICollectionViewDataSource {
         let notification = self.notifications![indexPath.row]
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! UICollectionViewCell
         
-        let imageView: AnyObject? = cell.subviews.first!.subviews.find { $0 is UIImageView }
-        let label: AnyObject? = cell.subviews.first!.subviews.find { $0 is UILabel }
+        let imageView: AnyObject? = cell.contentView.subviews.find { $0 is UIImageView }
+        let label: AnyObject? = cell.contentView.subviews.find { $0 is UILabel }
         
         if let label = label as? UILabel, imageView = imageView as? UIImageView {
             var actionString = "评论"
