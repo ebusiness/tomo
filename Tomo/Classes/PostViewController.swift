@@ -246,21 +246,19 @@ extension PostViewController {
         let contentSize = self.contentLabel.sizeThatFits(self.contentLabel.bounds.size)
         
         let headerView = self.tableView.tableHeaderView as UIView!
+//        headerView.frame.size.width = UIScreen.mainScreen().bounds.size.width
         
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
-            
-            let contentHeight = self.profileHeaderHeight + contentSize.height + 8 * 2
-            if ( self.post.images?.count ?? 0 ) < 1 {
-                self.postImageList.hidden = true
-                headerView.frame.size.height = contentHeight
-            } else {
-                headerView.frame.size.height = contentHeight + self.listViewHeight
-            }
-            
-            self.tableView.tableHeaderView = headerView
-            self.headerConstraint.constant = contentHeight
-            self.tableView.layoutIfNeeded()
-        })
+        let contentHeight = self.profileHeaderHeight + contentSize.height + 8 * 2
+        if ( self.post.images?.count ?? 0 ) < 1 {
+            self.postImageList.hidden = true
+            headerView.frame.size.height = contentHeight
+        } else {
+            headerView.frame.size.height = contentHeight + self.listViewHeight
+        }
+        
+        self.tableView.tableHeaderView = headerView
+        self.headerConstraint.constant = contentHeight
+        self.tableView.layoutIfNeeded()
     }
     
     func updateUIForHeader(){
