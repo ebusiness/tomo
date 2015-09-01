@@ -175,7 +175,9 @@ extension MessageViewController {
             btn_voice?.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
             if let url = VoiceController.instance.stop() {
                 let name = url.lastPathComponent
-                sendMessage(MediaMessage.mediaMessageStr(fileName: name, type: .Voice))
+                let content = MediaMessage.mediaMessageStr(fileName: name, type: .Voice)
+                self.createMessage(content)
+                self.sendMessage(content)
                 
                 S3Controller.uploadFile(name: name, localPath: url, remotePath: MediaMessage.remotePath(fileName: name, type: .Voice), done: { (error) -> Void in
                     println("done")
