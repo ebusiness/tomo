@@ -639,7 +639,7 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigatio
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
-            self.newPhotos.insert(image, atIndex: 0)
+            self.newPhotos.insert(image.normalizedImage(), atIndex: 0)
             let insertPath = NSIndexPath(forItem: 0, inSection: 0)
             
             self.dismissViewControllerAnimated(true) {
@@ -648,13 +648,14 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigatio
                 self.collectionView.selectItemAtIndexPath(insertPath, animated: true, scrollPosition: .Left)
                 self.updateNumberBadge()
                 
-                let cell = self.collectionView.cellForItemAtIndexPath(insertPath)!
-                UIView.animateWithDuration(0.1, animations: { () -> Void in
-                    cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
-                }, completion: { (_) -> Void in
-                    let mark = UIImageView(image: UIImage(named: "ok"))
-                    cell.contentView.addSubview(mark)
-                })
+                if let cell = self.collectionView.cellForItemAtIndexPath(insertPath) {
+                    UIView.animateWithDuration(0.1, animations: { () -> Void in
+                        cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+                    }, completion: { (_) -> Void in
+                        let mark = UIImageView(image: UIImage(named: "ok"))
+                        cell.contentView.addSubview(mark)
+                    })
+                }
             }
             
         } else {
