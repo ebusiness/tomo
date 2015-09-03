@@ -62,7 +62,7 @@ class UserEntity: NSObject {
         self.gender = json["gender"].string
         self.photo = json["photo_ref"].string ?? json["photo"].string
         self.cover = json["cover_ref"].string ?? json["cover"].string
-        self.bio = json["bioText"].string ?? json["bio"].string 
+        self.bio = json["bio"].string ?? json["bio"].string
         self.firstName = json["firstName"].string
         self.lastName = json["lastName"].string
         
@@ -72,7 +72,7 @@ class UserEntity: NSObject {
         self.telNo = json["telNo"].string
         self.address = json["address"].string
         self.friends = json["friends"].arrayObject as? [String]
-        self.invited = json["invited"].arrayObject as? [String]
+        self.invited = json["invitations"].arrayObject as? [String]
         self.bookmark = json["firstName"].arrayObject as? [String]
         
         self.friendInvitations = []

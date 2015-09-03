@@ -37,13 +37,13 @@ class PostEntity: NSObject {
     init(_ json: JSON) {
         super.init()
         self.id = json["_id"].stringValue
-        self.owner = UserEntity(json["_owner"].object)
-        self.content = json["contentText"].stringValue
+        self.owner = UserEntity(json["owner"].object)
+        self.content = json["content"].stringValue
         
-        if let imagesArray = json["images_mobile"].array {
+        if let imagesArray = json["images"].array {
             self.images = []
             imagesArray.map { (image) -> () in
-                self.images!.append(image["name"].stringValue)
+                self.images!.append(image.stringValue)
             }
         }
         

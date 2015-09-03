@@ -33,8 +33,8 @@ class MessageEntity: NSObject {
     init(_ json: JSON) {
         super.init()
         self.id = json["_id"].stringValue
-        self.owner = UserEntity(json["_owner"].object)
-        self.from = UserEntity(json["_from"].object)
+        self.owner = UserEntity(json["to"].object)
+        self.from = UserEntity(json["from"].object)
         self.content = json["content"].stringValue
         self.isOpened = json["isOpened"].boolValue
         self.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")

@@ -29,7 +29,7 @@ class NotificationEntity: NSObject {
     init(_ json: JSON) {
         super.init()
         self.id = json["_id"].stringValue
-        self.from = UserEntity(json["_from"].object)
+        self.from = UserEntity(json["from"].object)
         self.type = json["type"].stringValue
         self.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
         
