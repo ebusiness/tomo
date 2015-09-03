@@ -141,7 +141,7 @@ extension RegViewController {
             params["email"] = Defaults["email"].string
             params["password"] = Defaults["password"].string
             
-            Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/login" , parameters: params).validate().responseJSON { (_, _, result, error) -> Void in
+            Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/signin" , parameters: params).validate().responseJSON { (_, _, result, error) -> Void in
                 
                 if error == nil {
                     
@@ -212,7 +212,7 @@ extension RegViewController {
         params["email"] = emailTextField.text
         params["password"] = passwordTextField.text
         
-        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/login" , parameters: params).validate().responseJSON { (_, _, result, error) -> Void in
+        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/signin" , parameters: params).validate().responseJSON { (_, _, result, error) -> Void in
             
             if error == nil {
                 

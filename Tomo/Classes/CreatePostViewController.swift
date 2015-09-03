@@ -303,7 +303,7 @@ extension CreatePostViewController {
         
         if let selectedIndexes = collectionView.indexPathsForSelectedItems() as? [NSIndexPath] {
             
-            var imagelist = [[String:AnyObject]]()
+            var imagelist = [String]()
             
             for index in selectedIndexes {
                 
@@ -331,15 +331,7 @@ extension CreatePostViewController {
                 
                 S3Controller.uploadFile(name: name, localPath: imagePath, remotePath: remotePath, done: { (error) -> Void in
                     
-                    let imageinfo:[String:AnyObject] = [
-                        "name":name,
-                        "size":[
-                            "width":0,
-                            "height":0
-                        ]
-                    ]
-                    
-                    imagelist.append(imageinfo)
+                    imagelist.append(name)
                     
                     if error == nil && imagelist.count == selectedIndexes.count {
                         completion(imagelist: imagelist)
@@ -367,7 +359,7 @@ extension CreatePostViewController {
             param["coordinate"] = [String(stringInterpolationSegment: location.coordinate.latitude),String(stringInterpolationSegment: location.coordinate.longitude)];
         }
         
-        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/mobile/posts" , parameters: param,encoding: ParameterEncoding.JSON)
+        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/posts" , parameters: param,encoding: ParameterEncoding.JSON)
             .responseJSON { (_, _, post, _) -> Void in
                 Util.dismissHUD()
                 self.performSegueWithIdentifier("postCreated", sender: post)

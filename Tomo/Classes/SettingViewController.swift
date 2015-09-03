@@ -97,9 +97,7 @@ final class SettingViewController: MyAccountBaseController {
             
             Util.alert(self, title: "退出账号", message: "真的要退出当前的账号吗？", action: { (_) -> Void in
                 
-                var param = Dictionary<String, String>();
-                param["token"] = Defaults["deviceToken"].string
-                Manager.sharedInstance.request(.GET, kAPIBaseURLString + "/logout", parameters: param)
+                Manager.sharedInstance.request(.GET, kAPIBaseURLString + "/signout")
                 
                 Defaults.remove("openid")
                 Defaults.remove("deviceToken")

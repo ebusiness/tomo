@@ -166,7 +166,7 @@ extension MessageViewController {
             ])
         messageMapping.addPropertyMapping(propertyMapping)
         
-        let responseDescriptor = RKResponseDescriptor(mapping: messageMapping, method: .GET, pathPattern: "/chat/:userId", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        let responseDescriptor = RKResponseDescriptor(mapping: messageMapping, method: .GET, pathPattern: "/messages/:userId", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
         
         selink.addResponseDescriptor(responseDescriptor)
     }
@@ -185,7 +185,7 @@ extension MessageViewController {
             params["before"] = oldestMessage.createDate.timeIntervalSince1970
         }
         
-        selink.getObjectsAtPath("/chat/\(friend.id)", parameters: params, success: { (operation, result) -> Void in
+        selink.getObjectsAtPath("/messages/\(friend.id)", parameters: params, success: { (operation, result) -> Void in
             
             for message in result.array() {
                 
@@ -303,8 +303,7 @@ extension MessageViewController {
     func sendMessage(text: String, done: ( ()->() )? = nil ) {
         
         var params = Dictionary<String, String>()
-        params["recipient"] = friend.id
-        params["subject"] = "no subject"
+        params["to"] = friend.id
         params["content"] = text
         
         Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/messages", parameters: params).responseJSON { (_, _, _, error) -> Void in

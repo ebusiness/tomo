@@ -62,26 +62,26 @@ final class HomeViewController: BaseTableViewController {
             "createDate": "createDate"
             ])
         
-        let commentOwnerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping)
+        let commentOwnerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "owner", toKeyPath: "owner", withMapping: userMapping)
         commentMapping.addPropertyMapping(commentOwnerRelationshipMapping)
         
         let postMapping = RKObjectMapping(forClass: PostEntity.self)
         postMapping.addAttributeMappingsFromDictionary([
             "_id": "id",
-            "contentText": "content",
+            "content": "content",
             "coordinate": "coordinate",
-            "images_mobile.name": "images",
+            "images_ref": "images",
             "like": "like",
             "createDate": "createDate"
             ])
         
-        let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping)
+        let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "owner", toKeyPath: "owner", withMapping: userMapping)
         postMapping.addPropertyMapping(ownerRelationshipMapping)
         
         let commentRelationshipMapping = RKRelationshipMapping(fromKeyPath: "comments", toKeyPath: "comments", withMapping: commentMapping)
         postMapping.addPropertyMapping(commentRelationshipMapping)
         
-        let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/newsfeed", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/posts", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
         
         manager.addResponseDescriptor(responseDescriptor)
         
@@ -261,8 +261,8 @@ extension HomeViewController {
         if let oldestContent = oldestContent as? PostEntity {
             params["before"] = oldestContent.createDate.timeIntervalSince1970
         }
-        
-        manager.getObjectsAtPath("/newsfeed", parameters: params, success: { (operation, result) -> Void in
+               
+        manager.getObjectsAtPath("/posts", parameters: params, success: { (operation, result) -> Void in
             
             self.contents += result.array()
             self.appendRows(Int(result.count))
@@ -294,7 +294,7 @@ extension HomeViewController {
             params["after"] = latestContent.createDate.timeIntervalSince1970 + 1
         }
         
-        manager.getObjectsAtPath("/newsfeed", parameters: params, success: { (operation, result) -> Void in
+        manager.getObjectsAtPath("/posts", parameters: params, success: { (operation, result) -> Void in
             
             self.contents = result.array() + self.contents
             self.prependRows(Int(result.count))

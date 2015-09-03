@@ -44,16 +44,16 @@ class BookmarkedPostsViewController: MyAccountBaseController {
         let postMapping = RKObjectMapping(forClass: PostEntity.self)
         postMapping.addAttributeMappingsFromDictionary([
             "_id": "id",
-            "contentText": "content",
-            "images_mobile.name": "images",
+            "content": "content",
+            "images_ref": "images",
             "like": "like",
             "createDate": "createDate"
             ])
         
-        let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping)
+        let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "owner", toKeyPath: "owner", withMapping: userMapping)
         postMapping.addPropertyMapping(ownerRelationshipMapping)
         
-        let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/bookmark", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/posts", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
         
         manager.addResponseDescriptor(responseDescriptor)
         
@@ -154,13 +154,14 @@ extension BookmarkedPostsViewController {
         
         isLoading = true
         
-        var params = Dictionary<String, NSTimeInterval>()
+        var params = Dictionary<String, AnyObject>()
+        params["category"] = "bookmark"
         
         if let oldestContent = oldestContent as? PostEntity {
             params["before"] = oldestContent.createDate.timeIntervalSince1970
         }
         
-        manager.getObjectsAtPath("/bookmark", parameters: params, success: { (operation, result) -> Void in
+        manager.getObjectsAtPath("/posts", parameters: params, success: { (operation, result) -> Void in
             
             self.bookmarks += result.array()
             self.appendRows(Int(result.count))

@@ -95,10 +95,8 @@ final class ProfileViewController: ProfileBaseController {
     @IBAction func deleteFriend(sender: UIButton) {
         
         Util.alert(self, title: "删除好友", message: "确定删除该好友么?", action: { (_) -> Void in
-            var param = Dictionary<String, String>()
-            param["id"] = self.user.id
             
-            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/connections/break", parameters: param)
+            Manager.sharedInstance.request(.DELETE, kAPIBaseURLString + "/friends/\(self.user.id)")
                 .responseJSON { (_, _, _, error) -> Void in
                     
                     if let error = error {
@@ -121,7 +119,7 @@ final class ProfileViewController: ProfileBaseController {
         var param = Dictionary<String, String>()
         param["id"] = self.user.id
         
-        Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/connections/invite", parameters: param)
+        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/invitations", parameters: param)
             .responseJSON { (_, _, _, _) -> Void in
                 
                 if me.invited == nil {
@@ -154,9 +152,9 @@ extension ProfileViewController {
             
             Util.showHUD()
             var param = Dictionary<String, String>()
-            param["result"] = isApproved ? "approved" : "declined"
+            param["result"] = isApproved ? "accept" : "refuse"
             
-            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/notifications/\(id)", parameters: param).response({ (_, _, _, _) -> Void in
+            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/invitations/\(id)", parameters: param).response({ (_, _, _, _) -> Void in
                 self.addFriendToMe(isApproved,isComeFromSocket: false)
                 me.friendInvitations = me.friendInvitations.filter{ $0.from.id != self.user.id }
             })

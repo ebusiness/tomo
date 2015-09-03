@@ -163,7 +163,7 @@ class PostViewController: BaseViewController{
                 
                 Util.alert(self, title: "删除帖子", message: "确定删除该帖子么?", action: { (action) -> Void in
                     
-                    Manager.sharedInstance.request(.DELETE, "/posts/\(self.post.id)")
+                    Manager.sharedInstance.request(.DELETE, kAPIBaseURLString + "/posts/\(self.post.id)")
                         .response { (_, _, _, _) -> Void in
                             Util.showInfo("帖子已删除")
                             self.navigationController?.popViewControllerAnimated(true)

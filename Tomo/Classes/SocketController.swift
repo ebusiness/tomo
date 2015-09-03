@@ -38,7 +38,7 @@ enum SocketEvent: String {
 
 final class SocketController {
     
-    private var socket: AZSocketIO!
+    private var socket: SocketIOClient!
     private var observers = [String:AnyObject]()
     
     class var sharedInstance : SocketController {
@@ -49,30 +49,41 @@ final class SocketController {
     }
     
     private init() {
-        socket = AZSocketIO(host: "tomo.e-business.co.jp", andPort: SocketPort, secure: false)
+//        socket = AZSocketIO(host: "192.168.11.90", andPort: SocketPort, secure: false)
         
-        socket.eventRecievedBlock = { (name, data) -> Void in
-            gcd.async(.Default, closure: { () -> () in
-                
-                if let event = SocketEvent(rawValue: name), data = data as? NSArray, result = data[0] as? [NSObject : AnyObject] {
-                        
-                    event.receive(result)
-                }
-            })
+//        socket.eventRecievedBlock = { (name, data) -> Void in
+//            gcd.async(.Default, closure: { () -> () in
+//                
+//                if let event = SocketEvent(rawValue: name), data = data as? NSArray, result = data[0] as? [NSObject : AnyObject] {
+//                        
+//                    event.receive(result)
+//                }
+//            })
+//        }
+        socket = SocketIOClient(socketURL: "https://192.168.11.90")
+        
+        socket.onAny { (event) -> Void in
+            println("WWWWWWWWWWWWWWWWWWW")
+            println(event.event)
+            println(event.items)
+            println("WWWWWWWWWWWWWWWWWWW")
         }
     }
     
     class func connect() {
         
-        sharedInstance.socket.connectWithSuccess({ () -> Void in
-            println("connectWithSuccess")
-        }, andFailure: { (error) -> Void in
-                println(error)
-        })
+//        sharedInstance.socket.connectWithSuccess({ () -> Void in
+//            println("connectWithSuccess")
+//        }, andFailure: { (error) -> Void in
+//                println(error)
+//        })
+        
+        sharedInstance.socket.connect()
+        
     }
     
     class func disconnect() {
-        sharedInstance.socket.disconnect()
+        sharedInstance.socket.close(fast: false)
     }
 }
 

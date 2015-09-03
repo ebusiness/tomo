@@ -16,12 +16,19 @@ final class MapViewController: BaseViewController {
     
     var contents = [AnyObject]()
     
+    var displayDate = NSDate()
+    let calendar = NSCalendar.currentCalendar()
+    let unitFlag = (NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay)
+    
     var zoomedIn = false
     var lastViewRegion: MKCoordinateRegion?
     
     @IBOutlet weak var mapView: MKMapView!
     
     @IBOutlet weak var chooseDateButton: UIButton!
+    @IBOutlet weak var nextDay: UIButton!
+    @IBOutlet weak var previousDay: UIButton!
+    
     @IBOutlet weak var interestToggleButton: UIButton!
     @IBOutlet weak var buildingToggleButton: UIButton!
     @IBOutlet weak var currentLocationButton: UIButton!
@@ -38,8 +45,7 @@ final class MapViewController: BaseViewController {
         
         self.allAnnotationMapView = MKMapView(frame: CGRectZero)
         
-        self.loadPostBefore(0)
-        
+        self.loadPostAt(displayDate)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -74,21 +80,21 @@ final class MapViewController: BaseViewController {
         let postMapping = RKObjectMapping(forClass: PostEntity.self)
         postMapping.addAttributeMappingsFromDictionary([
             "_id": "id",
-            "contentText": "content",
+            "content": "content",
             "coordinate": "coordinate",
-            "images_mobile.name": "images",
+            "images_ref": "images",
             "like": "like",
             "createDate": "createDate"
             ])
         
-        let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "_owner", toKeyPath: "owner", withMapping: userMapping)
+        let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "owner", toKeyPath: "owner", withMapping: userMapping)
         postMapping.addPropertyMapping(ownerRelationshipMapping)
         
         let postAnnotationMapping = RKObjectMapping(forClass: PostAnnotation.self)
         let postRelationshipMapping = RKRelationshipMapping(fromKeyPath: nil, toKeyPath: "post", withMapping: postMapping)
         postAnnotationMapping.addPropertyMapping(postRelationshipMapping)
         
-        let responseDescriptor = RKResponseDescriptor(mapping: postAnnotationMapping, method: .GET, pathPattern: "/mapnews", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        let responseDescriptor = RKResponseDescriptor(mapping: postAnnotationMapping, method: .GET, pathPattern: "/posts", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
         
         manager.addResponseDescriptor(responseDescriptor)
         
@@ -107,16 +113,39 @@ final class MapViewController: BaseViewController {
 
 extension MapViewController {
     
-
+    @IBAction func nextDay(sender: AnyObject) {
+        
+        let dateComponent = NSDateComponents()
+        dateComponent.day = 1
+        
+        let nextDate = calendar.dateByAddingComponents(dateComponent, toDate: displayDate, options: NSCalendarOptions.allZeros)
+        
+        displayDate = nextDate!
+        self.chooseDateButton.setTitle(displayDate.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle, doesRelativeDateFormatting: false), forState: .Normal)
+        
+        self.loadPostAt(nextDate!)
+    }
+    
+    @IBAction func previousDay(sender: AnyObject) {
+        
+        let dateComponent = NSDateComponents()
+        dateComponent.day = -1
+        
+        let previousDate = calendar.dateByAddingComponents(dateComponent, toDate: displayDate, options: NSCalendarOptions.allZeros)
+        
+        displayDate = previousDate!
+        self.chooseDateButton.setTitle(displayDate.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle, doesRelativeDateFormatting: false), forState: .Normal)
+        
+        self.loadPostAt(previousDate!)
+    }
+    
     @IBAction func chooseDate(sender: AnyObject) {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         alert.addAction(UIAlertAction(title: "今天", style: .Default, handler: nil))
         alert.addAction(UIAlertAction(title: "昨天", style: .Default, handler: nil))
         alert.addAction(UIAlertAction(title: "两天前", style: .Default, handler: nil))
-        alert.addAction(UIAlertAction(title: "test", style: .Default, handler: { (action) -> Void in
-            self.loadPostBefore(3)
-        }))
+        alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -188,6 +217,7 @@ extension MapViewController: MKMapViewDelegate {
                     })
                 }                
 //                view.expandIntoView(self.view, finished: nil)
+                view.bounce(nil)
             }
         }
     }
@@ -243,7 +273,9 @@ extension MapViewController {
     
     private func setupAppearance() {
         
-        self.chooseDateButton.setTitle(NSDate().toString(dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle, doesRelativeDateFormatting: false), forState: .Normal)
+        self.chooseDateButton.setTitle(NSDate().toString(dateStyle: .MediumStyle, timeStyle: .NoStyle, doesRelativeDateFormatting: false), forState: .Normal)
+        
+        self.nextDay.hidden = true
         
         func decorateButton(button: UIButton) {
             button.backgroundColor = UIColor.whiteColor()
@@ -285,9 +317,24 @@ extension MapViewController {
         })
     }
     
-    private func loadPostBefore(dayAgo: Int) {
+    private func loadPostAt(date: NSDate) {
         
-        manager.getObjectsAtPath("/mapnews", parameters: ["day": dayAgo], success: { (operation, result) -> Void in
+        let todayComponents = calendar.components(unitFlag, fromDate: NSDate())
+        let today = calendar.dateFromComponents(todayComponents)
+        
+        let requestDayComponents = calendar.components(unitFlag, fromDate: date)
+        let requestDay = calendar.dateFromComponents(requestDayComponents)
+        
+        if today?.timeIntervalSince1970 == requestDay?.timeIntervalSince1970 {
+            self.nextDay.hidden = true
+        } else {
+            self.nextDay.hidden = false
+        }
+        
+        self.allAnnotationMapView.removeAnnotations(self.allAnnotationMapView.annotations)
+        self.mapView.removeAnnotations(self.mapView.annotations)
+        
+        manager.getObjectsAtPath("/posts", parameters: ["category": "mapnews", "day": requestDay!.timeIntervalSince1970], success: { (operation, result) -> Void in
             
             for annotation in result.array() {
                 if let annotation = annotation as? PostAnnotation {
@@ -298,14 +345,11 @@ extension MapViewController {
                 }
             }
             
-            self.allAnnotationMapView.removeAnnotations(self.allAnnotationMapView.annotations)
-            self.mapView.removeAnnotations(self.mapView.annotations)
-            
             self.allAnnotationMapView.addAnnotations(result.array())
             self.updateVisibleAnnotations()
             
-            }) { (operation, err) -> Void in
-                println(err)
+        }) { (operation, err) -> Void in
+            println(err)
         }
     }
     

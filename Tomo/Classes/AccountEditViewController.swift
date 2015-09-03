@@ -138,7 +138,7 @@ class AccountEditViewController: MyAccountBaseController {
             "address": "address",
             ])
         // edit user
-        let responseDescriptor = RKResponseDescriptor(mapping: userMapping, method: .PATCH, pathPattern: "/users/:id", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        let responseDescriptor = RKResponseDescriptor(mapping: userMapping, method: .PATCH, pathPattern: "/me", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
         self.manager.addResponseDescriptor(responseDescriptor)
         
         
@@ -276,7 +276,7 @@ extension AccountEditViewController {
         user.telNo = telTextField.text
         user.address = addressTextField.text
         
-        self.manager.patchObject(user, path: "/users/\(me.id)", parameters: nil, success: { (operation, result) -> Void in
+        self.manager.patchObject(user, path: "/me", parameters: nil, success: { (operation, result) -> Void in
             if let result = result.firstObject as? UserEntity {
                 me = result
                 self.user = result

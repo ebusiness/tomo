@@ -16,7 +16,7 @@ let wx_url_userinfo = "https://api.weixin.qq.com/sns/userinfo"
 let wx_url_access_token = "https://api.weixin.qq.com/sns/oauth2/access_token"
 let wx_url_refresh_token = "https://api.weixin.qq.com/sns/oauth2/refresh_token"
 
-let tomo_openid_login = kAPIBaseURLString + "/mobile/user/openid"
+let tomo_openid_login = kAPIBaseURLString + "/signin-wechat"
 
 class OpenidController: NSObject {
     
@@ -156,7 +156,8 @@ extension OpenidController {
                         result["sex"] = "男"
                     }
                     
-                    Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/mobile/user/regist" , parameters: result)
+                    // TODO: Error handle
+                    Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/signup-wechat" , parameters: result)
                     .responseJSON{(_, _, userinfo, _) in
                         if let userinfo = userinfo as? Dictionary<String, AnyObject> {
                             self.success(userinfo)

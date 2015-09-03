@@ -36,9 +36,9 @@ class UserPostsViewController: ProfileBaseController {
         let postMapping = RKObjectMapping(forClass: PostEntity.self)
         postMapping.addAttributeMappingsFromDictionary([
             "_id": "id",
-            "contentText": "content",
+            "content": "content",
             "coordinate": "coordinate",
-            "images_mobile.name": "images",
+            "images_ref": "images",
             "like": "like",
             "createDate": "createDate"
             ])

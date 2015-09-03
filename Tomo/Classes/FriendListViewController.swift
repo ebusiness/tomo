@@ -74,7 +74,7 @@ final class FriendListViewController: BaseTableViewController {
             "gender": "gender",
             "photo_ref": "photo",
             "cover_ref": "cover",
-            "bioText": "bio",
+            "bio": "bio",
             "firstName": "firstName",
             "lastName": "lastName",
             "birthDay": "birthDay",
@@ -85,7 +85,7 @@ final class FriendListViewController: BaseTableViewController {
         let messageRelationshipMapping = RKRelationshipMapping(fromKeyPath: "lastMessage", toKeyPath: "lastMessage", withMapping: messageMapping)
         userMapping.addPropertyMapping(messageRelationshipMapping)
         
-        let responseDescriptorUserInfo = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/connections/friends", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        let responseDescriptorUserInfo = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/friends", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
         self.manager.addResponseDescriptor(responseDescriptorUserInfo)
     }
     
@@ -103,7 +103,7 @@ final class FriendListViewController: BaseTableViewController {
 extension FriendListViewController {
     
     private func getFriends(){
-        self.manager.getObjectsAtPath("/connections/friends", parameters: nil, success: { (operation, result) -> Void in
+        self.manager.getObjectsAtPath("/friends", parameters: nil, success: { (operation, result) -> Void in
             self.friends = result.array() as! [UserEntity]
             self.friends.sort({
                 
@@ -226,7 +226,7 @@ extension FriendListViewController: FriendInvitationCellDelegate {
         
         if let indexPath = tableView.indexPathForCell(cell) {
             let invitation = me.friendInvitations.removeAtIndex(indexPath.row)
-            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/notifications/\(invitation.id)", parameters: ["result": "approved"], encoding: .URL)
+            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/invitations/\(invitation.id)", parameters: ["result": "accept"], encoding: .URL)
                 .responseJSON { (_, _, result, error) -> Void in
                     if error != nil {
                         println(error)
@@ -249,7 +249,7 @@ extension FriendListViewController: FriendInvitationCellDelegate {
         
         if let indexPath = tableView.indexPathForCell(cell) {
             let invitation = me.friendInvitations.removeAtIndex(indexPath.row)
-            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/notifications/\(invitation.id)", parameters: ["result": "declined"], encoding: .URL)
+            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/invitations/\(invitation.id)", parameters: ["result": "refuse"], encoding: .URL)
                 .responseJSON { (_, _, result, error) -> Void in
                     if error != nil {
                         println(error)

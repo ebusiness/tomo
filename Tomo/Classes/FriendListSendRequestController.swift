@@ -32,7 +32,7 @@ class FriendListSendRequestController: MyAccountBaseController {
         super.viewWillAppear(animated)
         
         Util.showHUD()
-        self.manager.getObjectsAtPath("/mobile/user/invited", parameters: nil, success: { (operation, result) -> Void in
+        self.manager.getObjectsAtPath("/invitations", parameters: nil, success: { (operation, result) -> Void in
             
             Util.dismissHUD()
             if let result = result.array() as? [UserEntity] {
@@ -63,7 +63,7 @@ class FriendListSendRequestController: MyAccountBaseController {
             "address": "address",
             ])
         // edit user
-        let responseDescriptor = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/mobile/user/invited", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        let responseDescriptor = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/invitations", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
         self.manager.addResponseDescriptor(responseDescriptor)
     }
     

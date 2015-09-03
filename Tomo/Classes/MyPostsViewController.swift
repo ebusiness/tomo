@@ -39,9 +39,9 @@ final class MyPostsViewController: MyAccountBaseController {
         let postMapping = RKObjectMapping(forClass: PostEntity.self)
         postMapping.addAttributeMappingsFromDictionary([
             "_id": "id",
-            "contentText": "content",
+            "content": "content",
             "coordinate": "coordinate",
-            "images_mobile.name": "images",
+            "images_ref": "images",
             "like": "like",
             "createDate": "createDate"
             ])
@@ -151,7 +151,8 @@ extension MyPostsViewController {
         
         isLoading = true
         
-        var params = Dictionary<String, NSTimeInterval>()
+        var params = Dictionary<String, AnyObject>()
+        params["category"] = "mine"
         
         if let oldestContent = oldestContent as? PostEntity {
             params["before"] = oldestContent.createDate.timeIntervalSince1970

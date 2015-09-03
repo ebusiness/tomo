@@ -76,17 +76,16 @@ class ProfileBaseController: BaseTableViewController {
         let userMapping = RKObjectMapping(forClass: UserEntity.self)
         userMapping.addAttributeMappingsFromDictionary([
             "_id": "id",
-            "tomoid": "tomoid",
             "nickName": "nickName",
-            "gender": "gender",
-            "photo_ref": "photo",
-            "cover_ref": "cover",
-            "bioText": "bio",
             "firstName": "firstName",
             "lastName": "lastName",
+            "photo_ref": "photo",
+            "cover_ref": "cover",
             "birthDay": "birthDay",
+            "gender": "gender",
             "telNo": "telNo",
             "address": "address",
+            "bio": "bio",
             ])
         
         let responseDescriptorUserInfo = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))

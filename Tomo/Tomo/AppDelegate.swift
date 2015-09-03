@@ -48,10 +48,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Defaults["deviceToken"] = deviceTokenString
             
             var param = Dictionary<String, String>();
-            param["name"] = UIDevice.currentDevice().name
+            param["os"] = UIDevice.currentDevice().systemName
+            param["version"] = UIDevice.currentDevice().systemVersion
+            param["model"] = UIDevice.currentDevice().model
             param["token"] = deviceTokenString;
             
-            Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/mobile/user/device", parameters: param)
+            Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/device", parameters: param)
 
         }
     }

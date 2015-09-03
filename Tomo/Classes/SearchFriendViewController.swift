@@ -37,7 +37,7 @@ class SearchFriendViewController: BaseTableViewController {
             "gender": "gender",
             "photo_ref": "photo",
             "cover_ref": "cover",
-            "bioText": "bio",
+            "bio": "bio",
             "firstName": "firstName",
             "lastName": "lastName",
             "birthDay": "birthDay",
@@ -45,7 +45,7 @@ class SearchFriendViewController: BaseTableViewController {
             "address": "address",
             ])
         
-        let responseDescriptor = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/mobile/stations/users", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
+        let responseDescriptor = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/users", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
         self.manager.addResponseDescriptor(responseDescriptor)
         
     }
@@ -93,7 +93,7 @@ extension SearchFriendViewController: UISearchBarDelegate {
             var param = Dictionary<String, String>()
             param["nickName"] = ".*?\(searchBar.text).*"
             
-            self.manager.getObjectsAtPath("/mobile/stations/users", parameters: param, success: { (_, results) -> Void in
+            self.manager.getObjectsAtPath("/users", parameters: param, success: { (_, results) -> Void in
                 Util.dismissHUD()
                 if let users = results.array() as? [UserEntity] {
                     self.result = users
