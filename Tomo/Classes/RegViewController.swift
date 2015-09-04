@@ -297,7 +297,7 @@ extension RegViewController {
             break;
         }
         
-        let tomo_test_login = kAPIBaseURLString + "/mobile/user/testLogin"
+        let tomo_test_login = kAPIBaseURLString + "/signin-test"
         
         Manager.sharedInstance.request(.GET, tomo_test_login, parameters: param, encoding: ParameterEncoding.URL)
             .responseJSON { (_, res, json, _) in

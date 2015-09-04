@@ -36,21 +36,21 @@ enum TabItem: Int {
         case .Home:
             imageName = "home"
         case .Chat:
-            imageName = "speech_bubble"
+            imageName = "chat"
         case .Group:
             imageName = "group"
         case .Map:
-            imageName = "globe"
+            imageName = "worldwide_location"
         case .Setting:
-            imageName = "user_male_circle"
+            imageName = "user"
         }
         
-        return UIImage(named: imageName)!
+        return UIImage(named: imageName)!.imageWithRenderingMode(.AlwaysOriginal)
     }
     
 }
 
-class TabBarController: UITabBarController {
+final class TabBarController: UITabBarController {
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -68,7 +68,8 @@ class TabBarController: UITabBarController {
             viewControllers.append(vc)
         }
         self.tabBar.barTintColor = UIColor.whiteColor()
-        self.tabBar.tintColor = Util.UIColorFromRGB(0x1976D2, alpha: 1)
+//        self.tabBar.tintColor = Util.UIColorFromRGB(0x1976D2, alpha: 1)
+        
         self.viewControllers = viewControllers
         
     }
