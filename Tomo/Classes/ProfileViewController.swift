@@ -67,7 +67,7 @@ final class ProfileViewController: ProfileBaseController {
                 self.heightOfInvitedView.constant = 44
                 self.changeHeaderView(height:284)
                 
-            } else if let invited = me.invited where invited.contains(self.user.id) {
+            } else if let invitations = me.invitations where invitations.contains(self.user.id) {
                 //invited
             } else if user.id != me.id {
                 self.addFriendButton.hidden = false
@@ -122,10 +122,10 @@ final class ProfileViewController: ProfileBaseController {
         Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/invitations", parameters: param)
             .responseJSON { (_, _, _, _) -> Void in
                 
-                if me.invited == nil {
-                    me.invited = []
+                if me.invitations == nil {
+                    me.invitations = []
                 }
-                me.invited?.append(self.user.id)
+                me.invitations?.append(self.user.id)
                 Util.showSuccess("已发送交友请求")
                 self.updateUI()
         }
@@ -170,7 +170,7 @@ extension ProfileViewController {
             me.addFriend(self.user.id)
             
         } else {
-            me.invited?.remove(self.user.id)
+            me.invitations?.remove(self.user.id)
             if isComeFromSocket {
                 Util.showSuccess(self.user.nickName + " 拒绝了您的好友邀请")
             } else {

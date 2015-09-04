@@ -14,11 +14,7 @@ class CommentEntity: NSObject {
     
     var owner: UserEntity!
     
-    var replyTo: String?
-    
     var content: String!
-
-    var like: [String]?
     
     var createDate: NSDate!
     
@@ -34,10 +30,8 @@ class CommentEntity: NSObject {
         super.init()
         self.id = json["_id"].stringValue
         self.owner = UserEntity(json["owner"].object)
-        self.replyTo = json["replyTo"].string
         self.content = json["content"].stringValue
-        self.like = json["like"].arrayObject as? [String]
-        self.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+        self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
         
     }
 }

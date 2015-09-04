@@ -255,7 +255,7 @@ extension FriendListViewController: FriendInvitationCellDelegate {
                         println(error)
                         return
                     }
-                    me.invited?.remove(invitation.from.id)
+                    me.invitations?.remove(invitation.from.id)
                     
                     self.updateBadgeNumber()
                     
@@ -284,14 +284,14 @@ extension FriendListViewController {
             if let user = user {
                 
                 let message = MessageEntity(json)
-                message.isOpened = false
+                message.opened = false
                 
 //                message.owner = me
                 message.from = user
                 user.lastMessage = message
                 
                 if let vc = self.navigationController?.childViewControllers.last as? MessageViewController where vc.friend.id == user.id {
-                    message.isOpened = true
+                    message.opened = true
                 } else {
                     me.newMessages.insert(message, atIndex: 0)
                 }

@@ -12,8 +12,6 @@ class UserEntity: NSObject {
     
     var id: String!
     
-    var tomoid: String?
-    
     var nickName: String!
     
     var gender: String?
@@ -36,7 +34,7 @@ class UserEntity: NSObject {
     
     var friends: [String]?
     
-    var invited: [String]?
+    var invitations: [String]?
     
     var bookmark: [String]?
     
@@ -57,7 +55,6 @@ class UserEntity: NSObject {
     init(_ json: JSON) {
         super.init()
         self.id = json["_id"].stringValue
-        self.tomoid = json["tomoid"].string
         self.nickName = json["nickName"].stringValue
         self.gender = json["gender"].string
         self.photo = json["photo_ref"].string ?? json["photo"].string
@@ -67,12 +64,12 @@ class UserEntity: NSObject {
         self.lastName = json["lastName"].string
         
         if let birthDay = json["birthDay"].string {
-            self.birthDay = birthDay.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+            self.birthDay = birthDay.toDate(format: kDateFormat)
         }
         self.telNo = json["telNo"].string
         self.address = json["address"].string
         self.friends = json["friends"].arrayObject as? [String]
-        self.invited = json["invitations"].arrayObject as? [String]
+        self.invitations = json["invitations"].arrayObject as? [String]
         self.bookmark = json["firstName"].arrayObject as? [String]
         
         self.friendInvitations = []
@@ -105,7 +102,7 @@ extension UserEntity {
     
     func addFriend(uid: String) -> Bool{
         
-        self.invited?.remove(uid)
+        self.invitations?.remove(uid)
         if let friends = self.friends where friends.contains(uid) {
             return false
         } else {
@@ -117,7 +114,7 @@ extension UserEntity {
     
     func removeFriend(uid: String){
         
-        self.invited?.remove(uid)
+        self.invitations?.remove(uid)
         self.friends?.remove(uid)
     }
     

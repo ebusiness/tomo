@@ -40,13 +40,7 @@ class PostEntity: NSObject {
         self.owner = UserEntity(json["owner"].object)
         self.content = json["content"].stringValue
         
-        if let imagesArray = json["images"].array {
-            self.images = []
-            imagesArray.map { (image) -> () in
-                self.images!.append(image.stringValue)
-            }
-        }
-        
+        self.images = json["images"].arrayObject as? [String]        
         self.like = json["like"].arrayObject as? [String]
         
         if let postComments = json["comments"].array {
@@ -58,7 +52,7 @@ class PostEntity: NSObject {
         }
         
         self.coordinate = json["coordinate"].arrayObject as? [Double]
-        self.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+        self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
         
         
     }

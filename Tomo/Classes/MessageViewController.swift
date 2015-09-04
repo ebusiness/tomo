@@ -193,10 +193,10 @@ extension MessageViewController {
                     
                     if message.from.id != me.id {
                         message.from = self.friend
-                        message.owner = me
+                        message.to = me
                     } else {
                         message.from = me
-                        message.owner = self.friend
+                        message.to = self.friend
                     }
                     self.messages.insert(JSQMessageEntity(message: message), atIndex: 0)
                 }
@@ -263,8 +263,8 @@ extension MessageViewController {
             if friend.id == json["_from"]["_id"].stringValue {
                 
                 let message = MessageEntity(json)
-                message.isOpened = true
-                message.owner = me
+                message.opened = true
+                message.to = me
                 message.from = friend
                 
                 let newMessage = JSQMessageEntity(message: message)
@@ -285,10 +285,10 @@ extension MessageViewController {
         
         let newMessage = JSQMessageEntity()
         newMessage.message.id = ""
-        newMessage.message.owner = friend
+        newMessage.message.to = friend
         newMessage.message.from = me
         newMessage.message.content = text
-        newMessage.message.isOpened = true
+        newMessage.message.opened = true
         newMessage.message.createDate = NSDate()
         
         friend.lastMessage = newMessage.message

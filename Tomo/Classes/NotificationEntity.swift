@@ -31,7 +31,7 @@ class NotificationEntity: NSObject {
         self.id = json["_id"].stringValue
         self.from = UserEntity(json["from"].object)
         self.type = json["type"].stringValue
-        self.createDate = json["createDate"].stringValue.toDate(format: "yyyy-MM-dd't'HH:mm:ss.SSSZ")
+        self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
         
     }
 }

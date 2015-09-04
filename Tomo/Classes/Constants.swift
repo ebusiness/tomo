@@ -12,7 +12,7 @@ let kTomoService = "jp.co.e-business.tomo"
 let kTomoPushToken = "token.push.tomo"
 #if DEBUG
     let AmazonS3Bucket = "tomo-dev"
-    let kAPIBaseURLString = "http://192.168.11.90:81"
+    let kAPIBaseURLString = "http://tomo.e-business.co.jp:81"
     let SocketPort = "81"
 #else
     let AmazonS3Bucket = "tomo-test"
@@ -21,6 +21,7 @@ let kTomoPushToken = "token.push.tomo"
 #endif
 
 let kS3BasePath = "https://s3-ap-northeast-1.amazonaws.com"
+let kDateFormat = "yyyy-MM-dd't'HH:mm:ss.SSSZ"
 
 let kAPIBaseURL = NSURL(string: kAPIBaseURLString)
 

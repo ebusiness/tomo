@@ -167,6 +167,7 @@ xcuserdata
 #
 .idea/
 
+Constants.swift
 S3.swift
 
 #Carthage
