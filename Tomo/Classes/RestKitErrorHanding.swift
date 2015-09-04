@@ -24,9 +24,9 @@ class RestKitErrorHanding: RKObjectRequestOperation{
                 let statusCode = res.statusCode
                 
                 if let window = UIApplication.sharedApplication().keyWindow
-                    where statusCode == 401 && NSStringFromClass(window.rootViewController!.classForCoder) != "tomo.LoadingViewController" {
+                    where statusCode == 401 && NSStringFromClass(window.rootViewController!.classForCoder) != "tomo.RegViewController" {
                         
-                        window.rootViewController = Util.createViewControllerWithIdentifier("LoadingViewController", storyboardName: "Main")
+                        window.rootViewController = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
                 }
             } else {
                 // no response NSURLErrorDomain Code=-1001
