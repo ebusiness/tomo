@@ -60,13 +60,20 @@ final class SocketController {
 //                }
 //            })
 //        }
-        socket = SocketIOClient(socketURL: "https://192.168.11.90")
+        socket = SocketIOClient(socketURL: kAPIBaseURLString)
         
         socket.onAny { (event) -> Void in
             println("WWWWWWWWWWWWWWWWWWW")
             println(event.event)
             println(event.items)
             println("WWWWWWWWWWWWWWWWWWW")
+            gcd.async(.Default, closure: { () -> () in
+                
+                if let socketEvent = SocketEvent(rawValue: event.event), data = event.items, result = data[0] as? [NSObject : AnyObject] {
+                    
+                    socketEvent.receive(result)
+                }
+            })
         }
     }
     
