@@ -253,6 +253,26 @@
                                             <segue destination="FZe-jy-2oB" kind="push" id="K1z-s2-NPI"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="BCk-ms-097" style="IBUITableViewCellStyleDefault" id="Ivi-JZ-nf3">
+                                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ivi-JZ-nf3" id="69X-rB-ywi">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="通知" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BCk-ms-097">
+                                                    <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="LeN-s4-IOl" kind="push" id="uV4-fc-FIs"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="Ts1-0j-hug">
@@ -1267,6 +1287,79 @@
             </objects>
             <point key="canvasLocation" x="180" y="2404"/>
         </scene>
+        <!--通知-->
+        <scene sceneID="jNK-Jw-ILS">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="LeN-s4-IOl" customClass="NotificationViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="lRi-SC-Pel">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="rwR-m1-Lqs">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eUt-VF-X9k">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="240"/>
+                                    <connections>
+                                        <segue destination="gEZ-U0-8Hr" kind="embed" id="4EO-l1-f2n"/>
+                                    </connections>
+                                </containerView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="eUt-VF-X9k" secondAttribute="trailing" id="93d-HR-Dxi"/>
+                                <constraint firstItem="eUt-VF-X9k" firstAttribute="top" secondItem="rwR-m1-Lqs" secondAttribute="top" id="YgJ-De-BDc"/>
+                                <constraint firstItem="eUt-VF-X9k" firstAttribute="leading" secondItem="rwR-m1-Lqs" secondAttribute="leading" id="dDv-OA-jzi"/>
+                                <constraint firstAttribute="bottom" secondItem="eUt-VF-X9k" secondAttribute="bottom" id="kOB-ig-TnY"/>
+                            </constraints>
+                        </view>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="60" id="VQ2-YV-KAC">
+                                <rect key="frame" x="0.0" y="262" width="320" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VQ2-YV-KAC" id="WGZ-Rk-0mP">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="DDs-z4-A0p">
+                                            <rect key="frame" x="8" y="8" width="39" height="39"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="39" id="Q7c-Ch-8nj"/>
+                                                <constraint firstAttribute="width" constant="39" id="xUH-CZ-Hk3"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7O-5Z-nYb">
+                                            <rect key="frame" x="55" y="19" width="39" height="18"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="S7O-5Z-nYb" firstAttribute="leading" secondItem="DDs-z4-A0p" secondAttribute="trailing" constant="8" id="71z-Xl-kwY"/>
+                                        <constraint firstItem="DDs-z4-A0p" firstAttribute="top" secondItem="WGZ-Rk-0mP" secondAttribute="top" constant="8" id="898-vs-5ac"/>
+                                        <constraint firstItem="DDs-z4-A0p" firstAttribute="leading" secondItem="WGZ-Rk-0mP" secondAttribute="leading" constant="8" id="H6D-v8-YJW"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="DDs-z4-A0p" secondAttribute="bottom" constant="8" id="RFv-IN-7ma"/>
+                                        <constraint firstItem="S7O-5Z-nYb" firstAttribute="centerY" secondItem="DDs-z4-A0p" secondAttribute="centerY" id="g9C-G8-NZX"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="avatarImageView" destination="DDs-z4-A0p" id="i0q-Vj-jCu"/>
+                                    <outlet property="userNameLabel" destination="S7O-5Z-nYb" id="tL0-il-OLz"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="通知" id="8KA-ZE-GV9"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="b0h-Ex-2nP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1238" y="2404"/>
+        </scene>
     </scenes>
     <resources>
         <image name="add_user" width="25" height="25"/>
@@ -1282,7 +1375,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="yny-kN-W4L"/>
         <segue reference="PG0-av-tgF"/>
+        <segue reference="yny-kN-W4L"/>
     </inferredMetricsTieBreakers>
 </document>
