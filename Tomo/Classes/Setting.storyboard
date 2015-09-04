@@ -1099,7 +1099,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7AO-Wf-RQg">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="nFJ-Ge-Kgq">
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_cover_default" translatesAutoresizingMaskIntoConstraints="NO" id="nFJ-Ge-Kgq">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
                                         <gestureRecognizers/>
                                         <connections>
@@ -1274,7 +1274,7 @@
         <image name="checkmark" width="25" height="25"/>
         <image name="edit_user" width="25" height="25"/>
         <image name="text_protection" width="320" height="160"/>
-        <image name="wallpaper" width="680" height="735"/>
+        <image name="user_cover_default" width="414" height="160"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

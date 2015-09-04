@@ -53,8 +53,9 @@ extension MyAccountHeaderViewController {
         }
         
         if let cover = me.cover {
-            coverImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: DefaultAvatarImage)
+            coverImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: UIImage(named: "user_cover_default"))
         }
+        
         nickNameLabel.text = me.nickName
         bioLabel.text = me.bio
     }
