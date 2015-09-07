@@ -1,5 +1,5 @@
 //
-//  NotificationViewController.swift
+//  NotificationListViewController.swift
 //  Tomo
 //
 //  Created by starboychina on 2015/09/04.
@@ -9,7 +9,7 @@
 
 import UIKit
 
-class NotificationViewController: MyAccountBaseController {
+class NotificationListViewController: MyAccountBaseController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +20,7 @@ class NotificationViewController: MyAccountBaseController {
     }
 }
 
-extension NotificationViewController: UITableViewDataSource {
+extension NotificationListViewController: UITableViewDataSource {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 0
@@ -38,7 +38,7 @@ extension NotificationViewController: UITableViewDataSource {
     }
 }
 
-extension NotificationViewController: UITableViewDelegate {
+extension NotificationListViewController: UITableViewDelegate {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         

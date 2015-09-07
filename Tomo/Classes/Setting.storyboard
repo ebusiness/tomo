@@ -1290,7 +1290,7 @@
         <!--通知-->
         <scene sceneID="jNK-Jw-ILS">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="LeN-s4-IOl" customClass="NotificationViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="LeN-s4-IOl" customClass="NotificationListViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="lRi-SC-Pel">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1315,7 +1315,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="60" id="VQ2-YV-KAC">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="60" id="VQ2-YV-KAC" customClass="NotificationCell" customModule="tomo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="262" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VQ2-YV-KAC" id="WGZ-Rk-0mP">
@@ -1323,29 +1323,41 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="DDs-z4-A0p">
-                                            <rect key="frame" x="8" y="8" width="39" height="39"/>
+                                            <rect key="frame" x="8" y="10" width="40" height="40"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="39" id="Q7c-Ch-8nj"/>
-                                                <constraint firstAttribute="width" constant="39" id="xUH-CZ-Hk3"/>
+                                                <constraint firstAttribute="height" constant="40" id="7hJ-nP-JCD"/>
+                                                <constraint firstAttribute="width" constant="40" id="kGI-se-Dig"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7O-5Z-nYb">
-                                            <rect key="frame" x="55" y="19" width="39" height="18"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S7O-5Z-nYb">
+                                            <rect key="frame" x="56" y="10" width="248" height="18"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="通知内容" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C3i-ez-5X9">
+                                            <rect key="frame" x="64" y="32" width="232" height="25"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="S7O-5Z-nYb" firstAttribute="leading" secondItem="DDs-z4-A0p" secondAttribute="trailing" constant="8" id="71z-Xl-kwY"/>
-                                        <constraint firstItem="DDs-z4-A0p" firstAttribute="top" secondItem="WGZ-Rk-0mP" secondAttribute="top" constant="8" id="898-vs-5ac"/>
-                                        <constraint firstItem="DDs-z4-A0p" firstAttribute="leading" secondItem="WGZ-Rk-0mP" secondAttribute="leading" constant="8" id="H6D-v8-YJW"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="DDs-z4-A0p" secondAttribute="bottom" constant="8" id="RFv-IN-7ma"/>
-                                        <constraint firstItem="S7O-5Z-nYb" firstAttribute="centerY" secondItem="DDs-z4-A0p" secondAttribute="centerY" id="g9C-G8-NZX"/>
+                                        <constraint firstItem="DDs-z4-A0p" firstAttribute="leading" secondItem="WGZ-Rk-0mP" secondAttribute="leading" constant="8" id="20M-Ze-zIJ"/>
+                                        <constraint firstItem="C3i-ez-5X9" firstAttribute="leading" secondItem="S7O-5Z-nYb" secondAttribute="leading" constant="8" id="45v-PU-pi2"/>
+                                        <constraint firstItem="S7O-5Z-nYb" firstAttribute="top" secondItem="DDs-z4-A0p" secondAttribute="top" id="FJq-tQ-G7X"/>
+                                        <constraint firstItem="C3i-ez-5X9" firstAttribute="top" secondItem="S7O-5Z-nYb" secondAttribute="bottom" constant="4" id="MZt-UX-RAq"/>
+                                        <constraint firstAttribute="trailing" secondItem="S7O-5Z-nYb" secondAttribute="trailing" constant="16" id="UHy-oC-sii"/>
+                                        <constraint firstItem="S7O-5Z-nYb" firstAttribute="leading" secondItem="DDs-z4-A0p" secondAttribute="trailing" constant="8" id="UwB-oL-lPI"/>
+                                        <constraint firstAttribute="bottom" secondItem="C3i-ez-5X9" secondAttribute="bottom" constant="2" id="XI8-xv-O11"/>
+                                        <constraint firstAttribute="centerY" secondItem="DDs-z4-A0p" secondAttribute="centerY" id="aNR-vn-NaP"/>
+                                        <constraint firstItem="S7O-5Z-nYb" firstAttribute="trailing" secondItem="C3i-ez-5X9" secondAttribute="trailing" constant="8" id="pJG-mB-RCJ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="avatarImageView" destination="DDs-z4-A0p" id="i0q-Vj-jCu"/>
+                                    <outlet property="avatarImageView" destination="DDs-z4-A0p" id="ogd-ro-N2r"/>
+                                    <outlet property="messageLabelView" destination="C3i-ez-5X9" id="uv7-uG-qYy"/>
+                                    <outlet property="nickNameLabelView" destination="S7O-5Z-nYb" id="png-FY-8hw"/>
                                     <outlet property="userNameLabel" destination="S7O-5Z-nYb" id="tL0-il-OLz"/>
                                 </connections>
                             </tableViewCell>
@@ -1375,7 +1387,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="PG0-av-tgF"/>
         <segue reference="yny-kN-W4L"/>
+        <segue reference="4EO-l1-f2n"/>
     </inferredMetricsTieBreakers>
 </document>

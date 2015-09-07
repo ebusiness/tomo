@@ -192,9 +192,9 @@ extension ProfileViewController {
 extension ProfileViewController {
     
     private func registerForNotifications() {
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendInvited:"), event: .FriendInvited)
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendApproved:"), event: .FriendApproved)
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendDeclined:"), event: .FriendDeclined)
+        ListenerEvent.FriendInvited.addObserver(self, selector: Selector("receiveFriendInvited:"))
+        ListenerEvent.FriendApproved.addObserver(self, selector: Selector("receiveFriendApproved:"))
+        ListenerEvent.FriendDeclined.addObserver(self, selector: Selector("receiveFriendDeclined:"))
     }
     
     private func receive(notification: NSNotification, done: (json: JSON)->() ){

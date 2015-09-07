@@ -12,7 +12,7 @@ class URLSchemesController {
     var taskURL: NSURL?
     
     // static initialize
-    class var instance : URLSchemesController {
+    class var sharedInstance : URLSchemesController {
         struct Static {
             static let instance : URLSchemesController = URLSchemesController()
         }
@@ -23,47 +23,35 @@ class URLSchemesController {
         
     }
     
-    // RemotePush
-    func handleOpenURLForRemotePush(userInfo: [NSObject : AnyObject])->Bool{
-        let json = JSON(userInfo)
-        let type = json["type"].stringValue
-        let id = json["id"].stringValue
-        NSURL(string:"tomo://\(type)/\(id)")
-        
-        return handleOpenURL(NSURL(string:"tomo://\(type)/\(id)")!)
-    }
-    
-    // application(application: , handleOpenURL:)
     func handleOpenURL(url:NSURL)->Bool{
         
         if WXApi.handleOpenURL(url, delegate: OpenidController.instance) {
             return true
-        } else if url.scheme == "tomo" {
-            
-            if let rootvc = UIApplication.sharedApplication().keyWindow?.rootViewController as? TabBarController{
-                self.tabBarController = rootvc
-                if let host = url.host, id = url.path, event = SocketEvent(rawValue: host) {
-                    let id =  id.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-                    switch event {
-                    case .Message:
-                        receiveMessage(id)
-                    case .FriendInvited:
-                        receiveFriendInvited(id)
-                    case .FriendApproved:
-                        receiveFriendApproved(id)
-                    case .PostNew:
-                        receivePostNew(id)
-                    case .PostCommented:
-                        receivePostCommented(id)
-                    default:
-                        println(url) // TODO
-                    }
+        } else if let rootvc = UIApplication.sharedApplication().keyWindow?.rootViewController as? TabBarController {
+            self.tabBarController = rootvc
+            if let host = url.host, id = url.path, event = ListenerEvent(rawValue: host) {
+                let id =  id.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+                switch event {
+                case .Message:
+                    openMessage(id)
+                case .FriendInvited:
+                    openFriendInvited(id)
+                case .FriendApproved:
+                    openFriendApproved(id)
+                case .PostNew:
+                    openPostNew(id)
+                case .PostCommented:
+                    openPostCommented(id)
+                default:
+                    println(url) // TODO
+                    return false
                 }
-            } else {
-                // TODO -> add to task
-                self.taskURL = url
+                return true
             }
+        } else {
+            self.taskURL = url
         }
+        
         return false
     }
     
@@ -78,15 +66,15 @@ class URLSchemesController {
 }
 
 extension URLSchemesController{
-
+    
     private func pushViewController(tabSelectedIndex: Int, viewController: UIViewController, animated: Bool){
         
         if self.tabBarController.childViewControllers.count > tabSelectedIndex {
             self.tabBarController.selectedIndex = tabSelectedIndex
-//            self.tabBarController.selectedViewController
+            //            self.tabBarController.selectedViewController
             self.tabBarController.childViewControllers[tabSelectedIndex].pushViewController(viewController, animated: true)
         } else {
-//            println( self.tabBarController.childViewControllers )
+            //            println( self.tabBarController.childViewControllers )
         }
         
     }
@@ -104,9 +92,11 @@ extension URLSchemesController{
     }
 }
 
+// MARK -- OpenURL
+
 extension URLSchemesController{
     
-    private func receiveMessage(id: String){
+    private func openMessage(id: String){
         
         getInformation("/users/\(id)", done: { (json) -> () in
             let vc = MessageViewController()
@@ -117,7 +107,7 @@ extension URLSchemesController{
         })
     }
     
-    private func receiveFriendInvited(id: String){
+    private func openFriendInvited(id: String){
         
         let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = UserEntity()
@@ -126,7 +116,7 @@ extension URLSchemesController{
         self.pushViewController(1, viewController: vc, animated: true)
     }
     
-    private func receiveFriendApproved(id: String){
+    private func openFriendApproved(id: String){
         getInformation("/users/\(id)", done: { (json) -> () in
             
             let nickName = json["nickName"].stringValue
@@ -134,7 +124,7 @@ extension URLSchemesController{
         })
     }
     
-    private func receivePostNew(id: String){
+    private func openPostNew(id: String){
         
         getInformation("/posts/\(id)", done: { (json) -> () in
 
@@ -147,9 +137,8 @@ extension URLSchemesController{
         
     }
     
-    private func receivePostCommented(id: String){
-        self.receivePostNew(id)
+    private func openPostCommented(id: String){
+        self.openPostNew(id)
     }
     
 }
-

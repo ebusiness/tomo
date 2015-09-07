@@ -100,7 +100,7 @@ class Util: NSObject {
         SVProgressHUD.dismiss()
     }
         
-    class func showLocalNotificationGotSocketEvent(event: SocketEvent, data: AnyObject) {
+    class func showLocalNotificationGotSocketEvent(event: ListenerEvent, data: AnyObject) {
         if UIApplication.sharedApplication().applicationState == .Background {
             let notification = UILocalNotification()
             notification.soundName = UILocalNotificationDefaultSoundName
@@ -185,37 +185,49 @@ extension Util {
     }
     
     class func changeImageColorForButton(btn:UIButton?,color:UIColor){
-        if let image = btn?.imageView?.image {
-            let image = Util.coloredImage( image, color: color)
-            btn?.setImage(image, forState: .Normal)
+        gcd.async(.Default) {
+            if let image = btn?.imageView?.image {
+                let image = Util.coloredImage( image, color: color)
+                gcd.sync(.Main) {
+                    btn?.setImage(image, forState: .Normal)
+                }
+            }
         }
     }
     
     //ActionSheet
     class func alertActionSheet(parentvc: UIViewController, optionalDict: Dictionary<String,((UIAlertAction!) -> Void)!>){
         
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        
-        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
-        alertController.addAction(cancelAction)
-        
-        for optional in optionalDict {
-            let action = UIAlertAction(title: optional.0, style: .Default, handler: optional.1)
-            alertController.addAction(action)
+        gcd.async(.Default) {
+            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+            
+            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            
+            for optional in optionalDict {
+                let action = UIAlertAction(title: optional.0, style: .Default, handler: optional.1)
+                alertController.addAction(action)
+            }
+            gcd.sync(.Main) {
+                parentvc.presentViewController(alertController, animated: true, completion: nil)
+            }
         }
-        parentvc.presentViewController(alertController, animated: true, completion: nil)
     }
     
     class func alert(parentvc: UIViewController, title: String, message: String, cancel: String = "取消",ok: String = "确定", action:((UIAlertAction!) -> Void)!){
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let cancelAction = UIAlertAction(title: cancel, style: .Cancel, handler: nil)
-        let okAction = UIAlertAction(title: ok, style: .Destructive, handler: action)
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(okAction)
-        
-        parentvc.presentViewController(alertController, animated: true, completion: nil)
+        gcd.async(.Default) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+            
+            let cancelAction = UIAlertAction(title: cancel, style: .Cancel, handler: nil)
+            let okAction = UIAlertAction(title: ok, style: .Destructive, handler: action)
+            
+            alertController.addAction(cancelAction)
+            alertController.addAction(okAction)
+            
+            gcd.sync(.Main) {
+                parentvc.presentViewController(alertController, animated: true, completion: nil)
+            }
+        }
 
     }
 

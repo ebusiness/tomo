@@ -161,7 +161,7 @@ extension SettingViewController: UICollectionViewDataSource {
         
         if let label = label as? UILabel, imageView = imageView as? UIImageView {
             var actionString = "评论"
-            if let event = SocketEvent(rawValue: notification.type) {
+            if let event = ListenerEvent(rawValue: notification.type) {
                 if event == .PostCommented {
                     actionString = "评论"
                 } else if event == .PostLiked {

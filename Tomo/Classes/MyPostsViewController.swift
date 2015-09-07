@@ -197,9 +197,9 @@ extension MyPostsViewController {
 extension MyPostsViewController {
     
     private func registerForNotifications() {
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receivePostLiked:"), event: .PostLiked)
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receivePostCommented:"), event: .PostCommented)
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receivePostBookmarked:"), event: .PostBookmarked)
+        ListenerEvent.PostLiked.addObserver(self, selector: Selector("receivePostLiked:"))
+        ListenerEvent.PostCommented.addObserver(self, selector: Selector("receivePostCommented:"))
+        ListenerEvent.PostBookmarked.addObserver(self, selector: Selector("receivePostBookmarked:"))
     }
     
     private func receivePost(notification: NSNotification,done: (cell: PostCell,nickName: String)->() ){

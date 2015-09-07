@@ -16,6 +16,10 @@ class NotificationEntity: NSObject {
     
     var type: String!
     
+    var message: String!
+    
+    var targetId: String!
+    
     var createDate: NSDate!
     
     override init() {
@@ -33,5 +37,22 @@ class NotificationEntity: NSObject {
         self.type = json["type"].stringValue
         self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
         
+        self.message = json["aps"]["alert"].stringValue
+        
+        if let event = ListenerEvent(rawValue: self.type) {
+            switch event {
+                //User
+            case .FriendInvited, .FriendApproved:
+                self.targetId = self.from.id
+                //Post
+            case .PostNew, .PostCommented:
+                self.targetId = json["targetId"].stringValue
+                //Message
+            case .Message:
+                self.targetId = json["targetId"].stringValue
+            default:
+                break
+            }
+        }
     }
 }

@@ -48,7 +48,7 @@ final class MessageViewController: JSQMessagesViewController {
         self.setNavigationBar()
         
         //receive message realtime
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveMessage:"), event: .Message)
+        ListenerEvent.Message.addObserver(self, selector: Selector("receiveMessage:"))
         
         // page title
         title = friend.nickName

@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = UIColor.whiteColor()
         
         if let launchOpts = launchOptions, userInfo = launchOpts[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject] {
-            URLSchemesController.instance.handleOpenURLForRemotePush(userInfo)
+            self.application(application, didReceiveRemoteNotification: userInfo)
         }
         
         return true
@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        URLSchemesController.instance.handleOpenURLForRemotePush(userInfo)
+        RemoteNotification.sharedInstance.receiveRemoteNotification(userInfo)
     }
     
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
@@ -67,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-        return URLSchemesController.instance.handleOpenURL(url)
+        return URLSchemesController.sharedInstance.handleOpenURL(url)
     }
 }
 

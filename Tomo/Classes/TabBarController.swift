@@ -89,7 +89,8 @@ final class TabBarController: UITabBarController {
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        URLSchemesController.instance.runTask()
+        URLSchemesController.sharedInstance.runTask()
+        RemoteNotification.sharedInstance.runTask()
     }
     
     // MARK: - Notification

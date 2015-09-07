@@ -270,9 +270,9 @@ extension FriendListViewController: FriendInvitationCellDelegate {
 extension FriendListViewController {
     
     private func registerForNotifications() {
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveMessage:"), event: .Message)
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendInvited:"), event: .FriendInvited)
-        SocketController.sharedInstance.addObserverForEvent(self, selector: Selector("receiveFriendApproved:"), event: .FriendApproved)
+        ListenerEvent.Message.addObserver(self, selector: Selector("receiveMessage:"))
+        ListenerEvent.FriendInvited.addObserver(self, selector: Selector("receiveFriendInvited:"))
+        ListenerEvent.FriendApproved.addObserver(self, selector: Selector("receiveFriendApproved:"))
     }
     
     func receiveMessage(notification: NSNotification) {
