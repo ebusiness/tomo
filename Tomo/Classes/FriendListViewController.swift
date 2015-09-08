@@ -69,7 +69,6 @@ final class FriendListViewController: BaseTableViewController {
         let userMapping = RKObjectMapping(forClass: UserEntity.self)
         userMapping.addAttributeMappingsFromDictionary([
             "_id": "id",
-            "tomoid": "tomoid",
             "nickName": "nickName",
             "gender": "gender",
             "photo_ref": "photo",
