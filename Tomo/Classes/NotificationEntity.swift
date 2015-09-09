@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NotificationEntity: NSObject {
+class NotificationEntity: Entity {
     
     var id: String!
     
@@ -26,14 +26,10 @@ class NotificationEntity: NSObject {
         super.init()
     }
     
-    convenience init(_ respunse: AnyObject) {
-        self.init(JSON(respunse))
-    }
-    
-    init(_ json: JSON) {
+    required init(_ json: JSON) {
         super.init()
-        self.id = json["_id"].stringValue
-        self.from = UserEntity(json["from"].object)
+        self.id = json["id"].stringValue
+        self.from = UserEntity(json["from"])
         self.type = json["type"].stringValue
         self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
         

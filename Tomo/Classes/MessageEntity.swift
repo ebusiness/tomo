@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MessageEntity: NSObject {
+class MessageEntity: Entity {
     
     var id: String!
     
@@ -26,15 +26,11 @@ class MessageEntity: NSObject {
         super.init()
     }
     
-    convenience init(_ respunse: AnyObject) {
-        self.init(JSON(respunse))
-    }
-    
-    init(_ json: JSON) {
+    required init(_ json: JSON) {
         super.init()
-        self.id = json["_id"].stringValue
-        self.to = UserEntity(json["to"].object)
-        self.from = UserEntity(json["from"].object)
+        self.id = json["id"].stringValue
+        self.to = UserEntity(json["to"])
+        self.from = UserEntity(json["from"])
         self.content = json["content"].stringValue
         self.opened = json["opened"].boolValue
         self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)

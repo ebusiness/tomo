@@ -114,6 +114,7 @@
 		D07793871B704F410056B7CB /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07793861B704F410056B7CB /* DatePickerViewController.swift */; };
 		D07D8A181B9997D500D13096 /* InvitationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07D8A171B9997D500D13096 /* InvitationEntity.swift */; };
 		D07D8A1A1B99A3DF00D13096 /* NotificationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07D8A191B99A3DF00D13096 /* NotificationListViewController.swift */; };
+		D07E48541B9EB35B00BF04B2 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07E48531B9EB35B00BF04B2 /* Entity.swift */; };
 		D0891C961B8AF5A600701CC7 /* SearchFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0891C951B8AF5A600701CC7 /* SearchFriendCell.swift */; };
 		D08BFB0B1B744C2D00771F70 /* JSQMessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08BFB0A1B744C2D00771F70 /* JSQMessageEntity.swift */; };
 		D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */; };
@@ -258,6 +259,7 @@
 		D07793861B704F410056B7CB /* DatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DatePickerViewController.swift; path = Classes/DatePickerViewController.swift; sourceTree = "<group>"; };
 		D07D8A171B9997D500D13096 /* InvitationEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvitationEntity.swift; path = Classes/InvitationEntity.swift; sourceTree = "<group>"; };
 		D07D8A191B99A3DF00D13096 /* NotificationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationListViewController.swift; path = Classes/NotificationListViewController.swift; sourceTree = "<group>"; };
+		D07E48531B9EB35B00BF04B2 /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Entity.swift; path = Classes/Entity.swift; sourceTree = "<group>"; };
 		D0891C951B8AF5A600701CC7 /* SearchFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchFriendCell.swift; path = Classes/SearchFriendCell.swift; sourceTree = "<group>"; };
 		D08BFB0A1B744C2D00771F70 /* JSQMessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSQMessageEntity.swift; path = Classes/JSQMessageEntity.swift; sourceTree = "<group>"; };
 		D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Profile.storyboard; path = Classes/Profile.storyboard; sourceTree = "<group>"; };
@@ -413,6 +415,7 @@
 				1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */,
 				1FCA1E661B722260000F2936 /* MessageEntity.swift */,
 				D07D8A171B9997D500D13096 /* InvitationEntity.swift */,
+				D07E48531B9EB35B00BF04B2 /* Entity.swift */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -908,6 +911,7 @@
 				296D8BAB1AFC59F10058D400 /* BaseViewController.swift in Sources */,
 				1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */,
 				D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */,
+				D07E48541B9EB35B00BF04B2 /* Entity.swift in Sources */,
 				1F985E6E1B60C19F008D5369 /* String.swift in Sources */,
 				1F1176A61B983D280049D9F5 /* SocketEngineClient.swift in Sources */,
 				1FCA1E631B71D0C8000F2936 /* CommentEntity.swift in Sources */,

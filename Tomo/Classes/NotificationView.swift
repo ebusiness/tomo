@@ -35,9 +35,7 @@ class NotificationView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        gcd.async(.Main) {
-            Util.changeImageColorForButton(self.closeButton, color: UIColor.whiteColor())
-        }
+        Util.changeImageColorForButton(self.closeButton, color: UIColor.whiteColor())
         gcd.async(.Default) {
             self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width / 2
             self.avatarImageView.layer.masksToBounds = true

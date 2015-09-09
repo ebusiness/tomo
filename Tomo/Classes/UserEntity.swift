@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UserEntity: NSObject {
+class UserEntity: Entity {
     
     var id: String!
     
@@ -48,13 +48,9 @@ class UserEntity: NSObject {
         super.init()
     }
     
-    convenience init(_ respunse: AnyObject) {
-        self.init(JSON(respunse))
-    }
-    
-    init(_ json: JSON) {
+    required init(_ json: JSON) {
         super.init()
-        self.id = json["_id"].stringValue
+        self.id = json["id"].stringValue
         self.nickName = json["nickName"].stringValue
         self.gender = json["gender"].string
         self.photo = json["photo_ref"].string ?? json["photo"].string
@@ -75,19 +71,19 @@ class UserEntity: NSObject {
         self.friendInvitations = []
         if let invitations = json["friendInvitations"].array {
             invitations.map { (invitation) -> () in
-                self.friendInvitations.append( NotificationEntity(invitation.object) )
+                self.friendInvitations.append( NotificationEntity(invitation) )
             }
         }
         
         self.newMessages = []
         if let messages = json["newMessages"].array {
             messages.map { (message) -> () in
-                self.newMessages.append( MessageEntity(message.object) )
+                self.newMessages.append( MessageEntity(message) )
             }
         }
         
         if !( json["lastMessage"].object is NSNull ) {
-            self.lastMessage = MessageEntity(json["lastMessage"].object)
+            self.lastMessage = MessageEntity(json["lastMessage"])
         }
     }
 }

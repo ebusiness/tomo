@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InvitationEntity: NSObject {
+class InvitationEntity: Entity {
     
     var id: String!
     
@@ -26,16 +26,12 @@ class InvitationEntity: NSObject {
         super.init()
     }
     
-    convenience init(_ respunse: AnyObject) {
-        self.init(JSON(respunse))
-    }
-    
-    init(_ json: JSON) {
+    required init(_ json: JSON) {
         super.init()
-        self.id = json["_id"].stringValue
+        self.id = json["id"].stringValue
         self.type = json["type"].stringValue
-        self.to = UserEntity(json["to"].object)
-        self.from = UserEntity(json["from"].object)
+        self.to = UserEntity(json["to"])
+        self.from = UserEntity(json["from"])
         self.result = json["result"].stringValue
         self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
         

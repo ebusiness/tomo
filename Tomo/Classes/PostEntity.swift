@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PostEntity: NSObject {
+class PostEntity: Entity {
     
     var id: String!
     
@@ -30,14 +30,10 @@ class PostEntity: NSObject {
         super.init()
     }
     
-    convenience init(_ respunse: AnyObject) {
-        self.init(JSON(respunse))
-    }
-    
-    init(_ json: JSON) {
+    required init(_ json: JSON) {
         super.init()
-        self.id = json["_id"].stringValue
-        self.owner = UserEntity(json["owner"].object)
+        self.id = json["id"].stringValue
+        self.owner = UserEntity(json["owner"])
         self.content = json["content"].stringValue
         
         self.images = json["images"].arrayObject as? [String]        
@@ -46,7 +42,7 @@ class PostEntity: NSObject {
         if let postComments = json["comments"].array {
             self.comments = []
             postComments.map { (commentJson) -> () in
-                var comment = CommentEntity(commentJson.object)
+                var comment = CommentEntity(commentJson)
                 self.comments!.append(comment)
             }
         }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CommentEntity: NSObject {
+class CommentEntity: Entity {
     
     var id: String!
     
@@ -22,14 +22,10 @@ class CommentEntity: NSObject {
         super.init()
     }
     
-    convenience init(_ respunse: AnyObject) {
-        self.init(JSON(respunse))
-    }
-    
-    init(_ json: JSON) {
+    required init(_ json: JSON) {
         super.init()
-        self.id = json["_id"].stringValue
-        self.owner = UserEntity(json["owner"].object)
+        self.id = json["id"].stringValue
+        self.owner = UserEntity(json["owner"])
         self.content = json["content"].stringValue
         self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
         
