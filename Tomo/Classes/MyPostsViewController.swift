@@ -202,47 +202,45 @@ extension MyPostsViewController {
         ListenerEvent.PostBookmarked.addObserver(self, selector: Selector("receivePostBookmarked:"))
     }
     
-    private func receivePost(notification: NSNotification,done: (cell: PostCell,nickName: String)->() ){
+    private func receivePost(notification: NSNotification,done: (cell: PostCell,user: UserEntity)->() ){
         
         if let userInfo = notification.userInfo {
             let json = JSON(userInfo)
-            let postid = json["targetPost"]["_id"].stringValue
-            let nickName = json["_from"]["nickName"].stringValue
+            let postid = json["targetId"].stringValue
+            let user = UserEntity(json["from"])
             
             let cell: AnyObject? = self.tableView.visibleCells().find { ($0 as! PostCell).post.id == postid }
             if let cell = cell as? PostCell {
-                cell.post.like = json["targetPost"]["like"].arrayObject as? [String]
                 gcd.sync(.Main, closure: { () -> () in
-                    done(cell: cell, nickName: nickName)
+                    done(cell: cell, user: user)
                 })
             }
         }
-
     }
     
     func receivePostLiked(notification: NSNotification) {
-        self.receivePost(notification) { (cell, nickName) -> () in
+        self.receivePost(notification) { (cell, user) -> () in
+            
+            cell.post.like = cell.post.like ?? []
+            cell.post.like!.append(user.id)
             
             cell.likeButton.bounce({ () -> Void in
                 cell.setupDisplay()
             })
-            Util.showInfo("\(nickName)赞了您的帖子")
         }
     }
     
     func receivePostCommented(notification: NSNotification) {
-        self.receivePost(notification) { (cell, nickName) -> () in
+        self.receivePost(notification) { (cell, _) -> () in
             
             cell.shake(nil)
-            Util.showInfo("\(nickName)评论了您的帖子")
         }
     }
     
     func receivePostBookmarked(notification: NSNotification) {
-        self.receivePost(notification) { (cell, nickName) -> () in
+        self.receivePost(notification) { (cell, _) -> () in
             
             cell.bookmarkButton.tada(nil)
-            Util.showInfo("\(nickName)收藏了您的帖子")
         }
     }
     

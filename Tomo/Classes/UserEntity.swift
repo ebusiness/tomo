@@ -50,7 +50,11 @@ class UserEntity: Entity {
     
     required init(_ json: JSON) {
         super.init()
-        self.id = json["id"].stringValue
+        if let id = json.string { //id only
+            self.id = id
+            return
+        }
+        self.id = json["_id"].string ?? json["id"].stringValue
         self.nickName = json["nickName"].stringValue
         self.gender = json["gender"].string
         self.photo = json["photo_ref"].string ?? json["photo"].string
@@ -99,6 +103,7 @@ extension UserEntity {
     func addFriend(uid: String) -> Bool{
         
         self.invitations?.remove(uid)
+        self.friendInvitations = self.friendInvitations.filter { $0.from.id != uid }
         if let friends = self.friends where friends.contains(uid) {
             return false
         } else {
@@ -111,6 +116,7 @@ extension UserEntity {
     func removeFriend(uid: String){
         
         self.invitations?.remove(uid)
+        self.friendInvitations = self.friendInvitations.filter { $0.from.id != uid }
         self.friends?.remove(uid)
     }
     

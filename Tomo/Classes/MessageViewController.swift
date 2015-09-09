@@ -70,9 +70,6 @@ final class MessageViewController: JSQMessagesViewController {
         // TODO: adjust
         setAccessoryButtonImageView()
         
-        // load message data
-        setupMapping()
-        
         loadMessages()
     }
     
@@ -152,25 +149,6 @@ extension MessageViewController {
         }
     }
     
-    private func setupMapping() {
-        
-        let userMapping = RKObjectMapping(forClass: UserEntity.self)
-        userMapping.addPropertyMapping(RKAttributeMapping(fromKeyPath: nil, toKeyPath: "id"))
-        let propertyMapping = RKRelationshipMapping(fromKeyPath: "_from", toKeyPath: "from", withMapping: userMapping)
-        
-        let messageMapping = RKObjectMapping(forClass: MessageEntity.self)
-        messageMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "content": "content",
-            "createDate": "createDate"
-            ])
-        messageMapping.addPropertyMapping(propertyMapping)
-        
-        let responseDescriptor = RKResponseDescriptor(mapping: messageMapping, method: .GET, pathPattern: "/messages/:userId", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
-        
-        selink.addResponseDescriptor(responseDescriptor)
-    }
-    
     private func loadMessages() {
         
         if isLoading || isExhausted {
@@ -184,12 +162,13 @@ extension MessageViewController {
         if let oldestMessage = oldestMessage {
             params["before"] = oldestMessage.createDate.timeIntervalSince1970
         }
+
         
-        selink.getObjectsAtPath("/messages/\(friend.id)", parameters: params, success: { (operation, result) -> Void in
+        AlamofireController.request(.GET, "/messages/\(friend.id)", parameters: params, success: { result in
             
-            for message in result.array() {
+            if let messages:[MessageEntity] = MessageEntity.collection(result) {
                 
-                if let message = message as? MessageEntity {
+                for message in messages {
                     
                     if message.from.id != me.id {
                         message.from = self.friend
@@ -200,32 +179,30 @@ extension MessageViewController {
                     }
                     self.messages.insert(JSQMessageEntity(message: message), atIndex: 0)
                 }
-            }
-            
-            if self.oldestMessage == nil {
-                self.collectionView.reloadData()
-                self.scrollToBottomAnimated(false)
                 
-                me.newMessages.filter({ (message) -> Bool in
-                    if message.from.id == self.friend.id {
-                        me.newMessages.remove(message)
-                    }
+                if self.oldestMessage == nil {
+                    self.collectionView.reloadData()
+                    self.scrollToBottomAnimated(false)
                     
-                    if let tabBarController = self.navigationController?.tabBarController as? TabBarController {
-                        tabBarController.updateBadgeNumber()
-                    }
-                    return true
-                })
-            } else {
-                self.prependRows(result.array().count)
+                    me.newMessages.filter({ (message) -> Bool in
+                        if message.from.id == self.friend.id {
+                            me.newMessages.remove(message)
+                        }
+                        
+                        if let tabBarController = self.navigationController?.tabBarController as? TabBarController {
+                            tabBarController.updateBadgeNumber()
+                        }
+                        return true
+                    })
+                } else {
+                    self.prependRows(messages.count)
+                }
+                
+                self.oldestMessage = messages.last
+                self.isLoading = false
             }
-            
-            self.oldestMessage = result.array().last as? MessageEntity
-            self.isLoading = false
-            
-        }) { (operation, err) -> Void in
+        }) { err in
             println(err)
-            
             self.isLoading = false
             self.isExhausted = true
         }
@@ -260,8 +237,7 @@ extension MessageViewController {
         if let userInfo = notification.userInfo {
             let json = JSON(userInfo)
             
-            if friend.id == json["_from"]["_id"].stringValue {
-                
+            if friend.id == json["from"]["id"].stringValue {
                 let message = MessageEntity(json)
                 message.opened = true
                 message.to = me
@@ -306,17 +282,17 @@ extension MessageViewController {
         params["to"] = friend.id
         params["content"] = text
         
-        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/messages", parameters: params).responseJSON { (_, _, _, error) -> Void in
+        AlamofireController.request(.POST, "/messages", parameters: params, success: { _ in
             
-            if error == nil {
-                
-                JSQSystemSoundPlayer.jsq_playMessageSentSound()
-                self.finishSendingMessageAnimated(true)
-                
-            } else {
-                // handle error
-            }
+            JSQSystemSoundPlayer.jsq_playMessageSentSound()
+            self.finishSendingMessageAnimated(true)
             done?()
+            
+        }) { (err) -> () in
+            
+            println(err)
+            done?()
+            
         }
     }
     

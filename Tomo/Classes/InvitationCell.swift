@@ -19,7 +19,7 @@ class InvitationCell: UITableViewCell {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     
-    var friendInvitedNotification: NotificationEntity?
+    var friendInvitedNotification: NotificationEntity!
     
     weak var delegate: FriendInvitationCellDelegate?
 
@@ -39,13 +39,13 @@ class InvitationCell: UITableViewCell {
 
     func setupDisplay() {
         
-        let user = friendInvitedNotification!.from
+        let user = friendInvitedNotification.from
         
-        if let photo = user?.photo {
+        if let photo = user.photo {
             avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
         }
         
-        userNameLabel.text = user?.nickName
+        userNameLabel.text = user.nickName
         
     }
     

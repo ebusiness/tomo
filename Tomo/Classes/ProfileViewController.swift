@@ -21,8 +21,6 @@ final class ProfileViewController: ProfileBaseController {
     
     @IBOutlet weak var invitedView: UIView!
     @IBOutlet weak var heightOfInvitedView: NSLayoutConstraint!
-    
-    var invitedId: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,26 +58,18 @@ final class ProfileViewController: ProfileBaseController {
             
         } else {
             
-            if let id = self.invitedId {
+            if let invitation = self.getUserInvitation() {
                 
                 self.invitedView.hidden = false
                 
                 self.heightOfInvitedView.constant = 44
                 self.changeHeaderView(height:284)
-                
             } else if let invitations = me.invitations where invitations.contains(self.user.id) {
                 //invited
-            } else if user.id != me.id {
+            } else if user.id != me.id  {
                 self.addFriendButton.hidden = false
             }
         }
-    }
-    
-    override func becomeActive() {
-        // check relationship
-        self.getUserInfo({ (id) -> () in
-            self.invitedId = id
-        })
     }
     
     @IBAction func Approved(sender: UIButton) {
@@ -88,26 +78,22 @@ final class ProfileViewController: ProfileBaseController {
     }
     
     @IBAction func Declined(sender: UIButton) {
-        
-        inviteAction(false)
+        Util.alert(self, title: "拒绝好友邀请", message: "拒绝 " + self.user.nickName + " 的好友邀请么") { _ in
+            self.inviteAction(false)
+        }
     }
     
     @IBAction func deleteFriend(sender: UIButton) {
         
         Util.alert(self, title: "删除好友", message: "确定删除该好友么?", action: { (_) -> Void in
             
-            Manager.sharedInstance.request(.DELETE, kAPIBaseURLString + "/friends/\(self.user.id)")
-                .responseJSON { (_, _, _, error) -> Void in
-                    
-                    if let error = error {
-                        
-                    } else {
-                        me.friends?.remove(self.user.id)
-                        Util.showSuccess("已删除好友")
-//                        self.navigationController?.popViewControllerAnimated(true)
-                    }
-                    self.updateUI()
-            }
+            AlamofireController.request(.DELETE, "/friends/\(self.user.id)", success: { _ in
+                
+                me.friends?.remove(self.user.id)
+//                self.navigationController?.popViewControllerAnimated(true)
+                self.updateUI()
+
+            })
         })
         
     }
@@ -119,17 +105,15 @@ final class ProfileViewController: ProfileBaseController {
         var param = Dictionary<String, String>()
         param["id"] = self.user.id
         
-        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/invitations", parameters: param)
-            .responseJSON { (_, _, _, _) -> Void in
-                
-                if me.invitations == nil {
-                    me.invitations = []
-                }
-                me.invitations?.append(self.user.id)
-                Util.showSuccess("已发送交友请求")
-                self.updateUI()
-        }
-        
+        AlamofireController.request(.POST, "/invitations", parameters: param, success: { _ in
+            
+            if me.invitations == nil {
+                me.invitations = []
+            }
+            me.invitations?.append(self.user.id)
+            Util.showSuccess("已发送交友请求")
+            self.updateUI()
+        })
     }
     
     @IBAction func sendMessage(sender: UIButton) {
@@ -146,15 +130,19 @@ final class ProfileViewController: ProfileBaseController {
 
 extension ProfileViewController {
     
+    private func getUserInvitation() -> NotificationEntity? {
+        return me.friendInvitations.find { $0.from.id == self.user.id }
+    }
+    
     private func inviteAction(isApproved:Bool){
         
-        if let id = self.invitedId {
+        if let invitation = self.getUserInvitation() {
             
             Util.showHUD()
             var param = Dictionary<String, String>()
             param["result"] = isApproved ? "accept" : "refuse"
             
-            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/invitations/\(id)", parameters: param).response({ (_, _, _, _) -> Void in
+            AlamofireController.request(.PATCH, "/invitations/\(invitation.id)", parameters: param, success: { _ in
                 self.addFriendToMe(isApproved,isComeFromSocket: false)
                 me.friendInvitations = me.friendInvitations.filter{ $0.from.id != self.user.id }
             })
@@ -171,17 +159,14 @@ extension ProfileViewController {
             
         } else {
             me.invitations?.remove(self.user.id)
-            if isComeFromSocket {
-                Util.showSuccess(self.user.nickName + " 拒绝了您的好友邀请")
-            } else {
-                Util.showSuccess("您拒绝了 " + self.user.nickName + " 的好友邀请")
+            if !isComeFromSocket {
+                Util.showMessage("您拒绝了 " + self.user.nickName + " 的好友邀请")
             }
         }
         
         self.heightOfInvitedView.constant = 0
         self.changeHeaderView(height:240,done: { () -> () in
             
-            self.invitedId = nil
             self.updateUI()
         })
     }
@@ -193,15 +178,15 @@ extension ProfileViewController {
     
     private func registerForNotifications() {
         ListenerEvent.FriendInvited.addObserver(self, selector: Selector("receiveFriendInvited:"))
-        ListenerEvent.FriendApproved.addObserver(self, selector: Selector("receiveFriendApproved:"))
-        ListenerEvent.FriendDeclined.addObserver(self, selector: Selector("receiveFriendDeclined:"))
+        ListenerEvent.FriendAccepted.addObserver(self, selector: Selector("receiveFriendAccepted:"))
+        ListenerEvent.FriendRefused.addObserver(self, selector: Selector("receiveFriendRefused:"))
     }
     
     private func receive(notification: NSNotification, done: (json: JSON)->() ){
         if let userInfo = notification.userInfo {
             
             let json = JSON(userInfo)
-            if self.user.id == json["_from"]["_id"].stringValue {
+            if self.user.id == json["from"]["id"].stringValue {
                 gcd.sync(.Main, closure: { () -> () in
                     done(json: json)
                 })
@@ -211,18 +196,23 @@ extension ProfileViewController {
     
     func receiveFriendInvited(notification: NSNotification) {
         self.receive(notification, done: { json in
-            self.invitedId = json["_id"].stringValue
+            
+            let invitation = NotificationEntity(json)
+            invitation.id = json["targetId"].stringValue
+            
+            me.friendInvitations.append( invitation )
+            
             self.updateUI()
         })
     }
     
-    func receiveFriendApproved(notification: NSNotification) {
+    func receiveFriendAccepted(notification: NSNotification) {
         self.receive(notification, done: { _ in
             self.addFriendToMe(true)
         })
     }
     
-    func receiveFriendDeclined(notification: NSNotification) {
+    func receiveFriendRefused(notification: NSNotification) {
         self.receive(notification, done: { _ in
             self.addFriendToMe(false)
         })

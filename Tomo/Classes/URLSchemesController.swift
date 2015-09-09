@@ -36,8 +36,8 @@ class URLSchemesController {
                     openMessage(id)
                 case .FriendInvited:
                     openFriendInvited(id)
-                case .FriendApproved:
-                    openFriendApproved(id)
+                case .FriendAccepted:
+                    openFriendAccepted(id)
                 case .PostNew:
                     openPostNew(id)
                 case .PostCommented:
@@ -116,7 +116,7 @@ extension URLSchemesController{
         self.pushViewController(1, viewController: vc, animated: true)
     }
     
-    private func openFriendApproved(id: String){
+    private func openFriendAccepted(id: String){
         getInformation("/users/\(id)", done: { (json) -> () in
             
             let nickName = json["nickName"].stringValue

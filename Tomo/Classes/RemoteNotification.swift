@@ -46,6 +46,8 @@ class RemoteNotification {
                             })
                         }
                     }
+                } else {
+                    // other event
                 }
                 
             } else {
@@ -77,6 +79,7 @@ extension RemoteNotification{
             window.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[notificationView]|", options: nil, metrics: nil, views: views))
             window.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-(-64)-[notificationView(==64)]", options: nil, metrics: nil, views: views))
             window.layoutIfNeeded()
+            notificationView.layoutIfNeeded()
 
             return notificationView
         }

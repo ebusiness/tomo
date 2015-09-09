@@ -28,7 +28,11 @@ class NotificationEntity: Entity {
     
     required init(_ json: JSON) {
         super.init()
-        self.id = json["id"].stringValue
+        if let id = json.string { //id only
+            self.id = id
+            return
+        }
+        self.id = json["_id"].string ?? json["id"].stringValue
         self.from = UserEntity(json["from"])
         self.type = json["type"].stringValue
         self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
@@ -38,7 +42,7 @@ class NotificationEntity: Entity {
         if let event = ListenerEvent(rawValue: self.type) {
             switch event {
                 //User
-            case .FriendInvited, .FriendApproved:
+            case .FriendInvited, .FriendAccepted:
                 self.targetId = self.from.id
                 //Post
             case .PostNew, .PostCommented:

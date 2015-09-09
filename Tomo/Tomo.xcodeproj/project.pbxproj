@@ -112,7 +112,6 @@
 		D073E6F81B84C1BF00066F42 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073E6F71B84C1BF00066F42 /* CameraController.swift */; };
 		D07793851B704F290056B7CB /* PickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07793841B704F290056B7CB /* PickerTableViewController.swift */; };
 		D07793871B704F410056B7CB /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07793861B704F410056B7CB /* DatePickerViewController.swift */; };
-		D07D8A181B9997D500D13096 /* InvitationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07D8A171B9997D500D13096 /* InvitationEntity.swift */; };
 		D07D8A1A1B99A3DF00D13096 /* NotificationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07D8A191B99A3DF00D13096 /* NotificationListViewController.swift */; };
 		D07E48541B9EB35B00BF04B2 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07E48531B9EB35B00BF04B2 /* Entity.swift */; };
 		D0891C961B8AF5A600701CC7 /* SearchFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0891C951B8AF5A600701CC7 /* SearchFriendCell.swift */; };
@@ -257,7 +256,6 @@
 		D073E6F71B84C1BF00066F42 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraController.swift; path = Classes/CameraController.swift; sourceTree = "<group>"; };
 		D07793841B704F290056B7CB /* PickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickerTableViewController.swift; path = Classes/PickerTableViewController.swift; sourceTree = "<group>"; };
 		D07793861B704F410056B7CB /* DatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DatePickerViewController.swift; path = Classes/DatePickerViewController.swift; sourceTree = "<group>"; };
-		D07D8A171B9997D500D13096 /* InvitationEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvitationEntity.swift; path = Classes/InvitationEntity.swift; sourceTree = "<group>"; };
 		D07D8A191B99A3DF00D13096 /* NotificationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationListViewController.swift; path = Classes/NotificationListViewController.swift; sourceTree = "<group>"; };
 		D07E48531B9EB35B00BF04B2 /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Entity.swift; path = Classes/Entity.swift; sourceTree = "<group>"; };
 		D0891C951B8AF5A600701CC7 /* SearchFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchFriendCell.swift; path = Classes/SearchFriendCell.swift; sourceTree = "<group>"; };
@@ -414,7 +412,6 @@
 				1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */,
 				1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */,
 				1FCA1E661B722260000F2936 /* MessageEntity.swift */,
-				D07D8A171B9997D500D13096 /* InvitationEntity.swift */,
 				D07E48531B9EB35B00BF04B2 /* Entity.swift */,
 			);
 			name = Entity;
@@ -893,7 +890,6 @@
 				293EB4251B132B06006BAF27 /* JSQVoiceMediaItem.m in Sources */,
 				D0A0C02E1B5F594C00ABFA5F /* ProfileBaseController.swift in Sources */,
 				1FCA1E651B7221F7000F2936 /* NotificationEntity.swift in Sources */,
-				D07D8A181B9997D500D13096 /* InvitationEntity.swift in Sources */,
 				1F1176A81B983D280049D9F5 /* SocketFixUTF8.swift in Sources */,
 				1F1176AD1B983D280049D9F5 /* SocketTypes.swift in Sources */,
 				29DCEFE91B14519300A7C7AF /* TomoVideoMediaItem.swift in Sources */,

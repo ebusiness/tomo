@@ -20,10 +20,9 @@ class ProfileBaseController: BaseTableViewController {
             
             vc.user = self.user
             if let parent = segue.sourceViewController as? ProfileViewController {
-                self.getUserInfo({ (id) -> () in
+                self.getUserInfo {
                     vc.user = self.user
-                    parent.invitedId = id
-                })
+                }
             }
             
             self.whenShowNavigationBar = { (OffsetY)->() in
@@ -68,59 +67,22 @@ class ProfileBaseController: BaseTableViewController {
         } else if let vc = segue.destinationViewController as? ProfileBaseController {
             vc.user = self.user
         }
-        
-    }
-    
-    override func setupMapping() {
-        
-        let userMapping = RKObjectMapping(forClass: UserEntity.self)
-        userMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "nickName": "nickName",
-            "firstName": "firstName",
-            "lastName": "lastName",
-            "photo_ref": "photo",
-            "cover_ref": "cover",
-            "birthDay": "birthDay",
-            "gender": "gender",
-            "telNo": "telNo",
-            "address": "address",
-            "bio": "bio",
-            ])
-        
-        let responseDescriptorUserInfo = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/users/:id", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
-        self.manager.addResponseDescriptor(responseDescriptorUserInfo)
     }
 }
 
 extension ProfileBaseController {
     
-    func getUserInfo(done: ((String?)->()) ){
+    func getUserInfo(done: ()->() ){
         
-        Util.showHUD()
-        
-        self.manager.getObject(nil, path: "/users/\(self.user.id)", parameters: nil, success: { (operation, result) -> Void in
-            if let result = result.firstObject as? UserEntity {
-                self.user = result
-                
-                if let friends = me.friends where friends.contains(self.user.id) {
-                    self.updateUI()
-                } else {
-                    var param = Dictionary<String, String>()
-                    param["type"] = "friend-invited"
-                    param["_from"] = self.user.id
-                    Manager.sharedInstance.request(.GET, kAPIBaseURLString + "/notifications/unconfirmed", parameters: param).responseJSON { (_, res, data, _) -> Void in
-                        if let arr = data as? NSArray ,dict = arr[0] as? Dictionary<String, AnyObject> , id = dict["_id"] as? String {
-                            done(id)
-                        } else {
-                            done(nil)
-                        }
-                        self.updateUI()
-                    }
-                }
-            }
+        AlamofireController.request(.GET, "/users/\(self.user.id)", success: { result in
             
-            }, failure: nil)
+            self.user = UserEntity(result)
+            
+            if !(me.friends ?? []).contains(self.user.id) {
+                done()
+            }
+            self.updateUI()
+        })
     }
     
     func updateUI() {

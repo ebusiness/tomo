@@ -64,11 +64,13 @@ class PostViewController: BaseViewController{
         commentBtn.layer.cornerRadius = commentBtn.frame.size.width / 2
         commentBtn.backgroundColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 1)
         commentBtn.superview?.bringSubviewToFront(commentBtn)
-        Util.changeImageColorForButton(commentBtn,color: UIColor.whiteColor())
         self.hideSendBtn(true)
         
-        Util.changeImageColorForButton(likedBtn,color: UIColor.redColor())
-        Util.changeImageColorForButton(bookmarkBtn,color: UIColor.orangeColor())
+        gcd.async(.Main) { // fix deadlock
+            Util.changeImageColorForButton(self.commentBtn,color: UIColor.whiteColor())
+            Util.changeImageColorForButton(self.likedBtn,color: UIColor.redColor())
+            Util.changeImageColorForButton(self.bookmarkBtn,color: UIColor.orangeColor())
+        }
         
         self.setPostContent()
         self.updateUIForHeader()

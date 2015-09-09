@@ -57,37 +57,6 @@ final class FriendListViewController: BaseTableViewController {
         super.viewWillAppear(animated)
     }
     
-    override func setupMapping() {
-        
-        let messageMapping = RKObjectMapping(forClass: MessageEntity.self)
-        messageMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "content": "content",
-            "createDate": "createDate"
-            ])
-        
-        let userMapping = RKObjectMapping(forClass: UserEntity.self)
-        userMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "nickName": "nickName",
-            "gender": "gender",
-            "photo_ref": "photo",
-            "cover_ref": "cover",
-            "bio": "bio",
-            "firstName": "firstName",
-            "lastName": "lastName",
-            "birthDay": "birthDay",
-            "telNo": "telNo",
-            "address": "address",
-            ])
-        
-        let messageRelationshipMapping = RKRelationshipMapping(fromKeyPath: "lastMessage", toKeyPath: "lastMessage", withMapping: messageMapping)
-        userMapping.addPropertyMapping(messageRelationshipMapping)
-        
-        let responseDescriptorUserInfo = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/friends", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
-        self.manager.addResponseDescriptor(responseDescriptorUserInfo)
-    }
-    
     override func becomeActive() {
         // recalculate badge number
         self.getFriends()
@@ -102,14 +71,14 @@ final class FriendListViewController: BaseTableViewController {
 extension FriendListViewController {
     
     private func getFriends(){
-        self.manager.getObjectsAtPath("/friends", parameters: nil, success: { (operation, result) -> Void in
-            self.friends = result.array() as! [UserEntity]
+        
+        AlamofireController.request(.GET, "/friends", success: { (result) -> () in
+            self.friends = UserEntity.collection(result)!
             self.friends.sort({
                 
                 if let msg1 = $0.lastMessage, msg2 = $1.lastMessage {
                     return msg1.createDate.timeIntervalSinceNow > msg2.createDate.timeIntervalSinceNow
                 }
-                
                 if $0.lastMessage == nil && $1.lastMessage != nil {
                     return false
                 }
@@ -121,7 +90,7 @@ extension FriendListViewController {
                 return false
             })
             self.tableView.reloadData()
-        }) { (operation, error) -> Void in
+        }) { _ in
             let emptyView = Util.createViewWithNibName("EmptyFriends")
             self.tableView.backgroundView = emptyView
         }
@@ -223,43 +192,43 @@ extension FriendListViewController: FriendInvitationCellDelegate {
     
     func friendInvitationAccept(cell: InvitationCell) {
         
-        if let indexPath = tableView.indexPathForCell(cell) {
-            let invitation = me.friendInvitations.removeAtIndex(indexPath.row)
-            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/invitations/\(invitation.id)", parameters: ["result": "accept"], encoding: .URL)
-                .responseJSON { (_, _, result, error) -> Void in
-                    if error != nil {
-                        println(error)
-                        return
-                    }
-                    
-                    self.tableView.beginUpdates()
-                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                    if me.addFriend(invitation.from.id) {
-                        self.friends.insert(invitation.from, atIndex: 0)
-                        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
-                    }
-                    self.tableView.endUpdates()
-                    self.updateBadgeNumber()
+        AlamofireController.request(.PATCH, "/invitations/\(cell.friendInvitedNotification.id)", parameters: ["result": "accept"], success: { (result) -> () in
+            
+            self.tableView.beginUpdates()
+            if let indexPath = self.tableView.indexPathForCell(cell) {
+                me.friendInvitations.removeAtIndex(indexPath.row)
+                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
-        }
+            if me.addFriend(cell.friendInvitedNotification.from.id) {
+                self.friends.insert(cell.friendInvitedNotification.from, atIndex: 0)
+                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
+            }
+            self.tableView.endUpdates()
+            self.updateBadgeNumber()
+            
+        }, failure: { err in
+                println(err)
+        })
     }
     
     func friendInvitationDeclined(cell: InvitationCell) {
         
-        if let indexPath = tableView.indexPathForCell(cell) {
-            let invitation = me.friendInvitations.removeAtIndex(indexPath.row)
-            Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/invitations/\(invitation.id)", parameters: ["result": "refuse"], encoding: .URL)
-                .responseJSON { (_, _, result, error) -> Void in
-                    if error != nil {
-                        println(error)
-                        return
-                    }
-                    me.invitations?.remove(invitation.from.id)
-                    
-                    self.updateBadgeNumber()
-                    
+        Util.alert(self, title: "拒绝好友邀请", message: "拒绝 " + cell.friendInvitedNotification.from.nickName + " 的好友邀请么") { _ in
+            
+            AlamofireController.request(.PATCH, "/invitations/\(cell.friendInvitedNotification.id)", parameters: ["result": "refuse"], success: { (result) -> () in
+                
+                me.invitations?.remove(cell.friendInvitedNotification.from.id)
+                self.updateBadgeNumber()
+                
+                if let indexPath = self.tableView.indexPathForCell(cell) {
+                    me.friendInvitations.removeAtIndex(indexPath.row)
                     self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            }
+                }
+                
+                }, failure: { err in
+                    println(err)
+            })
+            
         }
     }
 }
@@ -271,14 +240,14 @@ extension FriendListViewController {
     private func registerForNotifications() {
         ListenerEvent.Message.addObserver(self, selector: Selector("receiveMessage:"))
         ListenerEvent.FriendInvited.addObserver(self, selector: Selector("receiveFriendInvited:"))
-        ListenerEvent.FriendApproved.addObserver(self, selector: Selector("receiveFriendApproved:"))
+        ListenerEvent.FriendAccepted.addObserver(self, selector: Selector("receiveFriendAccepted:"))
     }
     
     func receiveMessage(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             let json = JSON(userInfo)
             
-            let user = self.friends.find{ $0.id == json["_from"]["_id"].stringValue }
+            let user = self.friends.find{ $0.id == json["from"]["id"].stringValue }
             
             if let user = user {
                 
@@ -320,10 +289,10 @@ extension FriendListViewController {
         }
     }
     
-    func receiveFriendApproved(notification: NSNotification) {
+    func receiveFriendAccepted(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             
-            let from = UserEntity(JSON(userInfo)["_from"])
+            let from = UserEntity(JSON(userInfo)["from"])
             
             let nvitationIndex = me.friendInvitations.indexOf{$0.from.id == from.id}
             if let nvitationIndex = nvitationIndex {

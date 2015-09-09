@@ -28,7 +28,11 @@ class MessageEntity: Entity {
     
     required init(_ json: JSON) {
         super.init()
-        self.id = json["id"].stringValue
+        if let id = json.string { //id only
+            self.id = id
+            return
+        }
+        self.id = json["_id"].string ?? json["id"].stringValue
         self.to = UserEntity(json["to"])
         self.from = UserEntity(json["from"])
         self.content = json["content"].stringValue

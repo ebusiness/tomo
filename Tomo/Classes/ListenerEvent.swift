@@ -11,8 +11,8 @@ private var observers = [String:AnyObject]()
 enum ListenerEvent: String {
     case Announcement = "new-announcement"
     case Message = "message-new"
-    case FriendApproved = "friend-approved"
-    case FriendDeclined = "friend-declined"
+    case FriendAccepted = "friend-accepted"
+    case FriendRefused = "friend-refused"
     case FriendInvited = "friend-invited"
     case FriendBreak = "friend-break"
     

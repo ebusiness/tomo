@@ -32,7 +32,12 @@ class PostEntity: Entity {
     
     required init(_ json: JSON) {
         super.init()
-        self.id = json["id"].stringValue
+        if let id = json.string { //id only
+            self.id = id
+            return
+        }
+        
+        self.id = json["_id"].string ?? json["id"].stringValue
         self.owner = UserEntity(json["owner"])
         self.content = json["content"].stringValue
         
