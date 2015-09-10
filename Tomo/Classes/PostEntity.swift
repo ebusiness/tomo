@@ -20,6 +20,8 @@ class PostEntity: Entity {
     
     var like: [String]?
     
+    var bookmark: [String]?
+    
     var comments: [CommentEntity]?
     
     var coordinate: [Double]?
@@ -41,8 +43,9 @@ class PostEntity: Entity {
         self.owner = UserEntity(json["owner"])
         self.content = json["content"].stringValue
         
-        self.images = json["images"].arrayObject as? [String]        
+        self.images = json["images_ref"].arrayObject as? [String]
         self.like = json["like"].arrayObject as? [String]
+        self.bookmark = json["bookmark"].arrayObject as? [String]
         
         if let postComments = json["comments"].array {
             self.comments = []

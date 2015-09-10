@@ -269,11 +269,14 @@ extension AccountEditViewController {
     func updateUser(){
         
         user.nickName = nickNameTextField.text
-        user.bio = bioTextView.text
         user.firstName = firstNameTextField.text
         user.lastName = lastNameTextField.text
         user.telNo = telTextField.text
         user.address = addressTextField.text
+        
+        if bioTextView.textColor != UIColor.lightGrayColor() || bioTextView.text != defaultbio {
+            user.bio = bioTextView.text
+        }
         
         self.manager.patchObject(user, path: "/me", parameters: nil, success: { (operation, result) -> Void in
             if let result = result.firstObject as? UserEntity {

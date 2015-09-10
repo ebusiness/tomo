@@ -10,7 +10,6 @@ import UIKit
 
 class SearchFriendViewController: BaseTableViewController {
     
-    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var closeButton: UIButton!
     
@@ -26,35 +25,21 @@ class SearchFriendViewController: BaseTableViewController {
         Util.changeImageColorForButton(closeButton,color: UIColor.whiteColor())
         self.searchBar.becomeFirstResponder()
     }
-    
-    override func setupMapping() {
-        
-        let userMapping = RKObjectMapping(forClass: UserEntity.self)
-        userMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "nickName": "nickName",
-            "gender": "gender",
-            "photo_ref": "photo",
-            "cover_ref": "cover",
-            "bio": "bio",
-            "firstName": "firstName",
-            "lastName": "lastName",
-            "birthDay": "birthDay",
-            "telNo": "telNo",
-            "address": "address",
-            ])
-        
-        let responseDescriptor = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/users", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
-        self.manager.addResponseDescriptor(responseDescriptor)
-        
+
+    @IBAction func close(sender: AnyObject) {
+        self.view.endEditing(true)
+        dismissViewControllerAnimated(true, completion: nil)
     }
+}
 
-    // MARK: - Table view data source
+// MARK: - Table view data source
 
+extension SearchFriendViewController {
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.result?.count ?? 0
     }
-
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SearchFriendCell", forIndexPath: indexPath) as! SearchFriendCell
         var user = self.result![indexPath.row]
@@ -74,12 +59,9 @@ class SearchFriendViewController: BaseTableViewController {
         vc.user = self.result![indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
     }
-
-    @IBAction func close(sender: AnyObject) {
-        self.view.endEditing(true)
-        dismissViewControllerAnimated(true, completion: nil)
-    }
 }
+
+// MARK: - UISearchBarDelegate
 
 extension SearchFriendViewController: UISearchBarDelegate {
     
@@ -88,17 +70,16 @@ extension SearchFriendViewController: UISearchBarDelegate {
         if searchBar.text.trimmed().length > 0 {
             
             self.searchBar.resignFirstResponder()
-            Util.showHUD()
             var param = Dictionary<String, String>()
             param["nickName"] = ".*?\(searchBar.text).*"
             
-            self.manager.getObjectsAtPath("/users", parameters: param, success: { (_, results) -> Void in
-                Util.dismissHUD()
-                if let users = results.array() as? [UserEntity] {
-                    self.result = users
-                }
+            AlamofireController.request(.GET, "/users", parameters: param, success: { results in
                 
-            }, failure: nil)
+                self.result = UserEntity.collection(results)
+                
+            }) { err in
+                
+            }
         }
     }
     

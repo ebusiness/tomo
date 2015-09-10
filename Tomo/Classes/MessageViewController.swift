@@ -91,8 +91,12 @@ final class MessageViewController: JSQMessagesViewController {
         super.viewWillDisappear(animated)
         
         VoiceController.instance.stopPlayer()
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        // open all message when leave
+        AlamofireController.request(.GET, "/messages/\(friend.id)")
     }
     
     // MARK: - Navigation

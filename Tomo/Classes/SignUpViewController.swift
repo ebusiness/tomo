@@ -124,23 +124,20 @@ extension SignUpViewController {
         params["email"] = emailTextField.text
         params["password"] = passwordTextField.text
         
-        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/signup" , parameters: params).validate().responseJSON { (_, _, result, error) -> Void in
+        AlamofireController.request(.POST, "/signup", parameters: params, success: { result in
             
-            if error == nil {
-                
-                let alert = UIAlertController(title: "感谢您注册現場Tomo", message: "认证邮件已发送至您的邮箱，请查收。激活您的帐号后即可开始使用現場Tomo", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "好", style: .Default) {
-                    _ -> () in
-                    self.dismissViewControllerAnimated(true, completion: nil)
+            let alert = UIAlertController(title: "感谢您注册現場Tomo", message: "认证邮件已发送至您的邮箱，请查收。激活您的帐号后即可开始使用現場Tomo", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "好", style: .Default) {
+                _ -> () in
+                self.dismissViewControllerAnimated(true, completion: nil)
                 })
-                self.presentViewController(alert, animated: true, completion: nil)
-                
-            } else {
-                
-                let alert = UIAlertController(title: "注册失败", message: "您输入的邮件地址已经被使用，请更换其他的邮件地址", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "好", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+        }) { err in
+            
+            let alert = UIAlertController(title: "注册失败", message: "您输入的邮件地址已经被使用，请更换其他的邮件地址", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "好", style: .Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         
     }

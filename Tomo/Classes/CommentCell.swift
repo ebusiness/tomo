@@ -29,6 +29,23 @@ class CommentCell: UITableViewCell {
         }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.size.height / 2
+        avatarImageView.layer.masksToBounds = true
+        
+        if avatarImageView.userInteractionEnabled {
+            let tap = UITapGestureRecognizer(target: self, action: Selector("avatarImageTapped:"))
+            avatarImageView.addGestureRecognizer(tap)
+        }
+        
+    }
+
+}
+
+extension CommentCell {
+    
     func height(comment: CommentEntity, width: CGFloat) -> CGFloat {
         contentLabel.preferredMaxLayoutWidth = width - 8 - 36 - 8
         
@@ -40,28 +57,16 @@ class CommentCell: UITableViewCell {
         return size.height
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        avatarImageView.layer.cornerRadius = avatarImageView.frame.size.height / 2
-        avatarImageView.layer.masksToBounds = true
-        
-        let tap = UITapGestureRecognizer(target: self, action: Selector("avatarImageTapped:"))
-//        avatarImageView.userInteractionEnabled = true
-        avatarImageView.addGestureRecognizer(tap)
-    }
-    
     func avatarImageTapped(sender: UITapGestureRecognizer) {
- 
+        
         if let childvcs = self.parentVC?.navigationController?.childViewControllers where childvcs.count > 4 {
             for index in 1..(childvcs.count-1) {
                 childvcs[index].removeFromParentViewController()
             }
         }
-
+        
         let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = comment.owner
         self.parentVC?.navigationController?.pushViewController(vc, animated: true)
     }
-
 }

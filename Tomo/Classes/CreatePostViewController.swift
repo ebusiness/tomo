@@ -64,8 +64,6 @@ final class CreatePostViewController: UIViewController {
         if segue.identifier == "postCreated" {
             if let sender: AnyObject = sender, home = segue.destinationViewController as? HomeViewController {
                 
-                let json = JSON(sender)
-                
                 var post = PostEntity(sender)
                 post.owner = me
                 
@@ -312,7 +310,7 @@ extension CreatePostViewController {
                 let remotePath = Constants.postPath(fileName: name)
                 
                 if index.item < self.newPhotos.count {
-                    let scaledImage = self.resize(self.newPhotos[index.item].normalizedImage())
+                    let scaledImage = self.resize(self.newPhotos[index.item])
                     scaledImage.saveToPath(imagePath)
                 } else {
                     
@@ -359,10 +357,10 @@ extension CreatePostViewController {
             param["coordinate"] = [String(stringInterpolationSegment: location.coordinate.latitude),String(stringInterpolationSegment: location.coordinate.longitude)];
         }
         
-        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/posts" , parameters: param,encoding: ParameterEncoding.JSON)
-            .responseJSON { (_, _, post, _) -> Void in
-                Util.dismissHUD()
-                self.performSegueWithIdentifier("postCreated", sender: post)
+        AlamofireController.request(.POST, "/posts", parameters: param, encoding: .JSON, success: { post in
+            self.performSegueWithIdentifier("postCreated", sender: post)
+        }) { err in
+            
         }
     }
     
@@ -373,53 +371,17 @@ extension CreatePostViewController {
         
         // if the image smaller than 1MB, do nothing
         if !(imageData.length/1024/1024 > 1) {
-            return image
+            return image.normalizedImage()
         }
         
         // modify this value to change result size
-        let resizeFactor = 1
+        let resizeFactor:CGFloat = 1
         
         // based on iPhone6 plus screen
-        let widthBase = CGFloat(414 * resizeFactor)
-        let heigthBase = CGFloat(736 * resizeFactor)
+        let widthBase = UIScreen.mainScreen().bounds.size.width * resizeFactor
+        let heigthBase = UIScreen.mainScreen().bounds.size.height * resizeFactor
         
-        let cgImage = image.CGImage
-        
-        let width = CGFloat(CGImageGetWidth(cgImage))
-        let height = CGFloat(CGImageGetHeight(cgImage))
-        
-        // image initial ratio
-        var ratio = CGFloat(1)
-        
-        // calculate resize ratio by width and height
-        if width > widthBase && height > heigthBase {
-            if width > height {
-                ratio = widthBase / width
-            } else {
-                ratio = heigthBase / height
-            }
-        } else if width > widthBase && height <= heigthBase {
-            ratio = widthBase / width
-        } else if width <= widthBase && height > heigthBase {
-            ratio = heigthBase / height
-        }
-        
-        let resultSize = CGSize(width: width * ratio, height: height * ratio)
-        
-        // prepare redraw context
-        let bitsPerComponent = CGImageGetBitsPerComponent(cgImage)
-        let bytesPerRow = CGImageGetBytesPerRow(cgImage)
-        let colorSpace = CGImageGetColorSpace(cgImage)
-        let bitmapInfo = CGImageGetBitmapInfo(cgImage)
-        let context = CGBitmapContextCreate(nil, Int(width * ratio), Int(height * ratio), bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo)
-        CGContextSetInterpolationQuality(context, kCGInterpolationHigh)
-        
-        // redraw image by new size
-        CGContextDrawImage(context, CGRect(origin: CGPointZero, size: resultSize), cgImage)
-        
-        let result = CGBitmapContextCreateImage(context)
-        
-        return UIImage(CGImage: result)!
+        return image.scaleToFitSize( CGSizeMake(widthBase, heigthBase) ).normalizedImage()
     }
 }
 

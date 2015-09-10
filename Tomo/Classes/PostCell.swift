@@ -81,7 +81,7 @@ class PostCell: UITableViewCell {
             
         }
         
-        let bookmarkimage = ( me.bookmark ?? [] ).contains(self.post.id) ? "star_filled" : "star"
+        let bookmarkimage = ( self.post.bookmark ?? [] ).contains(me.id) ? "star_filled" : "star"
         
         if let image = UIImage(named: bookmarkimage) {
             let image = Util.coloredImage(image, color: UIColor.orangeColor())
@@ -112,33 +112,46 @@ class PostCell: UITableViewCell {
 
     }
     
-    @IBAction func likePost() {
-        Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/posts/\(self.post.id)/like")
-            .response { (_, _, _, _) -> Void in
-                
-                if let like = self.post.like {
-                    like.contains(me.id) ? self.post.like!.remove(me.id) : self.post.like!.append(me.id)
-                } else {
-                    self.post.like = [me.id]
-                }
-                self.likeButton.bounce({ () -> Void in
-                    self.setupDisplay()
-                })
+    @IBAction func likePost(sender: UIButton) {
+        sender.userInteractionEnabled = false
+        AlamofireController.request(.PATCH, "/posts/\(self.post.id)/like", success: { _ in
+            
+            if let like = self.post.like {
+                like.contains(me.id) ? self.post.like!.remove(me.id) : self.post.like!.append(me.id)
+            } else {
+                self.post.like = [me.id]
+            }
+            
+            self.likeButton.bounce{
+                self.setupDisplay()
+                sender.userInteractionEnabled = true
+            }
+            
+        }) { err in
+            sender.userInteractionEnabled = true
         }
     }
 
-    @IBAction func bookmarkPost(sender: AnyObject) {
-        
-        Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/posts/\(self.post.id)/bookmark")
-            .response { (_, _, _, _) -> Void in
-                
-                if let bookmark = me.bookmark {
-                    bookmark.contains(self.post.id) ? me.bookmark!.remove(self.post.id) : me.bookmark!.append(self.post.id)
-                } else {
-                    me.bookmark = [self.post.id]
-                }
-                self.setupDisplay()
-                self.bookmarkButton.tada(nil)
+    @IBAction func bookmarkPost(sender: UIButton) {
+        sender.userInteractionEnabled = false
+        AlamofireController.request(.PATCH, "/posts/\(self.post.id)/bookmark", success: { _ in
+            
+            me.bookmark = me.bookmark ?? []
+            self.post.bookmark = self.post.bookmark ?? []
+            
+            if me.bookmark!.contains(self.post.id) {
+                me.bookmark!.remove(self.post.id)
+                self.post.bookmark!.remove(me.id)
+            } else {
+                me.bookmark!.append(self.post.id)
+                self.post.bookmark!.append(me.id)
+            }
+            self.setupDisplay()
+            self.bookmarkButton.tada {
+                sender.userInteractionEnabled = true
+            }
+        }) { err in
+            sender.userInteractionEnabled = true
         }
 
     }

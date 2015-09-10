@@ -109,35 +109,60 @@ extension CameraController: UIImagePickerControllerDelegate, UINavigationControl
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         picker.dismissViewControllerAnimated(true, completion: nil)
         
-        let mediaType = info["UIImagePickerControllerMediaType"] as! String
-        
-        var name: String!
-        var localURL: NSURL!
-        var remotePath: String!
-        
-        if mediaType == kUTTypeMovie as! String {
-            let url = info[UIImagePickerControllerMediaURL] as! NSURL
-            let path = url.path!
-            UISaveVideoAtPathToSavedPhotosAlbum(path, self, nil, nil)
-            self.completion(image: nil, videoPath: path)
+        gcd.async(.Default) {
+            let mediaType = info["UIImagePickerControllerMediaType"] as! String
             
-        } else {
-            var imageTaked:UIImage!
-            if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
-                imageTaked = image
+            if mediaType == kUTTypeMovie as! String {
+                let url = info[UIImagePickerControllerMediaURL] as! NSURL
+                let path = url.path!
+                UISaveVideoAtPathToSavedPhotosAlbum(path, self, nil, nil)
+                
+                gcd.sync(.Main) {
+                    self.completion(image: nil, videoPath: path)
+                }
+                
             } else {
-                imageTaked = info[UIImagePickerControllerOriginalImage] as! UIImage
+                var imageTaked:UIImage!
+                if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+                    imageTaked = image
+                } else {
+                    imageTaked = info[UIImagePickerControllerOriginalImage] as! UIImage
+                }
+                if picker.sourceType == .Camera {
+                    UIImageWriteToSavedPhotosAlbum(imageTaked, nil, nil, nil)
+                }
+                imageTaked = self.resize(imageTaked)
+                
+                gcd.sync(.Main) {
+                    self.completion(image: imageTaked, videoPath: nil)
+                }
             }
-            if picker.sourceType == .Camera {
-                UIImageWriteToSavedPhotosAlbum(imageTaked, nil, nil, nil)
-            }
-            self.completion(image: imageTaked.normalizedImage(), videoPath: nil)
         }
     }
     
     //What to do if the image picker cancels.
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // TODO - refactor out
+    private func resize(image: UIImage) -> UIImage {
+        
+        var imageData = UIImageJPEGRepresentation(image, 1)
+        
+        // if the image smaller than 1MB, do nothing
+        if !(imageData.length/1024/1024 > 1) {
+            return image.normalizedImage()
+        }
+        
+        // modify this value to change result size
+        let resizeFactor:CGFloat = 1
+        
+        // based on iPhone6 plus screen
+        let widthBase = UIScreen.mainScreen().bounds.size.width * resizeFactor
+        let heigthBase = UIScreen.mainScreen().bounds.size.height * resizeFactor
+        
+        return image.scaleToFitSize( CGSizeMake(widthBase, heigthBase) ).normalizedImage()
     }
 }
 

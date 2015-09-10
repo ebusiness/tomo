@@ -198,7 +198,7 @@ extension ProfileViewController {
         self.receive(notification, done: { json in
             
             let invitation = NotificationEntity(json)
-            invitation.id = json["targetId"].stringValue
+            invitation.id = invitation.targetId
             
             me.friendInvitations.append( invitation )
             

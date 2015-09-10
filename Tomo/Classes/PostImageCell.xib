@@ -13,7 +13,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p6b-Og-aac">
-                        <rect key="frame" x="8" y="8" width="417" height="371.5"/>
+                        <rect key="frame" x="8" y="8" width="417" height="371"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="wQe-Yj-udo">
                                 <rect key="frame" x="16" y="16" width="50" height="50"/>
@@ -23,7 +23,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用户名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfH-uV-6UG">
-                                <rect key="frame" x="74" y="18" width="216" height="20.5"/>
+                                <rect key="frame" x="74" y="18" width="216" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="216" id="19q-hz-hyq"/>
                                 </constraints>
@@ -32,7 +32,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="日期" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLL-ht-tGJ">
-                                <rect key="frame" x="76" y="46" width="325" height="14.5"/>
+                                <rect key="frame" x="76" y="47" width="325" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -45,7 +45,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="likePost" destination="mfk-hJ-rzm" eventType="touchUpInside" id="aTa-GG-gVY"/>
+                                    <action selector="likePost:" destination="mfk-hJ-rzm" eventType="touchUpInside" id="mu0-T0-feh"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="投稿内容" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y4i-E0-CGx">
@@ -65,7 +65,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="bookmarkPost:" destination="mfk-hJ-rzm" eventType="touchUpInside" id="7Bl-6f-XdI"/>
+                                    <action selector="bookmarkPost:" destination="mfk-hJ-rzm" eventType="touchUpInside" id="2Cb-FS-VMA"/>
                                 </connections>
                             </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o5x-Rd-tkH">

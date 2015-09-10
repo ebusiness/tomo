@@ -106,10 +106,9 @@ class PostViewController: BaseViewController{
         
     }
 
-    @IBAction func likeBtnTapped(sender: AnyObject) {
-        
-        Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/posts/\(self.post.id)/like")
-        .response { (_, _, _, _) -> Void in
+    @IBAction func likeBtnTapped(sender: UIButton) {
+        sender.userInteractionEnabled = false
+        AlamofireController.request(.PATCH, "/posts/\(self.post.id)/like", success: { _ in
             
             if let like = self.post.like {
                 like.contains(me.id) ? self.post.like!.remove(me.id) : self.post.like!.append(me.id)
@@ -117,24 +116,37 @@ class PostViewController: BaseViewController{
                 self.post.like = [me.id]
             }
             
-            self.likedBtn.bounce({ () -> Void in
+            self.likedBtn.bounce {
                 self.updateUIForHeader()
-            })
+                sender.userInteractionEnabled = true
+            }
+            
+        }) { err in
+            sender.userInteractionEnabled = true
         }
     }
     
-    @IBAction func bookmarkBtnTapped(sender: AnyObject) {
-        
-        Manager.sharedInstance.request(.PATCH, kAPIBaseURLString + "/posts/\(self.post.id)/bookmark")
-            .response { (_, _, _, _) -> Void in
-                
-                if let bookmark = me.bookmark {
-                    bookmark.contains(self.post.id) ? me.bookmark!.remove(self.post.id) : me.bookmark!.append(self.post.id)
-                } else {
-                    me.bookmark = [self.post.id]
-                }
-                self.updateUIForHeader()
-                self.bookmarkBtn.tada(nil)
+    @IBAction func bookmarkBtnTapped(sender: UIButton) {
+        sender.userInteractionEnabled = false
+        AlamofireController.request(.PATCH, "/posts/\(self.post.id)/bookmark", success: { _ in
+            
+            me.bookmark = me.bookmark ?? []
+            self.post.bookmark = self.post.bookmark ?? []
+            
+            if me.bookmark!.contains(self.post.id) {
+                me.bookmark!.remove(self.post.id)
+                self.post.bookmark!.remove(me.id)
+            } else {
+                me.bookmark!.append(self.post.id)
+                self.post.bookmark!.append(me.id)
+            }
+            
+            self.updateUIForHeader()
+            self.bookmarkBtn.tada {
+                sender.userInteractionEnabled = true
+            }
+        }) { err in
+            sender.userInteractionEnabled = true
         }
     }
 
@@ -165,10 +177,11 @@ class PostViewController: BaseViewController{
                 
                 Util.alert(self, title: "删除帖子", message: "确定删除该帖子么?", action: { (action) -> Void in
                     
-                    Manager.sharedInstance.request(.DELETE, kAPIBaseURLString + "/posts/\(self.post.id)")
-                        .response { (_, _, _, _) -> Void in
-                            Util.showInfo("帖子已删除")
-                            self.navigationController?.popViewControllerAnimated(true)
+                    AlamofireController.request(.DELETE, "/posts/\(self.post.id)", success: { _ in
+                        Util.showInfo("帖子已删除")
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }) { err in
+                        
                     }
                 })
             }
@@ -184,8 +197,6 @@ class PostViewController: BaseViewController{
 
     @IBAction func sendCommentBtnTapped(sender: AnyObject) {
         
-        Util.showHUD()
-        
         var param = Dictionary<String, String>();
         param["content"] = commentContent;
 //        param["replyTo"] = "552220aa915a1dd84834731b";//コメントID
@@ -198,9 +209,7 @@ class PostViewController: BaseViewController{
         self.hideSendBtn(true)
         self.view.endEditing(true)
         
-        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/posts/\(self.post.id)/comments", parameters: param).responseJSON { (_, _,_, _) -> Void in
-            
-            Util.dismissHUD()
+        AlamofireController.request(.POST, "/posts/\(self.post.id)/comments", parameters: param, success: { result in
             
             let comment = CommentEntity()
             comment.owner = me
@@ -210,6 +219,9 @@ class PostViewController: BaseViewController{
             if self.comments == nil { self.post.comments = [] }
             self.post.comments?.append(comment)
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)], withRowAnimation: .Automatic)
+            
+        }) { err in
+            
         }
 
     }
@@ -279,7 +291,7 @@ extension PostViewController {
             
         }
         
-        let bookmarkimage = ( me.bookmark ?? [] ).contains(self.post.id) ? "star_filled" : "star"
+        let bookmarkimage = ( self.post.bookmark ?? [] ).contains(me.id) ? "star_filled" : "star"
         
         if let image = UIImage(named: bookmarkimage) {
             

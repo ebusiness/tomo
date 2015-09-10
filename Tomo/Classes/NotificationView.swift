@@ -16,8 +16,6 @@ class NotificationView: UIView {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var backgroundView: UIView!
     
-    var timer: NSTimer?
-    
     var userInfo: [NSObject : AnyObject]! {
         didSet {
             let payload = NotificationEntity(self.userInfo)
@@ -45,7 +43,6 @@ class NotificationView: UIView {
 
     @IBAction func closeTapped() {
         gcd.async(.Default) {
-            self.timer?.invalidate()
             let topConstraint: AnyObject? = self.superview!.constraints().find { $0.firstAttribute == .Top && $0.firstItem is NotificationView }
             if let topConstraint = topConstraint as? NSLayoutConstraint {
                 gcd.sync(.Main) {

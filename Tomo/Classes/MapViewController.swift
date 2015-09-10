@@ -67,39 +67,6 @@ final class MapViewController: BaseViewController {
         return true
     }
     
-    override func setupMapping() {
-        
-        let userMapping = RKObjectMapping(forClass: UserEntity.self)
-        userMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "nickName": "nickName",
-            "photo_ref": "photo",
-            "cover_ref": "cover"
-            ])
-        
-        let postMapping = RKObjectMapping(forClass: PostEntity.self)
-        postMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "content": "content",
-            "coordinate": "coordinate",
-            "images_ref": "images",
-            "like": "like",
-            "createDate": "createDate"
-            ])
-        
-        let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "owner", toKeyPath: "owner", withMapping: userMapping)
-        postMapping.addPropertyMapping(ownerRelationshipMapping)
-        
-        let postAnnotationMapping = RKObjectMapping(forClass: PostAnnotation.self)
-        let postRelationshipMapping = RKRelationshipMapping(fromKeyPath: nil, toKeyPath: "post", withMapping: postMapping)
-        postAnnotationMapping.addPropertyMapping(postRelationshipMapping)
-        
-        let responseDescriptor = RKResponseDescriptor(mapping: postAnnotationMapping, method: .GET, pathPattern: "/posts", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
-        
-        manager.addResponseDescriptor(responseDescriptor)
-        
-    }
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if let controller = segue.destinationViewController as? PostMapViewController {
@@ -334,22 +301,25 @@ extension MapViewController {
         self.allAnnotationMapView.removeAnnotations(self.allAnnotationMapView.annotations)
         self.mapView.removeAnnotations(self.mapView.annotations)
         
-        manager.getObjectsAtPath("/posts", parameters: ["category": "mapnews", "day": requestDay!.timeIntervalSince1970], success: { (operation, result) -> Void in
-            
-            for annotation in result.array() {
-                if let annotation = annotation as? PostAnnotation {
-                    let post = annotation.post
+        AlamofireController.request(.GET, "/posts", parameters: ["category": "mapnews", "day": requestDay!.timeIntervalSince1970], success: { result in
+
+            if let loadPosts:[PostEntity] = PostEntity.collection(result) {
+                
+                let annotations = loadPosts.map { post -> PostAnnotation in
+                    let annotation = PostAnnotation()
+                    annotation.post = post
                     if let lat = post.coordinate?.get(0), log = post.coordinate?.get(1) {
                         annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: log)
                     }
+                    return annotation
                 }
+                self.allAnnotationMapView.addAnnotations(annotations)
+                self.updateVisibleAnnotations()
             }
             
-            self.allAnnotationMapView.addAnnotations(result.array())
-            self.updateVisibleAnnotations()
             
-        }) { (operation, err) -> Void in
-            println(err)
+        }) { err in
+            
         }
     }
     

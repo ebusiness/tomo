@@ -141,31 +141,25 @@ extension RegViewController {
             params["email"] = Defaults["email"].string
             params["password"] = Defaults["password"].string
             
-            Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/signin" , parameters: params).validate().responseJSON { (_, _, result, error) -> Void in
+            AlamofireController.request(.POST, "/signin", parameters: params, success: { result in
+                let json = JSON(result)
                 
-                if error == nil {
-                    
-                    let json = JSON(result!)
-                    
-                    if let id = json["id"].string, nickName = json["nickName"].string {
-                        me = UserEntity(json)
-                        self.changeRootToTab()
-                    }
-                    
-                } else {
-                    
-                    self.inputArea.hidden = false
-                    
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
-                        self.inputArea.alpha = 1
-                    })
-                    
-                    let alert = UIAlertController(title: "登录失败", message: "您的账号或密码已经变更，请输入新的账号和密码", preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: "重试", style: .Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
+                if let id = json["id"].string, nickName = json["nickName"].string {
+                    me = UserEntity(json)
+                    self.changeRootToTab()
                 }
+            }) { err in
+                self.inputArea.hidden = false
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.inputArea.alpha = 1
+                })
+                
+                let alert = UIAlertController(title: "登录失败", message: "您的账号或密码已经变更，请输入新的账号和密码", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "重试", style: .Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+                
             }
-            
             
         } else {
             inputArea.hidden = false
@@ -212,26 +206,22 @@ extension RegViewController {
         params["email"] = emailTextField.text
         params["password"] = passwordTextField.text
         
-        Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/signin" , parameters: params).validate().responseJSON { (_, _, result, error) -> Void in
+        AlamofireController.request(.POST, "/signin", parameters: params, success: { result in
             
-            if error == nil {
-                
-                Defaults["email"] = params["email"]
-                Defaults["password"] = params["password"]
-                
-                let json = JSON(result!)
-                
-                if let id = json["id"].string, nickName = json["nickName"].string {
-                    me = UserEntity(json)
-                    self.changeRootToTab()
-                }
-                
-            } else {
-                
-                let alert = UIAlertController(title: "登录失败", message: "您输入的账号或密码不正确", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "重试", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+            Defaults["email"] = params["email"]
+            Defaults["password"] = params["password"]
+            
+            let json = JSON(result)
+            
+            if let id = json["id"].string, nickName = json["nickName"].string {
+                me = UserEntity(json)
+                self.changeRootToTab()
             }
+        }) { err in
+            
+            let alert = UIAlertController(title: "登录失败", message: "您输入的账号或密码不正确", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "重试", style: .Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         
     }
@@ -297,20 +287,16 @@ extension RegViewController {
             break;
         }
         
-        let tomo_test_login = kAPIBaseURLString + "/signin-test"
-        
-        Manager.sharedInstance.request(.GET, tomo_test_login, parameters: param, encoding: ParameterEncoding.URL)
-            .responseJSON { (_, res, json, _) in
-                
-                let result = json as! Dictionary<String, AnyObject>
-                
-                if let id = result["id"] as? String,
-                    nickName = result["nickName"] as? String{
-                        me = UserEntity(result)
-                }
-                
+        AlamofireController.request(.GET, "/signin-test", parameters: param, success: { result in
+            
+            let json = JSON(result)
+            
+            if let id = json["id"].string, nickName = json["nickName"].string {
+                me = UserEntity(json)
                 self.changeRootToTab()
-        }
+            }
+            
+        })
     }
 }
 

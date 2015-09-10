@@ -166,24 +166,18 @@ extension FriendListViewController {
         if indexPath.section == 0 {
             
             let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-            
             vc.user = me.friendInvitations.get(indexPath.item)!.from
-            
             self.navigationController?.pushViewController(vc, animated: true)
             
         } else if indexPath.section == 1 {
             
             let vc = MessageViewController()
             vc.hidesBottomBarWhenPushed = true
-            
             vc.friend = self.friends[indexPath.row]
-            
             navigationController?.pushViewController(vc, animated: true)
             
         }
-        
     }
-    
 }
 
 // MARK: - FriendInvitationCell Delegate
@@ -207,7 +201,7 @@ extension FriendListViewController: FriendInvitationCellDelegate {
             self.updateBadgeNumber()
             
         }, failure: { err in
-                println(err)
+            println(err)
         })
     }
     
@@ -225,8 +219,8 @@ extension FriendListViewController: FriendInvitationCellDelegate {
                     self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 }
                 
-                }, failure: { err in
-                    println(err)
+            }, failure: { err in
+                println(err)
             })
             
         }
@@ -253,8 +247,7 @@ extension FriendListViewController {
                 
                 let message = MessageEntity(json)
                 message.opened = false
-                
-//                message.owner = me
+                message.to = me
                 message.from = user
                 user.lastMessage = message
                 
@@ -276,8 +269,9 @@ extension FriendListViewController {
     
     func receiveFriendInvited(notification: NSNotification) {
         if let userInfo = notification.userInfo {
-            let notification = NotificationEntity(userInfo)
-            me.friendInvitations.insert(notification, atIndex: 0)
+            let invitation = NotificationEntity(userInfo)
+            invitation.id = invitation.targetId
+            me.friendInvitations.insert(invitation, atIndex: 0)
             
             gcd.sync(.Main, closure: { () -> () in
                 self.updateBadgeNumber()

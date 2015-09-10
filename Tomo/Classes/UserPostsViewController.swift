@@ -13,9 +13,10 @@ class UserPostsViewController: ProfileBaseController {
     let screenHeight = UIScreen.mainScreen().bounds.height
     let loadTriggerHeight = CGFloat(88.0)
     
-    var posts = [AnyObject]()
-    var oldestContent: AnyObject?
+    var posts = [PostEntity]()
+    var oldestContent: PostEntity?
     var isLoading = false
+    var isExhausted = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,25 +31,6 @@ class UserPostsViewController: ProfileBaseController {
         
         loadMoreContent()
     }
-    
-    override func setupMapping() {
-        
-        let postMapping = RKObjectMapping(forClass: PostEntity.self)
-        postMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "content": "content",
-            "coordinate": "coordinate",
-            "images_ref": "images",
-            "like": "like",
-            "createDate": "createDate"
-            ])
-        
-        let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/users/:id/posts", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
-        
-        manager.addResponseDescriptor(responseDescriptor)
-        
-    }
-    
 }
 
 // MARK: UITableView DataSource
@@ -61,7 +43,7 @@ extension UserPostsViewController: UITableViewDataSource {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var post = posts[indexPath.row] as! PostEntity
+        var post = posts[indexPath.row]
         post.owner = self.user
         
         var cell: PostCell!
@@ -94,14 +76,14 @@ extension UserPostsViewController: UITableViewDelegate {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
-        vc.post = posts[indexPath.row] as! PostEntity
+        vc.post = posts[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
     
     override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        if let content = posts.get(indexPath.row) as? PostEntity {
+        if let content = posts.get(indexPath.row) {
             
             if content.images?.count > 0 {
                 return 334
@@ -140,7 +122,7 @@ extension UserPostsViewController {
     private func loadMoreContent() {
         
         // skip if already in loading
-        if isLoading {
+        if isLoading || isExhausted {
             return
         }
         
@@ -148,19 +130,24 @@ extension UserPostsViewController {
         
         var params = Dictionary<String, NSTimeInterval>()
         
-        if let oldestContent = oldestContent as? PostEntity {
+        if let oldestContent = oldestContent {
             params["before"] = oldestContent.createDate.timeIntervalSince1970
         }
         
-        manager.getObjectsAtPath("/users/\(self.user.id)/posts", parameters: params, success: { (_, results) -> Void in
+        AlamofireController.request(.GET, "/users/\(self.user.id)/posts", parameters: params, success: { results in
             
-            self.posts += results.array()
-            self.appendRows(Int(results.count))
+            if let loadPosts:[PostEntity] = PostEntity.collection(results) {
+                self.posts += loadPosts
+                self.appendRows(loadPosts.count)
+            } else {
+                // the response is not post
+            }
+            self.isLoading = false
+            
+        }) { err in
             
             self.isLoading = false
-            }) { (operation, err) -> Void in
-                println(err)
-                self.isLoading = false
+            self.isExhausted = true
         }
     }
     

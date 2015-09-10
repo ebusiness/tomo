@@ -35,7 +35,7 @@ class MessageEntity: Entity {
         self.id = json["_id"].string ?? json["id"].stringValue
         self.to = UserEntity(json["to"])
         self.from = UserEntity(json["from"])
-        self.content = json["content"].stringValue
+        self.content = json["aps"]["alert"].string ?? json["content"].stringValue
         self.opened = json["opened"].boolValue
         self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
         

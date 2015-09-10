@@ -45,47 +45,6 @@ final class HomeViewController: BaseTableViewController {
         
         loadMoreContent()
     }
-
-    override func setupMapping() {
-        
-        let userMapping = RKObjectMapping(forClass: UserEntity.self)
-        userMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "nickName": "nickName",
-            "photo_ref": "photo"
-            ])
-        
-        let commentMapping = RKObjectMapping(forClass: CommentEntity.self)
-        commentMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "content": "content",
-            "createDate": "createDate"
-            ])
-        
-        let commentOwnerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "owner", toKeyPath: "owner", withMapping: userMapping)
-        commentMapping.addPropertyMapping(commentOwnerRelationshipMapping)
-        
-        let postMapping = RKObjectMapping(forClass: PostEntity.self)
-        postMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "content": "content",
-            "coordinate": "coordinate",
-            "images_ref": "images",
-            "like": "like",
-            "createDate": "createDate"
-            ])
-        
-        let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "owner", toKeyPath: "owner", withMapping: userMapping)
-        postMapping.addPropertyMapping(ownerRelationshipMapping)
-        
-        let commentRelationshipMapping = RKRelationshipMapping(fromKeyPath: "comments", toKeyPath: "comments", withMapping: commentMapping)
-        postMapping.addPropertyMapping(commentRelationshipMapping)
-        
-        let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/posts", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
-        
-        manager.addResponseDescriptor(responseDescriptor)
-        
-    }
     
     override func becomeActive() {
         self.loadNewContent()
@@ -104,51 +63,7 @@ final class HomeViewController: BaseTableViewController {
     @IBAction func addedPost(segue: UIStoryboardSegue) {
         // exit addPostView
     }
-    
 }
-
-//extension HomeViewController: UIScrollViewDelegate {
-//    
-//    func scrollViewDidScroll(scrollView: UIScrollView) {
-//        if scrollView.contentOffset.y < pointNow?.y {
-//            setTabBarVisible(true, animated: true)
-//        } else if scrollView.contentOffset.y > pointNow?.y {
-//            setTabBarVisible(false, animated: true)
-//        }
-//    }
-//    
-//    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-//        pointNow = scrollView.contentOffset;
-//    }
-//    
-//    func setTabBarVisible(visible:Bool, animated:Bool) {
-//        
-//        //* This cannot be called before viewDidLayoutSubviews(), because the frame is not set before this time
-//        
-//        // bail if the current state matches the desired state
-//        if (tabBarIsVisible() == visible) { return }
-//        
-//        // get a frame calculation ready
-//        let frame = self.tabBarController?.tabBar.frame
-//        let height = frame?.size.height
-//        let offsetY = (visible ? -height! : height)
-//        
-//        // zero duration means no animation
-//        let duration:NSTimeInterval = (animated ? 0.3 : 0.0)
-//        
-//        //  animate the tabBar
-//        if frame != nil {
-//            UIView.animateWithDuration(duration) {
-//                self.tabBarController?.tabBar.frame = CGRectOffset(frame!, 0, offsetY!)
-//                return
-//            }
-//        }
-//    }
-//    
-//    func tabBarIsVisible() ->Bool {
-//        return self.tabBarController?.tabBar.frame.origin.y < CGRectGetMaxY(self.view.frame)
-//    }
-//}
 
 // MARK: UITableView datasource
 
@@ -261,15 +176,22 @@ extension HomeViewController {
         if let oldestContent = oldestContent as? PostEntity {
             params["before"] = oldestContent.createDate.timeIntervalSince1970
         }
-               
-        manager.getObjectsAtPath("/posts", parameters: params, success: { (operation, result) -> Void in
+        
+        AlamofireController.request(.GET, "/posts", parameters: params, success: { result in
             
-            self.contents += result.array()
-            self.appendRows(Int(result.count))
+            let posts:[PostEntity]? = PostEntity.collection(result)
+            
+            if let loadPosts:[AnyObject] = posts {
+                self.contents += loadPosts
+                self.appendRows(loadPosts.count)
+            } else {
+                // the response is not post
+            }
             
             self.isLoading = false
-        }) { (operation, err) -> Void in
-            println(err)
+            
+        }) { err in
+            
             self.isLoading = false
             self.isExhausted = true
         }
@@ -294,18 +216,20 @@ extension HomeViewController {
             params["after"] = latestContent.createDate.timeIntervalSince1970 + 1
         }
         
-        manager.getObjectsAtPath("/posts", parameters: params, success: { (operation, result) -> Void in
+        AlamofireController.request(.GET, "/posts", parameters: params, success: { result in
             
-            self.contents = result.array() + self.contents
-            self.prependRows(Int(result.count))
+            if let loadPosts:[PostEntity] = PostEntity.collection(result) {
+                self.contents = loadPosts + self.contents
+                self.prependRows(loadPosts.count)
+            } else {
+                // the response is not post
+            }
             self.endRefreshing()
-        }) { (operation, err) -> Void in
-            println(err)
+            
+        }) { err in
+            
             self.endRefreshing()
         }
-        
-        return
-        
     }
     
     private func endRefreshing() {
