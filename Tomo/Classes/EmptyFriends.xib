@@ -29,7 +29,7 @@
                             <rect key="frame" x="129" y="12.5" width="25" height="25"/>
                         </imageView>
                     </subviews>
-                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="centerY" secondItem="8iG-Fe-ZeH" secondAttribute="centerY" id="7iO-ie-ZAw"/>
                         <constraint firstItem="cI6-JH-6OS" firstAttribute="centerY" secondItem="8iG-Fe-ZeH" secondAttribute="centerY" id="AzV-q1-UHT"/>
@@ -41,7 +41,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="yHl-4f-hR1" secondAttribute="centerX" id="Ktg-LU-8cK"/>
                 <constraint firstItem="yHl-4f-hR1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="S7C-ZY-kfx"/>

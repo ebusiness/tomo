@@ -11,8 +11,8 @@ import UIKit
 enum TabItem: Int {
     case Home, Chat, Group, Map, Setting
     
-//    static let items = [Home, Chat, Group, Map, Setting]
-    static let items = [Home, Chat, Map, Setting]
+    static let items = [Home, Chat, Group, Map, Setting]
+//    static let items = [Home, Chat, Map, Setting]
     
     func storyBoardName() -> String {
         switch self {
@@ -34,7 +34,7 @@ enum TabItem: Int {
         
         switch self {
         case .Home:
-            imageName = "home"
+            imageName = "template"
         case .Chat:
             imageName = "chat"
         case .Group:
@@ -42,10 +42,10 @@ enum TabItem: Int {
         case .Map:
             imageName = "worldwide_location"
         case .Setting:
-            imageName = "user"
+            imageName = "home"
         }
         
-        return UIImage(named: imageName)!.imageWithRenderingMode(.AlwaysOriginal)
+        return UIImage(named: imageName)!
     }
     
 }

@@ -156,7 +156,7 @@ extension FriendListViewController {
 extension FriendListViewController {
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 66
+        return 88
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -176,6 +176,14 @@ extension FriendListViewController {
             vc.friend = self.friends[indexPath.row]
             navigationController?.pushViewController(vc, animated: true)
             
+        }
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "未处理的好友请求"
+        } else {
+            return "最近的消息"
         }
     }
 }

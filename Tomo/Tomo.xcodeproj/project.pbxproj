@@ -65,6 +65,10 @@
 		1F98AD261B9001A0003CAE29 /* PostMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F98AD251B9001A0003CAE29 /* PostMapViewController.swift */; };
 		1F9ACAFA1B69F99F00648A82 /* PostEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAF91B69F99F00648A82 /* PostEntity.swift */; };
 		1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */; };
+		1FA76AFE1BA27B1E004776B0 /* Group.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FA76AFD1BA27B1E004776B0 /* Group.storyboard */; };
+		1FA76B021BA2A01D004776B0 /* GroupListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA76B011BA2A01D004776B0 /* GroupListTableViewController.swift */; };
+		1FA76B041BA2AC03004776B0 /* GroupCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA76B031BA2AC03004776B0 /* GroupCollectionViewController.swift */; };
+		1FA76B091BA2C642004776B0 /* GroupCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA76B081BA2C642004776B0 /* GroupCreateViewController.swift */; };
 		1FCA1E631B71D0C8000F2936 /* CommentEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */; };
 		1FCA1E651B7221F7000F2936 /* NotificationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */; };
 		1FCA1E671B722260000F2936 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E661B722260000F2936 /* MessageEntity.swift */; };
@@ -198,6 +202,10 @@
 		1F98AD251B9001A0003CAE29 /* PostMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostMapViewController.swift; path = Classes/PostMapViewController.swift; sourceTree = "<group>"; };
 		1F9ACAF91B69F99F00648A82 /* PostEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostEntity.swift; path = Classes/PostEntity.swift; sourceTree = "<group>"; };
 		1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserEntity.swift; path = Classes/UserEntity.swift; sourceTree = "<group>"; };
+		1FA76AFD1BA27B1E004776B0 /* Group.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Group.storyboard; path = Classes/Group.storyboard; sourceTree = "<group>"; };
+		1FA76B011BA2A01D004776B0 /* GroupListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupListTableViewController.swift; path = Classes/GroupListTableViewController.swift; sourceTree = "<group>"; };
+		1FA76B031BA2AC03004776B0 /* GroupCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCollectionViewController.swift; path = Classes/GroupCollectionViewController.swift; sourceTree = "<group>"; };
+		1FA76B081BA2C642004776B0 /* GroupCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCreateViewController.swift; path = Classes/GroupCreateViewController.swift; sourceTree = "<group>"; };
 		1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentEntity.swift; path = Classes/CommentEntity.swift; sourceTree = "<group>"; };
 		1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationEntity.swift; path = Classes/NotificationEntity.swift; sourceTree = "<group>"; };
 		1FCA1E661B722260000F2936 /* MessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageEntity.swift; path = Classes/MessageEntity.swift; sourceTree = "<group>"; };
@@ -417,6 +425,16 @@
 			name = Entity;
 			sourceTree = "<group>";
 		};
+		1FA76AFF1BA29D43004776B0 /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				1FA76B011BA2A01D004776B0 /* GroupListTableViewController.swift */,
+				1FA76B031BA2AC03004776B0 /* GroupCollectionViewController.swift */,
+				1FA76B081BA2C642004776B0 /* GroupCreateViewController.swift */,
+			);
+			name = Group;
+			sourceTree = "<group>";
+		};
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
@@ -558,6 +576,7 @@
 				D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */,
 				29CA44921AD4EEBB009EB177 /* Tab.storyboard */,
 				1FEE80E71B4E552A0061B913 /* Home.storyboard */,
+				1FA76AFD1BA27B1E004776B0 /* Group.storyboard */,
 			);
 			name = storyboard;
 			sourceTree = "<group>";
@@ -576,6 +595,7 @@
 			children = (
 				29EA55B31AEDD27D006A1F41 /* Base */,
 				294185141AD777E700C6E913 /* Friend */,
+				1FA76AFF1BA29D43004776B0 /* Group */,
 				299389571AD3D13700043D91 /* Home */,
 				299389541AD3C77300043D91 /* Login */,
 				290144181ADF92470048F3D8 /* Map */,
@@ -770,6 +790,7 @@
 				296D8BC41AFC5A680058D400 /* Main.storyboard in Resources */,
 				29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */,
 				1F985E621B60C19F008D5369 /* Info.plist in Resources */,
+				1FA76AFE1BA27B1E004776B0 /* Group.storyboard in Resources */,
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
 				296D8BC31AFC5A680058D400 /* LaunchScreen.xib in Resources */,
 				29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */,
@@ -901,6 +922,7 @@
 				29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */,
 				29539C791B13175D00545509 /* VoiceMessageController.swift in Sources */,
 				2994AF911B019AA100656C39 /* GCD.swift in Sources */,
+				1FA76B021BA2A01D004776B0 /* GroupListTableViewController.swift in Sources */,
 				1FE7CEF51B8C9561006700FC /* SignUpViewController.swift in Sources */,
 				1F985E5C1B60C19F008D5369 /* Double.swift in Sources */,
 				D0B6364E1B81A9C70012C4E8 /* URLSchemesController.swift in Sources */,
@@ -943,6 +965,7 @@
 				1F937FE81B58EE8B009722CE /* AccountEditViewController.swift in Sources */,
 				1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */,
 				1F985E6C1B60C19F008D5369 /* Sequence.swift in Sources */,
+				1FA76B041BA2AC03004776B0 /* GroupCollectionViewController.swift in Sources */,
 				1F1176A31B983D280049D9F5 /* SocketAckManager.swift in Sources */,
 				1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */,
 				1F1176A71B983D280049D9F5 /* SocketEventHandler.swift in Sources */,
@@ -962,6 +985,7 @@
 				D07D8A1A1B99A3DF00D13096 /* NotificationListViewController.swift in Sources */,
 				1F79C1B61B5E55D5008800E1 /* InvitationCell.swift in Sources */,
 				296D8BAC1AFC59F10058D400 /* TabBarController.swift in Sources */,
+				1FA76B091BA2C642004776B0 /* GroupCreateViewController.swift in Sources */,
 				1F6AE7851B6F1A2300D7F488 /* PostAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
