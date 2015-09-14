@@ -14,7 +14,7 @@ class RequestFriendCell: UITableViewCell {
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var bioLabel: UILabel!
     
     var user: UserEntity? {
         didSet {
@@ -24,8 +24,7 @@ class RequestFriendCell: UITableViewCell {
             }
             
             userNameLabel.text = user?.nickName
-            
-            //        timeLabel.text = ""
+            bioLabel.text = user?.bio
         }
     }
     

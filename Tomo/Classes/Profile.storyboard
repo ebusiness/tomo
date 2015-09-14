@@ -27,29 +27,44 @@
                                     <rect key="frame" x="0.0" y="240" width="320" height="0.0"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="希望添加你为好友" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ts-M9-JX0">
-                                            <rect key="frame" x="16" y="-11" width="144" height="22"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <rect key="frame" x="16" y="-8" width="112" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vpB-gS-b1L">
-                                            <rect key="frame" x="192" y="-19" width="52" height="38"/>
+                                            <rect key="frame" x="208" y="-15" width="44" height="30"/>
                                             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                            <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
                                             <state key="normal" title="拒绝"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="Declined:" destination="3I6-mu-eq3" eventType="touchUpInside" id="iK2-iC-xbe"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H0F-YP-Aio">
-                                            <rect key="frame" x="252" y="-19" width="52" height="38"/>
+                                            <rect key="frame" x="260" y="-15" width="44" height="30"/>
                                             <color key="backgroundColor" red="0.0" green="0.59215686270000001" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                            <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="bLC-8O-z87"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
                                             <state key="normal" title="允许">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="Approved:" destination="3I6-mu-eq3" eventType="touchUpInside" id="ywS-bG-m75"/>
                                             </connections>
@@ -62,28 +77,44 @@
                                         <constraint firstAttribute="centerY" secondItem="6ts-M9-JX0" secondAttribute="centerY" id="ED0-AH-2YN"/>
                                         <constraint firstAttribute="centerY" secondItem="H0F-YP-Aio" secondAttribute="centerY" id="ObT-uI-lWU"/>
                                         <constraint firstAttribute="trailing" secondItem="H0F-YP-Aio" secondAttribute="trailing" constant="16" id="QsC-iL-5y0"/>
+                                        <constraint firstItem="H0F-YP-Aio" firstAttribute="height" secondItem="vpB-gS-b1L" secondAttribute="height" id="Y4t-IX-DdY"/>
                                         <constraint firstItem="vpB-gS-b1L" firstAttribute="centerY" secondItem="H0F-YP-Aio" secondAttribute="centerY" id="cvb-hV-eD3"/>
                                         <constraint firstItem="6ts-M9-JX0" firstAttribute="leading" secondItem="zF6-o3-6UP" secondAttribute="leading" constant="16" id="o84-SV-SgC"/>
                                     </constraints>
                                 </view>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FvK-sk-tJZ">
-                                    <rect key="frame" x="232" y="172" width="72" height="33"/>
+                                    <rect key="frame" x="232" y="175" width="72" height="30"/>
                                     <color key="backgroundColor" red="0.0" green="0.59215686270000001" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="acu-Yu-ozr"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                    <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
                                     <state key="normal" title="添加好友">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="5"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="addFriend:" destination="3I6-mu-eq3" eventType="touchUpInside" id="nOk-Z7-b7q"/>
                                     </connections>
                                 </button>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SS6-yz-muv">
-                                    <rect key="frame" x="232" y="172" width="72" height="33"/>
+                                    <rect key="frame" x="232" y="175" width="72" height="30"/>
                                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                    <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
                                     <state key="normal" title="删除好友"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="5"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
                                     <connections>
                                         <action selector="deleteFriend:" destination="3I6-mu-eq3" eventType="touchUpInside" id="a3O-Jr-Xrq"/>
                                     </connections>
@@ -102,6 +133,7 @@
                                 <constraint firstItem="kca-zC-XfM" firstAttribute="leading" secondItem="j2F-kj-xgQ" secondAttribute="leading" id="iTT-zV-QuW"/>
                                 <constraint firstItem="kca-zC-XfM" firstAttribute="trailing" secondItem="FvK-sk-tJZ" secondAttribute="trailing" constant="16" id="jDF-hy-BH4"/>
                                 <constraint firstAttribute="trailing" secondItem="zF6-o3-6UP" secondAttribute="trailing" id="lX7-RK-sLW"/>
+                                <constraint firstItem="SS6-yz-muv" firstAttribute="height" secondItem="FvK-sk-tJZ" secondAttribute="height" id="nq7-1W-Nfg"/>
                             </constraints>
                         </view>
                         <sections>

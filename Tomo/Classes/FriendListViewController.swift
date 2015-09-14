@@ -180,6 +180,7 @@ extension FriendListViewController {
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if me.friendInvitations.count < 1 { return nil }
         if section == 0 {
             return "未处理的好友请求"
         } else {
@@ -224,7 +225,13 @@ extension FriendListViewController: FriendInvitationCellDelegate {
                 
                 if let indexPath = self.tableView.indexPathForCell(cell) {
                     me.friendInvitations.removeAtIndex(indexPath.row)
+                    self.tableView.beginUpdates()
                     self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                    if me.friendInvitations.count < 1 {
+                        self.tableView.sectionFooterHeight = 0
+                        self.tableView.sectionHeaderHeight = 0
+                    }
+                    self.tableView.endUpdates()
                 }
                 
             }, failure: { err in
