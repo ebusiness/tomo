@@ -63,6 +63,7 @@
 		1F985E6C1B60C19F008D5369 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E521B60C19F008D5369 /* Sequence.swift */; };
 		1F985E6E1B60C19F008D5369 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E531B60C19F008D5369 /* String.swift */; };
 		1F98AD261B9001A0003CAE29 /* PostMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F98AD251B9001A0003CAE29 /* PostMapViewController.swift */; };
+		1F9A32371BA6AD8B001C43CE /* GroupEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9A32361BA6AD8B001C43CE /* GroupEntity.swift */; };
 		1F9ACAFA1B69F99F00648A82 /* PostEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAF91B69F99F00648A82 /* PostEntity.swift */; };
 		1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */; };
 		1FA76AFE1BA27B1E004776B0 /* Group.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FA76AFD1BA27B1E004776B0 /* Group.storyboard */; };
@@ -199,6 +200,7 @@
 		1F985E521B60C19F008D5369 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		1F985E531B60C19F008D5369 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		1F98AD251B9001A0003CAE29 /* PostMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostMapViewController.swift; path = Classes/PostMapViewController.swift; sourceTree = "<group>"; };
+		1F9A32361BA6AD8B001C43CE /* GroupEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupEntity.swift; path = Classes/GroupEntity.swift; sourceTree = "<group>"; };
 		1F9ACAF91B69F99F00648A82 /* PostEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostEntity.swift; path = Classes/PostEntity.swift; sourceTree = "<group>"; };
 		1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserEntity.swift; path = Classes/UserEntity.swift; sourceTree = "<group>"; };
 		1FA76AFD1BA27B1E004776B0 /* Group.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Group.storyboard; path = Classes/Group.storyboard; sourceTree = "<group>"; };
@@ -413,12 +415,13 @@
 		1F9ACAF61B69F96100648A82 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */,
+				D07E48531B9EB35B00BF04B2 /* Entity.swift */,
+				1F9A32361BA6AD8B001C43CE /* GroupEntity.swift */,
+				1FCA1E661B722260000F2936 /* MessageEntity.swift */,
+				1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */,
 				1F9ACAF91B69F99F00648A82 /* PostEntity.swift */,
 				1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */,
-				1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */,
-				1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */,
-				1FCA1E661B722260000F2936 /* MessageEntity.swift */,
-				D07E48531B9EB35B00BF04B2 /* Entity.swift */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -926,6 +929,7 @@
 				296D8BAB1AFC59F10058D400 /* BaseViewController.swift in Sources */,
 				1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */,
 				D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */,
+				1F9A32371BA6AD8B001C43CE /* GroupEntity.swift in Sources */,
 				D07E48541B9EB35B00BF04B2 /* Entity.swift in Sources */,
 				1F985E6E1B60C19F008D5369 /* String.swift in Sources */,
 				1F1176A61B983D280049D9F5 /* SocketEngineClient.swift in Sources */,
