@@ -36,7 +36,12 @@ extension GroupCreateViewController {
         
         var param = Dictionary<String, AnyObject>()
         
-        param["name"] = self.groupNameTextField.text
+        if self.groupNameTextField.text.length > 0 {
+            param["name"] = self.groupNameTextField.text
+        } else {
+            return
+        }
+        
         param["introduction"] = self.introductionTextField.text
         param["address"] = self.addressTextField.text
         param["station"] = self.stationTextField.text
