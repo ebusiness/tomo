@@ -205,9 +205,9 @@ extension AccountEditViewController {
             let path = NSTemporaryDirectory() + name
             image.saveToPath(path)
             
-            let remotePath =  isAvatar ? Constants.avatarPath(fileName: name) : Constants.coverPath(fileName: name)
+            let remotePath =  isAvatar ? Constants.avatarPath() : Constants.coverPath()
             
-            S3Controller.uploadFile(name: name, localPath: path, remotePath: remotePath, done: { (error) -> Void in
+            S3Controller.uploadFile(path, remotePath: remotePath, done: { (error) -> Void in
                 #if DEBUG
                     println(error)
                     println("done")

@@ -58,7 +58,7 @@ extension MessageViewController {
                 cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[progressView(==1)]-0-|", options: nil, metrics: nil, views: ["progressView" : progressView]))
                 cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[progressView(==messageBubbleContainerView)]-0-[avatarContainerView]", options: nil, metrics: nil, views: ["messageBubbleContainerView" : cell.messageBubbleContainerView, "progressView" : progressView,"avatarContainerView":cell.avatarContainerView]))
                 
-                S3Controller.uploadFile(name: name, localPath: localURL.path!, remotePath: remotePath, done: { (error) -> Void in
+                S3Controller.uploadFile(localURL.path!, remotePath: remotePath, done: { (error) -> Void in
                     self.sendMessage(messageContent){ ()->() in
                         progressView.removeFromSuperview()
                     }
@@ -179,7 +179,7 @@ extension MessageViewController {
                 self.createMessage(content)
                 self.sendMessage(content)
                 
-                S3Controller.uploadFile(name: name, localPath: url, remotePath: MediaMessage.remotePath(fileName: name, type: .Voice), done: { (error) -> Void in
+                S3Controller.uploadFile(url, remotePath: MediaMessage.remotePath(fileName: name, type: .Voice), done: { (error) -> Void in
                     println("done")
                     println(error)
                 })

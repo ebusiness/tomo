@@ -327,7 +327,7 @@ extension CreatePostViewController {
                     }
                 }
                 
-                S3Controller.uploadFile(name: name, localPath: imagePath, remotePath: remotePath, done: { (error) -> Void in
+                S3Controller.uploadFile(imagePath, remotePath: remotePath, done: { (error) -> Void in
                     
                     imagelist.append(name)
                     

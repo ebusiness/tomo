@@ -15,6 +15,9 @@ class GroupCreateViewController: BaseTableViewController {
     @IBOutlet var stationTextField: UITextField!
     @IBOutlet var introductionTextField: UITextField!
     
+    @IBOutlet weak var groupCoverImageView: UIImageView!
+    private var cover: UIImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -38,11 +41,74 @@ extension GroupCreateViewController {
         param["address"] = self.addressTextField.text
         param["station"] = self.stationTextField.text
         
-        AlamofireController.request(.POST, "/groups", parameters: param, encoding: .JSON, success: { group in
-            self.performSegueWithIdentifier("groupCreated", sender: group)
+        let coverName = NSUUID().UUIDString
+        let coverPath = NSTemporaryDirectory() + coverName
+        
+        if let cover = self.cover {
+            cover.saveToPath(coverPath)
+            param["cover"] = coverName
+        }
+        
+        AlamofireController.request(.POST, "/groups", parameters: param, success: { group in
+            
+            let groupInfo = GroupEntity(group)
+            if let cover = self.cover {
+                
+                let remotePath =  Constants.groupCoverPath(groupId: groupInfo.id)
+                
+                /////////////////////////////////////////////////
+                
+                let progressView = UIProgressView(frame: CGRectZero)
+                progressView.trackTintColor = Util.UIColorFromRGB(0x009688, alpha: 0.1)
+                progressView.tintColor = Util.UIColorFromRGB(0x009688, alpha: 1)
+                
+                self.tableView.tableHeaderView!.addSubview(progressView)
+                
+                progressView.setTranslatesAutoresizingMaskIntoConstraints(false)
+                self.tableView.tableHeaderView!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[progressView(==20)]", options: nil, metrics: nil, views: ["progressView" : progressView]))
+                self.tableView.tableHeaderView!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[progressView]|", options: nil, metrics: nil, views: ["progressView" : progressView]))
+                
+                /////////////////////////////////////////////////
+                S3Controller.uploadFile(coverPath, remotePath: remotePath, done: { (error) -> Void in
+                    progressView.removeFromSuperview()
+                    self.performSegueWithIdentifier("groupCreated", sender: groupInfo)
+                    
+                }).progress { _, sendBytes, totalBytes in
+                    
+                    let progress = Float(sendBytes)/Float(totalBytes)
+                    
+                    gcd.sync(.Main) { () -> () in
+                        progressView.progress = progress
+                        println(progress)
+                        
+                    }
+                }
+            } else {
+                self.performSegueWithIdentifier("groupCreated", sender: groupInfo)
+            }
+            
         }) { err in
             
         }
+    }
+    
+    @IBAction func changeCover(sender: UITapGestureRecognizer) {
+        
+        let block:CameraController.CameraBlock = { (image,_) ->() in
+            
+            self.cover = image
+            self.groupCoverImageView.image = image
+        }
+        
+        Util.alertActionSheet(self, optionalDict: [
+            
+            "拍摄":{ (_) -> Void in
+                CameraController.sharedInstance.open(self, sourceType: .Camera, completion: block)
+            },
+            "从相册选择":{ (_) -> () in
+                CameraController.sharedInstance.open(self, sourceType: .SavedPhotosAlbum, completion: block)
+            }
+        ])
     }
 }
 
@@ -69,4 +135,18 @@ extension GroupCreateViewController {
             return 0
         }
     }
+}
+
+extension GroupCreateViewController {
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) where cell.contentView.subviews.count > 0 {
+            
+            let views: AnyObject? = cell.contentView.subviews.filter { $0 is UITextView || $0 is UITextField }
+            if let views = views as? [UIView], lastView = views.last {
+                lastView.becomeFirstResponder()
+            }
+        }
+    }
+    
 }

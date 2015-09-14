@@ -54,7 +54,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="meguro" translatesAutoresizingMaskIntoConstraints="NO" id="Ch1-si-93O">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="87.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
                                         </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
@@ -142,7 +142,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="群组名称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xg8-eb-88t">
-                                            <rect key="frame" x="16" y="136" width="68" height="20.5"/>
+                                            <rect key="frame" x="16" y="136" width="68" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -189,7 +189,7 @@
             <objects>
                 <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="dtj-Xb-7ug" customClass="GroupCreateViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="598-py-01G">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="sWg-QG-QCj">
@@ -199,8 +199,12 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C9T-af-JaB">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group_cover_default" translatesAutoresizingMaskIntoConstraints="NO" id="T9S-FL-p2t">
+                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group_cover_default" translatesAutoresizingMaskIntoConstraints="NO" id="T9S-FL-p2t">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
+                                            <gestureRecognizers/>
+                                            <connections>
+                                                <outletCollection property="gestureRecognizers" destination="JwQ-ni-VQk" appends="YES" id="Gjn-5W-d34"/>
+                                            </connections>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text_protection" translatesAutoresizingMaskIntoConstraints="NO" id="ohu-06-4UC">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
@@ -236,13 +240,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="名称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SJh-LU-LAt">
-                                                    <rect key="frame" x="16" y="11" width="34" height="20.5"/>
+                                                    <rect key="frame" x="16" y="11" width="34" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="群组的名" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XkC-2p-3BH">
-                                                    <rect key="frame" x="66" y="13.5" width="222" height="17"/>
+                                                    <rect key="frame" x="66" y="14" width="222" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -262,13 +266,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="地址" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ova-dT-fye">
-                                                    <rect key="frame" x="16" y="11" width="34" height="20.5"/>
+                                                    <rect key="frame" x="16" y="11" width="34" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="群组主要的活动地点" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dcd-ZP-5hB">
-                                                    <rect key="frame" x="66" y="13.5" width="222" height="17"/>
+                                                    <rect key="frame" x="66" y="14" width="222" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -288,13 +292,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车站" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Rf-NR-rrm">
-                                                    <rect key="frame" x="16" y="11" width="34" height="20.5"/>
+                                                    <rect key="frame" x="16" y="11" width="34" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="群组活动时主要使用的车站" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MYC-vQ-Fpt">
-                                                    <rect key="frame" x="66" y="13.5" width="222" height="17"/>
+                                                    <rect key="frame" x="66" y="14" width="222" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -314,13 +318,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="介绍" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZYp-Xk-Wee">
-                                                    <rect key="frame" x="16" y="11" width="34" height="20.5"/>
+                                                    <rect key="frame" x="16" y="11" width="34" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="给群组写个简单的介绍" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bcm-Md-LFa">
-                                                    <rect key="frame" x="66" y="13.5" width="222" height="17"/>
+                                                    <rect key="frame" x="66" y="14" width="222" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -366,6 +370,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addressTextField" destination="dcd-ZP-5hB" id="ejN-KV-vv0"/>
+                        <outlet property="groupCoverImageView" destination="T9S-FL-p2t" id="oi7-rf-EFF"/>
                         <outlet property="groupNameTextField" destination="XkC-2p-3BH" id="ltX-nX-lNg"/>
                         <outlet property="introductionTextField" destination="bcm-Md-LFa" id="VeS-Ta-MA7"/>
                         <outlet property="stationTextField" destination="MYC-vQ-Fpt" id="cKR-hQ-d3D"/>
@@ -374,6 +379,11 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y4O-Ch-beh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="hKj-U8-sDu" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer id="JwQ-ni-VQk">
+                    <connections>
+                        <action selector="changeCover:" destination="dtj-Xb-7ug" id="dAy-Ie-8mj"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1465" y="2859"/>
         </scene>

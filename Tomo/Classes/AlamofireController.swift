@@ -41,6 +41,12 @@ class AlamofireController {
     // Mark - Error Handler
     // TODO
     private class func errorHanding(res: NSHTTPURLResponse?, error: NSError?) {
+        
+        #if DEBUG
+            println(res?.URL)
+            println(error)
+        #endif
+        
         if let window = UIApplication.sharedApplication().keyWindow, res = res
             where res.statusCode == 401 && NSStringFromClass(window.rootViewController!.classForCoder) != "tomo.RegViewController" {
                 
