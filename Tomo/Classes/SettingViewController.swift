@@ -97,7 +97,7 @@ final class SettingViewController: MyAccountBaseController {
             
             Util.alert(self, title: "退出账号", message: "真的要退出当前的账号吗？", action: { (_) -> Void in
                 
-                Manager.sharedInstance.request(.GET, kAPIBaseURLString + "/signout")
+                AlamofireController.request(.GET, "/signout")
                 
                 Defaults.remove("openid")
                 Defaults.remove("deviceToken")

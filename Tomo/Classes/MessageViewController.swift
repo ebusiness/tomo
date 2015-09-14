@@ -19,8 +19,6 @@ final class MessageViewController: JSQMessagesViewController {
     var icon_keyboard_highlighted:UIImage!
     
     var friend: UserEntity!
-
-    let selink = RKObjectManager(baseURL: kAPIBaseURL)
     
     let navigationBarImage = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
     let defaultAvatar = JSQMessagesAvatarImageFactory.avatarImageWithImage(DefaultAvatarImage, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))

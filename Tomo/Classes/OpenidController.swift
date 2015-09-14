@@ -157,12 +157,11 @@ extension OpenidController {
                     }
                     
                     // TODO: Error handle
-                    Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/signup-wechat" , parameters: result)
-                    .responseJSON{(_, _, userinfo, _) in
+                    AlamofireController.request(.POST, "/signup-wechat", parameters: result, success: { userinfo in
                         if let userinfo = userinfo as? Dictionary<String, AnyObject> {
                             self.success(userinfo)
                         }
-                    }
+                    })
                 }
             }
     }
@@ -183,22 +182,13 @@ extension OpenidController {
     
     private func success(result: Dictionary<String, AnyObject>){
         
-        self.setMyInfo(result)
-        
-        // get user notification
-        
-        Util.dismissHUD()
-        self.whenSuccess?(res: result)
-    }
-    
-    private func setMyInfo(result: Dictionary<String, AnyObject>){
-        
         if let id = result["id"] as? String,
             nickName = result["nickName"] as? String{
                 
-                me = UserEntity(result)                
+                me = UserEntity(result)
         }
-        
+        Util.dismissHUD()
+        self.whenSuccess?(res: result)
     }
 }
 

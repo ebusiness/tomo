@@ -31,33 +31,6 @@ class BookmarkedPostsViewController: MyAccountBaseController {
         
         loadMoreContent()
     }
-    
-    override func setupMapping() {
-        
-        let userMapping = RKObjectMapping(forClass: UserEntity.self)
-        userMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "nickName": "nickName",
-            "photo_ref": "photo"
-            ])
-        
-        let postMapping = RKObjectMapping(forClass: PostEntity.self)
-        postMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "content": "content",
-            "images_ref": "images",
-            "like": "like",
-            "createDate": "createDate"
-            ])
-        
-        let ownerRelationshipMapping = RKRelationshipMapping(fromKeyPath: "owner", toKeyPath: "owner", withMapping: userMapping)
-        postMapping.addPropertyMapping(ownerRelationshipMapping)
-        
-        let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/posts", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
-        
-        manager.addResponseDescriptor(responseDescriptor)
-        
-    }
 }
 
 // MARK: UITableView DataSource
@@ -161,16 +134,22 @@ extension BookmarkedPostsViewController {
             params["before"] = oldestContent.createDate.timeIntervalSince1970
         }
         
-        manager.getObjectsAtPath("/posts", parameters: params, success: { (operation, result) -> Void in
+        AlamofireController.request(.GET, "/posts", parameters: params, success: { result in
             
-            self.bookmarks += result.array()
-            self.appendRows(Int(result.count))
+            let posts:[PostEntity]? = PostEntity.collection(result)
+            
+            if let loadPosts:[AnyObject] = posts {
+                self.bookmarks += loadPosts
+                self.appendRows(loadPosts.count)
+            } else {
+                // the response is not post
+            }
+            self.isLoading = false
+            
+        }) { err in
             
             self.isLoading = false
-            }) { (operation, err) -> Void in
-                println(err)
-                self.isLoading = false
-                self.isExhausted = true
+            self.isExhausted = true
         }
     }
     

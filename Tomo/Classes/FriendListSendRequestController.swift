@@ -28,42 +28,18 @@ class FriendListSendRequestController: MyAccountBaseController {
         self.tableView.backgroundView = self.emptyView
 
     }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        Util.showHUD()
-        self.manager.getObjectsAtPath("/invitations", parameters: nil, success: { (operation, result) -> Void in
-            
-            Util.dismissHUD()
-            if let result = result.array() as? [UserEntity] {
+        AlamofireController.request(.GET, "/invitations", success: { result in
+            if let result:[UserEntity] = UserEntity.collection(result) {
                 self.invitedUsers = result
                 self.tableView.backgroundView = nil
             }
-            
-            }) { (operation, error) -> Void in
-                self.tableView.backgroundView = self.emptyView
+        }) { err in
+            self.tableView.backgroundView = self.emptyView
         }
-    }
-    
-    override func setupMapping() {
-        
-        let userMapping = RKObjectMapping(forClass: UserEntity.self)
-        userMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "nickName": "nickName",
-            "gender": "gender",
-            "photo_ref": "photo",
-            "cover_ref": "cover",
-            "bio": "bio",
-            "firstName": "firstName",
-            "lastName": "lastName",
-            "birthDay": "birthDay",
-            "telNo": "telNo",
-            "address": "address",
-            ])
-        // edit user
-        let responseDescriptor = RKResponseDescriptor(mapping: userMapping, method: .GET, pathPattern: "/invitations", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
-        self.manager.addResponseDescriptor(responseDescriptor)
     }
     
     @IBAction func searchFriend(sender: AnyObject) {

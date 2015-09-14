@@ -110,7 +110,6 @@
 		29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
-		D04608D01B6B9DA700D30B77 /* RestKitErrorHanding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04608CF1B6B9DA700D30B77 /* RestKitErrorHanding.swift */; };
 		D04608D21B6BA33F00D30B77 /* TestDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404B1ACE68C500D2A338 /* TestDataTests.swift */; };
 		D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D057BAF11B670687007D14D2 /* RequestFriendCell.swift */; };
 		D073E6F81B84C1BF00066F42 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073E6F71B84C1BF00066F42 /* CameraController.swift */; };
@@ -259,7 +258,6 @@
 		29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTableViewController.swift; path = Classes/BaseTableViewController.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		D04608CF1B6B9DA700D30B77 /* RestKitErrorHanding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestKitErrorHanding.swift; path = Classes/RestKitErrorHanding.swift; sourceTree = "<group>"; };
 		D057BAF11B670687007D14D2 /* RequestFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestFriendCell.swift; path = Classes/RequestFriendCell.swift; sourceTree = "<group>"; };
 		D073E6F71B84C1BF00066F42 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraController.swift; path = Classes/CameraController.swift; sourceTree = "<group>"; };
 		D07793841B704F290056B7CB /* PickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickerTableViewController.swift; path = Classes/PickerTableViewController.swift; sourceTree = "<group>"; };
@@ -559,7 +557,6 @@
 				D0DB07E31B9D655600C06C4E /* Listener */,
 				17B993181AF3712C00204E97 /* OpenidController.swift */,
 				29C1DA781AD36659009A02CC /* S3Controller.swift */,
-				D04608CF1B6B9DA700D30B77 /* RestKitErrorHanding.swift */,
 				D0E788741B6F5BD3009255B9 /* AlamofireController.swift */,
 				D073E6F71B84C1BF00066F42 /* CameraController.swift */,
 			);
@@ -948,7 +945,6 @@
 				29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */,
 				1F937FE61B58C2E3009722CE /* SettingViewController.swift in Sources */,
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
-				D04608D01B6B9DA700D30B77 /* RestKitErrorHanding.swift in Sources */,
 				1F985E601B60C19F008D5369 /* Float.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				1F79C1B41B5E10DC008800E1 /* FriendCell.swift in Sources */,

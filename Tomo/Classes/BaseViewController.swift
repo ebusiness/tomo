@@ -10,16 +10,9 @@ import UIKit
 
 class BaseViewController: UIViewController {
     
-    let manager = RKObjectManager(baseURL: kAPIBaseURL)
     var alwaysShowNavigationBar = false
     var topConstraint: NSLayoutConstraint?
     var headerHeight: CGFloat = 160 - 64
-    
-    override func loadView() {
-        super.loadView()
-        self.manager.registerRequestOperationClass(RestKitErrorHanding.self)
-        self.setupMapping()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,10 +48,6 @@ class BaseViewController: UIViewController {
     
     deinit {       
         NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-    func setupMapping(){
-    
     }
 }
 

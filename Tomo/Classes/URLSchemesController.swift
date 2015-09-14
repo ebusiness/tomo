@@ -71,24 +71,12 @@ extension URLSchemesController{
         
         if self.tabBarController.childViewControllers.count > tabSelectedIndex {
             self.tabBarController.selectedIndex = tabSelectedIndex
-            //            self.tabBarController.selectedViewController
+//            self.tabBarController.selectedViewController
             self.tabBarController.childViewControllers[tabSelectedIndex].pushViewController(viewController, animated: true)
         } else {
-            //            println( self.tabBarController.childViewControllers )
+//            println( self.tabBarController.childViewControllers )
         }
         
-    }
-    
-    private func getInformation(uri: String, done: (JSON)->() ){
-        
-        Util.showHUD()
-        Manager.sharedInstance.request(.GET, kAPIBaseURLString + uri).responseJSON { (_, _, result, error) -> Void in
-            if error == nil {
-                done(JSON(result!))
-            }
-            Util.dismissHUD()
-            
-        }
     }
 }
 
@@ -98,13 +86,16 @@ extension URLSchemesController{
     
     private func openMessage(id: String){
         
-        getInformation("/users/\(id)", done: { (json) -> () in
+        AlamofireController.request(.GET, "/users/\(id)", success: { result in
             let vc = MessageViewController()
             vc.hidesBottomBarWhenPushed = true
-            vc.friend = UserEntity(json)
+            vc.friend = UserEntity(result)
             
             self.pushViewController(1, viewController: vc, animated: true)
-        })
+            
+        }) { err in
+            
+        }
     }
     
     private func openFriendInvited(id: String){
@@ -117,23 +108,25 @@ extension URLSchemesController{
     }
     
     private func openFriendAccepted(id: String){
-        getInformation("/users/\(id)", done: { (json) -> () in
-            
-            let nickName = json["nickName"].stringValue
+        
+        AlamofireController.request(.GET, "/users/\(id)", success: { result in
+            let nickName = JSON(result)["nickName"].stringValue
             Util.showInfo("\(nickName)已成为您的好友")
-        })
+        }) { err in
+            
+        }
     }
     
     private func openPostNew(id: String){
         
-        getInformation("/posts/\(id)", done: { (json) -> () in
-
+        AlamofireController.request(.GET, "/posts/\(id)", success: { result in
             let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
-            vc.post = PostEntity(json)
+            vc.post = PostEntity(result)
             
             self.pushViewController(0, viewController: vc, animated: true)
+        }) { err in
             
-        })
+        }
         
     }
     

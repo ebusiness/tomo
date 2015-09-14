@@ -34,24 +34,6 @@ final class MyPostsViewController: MyAccountBaseController {
         loadMoreContent()
     }
     
-    override func setupMapping() {
-        
-        let postMapping = RKObjectMapping(forClass: PostEntity.self)
-        postMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "content": "content",
-            "coordinate": "coordinate",
-            "images_ref": "images",
-            "like": "like",
-            "createDate": "createDate"
-            ])
-        
-        let responseDescriptor = RKResponseDescriptor(mapping: postMapping, method: .GET, pathPattern: "/posts", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
-        
-        manager.addResponseDescriptor(responseDescriptor)
-        
-    }
-    
 }
 
 // MARK: UITableView DataSource
@@ -158,14 +140,23 @@ extension MyPostsViewController {
             params["before"] = oldestContent.createDate.timeIntervalSince1970
         }
         
-        manager.getObjectsAtPath("/posts", parameters: params, success: { (operation, result) -> Void in
+        
+        
+        
+        AlamofireController.request(.GET, "/posts", parameters: params, success: { result in
             
-            self.posts += result.array()
-            self.appendRows(Int(result.count))
+            let posts:[PostEntity]? = PostEntity.collection(result)
             
+            if let loadPosts:[AnyObject] = posts {
+                self.posts += loadPosts
+                self.appendRows(loadPosts.count)
+            } else {
+                // the response is not post
+            }
             self.isLoading = false
-            }) { (operation, err) -> Void in
-                println(err)
+            
+        }) { err in
+                
                 self.isLoading = false
                 self.isExhausted = true
         }

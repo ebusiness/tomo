@@ -118,36 +118,6 @@ class AccountEditViewController: MyAccountBaseController {
                 self.headerView = vc
         }
     }
-    
-    
-    override func setupMapping() {
-        
-        let userMapping = RKObjectMapping(forClass: UserEntity.self)
-        userMapping.addAttributeMappingsFromDictionary([
-            "_id": "id",
-            "nickName": "nickName",
-            "gender": "gender",
-            "photo_ref": "photo",
-            "cover_ref": "cover",
-            "bio": "bio",
-            "firstName": "firstName",
-            "lastName": "lastName",
-            "birthDay": "birthDay",
-            "telNo": "telNo",
-            "address": "address",
-            ])
-        // edit user
-        let responseDescriptor = RKResponseDescriptor(mapping: userMapping, method: .PATCH, pathPattern: "/me", keyPath: nil, statusCodes: RKStatusCodeIndexSetForClass(RKStatusCodeClass.Successful))
-        self.manager.addResponseDescriptor(responseDescriptor)
-        
-        
-        let inverseMapping = userMapping.inverseMapping()
-        inverseMapping.addAttributeMappingsFromDictionary(["photo":"photo","cover":"cover"])
-
-        let requestDescriptor = RKRequestDescriptor(mapping: inverseMapping, objectClass: UserEntity.self, rootKeyPath: nil, method: RKRequestMethod.Any)
-        self.manager.addRequestDescriptor(requestDescriptor)
-    }
-
 }
 
 extension AccountEditViewController {
@@ -267,27 +237,59 @@ extension AccountEditViewController {
     }
     
     func updateUser(){
+        var params = Dictionary<String,AnyObject>()
         
-        user.nickName = nickNameTextField.text
-        user.firstName = firstNameTextField.text
-        user.lastName = lastNameTextField.text
-        user.telNo = telTextField.text
-        user.address = addressTextField.text
-        
-        if bioTextView.textColor != UIColor.lightGrayColor() || bioTextView.text != defaultbio {
-            user.bio = bioTextView.text
+        if nickNameTextField.text != me.nickName {
+            params["nickName"] = nickNameTextField.text
         }
         
-        self.manager.patchObject(user, path: "/me", parameters: nil, success: { (operation, result) -> Void in
-            if let result = result.firstObject as? UserEntity {
-                me = result
-                self.user = result
-                self.headerView.updateUI()
+        if firstNameTextField.text != me.firstName ?? "" {
+            params["firstName"] = firstNameTextField.text
+        }
+        
+        if lastNameTextField.text != me.lastName ?? "" {
+            params["lastName"] = lastNameTextField.text
+        }
+        
+        if telTextField.text != me.telNo ?? "" {
+            params["telNo"] = telTextField.text
+        }
+        
+        if addressTextField.text != me.address ?? "" {
+            params["address"] = addressTextField.text
+        }
+        
+        if bioTextView.textColor == UIColor.blackColor() || bioTextView.text != defaultbio {
+            if bioTextView.text != me.bio ?? "" {
+                params["bio"] = bioTextView.text
             }
-            
-            }, failure: { (operation, error) -> Void in
-                
-        })
+        }
+        
+        if user.gender != me.gender {
+            params["gender"] = user.gender
+        }
+        
+        if user.birthDay != me.birthDay {
+            params["birthDay"] = user.birthDay
+        }
+        
+        if user.photo != me.photo {
+            params["photo"] = user.photo
+        }
+        
+        if user.cover != me.cover {
+            params["cover"] = user.cover
+        }
+        
+        if params.count > 0 {
+            AlamofireController.request(.PATCH, "/me", parameters: params, success: { result in
+                me = UserEntity(result)
+                self.user = me
+                self.headerView.updateUI()
+            }) { err in
+                    
+            }
+        }
     }
 }
 

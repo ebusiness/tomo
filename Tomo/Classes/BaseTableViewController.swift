@@ -10,8 +10,6 @@ import UIKit
 
 class BaseTableViewController: UITableViewController {
     
-    let manager = RKObjectManager(baseURL: kAPIBaseURL)
-    
     var topConstraint: NSLayoutConstraint?
     var headerHeight: CGFloat = 160 - 64
     var navigationImageView: UIImageView?
@@ -24,10 +22,7 @@ class BaseTableViewController: UITableViewController {
     
     override func loadView() {
         super.loadView()
-        
-        self.manager.registerRequestOperationClass(RestKitErrorHanding.self)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
-        self.setupMapping()
     }
     
     override func viewDidLoad() {
@@ -76,11 +71,6 @@ class BaseTableViewController: UITableViewController {
 extension BaseTableViewController {
     
     func becomeActive() {
-    }
-    
-    
-    func setupMapping(){
-        
     }
     
     func setBackButton() {
