@@ -21,9 +21,6 @@ enum ListenerEvent: String {
     case PostCommented = "post-commented"
     case PostBookmarked = "post-bookmarked"
     
-    case CommentReplied = "comment-replied"
-    
-    
     func getNotificationName() -> String{
         return "tomoNotification-" + self.rawValue
     }

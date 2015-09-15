@@ -44,6 +44,8 @@ class UserEntity: Entity {
     
     var lastMessage: MessageEntity?
     
+    var notifications: Int!
+    
     override init() {
         super.init()
     }
@@ -89,6 +91,8 @@ class UserEntity: Entity {
         if !( json["lastMessage"].object is NSNull ) {
             self.lastMessage = MessageEntity(json["lastMessage"])
         }
+        
+        self.notifications = json["notifications"].intValue
     }
 }
 
@@ -118,9 +122,5 @@ extension UserEntity {
         self.invitations?.remove(uid)
         self.friendInvitations = self.friendInvitations.filter { $0.from.id != uid }
         self.friends?.remove(uid)
-    }
-    
-    func getNotificationCount() -> Int {        
-        return me.friendInvitations.count + me.newMessages.count
     }
 }

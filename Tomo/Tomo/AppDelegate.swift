@@ -29,7 +29,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         
         if let rootvc = window?.rootViewController as? TabBarController{
-            application.applicationIconBadgeNumber = me.getNotificationCount()
+            application.applicationIconBadgeNumber = rootvc.viewControllers!.reduce(0) { (count, vc ) -> Int in
+                if let vc = vc as? UIViewController, badgeValue = vc.tabBarItem.badgeValue, badge = badgeValue.toInt() {
+                    return count + badge
+                }
+                return count
+            }
         }
     }
     
@@ -60,6 +65,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         RemoteNotification.sharedInstance.receiveRemoteNotification(userInfo)
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+//        {
+//            "aps":{
+//                "content-available": 1,
+//                "alert":"Test",
+//                "sound":"default",
+//                "badge":0
+//            }
+//        }
+        println(userInfo)
+        completionHandler(.NewData)
     }
     
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {

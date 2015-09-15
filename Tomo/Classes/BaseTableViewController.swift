@@ -90,13 +90,7 @@ extension BaseTableViewController {
         
         if let headerView = self.tableView.tableHeaderView where headerView.frame.size.height >= self.headerHeight + 64 {
             
-            for c in headerView.constraints() {
-                
-                if c.firstAttribute == .Top {
-                    self.topConstraint = c as? NSLayoutConstraint
-                    break
-                }
-            }
+            self.topConstraint = headerView.constraints().find { $0.firstAttribute == .Top } as? NSLayoutConstraint
         }
     }
     

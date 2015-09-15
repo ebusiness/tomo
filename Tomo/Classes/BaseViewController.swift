@@ -54,15 +54,9 @@ class BaseViewController: UIViewController {
 extension BaseViewController {
     
     func getTopConstraint() {
-        if let tableView = self.view.subviews.first as? UITableView, headerView = tableView.tableHeaderView where headerView.frame.size.height >=  self.headerHeight + 64 {
-            
-            for c in headerView.constraints() {
+        if let headerView = (self.view.subviews.first as? UITableView)?.tableHeaderView where headerView.frame.size.height >=  self.headerHeight + 64 {
                 
-                if c.firstAttribute == .Top {
-                    self.topConstraint = c as? NSLayoutConstraint
-                    break
-                }
-            }
+                self.topConstraint = headerView.constraints().find { $0.firstAttribute == .Top } as? NSLayoutConstraint
         }
     }
 }

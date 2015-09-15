@@ -58,6 +58,31 @@ final class TabBarController: UITabBarController {
         setupViewControllers()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        SocketController.connect()
+        
+        //local
+        updateBadgeNumber()
+
+        Util.setupPush()
+        
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        URLSchemesController.sharedInstance.runTask()
+        RemoteNotification.sharedInstance.runTask()
+    }
+    
+    deinit {
+        SocketController.disconnect()
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+}
+
+extension TabBarController {
+    
     private func setupViewControllers() {
         var viewControllers = [UIViewController]()
         
@@ -74,46 +99,26 @@ final class TabBarController: UITabBarController {
         
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        SocketController.connect()
-        
-        //local
-        updateBadgeNumber()
-
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
-
-        Util.setupPush()
-        
-    }
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        URLSchemesController.sharedInstance.runTask()
-        RemoteNotification.sharedInstance.runTask()
-    }
-    
     // MARK: - Notification
     
     func updateBadgeNumber() {
-
-        var notificationCount = me.getNotificationCount()
         
         if let vc = viewControllers?[1] as? UIViewController {
-            if notificationCount > 0 {
-                vc.tabBarItem.badgeValue = String(notificationCount)
+            let messageCount = me.friendInvitations.count + me.newMessages.count
+            if messageCount > 0 {
+                vc.tabBarItem.badgeValue = String(messageCount)
+            } else {
+                vc.tabBarItem.badgeValue = nil
+            }
+        }
+        
+        if let vc = viewControllers?.last as? UIViewController {
+            if me.notifications > 0 {
+                vc.tabBarItem.badgeValue = String(me.notifications)
             } else {
                 vc.tabBarItem.badgeValue = nil
             }
         }
     }
-    
-    func becomeActive() {
-        // recalculate badge number
-    }
-    
-    deinit {
-        SocketController.disconnect()
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
 }
+

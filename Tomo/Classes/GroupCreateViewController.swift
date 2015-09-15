@@ -61,19 +61,8 @@ extension GroupCreateViewController {
                 
                 let remotePath =  Constants.groupCoverPath(groupId: groupInfo.id)
                 
-                /////////////////////////////////////////////////
+                let progressView = self.getProgressView()
                 
-                let progressView = UIProgressView(frame: CGRectZero)
-                progressView.trackTintColor = Util.UIColorFromRGB(0x009688, alpha: 0.1)
-                progressView.tintColor = Util.UIColorFromRGB(0x009688, alpha: 1)
-                
-                self.tableView.tableHeaderView!.addSubview(progressView)
-                
-                progressView.setTranslatesAutoresizingMaskIntoConstraints(false)
-                self.tableView.tableHeaderView!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[progressView(==20)]", options: nil, metrics: nil, views: ["progressView" : progressView]))
-                self.tableView.tableHeaderView!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[progressView]|", options: nil, metrics: nil, views: ["progressView" : progressView]))
-                
-                /////////////////////////////////////////////////
                 S3Controller.uploadFile(coverPath, remotePath: remotePath, done: { (error) -> Void in
                     progressView.removeFromSuperview()
                     self.performSegueWithIdentifier("groupCreated", sender: groupInfo)
@@ -117,6 +106,23 @@ extension GroupCreateViewController {
     }
 }
 
+extension GroupCreateViewController {
+
+    func getProgressView() -> UIProgressView {
+        
+        let progressView = UIProgressView(frame: CGRectZero)
+        progressView.trackTintColor = Util.UIColorFromRGB(0x009688, alpha: 0.1)
+        progressView.tintColor = Util.UIColorFromRGB(0x009688, alpha: 1)
+        
+        self.tableView.tableHeaderView!.addSubview(progressView)
+        
+        progressView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.tableView.tableHeaderView!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[progressView(==20)]", options: nil, metrics: nil, views: ["progressView" : progressView]))
+        self.tableView.tableHeaderView!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[progressView]|", options: nil, metrics: nil, views: ["progressView" : progressView]))
+        return progressView
+    }
+    
+}
 
 // MARK: - UITableView DataSorce
 

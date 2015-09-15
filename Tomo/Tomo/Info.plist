@@ -63,6 +63,10 @@
 	<string>为了提供更好的服务，現場Tomo希望使用您的位置信息</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>为了浏览照片，現場Tomo希望访问您的相册</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
