@@ -9,40 +9,48 @@
 import UIKit
 
 class PostCell: UITableViewCell {
-
-    @IBOutlet weak var cardView: UIView!
     
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var postContentLabel: UILabel!
     @IBOutlet weak var postDateLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var bookmarkButton: UIButton!
-    
-    @IBOutlet weak var commentHeight: NSLayoutConstraint!
+
+    @IBOutlet var commentView: UIView!
     @IBOutlet weak var commentImageView: UIImageView!
     @IBOutlet weak var commentContentLabel: UILabel!
     @IBOutlet weak var commentDateLabel: UILabel!
     @IBOutlet weak var commentButton: UIButton!
     
+    @IBOutlet var commentConstriantTop: NSLayoutConstraint!
+    @IBOutlet var commentConstriantBottom: NSLayoutConstraint!
+    @IBOutlet var commentConstraintTrail: NSLayoutConstraint!
+    @IBOutlet var commentConstriantLead: NSLayoutConstraint!
+    @IBOutlet var commentConstriantHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var bottomLine: UIView!
+    
+    var constraintsWithComment: [NSLayoutConstraint]!
+    var constraintsWithOutComment: [NSLayoutConstraint]!
+    
     var post: PostEntity!
     
     override func awakeFromNib() {
+        
         super.awakeFromNib()
         
         layer.shouldRasterize = true
         layer.rasterizationScale = UIScreen.mainScreen().scale
         
-        cardView.layer.cornerRadius = 5
-        cardView.layer.masksToBounds = true
-        cardView.layer.borderWidth = 1
-        cardView.layer.borderColor = Util.UIColorFromRGB(0xDDDDDD, alpha: 1).CGColor
+        avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
         
-        avatarImageView.layer.cornerRadius = avatarImageView.bounds.width / 2
-        avatarImageView.layer.masksToBounds = true
+        commentView.setTranslatesAutoresizingMaskIntoConstraints(false)
         
-        commentImageView.layer.cornerRadius = commentImageView.bounds.width / 2
-        commentImageView.layer.masksToBounds = true
+        constraintsWithOutComment = NSLayoutConstraint.constraintsWithVisualFormat("V:[v1]-(8)-[v2]", options: nil, metrics: nil, views: ["v1": self.postContentLabel, "v2": self.bottomLine]) as! [NSLayoutConstraint]
+        
+        constraintsWithComment = [commentConstriantTop,commentConstriantBottom,commentConstraintTrail,commentConstriantLead,commentConstriantHeight]
         
     }
     
@@ -99,15 +107,21 @@ class PostCell: UITableViewCell {
             self.commentContentLabel.text = comment.content
             self.commentDateLabel.text = comment.createDate.relativeTimeToString()
             
-            self.commentHeight.constant = 62
+            if let comments = post.comments where comments.count > 0 {
+                self.commentButton.setTitle("\(comments.count)", forState: .Normal)
+            } else {
+                self.commentButton.setTitle("", forState: .Normal)
+            }
+            
+            self.addSubview(commentView)
+            NSLayoutConstraint.deactivateConstraints(self.constraintsWithOutComment)
+            NSLayoutConstraint.activateConstraints(self.constraintsWithComment)
+            
         } else {
-            self.commentHeight.constant = 0
-        }
-        
-        if let comments = post.comments where comments.count > 0 {
-            self.commentButton.setTitle("\(comments.count)", forState: .Normal)
-        } else {
-            self.commentButton.setTitle("", forState: .Normal)
+            
+            commentView.removeFromSuperview()
+            NSLayoutConstraint.activateConstraints(self.constraintsWithOutComment)
+            NSLayoutConstraint.deactivateConstraints(self.constraintsWithComment)
         }
 
     }
