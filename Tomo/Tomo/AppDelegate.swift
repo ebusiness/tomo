@@ -67,18 +67,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         RemoteNotification.sharedInstance.receiveRemoteNotification(userInfo)
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-//        {
-//            "aps":{
-//                "content-available": 1,
-//                "alert":"Test",
-//                "sound":"default",
-//                "badge":0
-//            }
-//        }
-        println(userInfo)
-        completionHandler(.NewData)
-    }
+//    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+////        {
+////            "aps":{
+////                "content-available": 1,
+////                "alert":"Test",
+////                "sound":"default",
+////                "badge":0
+////            }
+////        }
+//        println(userInfo)
+//        completionHandler(.NewData)
+//    }
     
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
         return self.application(application, openURL: url, sourceApplication: nil, annotation: nil)

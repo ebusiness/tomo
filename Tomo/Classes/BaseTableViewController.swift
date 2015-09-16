@@ -61,6 +61,11 @@ class BaseTableViewController: UITableViewController {
         self.scrollViewDidScroll(self.tableView)
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationImageView?.alpha = 0
+    }
+    
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
@@ -145,6 +150,7 @@ extension BaseTableViewController {
                 }
             }
         }
+        navigationImageView?.alpha = 1
         
         if let imageview = navigationImageView where imageview.image != image {
             if let image = image {

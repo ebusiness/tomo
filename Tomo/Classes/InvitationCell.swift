@@ -25,9 +25,8 @@ class InvitationCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        avatarImageView.layer.cornerRadius = avatarImageView.layer.bounds.width / 2
-        avatarImageView.layer.masksToBounds = true
+        
+        avatarImageView.layer.borderColor = avatarBorderColor
         
     }
 

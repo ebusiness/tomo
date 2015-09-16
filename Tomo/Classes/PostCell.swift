@@ -24,18 +24,21 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var commentDateLabel: UILabel!
     @IBOutlet weak var commentButton: UIButton!
     
-    @IBOutlet var commentConstriantTop: NSLayoutConstraint!
-    @IBOutlet var commentConstriantBottom: NSLayoutConstraint!
-    @IBOutlet var commentConstraintTrail: NSLayoutConstraint!
-    @IBOutlet var commentConstriantLead: NSLayoutConstraint!
-    @IBOutlet var commentConstriantHeight: NSLayoutConstraint!
-    
+    @IBOutlet weak var postContentConstriantBottom: NSLayoutConstraint!
     @IBOutlet weak var bottomLine: UIView!
     
-    var constraintsWithComment: [NSLayoutConstraint]!
-    var constraintsWithOutComment: [NSLayoutConstraint]!
-    
     var post: PostEntity!
+    
+//    var tableView: UITableView? {
+//        get {
+//            var table: UIView? = superview
+//            while !(table is UITableView) && table != nil {
+//                table = table?.superview
+//            }
+//            
+//            return table as? UITableView
+//        }
+//    }
     
     override func awakeFromNib() {
         
@@ -44,13 +47,10 @@ class PostCell: UITableViewCell {
         layer.shouldRasterize = true
         layer.rasterizationScale = UIScreen.mainScreen().scale
         
-        avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        avatarImageView.layer.borderColor = avatarBorderColor
+        commentImageView.layer.borderColor = avatarBorderColor
         
         commentView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        
-        constraintsWithOutComment = NSLayoutConstraint.constraintsWithVisualFormat("V:[v1]-(8)-[v2]", options: nil, metrics: nil, views: ["v1": self.postContentLabel, "v2": self.bottomLine]) as! [NSLayoutConstraint]
-        
-        constraintsWithComment = [commentConstriantTop,commentConstriantBottom,commentConstraintTrail,commentConstriantLead,commentConstriantHeight]
         
     }
     
@@ -103,6 +103,15 @@ class PostCell: UITableViewCell {
         
         if let comment = post.comments?.last {
             
+            commentView.hidden = false
+            postContentConstriantBottom.constant = 88
+//            if let parentview = self.tableView {
+//                UIView.setAnimationsEnabled(false)
+//                parentview.beginUpdates()
+//                parentview.endUpdates()
+//                UIView.setAnimationsEnabled(true)
+//            }
+            
             self.commentImageView.sd_setImageWithURL(NSURL(string: comment.owner.photo!), placeholderImage: DefaultAvatarImage)
             self.commentContentLabel.text = comment.content
             self.commentDateLabel.text = comment.createDate.relativeTimeToString()
@@ -113,16 +122,11 @@ class PostCell: UITableViewCell {
                 self.commentButton.setTitle("", forState: .Normal)
             }
             
-            self.addSubview(commentView)
-            NSLayoutConstraint.deactivateConstraints(self.constraintsWithOutComment)
-            NSLayoutConstraint.activateConstraints(self.constraintsWithComment)
-            
         } else {
-            
-            commentView.removeFromSuperview()
-            NSLayoutConstraint.activateConstraints(self.constraintsWithOutComment)
-            NSLayoutConstraint.deactivateConstraints(self.constraintsWithComment)
+            commentView.hidden = true
+            postContentConstriantBottom.constant = 16
         }
+        
 
     }
     

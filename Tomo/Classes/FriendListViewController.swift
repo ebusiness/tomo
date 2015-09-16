@@ -206,6 +206,7 @@ extension FriendListViewController: FriendInvitationCellDelegate {
                 self.friends.insert(cell.friendInvitedNotification.from, atIndex: 0)
                 self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
             }
+            self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
             self.tableView.endUpdates()
             self.updateBadgeNumber()
             
@@ -227,10 +228,7 @@ extension FriendListViewController: FriendInvitationCellDelegate {
                     me.friendInvitations.removeAtIndex(indexPath.row)
                     self.tableView.beginUpdates()
                     self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                    if me.friendInvitations.count < 1 {
-                        self.tableView.sectionFooterHeight = 0
-                        self.tableView.sectionHeaderHeight = 0
-                    }
+                    self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
                     self.tableView.endUpdates()
                 }
                 

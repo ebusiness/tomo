@@ -31,8 +31,10 @@ class RequestFriendCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        avatarImageView.layer.cornerRadius = avatarImageView.layer.bounds.width / 2
-        avatarImageView.layer.masksToBounds = true
+        self.avatarImageView.layer.cornerRadius = avatarImageView.layer.bounds.width / 2
+        self.avatarImageView.layer.masksToBounds = true
+        self.avatarImageView.layer.borderColor = avatarBorderColor
+        self.avatarImageView.layer.borderWidth = 2
     }
     
 }

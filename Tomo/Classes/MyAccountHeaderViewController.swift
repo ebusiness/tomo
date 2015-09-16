@@ -45,8 +45,8 @@ extension MyAccountHeaderViewController {
         
         photoImageView.layer.cornerRadius = photoImageView.frame.size.width / 2
         photoImageView.layer.masksToBounds = true
-        photoImageView.layer.borderWidth = 1
-        photoImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        photoImageView.layer.borderWidth = 2
+        photoImageView.layer.borderColor = avatarBorderColor
         
         if let photo = me.photo {
             photoImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)

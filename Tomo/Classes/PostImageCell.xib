@@ -14,7 +14,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p6b-Og-aac">
-                        <rect key="frame" x="0.0" y="16" width="433" height="561.5"/>
+                        <rect key="frame" x="0.0" y="16" width="433" height="561"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o5x-Rd-tkH">
                                 <rect key="frame" x="0.0" y="0.0" width="433" height="400"/>
@@ -39,13 +39,13 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="用户名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfH-uV-6UG">
-                                <rect key="frame" x="94" y="408" width="51" height="20.5"/>
+                                <rect key="frame" x="94" y="408" width="51" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="日期" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLL-ht-tGJ">
-                                <rect key="frame" x="153" y="411" width="24" height="14.5"/>
+                                <rect key="frame" x="153" y="411" width="24" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -73,20 +73,20 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="248" text="投稿内容" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y4i-E0-CGx">
-                                <rect key="frame" x="24" y="451" width="385" height="22.5"/>
+                                <rect key="frame" x="24" y="451" width="385" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uMk-t0-2Ro">
-                                <rect key="frame" x="0.0" y="560.5" width="433" height="1"/>
+                                <rect key="frame" x="0.0" y="560" width="433" height="1"/>
                                 <color key="backgroundColor" red="0.8666666666666667" green="0.8666666666666667" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="JgI-XT-82S"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L2k-JL-fDb" userLabel="评论">
-                                <rect key="frame" x="0.0" y="489" width="433" height="72"/>
+                                <rect key="frame" x="0.0" y="488" width="433" height="72"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="YUN-GO-npp" userLabel="用户头像">
                                         <rect key="frame" x="16" y="16" width="40" height="40"/>
@@ -98,6 +98,9 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                <integer key="value" value="2"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
@@ -145,15 +148,15 @@
                             <constraint firstItem="y4i-E0-CGx" firstAttribute="top" secondItem="wQe-Yj-udo" secondAttribute="bottom" constant="16" id="CCD-OI-owN"/>
                             <constraint firstItem="wQe-Yj-udo" firstAttribute="bottom" secondItem="B2H-5y-4xQ" secondAttribute="bottom" id="DGa-ec-Y9T"/>
                             <constraint firstAttribute="trailing" secondItem="o5x-Rd-tkH" secondAttribute="trailing" id="F0X-Jh-3KO"/>
-                            <constraint firstItem="L2k-JL-fDb" firstAttribute="top" secondItem="y4i-E0-CGx" secondAttribute="bottom" constant="16" id="GN5-sq-kzS"/>
-                            <constraint firstItem="uMk-t0-2Ro" firstAttribute="top" secondItem="L2k-JL-fDb" secondAttribute="bottom" id="HVu-gp-SiD"/>
                             <constraint firstItem="wQe-Yj-udo" firstAttribute="leading" secondItem="p6b-Og-aac" secondAttribute="leading" constant="16" id="IMN-3U-3d5"/>
                             <constraint firstItem="o5x-Rd-tkH" firstAttribute="top" secondItem="p6b-Og-aac" secondAttribute="top" id="JAA-Vw-3mG"/>
                             <constraint firstAttribute="trailing" secondItem="B2H-5y-4xQ" secondAttribute="trailing" constant="16" id="LOb-Xd-LfT"/>
                             <constraint firstItem="cLL-ht-tGJ" firstAttribute="leading" secondItem="xfH-uV-6UG" secondAttribute="trailing" constant="8" id="Msl-Fn-rnm"/>
                             <constraint firstItem="xfH-uV-6UG" firstAttribute="leading" secondItem="wQe-Yj-udo" secondAttribute="trailing" constant="8" id="UIz-hN-MpE"/>
                             <constraint firstItem="vjm-ao-ZM1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cLL-ht-tGJ" secondAttribute="trailing" constant="8" id="UiO-ef-kVK"/>
+                            <constraint firstItem="uMk-t0-2Ro" firstAttribute="top" secondItem="L2k-JL-fDb" secondAttribute="bottom" id="Z1l-CO-2kZ"/>
                             <constraint firstItem="wQe-Yj-udo" firstAttribute="bottom" secondItem="vjm-ao-ZM1" secondAttribute="bottom" id="bcl-Qd-O00"/>
+                            <constraint firstItem="uMk-t0-2Ro" firstAttribute="top" secondItem="y4i-E0-CGx" secondAttribute="bottom" constant="88" id="bwn-dB-CtP"/>
                             <constraint firstItem="L2k-JL-fDb" firstAttribute="leading" secondItem="p6b-Og-aac" secondAttribute="leading" id="gti-tO-tHh"/>
                             <constraint firstItem="o5x-Rd-tkH" firstAttribute="leading" secondItem="p6b-Og-aac" secondAttribute="leading" id="jZ0-ib-z2b"/>
                             <constraint firstItem="cLL-ht-tGJ" firstAttribute="centerY" secondItem="xfH-uV-6UG" secondAttribute="centerY" id="ovr-B8-IvL"/>
@@ -181,17 +184,13 @@
                 <outlet property="bookmarkButton" destination="vjm-ao-ZM1" id="77v-hf-qrC"/>
                 <outlet property="bottomLine" destination="uMk-t0-2Ro" id="2WO-YJ-rSc"/>
                 <outlet property="commentButton" destination="adI-fI-xuu" id="9ed-6i-DeQ"/>
-                <outlet property="commentConstraintTrail" destination="rmT-EL-Dox" id="xRU-V8-0CL"/>
-                <outlet property="commentConstriantBottom" destination="HVu-gp-SiD" id="iay-1f-EOE"/>
-                <outlet property="commentConstriantHeight" destination="nz5-z5-LVc" id="9aL-PX-D86"/>
-                <outlet property="commentConstriantLead" destination="gti-tO-tHh" id="SI5-dZ-K1e"/>
-                <outlet property="commentConstriantTop" destination="GN5-sq-kzS" id="LIJ-Vm-pLQ"/>
                 <outlet property="commentContentLabel" destination="f1s-G2-LRF" id="nwy-eq-Gx4"/>
                 <outlet property="commentDateLabel" destination="1Jg-TD-O02" id="h9v-QJ-8px"/>
                 <outlet property="commentImageView" destination="YUN-GO-npp" id="dFx-ex-4SR"/>
                 <outlet property="commentView" destination="L2k-JL-fDb" id="nxV-AJ-oA3"/>
                 <outlet property="containerView" destination="p6b-Og-aac" id="62w-Xr-0fF"/>
                 <outlet property="likeButton" destination="B2H-5y-4xQ" id="yS2-14-bSh"/>
+                <outlet property="postContentConstriantBottom" destination="bwn-dB-CtP" id="kHq-oR-RkN"/>
                 <outlet property="postContentLabel" destination="y4i-E0-CGx" id="hDO-Ft-Hr9"/>
                 <outlet property="postDateLabel" destination="cLL-ht-tGJ" id="w7w-Y0-bGy"/>
                 <outlet property="scrollView" destination="o5x-Rd-tkH" id="Gao-ZH-qat"/>

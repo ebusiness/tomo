@@ -17,7 +17,6 @@ class NotificationListViewController: MyAccountBaseController {
         super.viewDidLoad()
         self.loadData()
         self.registerForNotifications()
-        
     }
 }
 

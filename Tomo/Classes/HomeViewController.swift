@@ -125,7 +125,7 @@ extension HomeViewController {
             }
             
             if post.images?.count > 0 {
-                return CGFloat(300 + textHeight)
+                return CGFloat(472 + textHeight)
             } else {
                 return CGFloat(108 + textHeight)
             }

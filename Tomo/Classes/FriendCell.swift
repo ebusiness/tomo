@@ -13,19 +13,15 @@ class FriendCell: UITableViewCell {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
-    @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet weak var countLabel: UILabel!//left right constraints == (sqrt(2)-1) * avatarImageView.frame.size.width / 2 / sqrt(2) - countLabel.frame.size.width / 2
     @IBOutlet weak var timeLabel: UILabel!
     
     var user: UserEntity?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        avatarImageView.layer.cornerRadius = avatarImageView.layer.bounds.width / 2
-        avatarImageView.layer.masksToBounds = true
         
-        countLabel.layer.cornerRadius = countLabel.layer.bounds.width / 2
-        countLabel.layer.masksToBounds = true
+        avatarImageView.layer.borderColor = avatarBorderColor
     }
     
     func setupDisplay() {
