@@ -12,8 +12,8 @@ let kTomoService = "jp.co.e-business.tomo"
 let kTomoPushToken = "token.push.tomo"
 #if DEBUG
     let AmazonS3Bucket = "tomo-dev"
-    let kAPIBaseURLString = "https://tomo.e-business.co.jp:81"
-//    let kAPIBaseURLString = "https://192.168.11.93:81"
+//    let kAPIBaseURLString = "https://tomo.e-business.co.jp:81"
+    let kAPIBaseURLString = "https://192.168.11.93:81"
 //    let kAPIBaseURLString = "https://192.168.11.83:81"
 #else
     let AmazonS3Bucket = "tomo-test"
