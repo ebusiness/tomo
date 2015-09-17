@@ -265,30 +265,17 @@ extension AccountEditViewController {
             }
         }
         
-        if user.gender != me.gender {
-            params["gender"] = user.gender
-        }
+        params["gender"] = user.gender
+        params["birthDay"] = user.birthDay
+        params["photo"] = user.photo
+        params["cover"] = user.cover
         
-        if user.birthDay != me.birthDay {
-            params["birthDay"] = user.birthDay
-        }
-        
-        if user.photo != me.photo {
-            params["photo"] = user.photo
-        }
-        
-        if user.cover != me.cover {
-            params["cover"] = user.cover
-        }
-        
-        if params.count > 0 {
-            AlamofireController.request(.PATCH, "/me", parameters: params, success: { result in
-                me = UserEntity(result)
-                self.user = me
-                self.headerView.updateUI()
+        AlamofireController.request(.PATCH, "/me", parameters: params, success: { result in
+            me = UserEntity(result)
+            self.user = me
+            self.headerView.updateUI()
             }) { err in
-                    
-            }
+                
         }
     }
 }

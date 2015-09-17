@@ -42,6 +42,7 @@ final class FriendListViewController: BaseTableViewController {
                     if myfriends.contains(notification.from.id) {
                         self.friends.insert(notification.from, atIndex: 0)
                         self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
+                        self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
                     }
                     self.tableView.endUpdates()
                 }
@@ -50,6 +51,7 @@ final class FriendListViewController: BaseTableViewController {
                 if !myfriends.contains(self.friends[indexPath.row].id) { // remove friend
                     self.friends.removeAtIndex(indexPath.row)
                     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Middle)
+                    self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
                     return
                 }
             }

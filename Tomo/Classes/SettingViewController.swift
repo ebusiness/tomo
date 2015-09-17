@@ -18,13 +18,34 @@ final class SettingViewController: MyAccountBaseController {
     
     @IBOutlet weak var notificationCell: UITableViewCell!
     var user: UserEntity!
+    let badgeView: UILabel! = {
+        let label = UILabel(frame: CGRectMake(0, 0, 20, 20))
+        label.backgroundColor = UIColor.redColor()
+        label.layer.cornerRadius = 10
+        label.layer.masksToBounds = true
+        label.textColor = UIColor.whiteColor()
+        label.font = UIFont.systemFontOfSize(12)
+        label.textAlignment = .Center
+        
+        return label
+    }()
+    
+    required init!(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
+        self.registerForNotifications()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
 //        badgeLabel.layer.cornerRadius = badgeLabel.frame.size.height / 2
         Util.changeImageColorForButton(editButton,color: UIColor.whiteColor())
-        
+        if me.notifications > 0 {
+            badgeView.text = String(me.notifications)
+            notificationCell.accessoryView = badgeView
+        } else {
+            notificationCell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        }
         self.updateUI()
     }
 
@@ -73,6 +94,26 @@ extension SettingViewController {
             addressLabel.text = address
         }
         
+    }
+}
+
+// MARK: NSNotificationCenter
+
+extension SettingViewController {
+    
+    private func registerForNotifications() {
+        ListenerEvent.Any.addObserver(self, selector: Selector("receiveAny:"))
+    }
+    
+    func receiveAny(notification: NSNotification) {
+        println("test############\(notification.userInfo)")
+        if let userInfo = notification.userInfo {
+            let remoteNotification = NotificationEntity(userInfo)
+            println(userInfo)
+            gcd.sync(.Main) {
+                // TODO: refresh badge number
+            }
+        }
     }
 }
 

@@ -23,7 +23,7 @@ class URLSchemesController {
         
     }
     
-    func handleOpenURL(url:NSURL)->Bool{
+    func handleOpenURL(url:NSURL)->Bool {
         
         if WXApi.handleOpenURL(url, delegate: OpenidController.instance) {
             return true
@@ -34,14 +34,10 @@ class URLSchemesController {
                 switch event {
                 case .Message:
                     openMessage(id)
-                case .FriendInvited:
-                    openFriendInvited(id)
-                case .FriendAccepted:
-                    openFriendAccepted(id)
-                case .PostNew:
-                    openPostNew(id)
-                case .PostCommented:
-                    openPostCommented(id)
+                case .FriendInvited, .FriendAccepted, .FriendRefused, .FriendBreak:
+                    openProfile(id)
+                case .PostNew, .PostLiked, .PostCommented, .PostBookmarked:
+                    openPost(id)
                 default:
                     println(url) // TODO
                     return false
@@ -98,7 +94,7 @@ extension URLSchemesController{
         }
     }
     
-    private func openFriendInvited(id: String){
+    private func openProfile(id: String){
         
         let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = UserEntity()
@@ -107,17 +103,7 @@ extension URLSchemesController{
         self.pushViewController(1, viewController: vc, animated: true)
     }
     
-    private func openFriendAccepted(id: String){
-        
-        AlamofireController.request(.GET, "/users/\(id)", success: { result in
-            let nickName = JSON(result)["nickName"].stringValue
-            Util.showInfo("\(nickName)已成为您的好友")
-        }) { err in
-            
-        }
-    }
-    
-    private func openPostNew(id: String){
+    private func openPost(id: String){
         
         AlamofireController.request(.GET, "/posts/\(id)", success: { result in
             let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
@@ -128,10 +114,6 @@ extension URLSchemesController{
             
         }
         
-    }
-    
-    private func openPostCommented(id: String){
-        self.openPostNew(id)
     }
     
 }

@@ -143,8 +143,8 @@ extension ProfileViewController {
             param["result"] = isApproved ? "accept" : "refuse"
             
             AlamofireController.request(.PATCH, "/invitations/\(invitation.id)", parameters: param, success: { _ in
-                self.addFriendToMe(isApproved,isComeFromSocket: false)
                 me.friendInvitations = me.friendInvitations.filter{ $0.from.id != self.user.id }
+                self.addFriendToMe(isApproved,isComeFromSocket: false)
             })
         }
     }

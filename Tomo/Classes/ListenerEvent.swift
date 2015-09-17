@@ -21,6 +21,8 @@ enum ListenerEvent: String {
     case PostCommented = "post-commented"
     case PostBookmarked = "post-bookmarked"
     
+    case Any = "any"
+    
     func getNotificationName() -> String{
         return "tomoNotification-" + self.rawValue
     }
@@ -29,6 +31,9 @@ enum ListenerEvent: String {
         // TODO - Should add new message into me.newMessage
         // TODO - Should add friend-approved into me.friends
         NSNotificationCenter.defaultCenter().postNotificationName(self.getNotificationName(), object: nil, userInfo: data)
+        if self != .Any {
+            NSNotificationCenter.defaultCenter().postNotificationName(ListenerEvent.Any.getNotificationName(), object: nil, userInfo: data)
+        }
         Util.showLocalNotificationGotSocketEvent(self, data: data)
     }
     

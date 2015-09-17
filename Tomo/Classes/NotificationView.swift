@@ -16,18 +16,18 @@ class NotificationView: UIView {
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var backgroundView: UIView!
     
-    var userInfo: [NSObject : AnyObject]! {
+    var notification: NotificationEntity! {
         didSet {
-            let payload = NotificationEntity(self.userInfo)
-            if let photo = payload.from.photo {
+            if let photo = self.notification.from.photo {
                 self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
             }
             
-            self.nickNameLabelView.text = payload.from.nickName
-            self.messageLabelView.text = payload.message
+            self.nickNameLabelView.text = self.notification.from.nickName
+            self.messageLabelView.text = self.notification.message
             gcd.async(.Default, delay: 5) {
                 self.closeTapped()
             }
+
         }
     }
     
@@ -53,6 +53,45 @@ class NotificationView: UIView {
                 }
             }
         }
+    }
+    
+    @IBAction func bodyTapped(sender: UITapGestureRecognizer) {
+        
+        if let event = ListenerEvent(rawValue: self.notification.type) {
+            
+            switch event {
+            case .Announcement:
+                
+                println("系统通知")
+                return
+                
+            case .Message: // Message
+                fallthrough
+                
+            case .FriendAccepted, .FriendRefused, .FriendBreak, .FriendInvited: // User
+                
+                self.avatarTapped(sender)
+                
+            case .PostNew, .PostLiked, .PostCommented, .PostBookmarked: // Post
+                
+                let id = "/\(self.notification.targetId)"
+                let host = self.notification.type
+                URLSchemesController.sharedInstance.handleOpenURL(NSURL(scheme: "tomo", host: host, path: id)!)
+                
+            default:
+                break
+            }
+            
+        
+        }
+    }
+    
+    @IBAction func avatarTapped(sender: UITapGestureRecognizer) {
+        
+        let id = "/\(self.notification.from.id)"
+        let host = self.notification.type
+        URLSchemesController.sharedInstance.handleOpenURL(NSURL(scheme: "tomo", host: host, path: id)!)
+    
     }
     
 }

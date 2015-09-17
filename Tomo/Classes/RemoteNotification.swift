@@ -35,7 +35,7 @@ class RemoteNotification {
                     event.receive(userInfo)
                     gcd.sync(.Main) {
                         let notificationView = self.getNotificationView()
-                        notificationView.userInfo = userInfo
+                        notificationView.notification = NotificationEntity(userInfo)
                         let topConstraint: AnyObject? = notificationView.superview!.constraints().find { $0.firstAttribute == .Top && $0.firstItem is NotificationView }
                         
                         if let topConstraint = topConstraint as? NSLayoutConstraint {

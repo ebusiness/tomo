@@ -11,12 +11,28 @@ import UIKit
 
 class NotificationListViewController: MyAccountBaseController {
     
+    private let loadTriggerHeight = CGFloat(88.0)
+    
     private var notifications:[NotificationEntity]?
+    private var isLoading = false
+    private var isExhausted = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.loadData()
         self.registerForNotifications()
+    }
+    
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        super.scrollViewDidScroll(scrollView)
+        
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        
+        if (contentHeight - UIScreen.mainScreen().bounds.height - loadTriggerHeight) < offsetY {
+            loadData()
+        }
     }
 }
 
@@ -51,6 +67,14 @@ extension NotificationListViewController {
 extension NotificationListViewController {
     
     private func loadData() {
+        
+        // skip if already in loading
+        if isLoading || isExhausted {
+            return
+        }
+        
+        isLoading = true
+        
         var params = Dictionary<String, AnyObject>()
         
         if let oldestNotifications = self.notifications?.last {
@@ -58,6 +82,7 @@ extension NotificationListViewController {
         }
         
         AlamofireController.request(.GET, "/notifications", parameters: params, success: { result in
+            
             let loadNotifications:[NotificationEntity]? = NotificationEntity.collection(result)
             if let notifications = self.notifications {
                 self.notifications = notifications + (loadNotifications ?? [])
@@ -65,8 +90,12 @@ extension NotificationListViewController {
                 self.notifications = loadNotifications
             }
             self.appendRows(loadNotifications?.count ?? 0)
+            self.isLoading = false
+            
         }) { err in
             
+            self.isLoading = false
+            self.isExhausted = true
         }
     }
     
@@ -84,15 +113,38 @@ extension NotificationListViewController {
         tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
         tableView.endUpdates()
-        
+    }
+}
+
+// MARK: NSNotificationCenter
+
+extension NotificationListViewController {
+
+    private func registerForNotifications() {
+        ListenerEvent.Any.addObserver(self, selector: Selector("receiveAny:"))
     }
     
-// MARK: NSNotificationCenter
-    
-    private func registerForNotifications() {
-        ListenerEvent.FriendInvited.addObserver(self, selector: Selector("receiveFriendInvited:"))
-        ListenerEvent.FriendAccepted.addObserver(self, selector: Selector("receiveFriendAccepted:"))
-        ListenerEvent.FriendRefused.addObserver(self, selector: Selector("receiveFriendRefused:"))
+    func receiveAny(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            let remoteNotification = NotificationEntity(userInfo)
+            
+            if let type = ListenerEvent(rawValue: remoteNotification.type) {
+                if type == .FriendInvited || type == .Message { //receive it by friendlistviewcontroller
+                    return
+                }
+            }
+            
+            if let notifications = self.notifications {
+                self.notifications!.insert(remoteNotification, atIndex: 0)
+            } else {
+                self.notifications = [remoteNotification]
+            }
+            gcd.sync(.Main) {
+                self.tableView.beginUpdates()
+                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Fade)
+                self.tableView.endUpdates()
+            }
+        }
     }
 }
 

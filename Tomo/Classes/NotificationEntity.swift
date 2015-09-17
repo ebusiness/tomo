@@ -35,7 +35,12 @@ class NotificationEntity: Entity {
         self.id = json["_id"].string ?? json["id"].stringValue
         self.from = UserEntity(json["from"])
         self.type = json["type"].stringValue
-        self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
+        
+        if let createDate = json["createDate"].string {
+            self.createDate = createDate.toDate(format: kDateFormat)
+        } else {
+            self.createDate = NSDate()
+        }
         
         self.message = json["aps"]["alert"].stringValue
         self.targetId = json["targetId"].stringValue
