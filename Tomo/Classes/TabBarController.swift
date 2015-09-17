@@ -88,6 +88,7 @@ extension TabBarController {
         
         for tabItem in TabItem.items {
             let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: tabItem.storyBoardName())
+            
             vc.tabBarItem = UITabBarItem(title: nil, image: tabItem.tabImage(), selectedImage: tabItem.tabImage())
             vc.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
             viewControllers.append(vc)

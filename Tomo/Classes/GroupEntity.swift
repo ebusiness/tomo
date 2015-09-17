@@ -18,7 +18,7 @@ class GroupEntity: Entity {
     
     var name: String!
     
-    var cover: String?
+    var cover: String!
     
     var introduction: String?
     

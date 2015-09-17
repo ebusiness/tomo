@@ -32,8 +32,8 @@ final class HomeViewController: BaseTableViewController {
         var postImageCellNib = UINib(nibName: "PostImageCell", bundle: nil)
         tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
         
-        var RecommendGroupCellNib = UINib(nibName: "RecommendGroupCell", bundle: nil)
-        tableView.registerNib(RecommendGroupCellNib, forCellReuseIdentifier: "RecommendGroupCell")
+        var RecommendSiteTableCellNib = UINib(nibName: "RecommendSiteTableCell", bundle: nil)
+        tableView.registerNib(RecommendSiteTableCellNib, forCellReuseIdentifier: "RecommendSiteTableCell")
         
         tableView.backgroundColor = UIColor.groupTableViewBackgroundColor()
         clearsSelectionOnViewWillAppear = false
@@ -78,9 +78,10 @@ extension HomeViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if let content = contents[indexPath.item] as? String {
+        if let groups = contents[indexPath.item] as? [GroupEntity] {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("RecommendGroupCell", forIndexPath: indexPath) as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("RecommendSiteTableCell", forIndexPath: indexPath) as! RecommendSiteTableCell
+            cell.groups = groups
             return cell
             
         } else if let post = contents[indexPath.row] as? PostEntity {
@@ -109,28 +110,7 @@ extension HomeViewController {
         } else {
             return UITableViewCell()
         }
-        
-//        var post = contents[indexPath.row] as! PostEntity
-//        var cell: PostCell!
-//        
-//        if post.images?.count > 0 {
-//            
-//            cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell", forIndexPath: indexPath) as! PostImageCell
-//            
-//            let subviews = (cell as! PostImageCell).scrollView.subviews
-//            
-//            for subview in subviews {
-//                subview.removeFromSuperview()
-//            }
-//            
-//        } else {
-//            cell = tableView.dequeueReusableCellWithIdentifier("PostCell", forIndexPath: indexPath) as! PostCell
-//        }
-//        
-//        cell.post = post
-//        cell.setupDisplay()
-//        
-//        return cell
+
     }
 }
 
@@ -139,9 +119,10 @@ extension HomeViewController {
 extension HomeViewController {
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let post: AnyObject = contents[indexPath.row]
-        self.performSegueWithIdentifier("postdetail", sender: post)
+        if let post = contents[indexPath.row] as? PostEntity {
+            self.performSegueWithIdentifier("postdetail", sender: post)
+        }
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -216,21 +197,21 @@ extension HomeViewController {
             
             AlamofireController.request(.GET, "/groups", parameters: nil, success: { groups in
                 
-                let posts:[PostEntity]? = PostEntity.collection(result)
-                let groups:[GroupEntity]? = GroupEntity.collection(groups)
+                let posts: [PostEntity]? = PostEntity.collection(result)
+                let groups: [GroupEntity]? = GroupEntity.collection(groups)
                 
                 var rowNumber = 0
                 
-                if let loadPosts:[AnyObject] = posts {
+                if let loadPosts: [AnyObject] = posts {
                     self.contents += loadPosts
                     rowNumber += loadPosts.count
                 }
                 
-                if let loadGroups = groups {
+                if let loadGroups: AnyObject = groups as? AnyObject {
                     
                     if rowNumber > 0 {
                         let insertIndex = arc4random_uniform(UInt32(rowNumber/2)) + 1
-                        self.contents.insert("placeholder", atIndex: Int(insertIndex))
+                        self.contents.insert(loadGroups, atIndex: Int(insertIndex))
                     }
 //                    self.contents.append("placeHolder")
                     rowNumber += 1

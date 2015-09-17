@@ -38,8 +38,10 @@
 		1F1176AE1B983D280049D9F5 /* SwiftRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1176A11B983D280049D9F5 /* SwiftRegex.swift */; };
 		1F1176AF1B983D280049D9F5 /* WebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1176A21B983D280049D9F5 /* WebSocket.swift */; };
 		1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18B8331B844665003BD469 /* CreatePostViewController.swift */; };
-		1F19D9541BA9550A007C9919 /* RecommendGroupCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F19D9531BA9550A007C9919 /* RecommendGroupCell.xib */; };
-		1F19D9561BA9616C007C9919 /* RecommendGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D9551BA9616C007C9919 /* RecommendGroupCell.swift */; };
+		1F19D9541BA9550A007C9919 /* RecommendSiteTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */; };
+		1F19D9561BA9616C007C9919 /* RecommendSiteTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */; };
+		1F19D95A1BA96B3E007C9919 /* RecommendSiteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F19D9591BA96B3E007C9919 /* RecommendSiteCell.xib */; };
+		1F19D95C1BA96B8E007C9919 /* RecommendSiteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D95B1BA96B8E007C9919 /* RecommendSiteCell.swift */; };
 		1F350B2B1B68D32800088C1E /* PostAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */; };
 		1F6AE7851B6F1A2300D7F488 /* PostAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */; };
 		1F79C1B21B5E0E22008800E1 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B11B5E0E22008800E1 /* FriendListViewController.swift */; };
@@ -175,8 +177,10 @@
 		1F1176A11B983D280049D9F5 /* SwiftRegex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRegex.swift; sourceTree = "<group>"; };
 		1F1176A21B983D280049D9F5 /* WebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocket.swift; sourceTree = "<group>"; };
 		1F18B8331B844665003BD469 /* CreatePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreatePostViewController.swift; path = Classes/CreatePostViewController.swift; sourceTree = "<group>"; };
-		1F19D9531BA9550A007C9919 /* RecommendGroupCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RecommendGroupCell.xib; path = Classes/RecommendGroupCell.xib; sourceTree = "<group>"; };
-		1F19D9551BA9616C007C9919 /* RecommendGroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendGroupCell.swift; path = Classes/RecommendGroupCell.swift; sourceTree = "<group>"; };
+		1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RecommendSiteTableCell.xib; path = Classes/RecommendSiteTableCell.xib; sourceTree = "<group>"; };
+		1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendSiteTableCell.swift; path = Classes/RecommendSiteTableCell.swift; sourceTree = "<group>"; };
+		1F19D9591BA96B3E007C9919 /* RecommendSiteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RecommendSiteCell.xib; path = Classes/RecommendSiteCell.xib; sourceTree = "<group>"; };
+		1F19D95B1BA96B8E007C9919 /* RecommendSiteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendSiteCell.swift; path = Classes/RecommendSiteCell.swift; sourceTree = "<group>"; };
 		1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostAnnotationView.swift; path = Classes/PostAnnotationView.swift; sourceTree = "<group>"; };
 		1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostAnnotation.swift; path = Classes/PostAnnotation.swift; sourceTree = "<group>"; };
 		1F79C1B11B5E0E22008800E1 /* FriendListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendListViewController.swift; path = Classes/FriendListViewController.swift; sourceTree = "<group>"; };
@@ -379,7 +383,8 @@
 				1F8BF0121B536D9500090079 /* PostImageCell.xib */,
 				1F902D761B7D9C2800F6DC2D /* EmptyFriends.xib */,
 				D0DB07D61B9D1B5200C06C4E /* NotificationView.xib */,
-				1F19D9531BA9550A007C9919 /* RecommendGroupCell.xib */,
+				1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */,
+				1F19D9591BA96B3E007C9919 /* RecommendSiteCell.xib */,
 			);
 			name = xib;
 			sourceTree = "<group>";
@@ -619,7 +624,8 @@
 				1F8BF0101B53639F00090079 /* PostImageCell.swift */,
 				D0BA8DE61B55375A00271F2B /* PostViewController.swift */,
 				1F18B8331B844665003BD469 /* CreatePostViewController.swift */,
-				1F19D9551BA9616C007C9919 /* RecommendGroupCell.swift */,
+				1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */,
+				1F19D95B1BA96B8E007C9919 /* RecommendSiteCell.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -806,8 +812,9 @@
 				296D8BC31AFC5A680058D400 /* LaunchScreen.xib in Resources */,
 				29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */,
 				1F902D771B7D9C2800F6DC2D /* EmptyFriends.xib in Resources */,
-				1F19D9541BA9550A007C9919 /* RecommendGroupCell.xib in Resources */,
+				1F19D9541BA9550A007C9919 /* RecommendSiteTableCell.xib in Resources */,
 				1FEE80EC1B4E5C540061B913 /* PostCell.xib in Resources */,
+				1F19D95A1BA96B3E007C9919 /* RecommendSiteCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -919,6 +926,7 @@
 				D0A0C0321B5F5BF900ABFA5F /* ProfileViewController.swift in Sources */,
 				D0DB07DB1B9D266900C06C4E /* NotificationCell.swift in Sources */,
 				1F1176AB1B983D280049D9F5 /* SocketPacket.swift in Sources */,
+				1F19D95C1BA96B8E007C9919 /* RecommendSiteCell.swift in Sources */,
 				1F1176A51B983D280049D9F5 /* SocketEngine.swift in Sources */,
 				293EB4251B132B06006BAF27 /* JSQVoiceMediaItem.m in Sources */,
 				D0A0C02E1B5F594C00ABFA5F /* ProfileBaseController.swift in Sources */,
@@ -976,7 +984,7 @@
 				1F9ACAFA1B69F99F00648A82 /* PostEntity.swift in Sources */,
 				1F937FE81B58EE8B009722CE /* AccountEditViewController.swift in Sources */,
 				1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */,
-				1F19D9561BA9616C007C9919 /* RecommendGroupCell.swift in Sources */,
+				1F19D9561BA9616C007C9919 /* RecommendSiteTableCell.swift in Sources */,
 				1F985E6C1B60C19F008D5369 /* Sequence.swift in Sources */,
 				1FA76B041BA2AC03004776B0 /* GroupCollectionViewController.swift in Sources */,
 				1F1176A31B983D280049D9F5 /* SocketAckManager.swift in Sources */,
