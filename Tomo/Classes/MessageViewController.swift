@@ -241,14 +241,12 @@ extension MessageViewController {
             
             if friend.id == json["from"]["id"].stringValue {
                 let message = MessageEntity(json)
-                message.opened = true
                 message.to = me
                 message.from = friend
                 
                 let newMessage = JSQMessageEntity(message: message)
 
                 self.messages.append(newMessage)
-                friend.lastMessage = message
                 
                 gcd.sync(.Main, closure: { () -> () in
                     
@@ -266,7 +264,6 @@ extension MessageViewController {
         newMessage.message.to = friend
         newMessage.message.from = me
         newMessage.message.content = text
-        newMessage.message.opened = true
         newMessage.message.createDate = NSDate()
         
         friend.lastMessage = newMessage.message

@@ -248,8 +248,8 @@ extension FriendListViewController {
     
     private func registerForNotifications() {
         ListenerEvent.Message.addObserver(self, selector: Selector("receiveMessage:"))
-        ListenerEvent.FriendInvited.addObserver(self, selector: Selector("receiveFriendInvited:"))
         ListenerEvent.FriendAccepted.addObserver(self, selector: Selector("receiveFriendAccepted:"))
+        ListenerEvent.FriendBreak.addObserver(self, selector: Selector("receiveFriendBreak:"))
     }
     
     func receiveMessage(notification: NSNotification) {
@@ -261,40 +261,35 @@ extension FriendListViewController {
             if let user = user {
                 
                 let message = MessageEntity(json)
-                message.opened = false
                 message.to = me
                 message.from = user
                 user.lastMessage = message
                 
-                if let vc = self.navigationController?.childViewControllers.last as? MessageViewController where vc.friend.id == user.id {
-                    message.opened = true
-                } else {
-                    me.newMessages.insert(message, atIndex: 0)
-                }
+                let row = self.friends.indexOf(user)!
+                let indexPath = NSIndexPath(forRow: row, inSection: 1)
                 
-                gcd.sync(.Main, closure: { () -> () in
+                if 0 == row {
+                    gcd.sync(.Main){
+                        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                    }
+                } else {
+                    self.friends.remove(user)
+                    self.friends.insert(user, atIndex: 0)
                     
-                    self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.friends.indexOf(user)!, inSection: 1)], withRowAnimation: .Automatic)
-                    
-                    self.updateBadgeNumber() // TODO - optimization
-                })
+                    gcd.sync(.Main){
+                        
+                        let firstIndexPath =  NSIndexPath(forRow: 0, inSection: 1)
+                        
+                        self.tableView.beginUpdates()
+                        self.tableView.moveRowAtIndexPath(indexPath, toIndexPath: firstIndexPath)
+                        self.tableView.endUpdates()
+                        
+                        self.tableView.beginUpdates()
+                        self.tableView.reloadRowsAtIndexPaths([firstIndexPath], withRowAnimation: .Automatic)
+                        self.tableView.endUpdates()
+                    }
+                }
             }
-        }
-    }
-    
-    func receiveFriendInvited(notification: NSNotification) {
-        if let userInfo = notification.userInfo {
-            let invitation = NotificationEntity(userInfo)
-            invitation.id = invitation.targetId
-            me.friendInvitations.insert(invitation, atIndex: 0)
-            
-            gcd.sync(.Main, closure: { () -> () in
-                self.updateBadgeNumber()
-//                self.tableView.beginUpdates()
-                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation:  .Automatic)
-//                self.tableView.endUpdates()
-            })
-            
         }
     }
     
@@ -303,26 +298,31 @@ extension FriendListViewController {
             
             let from = UserEntity(JSON(userInfo)["from"])
             
-            let nvitationIndex = me.friendInvitations.indexOf{$0.from.id == from.id}
-            if let nvitationIndex = nvitationIndex {
-                
-                me.friendInvitations.removeAtIndex(nvitationIndex)
-                let indexPaths = [NSIndexPath(forRow: nvitationIndex, inSection: 0)]
-                
+            let index = self.friends.indexOf { $0.id == from.id }
+            
+            if index == nil {
+                self.friends.insert(from, atIndex: 0)
                 gcd.sync(.Main, closure: { () -> () in
-                    self.updateBadgeNumber()
                     self.tableView.beginUpdates()
-                    self.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+                    self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
                     self.tableView.endUpdates()
                 })
             }
+        }
+    }
+    
+    func receiveFriendBreak(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
             
-            if me.addFriend(from.id) {
-                self.friends.insert(from, atIndex: 0)
+            let from = UserEntity(JSON(userInfo)["from"])
+            
+            let index = self.friends.indexOf { $0.id == from.id }
+            
+            if let index = index {
+                self.friends.removeAtIndex(index)
                 gcd.sync(.Main, closure: { () -> () in
-                    self.updateBadgeNumber()
                     self.tableView.beginUpdates()
-                    self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
+                    self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation:  .Automatic)
                     self.tableView.endUpdates()
                 })
             }

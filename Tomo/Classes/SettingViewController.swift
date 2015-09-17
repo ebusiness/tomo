@@ -30,13 +30,9 @@ final class SettingViewController: MyAccountBaseController {
         return label
     }()
     
-    required init!(coder aDecoder: NSCoder!) {
-        super.init(coder: aDecoder)
-        self.registerForNotifications()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.registerForNotifications()
         
 //        badgeLabel.layer.cornerRadius = badgeLabel.frame.size.height / 2
         Util.changeImageColorForButton(editButton,color: UIColor.whiteColor())
@@ -106,12 +102,19 @@ extension SettingViewController {
     }
     
     func receiveAny(notification: NSNotification) {
-        println("test############\(notification.userInfo)")
         if let userInfo = notification.userInfo {
             let remoteNotification = NotificationEntity(userInfo)
-            println(userInfo)
-            gcd.sync(.Main) {
-                // TODO: refresh badge number
+            
+            if let type = ListenerEvent(rawValue: remoteNotification.type) {
+                if type == .FriendInvited || type == .Message { //receive it by friendlistviewcontroller
+                    return
+                }
+            }
+            if me.notifications > 0 {
+                gcd.sync(.Main) {
+                    self.badgeView.text = String(me.notifications)
+                    self.notificationCell.accessoryView = self.badgeView
+                }
             }
         }
     }

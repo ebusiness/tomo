@@ -202,9 +202,9 @@ extension MyPostsViewController {
             
             let cell: AnyObject? = self.tableView.visibleCells().find { ($0 as! PostCell).post.id == postid }
             if let cell = cell as? PostCell {
-                gcd.sync(.Main, closure: { () -> () in
+                gcd.sync(.Main) {
                     done(cell: cell, user: user)
-                })
+                }
             }
         }
     }

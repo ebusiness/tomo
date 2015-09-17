@@ -121,6 +121,7 @@ extension UserEntity {
         
         self.invitations?.remove(uid)
         self.friendInvitations = self.friendInvitations.filter { $0.from.id != uid }
+        self.newMessages = self.newMessages.filter { $0.from.id != uid }
         self.friends?.remove(uid)
     }
 }

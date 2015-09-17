@@ -83,6 +83,9 @@ extension NotificationListViewController {
         
         AlamofireController.request(.GET, "/notifications", parameters: params, success: { result in
             
+            me.notifications = 0
+            self.navigationController?.tabBarItem.badgeValue = nil
+            
             let loadNotifications:[NotificationEntity]? = NotificationEntity.collection(result)
             if let notifications = self.notifications {
                 self.notifications = notifications + (loadNotifications ?? [])

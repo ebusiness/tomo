@@ -89,7 +89,7 @@ final class ProfileViewController: ProfileBaseController {
             
             AlamofireController.request(.DELETE, "/friends/\(self.user.id)", success: { _ in
                 
-                me.friends?.remove(self.user.id)
+                me.removeFriend(self.user.id)
 //                self.navigationController?.popViewControllerAnimated(true)
                 self.updateUI()
 
@@ -143,27 +143,22 @@ extension ProfileViewController {
             param["result"] = isApproved ? "accept" : "refuse"
             
             AlamofireController.request(.PATCH, "/invitations/\(invitation.id)", parameters: param, success: { _ in
+                
                 me.friendInvitations = me.friendInvitations.filter{ $0.from.id != self.user.id }
-                self.addFriendToMe(isApproved,isComeFromSocket: false)
+                if isApproved {
+                    Util.showSuccess(self.user.nickName + " 已成为您的好友")
+                    me.addFriend(self.user.id)
+                } else {
+                    me.invitations?.remove(self.user.id)
+                    Util.showMessage("您拒绝了 " + self.user.nickName + " 的好友邀请")
+                }
+                
+                self.hideInvitationView()
             })
         }
     }
     
-    private func addFriendToMe(isApproved:Bool,isComeFromSocket: Bool = true){
-        
-        if isApproved {
-            
-            Util.showSuccess(self.user.nickName + " 已成为您的好友")
-//                me.friendInvitations = me.friendInvitations?.filter{ $0.from.id != self.user.id } //already do it in the friendlistViewController when called by NSNotificationCenter
-            me.addFriend(self.user.id)
-            
-        } else {
-            me.invitations?.remove(self.user.id)
-            if !isComeFromSocket {
-                Util.showMessage("您拒绝了 " + self.user.nickName + " 的好友邀请")
-            }
-        }
-        
+    private func hideInvitationView(){
         self.heightOfInvitedView.constant = 0
         self.changeHeaderView(height:240,done: { () -> () in
             
@@ -177,44 +172,45 @@ extension ProfileViewController {
 extension ProfileViewController {
     
     private func registerForNotifications() {
+        ListenerEvent.FriendBreak.addObserver(self, selector: Selector("receiveFriendBreak:"))
         ListenerEvent.FriendInvited.addObserver(self, selector: Selector("receiveFriendInvited:"))
         ListenerEvent.FriendAccepted.addObserver(self, selector: Selector("receiveFriendAccepted:"))
         ListenerEvent.FriendRefused.addObserver(self, selector: Selector("receiveFriendRefused:"))
     }
     
-    private func receive(notification: NSNotification, done: (json: JSON)->() ){
+    private func receive(notification: NSNotification, done: ()->() ){
         if let userInfo = notification.userInfo {
             
             let json = JSON(userInfo)
             if self.user.id == json["from"]["id"].stringValue {
                 gcd.sync(.Main, closure: { () -> () in
-                    done(json: json)
+                    done()
                 })
             }
         }
     }
     
-    func receiveFriendInvited(notification: NSNotification) {
-        self.receive(notification, done: { json in
-            
-            let invitation = NotificationEntity(json)
-            invitation.id = invitation.targetId
-            
-            me.friendInvitations.append( invitation )
-            
+    func receiveFriendBreak(notification: NSNotification) {
+        self.receive(notification) {
             self.updateUI()
-        })
+        }
+    }
+    
+    func receiveFriendInvited(notification: NSNotification) {
+        self.receive(notification) {
+            self.updateUI()
+        }
     }
     
     func receiveFriendAccepted(notification: NSNotification) {
-        self.receive(notification, done: { _ in
-            self.addFriendToMe(true)
-        })
+        self.receive(notification) {
+            self.hideInvitationView()
+        }
     }
     
     func receiveFriendRefused(notification: NSNotification) {
-        self.receive(notification, done: { _ in
-            self.addFriendToMe(false)
-        })
+        self.receive(notification) {
+            self.hideInvitationView()
+        }
     }
 }

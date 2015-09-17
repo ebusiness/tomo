@@ -18,8 +18,6 @@ class MessageEntity: Entity {
     
     var content: String!
     
-    var opened: Bool!
-    
     var createDate: NSDate!
     
     override init() {
@@ -36,7 +34,6 @@ class MessageEntity: Entity {
         self.to = UserEntity(json["to"])
         self.from = UserEntity(json["from"])
         self.content = json["aps"]["alert"].string ?? json["content"].stringValue
-        self.opened = json["opened"].boolValue
         self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
         
     }
