@@ -26,6 +26,8 @@ class GroupEntity: Entity {
     
     var address: String?
     
+    var station: String?
+    
     var members: [UserEntity]?
     
     var posts: [PostEntity]?
@@ -60,6 +62,8 @@ class GroupEntity: Entity {
         self.coordinate = json["coordinate"].arrayObject as? [Double]
         
         self.address = json["address"].stringValue
+        
+        self.station = json["station"]["name"].stringValue
         
         if let members = json["members"].array {
             self.members = []

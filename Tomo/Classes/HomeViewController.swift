@@ -82,6 +82,7 @@ extension HomeViewController {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("RecommendSiteTableCell", forIndexPath: indexPath) as! RecommendSiteTableCell
             cell.groups = groups
+            cell.delegate = self
             return cell
             
         } else if let post = contents[indexPath.row] as? PostEntity {
@@ -213,7 +214,6 @@ extension HomeViewController {
                         let insertIndex = arc4random_uniform(UInt32(rowNumber/2)) + 1
                         self.contents.insert(loadGroups, atIndex: Int(insertIndex))
                     }
-//                    self.contents.append("placeHolder")
                     rowNumber += 1
                 }
                 

@@ -40,8 +40,9 @@
 		1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18B8331B844665003BD469 /* CreatePostViewController.swift */; };
 		1F19D9541BA9550A007C9919 /* RecommendSiteTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */; };
 		1F19D9561BA9616C007C9919 /* RecommendSiteTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */; };
-		1F19D95A1BA96B3E007C9919 /* RecommendSiteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F19D9591BA96B3E007C9919 /* RecommendSiteCell.xib */; };
-		1F19D95C1BA96B8E007C9919 /* RecommendSiteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D95B1BA96B8E007C9919 /* RecommendSiteCell.swift */; };
+		1F19D95A1BA96B3E007C9919 /* GroupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F19D9591BA96B3E007C9919 /* GroupCollectionViewCell.xib */; };
+		1F19D95C1BA96B8E007C9919 /* GroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D95B1BA96B8E007C9919 /* GroupCollectionViewCell.swift */; };
+		1F26B29A1BAA61D10063AC6B /* GroupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */; };
 		1F350B2B1B68D32800088C1E /* PostAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */; };
 		1F6AE7851B6F1A2300D7F488 /* PostAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */; };
 		1F79C1B21B5E0E22008800E1 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B11B5E0E22008800E1 /* FriendListViewController.swift */; };
@@ -71,8 +72,8 @@
 		1F9ACAFA1B69F99F00648A82 /* PostEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAF91B69F99F00648A82 /* PostEntity.swift */; };
 		1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */; };
 		1FA76AFE1BA27B1E004776B0 /* Group.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FA76AFD1BA27B1E004776B0 /* Group.storyboard */; };
-		1FA76B021BA2A01D004776B0 /* GroupListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA76B011BA2A01D004776B0 /* GroupListTableViewController.swift */; };
-		1FA76B041BA2AC03004776B0 /* GroupCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA76B031BA2AC03004776B0 /* GroupCollectionViewController.swift */; };
+		1FA76B021BA2A01D004776B0 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA76B011BA2A01D004776B0 /* GroupListViewController.swift */; };
+		1FA76B041BA2AC03004776B0 /* GroupDiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA76B031BA2AC03004776B0 /* GroupDiscoverViewController.swift */; };
 		1FA76B091BA2C642004776B0 /* GroupCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA76B081BA2C642004776B0 /* GroupCreateViewController.swift */; };
 		1FCA1E631B71D0C8000F2936 /* CommentEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */; };
 		1FCA1E651B7221F7000F2936 /* NotificationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */; };
@@ -179,8 +180,9 @@
 		1F18B8331B844665003BD469 /* CreatePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreatePostViewController.swift; path = Classes/CreatePostViewController.swift; sourceTree = "<group>"; };
 		1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RecommendSiteTableCell.xib; path = Classes/RecommendSiteTableCell.xib; sourceTree = "<group>"; };
 		1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendSiteTableCell.swift; path = Classes/RecommendSiteTableCell.swift; sourceTree = "<group>"; };
-		1F19D9591BA96B3E007C9919 /* RecommendSiteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RecommendSiteCell.xib; path = Classes/RecommendSiteCell.xib; sourceTree = "<group>"; };
-		1F19D95B1BA96B8E007C9919 /* RecommendSiteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendSiteCell.swift; path = Classes/RecommendSiteCell.swift; sourceTree = "<group>"; };
+		1F19D9591BA96B3E007C9919 /* GroupCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupCollectionViewCell.xib; path = Classes/GroupCollectionViewCell.xib; sourceTree = "<group>"; };
+		1F19D95B1BA96B8E007C9919 /* GroupCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCollectionViewCell.swift; path = Classes/GroupCollectionViewCell.swift; sourceTree = "<group>"; };
+		1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDetailViewController.swift; path = Classes/GroupDetailViewController.swift; sourceTree = "<group>"; };
 		1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostAnnotationView.swift; path = Classes/PostAnnotationView.swift; sourceTree = "<group>"; };
 		1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostAnnotation.swift; path = Classes/PostAnnotation.swift; sourceTree = "<group>"; };
 		1F79C1B11B5E0E22008800E1 /* FriendListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendListViewController.swift; path = Classes/FriendListViewController.swift; sourceTree = "<group>"; };
@@ -212,8 +214,8 @@
 		1F9ACAF91B69F99F00648A82 /* PostEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostEntity.swift; path = Classes/PostEntity.swift; sourceTree = "<group>"; };
 		1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserEntity.swift; path = Classes/UserEntity.swift; sourceTree = "<group>"; };
 		1FA76AFD1BA27B1E004776B0 /* Group.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Group.storyboard; path = Classes/Group.storyboard; sourceTree = "<group>"; };
-		1FA76B011BA2A01D004776B0 /* GroupListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupListTableViewController.swift; path = Classes/GroupListTableViewController.swift; sourceTree = "<group>"; };
-		1FA76B031BA2AC03004776B0 /* GroupCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCollectionViewController.swift; path = Classes/GroupCollectionViewController.swift; sourceTree = "<group>"; };
+		1FA76B011BA2A01D004776B0 /* GroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupListViewController.swift; path = Classes/GroupListViewController.swift; sourceTree = "<group>"; };
+		1FA76B031BA2AC03004776B0 /* GroupDiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDiscoverViewController.swift; path = Classes/GroupDiscoverViewController.swift; sourceTree = "<group>"; };
 		1FA76B081BA2C642004776B0 /* GroupCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCreateViewController.swift; path = Classes/GroupCreateViewController.swift; sourceTree = "<group>"; };
 		1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentEntity.swift; path = Classes/CommentEntity.swift; sourceTree = "<group>"; };
 		1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationEntity.swift; path = Classes/NotificationEntity.swift; sourceTree = "<group>"; };
@@ -384,7 +386,7 @@
 				1F902D761B7D9C2800F6DC2D /* EmptyFriends.xib */,
 				D0DB07D61B9D1B5200C06C4E /* NotificationView.xib */,
 				1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */,
-				1F19D9591BA96B3E007C9919 /* RecommendSiteCell.xib */,
+				1F19D9591BA96B3E007C9919 /* GroupCollectionViewCell.xib */,
 			);
 			name = xib;
 			sourceTree = "<group>";
@@ -439,9 +441,11 @@
 		1FA76AFF1BA29D43004776B0 /* Group */ = {
 			isa = PBXGroup;
 			children = (
-				1FA76B011BA2A01D004776B0 /* GroupListTableViewController.swift */,
-				1FA76B031BA2AC03004776B0 /* GroupCollectionViewController.swift */,
+				1FA76B011BA2A01D004776B0 /* GroupListViewController.swift */,
+				1FA76B031BA2AC03004776B0 /* GroupDiscoverViewController.swift */,
 				1FA76B081BA2C642004776B0 /* GroupCreateViewController.swift */,
+				1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */,
+				1F19D95B1BA96B8E007C9919 /* GroupCollectionViewCell.swift */,
 			);
 			name = Group;
 			sourceTree = "<group>";
@@ -625,7 +629,6 @@
 				D0BA8DE61B55375A00271F2B /* PostViewController.swift */,
 				1F18B8331B844665003BD469 /* CreatePostViewController.swift */,
 				1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */,
-				1F19D95B1BA96B8E007C9919 /* RecommendSiteCell.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -814,7 +817,7 @@
 				1F902D771B7D9C2800F6DC2D /* EmptyFriends.xib in Resources */,
 				1F19D9541BA9550A007C9919 /* RecommendSiteTableCell.xib in Resources */,
 				1FEE80EC1B4E5C540061B913 /* PostCell.xib in Resources */,
-				1F19D95A1BA96B3E007C9919 /* RecommendSiteCell.xib in Resources */,
+				1F19D95A1BA96B3E007C9919 /* GroupCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -926,7 +929,7 @@
 				D0A0C0321B5F5BF900ABFA5F /* ProfileViewController.swift in Sources */,
 				D0DB07DB1B9D266900C06C4E /* NotificationCell.swift in Sources */,
 				1F1176AB1B983D280049D9F5 /* SocketPacket.swift in Sources */,
-				1F19D95C1BA96B8E007C9919 /* RecommendSiteCell.swift in Sources */,
+				1F19D95C1BA96B8E007C9919 /* GroupCollectionViewCell.swift in Sources */,
 				1F1176A51B983D280049D9F5 /* SocketEngine.swift in Sources */,
 				293EB4251B132B06006BAF27 /* JSQVoiceMediaItem.m in Sources */,
 				D0A0C02E1B5F594C00ABFA5F /* ProfileBaseController.swift in Sources */,
@@ -942,7 +945,7 @@
 				29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */,
 				29539C791B13175D00545509 /* VoiceMessageController.swift in Sources */,
 				2994AF911B019AA100656C39 /* GCD.swift in Sources */,
-				1FA76B021BA2A01D004776B0 /* GroupListTableViewController.swift in Sources */,
+				1FA76B021BA2A01D004776B0 /* GroupListViewController.swift in Sources */,
 				1FE7CEF51B8C9561006700FC /* SignUpViewController.swift in Sources */,
 				1F985E5C1B60C19F008D5369 /* Double.swift in Sources */,
 				D0B6364E1B81A9C70012C4E8 /* URLSchemesController.swift in Sources */,
@@ -986,7 +989,7 @@
 				1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */,
 				1F19D9561BA9616C007C9919 /* RecommendSiteTableCell.swift in Sources */,
 				1F985E6C1B60C19F008D5369 /* Sequence.swift in Sources */,
-				1FA76B041BA2AC03004776B0 /* GroupCollectionViewController.swift in Sources */,
+				1FA76B041BA2AC03004776B0 /* GroupDiscoverViewController.swift in Sources */,
 				1F1176A31B983D280049D9F5 /* SocketAckManager.swift in Sources */,
 				1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */,
 				1F1176A71B983D280049D9F5 /* SocketEventHandler.swift in Sources */,
@@ -1001,6 +1004,7 @@
 				1F985E6A1B60C19F008D5369 /* Range.swift in Sources */,
 				1F1176AF1B983D280049D9F5 /* WebSocket.swift in Sources */,
 				D0BA8DE71B55375A00271F2B /* PostViewController.swift in Sources */,
+				1F26B29A1BAA61D10063AC6B /* GroupDetailViewController.swift in Sources */,
 				295272D01AD51B2300FC7833 /* S3.swift in Sources */,
 				D0F44FAD1B5E534B009E12AA /* MyPostsViewController.swift in Sources */,
 				D07D8A1A1B99A3DF00D13096 /* NotificationListViewController.swift in Sources */,

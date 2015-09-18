@@ -36,6 +36,8 @@ class UserEntity: Entity {
     
     var invitations: [String]?
     
+    var groups: [String]?
+    
     var bookmark: [String]?
     
     var friendInvitations: [NotificationEntity]!
@@ -51,27 +53,43 @@ class UserEntity: Entity {
     }
     
     required init(_ json: JSON) {
+        
         super.init()
+        
         if let id = json.string { //id only
             self.id = id
             return
         }
+        
         self.id = json["_id"].string ?? json["id"].stringValue
+        
         self.nickName = json["nickName"].stringValue
+        
         self.gender = json["gender"].string
+        
         self.photo = json["photo_ref"].string ?? json["photo"].string
+        
         self.cover = json["cover_ref"].string ?? json["cover"].string
+        
         self.bio = json["bio"].string ?? json["bio"].string
+        
         self.firstName = json["firstName"].string
+        
         self.lastName = json["lastName"].string
         
         if let birthDay = json["birthDay"].string {
             self.birthDay = birthDay.toDate(format: kDateFormat)
         }
         self.telNo = json["telNo"].string
+        
         self.address = json["address"].string
+        
         self.friends = json["friends"].arrayObject as? [String]
+        
         self.invitations = json["invitations"].arrayObject as? [String]
+        
+        self.groups = json["groups"].arrayObject as? [String]
+        
         self.bookmark = json["firstName"].arrayObject as? [String]
         
         self.friendInvitations = []

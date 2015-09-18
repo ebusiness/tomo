@@ -13,11 +13,12 @@ class RecommendSiteTableCell: UITableViewCell {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var groups: [GroupEntity]!
+    var delegate: UIViewController!
     
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        collectionView.registerNib(UINib(nibName: "RecommendSiteCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+        collectionView.registerNib(UINib(nibName: "GroupCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -39,7 +40,7 @@ extension RecommendSiteTableCell: UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! RecommendSiteCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! GroupCollectionViewCell
         cell.group = groups[indexPath.item]
         cell.setupDisplay()
         return cell
@@ -49,6 +50,11 @@ extension RecommendSiteTableCell: UICollectionViewDataSource {
 extension RecommendSiteTableCell:UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
+        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+        
+        let vc = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+        vc.group = groups[indexPath.item]
+        self.delegate.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -61,8 +67,4 @@ extension RecommendSiteTableCell: UICollectionViewDelegateFlowLayout {
         
         return CGSizeMake(width, height)
     }
-    
-//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 0, left: 1, bottom: 0, right: 1)
-//    }
 }

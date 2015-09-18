@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GroupListTableViewController: BaseTableViewController {
+class GroupListViewController: BaseTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
