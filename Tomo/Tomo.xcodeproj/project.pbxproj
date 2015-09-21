@@ -83,6 +83,8 @@
 		1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */; };
 		1FEE80EC1B4E5C540061B913 /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE80EB1B4E5C540061B913 /* PostCell.xib */; };
 		1FEE80EE1B4E60850061B913 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE80ED1B4E60850061B913 /* PostCell.swift */; };
+		1FFD21FF1BABD57C00204080 /* GroupSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */; };
+		1FFD22011BABD77E00204080 /* GroupSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */; };
 		290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
 		290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290134DE1AC3991C00BBFE29 /* Images.xcassets */; };
 		290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134ED1AC3991D00BBFE29 /* TomoTests.swift */; };
@@ -225,6 +227,8 @@
 		1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Classes/HomeViewController.swift; sourceTree = "<group>"; };
 		1FEE80EB1B4E5C540061B913 /* PostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostCell.xib; path = Classes/PostCell.xib; sourceTree = "<group>"; };
 		1FEE80ED1B4E60850061B913 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCell.swift; path = Classes/PostCell.swift; sourceTree = "<group>"; };
+		1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupSectionHeaderView.xib; path = Classes/GroupSectionHeaderView.xib; sourceTree = "<group>"; };
+		1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupSectionHeaderView.swift; path = Classes/GroupSectionHeaderView.swift; sourceTree = "<group>"; };
 		290134D21AC3991C00BBFE29 /* tomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		290134D61AC3991C00BBFE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		290134D71AC3991C00BBFE29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -381,12 +385,7 @@
 			isa = PBXGroup;
 			children = (
 				296D8BBC1AFC5A680058D400 /* LaunchScreen.xib */,
-				1FEE80EB1B4E5C540061B913 /* PostCell.xib */,
-				1F8BF0121B536D9500090079 /* PostImageCell.xib */,
-				1F902D761B7D9C2800F6DC2D /* EmptyFriends.xib */,
 				D0DB07D61B9D1B5200C06C4E /* NotificationView.xib */,
-				1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */,
-				1F19D9591BA96B3E007C9919 /* GroupCollectionViewCell.xib */,
 			);
 			name = xib;
 			sourceTree = "<group>";
@@ -441,13 +440,45 @@
 		1FA76AFF1BA29D43004776B0 /* Group */ = {
 			isa = PBXGroup;
 			children = (
+				1FC051091BAF9F9200886F67 /* Components */,
 				1FA76B011BA2A01D004776B0 /* GroupListViewController.swift */,
 				1FA76B031BA2AC03004776B0 /* GroupDiscoverViewController.swift */,
 				1FA76B081BA2C642004776B0 /* GroupCreateViewController.swift */,
 				1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */,
-				1F19D95B1BA96B8E007C9919 /* GroupCollectionViewCell.swift */,
 			);
 			name = Group;
+			sourceTree = "<group>";
+		};
+		1FC051081BAF9F3B00886F67 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1FEE80ED1B4E60850061B913 /* PostCell.swift */,
+				1FEE80EB1B4E5C540061B913 /* PostCell.xib */,
+				1F8BF0101B53639F00090079 /* PostImageCell.swift */,
+				1F8BF0121B536D9500090079 /* PostImageCell.xib */,
+				1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */,
+				1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
+		1FC051091BAF9F9200886F67 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1F19D95B1BA96B8E007C9919 /* GroupCollectionViewCell.swift */,
+				1F19D9591BA96B3E007C9919 /* GroupCollectionViewCell.xib */,
+				1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */,
+				1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
+		1FC0510A1BAF9FDB00886F67 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1F902D761B7D9C2800F6DC2D /* EmptyFriends.xib */,
+			);
+			name = Components;
 			sourceTree = "<group>";
 		};
 		290134C91AC3991C00BBFE29 = {
@@ -524,6 +555,7 @@
 		294185141AD777E700C6E913 /* Friend */ = {
 			isa = PBXGroup;
 			children = (
+				1FC0510A1BAF9FDB00886F67 /* Components */,
 				29539C761B13175D00545509 /* VoiceController.swift */,
 				29539C771B13175D00545509 /* VoiceMessageController.swift */,
 				296D8BB01AFC5A250058D400 /* MessageViewController.swift */,
@@ -622,13 +654,11 @@
 		299389571AD3D13700043D91 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				1FC051081BAF9F3B00886F67 /* Components */,
 				291ADF941AD229B3009D8BE3 /* CommentCell.swift */,
-				1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */,
-				1FEE80ED1B4E60850061B913 /* PostCell.swift */,
-				1F8BF0101B53639F00090079 /* PostImageCell.swift */,
-				D0BA8DE61B55375A00271F2B /* PostViewController.swift */,
 				1F18B8331B844665003BD469 /* CreatePostViewController.swift */,
-				1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */,
+				1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */,
+				D0BA8DE61B55375A00271F2B /* PostViewController.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -804,6 +834,7 @@
 				29CA441A1AD4CA48009EB177 /* Chat.storyboard in Resources */,
 				1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */,
 				1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */,
+				1FFD21FF1BABD57C00204080 /* GroupSectionHeaderView.xib in Resources */,
 				D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */,
 				D0DB07D71B9D1B5200C06C4E /* NotificationView.xib in Resources */,
 				29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */,
@@ -924,6 +955,7 @@
 				D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
 				1F985E541B60C19F008D5369 /* Array.swift in Sources */,
+				1FFD22011BABD77E00204080 /* GroupSectionHeaderView.swift in Sources */,
 				D0F44FAF1B5E540F009E12AA /* FriendListSendRequestController.swift in Sources */,
 				D073E6F81B84C1BF00066F42 /* CameraController.swift in Sources */,
 				D0A0C0321B5F5BF900ABFA5F /* ProfileViewController.swift in Sources */,

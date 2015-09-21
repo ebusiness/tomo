@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GroupDetailViewController: BaseTableViewController {
+final class GroupDetailViewController: BaseTableViewController {
 
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var joinButton: UIButton!
@@ -32,8 +32,18 @@ class GroupDetailViewController: BaseTableViewController {
 extension GroupDetailViewController {
     
     private func updateUI() {
+        
+        let postButton = UIBarButtonItem(image: UIImage(named: "create_new"), style: .Plain, target: self, action: "createPost")
+        self.navigationItem.rightBarButtonItem = postButton
+        
         self.title = group.name
         self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: DefaultGroupImage)
+        
+        if let myGroups = me.groups {
+            if myGroups.contains(self.group.id) {
+                self.joinButton.hidden = true
+            }
+        }
     }
 }
 
@@ -49,6 +59,12 @@ extension GroupDetailViewController {
         }) { err in
             sender.userInteractionEnabled = true
         }
+    }
+    
+    func createPost() {
+        let postCreateView = Util.createViewControllerWithIdentifier("PostCreateView", storyboardName: "Home") as! CreatePostViewController
+        postCreateView.group = self.group
+        self.showViewController(postCreateView, sender: self)
     }
 }
 

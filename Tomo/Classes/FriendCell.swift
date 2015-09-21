@@ -21,7 +21,8 @@ class FriendCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        avatarImageView.layer.borderColor = avatarBorderColor
+        countLabel.layer.borderWidth = 2
+        countLabel.layer.borderColor = UIColor.whiteColor().CGColor
     }
     
     func setupDisplay() {

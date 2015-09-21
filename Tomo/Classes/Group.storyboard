@@ -4,63 +4,20 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--现场动态-->
+        <!--Group List View Controller-->
         <scene sceneID="2iC-vd-HkZ">
             <objects>
                 <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="wq9-gX-hfP" customClass="GroupListViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mcA-JG-1xf">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mcA-JG-1xf">
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="Tz2-We-56z">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vY8-1K-y4f">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cube" translatesAutoresizingMaskIntoConstraints="NO" id="Yra-Hl-h7Q">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
-                                        </imageView>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text_protection" translatesAutoresizingMaskIntoConstraints="NO" id="KEY-KE-HC5">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
-                                        </imageView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstItem="KEY-KE-HC5" firstAttribute="leading" secondItem="vY8-1K-y4f" secondAttribute="leading" id="2xb-vb-2rs"/>
-                                        <constraint firstItem="Yra-Hl-h7Q" firstAttribute="top" secondItem="vY8-1K-y4f" secondAttribute="top" id="Bng-Nz-6x7"/>
-                                        <constraint firstAttribute="trailing" secondItem="KEY-KE-HC5" secondAttribute="trailing" id="M2Y-Le-pbt"/>
-                                        <constraint firstAttribute="bottom" secondItem="KEY-KE-HC5" secondAttribute="bottom" id="XHT-P1-0ac"/>
-                                        <constraint firstAttribute="bottom" secondItem="Yra-Hl-h7Q" secondAttribute="bottom" id="gbl-xY-k7e"/>
-                                        <constraint firstItem="KEY-KE-HC5" firstAttribute="top" secondItem="vY8-1K-y4f" secondAttribute="top" id="haZ-HG-rcm"/>
-                                        <constraint firstItem="Yra-Hl-h7Q" firstAttribute="leading" secondItem="vY8-1K-y4f" secondAttribute="leading" id="lcW-d5-JPc"/>
-                                        <constraint firstAttribute="trailing" secondItem="Yra-Hl-h7Q" secondAttribute="trailing" id="tBV-1E-35K"/>
-                                    </constraints>
-                                </view>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="trailing" secondItem="vY8-1K-y4f" secondAttribute="trailing" id="6kA-pX-zKA"/>
-                                <constraint firstAttribute="bottom" secondItem="vY8-1K-y4f" secondAttribute="bottom" id="NFp-ja-XIx"/>
-                                <constraint firstItem="vY8-1K-y4f" firstAttribute="leading" secondItem="Tz2-We-56z" secondAttribute="leading" id="Unq-yh-w2Q"/>
-                                <constraint firstItem="vY8-1K-y4f" firstAttribute="top" secondItem="Tz2-We-56z" secondAttribute="top" id="kce-pd-tsl"/>
-                            </constraints>
-                        </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="88" id="S2w-ab-u7R">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="V1h-hX-ERg">
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S2w-ab-u7R" id="ePE-TB-FvB">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V1h-hX-ERg" id="Oee-jE-4FM">
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="meguro" translatesAutoresizingMaskIntoConstraints="NO" id="Ch1-si-93O">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
-                                        </imageView>
-                                    </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="UlV-bz-zwx" kind="push" id="il9-20-4Uv"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -68,7 +25,7 @@
                             <outlet property="delegate" destination="wq9-gX-hfP" id="u0r-A8-vPa"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="现场动态" id="UzC-30-DTY">
+                    <navigationItem key="navigationItem" id="UzC-30-DTY">
                         <barButtonItem key="leftBarButtonItem" image="create_new" id="G3L-2O-5Z9">
                             <connections>
                                 <segue destination="14z-Hc-XqR" kind="modal" id="CIz-EJ-OIJ"/>
@@ -133,7 +90,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SFx-G1-O7K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1005" y="2037"/>
+            <point key="canvasLocation" x="973" y="2037"/>
         </scene>
         <!--Group Detail View Controller-->
         <scene sceneID="1bh-eZ-gfI">
@@ -207,7 +164,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s9l-oX-kAz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-89" y="2780"/>
+            <point key="canvasLocation" x="-89" y="2480"/>
         </scene>
         <!--Group Create View Controller-->
         <scene sceneID="hnK-jX-Hh0">
@@ -433,7 +390,7 @@
         <!--Navigation Controller-->
         <scene sceneID="3sw-08-d7h">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kje-Ap-6j1" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="GroupDiscoverView" automaticallyAdjustsScrollViewInsets="NO" id="kje-Ap-6j1" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Q7c-so-81r">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -452,10 +409,8 @@
     <resources>
         <image name="checkmark" width="25" height="25"/>
         <image name="create_new" width="25" height="25"/>
-        <image name="cube" width="680" height="453"/>
         <image name="delete_sign" width="25" height="25"/>
         <image name="group_cover_default" width="414" height="160"/>
-        <image name="meguro" width="320" height="213"/>
         <image name="plus_plus" width="25" height="25"/>
         <image name="text1" width="680" height="453"/>
         <image name="text_protection" width="320" height="160"/>

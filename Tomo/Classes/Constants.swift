@@ -13,7 +13,7 @@ let kTomoPushToken = "token.push.tomo"
 #if DEBUG
     let AmazonS3Bucket = "tomo-dev"
 //    let kAPIBaseURLString = "https://tomo.e-business.co.jp:81"
-    let kAPIBaseURLString = "https://192.168.11.93:81"
+    let kAPIBaseURLString = "https://192.168.11.89:81"
 //    let kAPIBaseURLString = "https://192.168.11.83:81"
 #else
     let AmazonS3Bucket = "tomo-test"
@@ -30,7 +30,8 @@ let AvatarMaxWidth: CGFloat = 200
 let GroupImageWidth: CGFloat = 80
 
 let NavigationBarColorHex:UInt = 0x2196F3
-let avatarBorderColor = Util.UIColorFromRGB(0xE0E0E0, alpha: 1).CGColor
+//let avatarBorderColor = Util.UIColorFromRGB(0xE0E0E0, alpha: 1).CGColor
+let avatarBorderColor = UIColor.whiteColor().CGColor
 
 let DefaultAvatarImage = UIImage(named: "avatar")!
 let DefaultGroupImage = UIImage(named: "group_cover_default")!

@@ -17,6 +17,8 @@ final class CreatePostViewController: UIViewController {
     let navigationBarHeight = CGFloat(64)
     let paperPadding = CGFloat(8)
     
+    var group: GroupEntity?
+    
     var photos: PHFetchResult?
     var newPhotos = [UIImage]()
     
@@ -38,6 +40,7 @@ final class CreatePostViewController: UIViewController {
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var groupLabel: UILabel!
     @IBOutlet weak var numberBadge: UILabel!
     
     override func viewDidLoad() {
@@ -94,6 +97,10 @@ extension CreatePostViewController {
             navigationBar.translucent = true
             navigationBar.barStyle = .Black
             navigationBar.tintColor = UIColor.whiteColor()
+        }
+        
+        if let group = self.group {
+            self.groupLabel.text = "发布在：\(group.name)"
         }
         
         self.numberBadge.layer.cornerRadius = self.numberBadge.frame.height / 2
@@ -351,6 +358,10 @@ extension CreatePostViewController {
         
         if let imageList: AnyObject = imageList {
             param["images"] = imageList
+        }
+        
+        if let group = self.group {
+            param["group"] = group.id
         }
         
         if let location = self.location {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GroupCreateViewController: BaseTableViewController {
+final class GroupCreateViewController: BaseTableViewController {
 
     @IBOutlet var groupNameTextField: UITextField!
     @IBOutlet var addressTextField: UITextField!

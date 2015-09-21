@@ -8,90 +8,130 @@
 
 import UIKit
 
-class GroupListViewController: BaseTableViewController {
+final class GroupListViewController: BaseTableViewController {
+    
+    let screenHeight = UIScreen.mainScreen().bounds.height
+    let loadTriggerHeight = CGFloat(88.0)
+    
+    var groups = [GroupEntity]()
+    var page = 0
+    
+    var isLoading = false
+    var isExhausted = false
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        let GroupSectionHeaderNib = UINib(nibName: "GroupSectionHeaderView", bundle: nil)
+        self.tableView.registerNib(GroupSectionHeaderNib, forHeaderFooterViewReuseIdentifier: "GroupHeader")
+        
+        self.loadMoreContent()
     }
+}
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+// MARK: - Navigation
+
+extension GroupListViewController {
+    /*
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
     }
+    */
+}
 
-    // MARK: - Table view data source
+// MARK: - UITableView DataSource
 
+extension GroupListViewController {
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 0
+        return self.groups.count
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 0
+        return 3
     }
+}
 
-    /*
+// MARK: - UITableView Delegate
+
+extension GroupListViewController {
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 152
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("GroupHeader") as! GroupSectionHeaderView
+        
+        header.group = self.groups[section]
+        header.delegate = self.navigationController
+        header.setupDisplay()
+        
+        return header
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-
-        // Configure the cell...
-
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        
         return cell
     }
-    */
+//    
+//    override func scrollViewDidScroll(scrollView: UIScrollView) {
+//        let rect = self.tableView.rectForHeaderInSection(1)
+//        println(rect)
+//        println(scrollView.contentOffset.y)
+//    }
+}
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+// MARK: Internal methods
+
+extension GroupListViewController {
+    
+    private func loadMoreContent() {
+        
+        // skip if already in loading
+        if isLoading || isExhausted {
+            return
+        }
+        
+        isLoading = true
+        
+        AlamofireController.request(.GET, "/groups", parameters: ["page": self.page, "category": "mine"], success: { groups in
+            
+            let groups: [GroupEntity]? = GroupEntity.collection(groups)
+            
+            if let groups = groups {
+                self.groups.extend(groups)
+                self.appendRows(groups.count)
+            }
+            
+            self.page++
+            self.isLoading = false
+            
+            }) { err in
+                self.isLoading = false
+                self.isExhausted = true
+        }
+        
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    private func appendRows(rows: Int) {
+        
+        let firstIndex = self.groups.count - rows
+        
+        var indexSet = NSIndexSet(indexesInRange: NSMakeRange(firstIndex, rows))
+        
+        self.tableView.beginUpdates()
+        self.tableView.insertSections(indexSet, withRowAnimation: .Fade)
+        self.tableView.endUpdates()
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GroupDiscoverViewController: UICollectionViewController {
+final class GroupDiscoverViewController: UICollectionViewController {
     
     let screenHeight = UIScreen.mainScreen().bounds.height
     let loadTriggerHeight = CGFloat(88.0)
@@ -94,6 +94,12 @@ extension GroupDiscoverViewController {
         return cell
     }
     
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let vc = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+        vc.group = groups[indexPath.item]
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
         var edge = (UIScreen.mainScreen().bounds.width - 1) / 2.0
@@ -115,7 +121,7 @@ extension GroupDiscoverViewController {
         
         isLoading = true
         
-        AlamofireController.request(.GET, "/groups", parameters: ["page": self.page], success: { groups in
+        AlamofireController.request(.GET, "/groups", parameters: ["category": "discover", "page": self.page], success: { groups in
             
             let groups: [GroupEntity]? = GroupEntity.collection(groups)
             

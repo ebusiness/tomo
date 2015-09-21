@@ -33,6 +33,14 @@ class RecommendSiteTableCell: UITableViewCell {
 
 }
 
+extension RecommendSiteTableCell {
+    
+    @IBAction func discoverMoreSite(sender: AnyObject) {
+        let vc = Util.createViewControllerWithIdentifier("GroupDiscoverView", storyboardName: "Group") as UIViewController
+        self.delegate.navigationController?.presentViewController(vc, animated: true, completion: nil)
+    }
+}
+
 extension RecommendSiteTableCell: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -48,6 +56,7 @@ extension RecommendSiteTableCell: UICollectionViewDataSource {
 }
 
 extension RecommendSiteTableCell:UICollectionViewDelegate {
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         collectionView.deselectItemAtIndexPath(indexPath, animated: true)
@@ -62,8 +71,8 @@ extension RecommendSiteTableCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-        let width = UIScreen.mainScreen().bounds.width / 2 - 1
-        let height = collectionView.bounds.height / 2 - 0.5
+        let width = UIScreen.mainScreen().bounds.width / 3 - 1
+        let height = collectionView.bounds.height / 3 - 1
         
         return CGSizeMake(width, height)
     }
