@@ -9,20 +9,42 @@
 import UIKit
 
 final class GroupDetailViewController: BaseTableViewController {
-
+    
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var joinButton: UIButton!
     
     var group: GroupEntity!
     
+    var posts: [PostEntity]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.updateUI()
+        
+        tableView.registerNib(UINib(nibName: "PostCell", bundle: nil), forCellReuseIdentifier: "PostCell")
+        tableView.registerNib(UINib(nibName: "PostImageCell", bundle: nil), forCellReuseIdentifier: "PostImageCell")
+        tableView.separatorStyle = .None
+        tableView.backgroundColor = UIColor.groupTableViewBackgroundColor()
+        loadPosts()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func loadPosts() {
+        AlamofireController.request(.GET, "/groups/\(group.id)/posts", parameters: nil, encoding: .JSON, success: { (object) -> () in
+            self.posts = PostEntity.collection(object)
+            println(object)
+            self.tableView.reloadData()
+            }) { (_) -> () in
+                
+        }
+    }
+    
+    deinit {
+        println("group detail view controller released")
     }
     
 }
@@ -41,7 +63,11 @@ extension GroupDetailViewController {
         
         if let myGroups = me.groups {
             if myGroups.contains(self.group.id) {
+                navigationItem.rightBarButtonItem?.enabled = true
                 self.joinButton.hidden = true
+            } else {
+                navigationItem.rightBarButtonItem?.enabled = false
+                joinButton.hidden = false
             }
         }
     }
@@ -55,9 +81,10 @@ extension GroupDetailViewController {
         
         sender.userInteractionEnabled = false
         AlamofireController.request(.PATCH, "/groups/\(self.group.id)/join", success: { _ in
-            
-        }) { err in
-            sender.userInteractionEnabled = true
+            me.groups?.append(self.group.id)
+            self.updateUI()
+            }) { err in
+                sender.userInteractionEnabled = true
         }
     }
     
@@ -78,4 +105,59 @@ extension GroupDetailViewController {
     // Pass the selected object to the new view controller.
     }
     */
+}
+
+// MARK: - TableView
+extension GroupDetailViewController {
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let posts = posts {
+            return posts.count
+        } else {
+            return 0
+        }
+    }
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell: PostCell!
+        
+        let post = posts![indexPath.row]
+        if post.images?.count > 0 {
+            
+            cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell", forIndexPath: indexPath) as! PostImageCell
+            
+            let subviews = (cell as! PostImageCell).scrollView.subviews
+            
+            for subview in subviews {
+                subview.removeFromSuperview()
+            }
+            
+        } else {
+            cell = tableView.dequeueReusableCellWithIdentifier("PostCell", forIndexPath: indexPath) as! PostCell
+        }
+        
+        cell.post = post
+        cell.setupDisplay()
+        
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let post = posts![indexPath.row]
+        var textHeight = 0
+        
+        if post.content.length > 150 {
+            // one character take 18 points height,
+            // and 150 characters will take 7 rows
+            textHeight = 18 * 7
+        } else {
+            // one row have 24 characters
+            textHeight = post.content.length / 24 * 18
+        }
+        
+        if post.images?.count > 0 {
+            return CGFloat(472 + textHeight)
+        } else {
+            return CGFloat(108 + textHeight)
+        }
+    }
 }
