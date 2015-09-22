@@ -12,6 +12,7 @@ final class GroupDetailViewController: BaseTableViewController {
     
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var joinButton: UIButton!
+    @IBOutlet weak var groupDescriptionButton: UIButton!
     
     var group: GroupEntity!
     
@@ -104,18 +105,24 @@ extension GroupDetailViewController {
         postCreateViewController.group = self.group
         self.presentViewController(postCreateViewController, animated: true, completion: nil)
     }
+    
+    @IBAction func groupDescriptionButtonPressed(sender: UIButton) {
+    }
+    
 }
 
 // MARK: - Navigation
 
 extension GroupDetailViewController {
-    /*
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     // Get the new view controller using segue.destinationViewController.
     // Pass the selected object to the new view controller.
+        if segue.identifier == "pushGroupDescription" {
+            let destination = segue.destinationViewController as! GroupDescriptionViewController
+            destination.group = group
+        }
     }
-    */
 }
 
 // MARK: - TableView
