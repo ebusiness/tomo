@@ -36,17 +36,24 @@ final class GroupDetailViewController: BaseTableViewController {
     func loadPosts() {
         AlamofireController.request(.GET, "/groups/\(group.id)/posts", parameters: nil, encoding: .JSON, success: { (object) -> () in
             self.posts = PostEntity.collection(object)
-            println(object)
             self.tableView.reloadData()
             }) { (_) -> () in
                 
         }
     }
     
-    deinit {
-        println("group detail view controller released")
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        var contentInset = tableView.contentInset
+        contentInset.bottom = 49.0
+        tableView.contentInset = contentInset
+        
+        var scrollIndicatorInsets = tableView.scrollIndicatorInsets
+        scrollIndicatorInsets.bottom = 49.0
+        tableView.scrollIndicatorInsets = scrollIndicatorInsets
     }
-    
+
 }
 
 // MARK: - Internal Methods
@@ -163,5 +170,13 @@ extension GroupDetailViewController {
         } else {
             return CGFloat(108 + textHeight)
         }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let post = posts![indexPath.row]
+        let storyBoard = UIStoryboard(name: "Home", bundle: nil)
+        let postDetailVC = storyBoard.instantiateViewControllerWithIdentifier("PostView") as! PostViewController
+        postDetailVC.post = post
+        navigationController?.pushViewController(postDetailVC, animated: true)
     }
 }

@@ -28,6 +28,7 @@ final class GroupListViewController: BaseTableViewController {
         
         self.loadMoreContent()
     }
+    
 }
 
 // MARK: - Navigation
