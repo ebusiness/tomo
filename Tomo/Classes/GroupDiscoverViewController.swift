@@ -8,7 +8,9 @@
 
 import UIKit
 
-final class GroupDiscoverViewController: UICollectionViewController {
+final class GroupDiscoverViewController: UIViewController {
+    
+    @IBOutlet weak var collectionView: UICollectionView!
     
     let screenHeight = UIScreen.mainScreen().bounds.height
     let loadTriggerHeight = CGFloat(88.0)
@@ -22,8 +24,13 @@ final class GroupDiscoverViewController: UICollectionViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+
+        let searchBar = UISearchBar()
+        searchBar.barTintColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 0.7)
+        self.navigationItem.titleView = searchBar
         
-        self.collectionView?.registerNib(UINib(nibName: "GroupCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+        
+        self.collectionView.registerNib(UINib(nibName: "GroupCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
 
         self.loadMoreContent()
     }
@@ -50,11 +57,19 @@ extension GroupDiscoverViewController {
     }
 }
 
+// MARK: - UINavigationBar Delegate
+
+extension GroupDiscoverViewController {
+    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+        return .TopAttached
+    }
+}
+
 // MARK: UIScrollView delegate
 
 extension GroupDiscoverViewController {
     
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(scrollView: UIScrollView) {
         
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
@@ -70,11 +85,11 @@ extension GroupDiscoverViewController {
 
 extension GroupDiscoverViewController {
     
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.groups.count
     }
 
@@ -84,7 +99,7 @@ extension GroupDiscoverViewController {
 
 extension GroupDiscoverViewController {
     
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! GroupCollectionViewCell
         
@@ -94,7 +109,7 @@ extension GroupDiscoverViewController {
         return cell
     }
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let vc = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
         vc.group = groups[indexPath.item]
         self.navigationController?.pushViewController(vc, animated: true)

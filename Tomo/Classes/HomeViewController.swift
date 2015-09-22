@@ -196,7 +196,7 @@ extension HomeViewController {
         
         AlamofireController.request(.GET, "/posts", parameters: params, success: { result in
             
-            AlamofireController.request(.GET, "/groups", parameters: nil, success: { groups in
+            AlamofireController.request(.GET, "/groups", parameters: ["category": "discover"], success: { groups in
                 
                 let posts: [PostEntity]? = PostEntity.collection(result)
                 let groups: [GroupEntity]? = GroupEntity.collection(groups)

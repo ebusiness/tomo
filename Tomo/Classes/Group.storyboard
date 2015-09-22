@@ -33,7 +33,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="plus_plus" id="PRl-cK-qzY">
                             <connections>
-                                <segue destination="kje-Ap-6j1" kind="modal" id="3Ot-Zt-G6c"/>
+                                <segue destination="RHY-Dc-giN" kind="modal" id="eeP-2M-dre"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -41,6 +41,57 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nT5-dr-bwX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-89" y="1732"/>
+        </scene>
+        <!--Group Discover View Controller-->
+        <scene sceneID="l4d-T7-nSZ">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="VYH-Kw-Zpl" customClass="GroupDiscoverViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NK3-Oi-wqg"/>
+                        <viewControllerLayoutGuide type="bottom" id="gcE-US-wZW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iCn-lb-w68">
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tgY-eS-11t">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="089-un-HPX">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <connections>
+                                    <outlet property="dataSource" destination="VYH-Kw-Zpl" id="bH9-7F-ukB"/>
+                                    <outlet property="delegate" destination="VYH-Kw-Zpl" id="DXq-wU-vwX"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gcE-US-wZW" firstAttribute="top" secondItem="tgY-eS-11t" secondAttribute="bottom" id="5oS-NV-bCe"/>
+                            <constraint firstItem="tgY-eS-11t" firstAttribute="top" secondItem="NK3-Oi-wqg" secondAttribute="bottom" id="aMM-sv-1J7"/>
+                            <constraint firstItem="tgY-eS-11t" firstAttribute="leading" secondItem="iCn-lb-w68" secondAttribute="leading" id="kVs-zp-Jsq"/>
+                            <constraint firstAttribute="trailing" secondItem="tgY-eS-11t" secondAttribute="trailing" id="tZh-Mc-ula"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="kmr-kr-I16">
+                        <barButtonItem key="leftBarButtonItem" image="delete_sign" id="4qW-hJ-VXs">
+                            <connections>
+                                <action selector="cancel:" destination="VYH-Kw-Zpl" id="Vdb-aX-T2o"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="tgY-eS-11t" id="V9B-A9-QLs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BdW-zc-x9h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="973" y="2053"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="FvF-qj-YVn">
@@ -59,38 +110,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CXL-Xc-LtY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-621" y="1732"/>
-        </scene>
-        <!--Group Discover View Controller-->
-        <scene sceneID="IRe-dP-fnH">
-            <objects>
-                <collectionViewController id="n5r-hM-haf" customClass="GroupDiscoverViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="GlV-Qd-7ME">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="lMe-sK-Kxu">
-                            <size key="itemSize" width="229" height="198"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells/>
-                        <connections>
-                            <outlet property="dataSource" destination="n5r-hM-haf" id="chb-ei-8VQ"/>
-                            <outlet property="delegate" destination="n5r-hM-haf" id="Zud-YQ-LCO"/>
-                        </connections>
-                    </collectionView>
-                    <navigationItem key="navigationItem" id="Rco-QZ-rtS">
-                        <barButtonItem key="leftBarButtonItem" image="delete_sign" id="go6-ln-0iJ">
-                            <connections>
-                                <action selector="cancel:" destination="n5r-hM-haf" id="jG5-3i-W6U"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SFx-G1-O7K" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="973" y="2037"/>
         </scene>
         <!--Group Detail View Controller-->
         <scene sceneID="1bh-eZ-gfI">
@@ -160,9 +179,11 @@
                     <connections>
                         <outlet property="coverImageView" destination="D5I-gk-3oY" id="7gc-ph-tUd"/>
                         <outlet property="joinButton" destination="xp4-n8-ZXc" id="uJQ-BT-nB1"/>
+                        <segue destination="Q6G-5u-zfh" kind="unwind" unwindAction="addedPost:" id="YNh-gf-wlF"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s9l-oX-kAz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Q6G-5u-zfh" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-89" y="2480"/>
         </scene>
@@ -388,22 +409,25 @@
             <point key="canvasLocation" x="473" y="1369"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="3sw-08-d7h">
+        <scene sceneID="apv-gl-PcP">
             <objects>
-                <navigationController storyboardIdentifier="GroupDiscoverView" automaticallyAdjustsScrollViewInsets="NO" id="kje-Ap-6j1" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RHY-Dc-giN" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Q7c-so-81r">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="4Qw-i3-glD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.12941176470588234" green="0.58823529411764708" blue="0.95294117647058818" alpha="0.0" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="n5r-hM-haf" kind="relationship" relationship="rootViewController" id="Bxa-Mv-u39"/>
+                        <segue destination="VYH-Kw-Zpl" kind="relationship" relationship="rootViewController" id="CFf-hM-UjY"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="C6V-OT-2o3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PwM-7v-DVa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="473" y="2037"/>
+            <point key="canvasLocation" x="473" y="2053"/>
         </scene>
     </scenes>
     <resources>

@@ -88,10 +88,14 @@ extension GroupDetailViewController {
         }
     }
     
+    @IBAction func addedPost(segue: UIStoryboardSegue) {
+        // exit addPostView
+    }
+    
     func createPost() {
-        let postCreateView = Util.createViewControllerWithIdentifier("PostCreateView", storyboardName: "Home") as! CreatePostViewController
-        postCreateView.group = self.group
-        self.showViewController(postCreateView, sender: self)
+        let postCreateViewController = Util.createViewControllerWithIdentifier("PostCreateView", storyboardName: "Home") as! CreatePostViewController
+        postCreateViewController.group = self.group
+        self.presentViewController(postCreateViewController, animated: true, completion: nil)
     }
 }
 

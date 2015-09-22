@@ -34,6 +34,7 @@ final class CreatePostViewController: UIViewController {
     
     var timer: NSTimer?
     
+    @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var postButton: UIBarButtonItem!
     @IBOutlet weak var paperViewHeight: NSLayoutConstraint!
     @IBOutlet weak var paperView: UIView!
@@ -64,17 +65,30 @@ final class CreatePostViewController: UIViewController {
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
         if segue.identifier == "postCreated" {
-            if let sender: AnyObject = sender, home = segue.destinationViewController as? HomeViewController {
+            
+            if let sender: AnyObject = sender {
                 
-                var post = PostEntity(sender)
+                let post = PostEntity(sender)
                 post.owner = me
                 
-                home.contents.insert(post, atIndex: 0)
-                home.latestContent = post
-                home.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Middle)
+                if let homeViewController = segue.destinationViewController as? HomeViewController {
+                    
+                    homeViewController.contents.insert(post, atIndex: 0)
+                    homeViewController.latestContent = post
+                    homeViewController.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Middle)
+                    
+                } else if let groupDetailViewController = segue.destinationViewController as? GroupDetailViewController {
+                    
+                }
+                
             }
         }
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
     }
     
     deinit {
@@ -89,15 +103,10 @@ final class CreatePostViewController: UIViewController {
 extension CreatePostViewController {
     
     private func setupAppearance() {
-        
-        if let navigationBar = self.navigationController?.navigationBar {
-            let image = Util.imageWithColor(NavigationBarColorHex, alpha: 1.0)
-            navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
-            navigationBar.shadowImage = UIImage()
-            navigationBar.translucent = true
-            navigationBar.barStyle = .Black
-            navigationBar.tintColor = UIColor.whiteColor()
-        }
+
+        self.navigationBar.translucent = true
+        self.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationBar.barTintColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 0.7)
         
         if let group = self.group {
             self.groupLabel.text = "发布在：\(group.name)"
@@ -478,6 +487,14 @@ extension CreatePostViewController {
                 self.locationManager.startUpdatingLocation()
             }
         }
+    }
+}
+
+// MARK: - UINavigationBar Delegate
+
+extension CreatePostViewController {
+    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+        return .TopAttached
     }
 }
 
