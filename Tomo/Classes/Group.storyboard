@@ -411,7 +411,7 @@
         <!--Navigation Controller-->
         <scene sceneID="apv-gl-PcP">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RHY-Dc-giN" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="GroupDiscoverView" automaticallyAdjustsScrollViewInsets="NO" id="RHY-Dc-giN" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="4Qw-i3-glD">

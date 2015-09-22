@@ -20,7 +20,7 @@
                     <gestureRecognizers/>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="群组名称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IQS-IQ-q9o">
-                    <rect key="frame" x="16" y="23" width="68" height="20.5"/>
+                    <rect key="frame" x="16" y="23.5" width="68" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
@@ -29,6 +29,18 @@
                     <rect key="frame" x="16" y="44" width="56" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="成员人数" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fKg-1w-K7b">
+                    <rect key="frame" x="353" y="27" width="56" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="帖子数量" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wIo-XR-IoB">
+                    <rect key="frame" x="353" y="44" width="56" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cbs-Pz-SOq">
@@ -41,14 +53,18 @@
             <gestureRecognizers/>
             <constraints>
                 <constraint firstAttribute="centerY" secondItem="cbs-Pz-SOq" secondAttribute="centerY" id="2Nt-WX-ukU"/>
+                <constraint firstAttribute="centerY" secondItem="fKg-1w-K7b" secondAttribute="bottom" id="2fU-Xr-lpm"/>
                 <constraint firstItem="wNw-Rh-NNh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="3DF-y9-IQp"/>
                 <constraint firstItem="tjM-tq-UOc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="55F-QB-3Cc"/>
                 <constraint firstAttribute="bottom" secondItem="wNw-Rh-NNh" secondAttribute="bottom" id="56s-Hy-7X9"/>
+                <constraint firstAttribute="centerY" secondItem="wIo-XR-IoB" secondAttribute="top" id="EoU-Sp-Pzn"/>
                 <constraint firstAttribute="trailing" secondItem="tjM-tq-UOc" secondAttribute="trailing" id="KrA-tI-IzV"/>
                 <constraint firstAttribute="bottom" secondItem="tjM-tq-UOc" secondAttribute="bottom" id="OAF-Vh-SsJ"/>
+                <constraint firstItem="cbs-Pz-SOq" firstAttribute="leading" secondItem="wIo-XR-IoB" secondAttribute="trailing" constant="8" id="Obw-kH-JeF"/>
                 <constraint firstAttribute="trailing" secondItem="cbs-Pz-SOq" secondAttribute="trailing" constant="16" id="Ui3-XU-amy"/>
                 <constraint firstItem="tjM-tq-UOc" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="WK4-OT-REG"/>
                 <constraint firstAttribute="trailing" secondItem="wNw-Rh-NNh" secondAttribute="trailing" id="YkX-Gh-Vdj"/>
+                <constraint firstItem="cbs-Pz-SOq" firstAttribute="leading" secondItem="fKg-1w-K7b" secondAttribute="trailing" constant="8" id="Z3Q-Gk-ey6"/>
                 <constraint firstItem="wNw-Rh-NNh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="cub-hu-ZVn"/>
                 <constraint firstItem="IQS-IQ-q9o" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="iYk-tT-EiL"/>
                 <constraint firstAttribute="centerY" secondItem="IQS-IQ-q9o" secondAttribute="bottom" id="maZ-A3-38c"/>
@@ -60,7 +76,9 @@
             <connections>
                 <outlet property="coverImageView" destination="wNw-Rh-NNh" id="jvh-LC-l2I"/>
                 <outlet property="introductionLabel" destination="UVo-0J-cXa" id="MNh-k2-yM3"/>
+                <outlet property="memberLabel" destination="fKg-1w-K7b" id="fUn-jL-eRb"/>
                 <outlet property="nameLabel" destination="IQS-IQ-q9o" id="4Ya-mp-Pcr"/>
+                <outlet property="postLabel" destination="wIo-XR-IoB" id="35a-Vf-Vmz"/>
             </connections>
             <point key="canvasLocation" x="405" y="250"/>
         </view>

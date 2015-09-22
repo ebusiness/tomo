@@ -13,6 +13,8 @@ class GroupSectionHeaderView: UITableViewHeaderFooterView {
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var introductionLabel: UILabel!
+    @IBOutlet weak var memberLabel: UILabel!
+    @IBOutlet weak var postLabel: UILabel!
     
     var group: GroupEntity!
     var delegate: UINavigationController!
@@ -28,6 +30,8 @@ class GroupSectionHeaderView: UITableViewHeaderFooterView {
         
         self.nameLabel.text = self.group.name
         self.introductionLabel.text = self.group.introduction
+        self.memberLabel.text = "\(self.group.members!.count)个成员"
+        self.postLabel.text = "\(self.group.posts!.count)个帖子"
     }
     
     func headerTapped() {

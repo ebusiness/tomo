@@ -107,7 +107,7 @@
 		29BE7E121AC54224008110B4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
 		29C1DA7A1AD36659009A02CC /* S3Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA781AD36659009A02CC /* S3Controller.swift */; };
 		29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */; };
-		29CA441A1AD4CA48009EB177 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA44191AD4CA48009EB177 /* Chat.storyboard */; };
+		29CA441A1AD4CA48009EB177 /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA44191AD4CA48009EB177 /* Contacts.storyboard */; };
 		29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA441B1AD4CAAA009EB177 /* Map.storyboard */; };
 		29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA441D1AD4CAF0009EB177 /* Setting.storyboard */; };
 		29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA44921AD4EEBB009EB177 /* Tab.storyboard */; };
@@ -253,7 +253,7 @@
 		296D8BB01AFC5A250058D400 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewController.swift; path = Classes/MessageViewController.swift; sourceTree = "<group>"; };
 		296D8BBC1AFC5A680058D400 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = Classes/LaunchScreen.xib; sourceTree = "<group>"; };
 		296D8BBD1AFC5A680058D400 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Classes/Main.storyboard; sourceTree = "<group>"; };
-		296D8BCD1B004C6B0058D400 /* MessageGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageGroupViewController.swift; path = Classes/MessageGroupViewController.swift; sourceTree = "<group>"; };
+		296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupChatViewController.swift; path = Classes/GroupChatViewController.swift; sourceTree = "<group>"; };
 		299389431AD3B33800043D91 /* AmazonS3RequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonS3RequestManager.h; sourceTree = "<group>"; };
 		299389441AD3B33800043D91 /* AmazonS3RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestManager.swift; sourceTree = "<group>"; };
 		299389451AD3B33800043D91 /* AmazonS3SignatureHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonS3SignatureHelpers.h; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 		29BE7E111AC54224008110B4 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = ../Classes/Util.swift; sourceTree = "<group>"; };
 		29C1DA781AD36659009A02CC /* S3Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3Controller.swift; path = Classes/S3Controller.swift; sourceTree = "<group>"; };
 		29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyUserDefaults.swift; sourceTree = "<group>"; };
-		29CA44191AD4CA48009EB177 /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Chat.storyboard; path = Classes/Chat.storyboard; sourceTree = "<group>"; };
+		29CA44191AD4CA48009EB177 /* Contacts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Contacts.storyboard; path = Classes/Contacts.storyboard; sourceTree = "<group>"; };
 		29CA441B1AD4CAAA009EB177 /* Map.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Map.storyboard; path = Classes/Map.storyboard; sourceTree = "<group>"; };
 		29CA441D1AD4CAF0009EB177 /* Setting.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Setting.storyboard; path = Classes/Setting.storyboard; sourceTree = "<group>"; };
 		29CA44921AD4EEBB009EB177 /* Tab.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Tab.storyboard; path = Classes/Tab.storyboard; sourceTree = "<group>"; };
@@ -433,6 +433,7 @@
 				1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */,
 				1F9ACAF91B69F99F00648A82 /* PostEntity.swift */,
 				1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */,
+				D08BFB0A1B744C2D00771F70 /* JSQMessageEntity.swift */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -447,6 +448,17 @@
 				1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */,
 			);
 			name = Group;
+			sourceTree = "<group>";
+		};
+		1FB61D881BB0FEF000E6A05C /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				29539C761B13175D00545509 /* VoiceController.swift */,
+				29539C771B13175D00545509 /* VoiceMessageController.swift */,
+				296D8BB01AFC5A250058D400 /* MessageViewController.swift */,
+				296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */,
+			);
+			name = Chat;
 			sourceTree = "<group>";
 		};
 		1FC051081BAF9F3B00886F67 /* Components */ = {
@@ -552,22 +564,17 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
-		294185141AD777E700C6E913 /* Friend */ = {
+		294185141AD777E700C6E913 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
 				1FC0510A1BAF9FDB00886F67 /* Components */,
-				29539C761B13175D00545509 /* VoiceController.swift */,
-				29539C771B13175D00545509 /* VoiceMessageController.swift */,
-				296D8BB01AFC5A250058D400 /* MessageViewController.swift */,
-				296D8BCD1B004C6B0058D400 /* MessageGroupViewController.swift */,
 				1F79C1B11B5E0E22008800E1 /* FriendListViewController.swift */,
 				1F79C1B31B5E10DC008800E1 /* FriendCell.swift */,
 				1F79C1B51B5E55D5008800E1 /* InvitationCell.swift */,
 				1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */,
 				D0891C951B8AF5A600701CC7 /* SearchFriendCell.swift */,
-				D08BFB0A1B744C2D00771F70 /* JSQMessageEntity.swift */,
 			);
-			name = Friend;
+			name = Contacts;
 			sourceTree = "<group>";
 		};
 		296040441ACE669900D2A338 /* Vendors */ = {
@@ -616,7 +623,7 @@
 			isa = PBXGroup;
 			children = (
 				296D8BBD1AFC5A680058D400 /* Main.storyboard */,
-				29CA44191AD4CA48009EB177 /* Chat.storyboard */,
+				29CA44191AD4CA48009EB177 /* Contacts.storyboard */,
 				29CA441B1AD4CAAA009EB177 /* Map.storyboard */,
 				29CA441D1AD4CAF0009EB177 /* Setting.storyboard */,
 				D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */,
@@ -640,7 +647,8 @@
 			isa = PBXGroup;
 			children = (
 				29EA55B31AEDD27D006A1F41 /* Base */,
-				294185141AD777E700C6E913 /* Friend */,
+				1FB61D881BB0FEF000E6A05C /* Chat */,
+				294185141AD777E700C6E913 /* Contacts */,
 				1FA76AFF1BA29D43004776B0 /* Group */,
 				299389571AD3D13700043D91 /* Home */,
 				299389541AD3C77300043D91 /* Login */,
@@ -831,7 +839,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29CA441A1AD4CA48009EB177 /* Chat.storyboard in Resources */,
+				29CA441A1AD4CA48009EB177 /* Contacts.storyboard in Resources */,
 				1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */,
 				1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */,
 				1FFD21FF1BABD57C00204080 /* GroupSectionHeaderView.xib in Resources */,

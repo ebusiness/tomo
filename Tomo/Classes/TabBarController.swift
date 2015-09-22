@@ -9,17 +9,17 @@
 import UIKit
 
 enum TabItem: Int {
-    case Home, Chat, Group, Map, Setting
+    case Home, Contacts, Group, Map, Setting
     
-    static let items = [Home, Chat, Group, Map, Setting]
-//    static let items = [Home, Chat, Map, Setting]
+    static let items = [Home, Contacts, Group, Map, Setting]
+//    static let items = [Home, Contacts, Map, Setting]
     
     func storyBoardName() -> String {
         switch self {
         case .Home:
             return "Home"
-        case .Chat:
-            return "Chat"
+        case .Contacts:
+            return "Contacts"
         case .Group:
             return "Group"
         case .Map:
@@ -35,7 +35,7 @@ enum TabItem: Int {
         switch self {
         case .Home:
             imageName = "template"
-        case .Chat:
+        case .Contacts:
             imageName = "chat"
         case .Group:
             imageName = "group"

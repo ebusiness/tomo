@@ -14,7 +14,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p6b-Og-aac">
-                        <rect key="frame" x="0.0" y="16" width="433" height="467.5"/>
+                        <rect key="frame" x="0.0" y="8" width="433" height="483.5"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o5x-Rd-tkH">
                                 <rect key="frame" x="0.0" y="0.0" width="433" height="250"/>
@@ -73,7 +73,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="248" text="投稿内容" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y4i-E0-CGx">
-                                <rect key="frame" x="24" y="301" width="385" height="77.5"/>
+                                <rect key="frame" x="24" y="301" width="385" height="93.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="200" id="eEp-XY-EeL"/>
                                 </constraints>
@@ -82,14 +82,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uMk-t0-2Ro">
-                                <rect key="frame" x="0.0" y="466" width="433" height="1"/>
+                                <rect key="frame" x="0.0" y="482" width="433" height="1"/>
                                 <color key="backgroundColor" red="0.8666666666666667" green="0.8666666666666667" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="JgI-XT-82S"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L2k-JL-fDb" userLabel="评论">
-                                <rect key="frame" x="0.0" y="394" width="433" height="72"/>
+                                <rect key="frame" x="0.0" y="410" width="433" height="72"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="YUN-GO-npp" userLabel="用户头像">
                                         <rect key="frame" x="16" y="16" width="40" height="40"/>
@@ -175,10 +175,10 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="p6b-Og-aac" secondAttribute="bottom" constant="16" id="Kb0-ON-9nI"/>
+                    <constraint firstAttribute="bottom" secondItem="p6b-Og-aac" secondAttribute="bottom" constant="8" id="Kb0-ON-9nI"/>
                     <constraint firstItem="p6b-Og-aac" firstAttribute="leading" secondItem="byH-sp-tex" secondAttribute="leading" id="XGU-IR-ACc"/>
                     <constraint firstAttribute="trailing" secondItem="p6b-Og-aac" secondAttribute="trailing" id="bXB-Ci-Ykh"/>
-                    <constraint firstItem="p6b-Og-aac" firstAttribute="top" secondItem="byH-sp-tex" secondAttribute="top" constant="16" id="yZK-xn-Jhb"/>
+                    <constraint firstItem="p6b-Og-aac" firstAttribute="top" secondItem="byH-sp-tex" secondAttribute="top" constant="8" id="yZK-xn-Jhb"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

@@ -14,7 +14,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qrV-FA-MIO">
-                        <rect key="frame" x="0.0" y="16" width="407" height="272.5"/>
+                        <rect key="frame" x="0.0" y="8" width="407" height="288.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="2aQ-gP-sJC">
                                 <rect key="frame" x="16" y="16" width="70" height="70"/>
@@ -71,7 +71,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="投稿内容" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="glE-50-8OZ">
-                                <rect key="frame" x="16" y="94" width="375" height="89.5"/>
+                                <rect key="frame" x="16" y="94" width="375" height="105.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="200" id="eXx-oF-W4q"/>
                                 </constraints>
@@ -80,7 +80,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MJv-RI-EXz" userLabel="评论">
-                                <rect key="frame" x="0.0" y="199.5" width="407" height="72"/>
+                                <rect key="frame" x="0.0" y="215.5" width="407" height="72"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="R4t-tj-WyD">
                                         <rect key="frame" x="16" y="16" width="40" height="40"/>
@@ -136,7 +136,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ds-tg-3Me">
-                                <rect key="frame" x="0.0" y="271.5" width="407" height="1"/>
+                                <rect key="frame" x="0.0" y="287.5" width="407" height="1"/>
                                 <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="CyG-lA-2Av"/>
@@ -181,9 +181,9 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="qrV-FA-MIO" firstAttribute="leading" secondItem="8Dp-F4-IB8" secondAttribute="leading" id="3XV-Q9-y0Y"/>
-                    <constraint firstItem="qrV-FA-MIO" firstAttribute="top" secondItem="8Dp-F4-IB8" secondAttribute="top" constant="16" id="9BU-lR-2NK"/>
+                    <constraint firstItem="qrV-FA-MIO" firstAttribute="top" secondItem="8Dp-F4-IB8" secondAttribute="top" constant="8" id="9BU-lR-2NK"/>
                     <constraint firstAttribute="trailing" secondItem="qrV-FA-MIO" secondAttribute="trailing" id="JI1-Zt-GGp"/>
-                    <constraint firstAttribute="bottom" secondItem="qrV-FA-MIO" secondAttribute="bottom" constant="16" id="kOL-gd-uDN"/>
+                    <constraint firstAttribute="bottom" secondItem="qrV-FA-MIO" secondAttribute="bottom" constant="8" id="kOL-gd-uDN"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
