@@ -27,6 +27,8 @@ final class GroupDetailViewController: BaseTableViewController {
         tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor.groupTableViewBackgroundColor()
         loadPosts()
+        
+        groupDescriptionButton.setImage(Util.coloredImage(UIImage(named: "settings")!, color: UIColor.whiteColor()), forState: UIControlState.Normal)
     }
     
     override func didReceiveMemoryWarning() {

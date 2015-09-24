@@ -12,12 +12,39 @@ class GroupDescriptionViewController: BaseTableViewController {
     
     /// 从上个界面继承来的数据
     var group: GroupEntity!
-    /// 新加载的书就
-    private var detailedGroup: GroupEntity?
+    /// 新加载的数据
+    private var detailedGroup: GroupEntity? {
+        didSet {
+            if let detailedGroup = detailedGroup {
+                // 刷新界面
+                nameLabel.text = detailedGroup.name
+                addressLabel.text = detailedGroup.address
+                stationLabel.text = detailedGroup.station
+                introductionLabel.text = detailedGroup.introduction
+                groupCoverImageView.sd_setImageWithURL(NSURL(string: detailedGroup.cover), placeholderImage: UIImage(named: "group_cover_default"))
+                memberCollectionView.reloadData()
+                memberCollectionViewHeightConstraint.constant = memberCollectionView.collectionViewLayout.collectionViewContentSize().height
+                tableView.reloadData()
+            }
+        }
+    }
     
+    /// 名称
+    @IBOutlet weak var nameLabel: UILabel!
+    /// 地址
+    @IBOutlet weak var addressLabel: UILabel!
+    /// 车站
+    @IBOutlet weak var stationLabel: UILabel!
+    /// 介绍
+    @IBOutlet weak var introductionLabel: UILabel!
+    
+    /// 用于显示头像的Cell
+    @IBOutlet weak var memberCollectionCell: UITableViewCell!
     /// 用于显示头像的collectionView
-    private var memberCollectionView: UICollectionView?
-    
+    @IBOutlet weak var memberCollectionView: UICollectionView!
+    /// 头像collectionView的高度
+    @IBOutlet weak var memberCollectionViewHeightConstraint: NSLayoutConstraint!
+    /// 封面
     @IBOutlet weak var groupCoverImageView: UIImageView!
     
     
@@ -25,6 +52,8 @@ class GroupDescriptionViewController: BaseTableViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableViewAutomaticDimension
         loadGroupDescription()
     }
     
@@ -33,6 +62,16 @@ class GroupDescriptionViewController: BaseTableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        var tableContentInset = tableView.contentInset
+        tableContentInset.bottom = 49.0
+        tableView.contentInset = tableContentInset
+        var tableIndicatorInset = tableView.scrollIndicatorInsets
+        tableIndicatorInset.bottom = 49.0
+        tableView.scrollIndicatorInsets = tableIndicatorInset
+    }
 }
 
 // MARK: - Navigation
@@ -54,78 +93,15 @@ extension GroupDescriptionViewController {
         AlamofireController.request(Method.GET, "/groups/\(group.id)", parameters: nil, encoding: ParameterEncoding.JSON, success: { (object) -> () in
             
             self.detailedGroup = GroupEntity(object)
-            self.refreshData()
             
             }) { (_) -> () in
                 
         }
     }
-    private func refreshData() {
-        tableView.reloadData()
-        groupCoverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: UIImage(named: "group_cover_default"))
-        memberCollectionView?.reloadData()
-    }
 }
 
 // MARK: - TableView DataSource & Delegate
 extension GroupDescriptionViewController {
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
-    }
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 4;
-        case 1:
-            return 1;
-        default:
-            return 0;
-        }
-    }
-    
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "基本信息"
-        case 1:
-            return "群组成员"
-        default:
-            return nil
-        }
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case 0:
-            let cell = tableView.dequeueReusableCellWithIdentifier(GroupDescriptionLabelCell.identifier) as! GroupDescriptionLabelCell
-            switch indexPath.row {
-            case 0:
-                cell.majorLabel.text = "名称"
-                cell.minorLabel.text = detailedGroup?.name
-            case 1:
-                cell.majorLabel.text = "地址"
-                cell.minorLabel.text = detailedGroup?.address
-            case 2:
-                cell.majorLabel.text = "车站"
-                cell.minorLabel.text = detailedGroup?.station
-            case 3:
-                cell.majorLabel.text = "介绍"
-                cell.minorLabel.text = detailedGroup?.introduction
-            default:
-                break
-            }
-            return cell
-        case 1:
-            let cell = tableView.dequeueReusableCellWithIdentifier(GroupDescriptionMemberCell.identifier) as! GroupDescriptionMemberCell
-            
-            memberCollectionView = cell.memberAvatarCollectionView
-            
-            return cell
-        default:
-            return UITableViewCell()
-        }
-        
-    }
 }
 
 // MARK: - CollectionView datasource & delegate methods
@@ -139,5 +115,12 @@ extension GroupDescriptionViewController: UICollectionViewDataSource, UICollecti
             cell.avatarImageView.sd_setImageWithURL(NSURL(string: member.photo ?? ""), placeholderImage: UIImage(named: "avatar"))
         }
         return cell;
+    }
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if let member = detailedGroup?.members?[indexPath.row] {
+            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+            vc.user = member
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }

@@ -86,8 +86,6 @@
 		1FFD21FF1BABD57C00204080 /* GroupSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */; };
 		1FFD22011BABD77E00204080 /* GroupSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */; };
 		28CB45E11BB13FB200182924 /* GroupDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */; };
-		28CB45E31BB1526F00182924 /* GroupDescriptionLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB45E21BB1526F00182924 /* GroupDescriptionLabelCell.swift */; };
-		28CB45E51BB155C100182924 /* GroupDescriptionMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB45E41BB155C100182924 /* GroupDescriptionMemberCell.swift */; };
 		28CB45E71BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB45E61BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift */; };
 		290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
 		290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290134DE1AC3991C00BBFE29 /* Images.xcassets */; };
@@ -234,8 +232,6 @@
 		1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupSectionHeaderView.xib; path = Classes/GroupSectionHeaderView.xib; sourceTree = "<group>"; };
 		1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupSectionHeaderView.swift; path = Classes/GroupSectionHeaderView.swift; sourceTree = "<group>"; };
 		28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDescriptionViewController.swift; path = Classes/GroupDescriptionViewController.swift; sourceTree = "<group>"; };
-		28CB45E21BB1526F00182924 /* GroupDescriptionLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDescriptionLabelCell.swift; path = Classes/GroupDescriptionLabelCell.swift; sourceTree = "<group>"; };
-		28CB45E41BB155C100182924 /* GroupDescriptionMemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDescriptionMemberCell.swift; path = Classes/GroupDescriptionMemberCell.swift; sourceTree = "<group>"; };
 		28CB45E61BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDescriptionMemberAvatarCell.swift; path = Classes/GroupDescriptionMemberAvatarCell.swift; sourceTree = "<group>"; };
 		290134D21AC3991C00BBFE29 /* tomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		290134D61AC3991C00BBFE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -490,8 +486,6 @@
 				1F19D9591BA96B3E007C9919 /* GroupCollectionViewCell.xib */,
 				1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */,
 				1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */,
-				28CB45E21BB1526F00182924 /* GroupDescriptionLabelCell.swift */,
-				28CB45E41BB155C100182924 /* GroupDescriptionMemberCell.swift */,
 				28CB45E61BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift */,
 			);
 			name = Components;
@@ -979,7 +973,6 @@
 				1FFD22011BABD77E00204080 /* GroupSectionHeaderView.swift in Sources */,
 				D0F44FAF1B5E540F009E12AA /* FriendListSendRequestController.swift in Sources */,
 				D073E6F81B84C1BF00066F42 /* CameraController.swift in Sources */,
-				28CB45E51BB155C100182924 /* GroupDescriptionMemberCell.swift in Sources */,
 				D0A0C0321B5F5BF900ABFA5F /* ProfileViewController.swift in Sources */,
 				D0DB07DB1B9D266900C06C4E /* NotificationCell.swift in Sources */,
 				1F1176AB1B983D280049D9F5 /* SocketPacket.swift in Sources */,
@@ -1048,7 +1041,6 @@
 				1F1176A31B983D280049D9F5 /* SocketAckManager.swift in Sources */,
 				28CB45E11BB13FB200182924 /* GroupDescriptionViewController.swift in Sources */,
 				1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */,
-				28CB45E31BB1526F00182924 /* GroupDescriptionLabelCell.swift in Sources */,
 				1F1176A71B983D280049D9F5 /* SocketEventHandler.swift in Sources */,
 				D0E788751B6F5BD3009255B9 /* AlamofireController.swift in Sources */,
 				1F8BF0111B53639F00090079 /* PostImageCell.swift in Sources */,
