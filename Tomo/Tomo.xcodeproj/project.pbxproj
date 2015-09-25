@@ -91,6 +91,7 @@
 		1FEE80EE1B4E60850061B913 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE80ED1B4E60850061B913 /* PostCell.swift */; };
 		1FFD21FF1BABD57C00204080 /* GroupSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */; };
 		1FFD22011BABD77E00204080 /* GroupSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */; };
+		2869D71C1BB545FB00D1C479 /* StationDiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2869D71B1BB545FB00D1C479 /* StationDiscoverViewController.swift */; };
 		28CB45E11BB13FB200182924 /* GroupDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */; };
 		28CB45E71BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB45E61BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift */; };
 		290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
@@ -243,6 +244,7 @@
 		1FEE80ED1B4E60850061B913 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCell.swift; path = Classes/PostCell.swift; sourceTree = "<group>"; };
 		1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupSectionHeaderView.xib; path = Classes/GroupSectionHeaderView.xib; sourceTree = "<group>"; };
 		1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupSectionHeaderView.swift; path = Classes/GroupSectionHeaderView.swift; sourceTree = "<group>"; };
+		2869D71B1BB545FB00D1C479 /* StationDiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationDiscoverViewController.swift; path = Classes/StationDiscoverViewController.swift; sourceTree = "<group>"; };
 		28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDescriptionViewController.swift; path = Classes/GroupDescriptionViewController.swift; sourceTree = "<group>"; };
 		28CB45E61BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDescriptionMemberAvatarCell.swift; path = Classes/GroupDescriptionMemberAvatarCell.swift; sourceTree = "<group>"; };
 		290134D21AC3991C00BBFE29 /* tomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -690,6 +692,7 @@
 				291ADF941AD229B3009D8BE3 /* CommentCell.swift */,
 				1F18B8331B844665003BD469 /* CreatePostViewController.swift */,
 				1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */,
+				2869D71B1BB545FB00D1C479 /* StationDiscoverViewController.swift */,
 				D0BA8DE61B55375A00271F2B /* PostViewController.swift */,
 			);
 			name = Home;
@@ -1040,6 +1043,7 @@
 				1F937FE61B58C2E3009722CE /* SettingViewController.swift in Sources */,
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
 				28CB45E71BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift in Sources */,
+				2869D71C1BB545FB00D1C479 /* StationDiscoverViewController.swift in Sources */,
 				1F985E601B60C19F008D5369 /* Float.swift in Sources */,
 				1FEA3D031BB3DEA20037F3C5 /* Palette.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,

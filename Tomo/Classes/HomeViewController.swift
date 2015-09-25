@@ -91,6 +91,7 @@ extension HomeViewController {
             let cell = tableView.dequeueReusableCellWithIdentifier("RecommendStationTableCell", forIndexPath: indexPath) as! RecommendStationTableCell
             cell.stations = stations
             cell.delegate = self
+            cell.tableViewController = self
             return cell
             
         } else if let post = contents[indexPath.row] as? PostEntity {
@@ -236,6 +237,14 @@ extension HomeViewController: CLLocationManagerDelegate {
             }
         }
         
+    }
+}
+
+// MARK: - Actions
+
+extension HomeViewController {
+    func discoverMoreStation() {
+        performSegueWithIdentifier("modalStationSelector", sender: nil)
     }
 }
 

@@ -15,6 +15,9 @@ class RecommendStationTableCell: UITableViewCell {
     var stations: [StationEntity]!
     var delegate: UIViewController!
     
+    /// cell container --- used for search
+    weak var tableViewController: HomeViewController?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -27,6 +30,7 @@ extension RecommendStationTableCell {
     @IBAction func discoverMoreStation(sender: AnyObject) {
 //        let vc = Util.createViewControllerWithIdentifier("GroupDiscoverView", storyboardName: "Group") as UIViewController
 //        self.delegate.navigationController?.presentViewController(vc, animated: true, completion: nil)
+        tableViewController?.discoverMoreStation()
     }
 }
 
