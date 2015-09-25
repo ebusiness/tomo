@@ -28,11 +28,6 @@ final class NotificationCell: UITableViewCell {
             self.createDateLabelView.text = self.notification.createDate.relativeTimeToString()
         }
     }
-    
-    override func awakeFromNib() {
-        self.avatarImageView.layer.borderColor = avatarBorderColor
-        self.avatarImageView.layer.borderWidth = 2
-    }
 }
 
 extension NotificationCell {

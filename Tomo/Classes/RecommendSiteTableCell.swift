@@ -19,18 +19,7 @@ class RecommendSiteTableCell: UITableViewCell {
         super.awakeFromNib()
 
         collectionView.registerNib(UINib(nibName: "GroupCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        
     }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }
 
 extension RecommendSiteTableCell {

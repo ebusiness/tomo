@@ -17,7 +17,9 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var postDateLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var bookmarkButton: UIButton!
-
+    
+    @IBOutlet weak var tagView: UIView!
+    
     @IBOutlet var commentView: UIView!
     @IBOutlet weak var commentImageView: UIImageView!
     @IBOutlet weak var commentContentLabel: UILabel!
@@ -48,13 +50,18 @@ class PostCell: UITableViewCell {
         layer.rasterizationScale = UIScreen.mainScreen().scale
         
         avatarImageView.layer.borderColor = avatarBorderColor
-        commentImageView.layer.borderColor = avatarBorderColor
-        
-        commentView.setTranslatesAutoresizingMaskIntoConstraints(false)
         
     }
     
     func setupDisplay() {
+        
+        postContentConstriantBottom.constant = 16
+        
+        let subviews = self.tagView.subviews
+        
+        for subview in subviews {
+            subview.removeFromSuperview()
+        }
         
         if let owner = post.owner {
             userNameLabel.text = owner.nickName
@@ -66,6 +73,34 @@ class PostCell: UITableViewCell {
             userNameLabel.text = nil
         }
         
+        if let group = post.group {
+            
+            let label = UILabel(frame: CGRectZero)
+            
+            label.text = group.name
+            label.font = UIFont.systemFontOfSize(12)
+            label.textAlignment = .Center
+            label.textColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 1.0)
+            
+            label.sizeToFit()
+            
+            label.frame.size.width += 20
+            label.frame.size.height += 12
+            
+            label.layer.borderWidth = 1
+            label.layer.cornerRadius = 5
+            label.layer.borderColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 1.0).CGColor
+            
+            label.frame = CGRectMake(tagView.bounds.width - label.bounds.width, 0, label.bounds.width, label.bounds.height)
+            
+            self.tagView.hidden = false
+            self.tagView.addSubview(label)
+            
+            postContentConstriantBottom.constant += 52
+        } else {
+            self.tagView.hidden = true
+        }
+        
         if let date = post.createDate {
             postDateLabel.text = date.relativeTimeToString()
         }
@@ -73,6 +108,7 @@ class PostCell: UITableViewCell {
         if let contentRaw = post.content {
             var content = contentRaw.trimmed()
             postContentLabel.text = content
+            postContentLabel.sizeToFit()
         }
         
         if let like = post.like where like.count > 0 {
@@ -104,7 +140,7 @@ class PostCell: UITableViewCell {
         if let comment = post.comments?.last {
             
             commentView.hidden = false
-            postContentConstriantBottom.constant = 88
+            postContentConstriantBottom.constant += 72
 //            if let parentview = self.tableView {
 //                UIView.setAnimationsEnabled(false)
 //                parentview.beginUpdates()
@@ -124,7 +160,7 @@ class PostCell: UITableViewCell {
             
         } else {
             commentView.hidden = true
-            postContentConstriantBottom.constant = 16
+            
         }
         
 

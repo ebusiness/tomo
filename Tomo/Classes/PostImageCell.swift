@@ -25,6 +25,12 @@ class PostImageCell: PostCell {
         
         super.setupDisplay()
         
+        let subviews = self.scrollView.subviews
+        
+        for subview in subviews {
+            subview.removeFromSuperview()
+        }
+        
         if post.images!.count == 1 {
             displaySingleImage()
         } else {

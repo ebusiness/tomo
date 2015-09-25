@@ -14,6 +14,8 @@ class PostEntity: Entity {
     
     var owner: UserEntity!
     
+    var group: GroupEntity?
+    
     var content: String!
     
     var images: [String]?
@@ -33,18 +35,28 @@ class PostEntity: Entity {
     }
     
     required init(_ json: JSON) {
+        
         super.init()
+        
         if let id = json.string { //id only
             self.id = id
             return
         }
         
         self.id = json["_id"].string ?? json["id"].stringValue
+        
         self.owner = UserEntity(json["owner"])
+        
+        if !(json["group"].object is NSNull) {
+            self.group = GroupEntity(json["group"])
+        }
+        
         self.content = json["content"].stringValue
         
         self.images = json["images_ref"].arrayObject as? [String]
+        
         self.like = json["like"].arrayObject as? [String]
+        
         self.bookmark = json["bookmark"].arrayObject as? [String]
         
         if let postComments = json["comments"].array {
@@ -56,8 +68,8 @@ class PostEntity: Entity {
         }
         
         self.coordinate = json["coordinate"].arrayObject as? [Double]
-        self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
         
+        self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
         
     }
 }

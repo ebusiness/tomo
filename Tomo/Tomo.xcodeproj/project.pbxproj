@@ -75,10 +75,16 @@
 		1FA76B021BA2A01D004776B0 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA76B011BA2A01D004776B0 /* GroupListViewController.swift */; };
 		1FA76B041BA2AC03004776B0 /* GroupDiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA76B031BA2AC03004776B0 /* GroupDiscoverViewController.swift */; };
 		1FA76B091BA2C642004776B0 /* GroupCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA76B081BA2C642004776B0 /* GroupCreateViewController.swift */; };
+		1FB69E661BB2A0E9009D0C96 /* RecommendStationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FB69E651BB2A0E9009D0C96 /* RecommendStationTableViewCell.xib */; };
 		1FCA1E631B71D0C8000F2936 /* CommentEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */; };
 		1FCA1E651B7221F7000F2936 /* NotificationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */; };
 		1FCA1E671B722260000F2936 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E661B722260000F2936 /* MessageEntity.swift */; };
 		1FE7CEF51B8C9561006700FC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7CEF41B8C9561006700FC /* SignUpViewController.swift */; };
+		1FEA3CF91BB38F640037F3C5 /* StationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA3CF81BB38F640037F3C5 /* StationEntity.swift */; };
+		1FEA3CFB1BB391780037F3C5 /* RecommendStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */; };
+		1FEA3CFD1BB39E5A0037F3C5 /* StationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA3CFC1BB39E5A0037F3C5 /* StationCollectionViewCell.swift */; };
+		1FEA3CFF1BB39F160037F3C5 /* StationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FEA3CFE1BB39F160037F3C5 /* StationCollectionViewCell.xib */; };
+		1FEA3D031BB3DEA20037F3C5 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA3D021BB3DEA20037F3C5 /* Palette.swift */; };
 		1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE80E71B4E552A0061B913 /* Home.storyboard */; };
 		1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */; };
 		1FEE80EC1B4E5C540061B913 /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE80EB1B4E5C540061B913 /* PostCell.xib */; };
@@ -221,10 +227,16 @@
 		1FA76B011BA2A01D004776B0 /* GroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupListViewController.swift; path = Classes/GroupListViewController.swift; sourceTree = "<group>"; };
 		1FA76B031BA2AC03004776B0 /* GroupDiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDiscoverViewController.swift; path = Classes/GroupDiscoverViewController.swift; sourceTree = "<group>"; };
 		1FA76B081BA2C642004776B0 /* GroupCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCreateViewController.swift; path = Classes/GroupCreateViewController.swift; sourceTree = "<group>"; };
+		1FB69E651BB2A0E9009D0C96 /* RecommendStationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RecommendStationTableViewCell.xib; path = Classes/RecommendStationTableViewCell.xib; sourceTree = "<group>"; };
 		1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentEntity.swift; path = Classes/CommentEntity.swift; sourceTree = "<group>"; };
 		1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationEntity.swift; path = Classes/NotificationEntity.swift; sourceTree = "<group>"; };
 		1FCA1E661B722260000F2936 /* MessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageEntity.swift; path = Classes/MessageEntity.swift; sourceTree = "<group>"; };
 		1FE7CEF41B8C9561006700FC /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = Classes/SignUpViewController.swift; sourceTree = "<group>"; };
+		1FEA3CF81BB38F640037F3C5 /* StationEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationEntity.swift; path = Classes/StationEntity.swift; sourceTree = "<group>"; };
+		1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendStationTableViewCell.swift; path = Classes/RecommendStationTableViewCell.swift; sourceTree = "<group>"; };
+		1FEA3CFC1BB39E5A0037F3C5 /* StationCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationCollectionViewCell.swift; path = Classes/StationCollectionViewCell.swift; sourceTree = "<group>"; };
+		1FEA3CFE1BB39F160037F3C5 /* StationCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StationCollectionViewCell.xib; path = Classes/StationCollectionViewCell.xib; sourceTree = "<group>"; };
+		1FEA3D021BB3DEA20037F3C5 /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Palette.swift; path = Classes/Palette.swift; sourceTree = SOURCE_ROOT; };
 		1FEE80E71B4E552A0061B913 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Home.storyboard; path = Classes/Home.storyboard; sourceTree = "<group>"; };
 		1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Classes/HomeViewController.swift; sourceTree = "<group>"; };
 		1FEE80EB1B4E5C540061B913 /* PostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostCell.xib; path = Classes/PostCell.xib; sourceTree = "<group>"; };
@@ -433,11 +445,12 @@
 				1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */,
 				D07E48531B9EB35B00BF04B2 /* Entity.swift */,
 				1F9A32361BA6AD8B001C43CE /* GroupEntity.swift */,
+				D08BFB0A1B744C2D00771F70 /* JSQMessageEntity.swift */,
 				1FCA1E661B722260000F2936 /* MessageEntity.swift */,
 				1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */,
 				1F9ACAF91B69F99F00648A82 /* PostEntity.swift */,
+				1FEA3CF81BB38F640037F3C5 /* StationEntity.swift */,
 				1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */,
-				D08BFB0A1B744C2D00771F70 /* JSQMessageEntity.swift */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -475,6 +488,10 @@
 				1F8BF0121B536D9500090079 /* PostImageCell.xib */,
 				1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */,
 				1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */,
+				1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */,
+				1FB69E651BB2A0E9009D0C96 /* RecommendStationTableViewCell.xib */,
+				1FEA3CFC1BB39E5A0037F3C5 /* StationCollectionViewCell.swift */,
+				1FEA3CFE1BB39F160037F3C5 /* StationCollectionViewCell.xib */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -528,13 +545,14 @@
 		290134D51AC3991C00BBFE29 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				295272CF1AD51B2300FC7833 /* S3.swift */,
-				290134DE1AC3991C00BBFE29 /* Images.xcassets */,
-				290134D71AC3991C00BBFE29 /* AppDelegate.swift */,
-				29BE7E111AC54224008110B4 /* Util.swift */,
-				2901351C1AC3A90C00BBFE29 /* Constants.swift */,
 				290134FA1AC3A3D200BBFE29 /* Tomo-Bridging-Header.h */,
 				290134D61AC3991C00BBFE29 /* Info.plist */,
+				290134D71AC3991C00BBFE29 /* AppDelegate.swift */,
+				2901351C1AC3A90C00BBFE29 /* Constants.swift */,
+				1FEA3D021BB3DEA20037F3C5 /* Palette.swift */,
+				295272CF1AD51B2300FC7833 /* S3.swift */,
+				29BE7E111AC54224008110B4 /* Util.swift */,
+				290134DE1AC3991C00BBFE29 /* Images.xcassets */,
 			);
 			name = "Supporting Files";
 			path = Tomo;
@@ -853,6 +871,7 @@
 				D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */,
 				D0DB07D71B9D1B5200C06C4E /* NotificationView.xib in Resources */,
 				29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */,
+				1FB69E661BB2A0E9009D0C96 /* RecommendStationTableViewCell.xib in Resources */,
 				296D8BC41AFC5A680058D400 /* Main.storyboard in Resources */,
 				29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */,
 				1F985E621B60C19F008D5369 /* Info.plist in Resources */,
@@ -864,6 +883,7 @@
 				1F19D9541BA9550A007C9919 /* RecommendSiteTableCell.xib in Resources */,
 				1FEE80EC1B4E5C540061B913 /* PostCell.xib in Resources */,
 				1F19D95A1BA96B3E007C9919 /* GroupCollectionViewCell.xib in Resources */,
+				1FEA3CFF1BB39F160037F3C5 /* StationCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1021,6 +1041,7 @@
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
 				28CB45E71BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift in Sources */,
 				1F985E601B60C19F008D5369 /* Float.swift in Sources */,
+				1FEA3D031BB3DEA20037F3C5 /* Palette.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				1F79C1B41B5E10DC008800E1 /* FriendCell.swift in Sources */,
 				D0B40BBF1B78AF0400685D67 /* ExNSDate.swift in Sources */,
@@ -1033,6 +1054,7 @@
 				1F98AD261B9001A0003CAE29 /* PostMapViewController.swift in Sources */,
 				1F1176A91B983D280049D9F5 /* SocketIOClient.swift in Sources */,
 				1F9ACAFA1B69F99F00648A82 /* PostEntity.swift in Sources */,
+				1FEA3CF91BB38F640037F3C5 /* StationEntity.swift in Sources */,
 				1F937FE81B58EE8B009722CE /* AccountEditViewController.swift in Sources */,
 				1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */,
 				1F19D9561BA9616C007C9919 /* RecommendSiteTableCell.swift in Sources */,
@@ -1059,6 +1081,8 @@
 				D07D8A1A1B99A3DF00D13096 /* NotificationListViewController.swift in Sources */,
 				1F79C1B61B5E55D5008800E1 /* InvitationCell.swift in Sources */,
 				296D8BAC1AFC59F10058D400 /* TabBarController.swift in Sources */,
+				1FEA3CFD1BB39E5A0037F3C5 /* StationCollectionViewCell.swift in Sources */,
+				1FEA3CFB1BB391780037F3C5 /* RecommendStationTableViewCell.swift in Sources */,
 				1FA76B091BA2C642004776B0 /* GroupCreateViewController.swift in Sources */,
 				1F6AE7851B6F1A2300D7F488 /* PostAnnotation.swift in Sources */,
 			);

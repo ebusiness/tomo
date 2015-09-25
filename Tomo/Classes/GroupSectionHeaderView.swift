@@ -12,9 +12,9 @@ class GroupSectionHeaderView: UITableViewHeaderFooterView {
     
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var introductionLabel: UILabel!
     @IBOutlet weak var memberLabel: UILabel!
-    @IBOutlet weak var postLabel: UILabel!
     
     var group: GroupEntity!
     var delegate: UINavigationController!
@@ -25,13 +25,21 @@ class GroupSectionHeaderView: UITableViewHeaderFooterView {
     }
     
     func setupDisplay() {
-//        self.backgroundView = self.coverImageView
+
         self.coverImageView.sd_setImageWithURL(NSURL(string: self.group.cover), placeholderImage: DefaultGroupImage)
         
         self.nameLabel.text = self.group.name
+        
+        if self.group.type == "site" {
+            self.typeLabel.hidden = false
+            self.typeLabel.text = "现场"
+        } else {
+            self.typeLabel.hidden = true
+        }
+        
         self.introductionLabel.text = self.group.introduction
-        self.memberLabel.text = "\(self.group.members!.count)个成员"
-        self.postLabel.text = "\(self.group.posts!.count)个帖子"
+        
+        self.memberLabel.text = "\(self.group.members!.count)名成员"
     }
     
     func headerTapped() {

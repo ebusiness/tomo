@@ -83,6 +83,5 @@ class GroupEntity: Entity {
         
         self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
         
-        
     }
 }

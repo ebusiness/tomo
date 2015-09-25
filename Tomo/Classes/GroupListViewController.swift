@@ -26,6 +26,15 @@ final class GroupListViewController: BaseTableViewController {
         let GroupSectionHeaderNib = UINib(nibName: "GroupSectionHeaderView", bundle: nil)
         self.tableView.registerNib(GroupSectionHeaderNib, forHeaderFooterViewReuseIdentifier: "GroupHeader")
         
+        let postCellNib = UINib(nibName: "PostCell", bundle: nil)
+        self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "PostCell")
+        
+        let postImageCellNib = UINib(nibName: "PostImageCell", bundle: nil)
+        self.tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
+        
+        self.tableView.estimatedRowHeight = 550
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        
         self.loadMoreContent()
     }
     
@@ -48,15 +57,16 @@ extension GroupListViewController {
 extension GroupListViewController {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return self.groups.count
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 3
+        
+        if let posts = self.groups[section].posts {
+            return posts.count
+        } else {
+            return 0
+        }
     }
 }
 
@@ -65,7 +75,7 @@ extension GroupListViewController {
 extension GroupListViewController {
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 152
+        return 160
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -80,16 +90,33 @@ extension GroupListViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        var cell: PostCell!
+        
+        if let posts = self.groups[indexPath.section].posts {
+            
+            let post = posts[indexPath.row]
+            
+            if post.images?.count > 0 {
+                cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell", forIndexPath: indexPath) as! PostImageCell
+            } else {
+                cell = tableView.dequeueReusableCellWithIdentifier("PostCell", forIndexPath: indexPath) as! PostCell
+            }
+            
+            cell.post = post
+            cell.setupDisplay()
+        }
         
         return cell
     }
-//    
-//    override func scrollViewDidScroll(scrollView: UIScrollView) {
+
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
 //        let rect = self.tableView.rectForHeaderInSection(1)
 //        println(rect)
 //        println(scrollView.contentOffset.y)
-//    }
+//        if let topCell = self.tableView.visibleCells().get(0) as? UITableViewCell {
+//            println(tableView.indexPathForCell(topCell)?.section)
+//        }
+    }
 }
 
 // MARK: Internal methods

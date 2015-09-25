@@ -81,13 +81,6 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uMk-t0-2Ro">
-                                <rect key="frame" x="0.0" y="482" width="433" height="1"/>
-                                <color key="backgroundColor" red="0.8666666666666667" green="0.8666666666666667" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="JgI-XT-82S"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L2k-JL-fDb" userLabel="评论">
                                 <rect key="frame" x="0.0" y="410" width="433" height="72"/>
                                 <subviews>
@@ -101,9 +94,6 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="20"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                                                <integer key="value" value="2"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
@@ -143,6 +133,20 @@
                                     <constraint firstItem="1Jg-TD-O02" firstAttribute="leading" secondItem="YUN-GO-npp" secondAttribute="trailing" constant="8" id="uq5-HB-8fz"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uMk-t0-2Ro">
+                                <rect key="frame" x="0.0" y="482" width="433" height="1"/>
+                                <color key="backgroundColor" red="0.8666666666666667" green="0.8666666666666667" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="JgI-XT-82S"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yRG-wl-yVt">
+                                <rect key="frame" x="24" y="410.5" width="385" height="20"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="2Bx-gh-ySn"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -155,6 +159,7 @@
                             <constraint firstItem="o5x-Rd-tkH" firstAttribute="top" secondItem="p6b-Og-aac" secondAttribute="top" id="JAA-Vw-3mG"/>
                             <constraint firstAttribute="trailing" secondItem="B2H-5y-4xQ" secondAttribute="trailing" constant="16" id="LOb-Xd-LfT"/>
                             <constraint firstItem="cLL-ht-tGJ" firstAttribute="leading" secondItem="xfH-uV-6UG" secondAttribute="trailing" constant="8" id="Msl-Fn-rnm"/>
+                            <constraint firstItem="yRG-wl-yVt" firstAttribute="top" secondItem="y4i-E0-CGx" secondAttribute="bottom" constant="16" id="PBR-5d-LeY"/>
                             <constraint firstItem="xfH-uV-6UG" firstAttribute="leading" secondItem="wQe-Yj-udo" secondAttribute="trailing" constant="8" id="UIz-hN-MpE"/>
                             <constraint firstItem="vjm-ao-ZM1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cLL-ht-tGJ" secondAttribute="trailing" constant="8" id="UiO-ef-kVK"/>
                             <constraint firstItem="uMk-t0-2Ro" firstAttribute="top" secondItem="L2k-JL-fDb" secondAttribute="bottom" id="Z1l-CO-2kZ"/>
@@ -165,8 +170,10 @@
                             <constraint firstItem="cLL-ht-tGJ" firstAttribute="centerY" secondItem="xfH-uV-6UG" secondAttribute="centerY" id="ovr-B8-IvL"/>
                             <constraint firstItem="wQe-Yj-udo" firstAttribute="top" secondItem="o5x-Rd-tkH" secondAttribute="bottom" constant="-35" id="qfq-BX-IeC"/>
                             <constraint firstAttribute="trailing" secondItem="L2k-JL-fDb" secondAttribute="trailing" id="rmT-EL-Dox"/>
+                            <constraint firstItem="yRG-wl-yVt" firstAttribute="leading" secondItem="p6b-Og-aac" secondAttribute="leading" constant="24" id="rqJ-JM-xbm"/>
                             <constraint firstItem="y4i-E0-CGx" firstAttribute="leading" secondItem="p6b-Og-aac" secondAttribute="leading" constant="24" id="rsf-0v-vws"/>
                             <constraint firstAttribute="bottom" secondItem="uMk-t0-2Ro" secondAttribute="bottom" id="uvp-0t-FLx"/>
+                            <constraint firstAttribute="trailing" secondItem="yRG-wl-yVt" secondAttribute="trailing" constant="24" id="vkr-ty-LfQ"/>
                             <constraint firstItem="uMk-t0-2Ro" firstAttribute="leading" secondItem="p6b-Og-aac" secondAttribute="leading" id="wfz-VY-feA"/>
                             <constraint firstAttribute="trailing" secondItem="y4i-E0-CGx" secondAttribute="trailing" constant="24" id="xYu-94-peb"/>
                             <constraint firstItem="B2H-5y-4xQ" firstAttribute="leading" secondItem="vjm-ao-ZM1" secondAttribute="trailing" constant="8" id="yoJ-v2-u3v"/>
@@ -197,6 +204,7 @@
                 <outlet property="postContentLabel" destination="y4i-E0-CGx" id="hDO-Ft-Hr9"/>
                 <outlet property="postDateLabel" destination="cLL-ht-tGJ" id="w7w-Y0-bGy"/>
                 <outlet property="scrollView" destination="o5x-Rd-tkH" id="Gao-ZH-qat"/>
+                <outlet property="tagView" destination="yRG-wl-yVt" id="yCZ-wU-yLD"/>
                 <outlet property="userNameLabel" destination="xfH-uV-6UG" id="EO2-61-Ygm"/>
             </connections>
             <point key="canvasLocation" x="129.5" y="662"/>
