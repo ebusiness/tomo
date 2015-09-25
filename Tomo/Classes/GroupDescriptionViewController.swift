@@ -17,7 +17,6 @@ class GroupDescriptionViewController: BaseTableViewController {
         didSet {
             if let detailedGroup = detailedGroup {
                 // 刷新界面
-                nameLabel.text = detailedGroup.name
                 addressLabel.text = detailedGroup.address
                 stationLabel.text = detailedGroup.station
                 introductionLabel.text = detailedGroup.introduction
@@ -29,8 +28,6 @@ class GroupDescriptionViewController: BaseTableViewController {
         }
     }
     
-    /// 名称
-    @IBOutlet weak var nameLabel: UILabel!
     /// 地址
     @IBOutlet weak var addressLabel: UILabel!
     /// 车站
@@ -52,6 +49,8 @@ class GroupDescriptionViewController: BaseTableViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        navigationItem.title = group.name
+        
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         loadGroupDescription()

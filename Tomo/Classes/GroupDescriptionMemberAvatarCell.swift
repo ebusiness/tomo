@@ -12,5 +12,5 @@ class GroupDescriptionMemberAvatarCell: UICollectionViewCell {
     static let identifier = "GroupDescriptionMemberAvatarCellIdentifier"
     
     @IBOutlet weak var avatarImageView: UIImageView!
-    
+
 }
