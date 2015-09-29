@@ -25,6 +25,8 @@ class PostAnnotationView: MKAnnotationView {
         
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
+        self.canShowCallout = true
+        
         let postAnnotation = annotation as! PostAnnotation
         
         frame = CGRect(x: 0, y: 0, width: 40, height: 40)

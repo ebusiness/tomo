@@ -67,7 +67,6 @@
 		1F985E6A1B60C19F008D5369 /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E511B60C19F008D5369 /* Range.swift */; };
 		1F985E6C1B60C19F008D5369 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E521B60C19F008D5369 /* Sequence.swift */; };
 		1F985E6E1B60C19F008D5369 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E531B60C19F008D5369 /* String.swift */; };
-		1F98AD261B9001A0003CAE29 /* PostMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F98AD251B9001A0003CAE29 /* PostMapViewController.swift */; };
 		1F9A32371BA6AD8B001C43CE /* GroupEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9A32361BA6AD8B001C43CE /* GroupEntity.swift */; };
 		1F9ACAFA1B69F99F00648A82 /* PostEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAF91B69F99F00648A82 /* PostEntity.swift */; };
 		1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */; };
@@ -220,7 +219,6 @@
 		1F985E511B60C19F008D5369 /* Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Range.swift; sourceTree = "<group>"; };
 		1F985E521B60C19F008D5369 /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		1F985E531B60C19F008D5369 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
-		1F98AD251B9001A0003CAE29 /* PostMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostMapViewController.swift; path = Classes/PostMapViewController.swift; sourceTree = "<group>"; };
 		1F9A32361BA6AD8B001C43CE /* GroupEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupEntity.swift; path = Classes/GroupEntity.swift; sourceTree = "<group>"; };
 		1F9ACAF91B69F99F00648A82 /* PostEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostEntity.swift; path = Classes/PostEntity.swift; sourceTree = "<group>"; };
 		1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserEntity.swift; path = Classes/UserEntity.swift; sourceTree = "<group>"; };
@@ -585,7 +583,6 @@
 				290144161ADF6D890048F3D8 /* MapViewController.swift */,
 				1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */,
 				1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */,
-				1F98AD251B9001A0003CAE29 /* PostMapViewController.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -1055,7 +1052,6 @@
 				1F350B2B1B68D32800088C1E /* PostAnnotationView.swift in Sources */,
 				D0DB07E01B9D3E1400C06C4E /* RemoteNotification.swift in Sources */,
 				1F985E581B60C19F008D5369 /* Character.swift in Sources */,
-				1F98AD261B9001A0003CAE29 /* PostMapViewController.swift in Sources */,
 				1F1176A91B983D280049D9F5 /* SocketIOClient.swift in Sources */,
 				1F9ACAFA1B69F99F00648A82 /* PostEntity.swift in Sources */,
 				1FEA3CF91BB38F640037F3C5 /* StationEntity.swift in Sources */,

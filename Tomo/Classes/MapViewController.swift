@@ -20,12 +20,8 @@ final class MapViewController: BaseViewController {
     let calendar = NSCalendar.currentCalendar()
     let unitFlag = (NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay)
     
-    var zoomedIn = false
-    var lastViewRegion: MKCoordinateRegion?
-    
     let tokyoCenter = CLLocationCoordinate2D(latitude: 35.693889, longitude: 139.753611)
-    let tokyoSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-//    let tokyoRegion = MKCoordinateRegion(center: tokyoCenter, span: tokyoSpan)
+    let tokyoSpan = MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -36,11 +32,6 @@ final class MapViewController: BaseViewController {
     @IBOutlet weak var interestToggleButton: UIButton!
     @IBOutlet weak var buildingToggleButton: UIButton!
     @IBOutlet weak var currentLocationButton: UIButton!
-    
-    @IBOutlet weak var postMapView: UIView!
-    @IBOutlet weak var postMapViewHeight: NSLayoutConstraint!
-    
-    var postMapViewController: PostMapViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,13 +62,6 @@ final class MapViewController: BaseViewController {
     
     override func prefersStatusBarHidden() -> Bool {
         return true
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        if let controller = segue.destinationViewController as? PostMapViewController {
-            self.postMapViewController = controller
-        }
     }
     
 }
@@ -143,12 +127,13 @@ extension MapViewController: MKMapViewDelegate {
 //    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
 //        
 //        let userCoordinate = userLocation.coordinate
-//        let region = MKCoordinateRegionMakeWithDistance(userCoordinate, 1500, 1500)
-//        
+////        let region = MKCoordinateRegionMakeWithDistance(userCoordinate, 1500, 1500)
+//
 //        UIView.animateWithDuration(2.0, animations: { () -> Void in
-//            self.mapView.setRegion(mapView.regionThatFits(region), animated: true)
+//            self.mapView.setCenterCoordinate(userCoordinate, animated: true)
+////            self.mapView.setRegion(mapView.regionThatFits(region), animated: true)
 //        }) { (_) -> Void in
-//            self.mapView.showsUserLocation = false
+////            self.mapView.showsUserLocation = false
 //            self.turnTo3DMap(userCoordinate)
 //        }
 //    }
@@ -207,7 +192,7 @@ extension MapViewController: MKMapViewDelegate {
             }
             
             if let view = view as? PostAnnotationView {
-                view.expandIntoView(self.view, finished: nil)
+//                view.expandIntoView(self.view, finished: nil)
                 view.updateBadge()
                 view.updateScale()
                 //                view.bounce(nil)
@@ -216,47 +201,46 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
-        
-        if !zoomedIn {
-            self.lastViewRegion = mapView.region
-            self.zoomedIn = !self.zoomedIn
-        }
-        
-        if let annotation = view.annotation as? PostAnnotation {
-            
-            let region = MKCoordinateRegionMakeWithDistance(annotation.coordinate, 10, 10)
-            
-            let post = annotation.post!
-            self.postMapViewController?.configDisplay(post)
-            
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.postMapViewHeight.constant = UIScreen.mainScreen().bounds.height / 3
-                self.view.layoutIfNeeded()
-            }) { (finish) -> Void in
-                self.mapView.setRegion(self.mapView.regionThatFits(region), animated: true)
-            }
-        }
-    }
 
-    @IBAction func mapTapped(sender: UITapGestureRecognizer) {
-        
-        var tapOn = sender.locationInView(self.mapView)
-        
-        if self.mapView.hitTest(tapOn, withEvent: nil) is PostAnnotationView {
-            return
-        } else {
-            
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.postMapViewHeight.constant = 0.0
-                self.view.layoutIfNeeded()
-            }) { (finish) -> Void in
-                self.zoomedIn = false
-                if let region = self.lastViewRegion {
-                    self.mapView.setRegion(self.mapView.regionThatFits(region), animated: true)
-                }
-            }
-        }
+//        if !zoomedIn {
+//            self.lastViewRegion = mapView.region
+//            self.zoomedIn = !self.zoomedIn
+//        }
+//        
+//        if let annotation = view.annotation as? PostAnnotation {
+//            
+//            let region = MKCoordinateRegionMakeWithDistance(annotation.coordinate, 10, 10)
+//            
+//            let post = annotation.post!
+//            self.postMapViewController?.configDisplay(post)
+//            
+//            UIView.animateWithDuration(0.3, animations: { () -> Void in
+//                self.postMapViewHeight.constant = UIScreen.mainScreen().bounds.height / 3
+//                self.view.layoutIfNeeded()
+//            }) { (finish) -> Void in
+//                self.mapView.setRegion(self.mapView.regionThatFits(region), animated: true)
+//            }
+//        }
     }
+//
+//    @IBAction func mapTapped(sender: UITapGestureRecognizer) {
+//        
+//        var tapOn = sender.locationInView(self.mapView)
+//        
+//        if self.mapView.hitTest(tapOn, withEvent: nil) is PostAnnotationView {
+//            return
+//        } else {
+//            
+//            UIView.animateWithDuration(0.3, animations: { () -> Void in
+//                self.view.layoutIfNeeded()
+//            }) { (finish) -> Void in
+//                self.zoomedIn = false
+//                if let region = self.lastViewRegion {
+//                    self.mapView.setRegion(self.mapView.regionThatFits(region), animated: true)
+//                }
+//            }
+//        }
+//    }
 
 }
 
@@ -267,10 +251,7 @@ extension MapViewController {
     private func setupAppearance() {
         
         self.chooseDateButton.setTitle(NSDate().toString(dateStyle: .MediumStyle, timeStyle: .NoStyle, doesRelativeDateFormatting: false), forState: .Normal)
-        
         self.nextDay.hidden = true
-        
-        self.postMapViewHeight.constant = 0.0
     }
     
     private func showLocationServiceDisabledAlert() {
@@ -332,7 +313,6 @@ extension MapViewController {
                 self.updateVisibleAnnotations()
             }
             
-            
         }) { err in
             
         }
@@ -343,12 +323,12 @@ extension MapViewController {
         // This value to controls the number of off screen annotations are displayed.
         // A bigger number means more annotations, less chance of seeing annotation views pop in but decreased performance.
         // A smaller number means fewer annotations, more chance of seeing annotation views pop in but better performance.
-        let marginFactor = 1.0;
+        let marginFactor = 0.0;
         
         // Adjust this roughly based on the dimensions of your annotations views.
         // Bigger numbers more aggressively coalesce annotations (fewer annotations displayed but better performance).
         // Numbers too small result in overlapping annotations views and too many annotations on screen.
-        let bucketSize = 120.0;
+        let bucketSize = 80.0;
         
         // find all the annotations in the visible area + a wide margin to avoid popping annotation views in and out while panning the map.
         let visibleMapRect = mapView.visibleMapRect

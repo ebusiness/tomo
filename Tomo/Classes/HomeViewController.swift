@@ -229,6 +229,8 @@ extension HomeViewController: CLLocationManagerDelegate {
         
         // new location object more accurate than previous one
         if self.location == nil || self.location!.horizontalAccuracy > newLocation.horizontalAccuracy {
+
+            println("***** location updated")
             
             // accept the result
             self.locationError = nil
@@ -236,6 +238,7 @@ extension HomeViewController: CLLocationManagerDelegate {
             
             // accuracy better than desiredAccuracy, stop locating
             if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy {
+                println("***** normal done")
                 self.stopLocationManager()
             }
             
