@@ -20,6 +20,8 @@ class StationEntity: Entity {
     
     var coordinate: [Double]?
     
+    var color: String?
+    
     override init() {
         super.init()
     }
@@ -42,6 +44,8 @@ class StationEntity: Entity {
         self.address = json["address"].stringValue
         
         self.coordinate = json["coordinate"].arrayObject as? [Double]
+        
+        self.color = json["color"].stringValue
         
     }
 }
