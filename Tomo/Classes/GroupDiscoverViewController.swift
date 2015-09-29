@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class GroupDiscoverViewController: UIViewController {
+final class GroupDiscoverViewController: BaseViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -28,6 +28,7 @@ final class GroupDiscoverViewController: UIViewController {
         let searchBar = UISearchBar()
         searchBar.barTintColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 0.7)
         self.navigationItem.titleView = searchBar
+        self.alwaysShowNavigationBar = true
         
         
         self.collectionView.registerNib(UINib(nibName: "GroupCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
@@ -69,7 +70,7 @@ extension GroupDiscoverViewController {
 
 extension GroupDiscoverViewController {
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
         
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
