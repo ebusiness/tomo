@@ -197,6 +197,17 @@ extension HomeViewController: CLLocationManagerDelegate {
         self.stopLocationManager()
     }
     
+    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        println(status)
+        
+        switch status {
+        case .AuthorizedAlways, .AuthorizedWhenInUse:
+            self.getLocation()
+        default:
+            return
+        }
+    }
+    
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         
         let newLocation = locations.last as! CLLocation
@@ -319,22 +330,8 @@ extension HomeViewController {
         case .Restricted:
             return false
         case .Denied:
-            showLocationServiceDisabledAlert()
             return false
         }
-    }
-    
-    private func showLocationServiceDisabledAlert() {
-        
-        let alert = UIAlertController(title: "現場Tomo需要访问您的位置", message: "为了给您提供更多更好的内容，请您允许現場Tomo访问您的位置", preferredStyle: .Alert)
-        
-        alert.addAction(UIAlertAction(title: "不允许", style: .Destructive, handler: nil))
-        alert.addAction(UIAlertAction(title: "好", style: .Default, handler: { _ in
-            let url = NSURL(string: UIApplicationOpenSettingsURLString)
-            UIApplication.sharedApplication().openURL(url!)
-        }))
-        
-        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     private func stopLocationManager() {
@@ -365,40 +362,12 @@ extension HomeViewController {
         }
         
         AlamofireController.request(.GET, "/groups", parameters: params, success: { groupData in
-            
             self.recommendGroups = GroupEntity.collection(groupData)
-            
-            let visibleCells = self.tableView.visibleCells()
-            let visibleIndexPath = self.tableView.indexPathForCell(visibleCells.get(0) as! UITableViewCell)
-            
-            let insertIndexPath = NSIndexPath(forRow: visibleIndexPath!.row + 3, inSection: 0)
-            
-            if let groups: AnyObject = self.recommendGroups as? AnyObject {
-                self.contents.insert(groups, atIndex: Int(insertIndexPath.row))
-                self.tableView.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Fade)
-            }
-            
-        }) { err in
-            
-        }
+        })
         
         AlamofireController.request(.GET, "/stations", parameters: params, success: { stationData in
-            
             self.recommendStations = StationEntity.collection(stationData)
-            
-            let visibleCells = self.tableView.visibleCells()
-            let visibleIndexPath = self.tableView.indexPathForCell(visibleCells.get(0) as! UITableViewCell)
-            
-            let insertIndexPath = NSIndexPath(forRow: visibleIndexPath!.row + 6, inSection: 0)
-            
-            if let stations: AnyObject = self.recommendStations as? AnyObject {
-                self.contents.insert(stations, atIndex: Int(insertIndexPath.row))
-                self.tableView.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Fade)
-            }
-            
-        }) { err in
-                
-        }
+        })
     }
     
     private func loadMoreContent() {
@@ -425,32 +394,24 @@ extension HomeViewController {
                 self.appendRows(loadPosts.count)
             }
             
-//            var rowNumber = 0
-//            
-//            if let loadPosts: [AnyObject] = posts {
-//                self.contents += loadPosts
-//                rowNumber += loadPosts.count
-//            }
-//            
-//            if let loadGroups: AnyObject = self.recommendGroups as? AnyObject {
-//                
-//                if rowNumber > 0 {
-//                    let insertIndex = arc4random_uniform(UInt32(rowNumber/2)) + 1
-//                    self.contents.insert(loadGroups, atIndex: Int(insertIndex))
-//                }
-//                rowNumber += 1
-//            }
-//            
-//            if let loadStations: AnyObject = self.recommendStations as? AnyObject {
-//                
-//                if rowNumber > 0 {
-//                    let insertIndex = arc4random_uniform(UInt32(rowNumber/2)) + 1
-//                    self.contents.insert(loadStations, atIndex: Int(insertIndex))
-//                }
-//                rowNumber += 1
-//            }
-//            
-//            self.appendRows(rowNumber)
+            let visibleCells = self.tableView.visibleCells()
+            let visibleIndexPath = self.tableView.indexPathForCell(visibleCells.get(0) as! UITableViewCell)
+            
+            var insertIndexPath = NSIndexPath(forRow: visibleIndexPath!.row + 1, inSection: 0)
+            
+            if let stations: AnyObject = self.recommendStations as? AnyObject {
+                self.contents.insert(stations, atIndex: Int(insertIndexPath.row))
+                self.tableView.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Fade)
+                self.recommendStations = nil
+            }
+            
+            insertIndexPath = NSIndexPath(forRow: visibleIndexPath!.row + 4, inSection: 0)
+            
+            if let groups: AnyObject = self.recommendGroups as? AnyObject {
+                self.contents.insert(groups, atIndex: Int(insertIndexPath.row))
+                self.tableView.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Fade)
+                self.recommendGroups = nil
+            }
             
             self.isLoading = false
             
@@ -485,9 +446,10 @@ extension HomeViewController {
             if let loadPosts:[PostEntity] = PostEntity.collection(result) {
                 self.contents = loadPosts + self.contents
                 self.prependRows(loadPosts.count)
-            } else {
-                // the response is not post
             }
+            
+            
+            
             self.endRefreshing()
             
         }) { err in

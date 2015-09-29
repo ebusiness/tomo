@@ -17,7 +17,7 @@ class StationCollectionViewCell: UICollectionViewCell {
     
     func setupDisplay() {
         
-        let color = Palette.Blue//Palette(index: Int(arc4random_uniform(UInt32(16))))
+        let color = Palette(index: Int(arc4random_uniform(UInt32(16))))
         
         self.nameLabel.text = self.station.name
         self.lineLabel.text = self.station.line
