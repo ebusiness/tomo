@@ -215,8 +215,14 @@ extension AccountEditViewController {
                 
                 if error == nil {
                     if isAvatar {
+                        if let photo = me.photo {
+                            SDImageCache.sharedImageCache().removeImageForKey(photo)
+                        }
                         self.user.photo = name
                     } else {
+                        if let cover = me.cover {
+                            SDImageCache.sharedImageCache().removeImageForKey(cover)
+                        }
                         self.user.cover = name
                     }
                     self.updateUser()
