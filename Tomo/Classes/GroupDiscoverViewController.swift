@@ -71,7 +71,7 @@ extension GroupDiscoverViewController {
 extension GroupDiscoverViewController {
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        
+        self.navigationItem.titleView?.endEditing(true)
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         
@@ -101,7 +101,6 @@ extension GroupDiscoverViewController {
 extension GroupDiscoverViewController {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! GroupCollectionViewCell
         
         cell.group = self.groups[indexPath.item]
@@ -111,6 +110,7 @@ extension GroupDiscoverViewController {
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        self.navigationItem.titleView?.endEditing(true)
         let vc = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
         vc.group = groups[indexPath.item]
         self.navigationController?.pushViewController(vc, animated: true)
