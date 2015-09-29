@@ -62,6 +62,11 @@ final class HomeViewController: BaseTableViewController {
                 vc.post = post
             }
         }
+        if segue.identifier == "modalStationSelector" {
+            let nav = segue.destinationViewController as! UINavigationController
+            let vc = nav.viewControllers[0] as! StationDiscoverViewController
+            vc.location = location
+        }
     }
     
     @IBAction func addedPost(segue: UIStoryboardSegue) {
