@@ -9,17 +9,8 @@
 import UIKit
 
 class PostAnnotationView: MKAnnotationView {
-
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
     
     var imageView: UIImageView!
-    var contentLabel: UILabel!
     var numberBadge: UILabel!
     
     required init(coder aDecoder: NSCoder) {
@@ -31,14 +22,14 @@ class PostAnnotationView: MKAnnotationView {
     }
     
     override init(annotation: MKAnnotation!, reuseIdentifier: String!) {
+        
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
         let postAnnotation = annotation as! PostAnnotation
         
-        frame = CGRect(x: 0, y: 0, width: 60, height: 60)
+        frame = CGRect(x: 0, y: 0, width: 40, height: 40)
 
-        
-        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         imageView.sd_setImageWithURL(NSURL(string:  postAnnotation.post.owner.photo!), placeholderImage: UIImage(named: "avatar"))
         imageView.clipsToBounds = true
@@ -47,17 +38,22 @@ class PostAnnotationView: MKAnnotationView {
         imageView.layer.cornerRadius = imageView.frame.width / 2
         addSubview(imageView)
         
-        numberBadge = UILabel(frame: CGRect(x: 45, y: 0, width: 20, height: 20))
+        numberBadge = UILabel(frame: CGRect(x: 25, y: 0, width: 20, height: 20))
         numberBadge.textColor = UIColor.whiteColor()
         numberBadge.textAlignment = NSTextAlignment.Center
         numberBadge.font = UIFont.systemFontOfSize(12)
-        numberBadge.layer.cornerRadius = 10
+        numberBadge.clipsToBounds = true
         numberBadge.layer.borderWidth = 1
         numberBadge.layer.borderColor = UIColor.whiteColor().CGColor
-        numberBadge.clipsToBounds = true
+        numberBadge.layer.cornerRadius = 10
         numberBadge.backgroundColor = UIColor.redColor()
         
         updateBadge()
+    }
+    
+    func setupDisplay() {
+        let postAnnotation = annotation as! PostAnnotation
+        imageView.sd_setImageWithURL(NSURL(string:  postAnnotation.post.owner.photo!), placeholderImage: UIImage(named: "avatar"))
     }
     
     func updateBadge() {
@@ -66,12 +62,44 @@ class PostAnnotationView: MKAnnotationView {
         
         if let containedAnnotations = postAnnotation.containedAnnotations {
             
-            if containedAnnotations.count > 0 {
-                numberBadge.text = "\(containedAnnotations.count + 1)"
+            let count = containedAnnotations.count
+            
+            if count > 0 {
+                numberBadge.text = "\(count + 1)"
                 addSubview(numberBadge)
             } else {
                 numberBadge.removeFromSuperview()
             }
+        }
+    }
+    
+    func updateScale() {
+        
+        let postAnnotation = annotation as! PostAnnotation
+        
+        if let containedAnnotations = postAnnotation.containedAnnotations {
+            
+            let count = containedAnnotations.count
+            var exRate = CGFloat(1)
+            
+            switch count {
+            case 1..<10:
+                exRate = CGFloat(1.3)
+            case 10..<20:
+                exRate = CGFloat(1.5)
+            case 20..<30:
+                exRate = CGFloat(1.7)
+            case 30..<40:
+                exRate = CGFloat(1.9)
+            case 40..<Int.max:
+                exRate = CGFloat(2.1)
+            default:
+                exRate = 1
+            }
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.transform = CGAffineTransformMakeScale(exRate, exRate)
+            })
         }
     }
 

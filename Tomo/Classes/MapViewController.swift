@@ -10,7 +10,7 @@ import UIKit
 
 final class MapViewController: BaseViewController {
     
-    static let PostAnnotationViewIdentifier = "PostAnnotationView"
+    let PostAnnotationViewIdentifier = "PostAnnotationView"
     let locationManager = CLLocationManager()
     var allAnnotationMapView: MKMapView!
     
@@ -22,6 +22,10 @@ final class MapViewController: BaseViewController {
     
     var zoomedIn = false
     var lastViewRegion: MKCoordinateRegion?
+    
+    let tokyoCenter = CLLocationCoordinate2D(latitude: 35.693889, longitude: 139.753611)
+    let tokyoSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+//    let tokyoRegion = MKCoordinateRegion(center: tokyoCenter, span: tokyoSpan)
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -46,6 +50,8 @@ final class MapViewController: BaseViewController {
         self.allAnnotationMapView = MKMapView(frame: CGRectZero)
         
         self.loadPostAt(displayDate)
+        
+        self.mapView.region = MKCoordinateRegion(center: tokyoCenter, span: tokyoSpan)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -128,25 +134,24 @@ extension MapViewController {
     @IBAction func toggleBuilding() {
         mapView.showsBuildings = !mapView.showsBuildings
     }
-    
 }
 
 // MARK: MapView Delegate
 
 extension MapViewController: MKMapViewDelegate {
     
-    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
-        
-        let userCoordinate = userLocation.coordinate
-        let region = MKCoordinateRegionMakeWithDistance(userCoordinate, 1500, 1500)
-        
-        UIView.animateWithDuration(2.0, animations: { () -> Void in
-            self.mapView.setRegion(mapView.regionThatFits(region), animated: true)
-        }) { (_) -> Void in
-            self.mapView.showsUserLocation = false
-            self.turnTo3DMap(userCoordinate)
-        }
-    }
+//    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
+//        
+//        let userCoordinate = userLocation.coordinate
+//        let region = MKCoordinateRegionMakeWithDistance(userCoordinate, 1500, 1500)
+//        
+//        UIView.animateWithDuration(2.0, animations: { () -> Void in
+//            self.mapView.setRegion(mapView.regionThatFits(region), animated: true)
+//        }) { (_) -> Void in
+//            self.mapView.showsUserLocation = false
+//            self.turnTo3DMap(userCoordinate)
+//        }
+//    }
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView? {
         
@@ -155,7 +160,16 @@ extension MapViewController: MKMapViewDelegate {
         }
         
         if let annotation = annotation as? PostAnnotation {
-            var annotationView = PostAnnotationView(annotation: annotation, reuseIdentifier: MapViewController.PostAnnotationViewIdentifier)
+            
+            var annotationView = self.mapView.dequeueReusableAnnotationViewWithIdentifier(PostAnnotationViewIdentifier)
+            
+            if annotationView == nil {
+                annotationView = PostAnnotationView(annotation: annotation, reuseIdentifier: PostAnnotationViewIdentifier)
+            } else {
+                annotationView.annotation = annotation
+                (annotationView as! PostAnnotationView).setupDisplay()
+            }
+            
             return annotationView
         } else {
             return nil
@@ -173,18 +187,30 @@ extension MapViewController: MKMapViewDelegate {
             if let annotation = view.annotation as? PostAnnotation {
                 
                 if (annotation.clusterAnnotation != nil) {
+                    
+                    // animate the annotation from it's old container's coordinate, to its actual coordinate
                     let actualCoordinate = annotation.coordinate
                     let containerCoordinate = annotation.clusterAnnotation!.coordinate
                     
+                    // since it's displayed on the map, it is no longer contained by another annotation,
+                    // (We couldn't reset this in -updateVisibleAnnotations because we needed the reference to it here
+                    // to get the containerCoordinate)
                     annotation.clusterAnnotation = nil
+                    
                     annotation.coordinate = containerCoordinate
                     
                     UIView.animateWithDuration(0.3, animations: { () -> Void in
                         annotation.coordinate = actualCoordinate
+                        
                     })
-                }                
-//                view.expandIntoView(self.view, finished: nil)
-                view.bounce(nil)
+                }
+            }
+            
+            if let view = view as? PostAnnotationView {
+                view.expandIntoView(self.view, finished: nil)
+                view.updateBadge()
+                view.updateScale()
+                //                view.bounce(nil)
             }
         }
     }
@@ -244,17 +270,6 @@ extension MapViewController {
         
         self.nextDay.hidden = true
         
-        func decorateButton(button: UIButton) {
-            button.backgroundColor = UIColor.whiteColor()
-            button.layer.cornerRadius = interestToggleButton.frame.width / 2
-            button.layer.borderColor = UIColor.orangeColor().CGColor
-            button.layer.borderWidth = 1
-        }
-        
-        decorateButton(interestToggleButton)
-        decorateButton(buildingToggleButton)
-        decorateButton(currentLocationButton)
-        
         self.postMapViewHeight.constant = 0.0
     }
     
@@ -301,7 +316,7 @@ extension MapViewController {
         self.allAnnotationMapView.removeAnnotations(self.allAnnotationMapView.annotations)
         self.mapView.removeAnnotations(self.mapView.annotations)
         
-        AlamofireController.request(.GET, "/posts", parameters: ["category": "mapnews", "day": requestDay!.timeIntervalSince1970], success: { result in
+        AlamofireController.request(.GET, "/posts", parameters: ["category": "mapnews", "size": 50], success: { result in
 
             if let loadPosts:[PostEntity] = PostEntity.collection(result) {
                 
@@ -328,12 +343,12 @@ extension MapViewController {
         // This value to controls the number of off screen annotations are displayed.
         // A bigger number means more annotations, less chance of seeing annotation views pop in but decreased performance.
         // A smaller number means fewer annotations, more chance of seeing annotation views pop in but better performance.
-        let marginFactor = 0.0;
+        let marginFactor = 1.0;
         
         // Adjust this roughly based on the dimensions of your annotations views.
         // Bigger numbers more aggressively coalesce annotations (fewer annotations displayed but better performance).
         // Numbers too small result in overlapping annotations views and too many annotations on screen.
-        let bucketSize = 60.0;
+        let bucketSize = 120.0;
         
         // find all the annotations in the visible area + a wide margin to avoid popping annotation views in and out while panning the map.
         let visibleMapRect = mapView.visibleMapRect
@@ -378,9 +393,9 @@ extension MapViewController {
                         
                         if let view = mapView.viewForAnnotation(annotationForGrid) as? PostAnnotationView {
                             view.updateBadge()
+                            view.updateScale()
                         }
-            
-                        
+
                         for annotation in allAnnotations {
                             
                             // give all the other annotations a reference to the one which is representing them
@@ -413,6 +428,7 @@ extension MapViewController {
     
     private func annotationInGrid(gridMapRect: MKMapRect, usingAnnotations annotations: Array<NSObject>) -> NSObject? {
         
+        // first, see if one of the annotations we were already showing is in this mapRect
         let visibleAnnotationsInBucket = mapView.annotationsInMapRect(gridMapRect)
         
         for annotation in annotations {
@@ -421,6 +437,24 @@ extension MapViewController {
             }
         }
         
-        return annotations.first
+        // otherwise, sort the annotations based on their distance from the center of the grid square,
+        // then choose the one closest to the center to show
+        let centerMapPoint = MKMapPoint(x: MKMapRectGetMidX(gridMapRect), y: MKMapRectGetMidY(gridMapRect))
+        let sortedAnnotations = annotations.sorted { (obj1, obj2) -> Bool in
+            
+            let mapPoint1 = MKMapPointForCoordinate((obj1 as! MKAnnotation).coordinate)
+            let mapPoint2 = MKMapPointForCoordinate((obj2 as! MKAnnotation).coordinate)
+            
+            let distance1 = MKMetersBetweenMapPoints(mapPoint1, centerMapPoint)
+            let distance2 = MKMetersBetweenMapPoints(mapPoint2, centerMapPoint)
+            
+            if distance1 < distance2 {
+                return true
+            } else {
+                return false
+            }
+        }
+        
+        return sortedAnnotations.first
     }
 }
