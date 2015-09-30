@@ -28,6 +28,7 @@ class PostCell: UITableViewCell {
     
     @IBOutlet weak var postContentConstriantBottom: NSLayoutConstraint!
     @IBOutlet weak var bottomLine: UIView!
+    @IBOutlet weak var contentWidthConstraint: NSLayoutConstraint!
     
     var post: PostEntity!
     
@@ -51,6 +52,8 @@ class PostCell: UITableViewCell {
         
         avatarImageView.layer.borderColor = avatarBorderColor
         
+        let screenWidth = UIScreen.mainScreen().bounds.width
+        contentWidthConstraint.constant = screenWidth
     }
     
     func setupDisplay() {

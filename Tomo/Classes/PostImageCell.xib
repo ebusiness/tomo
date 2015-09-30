@@ -162,6 +162,7 @@
                             <constraint firstItem="yRG-wl-yVt" firstAttribute="top" secondItem="y4i-E0-CGx" secondAttribute="bottom" constant="16" id="PBR-5d-LeY"/>
                             <constraint firstItem="xfH-uV-6UG" firstAttribute="leading" secondItem="wQe-Yj-udo" secondAttribute="trailing" constant="8" id="UIz-hN-MpE"/>
                             <constraint firstItem="vjm-ao-ZM1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cLL-ht-tGJ" secondAttribute="trailing" constant="8" id="UiO-ef-kVK"/>
+                            <constraint firstAttribute="width" constant="433" id="YsN-X9-Uaf"/>
                             <constraint firstItem="uMk-t0-2Ro" firstAttribute="top" secondItem="L2k-JL-fDb" secondAttribute="bottom" id="Z1l-CO-2kZ"/>
                             <constraint firstItem="wQe-Yj-udo" firstAttribute="bottom" secondItem="vjm-ao-ZM1" secondAttribute="bottom" id="bcl-Qd-O00"/>
                             <constraint firstItem="uMk-t0-2Ro" firstAttribute="top" secondItem="y4i-E0-CGx" secondAttribute="bottom" constant="88" id="bwn-dB-CtP"/>
@@ -183,8 +184,8 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="p6b-Og-aac" secondAttribute="bottom" constant="8" id="Kb0-ON-9nI"/>
-                    <constraint firstItem="p6b-Og-aac" firstAttribute="leading" secondItem="byH-sp-tex" secondAttribute="leading" id="XGU-IR-ACc"/>
-                    <constraint firstAttribute="trailing" secondItem="p6b-Og-aac" secondAttribute="trailing" id="bXB-Ci-Ykh"/>
+                    <constraint firstItem="p6b-Og-aac" firstAttribute="leading" secondItem="byH-sp-tex" secondAttribute="leading" priority="800" id="XGU-IR-ACc"/>
+                    <constraint firstAttribute="trailing" secondItem="p6b-Og-aac" secondAttribute="trailing" priority="800" id="bXB-Ci-Ykh"/>
                     <constraint firstItem="p6b-Og-aac" firstAttribute="top" secondItem="byH-sp-tex" secondAttribute="top" constant="8" id="yZK-xn-Jhb"/>
                 </constraints>
             </tableViewCellContentView>
@@ -199,6 +200,7 @@
                 <outlet property="commentImageView" destination="YUN-GO-npp" id="dFx-ex-4SR"/>
                 <outlet property="commentView" destination="L2k-JL-fDb" id="nxV-AJ-oA3"/>
                 <outlet property="containerView" destination="p6b-Og-aac" id="62w-Xr-0fF"/>
+                <outlet property="contentWidthConstraint" destination="YsN-X9-Uaf" id="EPY-7P-ZU2"/>
                 <outlet property="likeButton" destination="B2H-5y-4xQ" id="yS2-14-bSh"/>
                 <outlet property="postContentConstriantBottom" destination="bwn-dB-CtP" id="kHq-oR-RkN"/>
                 <outlet property="postContentLabel" destination="y4i-E0-CGx" id="hDO-Ft-Hr9"/>

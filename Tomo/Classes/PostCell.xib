@@ -162,6 +162,7 @@
                             <constraint firstItem="Wi9-ri-1Wb" firstAttribute="leading" secondItem="KMd-bx-R3z" secondAttribute="trailing" constant="8" id="b55-or-zmu"/>
                             <constraint firstItem="LvW-jL-ARS" firstAttribute="top" secondItem="glE-50-8OZ" secondAttribute="bottom" constant="16" id="b8X-9H-aHh"/>
                             <constraint firstItem="lbm-Z1-PmS" firstAttribute="top" secondItem="2aQ-gP-sJC" secondAttribute="centerY" id="e2w-8c-cdJ"/>
+                            <constraint firstAttribute="width" constant="407" id="i0R-AK-xJT"/>
                             <constraint firstAttribute="trailing" secondItem="LvW-jL-ARS" secondAttribute="trailing" constant="24" id="iJG-ex-0yY"/>
                             <constraint firstAttribute="trailing" secondItem="6Ds-tg-3Me" secondAttribute="trailing" id="keT-RN-4Mf"/>
                             <constraint firstItem="MJv-RI-EXz" firstAttribute="leading" secondItem="qrV-FA-MIO" secondAttribute="leading" id="kfU-64-7Sw"/>
@@ -176,9 +177,9 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
-                    <constraint firstItem="qrV-FA-MIO" firstAttribute="leading" secondItem="8Dp-F4-IB8" secondAttribute="leading" id="3XV-Q9-y0Y"/>
+                    <constraint firstItem="qrV-FA-MIO" firstAttribute="leading" secondItem="8Dp-F4-IB8" secondAttribute="leading" priority="800" id="3XV-Q9-y0Y"/>
                     <constraint firstItem="qrV-FA-MIO" firstAttribute="top" secondItem="8Dp-F4-IB8" secondAttribute="top" constant="8" id="9BU-lR-2NK"/>
-                    <constraint firstAttribute="trailing" secondItem="qrV-FA-MIO" secondAttribute="trailing" id="JI1-Zt-GGp"/>
+                    <constraint firstAttribute="trailing" secondItem="qrV-FA-MIO" secondAttribute="trailing" priority="800" id="JI1-Zt-GGp"/>
                     <constraint firstAttribute="bottom" secondItem="qrV-FA-MIO" secondAttribute="bottom" constant="8" id="kOL-gd-uDN"/>
                 </constraints>
             </tableViewCellContentView>
@@ -193,6 +194,7 @@
                 <outlet property="commentImageView" destination="R4t-tj-WyD" id="ohe-GY-nWv"/>
                 <outlet property="commentView" destination="MJv-RI-EXz" id="SEF-k6-2nS"/>
                 <outlet property="containerView" destination="qrV-FA-MIO" id="IJP-NN-RaN"/>
+                <outlet property="contentWidthConstraint" destination="i0R-AK-xJT" id="cRW-uW-6sj"/>
                 <outlet property="likeButton" destination="Wi9-ri-1Wb" id="OgR-OM-9yA"/>
                 <outlet property="postContentConstriantBottom" destination="IQf-z9-bNV" id="Q8L-Ks-u5m"/>
                 <outlet property="postContentLabel" destination="glE-50-8OZ" id="tiB-Nq-AWT"/>
