@@ -69,7 +69,7 @@ extension RecommendStationTableCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-        let width = UIScreen.mainScreen().bounds.width / 3 - 1
+        let width = UIScreen.mainScreen().bounds.width / 3 - 10
         let height = collectionView.bounds.height / 4 - 1
         
         return CGSizeMake(width, height)
