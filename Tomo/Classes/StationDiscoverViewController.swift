@@ -10,13 +10,25 @@ import UIKit
 
 class StationDiscoverViewController: UIViewController {
     
-    var location: CLLocation?
+    private var tlocation: CLLocation?
+    var location: CLLocation {
+        get {
+            return tlocation ?? CLLocation(latitude: 35.6833, longitude: 139.6833)
+        }
+        set {
+            tlocation = newValue.copy() as? CLLocation
+        }
+    }
+    
+    var loading = false
+    var page = 0
     
     let searchBar = UISearchBar()
     
     @IBOutlet var collectionView: UICollectionView!
     
     let screenWidth = UIScreen.mainScreen().bounds.width
+    let screenHeight = UIScreen.mainScreen().bounds.height
     
     var stations: [StationEntity]?
     
@@ -86,23 +98,60 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
 // MARK: - Network and data process
 extension StationDiscoverViewController {
     private func loadInitData() {
-        var coordinate: CLLocationCoordinate2D
-        if let location = location {
-            coordinate = location.coordinate
-        } else {
-            coordinate = CLLocationCoordinate2DMake(35.6833, 139.6833)
-        }
-        AlamofireController.request(.GET, "/stations?coordinate=\(coordinate.latitude)&coordinate=\(coordinate.longitude)",
-            parameters: nil, encoding: ParameterEncoding.JSON, success: { (object) -> () in
+        loading = true
+        var coordinate = location.coordinate
+        let parameter: [String: AnyObject] = [
+            "coordinate": [coordinate.latitude, coordinate.longitude],
+        ]
+        AlamofireController.request(.GET, "/stations",
+            parameters: parameter, success: { (object) -> () in
                 self.stations = StationEntity.collection(object)
                 self.refresh()
+                self.loading = false
+                self.page = 1
             }) { (error) -> () in
-                println(error)
+                self.loading = false
         }
+    }
+    
+    private func loadMoreData() {
+        if loading {
+            return
+        }
+        loading = true
+        var coordinate = location.coordinate
+        let parameter: [String: AnyObject] = [
+            "coordinate": [coordinate.latitude, coordinate.longitude],
+            "page": page
+        ]
+        AlamofireController.request(.GET, "/stations", parameters: parameter,
+            success: { (object) -> () in
+                if let stations: [StationEntity] = StationEntity.collection(object) {
+                    self.stations?.extend(stations)
+                    self.appendCells(stations.count)
+                    self.page++
+                }
+                self.loading = false
+            }, failure: {error in
+                self.loading = false
+            }
+        )
     }
     
     private func refresh() {
         collectionView.reloadData()
+    }
+    private func appendCells(count: Int) {
+        if let totalCount = stations?.count {
+            let startIndex = totalCount - count
+            let endIndex = totalCount
+            var indexPaths = [NSIndexPath]()
+            for i in startIndex..<endIndex {
+                let indexPath = NSIndexPath(forItem: i, inSection: 0)
+                indexPaths.append(indexPath)
+            }
+            collectionView.insertItemsAtIndexPaths(indexPaths)
+        }
     }
 }
 
@@ -119,12 +168,18 @@ extension StationDiscoverViewController: UISearchBarDelegate {
     }
 }
 
-/*
-// MARK: - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-// Get the new view controller using segue.destinationViewController.
-// Pass the selected object to the new view controller.
+extension StationDiscoverViewController  {
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let contentHeight = scrollView.contentSize.height
+        let contentOffset = scrollView.contentOffset.y
+        let measuredOffset: CGFloat
+        if screenHeight > contentHeight + scrollView.contentInset.top {
+            measuredOffset = contentOffset + scrollView.contentInset.top
+        } else {
+            measuredOffset = contentOffset - (contentHeight - screenHeight)
+        }
+        if measuredOffset > 25 {
+            loadMoreData()
+        }
+    }
 }
-*/
