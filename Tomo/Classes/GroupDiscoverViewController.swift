@@ -26,6 +26,7 @@ final class GroupDiscoverViewController: BaseViewController {
         super.viewDidLoad()
 
         let searchBar = UISearchBar()
+        searchBar.placeholder = "搜索现场名称"
         searchBar.barTintColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 0.7)
         self.navigationItem.titleView = searchBar
         self.alwaysShowNavigationBar = true
