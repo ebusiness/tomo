@@ -7,30 +7,14 @@
 //
 
 import UIKit
-import MobileCoreServices
 
-final class MessageViewController: JSQMessagesViewController {
+final class MessageViewController: CommonMessageController {
     
     var selectedIndexPath: NSIndexPath?
     
-    var icon_speaker_normal:UIImage!
-    var icon_speaker_highlighted:UIImage!
-    var icon_keyboard_normal:UIImage!
-    var icon_keyboard_highlighted:UIImage!
-    
     var friend: UserEntity!
-    
-    let navigationBarImage = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
-    let defaultAvatar = JSQMessagesAvatarImageFactory.avatarImageWithImage(DefaultAvatarImage, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
-    
-    let avatarSize = CGSize(width: 50, height: 50)
-    var avatarMe: JSQMessagesAvatarImage!
-    var avatarBlank: JSQMessagesAvatarImage!
+
     var avatarFriend: JSQMessagesAvatarImage!
-    
-    static let BubbleFactory = JSQMessagesBubbleImageFactory()
-    let outgoingBubbleImageData = BubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleLightGrayColor())
-    let incomingBubbleImageData = BubbleFactory.incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleGreenColor())
     
     var messages = [JSQMessageEntity]()
     
@@ -42,8 +26,10 @@ final class MessageViewController: JSQMessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.delegate = self
+        
         // custom navigationBar
-        self.setNavigationBar()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "user_male_circle"), style: .Plain, target: self, action: "setting")
         
         //receive message realtime
         ListenerEvent.Message.addObserver(self, selector: Selector("receiveMessage:"))
@@ -51,22 +37,8 @@ final class MessageViewController: JSQMessagesViewController {
         // page title
         title = friend.nickName
         
-        // set sendId and displayName requested by jsq
-        senderId = me.id
-        senderDisplayName = me.nickName
-        
-        // customize avatar size
-        collectionView.collectionViewLayout.incomingAvatarViewSize = avatarSize
-        collectionView.collectionViewLayout.outgoingAvatarViewSize = avatarSize
-        
-        // adjust text bubble inset
-        collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7, 14, 3, 14)
-        
         // load avatar
         loadAvatars()
-        
-        // TODO: adjust
-        setAccessoryButtonImageView()
         
         loadMessages()
     }
@@ -80,33 +52,10 @@ final class MessageViewController: JSQMessagesViewController {
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        navigationController?.navigationBar.setBackgroundImage(navigationBarImage, forBarMetrics: .Default)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        VoiceController.instance.stopPlayer()
-    }
-    
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         // open all message when leave
         AlamofireController.request(.GET, "/messages/\(friend.id)")
-    }
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
 
@@ -114,41 +63,15 @@ final class MessageViewController: JSQMessagesViewController {
 
 extension MessageViewController {
     
-    private func setNavigationBar() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "user_male_circle"), style: .Plain, target: self, action: "setting")
-        
-        let backitem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        self.navigationItem.backBarButtonItem = backitem
-        
-        let backimage = UIImage(named: "back")!
-        navigationController?.navigationBar.backIndicatorImage = backimage
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = backimage
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        
-        navigationController?.navigationBar.barStyle = .Black
-        
-    }
-    
     private func loadAvatars() {
-        avatarBlank = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(named: "avatar"), diameter: UInt (kJSQMessagesCollectionViewAvatarSizeDefault))
-        
-        SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: me.photo!), options: nil, progress: nil) {
-            (image, error, _, _, _) -> Void in
-            if let image = image {
-                self.avatarMe = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
-            } else {
-                self.avatarMe = self.defaultAvatar
-            }
-        }
-        
-        SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: friend.photo!), options: nil, progress: nil) {
-            (image, error, _, _, _) -> Void in
-            if let image = image {
-                self.avatarFriend = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
-            } else {
-                self.avatarFriend = self.defaultAvatar
-            }
-        }
+//        SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: friend.photo!), options: nil, progress: nil) {
+//            (image, error, _, _, _) -> Void in
+//            if let image = image {
+//                self.avatarFriend = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+//            } else {
+//                self.avatarFriend = self.defaultAvatar
+//            }
+//        }
     }
     
     private func loadMessages() {
@@ -219,7 +142,49 @@ extension MessageViewController {
         }
         
         collectionView.insertItemsAtIndexPaths(indexPathes)
+    }
+    
+}
+
+// MARK: - CommonMessageDelegate
+
+extension MessageViewController: CommonMessageDelegate {
+    
+    func createMessage(text: String) -> NSIndexPath {
+        let newMessage = JSQMessageEntity()
+        newMessage.message.id = ""
+        newMessage.message.to = friend
+        newMessage.message.from = me
+        newMessage.message.content = text
+        newMessage.message.createDate = NSDate()
         
+        friend.lastMessage = newMessage.message
+        self.messages.append(newMessage)
+        
+        let indexPath = NSIndexPath(forRow: self.messages.count - 1, inSection: 0)
+        self.collectionView.insertItemsAtIndexPaths([indexPath])
+        return indexPath
+        
+    }
+    
+    func sendMessage(text: String, done: ( ()->() )? = nil ) {
+        
+        var params = Dictionary<String, String>()
+        params["to"] = friend.id
+        params["content"] = text
+        
+        AlamofireController.request(.POST, "/messages", parameters: params, success: { _ in
+            
+            JSQSystemSoundPlayer.jsq_playMessageSentSound()
+            self.finishSendingMessageAnimated(true)
+            done?()
+            
+            }) { (err) -> () in
+                
+                println(err)
+                done?()
+                
+        }
     }
     
 }
@@ -227,13 +192,6 @@ extension MessageViewController {
 // MARK: - JSQMessageViewController overrides
 
 extension MessageViewController {
-    
-    override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
-        button.enabled = false
-        
-        self.createMessage(text)
-        self.sendMessage(text)
-    }
     
     func receiveMessage(notification: NSNotification) {
         if let userInfo = notification.userInfo {
@@ -254,44 +212,6 @@ extension MessageViewController {
                     self.finishReceivingMessageAnimated(true)
                 })
             }
-        }
-    }
-    
-    func createMessage(text: String) -> NSIndexPath {
-        
-        let newMessage = JSQMessageEntity()
-        newMessage.message.id = ""
-        newMessage.message.to = friend
-        newMessage.message.from = me
-        newMessage.message.content = text
-        newMessage.message.createDate = NSDate()
-        
-        friend.lastMessage = newMessage.message
-        self.messages.append(newMessage)
-        
-        let indexPath = NSIndexPath(forRow: self.messages.count - 1, inSection: 0)
-        self.collectionView.insertItemsAtIndexPaths([indexPath])
-        return indexPath
-
-    }
-    
-    func sendMessage(text: String, done: ( ()->() )? = nil ) {
-        
-        var params = Dictionary<String, String>()
-        params["to"] = friend.id
-        params["content"] = text
-        
-        AlamofireController.request(.POST, "/messages", parameters: params, success: { _ in
-            
-            JSQSystemSoundPlayer.jsq_playMessageSentSound()
-            self.finishSendingMessageAnimated(true)
-            done?()
-            
-        }) { (err) -> () in
-            
-            println(err)
-            done?()
-            
         }
     }
     

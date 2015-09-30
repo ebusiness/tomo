@@ -48,6 +48,9 @@ extension NotificationCell {
 //                println("评论了您的帖子")
 //                println("收藏了您的帖子")
                 self.presentPostView(vc)
+            case .GroupJoined: // Group
+//                println("加入了您的群组")
+                self.presentGroupView(vc)
             default:
                 break
             }
@@ -77,6 +80,8 @@ extension NotificationCell {
                 message = "评论了您的帖子"
             case .PostBookmarked:
                 message = "收藏了您的帖子"
+            case .GroupJoined:
+                message = "加入了您的群组"
             default:
                 break
             }
@@ -96,6 +101,16 @@ extension NotificationCell {
             let postVC = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
             postVC.post = PostEntity(result)
             vc.navigationController?.pushViewController(postVC, animated: true)
+        }) { err in
+                
+        }
+    }
+    
+    private func presentGroupView(vc: UIViewController) {
+        AlamofireController.request(.GET, "/groupd/\(self.notification.targetId)", success: { result in
+            let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+            groupVC.group = GroupEntity(result)
+            vc.navigationController?.pushViewController(groupVC, animated: true)
         }) { err in
                 
         }

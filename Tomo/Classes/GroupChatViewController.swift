@@ -9,28 +9,13 @@
 import UIKit
 import MobileCoreServices
 
-final class GroupChatViewController: JSQMessagesViewController {
+final class GroupChatViewController: CommonMessageController {
     
     var selectedIndexPath: NSIndexPath?
     
-    var icon_speaker_normal:UIImage!
-    var icon_speaker_highlighted:UIImage!
-    var icon_keyboard_normal:UIImage!
-    var icon_keyboard_highlighted:UIImage!
-    
     var group: GroupEntity!
     
-    let navigationBarImage = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
-    let defaultAvatar = JSQMessagesAvatarImageFactory.avatarImageWithImage(DefaultAvatarImage, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
-    
-    let avatarSize = CGSize(width: 50, height: 50)
-    var avatarMe: JSQMessagesAvatarImage!
-    var avatarBlank: JSQMessagesAvatarImage!
-    var avatarFriend: JSQMessagesAvatarImage!
-    
-    static let BubbleFactory = JSQMessagesBubbleImageFactory()
-    let outgoingBubbleImageData = BubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleLightGrayColor())
-    let incomingBubbleImageData = BubbleFactory.incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleGreenColor())
+    var avatars = Dictionary<String, JSQMessagesAvatarImage>()
     
     var messages = [JSQMessageEntity]()
     
@@ -42,60 +27,33 @@ final class GroupChatViewController: JSQMessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // custom navigationBar
-        self.setupAppearance()
+        self.delegate = self
         
-        //receive message realtime
-        ListenerEvent.Message.addObserver(self, selector: Selector("receiveMessage:"))
+        // page title
+        title = group.name
         
-        // set sendId and displayName requested by jsq
-        senderId = me.id
-        senderDisplayName = me.nickName
+        //receive notification
+        self.registerForNotifications()
         
         // load avatar
-        loadAvatars()
-        
-        // TODO: adjust
-//        setAccessoryButtonImageView()
-        
-        loadMessages()
+        self.loadAvatars()
+
+        self.loadMessages()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-//        if let friend = me.friends where friend.contains(self.friend.id) {
-//        } else {
-//            self.navigationController?.popViewControllerAnimated(true)
-//        }
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        navigationController?.navigationBar.setBackgroundImage(navigationBarImage, forBarMetrics: .Default)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        VoiceController.instance.stopPlayer()
+        if let groups = me.groups where groups.contains(self.group.id) {
+        } else {
+            self.navigationController?.popViewControllerAnimated(true)
+        }
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         // open all message when leave
-//        AlamofireController.request(.GET, "/messages/\(friend.id)")
-    }
-    
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        AlamofireController.request(.GET, "/groups/\(self.group.id)/messages")
     }
 }
 
@@ -103,51 +61,52 @@ final class GroupChatViewController: JSQMessagesViewController {
 
 extension GroupChatViewController {
     
-    private func setupAppearance() {
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "user_male_circle"), style: .Plain, target: self, action: "setting")
-        
-        let backitem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        self.navigationItem.backBarButtonItem = backitem
-        
-        let backimage = UIImage(named: "back")!
-        navigationController?.navigationBar.backIndicatorImage = backimage
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = backimage
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        
-        navigationController?.navigationBar.barStyle = .Black
-        
-        // page title
-        title = group.name
-        
-        // customize avatar size
-        collectionView.collectionViewLayout.incomingAvatarViewSize = avatarSize
-        collectionView.collectionViewLayout.outgoingAvatarViewSize = avatarSize
-        
-        // adjust text bubble inset
-        collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7, 14, 3, 14)
-        
-    }
-    
     private func loadAvatars() {
-        avatarBlank = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(named: "avatar"), diameter: UInt (kJSQMessagesCollectionViewAvatarSizeDefault))
-        
-        SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: me.photo!), options: nil, progress: nil) {
-            (image, error, _, _, _) -> Void in
-            if let image = image {
-                self.avatarMe = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
-            } else {
-                self.avatarMe = self.defaultAvatar
-            }
+        self.group.members?.map { user in
+            self.avatars[user.id] = self.defaultAvatar
         }
         
-        SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: friend.photo!), options: nil, progress: nil) {
-            (image, error, _, _, _) -> Void in
-            if let image = image {
-                self.avatarFriend = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
-            } else {
-                self.avatarFriend = self.defaultAvatar
+        AlamofireController.request(Method.GET, "/groups/\(group.id)", parameters: nil, encoding: ParameterEncoding.JSON, success: { object in
+            
+            self.group = GroupEntity(object)
+            
+            if let members = self.group.members {
+                
+                members.map {
+                    self.loadAvatarForUser($0)
+                }
             }
+            
+        }) { error in
+            
+        }
+    }
+    
+    private func loadAvatarForUser(user: UserEntity){
+        if user.id == me.id {
+            return
+        }
+        self.avatars[user.id] = self.defaultAvatar
+        
+        if let photo = user.photo {
+            
+            var sdBlock: SDWebImageCompletionWithFinishedBlock = { (image, error, _, _, _) -> Void in
+                if let image = image {
+                    
+                    self.avatars[user.id] = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+                    
+                    self.collectionView.visibleCells().map { (cell) -> () in
+                        
+                        if let indexPath = self.collectionView.indexPathForCell(cell as! UICollectionViewCell)
+                            where self.messages[indexPath.item].senderId() == user.id {
+                                
+                                self.collectionView.reloadItemsAtIndexPaths([indexPath])
+                        }
+                    }
+                }
+            }
+            
+            SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: photo), options: nil, progress: nil, completed: sdBlock)
         }
     }
     
@@ -166,18 +125,16 @@ extension GroupChatViewController {
         }
         
         
-        AlamofireController.request(.GET, "/messages/\(friend.id)", parameters: params, success: { result in
+        AlamofireController.request(.GET, "/groups/\(self.group.id)/messages", parameters: params, success: { result in
             
             if let messages:[MessageEntity] = MessageEntity.collection(result) {
                 
                 for message in messages {
                     
-                    if message.from.id != me.id {
-                        message.from = self.friend
-                        message.to = me
-                    } else {
+                    message.group = self.group
+                    
+                    if message.from.id == me.id {
                         message.from = me
-                        message.to = self.friend
                     }
                     self.messages.insert(JSQMessageEntity(message: message), atIndex: 0)
                 }
@@ -187,7 +144,7 @@ extension GroupChatViewController {
                     self.scrollToBottomAnimated(false)
                     
                     me.newMessages.filter({ (message) -> Bool in
-                        if message.from.id == self.friend.id {
+                        if message.group == self.group.id {
                             me.newMessages.remove(message)
                         }
                         
@@ -224,49 +181,20 @@ extension GroupChatViewController {
     
 }
 
-// MARK: - JSQMessageViewController overrides
+// MARK: - CommonMessageDelegate
 
-extension GroupChatViewController {
-    
-    override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
-        button.enabled = false
-        
-        self.createMessage(text)
-        self.sendMessage(text)
-    }
-    
-    func receiveMessage(notification: NSNotification) {
-        if let userInfo = notification.userInfo {
-            let json = JSON(userInfo)
-            
-            if friend.id == json["from"]["id"].stringValue {
-                let message = MessageEntity(json)
-                message.to = me
-                message.from = friend
-                
-                let newMessage = JSQMessageEntity(message: message)
-                
-                self.messages.append(newMessage)
-                
-                gcd.sync(.Main, closure: { () -> () in
-                    
-                    JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
-                    self.finishReceivingMessageAnimated(true)
-                })
-            }
-        }
-    }
+extension GroupChatViewController: CommonMessageDelegate {
     
     func createMessage(text: String) -> NSIndexPath {
         
         let newMessage = JSQMessageEntity()
         newMessage.message.id = ""
-        newMessage.message.to = friend
         newMessage.message.from = me
+        newMessage.message.group = self.group
         newMessage.message.content = text
         newMessage.message.createDate = NSDate()
         
-        friend.lastMessage = newMessage.message
+//        friend.lastMessage = newMessage.message
         self.messages.append(newMessage)
         
         let indexPath = NSIndexPath(forRow: self.messages.count - 1, inSection: 0)
@@ -278,10 +206,9 @@ extension GroupChatViewController {
     func sendMessage(text: String, done: ( ()->() )? = nil ) {
         
         var params = Dictionary<String, String>()
-        params["to"] = friend.id
         params["content"] = text
         
-        AlamofireController.request(.POST, "/messages", parameters: params, success: { _ in
+        AlamofireController.request(.POST, "/groups/\(self.group.id)/messages", parameters: params, success: { _ in
             
             JSQSystemSoundPlayer.jsq_playMessageSentSound()
             self.finishSendingMessageAnimated(true)
@@ -295,14 +222,47 @@ extension GroupChatViewController {
         }
     }
     
-    func setting(){
-        //push setting or prifile?
-        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-        vc.user = friend
-        
-        self.navigationController?.pushViewController(vc, animated: true)
+}
+
+
+// MARK: - NSNotificationCenter
+
+extension GroupChatViewController {
+    
+    private func registerForNotifications() {
+        ListenerEvent.GroupMessage.addObserver(self, selector: Selector("receiveMessage:"))
     }
     
+    func receiveMessage(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            
+            let json = JSON(userInfo)
+            
+            if json["targetId"].stringValue == self.group.id {
+                
+                let message = MessageEntity(json)
+                message.group = self.group
+                
+                let sender = self.group.members?.find { $0.id == message.from.id }
+                
+                if sender == nil {
+                    self.group.members = self.group.members ?? []
+                    self.group.members!.append(message.from)
+                    self.loadAvatarForUser(message.from)
+                }
+                
+                let newMessage = JSQMessageEntity(message: message)
+                
+                self.messages.append(newMessage)
+                
+                gcd.sync(.Main) { _ in
+                    
+                    JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
+                    self.finishReceivingMessageAnimated(true)
+                }
+            }
+        }
+    }
 }
 
 // MARK: - ScrollView Delegate
@@ -344,9 +304,9 @@ extension GroupChatViewController {
     override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
         
         let message = messages[indexPath.item]
-        
+
         if message.senderId() != me.id {
-            return avatarFriend
+            return avatars[message.senderId()]
         }
         
         return avatarMe
@@ -393,8 +353,7 @@ extension GroupChatViewController {
         let message = messages[indexPath.item]
         
         let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-        vc.user = message.senderId() == me.id ? me : friend
-        
+        vc.user = message.message.from
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -406,9 +365,6 @@ extension GroupChatViewController {
             
             if MediaMessage.mediaMessage(content) == .Image || MediaMessage.mediaMessage(content) == .Video {
                 if let broken = message.brokenImage {
-                    //                    let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! JSQMessagesCollectionViewCell
-                    //                    cell.mediaView = UIImageView(image: broken)
-                    
                     message.reload({ () -> () in
                         self.collectionView.reloadItemsAtIndexPaths([indexPath])
                     })

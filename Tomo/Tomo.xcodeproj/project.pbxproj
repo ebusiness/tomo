@@ -101,7 +101,7 @@
 		293EB4251B132B06006BAF27 /* JSQVoiceMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */; };
 		295272D01AD51B2300FC7833 /* S3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295272CF1AD51B2300FC7833 /* S3.swift */; };
 		29539C781B13175D00545509 /* VoiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29539C761B13175D00545509 /* VoiceController.swift */; };
-		29539C791B13175D00545509 /* VoiceMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29539C771B13175D00545509 /* VoiceMessageController.swift */; };
+		29539C791B13175D00545509 /* CommonMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29539C771B13175D00545509 /* CommonMessageController.swift */; };
 		296040401ACE46E000D2A338 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901351C1AC3A90C00BBFE29 /* Constants.swift */; };
 		296D8BAB1AFC59F10058D400 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BA91AFC59F10058D400 /* BaseViewController.swift */; };
 		296D8BAC1AFC59F10058D400 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BAA1AFC59F10058D400 /* TabBarController.swift */; };
@@ -126,6 +126,7 @@
 		29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
+		D04447B31BBA9DF300AD7B0C /* GroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */; };
 		D04608D21B6BA33F00D30B77 /* TestDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404B1ACE68C500D2A338 /* TestDataTests.swift */; };
 		D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D057BAF11B670687007D14D2 /* RequestFriendCell.swift */; };
 		D073E6F81B84C1BF00066F42 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073E6F71B84C1BF00066F42 /* CameraController.swift */; };
@@ -261,7 +262,7 @@
 		294BA32E1AC3D79100089204 /* ApiControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiControllerTests.swift; sourceTree = "<group>"; };
 		295272CF1AD51B2300FC7833 /* S3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3.swift; path = ../../../S3.swift; sourceTree = "<group>"; };
 		29539C761B13175D00545509 /* VoiceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VoiceController.swift; path = Classes/VoiceController.swift; sourceTree = "<group>"; };
-		29539C771B13175D00545509 /* VoiceMessageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VoiceMessageController.swift; path = Classes/VoiceMessageController.swift; sourceTree = "<group>"; };
+		29539C771B13175D00545509 /* CommonMessageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommonMessageController.swift; path = Classes/CommonMessageController.swift; sourceTree = "<group>"; };
 		296040451ACE669900D2A338 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
 		2960404B1ACE68C500D2A338 /* TestDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataTests.swift; sourceTree = "<group>"; };
 		296D8BA91AFC59F10058D400 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseViewController.swift; path = Classes/BaseViewController.swift; sourceTree = "<group>"; };
@@ -472,7 +473,7 @@
 			isa = PBXGroup;
 			children = (
 				29539C761B13175D00545509 /* VoiceController.swift */,
-				29539C771B13175D00545509 /* VoiceMessageController.swift */,
+				29539C771B13175D00545509 /* CommonMessageController.swift */,
 				296D8BB01AFC5A250058D400 /* MessageViewController.swift */,
 				296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */,
 			);
@@ -1010,7 +1011,7 @@
 				290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */,
 				1F1176AE1B983D280049D9F5 /* SwiftRegex.swift in Sources */,
 				29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */,
-				29539C791B13175D00545509 /* VoiceMessageController.swift in Sources */,
+				29539C791B13175D00545509 /* CommonMessageController.swift in Sources */,
 				2994AF911B019AA100656C39 /* GCD.swift in Sources */,
 				1FA76B021BA2A01D004776B0 /* GroupListViewController.swift in Sources */,
 				1FE7CEF51B8C9561006700FC /* SignUpViewController.swift in Sources */,
@@ -1081,6 +1082,7 @@
 				D07D8A1A1B99A3DF00D13096 /* NotificationListViewController.swift in Sources */,
 				1F79C1B61B5E55D5008800E1 /* InvitationCell.swift in Sources */,
 				296D8BAC1AFC59F10058D400 /* TabBarController.swift in Sources */,
+				D04447B31BBA9DF300AD7B0C /* GroupChatViewController.swift in Sources */,
 				1FEA3CFD1BB39E5A0037F3C5 /* StationCollectionViewCell.swift in Sources */,
 				1FEA3CFB1BB391780037F3C5 /* RecommendStationTableViewCell.swift in Sources */,
 				1FA76B091BA2C642004776B0 /* GroupCreateViewController.swift in Sources */,

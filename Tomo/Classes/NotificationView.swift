@@ -65,6 +65,12 @@ class NotificationView: UIView {
                 println("系统通知")
                 return
                 
+            case .GroupMessage: // GroupMessage
+                
+                let id = "/\(self.notification.targetId)"
+                let host = self.notification.type
+                URLSchemesController.sharedInstance.handleOpenURL(NSURL(scheme: "tomo", host: host, path: id)!)
+                
             case .Message: // Message
                 fallthrough
                 

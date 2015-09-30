@@ -34,6 +34,8 @@ class URLSchemesController {
                 switch event {
                 case .Message:
                     openMessage(id)
+                case .GroupMessage:
+                    openGroupMessage(id)
                 case .FriendInvited, .FriendAccepted, .FriendRefused, .FriendBreak:
                     openProfile(id)
                 case .PostNew, .PostLiked, .PostCommented, .PostBookmarked:
@@ -89,8 +91,22 @@ extension URLSchemesController{
             
             self.pushViewController(1, viewController: vc, animated: true)
             
-        }) { err in
+            }) { err in
+                
+        }
+    }
+    
+    private func openGroupMessage(id: String){
+        
+        AlamofireController.request(.GET, "/groups/\(id)", success: { result in
+            let vc = GroupChatViewController()
+            vc.hidesBottomBarWhenPushed = true
+            vc.group = GroupEntity(result)
             
+            self.pushViewController(2, viewController: vc, animated: true)
+            
+            }) { err in
+                
         }
     }
     

@@ -9,17 +9,22 @@
 private var observers = [String:AnyObject]()
 
 enum ListenerEvent: String {
-    case Announcement = "new-announcement"
-    case Message = "message-new"
-    case FriendAccepted = "friend-accepted"
-    case FriendRefused = "friend-refused"
-    case FriendInvited = "friend-invited"
-    case FriendBreak = "friend-break"
+    case Announcement   = "new-announcement"
     
-    case PostNew = "post-new"
-    case PostLiked = "post-liked"
-    case PostCommented = "post-commented"
+    case Message        = "message-new"
+    case GroupMessage   = "message-group"
+    
+    case FriendAccepted = "friend-accepted"
+    case FriendRefused  = "friend-refused"
+    case FriendInvited  = "friend-invited"
+    case FriendBreak    = "friend-break"
+    
+    case PostNew        = "post-new"
+    case PostLiked      = "post-liked"
+    case PostCommented  = "post-commented"
     case PostBookmarked = "post-bookmarked"
+    
+    case GroupJoined    = "group-joined"
     
     case Any = "any"
     
@@ -61,6 +66,9 @@ extension ListenerEvent {
             
             break
             
+        case .GroupMessage:
+            println("GroupMessage")
+//            fallthrough /// - TODO
         case .Message:
             
             self.receiveMessage(tabBarController, userInfo: userInfo)
@@ -72,6 +80,10 @@ extension ListenerEvent {
         case .FriendAccepted, .FriendRefused, .FriendBreak:
             
             self.receiveFriendRelationship(tabBarController, userInfo: userInfo)
+            fallthrough
+            
+        case .GroupJoined:
+            
             fallthrough
             
         case .PostNew, .PostLiked, .PostCommented, .PostBookmarked:
@@ -144,9 +156,16 @@ extension ListenerEvent {
     private func receiveMessage(tabBarController: TabBarController, userInfo: [NSObject : AnyObject]) {
         let message = MessageEntity(userInfo)
         
-        if let messageViewController = tabBarController.selectedViewController?.childViewControllers.last as? MessageViewController {
+        let lastViewController: AnyObject? = tabBarController.selectedViewController?.childViewControllers.last
+        
+        if let messageViewController = lastViewController as? MessageViewController {
             
             if message.from.id == messageViewController.friend.id {
+                return
+            }
+        } else if let groupChatViewController = lastViewController as? GroupChatViewController {
+            
+            if message.group == groupChatViewController.group.id {
                 return
             }
         }
