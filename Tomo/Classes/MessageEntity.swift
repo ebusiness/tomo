@@ -16,6 +16,8 @@ class MessageEntity: Entity {
     
     var from: UserEntity!
     
+    var group: GroupEntity?
+    
     var content: String!
     
     var createDate: NSDate!
@@ -33,6 +35,10 @@ class MessageEntity: Entity {
         self.id = json["_id"].string ?? json["id"].stringValue
         self.to = UserEntity(json["to"])
         self.from = UserEntity(json["from"])
+        
+        if !(json["group"].object is NSNull) {
+            self.group = GroupEntity(json["group"])
+        }
         self.content = json["aps"]["alert"].string ?? json["content"].stringValue
         self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
         
