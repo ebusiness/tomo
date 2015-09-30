@@ -68,7 +68,9 @@ final class HomeViewController: BaseTableViewController {
         if segue.identifier == "modalStationSelector" {
             let nav = segue.destinationViewController as! UINavigationController
             let vc = nav.viewControllers[0] as! StationDiscoverViewController
-            vc.location = location
+            if let location = location {
+                vc.location = location
+            }
         }
     }
     
