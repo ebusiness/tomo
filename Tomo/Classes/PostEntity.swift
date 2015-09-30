@@ -72,4 +72,6 @@ class PostEntity: Entity {
         self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
         
     }
+    
+    var contentHeight: CGFloat?
 }
