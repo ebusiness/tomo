@@ -482,7 +482,7 @@ extension PostViewController: UITextViewDelegate {
     func textViewDidChange(textView: UITextView) {
         
         let viewheight = textView.contentSize.height + 2 * 8
-        commentInputViewConstraint.constant = viewheight < 50 ? 50 : viewheight
+        commentInputViewConstraint.constant = viewheight < 50 ? 50 : viewheight > 100 ? 100 : viewheight
         
         if textView.markedTextRange == nil {
             commentContent = textView.text.trimmed()

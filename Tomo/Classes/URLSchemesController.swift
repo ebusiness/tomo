@@ -74,7 +74,22 @@ extension URLSchemesController{
         } else {
 //            println( self.tabBarController.childViewControllers )
         }
+    }
+    
+    private func refreshViewControllerIfNeeded(tabSelectedIndex: Int, key: AnyObject){
         
+        if self.tabBarController.childViewControllers.count > tabSelectedIndex {
+            self.tabBarController.selectedIndex = tabSelectedIndex
+            let vc: AnyObject? = self.tabBarController.childViewControllers[tabSelectedIndex].childViewControllers.first
+            
+            if let friendListViewController = vc as? FriendListViewController {
+                let index = friendListViewController.friends.indexOf { $0.id == key as! String }
+                if let index = index {
+                    let indexPath = NSIndexPath(forItem: index, inSection: 1)
+                    friendListViewController.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)//.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                }
+            }
+        }
     }
 }
 
@@ -91,7 +106,9 @@ extension URLSchemesController{
             
             self.pushViewController(1, viewController: vc, animated: true)
             
-            }) { err in
+            self.refreshViewControllerIfNeeded(1, key: vc.friend.id)
+            
+        }) { err in
                 
         }
     }
