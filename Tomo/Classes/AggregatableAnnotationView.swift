@@ -25,7 +25,7 @@ class AggregatableAnnotationView: MKAnnotationView {
         
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
-        self.canShowCallout = true
+        self.canShowCallout = false
         
         frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         

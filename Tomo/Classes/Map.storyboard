@@ -126,6 +126,26 @@
             </objects>
             <point key="canvasLocation" x="705" y="448"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="rv0-8P-2Dx">
+            <objects>
+                <viewController storyboardIdentifier="TestView" id="Zf4-H3-fC5" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WCN-5R-w4v"/>
+                        <viewControllerLayoutGuide type="bottom" id="IDg-qG-c3M"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bXb-bW-kZQ">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.12941176469999999" green="0.58823529409999997" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="200" height="200"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Swf-T4-2Mx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1072" y="568"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="MOJ-Y9-CVB">
             <objects>

@@ -51,6 +51,8 @@
 		1F79C1B81B5E730E008800E1 /* SearchFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */; };
 		1F8BF0111B53639F00090079 /* PostImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8BF0101B53639F00090079 /* PostImageCell.swift */; };
 		1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8BF0121B536D9500090079 /* PostImageCell.xib */; };
+		1F8DEBE01BBD22600037FD1C /* PostCallOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8DEBDE1BBD22600037FD1C /* PostCallOutViewController.swift */; };
+		1F8DEBE11BBD22600037FD1C /* PostCallOutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8DEBDF1BBD22600037FD1C /* PostCallOutView.xib */; };
 		1F902D771B7D9C2800F6DC2D /* EmptyFriends.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F902D761B7D9C2800F6DC2D /* EmptyFriends.xib */; };
 		1F937FE61B58C2E3009722CE /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F937FE51B58C2E3009722CE /* SettingViewController.swift */; };
 		1F937FE81B58EE8B009722CE /* AccountEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F937FE71B58EE8B009722CE /* AccountEditViewController.swift */; };
@@ -210,6 +212,8 @@
 		1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchFriendViewController.swift; path = Classes/SearchFriendViewController.swift; sourceTree = "<group>"; };
 		1F8BF0101B53639F00090079 /* PostImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostImageCell.swift; path = Classes/PostImageCell.swift; sourceTree = "<group>"; };
 		1F8BF0121B536D9500090079 /* PostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostImageCell.xib; path = Classes/PostImageCell.xib; sourceTree = "<group>"; };
+		1F8DEBDE1BBD22600037FD1C /* PostCallOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCallOutViewController.swift; path = Classes/PostCallOutViewController.swift; sourceTree = "<group>"; };
+		1F8DEBDF1BBD22600037FD1C /* PostCallOutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostCallOutView.xib; path = Classes/PostCallOutView.xib; sourceTree = "<group>"; };
 		1F902D761B7D9C2800F6DC2D /* EmptyFriends.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptyFriends.xib; path = Classes/EmptyFriends.xib; sourceTree = "<group>"; };
 		1F937FE51B58C2E3009722CE /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingViewController.swift; path = Classes/SettingViewController.swift; sourceTree = "<group>"; };
 		1F937FE71B58EE8B009722CE /* AccountEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountEditViewController.swift; path = Classes/AccountEditViewController.swift; sourceTree = "<group>"; };
@@ -481,6 +485,8 @@
 				1FC268811BBABF20006F1FDA /* GroupAnnotationView.swift */,
 				1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */,
 				1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */,
+				1F8DEBDF1BBD22600037FD1C /* PostCallOutView.xib */,
+				1F8DEBDE1BBD22600037FD1C /* PostCallOutViewController.swift */,
 				1FAA70FB1BBBF97B00BCE5AF /* StationAnnotation.swift */,
 				1FAA70FD1BBBF99100BCE5AF /* StationAnnotationView.swift */,
 			);
@@ -942,6 +948,7 @@
 				1FEE80EC1B4E5C540061B913 /* PostCell.xib in Resources */,
 				1F19D95A1BA96B3E007C9919 /* GroupCollectionViewCell.xib in Resources */,
 				1FEA3CFF1BB39F160037F3C5 /* StationCollectionViewCell.xib in Resources */,
+				1F8DEBE11BBD22600037FD1C /* PostCallOutView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1135,6 +1142,7 @@
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
 				1F1176A41B983D280049D9F5 /* SocketAnyEvent.swift in Sources */,
 				1F1176AA1B983D280049D9F5 /* SocketLogger.swift in Sources */,
+				1F8DEBE01BBD22600037FD1C /* PostCallOutViewController.swift in Sources */,
 				D0F44FAB1B5E4790009E12AA /* BookmarkedPostsViewController.swift in Sources */,
 				D0B6EB121B5E7D09005A7E45 /* MyAccountHeaderViewController.swift in Sources */,
 				1F985E6A1B60C19F008D5369 /* Range.swift in Sources */,

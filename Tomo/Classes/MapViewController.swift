@@ -101,13 +101,27 @@ extension MapViewController {
     
     @IBAction func chooseDate(sender: AnyObject) {
         
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        alert.addAction(UIAlertAction(title: "今天", style: .Default, handler: nil))
-        alert.addAction(UIAlertAction(title: "昨天", style: .Default, handler: nil))
-        alert.addAction(UIAlertAction(title: "两天前", style: .Default, handler: nil))
-        alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
+        let vc = Util.createViewControllerWithIdentifier("TestView", storyboardName: "Map")
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        vc.modalPresentationStyle = .Popover
+        vc.popoverPresentationController?.delegate = self
+        
+        self.presentViewController(vc, animated: true, completion: nil)
+        
+        if let pop = vc.popoverPresentationController {
+            let v = sender as! UIView
+            pop.sourceView = v
+            pop.sourceRect = v.bounds
+            pop.permittedArrowDirections = .Up
+        }
+//
+//        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+//        alert.addAction(UIAlertAction(title: "今天", style: .Default, handler: nil))
+//        alert.addAction(UIAlertAction(title: "昨天", style: .Default, handler: nil))
+//        alert.addAction(UIAlertAction(title: "两天前", style: .Default, handler: nil))
+//        alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
+//        
+//        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     @IBAction func showUser() {
@@ -120,6 +134,13 @@ extension MapViewController {
     
     @IBAction func toggleBuilding() {
         mapView.showsBuildings = !mapView.showsBuildings
+    }
+}
+
+extension MapViewController: UIPopoverPresentationControllerDelegate, UIAdaptivePresentationControllerDelegate {
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
     }
 }
 
@@ -214,6 +235,30 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
+        
+        let vc: UIViewController!
+        
+        if let view = view as? PostAnnotationView {
+            let pvc = PostCallOutViewController(nibName: "PostCallOutViewController", bundle: nil)
+            pvc.post = (view.annotation as! PostAnnotation).post
+//            pvc.setupDisplay()
+            
+            vc = pvc as UIViewController
+        } else {
+            vc = Util.createViewControllerWithIdentifier("TestView", storyboardName: "Map")
+        }
+        
+        
+        vc.modalPresentationStyle = .Popover
+        vc.popoverPresentationController?.delegate = self
+        
+        self.presentViewController(vc, animated: true, completion: nil)
+        
+        if let pop = vc.popoverPresentationController {
+            pop.backgroundColor = UIColor.whiteColor()
+            pop.sourceView = view
+            pop.sourceRect = view.bounds
+        }
         
 //        if !zoomedIn {
 //            self.lastViewRegion = mapView.region
