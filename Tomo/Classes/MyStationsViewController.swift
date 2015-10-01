@@ -17,6 +17,7 @@ class MyStationsViewController: BaseViewController {
     let saveImage = Util.coloredImage(UIImage(named: "checkmark")!, color: UIColor.whiteColor())
     
     var loading = false
+    var isExhausted = false
     var page = 0
     
     @IBOutlet var collectionView: UICollectionView!
@@ -40,6 +41,11 @@ class MyStationsViewController: BaseViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         loadInitData()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        isExhausted = false
     }
     
     override func didReceiveMemoryWarning() {
@@ -142,14 +148,16 @@ extension MyStationsViewController {
                 self.stations = StationEntity.collection(object)
                 self.refresh()
                 self.loading = false
+                self.editButton.enabled = true
                 self.page = 1
             }) { (error) -> () in
                 self.loading = false
+                self.isExhausted = true
         }
     }
     
     private func loadMoreData() {
-        if loading {
+        if loading || isExhausted {
             return
         }
         loading = true
@@ -167,6 +175,7 @@ extension MyStationsViewController {
                 self.loading = false
             }, failure: {error in
                 self.loading = false
+                self.isExhausted = true
             }
         )
     }
@@ -196,6 +205,9 @@ extension MyStationsViewController {
         AlamofireController.request(.PATCH, "/me", parameters: ["$pull": ["stations":cell.station.id]], encoding: .URL, success: { (result) -> () in
             self.stations?.remove(cell.station)
             self.collectionView.deleteItemsAtIndexPaths([indexPath])
+            if self.stations!.count < 1 {
+                self.editButton.enabled = false
+            }
         }) { (err) -> () in
                 
         }
