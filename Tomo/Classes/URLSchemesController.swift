@@ -81,7 +81,7 @@ extension URLSchemesController{
         if self.tabBarController.childViewControllers.count > tabSelectedIndex {
             self.tabBarController.selectedIndex = tabSelectedIndex
             let vc: AnyObject? = self.tabBarController.childViewControllers[tabSelectedIndex].childViewControllers.first
-            
+            /// mark the cell
             if let friendListViewController = vc as? FriendListViewController {
                 let index = friendListViewController.friends.indexOf { $0.id == key as! String }
                 if let index = index {
