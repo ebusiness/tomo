@@ -18,6 +18,7 @@ final class SettingViewController: MyAccountBaseController {
     
     @IBOutlet weak var notificationCell: UITableViewCell!
     var user: UserEntity!
+    var notificationCellAccessoryView: UIView?
     let badgeView: UILabel! = {
         let label = UILabel(frame: CGRectMake(0, 0, 20, 20))
         label.backgroundColor = UIColor.redColor()
@@ -33,16 +34,21 @@ final class SettingViewController: MyAccountBaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerForNotifications()
+        self.notificationCellAccessoryView = notificationCell.accessoryView
         
 //        badgeLabel.layer.cornerRadius = badgeLabel.frame.size.height / 2
         Util.changeImageColorForButton(editButton,color: UIColor.whiteColor())
+
+        self.updateUI()
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         if me.notifications > 0 {
             badgeView.text = String(me.notifications)
             notificationCell.accessoryView = badgeView
         } else {
-            notificationCell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            notificationCell.accessoryView = self.notificationCellAccessoryView
         }
-        self.updateUI()
     }
 
     @IBAction func logoutTapped(sender: UIButton) {
