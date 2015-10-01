@@ -64,14 +64,14 @@ final class MessageViewController: CommonMessageController {
 extension MessageViewController {
     
     private func loadAvatars() {
-//        SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: friend.photo!), options: nil, progress: nil) {
-//            (image, error, _, _, _) -> Void in
-//            if let image = image {
-//                self.avatarFriend = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
-//            } else {
-//                self.avatarFriend = self.defaultAvatar
-//            }
-//        }
+        SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: friend.photo!), options: nil, progress: nil) {
+            (image, error, _, _, _) -> Void in
+            if let image = image {
+                self.avatarFriend = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+            } else {
+                self.avatarFriend = self.defaultAvatar
+            }
+        }
     }
     
     private func loadMessages() {

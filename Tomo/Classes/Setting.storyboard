@@ -1393,7 +1393,7 @@
                                             <action selector="addTapped:" destination="pZt-Wk-dfy" eventType="touchUpInside" id="FFR-Fy-LG1"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QXM-Bz-SZQ">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QXM-Bz-SZQ">
                                         <rect key="frame" x="5" y="4" width="25" height="25"/>
                                         <state key="normal" image="delete_sign">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

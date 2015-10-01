@@ -54,6 +54,7 @@ final class FriendListViewController: BaseTableViewController {
                     self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
                     return
                 }
+                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
         }
         super.viewWillAppear(animated)
