@@ -126,6 +126,8 @@
 		29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
+		D012F5951BBBC4CA00D5293D /* MyGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012F5941BBBC4CA00D5293D /* MyGroupsViewController.swift */; };
+		D012F5971BBBC4DD00D5293D /* MyStationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */; };
 		D04447B31BBA9DF300AD7B0C /* GroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */; };
 		D04608D21B6BA33F00D30B77 /* TestDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404B1ACE68C500D2A338 /* TestDataTests.swift */; };
 		D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D057BAF11B670687007D14D2 /* RequestFriendCell.swift */; };
@@ -268,7 +270,7 @@
 		296D8BA91AFC59F10058D400 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseViewController.swift; path = Classes/BaseViewController.swift; sourceTree = "<group>"; };
 		296D8BAA1AFC59F10058D400 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarController.swift; path = Classes/TabBarController.swift; sourceTree = "<group>"; };
 		296D8BB01AFC5A250058D400 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewController.swift; path = Classes/MessageViewController.swift; sourceTree = "<group>"; };
-		296D8BBC1AFC5A680058D400 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = Classes/LaunchScreen.xib; sourceTree = "<group>"; };
+		296D8BBC1AFC5A680058D400 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = ../Classes/LaunchScreen.xib; sourceTree = "<group>"; };
 		296D8BBD1AFC5A680058D400 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Classes/Main.storyboard; sourceTree = "<group>"; };
 		296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupChatViewController.swift; path = Classes/GroupChatViewController.swift; sourceTree = "<group>"; };
 		299389431AD3B33800043D91 /* AmazonS3RequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonS3RequestManager.h; sourceTree = "<group>"; };
@@ -291,6 +293,8 @@
 		29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTableViewController.swift; path = Classes/BaseTableViewController.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		D012F5941BBBC4CA00D5293D /* MyGroupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyGroupsViewController.swift; path = Classes/MyGroupsViewController.swift; sourceTree = "<group>"; };
+		D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyStationsViewController.swift; path = Classes/MyStationsViewController.swift; sourceTree = "<group>"; };
 		D057BAF11B670687007D14D2 /* RequestFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestFriendCell.swift; path = Classes/RequestFriendCell.swift; sourceTree = "<group>"; };
 		D073E6F71B84C1BF00066F42 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraController.swift; path = Classes/CameraController.swift; sourceTree = "<group>"; };
 		D07793841B704F290056B7CB /* PickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickerTableViewController.swift; path = Classes/PickerTableViewController.swift; sourceTree = "<group>"; };
@@ -398,24 +402,13 @@
 			path = SocketIOClientSwift;
 			sourceTree = "<group>";
 		};
-		1F985DF31B60B5BB008D5369 /* xib */ = {
+		1F985DF41B60B748008D5369 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				296D8BBC1AFC5A680058D400 /* LaunchScreen.xib */,
-				D0DB07D61B9D1B5200C06C4E /* NotificationView.xib */,
-			);
-			name = xib;
-			sourceTree = "<group>";
-		};
-		1F985DF41B60B748008D5369 /* Profile */ = {
-			isa = PBXGroup;
-			children = (
+				D012F5931BBBC48D00D5293D /* UserProfile */,
 				D0A0C0331B5F5D0500ABFA5F /* UserPostsViewController.swift */,
-				D0A0C0311B5F5BF900ABFA5F /* ProfileViewController.swift */,
-				D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */,
-				D0A0C02D1B5F594C00ABFA5F /* ProfileBaseController.swift */,
 			);
-			name = Profile;
+			name = User;
 			sourceTree = "<group>";
 		};
 		1F985E441B60C19F008D5369 /* ExSwift */ = {
@@ -521,7 +514,6 @@
 			isa = PBXGroup;
 			children = (
 				1F9ACAF61B69F96100648A82 /* Entity */,
-				1F985DF31B60B5BB008D5369 /* xib */,
 				299389531AD3C71500043D91 /* storyboard */,
 				299389561AD3C7CA00043D91 /* ViewController */,
 				299389521AD3C6FB00043D91 /* Controller */,
@@ -546,6 +538,7 @@
 		290134D51AC3991C00BBFE29 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				296D8BBC1AFC5A680058D400 /* LaunchScreen.xib */,
 				290134FA1AC3A3D200BBFE29 /* Tomo-Bridging-Header.h */,
 				290134D61AC3991C00BBFE29 /* Info.plist */,
 				290134D71AC3991C00BBFE29 /* AppDelegate.swift */,
@@ -677,7 +670,7 @@
 				299389571AD3D13700043D91 /* Home */,
 				299389541AD3C77300043D91 /* Login */,
 				290144181ADF92470048F3D8 /* Map */,
-				1F985DF41B60B748008D5369 /* Profile */,
+				1F985DF41B60B748008D5369 /* User */,
 				29CA44911AD4DEEA009EB177 /* Setting */,
 			);
 			name = ViewController;
@@ -699,16 +692,14 @@
 		29CA44911AD4DEEA009EB177 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				D012F5901BBBC2D800D5293D /* MyProfile */,
+				D012F5911BBBC31100D5293D /* Invitation */,
 				D0DB07DC1B9D26E200C06C4E /* Notification */,
 				D07793831B704EA00056B7CB /* picker */,
-				1F937FE71B58EE8B009722CE /* AccountEditViewController.swift */,
-				1F937FE51B58C2E3009722CE /* SettingViewController.swift */,
 				D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */,
+				D012F5941BBBC4CA00D5293D /* MyGroupsViewController.swift */,
 				D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */,
-				D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */,
-				D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */,
-				D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */,
-				D057BAF11B670687007D14D2 /* RequestFriendCell.swift */,
+				D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -716,10 +707,10 @@
 		29EA55B31AEDD27D006A1F41 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				D012F5921BBBC40A00D5293D /* Components */,
 				296D8BA91AFC59F10058D400 /* BaseViewController.swift */,
 				296D8BAA1AFC59F10058D400 /* TabBarController.swift */,
 				29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */,
-				D0DB07D81B9D224900C06C4E /* NotificationView.swift */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -731,6 +722,45 @@
 				B5997E727845063A13A5D63E /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		D012F5901BBBC2D800D5293D /* MyProfile */ = {
+			isa = PBXGroup;
+			children = (
+				1F937FE71B58EE8B009722CE /* AccountEditViewController.swift */,
+				1F937FE51B58C2E3009722CE /* SettingViewController.swift */,
+				D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */,
+				D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */,
+			);
+			name = MyProfile;
+			sourceTree = "<group>";
+		};
+		D012F5911BBBC31100D5293D /* Invitation */ = {
+			isa = PBXGroup;
+			children = (
+				D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */,
+				D057BAF11B670687007D14D2 /* RequestFriendCell.swift */,
+			);
+			name = Invitation;
+			sourceTree = "<group>";
+		};
+		D012F5921BBBC40A00D5293D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D0DB07D61B9D1B5200C06C4E /* NotificationView.xib */,
+				D0DB07D81B9D224900C06C4E /* NotificationView.swift */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
+		D012F5931BBBC48D00D5293D /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				D0A0C0311B5F5BF900ABFA5F /* ProfileViewController.swift */,
+				D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */,
+				D0A0C02D1B5F594C00ABFA5F /* ProfileBaseController.swift */,
+			);
+			name = UserProfile;
 			sourceTree = "<group>";
 		};
 		D07793831B704EA00056B7CB /* picker */ = {
@@ -1012,6 +1042,7 @@
 				1F1176AE1B983D280049D9F5 /* SwiftRegex.swift in Sources */,
 				29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */,
 				29539C791B13175D00545509 /* CommonMessageController.swift in Sources */,
+				D012F5951BBBC4CA00D5293D /* MyGroupsViewController.swift in Sources */,
 				2994AF911B019AA100656C39 /* GCD.swift in Sources */,
 				1FA76B021BA2A01D004776B0 /* GroupListViewController.swift in Sources */,
 				1FE7CEF51B8C9561006700FC /* SignUpViewController.swift in Sources */,
@@ -1033,6 +1064,7 @@
 				D0A0C0301B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift in Sources */,
 				D0891C961B8AF5A600701CC7 /* SearchFriendCell.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
+				D012F5971BBBC4DD00D5293D /* MyStationsViewController.swift in Sources */,
 				1F985E561B60C19F008D5369 /* Bool.swift in Sources */,
 				17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */,
 				D0DB07E51B9D65BE00C06C4E /* ListenerEvent.swift in Sources */,
