@@ -13,7 +13,7 @@ class RecommendStationTableCell: UITableViewCell {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var stations: [StationEntity]!
-    var delegate: UIViewController!
+    weak var delegate: HomeViewController!
     
     /// cell container --- used for search
     weak var tableViewController: HomeViewController?
@@ -28,8 +28,7 @@ class RecommendStationTableCell: UITableViewCell {
 extension RecommendStationTableCell {
     
     @IBAction func discoverMoreStation(sender: AnyObject) {
-//        let vc = Util.createViewControllerWithIdentifier("GroupDiscoverView", storyboardName: "Group") as UIViewController
-//        self.delegate.navigationController?.presentViewController(vc, animated: true, completion: nil)
+        
         tableViewController?.discoverMoreStation()
     }
 }
@@ -59,6 +58,7 @@ extension RecommendStationTableCell:UICollectionViewDelegate {
         AlamofireController.request(.PATCH, "/me", parameters: ["$addToSet": ["stations":station.id]], encoding: .URL, success: { (result) -> () in
             self.stations.removeAtIndex(indexPath.item)
             collectionView.deleteItemsAtIndexPaths([indexPath])
+            self.delegate.synchronizeRecommendStations(self.stations)
         }) { (err) -> () in
             
         }
