@@ -16,6 +16,8 @@ class PostImageCell: PostCell {
     let leftOffset = CGFloat(0)
     let placeHolder = UIImage(named: "placeholder")
     
+    let screenWidth = UIScreen.mainScreen().bounds.width
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.scrollView.scrollsToTop = false
@@ -42,7 +44,7 @@ class PostImageCell: PostCell {
     private func displaySingleImage() {
         
         let imageHeight = scrollView.frame.height
-        let imageWidth = scrollView.frame.width
+        let imageWidth = screenWidth
         
         let imageFrame = CGRect(x: 0, y: 0, width: imageWidth, height: imageHeight)
         let imageView = UIImageView(frame: imageFrame)
