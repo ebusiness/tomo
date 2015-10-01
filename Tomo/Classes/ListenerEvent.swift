@@ -95,13 +95,30 @@ extension ListenerEvent {
         }
         
         let notification = NotificationEntity(userInfo)
-        self.showNotification(tabBarController, notification: notification)
+        self.showNotificationIfNeeded(tabBarController, notification: notification)
         
         self.postNotification(userInfo)
 
     }
     
-    private func showNotification(tabBarController: TabBarController, notification: NotificationEntity) {
+    private func showNotificationIfNeeded(tabBarController: TabBarController, notification: NotificationEntity) {
+        
+        if self == .GroupMessage || self == .Message {
+            
+            let lastViewController: AnyObject? = tabBarController.selectedViewController?.childViewControllers.last
+            
+            if let messageViewController = lastViewController as? MessageViewController {
+                
+                if notification.from.id == messageViewController.friend.id {
+                    return
+                }
+            } else if let groupChatViewController = lastViewController as? GroupChatViewController {
+                
+                if notification.targetId == groupChatViewController.group.id {
+                    return
+                }
+            }
+        }
         
         gcd.sync(.Main) {
             tabBarController.updateBadgeNumber()
@@ -152,7 +169,7 @@ extension ListenerEvent {
 // MARK: - receive for [me]
 
 extension ListenerEvent {
-    
+
     private func receiveMessage(tabBarController: TabBarController, userInfo: [NSObject : AnyObject]) {
         let message = MessageEntity(userInfo)
         

@@ -59,6 +59,7 @@ class CommonMessageController: JSQMessagesViewController {
         collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7, 14, 3, 14)
         // TODO: adjust
         setAccessoryButtonImageView()
+        navigationController?.navigationBar.setBackgroundImage(navigationBarImage, forBarMetrics: .Default)
     }
     
     override func viewDidAppear(animated: Bool) {
