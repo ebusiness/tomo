@@ -136,6 +136,26 @@
                             </tableViewSection>
                             <tableViewSection id="V7W-s2-FKH">
                                 <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Dr4-2m-wpy" style="IBUITableViewCellStyleDefault" id="ZrW-UB-GfR">
+                                        <rect key="frame" x="0.0" y="436" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZrW-UB-GfR" id="1iH-XU-hvq">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="我常去的车站" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Dr4-2m-wpy">
+                                                    <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="pZt-Wk-dfy" kind="push" id="k3N-wo-Ih6"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="K0K-7b-cJe" style="IBUITableViewCellStyleDefault" id="uci-Ij-g1i">
                                         <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -1333,12 +1353,86 @@
             </objects>
             <point key="canvasLocation" x="1238" y="2404"/>
         </scene>
+        <!--My Stations View Controller-->
+        <scene sceneID="nim-yb-FSm">
+            <objects>
+                <viewController id="pZt-Wk-dfy" customClass="MyStationsViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" id="X4X-eh-LJm">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="mYr-U1-eby">
+                            <size key="itemSize" width="100" height="100"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="pZt-Wk-dfy" id="ZFW-0D-TWj"/>
+                            <outlet property="delegate" destination="pZt-Wk-dfy" id="rPr-oM-DLi"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="D79-Cq-gYz">
+                        <nil key="title"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="SGJ-sY-x1K">
+                            <view key="customView" contentMode="scaleToFill" id="54o-W2-4Nd">
+                                <rect key="frame" x="0.0" y="0.0" width="71" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SA2-ez-owm">
+                                        <rect key="frame" x="46" y="4" width="25" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="25" id="0IP-Oi-PNb"/>
+                                            <constraint firstAttribute="height" constant="25" id="zpQ-Pr-uF9"/>
+                                        </constraints>
+                                        <state key="normal" image="plus_plus">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addTapped:" destination="pZt-Wk-dfy" eventType="touchUpInside" id="FFR-Fy-LG1"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QXM-Bz-SZQ">
+                                        <rect key="frame" x="5" y="4" width="25" height="25"/>
+                                        <state key="normal" image="delete_sign">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="editTapped:" destination="pZt-Wk-dfy" eventType="touchUpInside" id="ZcH-DF-1A4"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="QXM-Bz-SZQ" firstAttribute="centerY" secondItem="SA2-ez-owm" secondAttribute="centerY" id="8kW-43-Ka8"/>
+                                    <constraint firstItem="QXM-Bz-SZQ" firstAttribute="width" secondItem="SA2-ez-owm" secondAttribute="width" id="JKb-cG-Qzl"/>
+                                    <constraint firstAttribute="centerY" secondItem="SA2-ez-owm" secondAttribute="centerY" id="a1X-x3-OeO"/>
+                                    <constraint firstItem="SA2-ez-owm" firstAttribute="leading" secondItem="QXM-Bz-SZQ" secondAttribute="trailing" constant="16" id="gJB-K5-gCp"/>
+                                    <constraint firstItem="QXM-Bz-SZQ" firstAttribute="height" secondItem="SA2-ez-owm" secondAttribute="height" id="wa3-Rd-7qN"/>
+                                    <constraint firstAttribute="trailing" secondItem="SA2-ez-owm" secondAttribute="trailing" id="yFX-lC-R3m"/>
+                                </constraints>
+                            </view>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="addButton" destination="SA2-ez-owm" id="fVH-b1-vw2"/>
+                        <outlet property="collectionView" destination="X4X-eh-LJm" id="q78-AV-WEb"/>
+                        <outlet property="editButton" destination="QXM-Bz-SZQ" id="cFb-CS-KmH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JIk-yX-HDZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-766" y="2404"/>
+        </scene>
     </scenes>
     <resources>
         <image name="add_user" width="25" height="25"/>
         <image name="avatar" width="80" height="80"/>
         <image name="checkmark" width="25" height="25"/>
+        <image name="delete_sign" width="25" height="25"/>
         <image name="edit_user" width="25" height="25"/>
+        <image name="plus_plus" width="25" height="25"/>
         <image name="text_protection" width="320" height="160"/>
         <image name="user_cover_default" width="414" height="160"/>
     </resources>
@@ -1348,6 +1442,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="4EO-l1-f2n"/>
+        <segue reference="PG0-av-tgF"/>
     </inferredMetricsTieBreakers>
 </document>

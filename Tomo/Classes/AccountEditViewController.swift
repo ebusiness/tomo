@@ -247,27 +247,33 @@ extension AccountEditViewController {
         
         if nickNameTextField.text != me.nickName {
             params["nickName"] = nickNameTextField.text
+            me.nickName = nickNameTextField.text
         }
         
         if firstNameTextField.text != me.firstName ?? "" {
             params["firstName"] = firstNameTextField.text
+            me.firstName = firstNameTextField.text == "" ? nil : firstNameTextField.text
         }
         
         if lastNameTextField.text != me.lastName ?? "" {
             params["lastName"] = lastNameTextField.text
+            me.lastName = lastNameTextField.text == "" ? nil : lastNameTextField.text
         }
         
         if telTextField.text != me.telNo ?? "" {
             params["telNo"] = telTextField.text
+            me.telNo = telTextField.text
         }
         
         if addressTextField.text != me.address ?? "" {
             params["address"] = addressTextField.text
+            me.address = addressTextField.text == "" ? nil : addressTextField.text
         }
         
         if bioTextView.textColor == UIColor.blackColor() || bioTextView.text != defaultbio {
             if bioTextView.text != me.bio ?? "" {
                 params["bio"] = bioTextView.text
+                me.bio = bioTextView.text == "" ? nil : bioTextView.text
             }
         }
         
@@ -276,11 +282,16 @@ extension AccountEditViewController {
         params["photo"] = user.photo
         params["cover"] = user.cover
         
+        me.gender = user.gender
+        me.birthDay = user.birthDay
+        me.photo = user.photo
+        me.cover  = user.cover
+        
         AlamofireController.request(.PATCH, "/me", parameters: params, success: { result in
             me = UserEntity(result)
             self.user = me
             self.headerView.updateUI()
-            }) { err in
+        }) { err in
                 
         }
     }

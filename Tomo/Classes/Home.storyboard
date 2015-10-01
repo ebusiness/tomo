@@ -616,7 +616,7 @@
         <!--Navigation Controller-->
         <scene sceneID="isQ-Ue-dsO">
             <objects>
-                <navigationController id="y9E-on-1q4" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="modalStationSelector" id="y9E-on-1q4" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="iby-Fq-jBB">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
