@@ -224,7 +224,6 @@ extension FriendListViewController: FriendInvitationCellDelegate {
             AlamofireController.request(.PATCH, "/invitations/\(cell.friendInvitedNotification.id)", parameters: ["result": "refuse"], success: { (result) -> () in
                 
                 me.invitations?.remove(cell.friendInvitedNotification.from.id)
-                self.updateBadgeNumber()
                 
                 if let indexPath = self.tableView.indexPathForCell(cell) {
                     me.friendInvitations.removeAtIndex(indexPath.row)
@@ -233,6 +232,7 @@ extension FriendListViewController: FriendInvitationCellDelegate {
                     self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
                     self.tableView.endUpdates()
                 }
+                self.updateBadgeNumber()
                 
             }, failure: { err in
                 println(err)
