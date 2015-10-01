@@ -35,7 +35,10 @@ class MyStationsViewController: BaseViewController {
         Util.changeImageColorForButton(addButton, color: UIColor.whiteColor())
         
         collectionView.registerNib(UINib(nibName: "StationCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "identifier")
-        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         loadInitData()
     }
     
