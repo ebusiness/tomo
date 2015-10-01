@@ -54,7 +54,6 @@ class StationDiscoverViewController: UIViewController {
         super.awakeFromNib()
         searchBar.placeholder = "搜索车站名称"
     }
-    
 }
 
 // MARK: - Actions
