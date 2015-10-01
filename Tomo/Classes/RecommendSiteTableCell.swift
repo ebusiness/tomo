@@ -12,13 +12,19 @@ class RecommendSiteTableCell: UITableViewCell {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var pageControl: UIPageControl!
     var groups: [GroupEntity]!
     var delegate: UIViewController!
+    
+    let screenWidth = UIScreen.mainScreen().bounds.width
     
     override func awakeFromNib() {
         super.awakeFromNib()
 
         collectionView.registerNib(UINib(nibName: "GroupCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+    }
+    func setup() {
+        pageControl.numberOfPages = (groups.count - 1) / 9 + 1
     }
 }
 
@@ -54,13 +60,25 @@ extension RecommendSiteTableCell:UICollectionViewDelegate {
         vc.group = groups[indexPath.item]
         self.delegate.navigationController?.pushViewController(vc, animated: true)
     }
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView == collectionView {
+            let contentOffsetX = scrollView.contentOffset.x + 20
+            if contentOffsetX < 30 {
+                pageControl.currentPage = 0
+            } else if contentOffsetX + screenWidth > scrollView.contentSize.width {
+                pageControl.currentPage = pageControl.numberOfPages - 1
+            } else {
+                pageControl.currentPage = Int(floor(contentOffsetX / screenWidth))
+            }
+        }
+    }
 }
 
 extension RecommendSiteTableCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
-        let width = UIScreen.mainScreen().bounds.width / 3 - 10
+        let width = UIScreen.mainScreen().bounds.width / 3 - 1
         let height = collectionView.bounds.height / 3 - 1
         
         return CGSizeMake(width, height)

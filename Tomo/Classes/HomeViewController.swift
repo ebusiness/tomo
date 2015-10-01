@@ -94,6 +94,7 @@ extension HomeViewController {
             let cell = tableView.dequeueReusableCellWithIdentifier("RecommendSiteTableCell", forIndexPath: indexPath) as! RecommendSiteTableCell
             cell.groups = groups
             cell.delegate = self
+            cell.setup()
             return cell
             
         } else if let stations = contents[indexPath.item] as? [StationEntity] {
@@ -102,7 +103,7 @@ extension HomeViewController {
             cell.stations = stations
             cell.delegate = self
             cell.tableViewController = self
-            cell.collectionView.reloadData()
+            cell.setup()
             return cell
             
         } else if let post = contents[indexPath.row] as? PostEntity {

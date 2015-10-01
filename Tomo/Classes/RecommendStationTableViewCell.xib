@@ -40,13 +40,13 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zMa-Tn-nAT">
-                                <rect key="frame" x="0.0" y="405.5" width="443" height="1"/>
+                                <rect key="frame" x="0.0" y="405" width="443" height="1"/>
                                 <color key="backgroundColor" red="0.8666666666666667" green="0.8666666666666667" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="beX-xv-Euz"/>
                                 </constraints>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="V7J-uq-rTZ">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="V7J-uq-rTZ">
                                 <rect key="frame" x="0.0" y="56" width="443" height="300"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -63,10 +63,15 @@
                                     <outlet property="delegate" destination="osL-lw-bmj" id="bKF-wv-obE"/>
                                 </connections>
                             </collectionView>
+                            <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="5" translatesAutoresizingMaskIntoConstraints="NO" id="Uqe-Jf-YVX">
+                                <rect key="frame" x="186" y="319" width="71" height="37"/>
+                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="05J-10-Nvt" firstAttribute="top" secondItem="V7J-uq-rTZ" secondAttribute="bottom" constant="8" id="02z-nj-q5a"/>
+                            <constraint firstItem="Uqe-Jf-YVX" firstAttribute="bottom" secondItem="V7J-uq-rTZ" secondAttribute="bottom" id="0iv-uM-5aF"/>
+                            <constraint firstItem="Uqe-Jf-YVX" firstAttribute="centerX" secondItem="V7J-uq-rTZ" secondAttribute="centerX" id="1H4-0l-ext"/>
                             <constraint firstItem="dDV-qy-V48" firstAttribute="leading" secondItem="3BF-Ej-w7T" secondAttribute="leading" constant="16" id="4WM-IS-MYZ"/>
                             <constraint firstItem="V7J-uq-rTZ" firstAttribute="leading" secondItem="3BF-Ej-w7T" secondAttribute="leading" id="4vL-sx-bi0"/>
                             <constraint firstItem="dDV-qy-V48" firstAttribute="top" secondItem="3BF-Ej-w7T" secondAttribute="top" constant="16" id="85g-VR-EbB"/>
@@ -92,6 +97,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="collectionView" destination="V7J-uq-rTZ" id="UHd-NN-d5Y"/>
+                <outlet property="pageControl" destination="Uqe-Jf-YVX" id="Egu-GV-ePH"/>
             </connections>
             <point key="canvasLocation" x="442.5" y="437.5"/>
         </tableViewCell>
