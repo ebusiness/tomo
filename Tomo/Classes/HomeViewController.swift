@@ -102,6 +102,7 @@ extension HomeViewController {
             cell.stations = stations
             cell.delegate = self
             cell.tableViewController = self
+            cell.collectionView.reloadData()
             return cell
             
         } else if let post = contents[indexPath.row] as? PostEntity {
@@ -274,6 +275,14 @@ extension HomeViewController: CLLocationManagerDelegate {
 extension HomeViewController {
     func discoverMoreStation() {
         performSegueWithIdentifier("modalStationSelector", sender: nil)
+    }
+    func synchronizeRecommendStations(newStations: [StationEntity]) {
+        for index in 0..<contents.count {
+            if let _ = contents[index] as? [StationEntity] {
+                contents[index] = newStations
+                break
+            }
+        }
     }
 }
 
