@@ -43,6 +43,7 @@ class StationDiscoverViewController: UIViewController {
         collectionView.registerNib(UINib(nibName: "StationCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "identifier")
         
         loadInitData()
+        navigationController?.navigationBar.barStyle = .Black
     }
     
     override func didReceiveMemoryWarning() {
