@@ -24,6 +24,7 @@ class StationDiscoverViewController: UIViewController {
     var page = 0
     
     let searchBar = UISearchBar()
+    var searchText: String?
     
     @IBOutlet var collectionView: UICollectionView!
     
@@ -120,10 +121,13 @@ extension StationDiscoverViewController {
         }
         loading = true
         var coordinate = location.coordinate
-        let parameter: [String: AnyObject] = [
+        var parameter: [String: AnyObject] = [
             "coordinate": [coordinate.latitude, coordinate.longitude],
             "page": page
         ]
+        if let searchText = searchText {
+            parameter["name"] = searchText
+        }
         AlamofireController.request(.GET, "/stations", parameters: parameter,
             success: { (object) -> () in
                 if let stations: [StationEntity] = StationEntity.collection(object) {
@@ -158,6 +162,7 @@ extension StationDiscoverViewController {
 extension StationDiscoverViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         let text = searchBar.text
+        searchText = searchBar.text
         AlamofireController.request(.GET, "/stations", parameters: ["name": text], success: { (object) -> () in
             self.stations = StationEntity.collection(object)
             self.refresh()
