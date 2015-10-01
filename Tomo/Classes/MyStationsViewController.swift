@@ -77,6 +77,10 @@ class MyStationsViewController: BaseViewController {
     @IBAction func addTapped(sender: AnyObject) {
         let vc = Util.createViewControllerWithIdentifier("modalStationSelector", storyboardName: "Home")
         self.presentViewController(vc, animated: true, completion: nil)
+        
+        if 1 == editButton.tag {
+            self.editTapped(editButton)
+        }
     }
     
 }
@@ -92,24 +96,28 @@ extension MyStationsViewController: UICollectionViewDataSource, UICollectionView
             cell.station = station
         }
         cell.setupDisplay()
-
-        let delBtn = UIButton()
-        delBtn.tag = 101
-        delBtn.hidden = 0 == editButton.tag
-        delBtn.backgroundColor = UIColor.whiteColor()
-        delBtn.setImage(deleteImage, forState: .Normal)
-        delBtn.layer.cornerRadius = 12.5
-        delBtn.layer.masksToBounds = true
-//        delBtn.layer.borderWidth = 2
-//        delBtn.layer.borderColor = UIColor.whiteColor().CGColor
         
-        delBtn.addTarget(self, action: Selector("deleteStation:"), forControlEvents: .TouchUpInside)
-        
-        delBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
-        cell.addSubview(delBtn)
-        
-        cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[delBtn(==25)]", options: nil, metrics: nil, views: ["delBtn" : delBtn]))
-        cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[delBtn(==25)]|", options: nil, metrics: nil, views: ["delBtn" : delBtn]))
+        if let delBtn = cell.viewWithTag(101) as? UIButton {
+            delBtn.hidden = 0 == editButton.tag
+        } else {
+            let delBtn = UIButton()
+            delBtn.tag = 101
+            delBtn.hidden = 0 == editButton.tag
+            delBtn.backgroundColor = UIColor.whiteColor()
+            delBtn.setImage(deleteImage, forState: .Normal)
+            delBtn.layer.cornerRadius = 12.5
+            delBtn.layer.masksToBounds = true
+//            delBtn.layer.borderWidth = 2
+//            delBtn.layer.borderColor = UIColor.whiteColor().CGColor
+            
+            delBtn.addTarget(self, action: Selector("deleteStation:"), forControlEvents: .TouchUpInside)
+            
+            delBtn.setTranslatesAutoresizingMaskIntoConstraints(false)
+            cell.addSubview(delBtn)
+            
+            cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[delBtn(==25)]", options: nil, metrics: nil, views: ["delBtn" : delBtn]))
+            cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[delBtn(==25)]|", options: nil, metrics: nil, views: ["delBtn" : delBtn]))
+        }
 
         return cell
     }
