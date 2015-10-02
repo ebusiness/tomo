@@ -550,7 +550,7 @@ extension HomeViewController: PostCellDelegate {
     }
     
     func postCellMinorAvatarTapped(post: PostEntity) {
-        if let member = post.comments?[0].owner {
+        if let member = post.comments?.last?.owner {
             let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
             vc.user = member
             navigationController?.pushViewController(vc, animated: true)
