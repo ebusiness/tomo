@@ -146,6 +146,11 @@ extension StationDiscoverViewController {
     
     private func refresh() {
         collectionView.reloadData()
+        if let count = stations?.count where count != 0 {
+            collectionView.backgroundView = nil
+        } else {
+            collectionView.backgroundView = UINib(nibName: "EmptyStationResult", bundle: nil).instantiateWithOwner(nil, options: nil).first as? UIView
+        }
     }
     private func appendCells(count: Int) {
         if let totalCount = stations?.count {
