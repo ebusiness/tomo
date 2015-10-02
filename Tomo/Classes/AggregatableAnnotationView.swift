@@ -32,7 +32,7 @@ class AggregatableAnnotationView: MKAnnotationView {
         imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.borderWidth = 3
+        imageView.layer.borderWidth = 1
         imageView.layer.borderColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 1).CGColor
         imageView.layer.cornerRadius = imageView.frame.width / 2
         addSubview(imageView)
