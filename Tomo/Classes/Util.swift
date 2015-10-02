@@ -286,3 +286,21 @@ extension String {
     }
     
 }
+
+extension UIImageView {
+    var roundedCorner: Bool {
+        set {
+            if newValue == true {
+                let radius = min(bounds.width, bounds.height) / 2.0
+                layer.cornerRadius = radius
+                layer.masksToBounds = true
+            } else {
+                layer.cornerRadius = 0
+                layer.masksToBounds = false
+            }
+        }
+        get {
+            return layer.masksToBounds == true && layer.cornerRadius == min(bounds.width, bounds.height) / 2.0
+        }
+    }
+}

@@ -214,8 +214,12 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xLt-qP-nU1" userLabel="delete location">
-                                        <rect key="frame" x="76" y="236.5" width="19" height="22"/>
-                                        <state key="normal" image="cross_oval">
+                                        <rect key="frame" x="76" y="239" width="17" height="17"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="17" id="X69-eg-qDm"/>
+                                            <constraint firstAttribute="width" constant="17" id="pkm-Tm-2tL"/>
+                                        </constraints>
+                                        <state key="normal" image="cancel">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -685,9 +689,9 @@
     </scenes>
     <resources>
         <image name="avatar" width="80" height="80"/>
+        <image name="cancel" width="32" height="32"/>
         <image name="checkmark" width="25" height="25"/>
         <image name="create_new" width="25" height="25"/>
-        <image name="cross_oval" width="19" height="19"/>
         <image name="delete_sign" width="25" height="25"/>
         <image name="google_images" width="32" height="32"/>
         <image name="hearts" width="25" height="25"/>
