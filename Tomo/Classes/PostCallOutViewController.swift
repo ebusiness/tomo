@@ -26,12 +26,11 @@ class PostCallOutViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
     func setupDisplay() {
         
-        if let photo = self.post.owner.photo {
-            self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
-        }
+//        if let photo = self.post.owner.photo {
+//            self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
+//        }
         
         self.contentLabel.text = self.post.content
     }

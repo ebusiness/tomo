@@ -236,13 +236,14 @@ extension MapViewController: MKMapViewDelegate {
     
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
         
+        mapView.deselectAnnotation(view.annotation, animated: true)
+        
         let vc: UIViewController!
         
         if let view = view as? PostAnnotationView {
-            let pvc = PostCallOutViewController(nibName: "PostCallOutViewController", bundle: nil)
+            let pvc = PostCallOutViewController(nibName: "PostCallOutView", bundle: nil)
             pvc.post = (view.annotation as! PostAnnotation).post
-//            pvc.setupDisplay()
-            
+            pvc.preferredContentSize = pvc.view.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
             vc = pvc as UIViewController
         } else {
             vc = Util.createViewControllerWithIdentifier("TestView", storyboardName: "Map")
