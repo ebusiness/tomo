@@ -43,7 +43,7 @@ class FriendListSendRequestController: MyAccountBaseController {
     }
     
     @IBAction func searchFriend(sender: AnyObject) {
-        let vc = Util.createViewControllerWithIdentifier("SearchFriend", storyboardName: "Chat")
+        let vc = Util.createViewControllerWithIdentifier("SearchFriend", storyboardName: "Contacts")
         self.presentViewController(vc, animated: true, completion: nil)
     }
     

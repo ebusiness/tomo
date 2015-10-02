@@ -17,9 +17,44 @@ final class GroupCreateViewController: BaseTableViewController {
     
     @IBOutlet weak var groupCoverImageView: UIImageView!
     private var cover: UIImage?
+    @IBOutlet weak var inviteMark: UILabel!
+    
+    /// 用于显示头像的collectionView
+    @IBOutlet weak var memberCollectionView: UICollectionView!
+    /// 头像collectionView的高度
+    @IBOutlet weak var memberCollectionViewHeightConstraint: NSLayoutConstraint!
+    
+    private var inviteFriends = [UserEntity]()
+    
+    private var friends: [UserEntity]? {
+        didSet {
+            if let friends = friends {
+                memberCollectionView.reloadData()
+                memberCollectionViewHeightConstraint.constant = memberCollectionView.collectionViewLayout.collectionViewContentSize().height
+                tableView.reloadData()
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.memberCollectionView.allowsMultipleSelection = true
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
+        //no friends
+        if (me.friends ?? []).count < 1 {
+            Util.alert(self, title: "添加好友", message: "您还没有好友,是否需要添加好友?", action: { _ in
+                let vc = Util.createViewControllerWithIdentifier("SearchFriend", storyboardName: "Contacts")
+                self.presentViewController(vc, animated: true, completion: nil)
+            })
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.loadFriends()
     }
 
 }
@@ -45,6 +80,9 @@ extension GroupCreateViewController {
         param["introduction"] = self.introductionTextField.text
         param["address"] = self.addressTextField.text
         param["station"] = self.stationTextField.text
+        param["members"] = self.inviteFriends.map{ (user) -> String in
+            return user.id
+        }
         
         let coverName = NSUUID().UUIDString
         let coverPath = NSTemporaryDirectory() + coverName
@@ -131,20 +169,7 @@ extension GroupCreateViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 2
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        
-        if section == 0 {
-            return 4
-        } else if section == 1 {
-            return 1
-        } else {
-            return 0
-        }
+        return (me.friends ?? []).count > 0 ? 2 : 1
     }
 }
 
@@ -160,4 +185,108 @@ extension GroupCreateViewController {
         }
     }
     
+}
+
+// MARK: - Net methods
+extension GroupCreateViewController {
+    private func loadFriends() {
+        AlamofireController.request(.GET, "/friends", success: { object in
+            
+            self.friends = UserEntity.collection(object)
+            
+        })
+    }
+}
+
+// MARK: - CollectionView datasource & delegate methods
+extension GroupCreateViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.friends?.count ?? 0
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(GroupDescriptionMemberAvatarCell.identifier, forIndexPath: indexPath) as! GroupDescriptionMemberAvatarCell
+        if let member = self.friends?[indexPath.item] {
+            cell.avatarImageView.sd_setImageWithURL(NSURL(string: member.photo ?? ""), placeholderImage: UIImage(named: "avatar"))
+        }
+        return cell;
+    }
+    
+//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+//        if let member = self.friends?[indexPath.row] {
+//            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+//            vc.user = member
+//            navigationController?.pushViewController(vc, animated: true)
+//        }
+//    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
+            
+            self.inviteFriends.append(self.friends![indexPath.item])
+            
+            self.refreshInviteMark()
+            
+            UIView.animateWithDuration(0.1, animations: { () -> Void in
+                cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+            }, completion: { (_) -> Void in
+                let avatar: AnyObject? = cell.contentView.subviews.find { $0 is UIImageView }
+                if let avatar = avatar as? UIImageView {
+                    avatar.layer.borderColor = Util.UIColorFromRGB(0x4CAF50, alpha: 1).CGColor
+                    avatar.layer.borderWidth = 2
+                }
+            })
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
+            
+            self.inviteFriends.remove(self.friends![indexPath.item])
+            self.refreshInviteMark()
+            
+            UIView.animateWithDuration(0.1, animations: { () -> Void in
+                cell.transform = CGAffineTransformIdentity
+            }, completion: { (_) -> Void in
+                let avatar: AnyObject? = cell.contentView.subviews.find { $0 is UIImageView }
+                if let avatar = avatar as? UIImageView {
+                    avatar.layer.borderWidth = 0
+                }
+            })
+        }
+    }
+    
+    
+}
+
+extension GroupCreateViewController {
+    func refreshInviteMark() {
+        let inviteCount = self.inviteFriends.count
+        
+        if inviteCount > 0 {
+            inviteMark.text = String(inviteCount)
+            if inviteMark.hidden {
+                inviteMark.superview?.bringSubviewToFront(inviteMark)
+                inviteMark.transform = CGAffineTransformMakeScale(0, 0)
+                inviteMark.hidden = false
+                
+                UIView.animateWithDuration(0.3, animations: { _ in
+                    self.inviteMark.transform = CGAffineTransformMakeScale(1, 1)
+                }, completion: nil)
+            }
+            
+        } else {
+            if !inviteMark.hidden {
+                UIView.animateWithDuration(0.1, animations: { _ in
+                    self.inviteMark.transform = CGAffineTransformMakeScale(0, 0)
+                }, completion: { (_) -> Void in
+                    self.inviteMark.hidden = true
+                })
+            }
+        }
+        
+    }
 }
