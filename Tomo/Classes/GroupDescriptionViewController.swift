@@ -21,9 +21,11 @@ class GroupDescriptionViewController: BaseTableViewController {
                 stationLabel.text = detailedGroup.station
                 introductionLabel.text = detailedGroup.introduction
                 groupCoverImageView.sd_setImageWithURL(NSURL(string: detailedGroup.cover), placeholderImage: UIImage(named: "group_cover_default"))
-                memberCollectionView.reloadData()
-                memberCollectionViewHeightConstraint.constant = memberCollectionView.collectionViewLayout.collectionViewContentSize().height
-                tableView.reloadData()
+                if (detailedGroup.members ?? []).count > 0 {
+                    memberCollectionView.reloadData()
+                    memberCollectionViewHeightConstraint.constant = memberCollectionView.collectionViewLayout.collectionViewContentSize().height
+                    tableView.reloadData()
+                }
             }
         }
     }
@@ -43,7 +45,6 @@ class GroupDescriptionViewController: BaseTableViewController {
     @IBOutlet weak var memberCollectionViewHeightConstraint: NSLayoutConstraint!
     /// 封面
     @IBOutlet weak var groupCoverImageView: UIImageView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +71,10 @@ class GroupDescriptionViewController: BaseTableViewController {
         var tableIndicatorInset = tableView.scrollIndicatorInsets
         tableIndicatorInset.bottom = 49.0
         tableView.scrollIndicatorInsets = tableIndicatorInset
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return (detailedGroup?.members ?? []).count > 0 ? 2 : 1
     }
 }
 
