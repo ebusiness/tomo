@@ -36,6 +36,9 @@ final class HomeViewController: BaseTableViewController {
     var postCellEstimator: PostCell!
     var postImageCellEstimator: PostImageCell!
     
+    /// true: comment, false: cell content
+    private var selectCellOrComment = false
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -63,6 +66,10 @@ final class HomeViewController: BaseTableViewController {
             if let post = sender as? PostEntity {
                 let vc = segue.destinationViewController as! PostViewController
                 vc.post = post
+                if selectCellOrComment {
+                    vc.isCommentInitial = true
+                    selectCellOrComment = false
+                }
             }
         }
         if segue.identifier == "modalStationSelector" {
@@ -550,7 +557,11 @@ extension HomeViewController: PostCellDelegate {
         }
     }
     func postCellImageTapped(post: PostEntity) {
-        self.performSegueWithIdentifier("postdetail", sender: post)
+        performSegueWithIdentifier("postdetail", sender: post)
+    }
+    func postCellCommentTapped(post: PostEntity) {
+        selectCellOrComment = true
+        performSegueWithIdentifier("postdetail", sender: post)
     }
 }
 

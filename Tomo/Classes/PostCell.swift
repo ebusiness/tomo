@@ -63,6 +63,9 @@ class PostCell: UITableViewCell {
         
         let minorAvatarTapGesture = UITapGestureRecognizer(target: self, action: "minorAvatarTapped")
         commentImageView.addGestureRecognizer(minorAvatarTapGesture)
+        
+        let commentTapGesture = UITapGestureRecognizer(target: self, action: "commentTapped")
+        commentView.addGestureRecognizer(commentTapGesture)
     }
     
     func setupDisplay() {
@@ -227,6 +230,7 @@ protocol PostCellDelegate: class {
     func postCellMajorAvatarTapped(post: PostEntity)
     func postCellMinorAvatarTapped(post: PostEntity)
     func postCellImageTapped(post: PostEntity)
+    func postCellCommentTapped(post: PostEntity)
 }
 
 
@@ -237,5 +241,8 @@ extension PostCell {
     }
     func minorAvatarTapped() {
         delegate?.postCellMinorAvatarTapped(post)
+    }
+    func commentTapped() {
+        delegate?.postCellCommentTapped(post)
     }
 }
