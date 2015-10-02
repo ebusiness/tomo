@@ -73,7 +73,7 @@ class UserEntity: Entity {
         
         self.cover = json["cover_ref"].string ?? json["cover"].string
         
-        self.bio = json["bio"].string ?? json["bio"].string
+        self.bio = json["bio"].string
         
         self.firstName = json["firstName"].string
         
