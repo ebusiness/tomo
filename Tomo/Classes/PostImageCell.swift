@@ -21,6 +21,9 @@ class PostImageCell: PostCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.scrollView.scrollsToTop = false
+        
+        let imageTapGesture = UITapGestureRecognizer(target: self, action: "imageScrollTapped")
+        scrollView.addGestureRecognizer(imageTapGesture)
     }
     
     override func setupDisplay() {
@@ -87,6 +90,10 @@ class PostImageCell: PostCell {
         }
         
         scrollView.contentSize = CGSizeMake((imageWidth + gapOffset) * imageCount + leftOffset, imageHeight)
+    }
+    
+    func imageScrollTapped() {
+        delegate?.postCellImageTapped(post)
     }
 
 }

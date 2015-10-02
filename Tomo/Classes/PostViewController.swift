@@ -30,6 +30,8 @@ class PostViewController: BaseViewController{
     
     var isKeyboardShown: Bool = false
     
+    var isCommentInitial = false
+    
     var listViewHeight:CGFloat = UIScreen.mainScreen().bounds.size.height * 0.618 //  250
     let profileHeaderHeight:CGFloat = 100
 
@@ -76,6 +78,13 @@ class PostViewController: BaseViewController{
         self.updateUIForHeader()
         
         self.registerForKeyboardNotifications()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if isCommentInitial {
+            tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Middle, animated: false)
+        }
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {

@@ -36,6 +36,9 @@ final class HomeViewController: BaseTableViewController {
     var postCellEstimator: PostCell!
     var postImageCellEstimator: PostImageCell!
     
+    /// true: comment, false: cell content
+    private var selectCellOrComment = false
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -44,7 +47,7 @@ final class HomeViewController: BaseTableViewController {
         
         self.setupRefreshControll()
         
-//        self.setupTableRowHeight()
+        //        self.setupTableRowHeight()
         
         self.setupLocationManager()
         
@@ -57,12 +60,16 @@ final class HomeViewController: BaseTableViewController {
         self.loadNewContent()
     }
     // MARK: - Navigation
-
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "postdetail" {
             if let post = sender as? PostEntity {
                 let vc = segue.destinationViewController as! PostViewController
                 vc.post = post
+                if selectCellOrComment {
+                    vc.isCommentInitial = true
+                    selectCellOrComment = false
+                }
             }
         }
         if segue.identifier == "modalStationSelector" {
@@ -117,6 +124,7 @@ extension HomeViewController {
             }
             
             cell.post = post
+            cell.delegate = self
             cell.setupDisplay()
             
             return cell
@@ -124,14 +132,14 @@ extension HomeViewController {
         } else {
             return UITableViewCell()
         }
-
+        
     }
 }
 
 // MARK: UITableView delegate
 
 extension HomeViewController {
-
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let post = contents[indexPath.row] as? PostEntity {
             self.performSegueWithIdentifier("postdetail", sender: post)
@@ -181,7 +189,7 @@ extension HomeViewController {
         
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
-
+        
         if (contentHeight - screenHeight - loadTriggerHeight) < offsetY {
             loadMoreContent()
         }
@@ -241,7 +249,7 @@ extension HomeViewController: CLLocationManagerDelegate {
         
         // new location object more accurate than previous one
         if self.location == nil || self.location!.horizontalAccuracy > newLocation.horizontalAccuracy {
-
+            
             println("***** location updated")
             
             // accept the result
@@ -399,7 +407,7 @@ extension HomeViewController {
         if isLoading || isExhausted {
             return
         }
-
+        
         isLoading = true
         
         var params = Dictionary<String, NSTimeInterval>()
@@ -438,10 +446,10 @@ extension HomeViewController {
             
             self.isLoading = false
             
-        }) { err in
-            
-            self.isLoading = false
-            self.isExhausted = true
+            }) { err in
+                
+                self.isLoading = false
+                self.isExhausted = true
         }
     }
     
@@ -451,7 +459,7 @@ extension HomeViewController {
         if isLoading {
             return
         }
-
+        
         isLoading = true
         
         activityIndicator.startAnimating()
@@ -475,9 +483,9 @@ extension HomeViewController {
             
             self.endRefreshing()
             
-        }) { err in
-            
-            self.endRefreshing()
+            }) { err in
+                
+                self.endRefreshing()
         }
     }
     
@@ -490,7 +498,7 @@ extension HomeViewController {
         self.indicatorLabel.alpha = 0
         self.indicatorLabel.text = "向下拉动加载更多内容"
     }
-
+    
     private func appendRows(rows: Int) {
         
         let firstIndex = contents.count - rows
@@ -532,3 +540,28 @@ extension HomeViewController {
         tableView.endUpdates()
     }
 }
+
+extension HomeViewController: PostCellDelegate {
+    func postCellMajorAvatarTapped(post: PostEntity) {
+        let member = post.owner
+        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+        vc.user = member
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func postCellMinorAvatarTapped(post: PostEntity) {
+        if let member = post.comments?.last?.owner {
+            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+            vc.user = member
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    func postCellImageTapped(post: PostEntity) {
+        performSegueWithIdentifier("postdetail", sender: post)
+    }
+    func postCellCommentTapped(post: PostEntity) {
+        selectCellOrComment = true
+        performSegueWithIdentifier("postdetail", sender: post)
+    }
+}
+

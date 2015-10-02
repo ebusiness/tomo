@@ -30,6 +30,9 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var bottomLine: UIView!
     @IBOutlet weak var contentWidthConstraint: NSLayoutConstraint!
     
+    
+    weak var delegate: PostCellDelegate?
+    
     var post: PostEntity!
     
 //    var tableView: UITableView? {
@@ -54,6 +57,15 @@ class PostCell: UITableViewCell {
         
         let screenWidth = UIScreen.mainScreen().bounds.width
         contentWidthConstraint.constant = screenWidth
+        
+        let majorAvatarTapGesture = UITapGestureRecognizer(target: self, action: "majorAvatarTapped")
+        avatarImageView.addGestureRecognizer(majorAvatarTapGesture)
+        
+        let minorAvatarTapGesture = UITapGestureRecognizer(target: self, action: "minorAvatarTapped")
+        commentImageView.addGestureRecognizer(minorAvatarTapGesture)
+        
+        let commentTapGesture = UITapGestureRecognizer(target: self, action: "commentTapped")
+        commentView.addGestureRecognizer(commentTapGesture)
     }
     
     func setupDisplay() {
@@ -211,5 +223,26 @@ class PostCell: UITableViewCell {
             sender.userInteractionEnabled = true
         }
 
+    }
+}
+
+protocol PostCellDelegate: class {
+    func postCellMajorAvatarTapped(post: PostEntity)
+    func postCellMinorAvatarTapped(post: PostEntity)
+    func postCellImageTapped(post: PostEntity)
+    func postCellCommentTapped(post: PostEntity)
+}
+
+
+// MARK: - Gestures
+extension PostCell {
+    func majorAvatarTapped() {
+        delegate?.postCellMajorAvatarTapped(post)
+    }
+    func minorAvatarTapped() {
+        delegate?.postCellMinorAvatarTapped(post)
+    }
+    func commentTapped() {
+        delegate?.postCellCommentTapped(post)
     }
 }
