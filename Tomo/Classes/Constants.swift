@@ -34,6 +34,7 @@ let NavigationBarColorHex:UInt = 0x2196F3
 let avatarBorderColor = UIColor.whiteColor().CGColor
 
 let DefaultAvatarImage = UIImage(named: "avatar")!
+let DefaultCoverImage = UIImage(named: "user_cover_default")!
 let DefaultGroupImage = UIImage(named: "group_cover_default")!
 
 class Constants: NSObject {

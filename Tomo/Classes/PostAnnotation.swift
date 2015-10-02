@@ -8,26 +8,15 @@
 
 import Foundation
 
-class PostAnnotation: NSObject, MKAnnotation {
+class PostAnnotation: AggregatableAnnotation {
     
     var post: PostEntity!
-    
-    var containedAnnotations: Array<PostAnnotation>?
-    
-    var clusterAnnotation: PostAnnotation?
-    
-    dynamic var coordinate: CLLocationCoordinate2D
 
-    var title: String {
+    override var title: String {
         return post.owner.nickName
     }
     
-    var subtitle: String {
+    override var subtitle: String {
         return post.content
-    }
-    
-    override init() {
-        self.coordinate = CLLocationCoordinate2DMake(33, 133)
-        super.init()
     }
 }

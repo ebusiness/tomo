@@ -90,23 +90,21 @@ extension MyStationsViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! StationCollectionViewCell
         
         if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
             
             UIView.animateWithDuration(0.1, animations: { () -> Void in
                 cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
-                }, completion: { (_) -> Void in
-                    let mark = UIImageView(image: self.markImage)
-                    mark.layer.cornerRadius = 12.5
-                    mark.layer.masksToBounds = true
-                    mark.layer.borderWidth = 2
-                    mark.layer.borderColor = UIColor.whiteColor().CGColor
-                    mark.setTranslatesAutoresizingMaskIntoConstraints(false)
-
-                    cell.contentView.addSubview(mark)
-                    cell.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-5-[mark(25)]", options: nil, metrics: nil, views: ["mark" : mark]))
-                    cell.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[mark(25)]-5-|", options: nil, metrics: nil, views: ["mark" : mark]))
+            }, completion: { (_) -> Void in
+                let mark = UIImageView(image: self.markImage)
+                mark.layer.cornerRadius = 12.5
+                mark.layer.masksToBounds = true
+                mark.layer.borderWidth = 2
+                mark.layer.borderColor = UIColor.whiteColor().CGColor
+                mark.setTranslatesAutoresizingMaskIntoConstraints(false)
+                cell.contentView.addSubview(mark)
+                cell.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-5-[mark(25)]", options: nil, metrics: nil, views: ["mark" : mark]))
+                cell.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[mark(25)]-5-|", options: nil, metrics: nil, views: ["mark" : mark]))
             })
         }
     }
@@ -117,8 +115,8 @@ extension MyStationsViewController: UICollectionViewDataSource, UICollectionView
             
             UIView.animateWithDuration(0.1, animations: { () -> Void in
                 cell.transform = CGAffineTransformIdentity
-                }, completion: { (_) -> Void in
-                    cell.contentView.subviews.last?.removeFromSuperview()
+            }, completion: { (_) -> Void in
+                cell.contentView.subviews.last?.removeFromSuperview()
             })
         }
     }

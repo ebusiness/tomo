@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--地图-->
+        <!--Map View Controller-->
         <scene sceneID="18X-hB-eLN">
             <objects>
-                <viewController id="OpP-6Y-mbl" customClass="MapViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="OpP-6Y-mbl" customClass="MapViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cbP-3X-ubl"/>
                         <viewControllerLayoutGuide type="bottom" id="Cpn-4Z-PSd"/>
@@ -22,63 +22,65 @@
                                     <outlet property="delegate" destination="OpP-6Y-mbl" id="Izv-tq-Wk5"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h5e-uw-BW1">
-                                <rect key="frame" x="270" y="514" width="34" height="34"/>
+                            <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HAh-3k-lh9" userLabel="按钮区">
+                                <rect key="frame" x="16" y="16" width="288" height="46"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xi3-wd-alO" userLabel="显示当前位置">
+                                <rect key="frame" x="258" y="24" width="30" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="34" id="4Ba-ug-3zo"/>
-                                    <constraint firstAttribute="height" constant="34" id="SRP-2j-Q0H"/>
+                                    <constraint firstAttribute="width" constant="30" id="Eci-sG-t69"/>
+                                    <constraint firstAttribute="height" constant="30" id="eD9-HA-FUl"/>
+                                </constraints>
+                                <state key="normal" image="center_direction">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showCurrentLocation" destination="OpP-6Y-mbl" eventType="touchUpInside" id="qcR-VR-LnZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ws5-Aq-GDW" userLabel="帖子模式">
+                                <rect key="frame" x="212" y="24" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="hwh-Vc-Beu"/>
+                                    <constraint firstAttribute="height" constant="30" id="tew-Ml-I2Q"/>
+                                </constraints>
+                                <state key="normal" image="post">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showPostMode:" destination="OpP-6Y-mbl" eventType="touchUpInside" id="pHt-Pj-fKR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h5e-uw-BW1" userLabel="群组模式">
+                                <rect key="frame" x="166" y="24" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="4Ba-ug-3zo"/>
+                                    <constraint firstAttribute="height" constant="30" id="SRP-2j-Q0H"/>
                                 </constraints>
                                 <state key="normal" image="building">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="toggleBuilding" destination="OpP-6Y-mbl" eventType="touchUpInside" id="5CP-jf-Yfu"/>
+                                    <action selector="showGroupMode:" destination="OpP-6Y-mbl" eventType="touchUpInside" id="LFd-nv-whV"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ws5-Aq-GDW">
-                                <rect key="frame" x="270" y="472" width="34" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RA4-tj-qRO" userLabel="车站模式">
+                                <rect key="frame" x="120" y="24" width="30" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="34" id="hwh-Vc-Beu"/>
-                                    <constraint firstAttribute="height" constant="34" id="tew-Ml-I2Q"/>
+                                    <constraint firstAttribute="width" constant="30" id="7mH-cy-vL7"/>
+                                    <constraint firstAttribute="height" constant="30" id="lqs-Sq-m7J"/>
                                 </constraints>
-                                <state key="normal" image="shop">
+                                <state key="normal" image="train">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="toggleInterest" destination="OpP-6Y-mbl" eventType="touchUpInside" id="KoE-nJ-flF"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xi3-wd-alO">
-                                <rect key="frame" x="270" y="430" width="34" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="34" id="Eci-sG-t69"/>
-                                    <constraint firstAttribute="height" constant="34" id="eD9-HA-FUl"/>
-                                </constraints>
-                                <state key="normal" image="center_direction">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" alpha="0.49999999999999961" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9P-JF-ot5">
-                                <rect key="frame" x="147" y="17" width="25" height="25"/>
-                                <state key="normal" image="forward">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="previousDay:" destination="OpP-6Y-mbl" eventType="touchUpInside" id="LCb-am-zJm"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" alpha="0.49999999999999961" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nxE-QD-T1z">
-                                <rect key="frame" x="16" y="16" width="25" height="25"/>
-                                <state key="normal" image="back">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="nextDay:" destination="OpP-6Y-mbl" eventType="touchUpInside" id="00R-Bx-Tgg"/>
+                                    <action selector="showStationMode:" destination="OpP-6Y-mbl" eventType="touchUpInside" id="B7g-Kt-kdp"/>
                                 </connections>
                             </button>
                             <button opaque="NO" alpha="0.59999999999999964" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YG3-n4-XL5">
-                                <rect key="frame" x="41" y="8" width="106" height="42"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                <rect key="frame" x="32" y="22.5" width="72" height="33"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <state key="normal" title="12月31日">
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -91,44 +93,61 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="UKM-D9-brj" firstAttribute="top" secondItem="nxE-QD-T1z" secondAttribute="top" constant="-16" id="2Sx-hO-Wl4"/>
-                            <constraint firstItem="Cpn-4Z-PSd" firstAttribute="top" secondItem="h5e-uw-BW1" secondAttribute="bottom" constant="20" id="5On-n7-d2P"/>
+                            <constraint firstItem="xi3-wd-alO" firstAttribute="top" secondItem="HAh-3k-lh9" secondAttribute="top" constant="8" id="0MX-Kv-hdQ"/>
+                            <constraint firstItem="xi3-wd-alO" firstAttribute="trailing" secondItem="HAh-3k-lh9" secondAttribute="trailing" constant="-16" id="2ay-7T-nmK"/>
+                            <constraint firstAttribute="trailing" secondItem="HAh-3k-lh9" secondAttribute="trailing" constant="16" id="3pS-Ct-xfv"/>
                             <constraint firstItem="UKM-D9-brj" firstAttribute="leading" secondItem="wVk-fz-608" secondAttribute="leading" id="7B1-hi-sXs"/>
+                            <constraint firstItem="UKM-D9-brj" firstAttribute="top" secondItem="cbP-3X-ubl" secondAttribute="bottom" id="8gF-0R-Qaq"/>
                             <constraint firstAttribute="trailing" secondItem="UKM-D9-brj" secondAttribute="trailing" id="DLL-Kd-ZdR"/>
-                            <constraint firstAttribute="trailing" secondItem="ws5-Aq-GDW" secondAttribute="trailing" constant="16" id="ELh-2d-CXn"/>
-                            <constraint firstItem="UKM-D9-brj" firstAttribute="leading" secondItem="nxE-QD-T1z" secondAttribute="leading" constant="-16" id="EZd-TZ-GE8"/>
-                            <constraint firstAttribute="trailing" secondItem="xi3-wd-alO" secondAttribute="trailing" constant="16" id="I01-9z-agV"/>
-                            <constraint firstItem="Cpn-4Z-PSd" firstAttribute="top" secondItem="UKM-D9-brj" secondAttribute="bottom" id="JDw-4z-CWG"/>
-                            <constraint firstItem="UKM-D9-brj" firstAttribute="top" secondItem="cbP-3X-ubl" secondAttribute="bottom" id="MhS-kw-khv"/>
-                            <constraint firstItem="YG3-n4-XL5" firstAttribute="leading" secondItem="nxE-QD-T1z" secondAttribute="trailing" id="Qt5-8Q-M2i"/>
-                            <constraint firstItem="a9P-JF-ot5" firstAttribute="leading" secondItem="YG3-n4-XL5" secondAttribute="trailing" id="X5g-CA-bBK"/>
-                            <constraint firstItem="h5e-uw-BW1" firstAttribute="top" secondItem="ws5-Aq-GDW" secondAttribute="bottom" constant="8" id="bRZ-MZ-WSF"/>
-                            <constraint firstItem="h5e-uw-BW1" firstAttribute="top" secondItem="ws5-Aq-GDW" secondAttribute="bottom" constant="8" id="cpm-xX-ahT"/>
-                            <constraint firstItem="YG3-n4-XL5" firstAttribute="centerY" secondItem="nxE-QD-T1z" secondAttribute="centerY" id="hPp-Zu-jeH"/>
-                            <constraint firstAttribute="trailing" secondItem="h5e-uw-BW1" secondAttribute="trailing" constant="16" id="lKF-VU-zwB"/>
-                            <constraint firstItem="ws5-Aq-GDW" firstAttribute="top" secondItem="xi3-wd-alO" secondAttribute="bottom" constant="8" id="rxY-QZ-CDx"/>
-                            <constraint firstItem="a9P-JF-ot5" firstAttribute="centerY" secondItem="YG3-n4-XL5" secondAttribute="centerY" id="yBt-bg-bNU"/>
+                            <constraint firstItem="h5e-uw-BW1" firstAttribute="leading" secondItem="RA4-tj-qRO" secondAttribute="trailing" constant="16" id="Ef8-gC-ZRt"/>
+                            <constraint firstItem="HAh-3k-lh9" firstAttribute="top" secondItem="cbP-3X-ubl" secondAttribute="bottom" constant="16" id="F4x-xV-WFj"/>
+                            <constraint firstItem="HAh-3k-lh9" firstAttribute="top" secondItem="ws5-Aq-GDW" secondAttribute="top" constant="-8" id="G2f-ff-gHS"/>
+                            <constraint firstItem="xi3-wd-alO" firstAttribute="leading" secondItem="ws5-Aq-GDW" secondAttribute="trailing" constant="16" id="Y40-gg-z1I"/>
+                            <constraint firstItem="RA4-tj-qRO" firstAttribute="leading" secondItem="YG3-n4-XL5" secondAttribute="trailing" constant="16" id="bBv-Zj-sr0"/>
+                            <constraint firstItem="HAh-3k-lh9" firstAttribute="top" secondItem="h5e-uw-BW1" secondAttribute="top" constant="-8" id="bSV-R2-Orc"/>
+                            <constraint firstItem="xi3-wd-alO" firstAttribute="bottom" secondItem="HAh-3k-lh9" secondAttribute="bottom" constant="-8" id="e0b-mJ-1MP"/>
+                            <constraint firstItem="HAh-3k-lh9" firstAttribute="top" secondItem="RA4-tj-qRO" secondAttribute="top" constant="-8" id="mfD-UB-c4S"/>
+                            <constraint firstItem="ws5-Aq-GDW" firstAttribute="leading" secondItem="h5e-uw-BW1" secondAttribute="trailing" constant="16" id="prS-ht-dAb"/>
+                            <constraint firstItem="Cpn-4Z-PSd" firstAttribute="top" secondItem="UKM-D9-brj" secondAttribute="bottom" id="r8E-t3-iXV"/>
+                            <constraint firstItem="YG3-n4-XL5" firstAttribute="leading" secondItem="HAh-3k-lh9" secondAttribute="leading" constant="16" id="uR8-6g-noU"/>
+                            <constraint firstItem="YG3-n4-XL5" firstAttribute="centerY" secondItem="HAh-3k-lh9" secondAttribute="centerY" id="wQS-aR-hu4"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="地图" id="KKw-VS-iwT"/>
+                    <navigationItem key="navigationItem" id="KKw-VS-iwT"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
-                        <outlet property="buildingToggleButton" destination="h5e-uw-BW1" id="Hel-90-8oc"/>
                         <outlet property="chooseDateButton" destination="YG3-n4-XL5" id="Uc4-77-eQn"/>
-                        <outlet property="currentLocationButton" destination="xi3-wd-alO" id="1f1-E9-EcU"/>
-                        <outlet property="interestToggleButton" destination="ws5-Aq-GDW" id="Tgo-VX-ipd"/>
                         <outlet property="mapView" destination="UKM-D9-brj" id="omH-2J-6xe"/>
-                        <outlet property="nextDay" destination="nxE-QD-T1z" id="aOF-tP-Qhh"/>
-                        <outlet property="previousDay" destination="a9P-JF-ot5" id="SXb-uS-bkG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lyR-37-tdo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="705" y="448"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="rv0-8P-2Dx">
+            <objects>
+                <viewController storyboardIdentifier="TestView" id="Zf4-H3-fC5" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WCN-5R-w4v"/>
+                        <viewControllerLayoutGuide type="bottom" id="IDg-qG-c3M"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bXb-bW-kZQ">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.12941176469999999" green="0.58823529409999997" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="200" height="200"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Swf-T4-2Mx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1072" y="568"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="MOJ-Y9-CVB">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hqf-3L-M0k" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="lFe-YQ-9Zz" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="DAt-QF-5wW">
@@ -140,17 +159,15 @@
                         <segue destination="OpP-6Y-mbl" kind="relationship" relationship="rootViewController" id="IO4-YM-isQ"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Hqf-3L-M0k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="171" y="448"/>
         </scene>
     </scenes>
     <resources>
-        <image name="back" width="25" height="25"/>
         <image name="building" width="32" height="32"/>
         <image name="center_direction" width="32" height="32"/>
-        <image name="forward" width="25" height="25"/>
-        <image name="shop" width="32" height="32"/>
+        <image name="post" width="32" height="32"/>
+        <image name="train" width="32" height="32"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
