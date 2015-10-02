@@ -20,22 +20,26 @@ final class GroupDiscoverViewController: BaseViewController {
     
     var isLoading = false
     var isExhausted = false
-
+    
+    var searchText: String?
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
-
+        
         let searchBar = UISearchBar()
         searchBar.placeholder = "搜索现场名称"
         searchBar.barTintColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 0.7)
+        searchBar.delegate = self
         self.navigationItem.titleView = searchBar
         self.alwaysShowNavigationBar = true
         
         
         self.collectionView.registerNib(UINib(nibName: "GroupCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
-
+        
         self.loadMoreContent()
     }
+    
 }
 
 // MARK: - Navigation
@@ -94,7 +98,7 @@ extension GroupDiscoverViewController {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.groups.count
     }
-
+    
 }
 
 // MARK: UICollectionViewDelegate
@@ -138,7 +142,12 @@ extension GroupDiscoverViewController {
         
         isLoading = true
         
-        AlamofireController.request(.GET, "/groups", parameters: ["category": "discover", "page": self.page], success: { groups in
+        var parameters: [String: AnyObject] = ["category": "discover", "page": self.page]
+        if let searchText = searchText {
+            parameters["name"] = searchText
+        }
+        
+        AlamofireController.request(.GET, "/groups", parameters: parameters, success: { groups in
             
             let groups: [GroupEntity]? = GroupEntity.collection(groups)
             
@@ -150,11 +159,11 @@ extension GroupDiscoverViewController {
             self.page++
             self.isLoading = false
             
-        }) { err in
-            self.isLoading = false
-            self.isExhausted = true
+            }) { err in
+                self.isLoading = false
+                self.isExhausted = true
         }
-
+        
     }
     
     private func appendRows(rows: Int) {
@@ -171,5 +180,27 @@ extension GroupDiscoverViewController {
         self.collectionView?.insertItemsAtIndexPaths(indexPathes)
     }
     
+    private func refresh() {
+        collectionView.reloadData()
+    }
+    
+}
+
+extension GroupDiscoverViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        let text = searchBar.text
+        searchText = searchBar.text
+        AlamofireController.request(.GET, "/stations", parameters: ["name": text],
+            success: { (object) -> () in
+                if let groups: [GroupEntity] = GroupEntity.collection(object) {
+                    self.groups = groups
+                    self.page = 0
+                    self.refresh()
+                }
+            }) { (error) -> () in
+                self.groups = [GroupEntity]()
+                self.refresh()
+        }
+    }
 }
 

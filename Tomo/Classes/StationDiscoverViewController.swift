@@ -163,9 +163,11 @@ extension StationDiscoverViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         let text = searchBar.text
         searchText = searchBar.text
-        AlamofireController.request(.GET, "/stations", parameters: ["name": text], success: { (object) -> () in
-            self.stations = StationEntity.collection(object)
-            self.refresh()
+        AlamofireController.request(.GET, "/stations",
+            parameters: ["name": text],
+            success: { (object) -> () in
+                self.stations = StationEntity.collection(object)
+                self.refresh()
             }) { (error) -> () in
                 self.stations = nil
                 self.refresh()
