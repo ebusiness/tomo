@@ -44,6 +44,12 @@ final class CreatePostViewController: UIViewController {
     @IBOutlet weak var groupLabel: UILabel!
     @IBOutlet weak var numberBadge: UILabel!
     
+    
+    @IBOutlet weak var locationButton: UIButton!
+    @IBOutlet weak var locationButtonWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var clearLocationButton: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,6 +62,9 @@ final class CreatePostViewController: UIViewController {
         self.postTextView.becomeFirstResponder()
         
         self.markLocation("")
+        
+        locationButton.setImage(nil, forState: UIControlState.Normal)
+        locationButtonWidthConstraint.constant = 0.0
 
     }
 
@@ -110,6 +119,8 @@ extension CreatePostViewController {
         
         if let group = self.group {
             self.groupLabel.text = "发布在：\(group.name)"
+        } else {
+            groupLabel.text = nil
         }
         
         self.numberBadge.layer.cornerRadius = self.numberBadge.frame.height / 2
@@ -197,6 +208,15 @@ extension CreatePostViewController {
             
             self.locationLabel.text = address
             self.locationLabel.hidden = false
+            clearLocationButton.hidden = false
+            locationButton.setImage(nil, forState: UIControlState.Normal)
+            locationButtonWidthConstraint.constant = 0.0
+        } else {
+            locationLabel.text = nil
+            locationLabel.hidden = true
+            clearLocationButton.hidden = true
+            locationButton.setImage(UIImage(named: "marker"), forState: UIControlState.Normal)
+            locationButtonWidthConstraint.constant = 30.0
         }
     }
     
@@ -294,8 +314,6 @@ extension CreatePostViewController {
     }
     
     func didTimeOut() {
-        println("***** Time Out")
-        
         self.stopLocationManager()
         self.updateLocationLabel()
     }
@@ -377,7 +395,8 @@ extension CreatePostViewController {
             param["coordinate"] = [String(stringInterpolationSegment: location.coordinate.latitude),String(stringInterpolationSegment: location.coordinate.longitude)];
         }
         
-        AlamofireController.request(.POST, "/posts", parameters: param, encoding: .JSON, success: { post in
+        AlamofireController.request(.POST, "/posts", parameters: param, encoding: .JSON,
+            success: { post in
             self.performSegueWithIdentifier("postCreated", sender: post)
         }) { err in
             
@@ -488,6 +507,13 @@ extension CreatePostViewController {
             }
         }
     }
+    
+    @IBAction func clearLocationButtonPressed(sender: AnyObject) {
+        location = nil
+        placemark = nil
+        updateLocationLabel()
+    }
+    
 }
 
 // MARK: - UINavigationBar Delegate
