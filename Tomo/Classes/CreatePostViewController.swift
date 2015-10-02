@@ -594,6 +594,11 @@ extension CreatePostViewController: UICollectionViewDataSource {
                     cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
                 }, completion: { (_) -> Void in
                     let mark = UIImageView(image: UIImage(named: "ok"))
+                    let position = CGPoint(x: 4, y: 4)
+                    mark.frame.origin = position
+                    mark.roundedCorner = true
+                    mark.layer.borderWidth = 2.0
+                    mark.layer.borderColor = UIColor.whiteColor().CGColor
                     cell.contentView.addSubview(mark)
                 })
             }
@@ -616,6 +621,11 @@ extension CreatePostViewController: UICollectionViewDelegate {
                 cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
             }, completion: { (_) -> Void in
                 let mark = UIImageView(image: UIImage(named: "ok"))
+                let position = CGPoint(x: 4, y: 4)
+                mark.frame.origin = position
+                mark.roundedCorner = true
+                mark.layer.borderWidth = 2.0
+                mark.layer.borderColor = UIColor.whiteColor().CGColor
                 cell.contentView.addSubview(mark)
             })
             
