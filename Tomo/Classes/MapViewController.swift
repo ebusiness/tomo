@@ -327,7 +327,7 @@ extension MapViewController: MKMapViewDelegate {
             pop.backgroundColor = UIColor.whiteColor()
             pop.sourceView = view
             pop.sourceRect = view.bounds
-            pop.permittedArrowDirections = .Up | .Down
+//            pop.permittedArrowDirections = .Up | .Down
         }
         
     }
