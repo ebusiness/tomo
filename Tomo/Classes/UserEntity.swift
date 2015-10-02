@@ -38,6 +38,8 @@ class UserEntity: Entity {
     
     var groups: [String]?
     
+    var stations: [String]?
+    
     var bookmark: [String]?
     
     var friendInvitations: [NotificationEntity]!
@@ -71,7 +73,7 @@ class UserEntity: Entity {
         
         self.cover = json["cover_ref"].string ?? json["cover"].string
         
-        self.bio = json["bio"].string ?? json["bio"].string
+        self.bio = json["bio"].string
         
         self.firstName = json["firstName"].string
         
@@ -89,6 +91,8 @@ class UserEntity: Entity {
         self.invitations = json["invitations"].arrayObject as? [String]
         
         self.groups = json["groups"].arrayObject as? [String]
+        
+        self.stations = json["stations"].arrayObject as? [String]
         
         self.bookmark = json["firstName"].arrayObject as? [String]
         

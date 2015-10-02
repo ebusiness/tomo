@@ -57,7 +57,7 @@ extension MyAccountHeaderViewController {
         }
         
         nickNameLabel.text = me.nickName
-        bioLabel.text = me.bio
+        bioLabel.text = (me.bio ?? "" ).length > 0 ? me.bio : "一个彰显个性的签名"
     }
     
 }

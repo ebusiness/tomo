@@ -21,7 +21,7 @@ class SearchFriendCell: UITableViewCell {
             }
             
             userNameLabel.text = user.nickName
-            bioLabel.text = (user.bio ?? "" ).length > 0 ? user.bio : "这家伙很懒,什么都没写."
+            bioLabel.text = (user.bio ?? "" ).length > 0 ? user.bio : "一个彰显个性的签名"
         }
     }
     
