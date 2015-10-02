@@ -126,7 +126,6 @@
 		29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
-		D012F5951BBBC4CA00D5293D /* MyGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012F5941BBBC4CA00D5293D /* MyGroupsViewController.swift */; };
 		D012F5971BBBC4DD00D5293D /* MyStationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */; };
 		D04447B31BBA9DF300AD7B0C /* GroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */; };
 		D04608D21B6BA33F00D30B77 /* TestDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404B1ACE68C500D2A338 /* TestDataTests.swift */; };
@@ -293,7 +292,6 @@
 		29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTableViewController.swift; path = Classes/BaseTableViewController.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		D012F5941BBBC4CA00D5293D /* MyGroupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyGroupsViewController.swift; path = Classes/MyGroupsViewController.swift; sourceTree = "<group>"; };
 		D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyStationsViewController.swift; path = Classes/MyStationsViewController.swift; sourceTree = "<group>"; };
 		D057BAF11B670687007D14D2 /* RequestFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestFriendCell.swift; path = Classes/RequestFriendCell.swift; sourceTree = "<group>"; };
 		D073E6F71B84C1BF00066F42 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraController.swift; path = Classes/CameraController.swift; sourceTree = "<group>"; };
@@ -697,7 +695,6 @@
 				D0DB07DC1B9D26E200C06C4E /* Notification */,
 				D07793831B704EA00056B7CB /* picker */,
 				D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */,
-				D012F5941BBBC4CA00D5293D /* MyGroupsViewController.swift */,
 				D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */,
 				D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */,
 			);
@@ -1042,7 +1039,6 @@
 				1F1176AE1B983D280049D9F5 /* SwiftRegex.swift in Sources */,
 				29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */,
 				29539C791B13175D00545509 /* CommonMessageController.swift in Sources */,
-				D012F5951BBBC4CA00D5293D /* MyGroupsViewController.swift in Sources */,
 				2994AF911B019AA100656C39 /* GCD.swift in Sources */,
 				1FA76B021BA2A01D004776B0 /* GroupListViewController.swift in Sources */,
 				1FE7CEF51B8C9561006700FC /* SignUpViewController.swift in Sources */,

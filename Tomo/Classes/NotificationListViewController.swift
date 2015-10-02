@@ -132,7 +132,7 @@ extension NotificationListViewController {
             let remoteNotification = NotificationEntity(userInfo)
             
             if let type = ListenerEvent(rawValue: remoteNotification.type) {
-                if type == .FriendInvited || type == .Message { //receive it by friendlistviewcontroller
+                if type == .FriendInvited || type == .Message || type == .GroupMessage { //receive it by friendlistviewcontroller
                     return
                 }
             }
