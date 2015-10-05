@@ -10,7 +10,6 @@ import UIKit
 
 class SearchFriendViewController: BaseTableViewController {
     
-    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var closeButton: UIButton!
     
     var result:[UserEntity]?{
@@ -22,8 +21,16 @@ class SearchFriendViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "输入昵称搜索"
+        searchBar.barTintColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 0.7)
+        searchBar.delegate = self
+        self.navigationItem.titleView = searchBar
+        searchBar.becomeFirstResponder()
+        
+        self.alwaysShowNavigationBar = true
+        
         Util.changeImageColorForButton(closeButton,color: UIColor.whiteColor())
-        self.searchBar.becomeFirstResponder()
     }
 
     @IBAction func close(sender: AnyObject) {
@@ -54,7 +61,7 @@ extension SearchFriendViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
+        self.navigationItem.titleView?.endEditing(true)
         let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = self.result![indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
@@ -69,7 +76,7 @@ extension SearchFriendViewController: UISearchBarDelegate {
         
         if searchBar.text.trimmed().length > 0 {
             
-            self.searchBar.resignFirstResponder()
+            self.navigationItem.titleView?.endEditing(true)
             var param = Dictionary<String, String>()
             param["nickName"] = ".*?\(searchBar.text).*"
             
