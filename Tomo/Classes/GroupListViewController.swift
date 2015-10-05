@@ -14,10 +14,8 @@ final class GroupListViewController: BaseTableViewController {
     let loadTriggerHeight = CGFloat(88.0)
     
     var groups = [GroupEntity]()
-    var page = 0
     
     var isLoading = false
-    var isExhausted = false
 
     override func viewDidLoad() {
         
@@ -34,7 +32,18 @@ final class GroupListViewController: BaseTableViewController {
         
         self.tableView.estimatedRowHeight = 550
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+//        super.viewWillAppear(animated)
+        if self.groups.count > 0 {
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            self.navigationController?.navigationBar.shadowImage = UIImage()
+        } else {
+            var image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
+            self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+            self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
+        }
         self.loadMoreContent()
     }
     
@@ -108,15 +117,6 @@ extension GroupListViewController {
         
         return cell
     }
-
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
-//        let rect = self.tableView.rectForHeaderInSection(1)
-//        println(rect)
-//        println(scrollView.contentOffset.y)
-//        if let topCell = self.tableView.visibleCells().get(0) as? UITableViewCell {
-//            println(tableView.indexPathForCell(topCell)?.section)
-//        }
-    }
 }
 
 // MARK: Internal methods
@@ -126,13 +126,13 @@ extension GroupListViewController {
     private func loadMoreContent() {
         
         // skip if already in loading
-        if isLoading || isExhausted {
+        if isLoading {
             return
         }
         
         isLoading = true
         
-        AlamofireController.request(.GET, "/groups", parameters: ["page": self.page, "category": "mine"], success: { groups in
+        AlamofireController.request(.GET, "/groups", parameters: ["category": "mine"], success: { groups in
             
             let groups: [GroupEntity]? = GroupEntity.collection(groups)
             
@@ -140,13 +140,13 @@ extension GroupListViewController {
                 self.groups.extend(groups)
                 self.appendRows(groups.count)
             }
-            
-            self.page++
             self.isLoading = false
             
-            }) { err in
-                self.isLoading = false
-                self.isExhausted = true
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            self.navigationController?.navigationBar.shadowImage = UIImage()
+            
+        }) { err in
+            self.isLoading = false
         }
         
     }
