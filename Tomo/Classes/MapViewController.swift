@@ -8,7 +8,19 @@
 
 import UIKit
 
+enum InterfaceMode: Int {
+    case StationListMode
+    case GroupListMode
+    case PostListMode
+//    case StationMode
+    case GroupMode
+}
+
 final class MapViewController: UIViewController {
+    
+    var mode = InterfaceMode.PostListMode
+    
+    let vc = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
     
     let PostAnnotationViewIdentifier = "PostAnnotationView"
     let GroupAnnotationViewIdentifier = "GroupAnnotationView"
@@ -23,13 +35,14 @@ final class MapViewController: UIViewController {
     let calendar = NSCalendar.currentCalendar()
     let unitFlag = (NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay)
     
+    var displayGroup: GroupEntity?
+    
     let tokyoCenter = CLLocationCoordinate2D(latitude: 35.693889, longitude: 139.753611)
     let tokyoSpan = MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
     
     @IBOutlet weak var mapView: MKMapView!
     
     @IBOutlet weak var chooseDateButton: UIButton!
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +51,8 @@ final class MapViewController: UIViewController {
         
         self.allAnnotationMapView = MKMapView(frame: CGRectZero)
         
-        self.loadPostAt(displayDate)
+//        self.loadPostAt(displayDate)
+        self.showPostMode(self)
         
         self.mapView.region = MKCoordinateRegion(center: tokyoCenter, span: tokyoSpan)
     }
@@ -68,141 +82,49 @@ final class MapViewController: UIViewController {
 
 extension MapViewController {
     
-    @IBAction func nextDay(sender: AnyObject) {
-        
-        let dateComponent = NSDateComponents()
-        dateComponent.day = 1
-        
-        let nextDate = calendar.dateByAddingComponents(dateComponent, toDate: displayDate, options: NSCalendarOptions.allZeros)
-        
-        displayDate = nextDate!
-        self.chooseDateButton.setTitle(displayDate.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle, doesRelativeDateFormatting: false), forState: .Normal)
-        
-        self.loadPostAt(nextDate!)
-    }
-    
-    @IBAction func previousDay(sender: AnyObject) {
-        
-        let dateComponent = NSDateComponents()
-        dateComponent.day = -1
-        
-        let previousDate = calendar.dateByAddingComponents(dateComponent, toDate: displayDate, options: NSCalendarOptions.allZeros)
-        
-        displayDate = previousDate!
-        self.chooseDateButton.setTitle(displayDate.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle, doesRelativeDateFormatting: false), forState: .Normal)
-        
-        self.loadPostAt(previousDate!)
-    }
-    
     @IBAction func chooseDate(sender: AnyObject) {
         
         let vc = Util.createViewControllerWithIdentifier("TestView", storyboardName: "Map")
         
         vc.modalPresentationStyle = .Popover
         vc.popoverPresentationController?.delegate = self
-        
+        vc.preferredContentSize = CGSize(width: 280, height: 180)
         self.presentViewController(vc, animated: true, completion: nil)
         
         if let pop = vc.popoverPresentationController {
             let v = sender as! UIView
             pop.sourceView = v
             pop.sourceRect = v.bounds
-            pop.permittedArrowDirections = .Up
+            pop.permittedArrowDirections = .Down
         }
-//
-//        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-//        alert.addAction(UIAlertAction(title: "今天", style: .Default, handler: nil))
-//        alert.addAction(UIAlertAction(title: "昨天", style: .Default, handler: nil))
-//        alert.addAction(UIAlertAction(title: "两天前", style: .Default, handler: nil))
-//        alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
-//        
-//        self.presentViewController(alert, animated: true, completion: nil)
+
+    }
+    
+    @IBAction func dateLabelSwiped(sender: UISwipeGestureRecognizer) {
+        if sender.direction == .Left {
+            self.nextDay()
+        } else {
+            self.previousDay()
+        }
     }
     
     @IBAction func showCurrentLocation() {
-        self.mapView.setCenterCoordinate(self.mapView.userLocation.coordinate, animated: true)
+        self.mapView.setRegion(MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 10000, 10000), animated: true)
     }
     
     @IBAction func showPostMode(sender: AnyObject) {
-        
-        self.allAnnotationMapView.removeAnnotations(self.allAnnotationMapView.annotations)
-        self.mapView.removeAnnotations(self.mapView.annotations)
-        
-        AlamofireController.request(.GET, "/posts", parameters: ["category": "mapnews", "size": 50], success: { postData in
-            
-            if let posts:[PostEntity] = PostEntity.collection(postData) {
-                
-                let annotations = posts.map { post -> PostAnnotation in
-                    let annotation = PostAnnotation()
-                    annotation.post = post
-                    if let lat = post.coordinate?.get(0), log = post.coordinate?.get(1) {
-                        annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: log)
-                    }
-                    return annotation
-                }
-                self.allAnnotationMapView.addAnnotations(annotations)
-            }
-            
-            self.updateVisibleAnnotations()
-            
-            }) { err in
-                
-        }
+        self.mode = .PostListMode
+        self.loadContents()
     }
     
     @IBAction func showGroupMode(sender: AnyObject) {
-        
-        self.allAnnotationMapView.removeAnnotations(self.allAnnotationMapView.annotations)
-        self.mapView.removeAnnotations(self.mapView.annotations)
-        
-        AlamofireController.request(.GET, "/groups", parameters: ["box": self.getCurrentBox()], success: { groupData in
-            
-            if let groups:[GroupEntity] = GroupEntity.collection(groupData) {
-                
-                let annotations = groups.map { group -> GroupAnnotation in
-                    let annotation = GroupAnnotation()
-                    annotation.group = group
-                    if let lat = group.coordinate?.get(0), log = group.coordinate?.get(1) {
-                        annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: log)
-                    }
-                    return annotation
-                }
-                self.allAnnotationMapView.addAnnotations(annotations)
-            }
-            
-            self.updateVisibleAnnotations()
-
-            }) { err in
-                
-        }
-        
+        self.mode = .GroupListMode
+        self.loadContents()
     }
     
     @IBAction func showStationMode(sender: AnyObject) {
-        
-        self.allAnnotationMapView.removeAnnotations(self.allAnnotationMapView.annotations)
-        self.mapView.removeAnnotations(self.mapView.annotations)
-        
-        AlamofireController.request(.GET, "/stations", parameters: ["category": "mine"], success: { stationData in
-            
-            if let stations:[StationEntity] = StationEntity.collection(stationData) {
-                
-                let annotations = stations.map { station -> StationAnnotation in
-                    let annotation = StationAnnotation()
-                    annotation.station = station
-                    if let lat = station.coordinate?.get(0), log = station.coordinate?.get(1) {
-                        annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: log)
-                    }
-                    return annotation
-                }
-                self.allAnnotationMapView.addAnnotations(annotations)
-            }
-            
-            self.updateVisibleAnnotations()
-            
-            }) { err in
-                
-        }
+        self.mode = .StationListMode
+        self.loadContents()
     }
 }
 
@@ -307,15 +229,35 @@ extension MapViewController: MKMapViewDelegate {
         
         mapView.deselectAnnotation(view.annotation, animated: true)
         
-        let vc: UIViewController!
-        
         if let view = view as? PostAnnotationView {
+            
             let pvc = PostCallOutViewController(nibName: "PostCallOutView", bundle: nil)
-            pvc.post = (view.annotation as! PostAnnotation).post
-            pvc.preferredContentSize = pvc.view.systemLayoutSizeFittingSize(CGSize(width: 300, height: 300), withHorizontalFittingPriority: 1000, verticalFittingPriority: 250)
-            vc = pvc as UIViewController
-        } else {
-            vc = Util.createViewControllerWithIdentifier("TestView", storyboardName: "Map")
+            pvc.postAnnotation = view.annotation as! PostAnnotation
+            
+            vc.preferredContentSize = pvc.view.systemLayoutSizeFittingSize(CGSize(width: 300, height: 300), withHorizontalFittingPriority: 1000, verticalFittingPriority: 250)
+            vc.setViewControllers([pvc], direction: .Forward, animated: false, completion: nil)
+            vc.dataSource = view
+            
+        } else if let view = view as? GroupAnnotationView {
+            
+            let groupAnnotation = view.annotation as! GroupAnnotation
+            
+            if groupAnnotation.containedAnnotations?.count == 0 {
+                
+                self.mode = .GroupMode
+                self.displayGroup = groupAnnotation.group
+                self.loadContents()
+                
+            } else {
+                
+                let gvc = GroupCallOutViewController(nibName: "GroupCallOutView", bundle: nil)
+                gvc.groupAnnotation = view.annotation as! GroupAnnotation
+                
+                vc.preferredContentSize = gvc.view.systemLayoutSizeFittingSize(CGSize(width: 320, height: 200), withHorizontalFittingPriority: 1000, verticalFittingPriority: 1000)
+                vc.setViewControllers([gvc], direction: .Forward, animated: false, completion: nil)
+                vc.dataSource = view
+            }
+            
         }
         
         vc.modalPresentationStyle = .Popover
@@ -327,7 +269,6 @@ extension MapViewController: MKMapViewDelegate {
             pop.backgroundColor = UIColor.whiteColor()
             pop.sourceView = view
             pop.sourceRect = view.bounds
-//            pop.permittedArrowDirections = .Up | .Down
         }
         
     }
@@ -385,76 +326,118 @@ extension MapViewController {
         return [leftBottom.latitude, leftBottom.longitude, rightTop.latitude, rightTop.longitude]
     }
     
-    private func loadPostAt(date: NSDate) {
+    func nextDay() {
+        
+        let dateComponent = NSDateComponents()
+        dateComponent.day = 1
+        
+        let nextDate = calendar.dateByAddingComponents(dateComponent, toDate: displayDate, options: NSCalendarOptions.allZeros)
+        
+        displayDate = nextDate!
+        self.chooseDateButton.setTitle(displayDate.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle, doesRelativeDateFormatting: false), forState: .Normal)
+        
+        self.loadContents()
+    }
+    
+    func previousDay() {
+        
+        let dateComponent = NSDateComponents()
+        dateComponent.day = -1
+        
+        let previousDate = calendar.dateByAddingComponents(dateComponent, toDate: displayDate, options: NSCalendarOptions.allZeros)
+        
+        displayDate = previousDate!
+        self.chooseDateButton.setTitle(displayDate.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle, doesRelativeDateFormatting: false), forState: .Normal)
+        
+        self.loadContents()
+    }
+    
+    private func loadContents() {
         
         let todayComponents = calendar.components(unitFlag, fromDate: NSDate())
         let today = calendar.dateFromComponents(todayComponents)
         
-        let requestDayComponents = calendar.components(unitFlag, fromDate: date)
+        let requestDayComponents = calendar.components(unitFlag, fromDate: displayDate)
         let requestDay = calendar.dateFromComponents(requestDayComponents)
         
         self.allAnnotationMapView.removeAnnotations(self.allAnnotationMapView.annotations)
         self.mapView.removeAnnotations(self.mapView.annotations)
         
-        AlamofireController.request(.GET, "/posts", parameters: ["category": "mapnews", "size": 50], success: { postData in
-            
-            AlamofireController.request(.GET, "/groups", parameters: ["box": self.getCurrentBox()], success: { groupData in
+        switch self.mode {
+        case .PostListMode:
+            AlamofireController.request(.GET, "/posts", parameters: ["category": "map", "day": requestDay!.timeIntervalSince1970], success: { postData in
                 
-                AlamofireController.request(.GET, "/stations", parameters: ["category": "mine"], success: { stationData in
+                if let posts:[PostEntity] = PostEntity.collection(postData) {
                     
-                    if let posts:[PostEntity] = PostEntity.collection(postData) {
-                        
-                        let annotations = posts.map { post -> PostAnnotation in
-                            let annotation = PostAnnotation()
-                            annotation.post = post
-                            if let lat = post.coordinate?.get(0), log = post.coordinate?.get(1) {
-                                annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: log)
-                            }
-                            return annotation
+                    let annotations = posts.map { post -> PostAnnotation in
+                        let annotation = PostAnnotation()
+                        annotation.post = post
+                        if let lat = post.coordinate?.get(0), log = post.coordinate?.get(1) {
+                            annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: log)
                         }
-                        self.allAnnotationMapView.addAnnotations(annotations)
+                        return annotation
                     }
+                    self.allAnnotationMapView.addAnnotations(annotations)
+                }
+                self.updateVisibleAnnotations()
+            })
+        case .GroupListMode:
+            AlamofireController.request(.GET, "/groups", parameters: ["category": "map"], success: { groupData in
+                
+                if let groups:[GroupEntity] = GroupEntity.collection(groupData) {
                     
-                    if let groups:[GroupEntity] = GroupEntity.collection(groupData) {
-                        
-                        let annotations = groups.map { group -> GroupAnnotation in
-                            let annotation = GroupAnnotation()
-                            annotation.group = group
-                            if let lat = group.coordinate?.get(0), log = group.coordinate?.get(1) {
-                                annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: log)
-                            }
-                            return annotation
+                    let annotations = groups.map { group -> GroupAnnotation in
+                        let annotation = GroupAnnotation()
+                        annotation.group = group
+                        if let lat = group.coordinate?.get(0), log = group.coordinate?.get(1) {
+                            annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: log)
                         }
-                        self.allAnnotationMapView.addAnnotations(annotations)
+                        return annotation
                     }
-                    
-                    if let stations:[StationEntity] = StationEntity.collection(stationData) {
-                        
-                        let annotations = stations.map { station -> StationAnnotation in
-                            let annotation = StationAnnotation()
-                            annotation.station = station
-                            if let lat = station.coordinate?.get(0), log = station.coordinate?.get(1) {
-                                annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: log)
-                            }
-                            return annotation
-                        }
-                        self.allAnnotationMapView.addAnnotations(annotations)
-                    }
-                    
-                    self.updateVisibleAnnotations()
-                    
-                }) { err in
-                    
+                    self.allAnnotationMapView.addAnnotations(annotations)
                 }
                 
-            }) { err in
+                self.updateVisibleAnnotations()
+                
+            })
+        case .GroupMode:
+            AlamofireController.request(.GET, "/groups/\(self.displayGroup!.id)/posts", parameters: ["category": "map", "day": requestDay!.timeIntervalSince1970], success: { postData in
+                
+                if let posts:[PostEntity] = PostEntity.collection(postData) {
                     
-            }
-
-        }) { err in
-            
+                    let annotations = posts.map { post -> PostAnnotation in
+                        let annotation = PostAnnotation()
+                        annotation.post = post
+                        if let lat = post.coordinate?.get(0), log = post.coordinate?.get(1) {
+                            annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: log)
+                        }
+                        return annotation
+                    }
+                    self.allAnnotationMapView.addAnnotations(annotations)
+                }
+                self.updateVisibleAnnotations()
+                
+            })
+        case .StationListMode:
+            AlamofireController.request(.GET, "/stations", parameters: ["category": "mine"], success: { stationData in
+                
+                if let stations:[StationEntity] = StationEntity.collection(stationData) {
+                    
+                    let annotations = stations.map { station -> StationAnnotation in
+                        let annotation = StationAnnotation()
+                        annotation.station = station
+                        if let lat = station.coordinate?.get(0), log = station.coordinate?.get(1) {
+                            annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: log)
+                        }
+                        return annotation
+                    }
+                    self.allAnnotationMapView.addAnnotations(annotations)
+                }
+                
+                self.updateVisibleAnnotations()
+                
+            })
         }
-    
     }
     
     private func updateVisibleAnnotations() {

@@ -10,7 +10,7 @@ import UIKit
 
 class PostCallOutViewController: UIViewController {
     
-    var post: PostEntity!
+    var postAnnotation: PostAnnotation!
 
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var avatarImageView: UIImageView!
@@ -33,23 +33,25 @@ class PostCallOutViewController: UIViewController {
     
     func setupDisplay() {
         
+        let post = postAnnotation.post
+        
         self.avatarImageView.layer.borderColor = avatarBorderColor
         
-        if let image = self.post.images?.first {
+        if let image = post.images?.first {
             self.coverImageView.sd_setImageWithURL(NSURL(string: image), placeholderImage: DefaultCoverImage)
-        } else if let cover = self.post.owner.cover {
+        } else if let cover = post.owner.cover {
             self.coverImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: DefaultCoverImage)
         }
         
-        if let photo = self.post.owner.photo {
+        if let photo = post.owner.photo {
             self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
         }
         
-        self.userNameLabel.text = self.post.owner.nickName
+        self.userNameLabel.text = post.owner.nickName
         
-        self.dateTimeLabel.text = self.post.createDate.relativeTimeToString()
+        self.dateTimeLabel.text = post.createDate.relativeTimeToString()
         
-        self.contentLabel.text = self.post.content
+        self.contentLabel.text = post.content
         
         if let like = post.like where like.count > 0 {
             likeButton.setTitle("\(like.count)", forState: .Normal)
@@ -57,7 +59,7 @@ class PostCallOutViewController: UIViewController {
             likeButton.setTitle("", forState: .Normal)
         }
         
-        let likeimage = ( self.post.like ?? [] ).contains(me.id) ? "hearts_filled" : "hearts"
+        let likeimage = ( post.like ?? [] ).contains(me.id) ? "hearts_filled" : "hearts"
         if let image = UIImage(named: likeimage) {
             
             let image = Util.coloredImage(image, color: UIColor.redColor())
@@ -65,7 +67,7 @@ class PostCallOutViewController: UIViewController {
             
         }
         
-        let bookmarkimage = ( self.post.bookmark ?? [] ).contains(me.id) ? "star_filled" : "star"
+        let bookmarkimage = ( post.bookmark ?? [] ).contains(me.id) ? "star_filled" : "star"
         
         if let image = UIImage(named: bookmarkimage) {
             let image = Util.coloredImage(image, color: UIColor.orangeColor())

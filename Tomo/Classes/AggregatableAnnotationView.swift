@@ -10,7 +10,6 @@ import Foundation
 
 class AggregatableAnnotationView: MKAnnotationView {
     
-    var imageView: UIImageView!
     var numberBadge: UILabel!
     
     required init(coder aDecoder: NSCoder) {
@@ -27,30 +26,17 @@ class AggregatableAnnotationView: MKAnnotationView {
         
         self.canShowCallout = false
         
-        frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-        
-        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 1).CGColor
-        imageView.layer.cornerRadius = imageView.frame.width / 2
-        addSubview(imageView)
-        
-        numberBadge = UILabel(frame: CGRect(x: 25, y: 0, width: 20, height: 20))
+        numberBadge = UILabel()
         numberBadge.textColor = UIColor.whiteColor()
         numberBadge.textAlignment = NSTextAlignment.Center
         numberBadge.font = UIFont.systemFontOfSize(12)
         numberBadge.clipsToBounds = true
         numberBadge.layer.borderWidth = 1
         numberBadge.layer.borderColor = UIColor.whiteColor().CGColor
-        numberBadge.layer.cornerRadius = numberBadge.frame.width / 2
         numberBadge.backgroundColor = UIColor.redColor()
     }
     
     func setupDisplay() {
-        
-        self.setupAnnotationImage()
         
         let annotation = self.annotation as! AggregatableAnnotation
         
@@ -68,15 +54,15 @@ class AggregatableAnnotationView: MKAnnotationView {
             
             switch count {
             case 1..<10:
-                exRate = CGFloat(1.3)
+                exRate = CGFloat(1.2)
             case 10..<20:
-                exRate = CGFloat(1.5)
+                exRate = CGFloat(1.4)
             case 20..<30:
-                exRate = CGFloat(1.7)
+                exRate = CGFloat(1.6)
             case 30..<40:
-                exRate = CGFloat(1.9)
+                exRate = CGFloat(1.8)
             case 40..<Int.max:
-                exRate = CGFloat(2.1)
+                exRate = CGFloat(2.0)
             default:
                 exRate = 1
             }
@@ -85,10 +71,6 @@ class AggregatableAnnotationView: MKAnnotationView {
                 self.transform = CGAffineTransformMakeScale(exRate, exRate)
             })
         }
-    }
-    
-    func setupAnnotationImage() {
-        imageView.image = DefaultAvatarImage
     }
     
 }

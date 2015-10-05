@@ -8,7 +8,9 @@
 
 import Foundation
 
-class GroupAnnotationView: AggregatableAnnotationView {
+class GroupAnnotationView: AggregatableAnnotationView, UIPageViewControllerDataSource {
+    
+    var imageView: UIImageView!
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -22,8 +24,6 @@ class GroupAnnotationView: AggregatableAnnotationView {
         
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
-        self.canShowCallout = false
-        
         frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         
         imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
@@ -34,19 +34,78 @@ class GroupAnnotationView: AggregatableAnnotationView {
         imageView.layer.cornerRadius = 5
         addSubview(imageView)
         
-        numberBadge = UILabel(frame: CGRect(x: 25, y: -6, width: 20, height: 20))
-        numberBadge.textColor = UIColor.whiteColor()
-        numberBadge.textAlignment = NSTextAlignment.Center
-        numberBadge.font = UIFont.systemFontOfSize(12)
-        numberBadge.clipsToBounds = true
-        numberBadge.layer.borderWidth = 1
-        numberBadge.layer.borderColor = UIColor.whiteColor().CGColor
+        numberBadge.frame = CGRect(x: 28, y: -8, width: 20, height: 20)
         numberBadge.layer.cornerRadius = numberBadge.frame.width / 2
-        numberBadge.backgroundColor = UIColor.redColor()
     }
     
-    override func setupAnnotationImage() {
+    override func setupDisplay() {
+        
+        super.setupDisplay()
+        
         let annotation = self.annotation as! GroupAnnotation
         imageView.sd_setImageWithURL(NSURL(string: annotation.group.cover!), placeholderImage: DefaultGroupImage)
+    }
+    
+    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+        
+        let currentGroup = (viewController as! GroupCallOutViewController).groupAnnotation
+        let annotation = self.annotation as! GroupAnnotation
+        
+        if let containedAnnotations = annotation.containedAnnotations {
+            
+            if containedAnnotations.count == 0 {
+                return nil
+            }
+            
+            let callOutViewController = GroupCallOutViewController(nibName: "GroupCallOutView", bundle: nil)
+            
+            if let index = find(containedAnnotations, currentGroup) {
+                
+                if index < containedAnnotations.count - 1 {
+                    callOutViewController.groupAnnotation = containedAnnotations.get(index + 1) as! GroupAnnotation
+                } else {
+                    callOutViewController.groupAnnotation = annotation
+                }
+                
+            } else {
+                callOutViewController.groupAnnotation = containedAnnotations.first as! GroupAnnotation
+            }
+            
+            return callOutViewController
+        }
+        
+        return nil
+    }
+    
+    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+        
+        let currentGroup = (viewController as! GroupCallOutViewController).groupAnnotation
+        let annotation = self.annotation as! GroupAnnotation
+        
+        if let containedAnnotations = annotation.containedAnnotations {
+            
+            if containedAnnotations.count == 0 {
+                return nil
+            }
+            
+            let callOutViewController = GroupCallOutViewController(nibName: "GroupCallOutView", bundle: nil)
+            
+            if let index = find(containedAnnotations, currentGroup) {
+                
+                if index == 0 {
+                    callOutViewController.groupAnnotation = annotation
+                } else {
+                    callOutViewController.groupAnnotation = annotation.containedAnnotations?.get(index - 1) as! GroupAnnotation
+                }
+                return callOutViewController
+                
+            } else {
+                callOutViewController.groupAnnotation = containedAnnotations.last as! GroupAnnotation
+            }
+            
+            return callOutViewController
+        }
+        
+        return nil
     }
 }

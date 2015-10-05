@@ -28,4 +28,6 @@ class AggregatableAnnotation: NSObject, MKAnnotation {
     var subtitle: String {
         return ""
     }
+    
+    
 }

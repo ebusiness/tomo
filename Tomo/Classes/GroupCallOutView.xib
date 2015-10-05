@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GroupCallOutViewController" customModule="tomo" customModuleProvider="target">
+            <connections>
+                <outlet property="coverImageView" destination="nBe-9q-toB" id="Trm-bt-iKC"/>
+                <outlet property="detailLabel" destination="OO0-hf-ZF1" id="HVo-E5-eLJ"/>
+                <outlet property="nameLabel" destination="Xte-D9-Hde" id="tjZ-zD-K0k"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="222" height="225"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group_cover_default" translatesAutoresizingMaskIntoConstraints="NO" id="nBe-9q-toB">
+                    <rect key="frame" x="0.0" y="0.0" width="222" height="225"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text_protection_down" translatesAutoresizingMaskIntoConstraints="NO" id="AgH-MO-0g1">
+                    <rect key="frame" x="0.0" y="0.0" width="222" height="225"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="内容个数" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OO0-hf-ZF1">
+                    <rect key="frame" x="8" y="200" width="56" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="群组名称" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xte-D9-Hde">
+                    <rect key="frame" x="8" y="171" width="68" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="nBe-9q-toB" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="2Hm-jy-Ybl"/>
+                <constraint firstItem="OO0-hf-ZF1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="9l6-Nm-5j7"/>
+                <constraint firstItem="Xte-D9-Hde" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="BUN-jY-eVp"/>
+                <constraint firstItem="AgH-MO-0g1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GDH-Dd-EFm"/>
+                <constraint firstAttribute="trailing" secondItem="AgH-MO-0g1" secondAttribute="trailing" id="QEg-E3-LGY"/>
+                <constraint firstAttribute="bottom" secondItem="nBe-9q-toB" secondAttribute="bottom" id="aD9-uH-ddi"/>
+                <constraint firstAttribute="bottom" secondItem="OO0-hf-ZF1" secondAttribute="bottom" constant="8" id="bsc-0F-ywb"/>
+                <constraint firstItem="OO0-hf-ZF1" firstAttribute="top" secondItem="Xte-D9-Hde" secondAttribute="bottom" constant="8" id="dp6-db-HL7"/>
+                <constraint firstAttribute="bottom" secondItem="AgH-MO-0g1" secondAttribute="bottom" id="kfy-Do-eYq"/>
+                <constraint firstAttribute="trailing" secondItem="nBe-9q-toB" secondAttribute="trailing" id="kvb-Gt-x9A"/>
+                <constraint firstItem="AgH-MO-0g1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="orS-jf-Mei"/>
+                <constraint firstItem="nBe-9q-toB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="y76-kI-gOt"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="246" y="120.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="group_cover_default" width="414" height="160"/>
+        <image name="text_protection_down" width="320" height="160"/>
+    </resources>
+</document>

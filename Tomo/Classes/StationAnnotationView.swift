@@ -10,6 +10,8 @@ import Foundation
 
 class StationAnnotationView: AggregatableAnnotationView {
     
+    var nameLabel: UILabel!
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,27 +24,30 @@ class StationAnnotationView: AggregatableAnnotationView {
         
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
-        self.canShowCallout = false
-        
         frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         
-        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = Palette.Green.getPrimaryColor().CGColor
-        imageView.layer.cornerRadius = 5
-        addSubview(imageView)
+        nameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        nameLabel.textColor = UIColor.whiteColor()
+        nameLabel.textAlignment = NSTextAlignment.Center
+        nameLabel.font = UIFont.systemFontOfSize(12)
+        nameLabel.numberOfLines = 0
+        nameLabel.clipsToBounds = true
+        nameLabel.layer.borderWidth = 1
+        nameLabel.layer.borderColor = Palette.Green.getPrimaryColor().CGColor
+        nameLabel.layer.cornerRadius = 5
         
-        numberBadge = UILabel(frame: CGRect(x: 25, y: -6, width: 20, height: 20))
-        numberBadge.textColor = UIColor.whiteColor()
-        numberBadge.textAlignment = NSTextAlignment.Center
-        numberBadge.font = UIFont.systemFontOfSize(12)
-        numberBadge.clipsToBounds = true
-        numberBadge.layer.borderWidth = 1
-        numberBadge.layer.borderColor = UIColor.whiteColor().CGColor
+        addSubview(nameLabel)
+        
+        numberBadge.frame = CGRect(x: 28, y: -8, width: 20, height: 20)
         numberBadge.layer.cornerRadius = numberBadge.frame.width / 2
-        numberBadge.backgroundColor = UIColor.redColor()
     }
     
+    override func setupDisplay() {
+        super.setupDisplay()
+        
+        let annotation = self.annotation as! StationAnnotation
+        nameLabel.text = annotation.station.name
+        nameLabel.backgroundColor = Util.colorWithHexString(annotation.station.color!)
+
+    }
 }
