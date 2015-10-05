@@ -157,12 +157,11 @@ extension GroupListViewController {
     }
 
     private func reloadCells(){
-        let indexPaths = self.tableView.visibleCells().map { (cell) -> NSIndexPath in
-            return self.tableView.indexPathForCell(cell as! UITableViewCell)!
+        if let indexPaths = self.tableView.indexPathsForVisibleRows() {
+            self.tableView.beginUpdates()
+            self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Automatic)
+            self.tableView.endUpdates()
         }
-        self.tableView.beginUpdates()
-        self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Automatic)
-        self.tableView.endUpdates()
     }
     
     private func appendRows(rows: Int) {
