@@ -395,6 +395,27 @@ extension CreatePostViewController {
             param["coordinate"] = [String(stringInterpolationSegment: location.coordinate.latitude),String(stringInterpolationSegment: location.coordinate.longitude)];
         }
         
+        if let placemark = placemark {
+            var address = ""
+            
+            if let province = placemark.administrativeArea {
+                address += province
+            }
+            
+            if let city = placemark.locality {
+                address += city
+            }
+            
+            if let street = placemark.thoroughfare {
+                address += street
+            }
+            
+            if let houseNumber = placemark.subThoroughfare {
+                address += houseNumber
+            }
+            param["location"] = address
+        }
+        
         AlamofireController.request(.POST, "/posts", parameters: param, encoding: .JSON,
             success: { post in
             self.performSegueWithIdentifier("postCreated", sender: post)
