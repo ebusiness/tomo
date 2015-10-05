@@ -36,9 +36,6 @@ final class HomeViewController: BaseTableViewController {
     var postCellEstimator: PostCell!
     var postImageCellEstimator: PostImageCell!
     
-    /// true: comment, false: cell content
-    private var selectCellOrComment = false
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -66,10 +63,6 @@ final class HomeViewController: BaseTableViewController {
             if let post = sender as? PostEntity {
                 let vc = segue.destinationViewController as! PostViewController
                 vc.post = post
-                if selectCellOrComment {
-                    vc.isCommentInitial = true
-                    selectCellOrComment = false
-                }
             }
         }
         if segue.identifier == "modalStationSelector" {
@@ -124,7 +117,6 @@ extension HomeViewController {
             }
             
             cell.post = post
-            cell.delegate = self
             cell.setupDisplay()
             
             return cell
@@ -538,30 +530,6 @@ extension HomeViewController {
         tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
         tableView.endUpdates()
-    }
-}
-
-extension HomeViewController: PostCellDelegate {
-    func postCellMajorAvatarTapped(post: PostEntity) {
-        let member = post.owner
-        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-        vc.user = member
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func postCellMinorAvatarTapped(post: PostEntity) {
-        if let member = post.comments?.last?.owner {
-            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-            vc.user = member
-            navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-    func postCellImageTapped(post: PostEntity) {
-        performSegueWithIdentifier("postdetail", sender: post)
-    }
-    func postCellCommentTapped(post: PostEntity) {
-        selectCellOrComment = true
-        performSegueWithIdentifier("postdetail", sender: post)
     }
 }
 
