@@ -20,7 +20,7 @@ final class MapViewController: UIViewController {
     
     var mode = InterfaceMode.PostListMode
     
-    let vc = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
+    let pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
     
     let PostAnnotationViewIdentifier = "PostAnnotationView"
     let GroupAnnotationViewIdentifier = "GroupAnnotationView"
@@ -88,7 +88,7 @@ extension MapViewController {
         
         vc.modalPresentationStyle = .Popover
         vc.popoverPresentationController?.delegate = self
-        vc.preferredContentSize = CGSize(width: 280, height: 180)
+        vc.preferredContentSize = CGSize(width: 150, height: 100)
         self.presentViewController(vc, animated: true, completion: nil)
         
         if let pop = vc.popoverPresentationController {
@@ -234,9 +234,10 @@ extension MapViewController: MKMapViewDelegate {
             let pvc = PostCallOutViewController(nibName: "PostCallOutView", bundle: nil)
             pvc.postAnnotation = view.annotation as! PostAnnotation
             
-            vc.preferredContentSize = pvc.view.systemLayoutSizeFittingSize(CGSize(width: 300, height: 300), withHorizontalFittingPriority: 1000, verticalFittingPriority: 250)
-            vc.setViewControllers([pvc], direction: .Forward, animated: false, completion: nil)
-            vc.dataSource = view
+            pageViewController.preferredContentSize = pvc.view.systemLayoutSizeFittingSize(CGSize(width: 300, height: 300), withHorizontalFittingPriority: 1000, verticalFittingPriority: 250)
+            pageViewController.dataSource = view
+            
+            self.showPopover(pvc, onView: view)
             
         } else if let view = view as? GroupAnnotationView {
             
@@ -253,22 +254,12 @@ extension MapViewController: MKMapViewDelegate {
                 let gvc = GroupCallOutViewController(nibName: "GroupCallOutView", bundle: nil)
                 gvc.groupAnnotation = view.annotation as! GroupAnnotation
                 
-                vc.preferredContentSize = gvc.view.systemLayoutSizeFittingSize(CGSize(width: 320, height: 200), withHorizontalFittingPriority: 1000, verticalFittingPriority: 1000)
-                vc.setViewControllers([gvc], direction: .Forward, animated: false, completion: nil)
-                vc.dataSource = view
+                pageViewController.preferredContentSize = gvc.view.systemLayoutSizeFittingSize(CGSize(width: 320, height: 200), withHorizontalFittingPriority: 1000, verticalFittingPriority: 1000)
+                pageViewController.dataSource = view
+                
+                self.showPopover(gvc, onView: view)
             }
             
-        }
-        
-        vc.modalPresentationStyle = .Popover
-        vc.popoverPresentationController?.delegate = self
-        
-        self.presentViewController(vc, animated: true, completion: nil)
-        
-        if let pop = vc.popoverPresentationController {
-            pop.backgroundColor = UIColor.whiteColor()
-            pop.sourceView = view
-            pop.sourceRect = view.bounds
         }
         
     }
@@ -307,6 +298,21 @@ extension MapViewController {
         UIView.animateWithDuration(1.0, animations: { () -> Void in
             self.mapView.camera = camera
         })
+    }
+    
+    private func showPopover(viewController: UIViewController, onView view: UIView) {
+        
+        pageViewController.setViewControllers([viewController], direction: .Forward, animated: false, completion: nil)
+        pageViewController.modalPresentationStyle = .Popover
+        pageViewController.popoverPresentationController?.delegate = self
+        
+        self.presentViewController(pageViewController, animated: true, completion: nil)
+        
+        if let pop = pageViewController.popoverPresentationController {
+            pop.backgroundColor = UIColor.whiteColor()
+            pop.sourceView = view
+            pop.sourceRect = view.bounds
+        }
     }
     
     private func getCurrentBox() -> [Double] {
@@ -379,10 +385,11 @@ extension MapViewController {
                     }
                     self.allAnnotationMapView.addAnnotations(annotations)
                 }
+                self.adjustRegion()
                 self.updateVisibleAnnotations()
             })
         case .GroupListMode:
-            AlamofireController.request(.GET, "/groups", parameters: ["category": "map"], success: { groupData in
+            AlamofireController.request(.GET, "/groups", parameters: ["category": "map", "day": requestDay!.timeIntervalSince1970], success: { groupData in
                 
                 if let groups:[GroupEntity] = GroupEntity.collection(groupData) {
                     
@@ -396,12 +403,12 @@ extension MapViewController {
                     }
                     self.allAnnotationMapView.addAnnotations(annotations)
                 }
-                
+                self.adjustRegion()
                 self.updateVisibleAnnotations()
                 
             })
         case .GroupMode:
-            AlamofireController.request(.GET, "/groups/\(self.displayGroup!.id)/posts", parameters: ["category": "map", "day": requestDay!.timeIntervalSince1970], success: { postData in
+            AlamofireController.request(.GET, "/groups/\(self.displayGroup!.id)/posts", parameters: ["category": "map"], success: { postData in
                 
                 if let posts:[PostEntity] = PostEntity.collection(postData) {
                     
@@ -415,6 +422,7 @@ extension MapViewController {
                     }
                     self.allAnnotationMapView.addAnnotations(annotations)
                 }
+                self.adjustRegion()
                 self.updateVisibleAnnotations()
                 
             })
@@ -433,7 +441,7 @@ extension MapViewController {
                     }
                     self.allAnnotationMapView.addAnnotations(annotations)
                 }
-                
+                self.adjustRegion()
                 self.updateVisibleAnnotations()
                 
             })
@@ -524,6 +532,53 @@ extension MapViewController {
             }
             
             gridMapRect.origin.y += gridSize
+        }
+    }
+    
+    private func adjustRegion() {
+        
+        let annotations = allAnnotationMapView.annotations
+        
+        if annotations.count > 0 {
+            
+            let horizontalSortedAnnotations = annotations.sorted { (obj1, obj2) -> Bool in
+                
+                let mapPoint1 = MKMapPointForCoordinate((obj1 as! MKAnnotation).coordinate)
+                let mapPoint2 = MKMapPointForCoordinate((obj2 as! MKAnnotation).coordinate)
+                
+                if mapPoint1.x < mapPoint2.x {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            
+            let verticalSortedAnnotations = annotations.sorted { (obj1, obj2) -> Bool in
+                
+                let mapPoint1 = MKMapPointForCoordinate((obj1 as! MKAnnotation).coordinate)
+                let mapPoint2 = MKMapPointForCoordinate((obj2 as! MKAnnotation).coordinate)
+                
+                if mapPoint1.y < mapPoint2.y {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            
+            let leftMostAnnotationPoint = MKMapPointForCoordinate((horizontalSortedAnnotations.first as! MKAnnotation).coordinate)
+            let rightMostAnnotationPoint = MKMapPointForCoordinate((horizontalSortedAnnotations.last as! MKAnnotation).coordinate)
+            let topMostAnnotationPoint = MKMapPointForCoordinate((verticalSortedAnnotations.first as! MKAnnotation).coordinate)
+            let bottomMostAnnotationPoint = MKMapPointForCoordinate((verticalSortedAnnotations.last as! MKAnnotation).coordinate)
+            
+            let targetRect = MKMapRect(origin: MKMapPoint(x: leftMostAnnotationPoint.x, y: topMostAnnotationPoint.y), size: MKMapSize(width: rightMostAnnotationPoint.x - leftMostAnnotationPoint.x, height: bottomMostAnnotationPoint.y - topMostAnnotationPoint.y))
+            
+            let adjustRect = self.mapView.mapRectThatFits(targetRect, edgePadding: UIEdgeInsets(top: 120, left: 80, bottom: 120, right: 80))
+            let adjustRegion = MKCoordinateRegionForMapRect(adjustRect)
+            
+            self.mapView.setRegion(adjustRegion, animated: true)
+            
+        } else {
+            return
         }
     }
     
