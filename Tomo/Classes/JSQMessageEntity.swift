@@ -174,11 +174,11 @@ enum MediaMessage: Int {
         get {
             switch self {
             case .Image:
-                return "[画像]"
+                return "[photo]"
             case .Voice:
-                return "[音声]"
+                return "[voice]"
             case .Video:
-                return "[動画]"
+                return "[video]"
             }
         }
     }

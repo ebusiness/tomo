@@ -16,7 +16,7 @@ class FriendCell: UITableViewCell {
     @IBOutlet weak var countLabel: UILabel!//left right constraints == (sqrt(2)-1) * avatarImageView.frame.size.width / 2 / sqrt(2) - countLabel.frame.size.width / 2
     @IBOutlet weak var timeLabel: UILabel!
     
-    var user: UserEntity?
+    var user: UserEntity!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,11 +27,11 @@ class FriendCell: UITableViewCell {
     
     func setupDisplay() {
         
-        if let photo = user?.photo {
+        if let photo = user.photo {
             avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
         }
         
-        userNameLabel.text = user?.nickName
+        userNameLabel.text = user.nickName
         
         let count = me.newMessages.reduce(0, combine: { (count, message) -> Int in
             if message.from.id == user!.id {
@@ -48,9 +48,9 @@ class FriendCell: UITableViewCell {
             countLabel.hidden = true
         }
         
-        if let message = user?.lastMessage {
+        if let message = user.lastMessage {
             if let media = MediaMessage.mediaMessage(message.content) {
-                messageLabel.text = media.messagePrefix
+                messageLabel.text = self.getMediaString(media)
             } else {
                 messageLabel.text = message.content
             }
@@ -60,6 +60,17 @@ class FriendCell: UITableViewCell {
             timeLabel.hidden = true
         }
         
+    }
+    
+    private func getMediaString(media: MediaMessage)-> String {
+        switch media {
+        case .Image:
+            return "\(user.nickName)发给您一张图片"
+        case .Voice:
+            return "\(user.nickName)发给您一段语音"
+        case .Video:
+            return "\(user.nickName)发给您一段视频"
+        }
     }
 
 }

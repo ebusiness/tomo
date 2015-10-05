@@ -11,7 +11,6 @@ import UIKit
 class NotificationView: UIView {
     
     @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var nickNameLabelView: UILabel!
     @IBOutlet weak var messageLabelView: UILabel!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var backgroundView: UIView!
@@ -22,7 +21,6 @@ class NotificationView: UIView {
                 self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
             }
             
-            self.nickNameLabelView.text = self.notification.from.nickName
             self.messageLabelView.text = self.notification.message
             gcd.async(.Default, delay: 5) {
                 self.closeTapped()

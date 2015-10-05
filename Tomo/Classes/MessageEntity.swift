@@ -39,7 +39,7 @@ class MessageEntity: Entity {
         if !(json["group"].object is NSNull) {
             self.group = GroupEntity(json["group"])
         }
-        self.content = json["aps"]["alert"].string ?? json["content"].stringValue
+        self.content = json["content"].string ?? json["aps"]["alert"].stringValue
         self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
         
     }
