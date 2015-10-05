@@ -65,11 +65,11 @@ class FriendCell: UITableViewCell {
     private func getMediaString(media: MediaMessage)-> String {
         switch media {
         case .Image:
-            return "\(user.nickName)发给您一张图片"
+            return "发给您一张图片"
         case .Voice:
-            return "\(user.nickName)发给您一段语音"
+            return "发给您一段语音"
         case .Video:
-            return "\(user.nickName)发给您一段视频"
+            return "发给您一段视频"
         }
     }
 
