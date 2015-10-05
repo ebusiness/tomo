@@ -304,3 +304,9 @@ extension UIImageView {
         }
     }
 }
+
+extension CGFloat {
+    static var relativeZero: CGFloat {
+        return 0.0001
+    }
+}

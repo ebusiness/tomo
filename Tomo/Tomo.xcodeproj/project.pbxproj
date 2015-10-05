@@ -100,6 +100,11 @@
 		1FEE80EE1B4E60850061B913 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE80ED1B4E60850061B913 /* PostCell.swift */; };
 		1FFD21FF1BABD57C00204080 /* GroupSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */; };
 		1FFD22011BABD77E00204080 /* GroupSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */; };
+		2857784C1BC25DC600533E8E /* ICYPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2857784A1BC25DC600533E8E /* ICYPostCell.swift */; };
+		2857784D1BC25DC600533E8E /* ICYPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2857784B1BC25DC600533E8E /* ICYPostCell.xib */; };
+		285778511BC272E000533E8E /* ICYTagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285778501BC272E000533E8E /* ICYTagButton.swift */; };
+		285778561BC29AEC00533E8E /* ICYTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285778541BC29AEC00533E8E /* ICYTagCollectionViewCell.swift */; };
+		285778571BC29AEC00533E8E /* ICYTagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 285778551BC29AEC00533E8E /* ICYTagCollectionViewCell.xib */; };
 		2869D71C1BB545FB00D1C479 /* StationDiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2869D71B1BB545FB00D1C479 /* StationDiscoverViewController.swift */; };
 		28C647B01BBE838200253647 /* EmptyStationResult.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C647AF1BBE838200253647 /* EmptyStationResult.xib */; };
 		28CB45E11BB13FB200182924 /* GroupDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */; };
@@ -265,6 +270,11 @@
 		1FEE80ED1B4E60850061B913 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCell.swift; path = Classes/PostCell.swift; sourceTree = "<group>"; };
 		1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupSectionHeaderView.xib; path = Classes/GroupSectionHeaderView.xib; sourceTree = "<group>"; };
 		1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupSectionHeaderView.swift; path = Classes/GroupSectionHeaderView.swift; sourceTree = "<group>"; };
+		2857784A1BC25DC600533E8E /* ICYPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYPostCell.swift; path = Classes/ICYPostCell.swift; sourceTree = "<group>"; };
+		2857784B1BC25DC600533E8E /* ICYPostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ICYPostCell.xib; path = Classes/ICYPostCell.xib; sourceTree = "<group>"; };
+		285778501BC272E000533E8E /* ICYTagButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYTagButton.swift; path = Classes/ICYTagButton.swift; sourceTree = "<group>"; };
+		285778541BC29AEC00533E8E /* ICYTagCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYTagCollectionViewCell.swift; path = Classes/ICYTagCollectionViewCell.swift; sourceTree = "<group>"; };
+		285778551BC29AEC00533E8E /* ICYTagCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ICYTagCollectionViewCell.xib; path = Classes/ICYTagCollectionViewCell.xib; sourceTree = "<group>"; };
 		2869D71B1BB545FB00D1C479 /* StationDiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationDiscoverViewController.swift; path = Classes/StationDiscoverViewController.swift; sourceTree = "<group>"; };
 		28C647AF1BBE838200253647 /* EmptyStationResult.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptyStationResult.xib; path = Classes/EmptyStationResult.xib; sourceTree = "<group>"; };
 		28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDescriptionViewController.swift; path = Classes/GroupDescriptionViewController.swift; sourceTree = "<group>"; };
@@ -517,6 +527,11 @@
 				1FEE80EB1B4E5C540061B913 /* PostCell.xib */,
 				1F8BF0101B53639F00090079 /* PostImageCell.swift */,
 				1F8BF0121B536D9500090079 /* PostImageCell.xib */,
+				285778541BC29AEC00533E8E /* ICYTagCollectionViewCell.swift */,
+				285778551BC29AEC00533E8E /* ICYTagCollectionViewCell.xib */,
+				2857784A1BC25DC600533E8E /* ICYPostCell.swift */,
+				285778501BC272E000533E8E /* ICYTagButton.swift */,
+				2857784B1BC25DC600533E8E /* ICYPostCell.xib */,
 				1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */,
 				1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */,
 				1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */,
@@ -936,6 +951,7 @@
 				28C647B01BBE838200253647 /* EmptyStationResult.xib in Resources */,
 				29CA441A1AD4CA48009EB177 /* Contacts.storyboard in Resources */,
 				1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */,
+				2857784D1BC25DC600533E8E /* ICYPostCell.xib in Resources */,
 				1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */,
 				1FFD21FF1BABD57C00204080 /* GroupSectionHeaderView.xib in Resources */,
 				D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */,
@@ -946,6 +962,7 @@
 				29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */,
 				1F985E621B60C19F008D5369 /* Info.plist in Resources */,
 				1FA76AFE1BA27B1E004776B0 /* Group.storyboard in Resources */,
+				285778571BC29AEC00533E8E /* ICYTagCollectionViewCell.xib in Resources */,
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
 				296D8BC31AFC5A680058D400 /* LaunchScreen.xib in Resources */,
 				29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */,
@@ -1146,6 +1163,7 @@
 				1F1176A71B983D280049D9F5 /* SocketEventHandler.swift in Sources */,
 				D0E788751B6F5BD3009255B9 /* AlamofireController.swift in Sources */,
 				1F8BF0111B53639F00090079 /* PostImageCell.swift in Sources */,
+				285778561BC29AEC00533E8E /* ICYTagCollectionViewCell.swift in Sources */,
 				D07793871B704F410056B7CB /* DatePickerViewController.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
 				1F1176A41B983D280049D9F5 /* SocketAnyEvent.swift in Sources */,
@@ -1157,6 +1175,7 @@
 				1F1176AF1B983D280049D9F5 /* WebSocket.swift in Sources */,
 				D0BA8DE71B55375A00271F2B /* PostViewController.swift in Sources */,
 				1F26B29A1BAA61D10063AC6B /* GroupDetailViewController.swift in Sources */,
+				285778511BC272E000533E8E /* ICYTagButton.swift in Sources */,
 				295272D01AD51B2300FC7833 /* S3.swift in Sources */,
 				D0F44FAD1B5E534B009E12AA /* MyPostsViewController.swift in Sources */,
 				D07D8A1A1B99A3DF00D13096 /* NotificationListViewController.swift in Sources */,
@@ -1164,6 +1183,7 @@
 				296D8BAC1AFC59F10058D400 /* TabBarController.swift in Sources */,
 				D04447B31BBA9DF300AD7B0C /* GroupChatViewController.swift in Sources */,
 				1FEA3CFD1BB39E5A0037F3C5 /* StationCollectionViewCell.swift in Sources */,
+				2857784C1BC25DC600533E8E /* ICYPostCell.swift in Sources */,
 				1FEA3CFB1BB391780037F3C5 /* RecommendStationTableViewCell.swift in Sources */,
 				1FA76B091BA2C642004776B0 /* GroupCreateViewController.swift in Sources */,
 				1F6AE7851B6F1A2300D7F488 /* PostAnnotation.swift in Sources */,
