@@ -134,11 +134,16 @@ extension GroupListViewController {
         
         AlamofireController.request(.GET, "/groups", parameters: ["category": "mine"], success: { groups in
             
+            let oldDataCount = self.groups.count
             let groups: [GroupEntity]? = GroupEntity.collection(groups)
-            
+
             if let groups = groups {
-                self.groups.extend(groups)
-                self.appendRows(groups.count)
+                self.groups = groups
+                if oldDataCount > 0 {
+                    self.reloadCells()
+                } else {
+                    self.appendRows(groups.count)
+                }
             }
             self.isLoading = false
             
@@ -149,6 +154,15 @@ extension GroupListViewController {
             self.isLoading = false
         }
         
+    }
+
+    private func reloadCells(){
+        let indexPaths = self.tableView.visibleCells().map { (cell) -> NSIndexPath in
+            return self.tableView.indexPathForCell(cell as! UITableViewCell)!
+        }
+        self.tableView.beginUpdates()
+        self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Automatic)
+        self.tableView.endUpdates()
     }
     
     private func appendRows(rows: Int) {
