@@ -59,7 +59,7 @@
                                 </state>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AS9-Bd-jfS" userLabel="内容">
-                                <rect key="frame" x="8" y="94" width="374" height="88"/>
+                                <rect key="frame" x="16" y="94" width="358" height="88"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="200" id="Zdj-k5-6qF"/>
                                 </constraints>
@@ -68,15 +68,11 @@
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="15k-go-EnM" userLabel="TAG！">
                                 <rect key="frame" x="8" y="190" width="374" height="80"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="0JG-Bd-vpe"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ciG-cT-bCt">
-                                    <size key="itemSize" width="60" height="25"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
+                                <collectionViewLayout key="collectionViewLayout" id="OK5-bJ-yRX" customClass="ICYFlowLayout" customModule="tomo" customModuleProvider="target"/>
                                 <connections>
                                     <outlet property="dataSource" destination="KGk-i7-Jjw" id="L4q-4d-AcY"/>
                                     <outlet property="delegate" destination="KGk-i7-Jjw" id="y45-2q-y8K"/>
@@ -146,10 +142,10 @@
                             <constraint firstItem="lqq-BY-PVH" firstAttribute="centerY" secondItem="IVD-VP-htr" secondAttribute="bottom" id="Plr-cv-6NY"/>
                             <constraint firstItem="RK9-Fx-ODM" firstAttribute="leading" secondItem="asU-Al-bof" secondAttribute="leading" constant="8" id="VcJ-uD-FRT"/>
                             <constraint firstItem="15k-go-EnM" firstAttribute="leading" secondItem="asU-Al-bof" secondAttribute="leading" constant="8" id="Wn1-Hy-khl"/>
-                            <constraint firstAttribute="trailing" secondItem="AS9-Bd-jfS" secondAttribute="trailing" constant="8" id="f1k-Jv-Otf"/>
+                            <constraint firstAttribute="trailing" secondItem="AS9-Bd-jfS" secondAttribute="trailing" constant="16" id="f1k-Jv-Otf"/>
                             <constraint firstItem="RA8-TD-WaY" firstAttribute="leading" secondItem="gxT-CO-85S" secondAttribute="trailing" constant="8" id="fmF-1k-F6z"/>
                             <constraint firstAttribute="trailing" secondItem="15k-go-EnM" secondAttribute="trailing" constant="8" id="ibI-rm-fpY"/>
-                            <constraint firstItem="AS9-Bd-jfS" firstAttribute="leading" secondItem="asU-Al-bof" secondAttribute="leading" constant="8" id="m2C-g7-mgf"/>
+                            <constraint firstItem="AS9-Bd-jfS" firstAttribute="leading" secondItem="asU-Al-bof" secondAttribute="leading" constant="16" id="m2C-g7-mgf"/>
                             <constraint firstItem="vhs-65-kYL" firstAttribute="leading" secondItem="lqq-BY-PVH" secondAttribute="trailing" constant="8" id="m2P-5J-rnh"/>
                             <constraint firstItem="RK9-Fx-ODM" firstAttribute="top" secondItem="15k-go-EnM" secondAttribute="bottom" priority="999" id="w5n-l8-D5n"/>
                             <constraint firstAttribute="bottom" secondItem="RK9-Fx-ODM" secondAttribute="bottom" priority="999" constant="8" id="z7K-UT-Nnq"/>
@@ -163,7 +159,7 @@
                     <constraint firstAttribute="trailing" secondItem="asU-Al-bof" secondAttribute="trailing" id="xFB-Zg-F5n"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
             <connections>
                 <outlet property="collectionButton" destination="gxT-CO-85S" id="e2H-Lk-Bka"/>
                 <outlet property="collectionView" destination="15k-go-EnM" id="ARP-og-sVw"/>
@@ -172,6 +168,7 @@
                 <outlet property="commentViewHeight" destination="nZE-U7-1X3" id="qcj-FO-AeT"/>
                 <outlet property="contentLabel" destination="AS9-Bd-jfS" id="um7-8F-D9n"/>
                 <outlet property="dateLabel" destination="vhs-65-kYL" id="ll0-jQ-8Ed"/>
+                <outlet property="flowLayout" destination="OK5-bJ-yRX" id="Ddx-7V-Pwl"/>
                 <outlet property="lastCommentAvatarImageView" destination="tWN-jG-Ujd" id="AZY-M7-IQn"/>
                 <outlet property="lastCommentContent" destination="Vjq-qI-D1O" id="JSR-Sg-i1D"/>
                 <outlet property="lastCommentDateLabel" destination="Zzo-du-I80" id="0OF-qS-ur6"/>

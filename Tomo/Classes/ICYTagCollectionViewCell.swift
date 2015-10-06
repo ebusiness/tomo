@@ -12,6 +12,8 @@ class ICYTagCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ICYTagCollectionViewCellIdentifier"
 
+    @IBOutlet weak var tagButton: ICYTagButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

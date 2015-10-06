@@ -43,10 +43,11 @@ class ICYPostCell: UITableViewCell {
                 contentLabel.text = post.content
                 // tag
                 if let group = post.group {
-                    collectionViewHeight.constant = 25.0
+                    collectionViewHeight.constant = 30.0
                 } else {
                     collectionViewHeight.constant = 0.0
                 }
+                collectionView.reloadData()
                 // comment
                 if let lastComment = post.comments?.last {
                     commentViewHeight.constant = 56.0
@@ -93,6 +94,7 @@ class ICYPostCell: UITableViewCell {
     
     @IBOutlet weak var commentCountButton: UIButton!
     
+    @IBOutlet weak var flowLayout: ICYFlowLayout!
     
     
     
@@ -114,6 +116,8 @@ class ICYPostCell: UITableViewCell {
         
         let nib = UINib(nibName: "ICYTagCollectionViewCell", bundle: nil)
         collectionView.registerNib(nib, forCellWithReuseIdentifier: ICYTagCollectionViewCell.identifier)
+        
+        flowLayout.sectionInset = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 4.0, right: 0.0)
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -124,7 +128,7 @@ class ICYPostCell: UITableViewCell {
     
 }
 
-extension ICYPostCell: UICollectionViewDataSource {
+extension ICYPostCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let group = post?.group {
             return 1
@@ -134,6 +138,14 @@ extension ICYPostCell: UICollectionViewDataSource {
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ICYTagCollectionViewCell.identifier, forIndexPath: indexPath) as! ICYTagCollectionViewCell
+        cell.tagButton.tagString = post?.group?.name
         return cell
+    }
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        if let tagString = post?.group?.name {
+            let size = ICYTagButton.defaultSize(tagString)
+            return size
+        }
+        return CGSizeZero
     }
 }

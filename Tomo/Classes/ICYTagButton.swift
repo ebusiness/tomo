@@ -10,16 +10,18 @@ import UIKit
 
 class ICYTagButton: UIButton {
     
-    static let font = UIFont.systemFontOfSize(UIFont.systemFontSize())
+    static let font = UIFont.systemFontOfSize(13)
     
     class func defaultSize(string: String) -> CGSize {
-        let size = string.boundingRectWithSize(CGSize(width: 5000, height: 30), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil).size
-        return size
+        let size = string.boundingRectWithSize(CGSize(width: 5000, height: 24), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil).size
+        let expandedSize = CGSizeMake(size.width + 14.0, 24.0)
+        return expandedSize
     }
     
     var tagString: String? {
         didSet {
-            setTitle(tagString, forState: UIControlState.Normal)
+            setTitle(tagString == nil ? nil : " " + tagString! + " ",
+                forState: UIControlState.Normal)
         }
     }
     
@@ -27,7 +29,13 @@ class ICYTagButton: UIButton {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         addTarget(self, action: "buttonClicked", forControlEvents: UIControlEvents.TouchUpInside)
+        backgroundColor = UIColor.whiteColor()
+        setTitleColor(Palette.Blue.getPrimaryColor(), forState: UIControlState.Normal)
+        layer.cornerRadius = 3.0
+        layer.borderColor = Palette.Blue.getPrimaryColor().CGColor
+        layer.borderWidth = 1.0
     }
     
     func buttonClicked() {
