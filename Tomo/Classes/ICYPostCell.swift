@@ -10,6 +10,8 @@ import UIKit
 
 class ICYPostCell: UITableViewCell {
     
+    weak var delegate: UIViewController?
+    
     var post: PostEntity? {
         didSet {
             if let post = post {
@@ -82,6 +84,7 @@ class ICYPostCell: UITableViewCell {
     
     @IBOutlet weak var likeButton: UIButton!
     
+    /// TAG collection
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var lastCommentAvatarImageView: UIImageView!
@@ -91,6 +94,8 @@ class ICYPostCell: UITableViewCell {
     @IBOutlet weak var lastCommentDateLabel: UILabel!
     
     @IBOutlet weak var commentCountButton: UIButton!
+    
+    @IBOutlet weak var commentView: UIView!
     
     @IBOutlet weak var flowLayout: ICYFlowLayout!
     
@@ -153,9 +158,30 @@ class ICYPostCell: UITableViewCell {
         }
     }
     
+    func majorAvatarTapped() {
+        if let owner = post?.owner {
+            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+            vc.user = owner
+            delegate?.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
     
+    func lastCommentAvatarTapped() {
+        if let owner = post?.comments?.last?.owner {
+            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+            vc.user = owner
+            delegate?.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
     
-    
+    func commentTapped() {
+        if let comment = post?.comments?.last {
+            let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
+            vc.post = post!
+            vc.isCommentInitial = true
+            delegate?.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
     
     
     
@@ -172,6 +198,18 @@ class ICYPostCell: UITableViewCell {
         collectionView.registerNib(nib, forCellWithReuseIdentifier: ICYTagCollectionViewCell.identifier)
         
         flowLayout.sectionInset = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 4.0, right: 0.0)
+        
+        // major avatar tap
+        let majorAvatarTap = UITapGestureRecognizer(target: self, action: "majorAvatarTapped")
+        majorAvatarImageView.addGestureRecognizer(majorAvatarTap)
+        
+        // minor avatar tap
+        let lastCommentAvatarTap = UITapGestureRecognizer(target: self, action: "lastCommentAvatarTapped")
+        lastCommentAvatarImageView.addGestureRecognizer(lastCommentAvatarTap)
+        
+        // comment tap
+        let commentTap = UITapGestureRecognizer(target: self, action: "commentTapped")
+        commentView.addGestureRecognizer(commentTap)
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -192,7 +230,18 @@ extension ICYPostCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ICYTagCollectionViewCell.identifier, forIndexPath: indexPath) as! ICYTagCollectionViewCell
-        cell.tagButton.tagString = post?.group?.name
+        if let group = post?.group {
+            cell.tagButton.tomoTag = TomoTag(content: group)
+            cell.tagButton.setTagClickAction({ (tomoTag) -> () in
+                switch tomoTag.type {
+                case .Group:
+                    let group = tomoTag.content as! GroupEntity
+                    let groupVC = Util.createViewControllerWithIdentifier("groupDescriptionVC", storyboardName: "Group") as! GroupDescriptionViewController
+                    groupVC.group = group
+                    self.delegate?.navigationController?.pushViewController(groupVC, animated: true)
+                }
+            })
+        }
         return cell
     }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {

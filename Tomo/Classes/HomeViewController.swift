@@ -47,8 +47,6 @@ final class HomeViewController: BaseTableViewController {
         
         self.setupRefreshControll()
         
-//        self.setupTableRowHeight()
-        
         self.setupLocationManager()
         
         self.getLocation()
@@ -121,6 +119,7 @@ extension HomeViewController {
                 cell = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier") as! ICYPostCell
             }
             cell.post = post
+            cell.delegate = self
             return cell
             
         } else {
@@ -293,12 +292,6 @@ extension HomeViewController {
     
     private func registerCell() {
         
-        var postCellNib = UINib(nibName: "PostCell", bundle: nil)
-        tableView.registerNib(postCellNib, forCellReuseIdentifier: "PostCell")
-        
-        var postImageCellNib = UINib(nibName: "PostImageCell", bundle: nil)
-        tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
-        
         var RecommendSiteTableCellNib = UINib(nibName: "RecommendSiteTableCell", bundle: nil)
         tableView.registerNib(RecommendSiteTableCellNib, forCellReuseIdentifier: "RecommendSiteTableCell")
         
@@ -316,11 +309,6 @@ extension HomeViewController {
         var refresh = UIRefreshControl()
         refresh.addTarget(self, action: "loadNewContent", forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl = refresh
-    }
-    
-    private func setupTableRowHeight() {
-        self.tableView.estimatedRowHeight = 44.0
-        self.tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     private func setupLocationManager() {
@@ -538,28 +526,3 @@ extension HomeViewController {
         tableView.endUpdates()
     }
 }
-
-extension HomeViewController: PostCellDelegate {
-    func postCellMajorAvatarTapped(post: PostEntity) {
-        let member = post.owner
-        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-        vc.user = member
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func postCellMinorAvatarTapped(post: PostEntity) {
-        if let member = post.comments?.last?.owner {
-            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-            vc.user = member
-            navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-    func postCellImageTapped(post: PostEntity) {
-        performSegueWithIdentifier("postdetail", sender: post)
-    }
-    func postCellCommentTapped(post: PostEntity) {
-        selectCellOrComment = true
-        performSegueWithIdentifier("postdetail", sender: post)
-    }
-}
-

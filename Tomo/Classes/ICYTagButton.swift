@@ -18,14 +18,28 @@ class ICYTagButton: UIButton {
         return expandedSize
     }
     
-    var tagString: String? {
+    /// TOMO Tag!
+    var tomoTag: TomoTag? {
         didSet {
-            setTitle(tagString == nil ? nil : " " + tagString! + " ",
-                forState: UIControlState.Normal)
+            if let tag = tomoTag {
+                switch tag.type {
+                case .Group:
+                    let group = tag.content as! GroupEntity
+                    setTitle(" " + group.name + " ", forState: UIControlState.Normal)
+                }
+            } else {
+                setTitle(nil, forState: UIControlState.Normal)
+            }
         }
     }
     
-    var tagClicked: ((tagString: String) ->())?
+    typealias tagClickActionType = ((tomoTag: TomoTag) ->())
+    
+    private var tagClicked: tagClickActionType?
+    
+    func setTagClickAction(action: tagClickActionType?) {
+        tagClicked = action
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,8 +53,26 @@ class ICYTagButton: UIButton {
     }
     
     func buttonClicked() {
-        if let tagString = tagString {
-            tagClicked?(tagString: tagString)
+        if let tomoTag = tomoTag {
+            tagClicked?(tomoTag: tomoTag)
+        }
+    }
+}
+
+
+
+class TomoTag {
+    enum TomoTagType {
+        case Group
+    }
+    var type: TomoTagType
+    var content: AnyObject
+    init(content: AnyObject) {
+        if let transd = content as? GroupEntity {
+            type = .Group
+            self.content = transd
+        } else {
+            fatalError("TAG must init with GroupEntity!")
         }
     }
 }
