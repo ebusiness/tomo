@@ -121,12 +121,12 @@ extension GroupDiscoverViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-        var edge = (UIScreen.mainScreen().bounds.width - 1) / 2.0
-        
-        return CGSizeMake(edge, edge/3*4)
-    }
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+//        
+//        var edge = (UIScreen.mainScreen().bounds.width - 1) / 2.0
+//        
+//        return CGSizeMake(edge, edge/3*4)
+//    }
 }
 
 // MARK: Internal methods
