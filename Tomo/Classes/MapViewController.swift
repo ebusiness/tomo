@@ -18,9 +18,20 @@ enum InterfaceMode: Int {
 
 final class MapViewController: UIViewController {
     
-    var mode = InterfaceMode.PostListMode
+    var mode = InterfaceMode.PostListMode {
+        didSet {
+            self.updateModeAppearance()
+        }
+    }
+    
+    var duration = Duration.today {
+        didSet {
+            self.updateChooseDateButtonTitle()
+        }
+    }
     
     let pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
+    let durationPicker = Util.createViewControllerWithIdentifier("DurationPickerView", storyboardName: "Map") as! DurationPickerTableViewController
     
     let PostAnnotationViewIdentifier = "PostAnnotationView"
     let GroupAnnotationViewIdentifier = "GroupAnnotationView"
@@ -42,7 +53,11 @@ final class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     
+    @IBOutlet weak var postModeButton: UIButton!
+    @IBOutlet weak var groupModeButton: UIButton!
+    @IBOutlet weak var stationModeButton: UIButton!
     @IBOutlet weak var chooseDateButton: UIButton!
+    @IBOutlet weak var modeLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,28 +99,27 @@ extension MapViewController {
     
     @IBAction func chooseDate(sender: AnyObject) {
         
-        let vc = Util.createViewControllerWithIdentifier("TestView", storyboardName: "Map")
+        durationPicker.delegate = self
+        durationPicker.modalPresentationStyle = .Popover
+        durationPicker.popoverPresentationController?.delegate = self
+        durationPicker.preferredContentSize = CGSize(width: 100, height: 130)
+        self.presentViewController(durationPicker, animated: true, completion: nil)
         
-        vc.modalPresentationStyle = .Popover
-        vc.popoverPresentationController?.delegate = self
-        vc.preferredContentSize = CGSize(width: 150, height: 100)
-        self.presentViewController(vc, animated: true, completion: nil)
-        
-        if let pop = vc.popoverPresentationController {
+        if let pop = durationPicker.popoverPresentationController {
             let v = sender as! UIView
+            pop.backgroundColor = UIColor.whiteColor()
             pop.sourceView = v
             pop.sourceRect = v.bounds
-            pop.permittedArrowDirections = .Down
         }
 
     }
     
     @IBAction func dateLabelSwiped(sender: UISwipeGestureRecognizer) {
-        if sender.direction == .Left {
-            self.nextDay()
-        } else {
-            self.previousDay()
-        }
+//        if sender.direction == .Left {
+//            self.nextDay()
+//        } else {
+//            self.previousDay()
+//        }
     }
     
     @IBAction func showCurrentLocation() {
@@ -132,6 +146,19 @@ extension MapViewController: UIPopoverPresentationControllerDelegate, UIAdaptive
     
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return .None
+    }
+}
+
+/// MARK: DurationPickerView Delegate
+
+extension MapViewController: DurationPickerTableViewControllerDelegate {
+    
+    func durationPicker(didSelectWith duration: Duration) {
+        
+        if self.duration != duration {
+            self.duration = duration
+            self.loadContents()
+        }
     }
 }
 
@@ -245,8 +272,8 @@ extension MapViewController: MKMapViewDelegate {
             
             if groupAnnotation.containedAnnotations?.count == 0 {
                 
-                self.mode = .GroupMode
                 self.displayGroup = groupAnnotation.group
+                self.mode = .GroupMode
                 self.loadContents()
                 
             } else {
@@ -271,7 +298,7 @@ extension MapViewController {
     
     private func setupAppearance() {
         
-        self.chooseDateButton.setTitle(NSDate().toString(dateStyle: .MediumStyle, timeStyle: .NoStyle, doesRelativeDateFormatting: false), forState: .Normal)
+//        self.chooseDateButton.setTitle(NSDate().toString(dateStyle: .MediumStyle, timeStyle: .NoStyle, doesRelativeDateFormatting: false), forState: .Normal)
     }
     
     private func showLocationServiceDisabledAlert() {
@@ -332,6 +359,58 @@ extension MapViewController {
         return [leftBottom.latitude, leftBottom.longitude, rightTop.latitude, rightTop.longitude]
     }
     
+    private func updateModeAppearance() {
+        
+        let scaleEffect = CGAffineTransformMakeScale(1.5, 1.5)
+        
+        switch self.mode {
+        case .StationListMode:
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.stationModeButton.transform = scaleEffect
+                self.groupModeButton.transform = CGAffineTransformIdentity
+                self.postModeButton.transform = CGAffineTransformIdentity
+                self.modeLabel.text = "关注中的车站"
+            })
+        case .GroupListMode:
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.stationModeButton.transform = CGAffineTransformIdentity
+                self.groupModeButton.transform = scaleEffect
+                self.postModeButton.transform = CGAffineTransformIdentity
+                self.modeLabel.text = "关注中的现场与群组"
+            })
+        case .GroupMode:
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.stationModeButton.transform = CGAffineTransformIdentity
+                self.groupModeButton.transform = scaleEffect
+                self.postModeButton.transform = CGAffineTransformIdentity
+                self.modeLabel.text = self.displayGroup?.name
+            })
+        case .PostListMode:
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.stationModeButton.transform = CGAffineTransformIdentity
+                self.groupModeButton.transform = CGAffineTransformIdentity
+                self.postModeButton.transform = scaleEffect
+                self.modeLabel.text = ""
+            })
+        }
+    }
+    
+    private func updateChooseDateButtonTitle() {
+        
+        var title: String
+        
+        switch self.duration {
+        case .today:
+            title = "今天"
+        case .thisWeek:
+            title = "本周"
+        case .thisMonth:
+            title = "本月"
+        }
+        
+        self.chooseDateButton.setTitle(title, forState: .Normal)
+    }
+    
     func nextDay() {
         
         let dateComponent = NSDateComponents()
@@ -371,7 +450,8 @@ extension MapViewController {
         
         switch self.mode {
         case .PostListMode:
-            AlamofireController.request(.GET, "/posts", parameters: ["category": "map", "day": requestDay!.timeIntervalSince1970], success: { postData in
+//            AlamofireController.request(.GET, "/map/posts", parameters: ["date": requestDay!.timeIntervalSince1970], success: { postData in
+            AlamofireController.request(.GET, "/map/posts", parameters: ["mode": self.duration.rawValue], success: { postData in
                 
                 if let posts:[PostEntity] = PostEntity.collection(postData) {
                     
@@ -389,8 +469,8 @@ extension MapViewController {
                 self.updateVisibleAnnotations()
             })
         case .GroupListMode:
-            AlamofireController.request(.GET, "/groups", parameters: ["category": "map", "day": requestDay!.timeIntervalSince1970], success: { groupData in
-                
+//            AlamofireController.request(.GET, "/map/groups", parameters: ["date": requestDay!.timeIntervalSince1970], success: { groupData in
+            AlamofireController.request(.GET, "/map/groups", parameters: ["mode": self.duration.rawValue], success: { groupData in
                 if let groups:[GroupEntity] = GroupEntity.collection(groupData) {
                     
                     let annotations = groups.map { group -> GroupAnnotation in
@@ -408,7 +488,7 @@ extension MapViewController {
                 
             })
         case .GroupMode:
-            AlamofireController.request(.GET, "/groups/\(self.displayGroup!.id)/posts", parameters: ["category": "map"], success: { postData in
+            AlamofireController.request(.GET, "/groups/\(self.displayGroup!.id)/posts", parameters: nil, success: { postData in
                 
                 if let posts:[PostEntity] = PostEntity.collection(postData) {
                     
@@ -427,7 +507,7 @@ extension MapViewController {
                 
             })
         case .StationListMode:
-            AlamofireController.request(.GET, "/stations", parameters: ["category": "mine"], success: { stationData in
+            AlamofireController.request(.GET, "/map/stations", parameters: ["category": "mine"], success: { stationData in
                 
                 if let stations:[StationEntity] = StationEntity.collection(stationData) {
                     
