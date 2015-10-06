@@ -128,7 +128,15 @@ extension HomeViewController {
 //            cell.setupDisplay()
 //            
 //            return cell
-            var cell = tableView.dequeueReusableCellWithIdentifier(ICYPostCell.identifier) as! ICYPostCell
+//            var cell = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier") as! ICYPostCell
+//            cell.post = post
+//            return cell
+            var cell: ICYPostCell!
+            if post.images?.count > 0 {
+                cell = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier") as! ICYPostImageCell
+            } else {
+                cell = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier") as! ICYPostCell
+            }
             cell.post = post
             return cell
             
@@ -316,8 +324,11 @@ extension HomeViewController {
         var RecommendStationTableCellNib = UINib(nibName: "RecommendStationTableViewCell", bundle: nil)
         tableView.registerNib(RecommendStationTableCellNib, forCellReuseIdentifier: "RecommendStationTableCell")
         
-        var ICYPostCellNib = UINib(nibName: "ICYPostCell", bundle: nil)
-        tableView.registerNib(ICYPostCellNib, forCellReuseIdentifier: ICYPostCell.identifier)
+        let ICYPostCellNib = UINib(nibName: "ICYPostCell", bundle: nil)
+        tableView.registerNib(ICYPostCellNib, forCellReuseIdentifier: "ICYPostCellIdentifier")
+        
+        let ICYPostImageCellNib = UINib(nibName: "ICYPostImageCell", bundle: nil)
+        tableView.registerNib(ICYPostImageCellNib, forCellReuseIdentifier: "ICYPostImageCellIdentifier")
     }
     
     private func setupRefreshControll() {

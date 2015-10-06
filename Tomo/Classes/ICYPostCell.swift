@@ -10,8 +10,6 @@ import UIKit
 
 class ICYPostCell: UITableViewCell {
     
-    static let identifier = "ICYPostCellIdentifier"
-    
     var post: PostEntity? {
         didSet {
             if let post = post {
