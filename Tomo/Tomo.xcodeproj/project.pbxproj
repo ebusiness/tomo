@@ -24,6 +24,7 @@
 		17B993011AF353D000204E97 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B993001AF353D000204E97 /* amrFileCodec.m */; };
 		17B993081AF3540D00204E97 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17B993071AF3540D00204E97 /* libopencore-amrnb.a */; };
 		17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993181AF3712C00204E97 /* OpenidController.swift */; };
+		1F05345C1BC3635700C99DF0 /* PeriodPickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F05345B1BC3635700C99DF0 /* PeriodPickerTableViewController.swift */; };
 		1F1176A31B983D280049D9F5 /* SocketAckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1176961B983D280049D9F5 /* SocketAckManager.swift */; };
 		1F1176A41B983D280049D9F5 /* SocketAnyEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1176971B983D280049D9F5 /* SocketAnyEvent.swift */; };
 		1F1176A51B983D280049D9F5 /* SocketEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1176981B983D280049D9F5 /* SocketEngine.swift */; };
@@ -158,6 +159,8 @@
 		D07E48541B9EB35B00BF04B2 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07E48531B9EB35B00BF04B2 /* Entity.swift */; };
 		D0891C961B8AF5A600701CC7 /* SearchFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0891C951B8AF5A600701CC7 /* SearchFriendCell.swift */; };
 		D08BFB0B1B744C2D00771F70 /* JSQMessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08BFB0A1B744C2D00771F70 /* JSQMessageEntity.swift */; };
+		D0960AAC1BC376FB00A63733 /* UltravisualLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0960AAB1BC376FB00A63733 /* UltravisualLayout.swift */; };
+		D0960AAE1BC3CE2600A63733 /* MyGroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0960AAD1BC3CE2600A63733 /* MyGroupListViewController.swift */; };
 		D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */; };
 		D0A0C02E1B5F594C00ABFA5F /* ProfileBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C02D1B5F594C00ABFA5F /* ProfileBaseController.swift */; };
 		D0A0C0301B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */; };
@@ -197,6 +200,7 @@
 		17B993051AF353F600204E97 /* interf_enc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interf_enc.h; path = "opencore-amr/include/opencore-amrnb/interf_enc.h"; sourceTree = "<group>"; };
 		17B993071AF3540D00204E97 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libopencore-amrnb.a"; path = "opencore-amr/lib/libopencore-amrnb.a"; sourceTree = "<group>"; };
 		17B993181AF3712C00204E97 /* OpenidController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidController.swift; path = Classes/OpenidController.swift; sourceTree = "<group>"; };
+		1F05345B1BC3635700C99DF0 /* PeriodPickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeriodPickerTableViewController.swift; path = Classes/PeriodPickerTableViewController.swift; sourceTree = "<group>"; };
 		1F1176961B983D280049D9F5 /* SocketAckManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAckManager.swift; sourceTree = "<group>"; };
 		1F1176971B983D280049D9F5 /* SocketAnyEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAnyEvent.swift; sourceTree = "<group>"; };
 		1F1176981B983D280049D9F5 /* SocketEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketEngine.swift; sourceTree = "<group>"; };
@@ -343,6 +347,8 @@
 		D07E48531B9EB35B00BF04B2 /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Entity.swift; path = Classes/Entity.swift; sourceTree = "<group>"; };
 		D0891C951B8AF5A600701CC7 /* SearchFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchFriendCell.swift; path = Classes/SearchFriendCell.swift; sourceTree = "<group>"; };
 		D08BFB0A1B744C2D00771F70 /* JSQMessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSQMessageEntity.swift; path = Classes/JSQMessageEntity.swift; sourceTree = "<group>"; };
+		D0960AAB1BC376FB00A63733 /* UltravisualLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UltravisualLayout.swift; sourceTree = "<group>"; };
+		D0960AAD1BC3CE2600A63733 /* MyGroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyGroupListViewController.swift; path = Classes/MyGroupListViewController.swift; sourceTree = "<group>"; };
 		D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Profile.storyboard; path = Classes/Profile.storyboard; sourceTree = "<group>"; };
 		D0A0C02D1B5F594C00ABFA5F /* ProfileBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileBaseController.swift; path = Classes/ProfileBaseController.swift; sourceTree = "<group>"; };
 		D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileHeaderViewController.swift; path = Classes/ProfileHeaderViewController.swift; sourceTree = "<group>"; };
@@ -498,6 +504,7 @@
 				1FA76B081BA2C642004776B0 /* GroupCreateViewController.swift */,
 				1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */,
 				28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */,
+				D0960AAD1BC3CE2600A63733 /* MyGroupListViewController.swift */,
 			);
 			name = Group;
 			sourceTree = "<group>";
@@ -515,6 +522,7 @@
 				1F8DEBDE1BBD22600037FD1C /* PostCallOutViewController.swift */,
 				1FAA70FB1BBBF97B00BCE5AF /* StationAnnotation.swift */,
 				1FAA70FD1BBBF99100BCE5AF /* StationAnnotationView.swift */,
+				1F05345B1BC3635700C99DF0 /* PeriodPickerTableViewController.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -678,6 +686,7 @@
 				299389421AD3B33800043D91 /* AmazonS3RequestManager */,
 				17B992FE1AF353C200204E97 /* opencore-amr */,
 				D0B40BBE1B78AF0400685D67 /* ExNSDate.swift */,
+				D0960AAB1BC376FB00A63733 /* UltravisualLayout.swift */,
 			);
 			path = Vendors;
 			sourceTree = "<group>";
@@ -1117,6 +1126,7 @@
 				29DCEFE91B14519300A7C7AF /* TomoVideoMediaItem.swift in Sources */,
 				1FEE80EE1B4E60850061B913 /* PostCell.swift in Sources */,
 				17B993011AF353D000204E97 /* amrFileCodec.m in Sources */,
+				1F05345C1BC3635700C99DF0 /* PeriodPickerTableViewController.swift in Sources */,
 				D0DB07D91B9D224900C06C4E /* NotificationView.swift in Sources */,
 				290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */,
 				1F1176AE1B983D280049D9F5 /* SwiftRegex.swift in Sources */,
@@ -1142,6 +1152,7 @@
 				29C1DA7A1AD36659009A02CC /* S3Controller.swift in Sources */,
 				D07793851B704F290056B7CB /* PickerTableViewController.swift in Sources */,
 				1F79C1B81B5E730E008800E1 /* SearchFriendViewController.swift in Sources */,
+				D0960AAE1BC3CE2600A63733 /* MyGroupListViewController.swift in Sources */,
 				D0A0C0301B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift in Sources */,
 				D0891C961B8AF5A600701CC7 /* SearchFriendCell.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
@@ -1196,6 +1207,7 @@
 				D0BA8DE71B55375A00271F2B /* PostViewController.swift in Sources */,
 				1F26B29A1BAA61D10063AC6B /* GroupDetailViewController.swift in Sources */,
 				285778511BC272E000533E8E /* ICYTagButton.swift in Sources */,
+				D0960AAC1BC376FB00A63733 /* UltravisualLayout.swift in Sources */,
 				295272D01AD51B2300FC7833 /* S3.swift in Sources */,
 				D0F44FAD1B5E534B009E12AA /* MyPostsViewController.swift in Sources */,
 				D07D8A1A1B99A3DF00D13096 /* NotificationListViewController.swift in Sources */,

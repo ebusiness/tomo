@@ -158,8 +158,8 @@
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最近消息" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="emZ-LY-ySK">
-                                            <rect key="frame" x="84" y="44" width="56" height="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最近消息" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="emZ-LY-ySK">
+                                            <rect key="frame" x="84" y="44" width="220" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -198,6 +198,7 @@
                                         <constraint firstItem="73N-tU-gLq" firstAttribute="leading" secondItem="AQB-Ti-cPZ" secondAttribute="trailing" constant="16" id="8eu-vb-inY"/>
                                         <constraint firstAttribute="trailing" secondItem="73N-tU-gLq" secondAttribute="trailing" constant="16" id="D95-3x-zVc"/>
                                         <constraint firstAttribute="centerY" secondItem="f14-nm-854" secondAttribute="centerY" id="DqD-2B-OaM"/>
+                                        <constraint firstAttribute="trailing" secondItem="emZ-LY-ySK" secondAttribute="trailing" constant="16" id="FYU-41-hXN"/>
                                         <constraint firstItem="f14-nm-854" firstAttribute="centerY" secondItem="emZ-LY-ySK" secondAttribute="top" id="Nqw-RL-05v"/>
                                         <constraint firstItem="Ic9-RH-PbK" firstAttribute="top" secondItem="f14-nm-854" secondAttribute="top" id="UE3-vv-Kgr"/>
                                         <constraint firstItem="AQB-Ti-cPZ" firstAttribute="bottom" secondItem="f14-nm-854" secondAttribute="centerY" id="lqu-VB-Rrg"/>
@@ -278,7 +279,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这家伙很懒,什么都没写." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xa1-8c-wu4">
-                                            <rect key="frame" x="84" y="44" width="212" height="17"/>
+                                            <rect key="frame" x="84" y="44" width="220" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -287,7 +288,7 @@
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="M34-iK-lrC" secondAttribute="centerY" id="B3H-Rh-iV1"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="SQy-WC-KbA" secondAttribute="trailing" constant="16" id="GRo-WU-BZV"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Xa1-8c-wu4" secondAttribute="trailing" constant="16" id="HhB-ld-gON"/>
+                                        <constraint firstAttribute="trailing" secondItem="Xa1-8c-wu4" secondAttribute="trailing" constant="16" id="HhB-ld-gON"/>
                                         <constraint firstItem="SQy-WC-KbA" firstAttribute="bottom" secondItem="M34-iK-lrC" secondAttribute="centerY" id="NbB-ls-6Cb"/>
                                         <constraint firstItem="Xa1-8c-wu4" firstAttribute="leading" secondItem="M34-iK-lrC" secondAttribute="trailing" constant="8" id="QbC-zp-iN7"/>
                                         <constraint firstItem="M34-iK-lrC" firstAttribute="leading" secondItem="ytp-rp-Scs" secondAttribute="leading" constant="16" id="XMY-2x-IER"/>

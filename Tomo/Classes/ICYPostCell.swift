@@ -59,7 +59,7 @@ class ICYPostCell: UITableViewCell {
                     commentCountButton.setTitle("\(post.comments!.count)", forState: UIControlState.Normal)
                     commentCountButton.setImage(UIImage(named: "comments"), forState: UIControlState.Normal)
                 } else {
-                    commentViewHeight.constant = CGFloat.relativeZero
+                    commentViewHeight.constant = CGFloat.almostZero
                     minorAvatarImageViewHeight.constant = 0.0
                     lastCommentAvatarImageView.image = nil
                     lastCommentContent.text = nil

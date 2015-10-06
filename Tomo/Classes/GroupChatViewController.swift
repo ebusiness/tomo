@@ -11,8 +11,6 @@ import MobileCoreServices
 
 final class GroupChatViewController: CommonMessageController {
     
-    var selectedIndexPath: NSIndexPath?
-    
     var group: GroupEntity!
     
     var avatars = Dictionary<String, JSQMessagesAvatarImage>()
@@ -437,19 +435,17 @@ extension GroupChatViewController {
             gallery.UICustomization.showMHShareViewInsteadOfActivityViewController = false
             
             gallery.finishedCallback = { [weak self] (currentIndex, image, transition, viewMode) -> Void in
-                let cell = self!.collectionView.cellForItemAtIndexPath(self!.selectedIndexPath!) as!JSQMessagesCollectionViewCell
+                let cell = self!.collectionView.cellForItemAtIndexPath(indexPath) as!JSQMessagesCollectionViewCell
                 let imageView = cell.mediaView as! UIImageView
                 gcd.async(.Main, closure: { () -> () in
                     gallery.dismissViewControllerAnimated(true, dismissImageView: imageView, completion: { [weak self] () -> Void in
                         self!.automaticallyScrollsToMostRecentMessage = true
-                        self!.collectionView.reloadItemsAtIndexPaths([self!.selectedIndexPath!])
-                        })
-                    
+                        self!.collectionView.reloadItemsAtIndexPaths([indexPath])
+                    })
                 })
             }
             
             self.automaticallyScrollsToMostRecentMessage = false
-            selectedIndexPath = indexPath
             presentMHGalleryController(gallery, animated: true, completion: nil)
         } else {
             

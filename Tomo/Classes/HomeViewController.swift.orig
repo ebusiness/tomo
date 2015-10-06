@@ -36,9 +36,6 @@ final class HomeViewController: BaseTableViewController {
     var postCellEstimator: ICYPostCell!
     var postImageCellEstimator: ICYPostImageCell!
     
-    /// true: comment, false: cell content
-    private var selectCellOrComment = false
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -46,8 +43,6 @@ final class HomeViewController: BaseTableViewController {
         self.registerCell()
         
         self.setupRefreshControll()
-        
-        //        self.setupTableRowHeight()
         
         self.setupLocationManager()
         
@@ -117,7 +112,12 @@ extension HomeViewController {
                 cell = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier") as! ICYPostCell
             }
             cell.post = post
+<<<<<<< HEAD
             cell.delegate = self
+=======
+            cell.setupDisplay()
+            
+>>>>>>> 63b01bbbafbaf5d29ddf79d3d62bb695a7155cec
             return cell
             
         } else {
@@ -524,3 +524,7 @@ extension HomeViewController {
         tableView.endUpdates()
     }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 63b01bbbafbaf5d29ddf79d3d62bb695a7155cec

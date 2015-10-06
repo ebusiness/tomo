@@ -30,9 +30,6 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var bottomLine: UIView!
     @IBOutlet weak var contentWidthConstraint: NSLayoutConstraint!
     
-    
-    weak var delegate: PostCellDelegate?
-    
     var post: PostEntity!
     
 //    var tableView: UITableView? {
@@ -226,23 +223,26 @@ class PostCell: UITableViewCell {
     }
 }
 
-protocol PostCellDelegate: class {
-    func postCellMajorAvatarTapped(post: PostEntity)
-    func postCellMinorAvatarTapped(post: PostEntity)
-    func postCellImageTapped(post: PostEntity)
-    func postCellCommentTapped(post: PostEntity)
-}
-
-
 // MARK: - Gestures
 extension PostCell {
     func majorAvatarTapped() {
-        delegate?.postCellMajorAvatarTapped(post)
+        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+        vc.user = self.post.owner
+        self.parentViewController?.navigationController?.pushViewController(vc, animated: true)
     }
+    
     func minorAvatarTapped() {
-        delegate?.postCellMinorAvatarTapped(post)
+        if let member = self.post.comments?.last?.owner {
+            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+            vc.user = member
+            self.parentViewController?.navigationController?.pushViewController(vc, animated: true)
+        }
     }
+    
     func commentTapped() {
-        delegate?.postCellCommentTapped(post)
+        let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
+        vc.isCommentInitial = true
+        vc.post = self.post
+        self.parentViewController?.navigationController?.pushViewController(vc, animated: true)
     }
 }

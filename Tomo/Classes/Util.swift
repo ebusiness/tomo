@@ -305,8 +305,21 @@ extension UIImageView {
     }
 }
 
+extension UIView {
+    var parentViewController: UIViewController? {
+        var parentResponder: UIResponder? = self
+        while parentResponder != nil {
+            parentResponder = parentResponder!.nextResponder()
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
+}
+
 extension CGFloat {
-    static var relativeZero: CGFloat {
-        return 0.0001
+    static var almostZero: CGFloat {
+        return 0.00001
     }
 }

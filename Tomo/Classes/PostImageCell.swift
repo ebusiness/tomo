@@ -93,7 +93,9 @@ class PostImageCell: PostCell {
     }
     
     func imageScrollTapped() {
-        delegate?.postCellImageTapped(post)
+        let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
+        vc.post = self.post
+        self.parentViewController?.navigationController?.pushViewController(vc, animated: true)
     }
 
 }
