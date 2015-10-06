@@ -33,8 +33,8 @@ final class HomeViewController: BaseTableViewController {
     
     var timer: NSTimer?
     
-    var postCellEstimator: PostCell!
-    var postImageCellEstimator: PostImageCell!
+    var postCellEstimator: ICYPostCell!
+    var postImageCellEstimator: ICYPostImageCell!
     
     /// true: comment, false: cell content
     private var selectCellOrComment = false
@@ -47,7 +47,7 @@ final class HomeViewController: BaseTableViewController {
         
         self.setupRefreshControll()
         
-        self.setupTableRowHeight()
+//        self.setupTableRowHeight()
         
         self.setupLocationManager()
         
@@ -114,23 +114,6 @@ extension HomeViewController {
             return cell
             
         } else if let post = contents[indexPath.row] as? PostEntity {
-            
-//            var cell: PostCell!
-//            
-//            if post.images?.count > 0 {
-//                cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell", forIndexPath: indexPath) as! PostImageCell
-//            } else {
-//                cell = tableView.dequeueReusableCellWithIdentifier("PostCell", forIndexPath: indexPath) as! PostCell
-//            }
-//            
-//            cell.post = post
-//            cell.delegate = self
-//            cell.setupDisplay()
-//            
-//            return cell
-//            var cell = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier") as! ICYPostCell
-//            cell.post = post
-//            return cell
             var cell: ICYPostCell!
             if post.images?.count > 0 {
                 cell = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier") as! ICYPostImageCell
@@ -158,35 +141,33 @@ extension HomeViewController {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
-//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        if let post = contents[indexPath.row] as? PostEntity {
-//            if post.contentHeight == nil {
-//                if post.images?.count > 0 {
-//                    if postImageCellEstimator == nil {
-//                        postImageCellEstimator = tableView.dequeueReusableCellWithIdentifier("PostImageCell") as! PostImageCell
-//                    }
-//                    postImageCellEstimator.post = post
-//                    postImageCellEstimator.setupDisplay()
-//                    let size = postImageCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-//                    post.contentHeight = size.height
-//                } else {
-//                    if postCellEstimator == nil {
-//                        postCellEstimator = tableView.dequeueReusableCellWithIdentifier("PostCell") as! PostCell
-//                    }
-//                    postCellEstimator.post = post
-//                    postCellEstimator.setupDisplay()
-//                    let size = postCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-//                    post.contentHeight = size.height
-//                }
-//            }
-//            return post.contentHeight!
-//        } else if let stations = contents[indexPath.row] as? [StationEntity] {
-//            return 423.0
-//        } else if let groups = contents[indexPath.row] as? [GroupEntity] {
-//            return 623.0
-//        }
-//        return 0
-//    }
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if let post = contents[indexPath.row] as? PostEntity {
+            if post.contentHeight == nil {
+                if post.images?.count > 0 {
+                    if postImageCellEstimator == nil {
+                        postImageCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier") as! ICYPostImageCell
+                    }
+                    postImageCellEstimator.post = post
+                    let size = postImageCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+                    post.contentHeight = size.height
+                } else {
+                    if postCellEstimator == nil {
+                        postCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier") as! ICYPostCell
+                    }
+                    postCellEstimator.post = post
+                    let size = postCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+                    post.contentHeight = size.height
+                }
+            }
+            return post.contentHeight!
+        } else if let stations = contents[indexPath.row] as? [StationEntity] {
+            return 423.0
+        } else if let groups = contents[indexPath.row] as? [GroupEntity] {
+            return 623.0
+        }
+        return 0
+    }
     
 }
 

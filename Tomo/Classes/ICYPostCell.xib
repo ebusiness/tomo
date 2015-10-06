@@ -164,6 +164,7 @@
                         </constraints>
                     </view>
                 </subviews>
+                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="asU-Al-bof" secondAttribute="bottom" priority="999" constant="8" id="4ZG-fv-kot"/>
                     <constraint firstItem="asU-Al-bof" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" priority="999" constant="8" id="K4j-Yd-AxU"/>
