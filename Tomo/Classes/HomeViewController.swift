@@ -370,17 +370,16 @@ extension HomeViewController {
     private func getRecommendInfo() {
         
         var params = Dictionary<String, AnyObject>()
-        params["category"] = "discover"
         
         if let location = self.location {
             params["coordinate"] = [location.coordinate.latitude, location.coordinate.longitude];
         }
         
-        AlamofireController.request(.GET, "/groups", parameters: params, success: { groupData in
+        AlamofireController.request(.GET, "/map/groups", parameters: params, success: { groupData in
             self.recommendGroups = GroupEntity.collection(groupData)
         })
         
-        AlamofireController.request(.GET, "/stations", parameters: params, success: { stationData in
+        AlamofireController.request(.GET, "/map/stations", parameters: params, success: { stationData in
             self.recommendStations = StationEntity.collection(stationData)
         })
     }

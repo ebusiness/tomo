@@ -106,7 +106,7 @@ extension StationDiscoverViewController {
         let parameter: [String: AnyObject] = [
             "coordinate": [coordinate.latitude, coordinate.longitude],
         ]
-        AlamofireController.request(.GET, "/stations",
+        AlamofireController.request(.GET, "/map/stations",
             parameters: parameter, success: { (object) -> () in
                 self.stations = StationEntity.collection(object)
                 self.refresh()
@@ -130,7 +130,7 @@ extension StationDiscoverViewController {
         if let searchText = searchText {
             parameter["name"] = searchText
         }
-        AlamofireController.request(.GET, "/stations", parameters: parameter,
+        AlamofireController.request(.GET, "/map/stations", parameters: parameter,
             success: { (object) -> () in
                 if let stations: [StationEntity] = StationEntity.collection(object) {
                     self.stations?.extend(stations)
@@ -170,7 +170,7 @@ extension StationDiscoverViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         let text = searchBar.text
         searchText = searchBar.text
-        AlamofireController.request(.GET, "/stations",
+        AlamofireController.request(.GET, "/map/stations",
             parameters: ["name": text],
             success: { (object) -> () in
                 self.stations = StationEntity.collection(object)
