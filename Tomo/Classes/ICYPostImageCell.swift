@@ -62,4 +62,14 @@ extension ICYPostImageCell: UICollectionViewDelegate, UICollectionViewDataSource
             return super.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAtIndexPath: indexPath)
         }
     }
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if collectionView == imageCollectionView {
+            if let post = post {
+                let postVC = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
+                postVC.post = post
+                delegate?.navigationController?.pushViewController(postVC, animated: true)
+            }
+        } else {
+        }
+    }
 }
