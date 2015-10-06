@@ -17,6 +17,49 @@ class ICYPostImageCell: ICYPostCell {
             } else {
                 super.post = nil
             }
+            imageCollectionView.reloadData()
+        }
+    }
+    
+    @IBOutlet weak var imageCollectionView: UICollectionView!
+    
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        let sigleImageCell = UINib(nibName: "ICYCollectionViewSingleImageCell", bundle: nil)
+        imageCollectionView.registerNib(sigleImageCell, forCellWithReuseIdentifier: ICYCollectionViewSingleImageCell.identifier)
+    }
+    
+    private let screenWidth = UIScreen.mainScreen().bounds.width
+    
+}
+
+extension ICYPostImageCell: UICollectionViewDelegate, UICollectionViewDataSource {
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == imageCollectionView {
+            return post?.images?.count ?? 0
+        } else {
+            return super.collectionView(collectionView, numberOfItemsInSection: section)
+        }
+    }
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        if collectionView == imageCollectionView {
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ICYCollectionViewSingleImageCell.identifier, forIndexPath: indexPath) as! ICYCollectionViewSingleImageCell
+            if let imageURL = post?.images?.get(indexPath.row) {
+                cell.imageURL = imageURL
+            } else {
+                cell.imageURL = nil
+            }
+            return cell
+        } else {
+            return super.collectionView(collectionView, cellForItemAtIndexPath: indexPath)
+        }
+    }
+    override func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        if collectionView == imageCollectionView {
+            return CGSize(width: screenWidth, height: 250.0)
+        } else {
+            return super.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAtIndexPath: indexPath)
         }
     }
 }

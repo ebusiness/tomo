@@ -7,42 +7,47 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ICYPostImageCellIdentifier" rowHeight="433" id="KGk-i7-Jjw" customClass="ICYPostImageCell" customModule="tomo" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="314" height="433"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ICYPostImageCellIdentifier" rowHeight="534" id="KGk-i7-Jjw" customClass="ICYPostImageCell" customModule="tomo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="314" height="534"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AfO-VT-fSv">
-                        <rect key="frame" x="0.0" y="8" width="314" height="416.5"/>
+                        <rect key="frame" x="0.0" y="8" width="314" height="517.5"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="XuU-Hv-w6D">
-                                <rect key="frame" x="0.0" y="0.0" width="314" height="120"/>
+                                <rect key="frame" x="0.0" y="0.0" width="314" height="250"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="120" id="KFu-hJ-SCr"/>
+                                    <constraint firstAttribute="height" constant="250" id="KFu-hJ-SCr"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vOp-Sb-xCb">
-                                    <size key="itemSize" width="50" height="50"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="vOp-Sb-xCb">
+                                    <size key="itemSize" width="314" height="250"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
+                                <connections>
+                                    <outlet property="dataSource" destination="KGk-i7-Jjw" id="KVT-CO-iWk"/>
+                                    <outlet property="delegate" destination="KGk-i7-Jjw" id="CLe-Ic-rnb"/>
+                                </connections>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="600" text="用户名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lkc-gW-6rk">
-                                <rect key="frame" x="94" y="128" width="51" height="20.5"/>
+                                <rect key="frame" x="94" y="258" width="51" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="500" text="日期" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1it-KP-iAZ">
-                                <rect key="frame" x="153" y="131" width="24" height="14.5"/>
+                                <rect key="frame" x="153" y="261" width="24" height="14.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXg-b1-Plu" userLabel="收藏">
-                                <rect key="frame" x="226" y="130" width="25" height="25"/>
+                                <rect key="frame" x="226" y="260" width="25" height="25"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" image="star">
                                     <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -50,7 +55,7 @@
                                 </state>
                             </button>
                             <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1KV-Wy-XX4" userLabel="点赞">
-                                <rect key="frame" x="259" y="130" width="39" height="25"/>
+                                <rect key="frame" x="259" y="260" width="39" height="25"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="15" image="hearts">
                                     <color key="titleColor" red="0.95686274510000002" green="0.26274509800000001" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -58,7 +63,7 @@
                                 </state>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J74-PS-B6b" userLabel="内容">
-                                <rect key="frame" x="16" y="163" width="282" height="101.5"/>
+                                <rect key="frame" x="16" y="293" width="282" height="72.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="200" id="dhJ-0T-jjO"/>
                                 </constraints>
@@ -66,7 +71,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="kGR-hJ-Vwc" userLabel="TAG！">
-                                <rect key="frame" x="8" y="272.5" width="298" height="80"/>
+                                <rect key="frame" x="8" y="373.5" width="298" height="80"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="1uV-6P-8Ng"/>
@@ -78,7 +83,7 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xfO-UH-rq5" userLabel="评论">
-                                <rect key="frame" x="8" y="352.5" width="298" height="56"/>
+                                <rect key="frame" x="8" y="453.5" width="298" height="56"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p3n-Ex-dmY" userLabel="小头像">
                                         <rect key="frame" x="8" y="8" width="40" height="40"/>
@@ -124,7 +129,7 @@
                                 </constraints>
                             </view>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="FFq-2v-BOP" userLabel="大头像">
-                                <rect key="frame" x="16" y="85" width="70" height="70"/>
+                                <rect key="frame" x="16" y="215" width="70" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="jhI-Ms-U38"/>
                                     <constraint firstAttribute="height" constant="70" id="myl-ZE-WRf"/>
@@ -183,6 +188,7 @@
                 <outlet property="contentLabel" destination="J74-PS-B6b" id="xB3-7a-G6h"/>
                 <outlet property="dateLabel" destination="1it-KP-iAZ" id="RTS-OE-mis"/>
                 <outlet property="flowLayout" destination="cCe-HW-YJh" id="y6k-F9-wNA"/>
+                <outlet property="imageCollectionView" destination="XuU-Hv-w6D" id="Log-58-2vS"/>
                 <outlet property="lastCommentAvatarImageView" destination="p3n-Ex-dmY" id="cdC-cz-qGw"/>
                 <outlet property="lastCommentContent" destination="Y62-Yo-Zhh" id="2H1-RF-Zbw"/>
                 <outlet property="lastCommentDateLabel" destination="bpc-e1-ZPm" id="Pmu-R6-GZa"/>
@@ -191,7 +197,7 @@
                 <outlet property="minorAvatarImageViewHeight" destination="B1d-AE-rI2" id="qLo-BP-3dV"/>
                 <outlet property="userNameLabel" destination="lkc-gW-6rk" id="RRT-bM-coA"/>
             </connections>
-            <point key="canvasLocation" x="231" y="318.5"/>
+            <point key="canvasLocation" x="231" y="369"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -103,6 +103,8 @@
 		283771911BC37653001B06D3 /* ICYFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283771901BC37653001B06D3 /* ICYFlowLayout.swift */; };
 		283771981BC3A329001B06D3 /* ICYPostImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283771961BC3A329001B06D3 /* ICYPostImageCell.swift */; };
 		283771991BC3A329001B06D3 /* ICYPostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 283771971BC3A329001B06D3 /* ICYPostImageCell.xib */; };
+		2837719E1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2837719C1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.swift */; };
+		2837719F1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2837719D1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.xib */; };
 		2857784C1BC25DC600533E8E /* ICYPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2857784A1BC25DC600533E8E /* ICYPostCell.swift */; };
 		2857784D1BC25DC600533E8E /* ICYPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2857784B1BC25DC600533E8E /* ICYPostCell.xib */; };
 		285778511BC272E000533E8E /* ICYTagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285778501BC272E000533E8E /* ICYTagButton.swift */; };
@@ -276,6 +278,8 @@
 		283771901BC37653001B06D3 /* ICYFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYFlowLayout.swift; path = Classes/ICYFlowLayout.swift; sourceTree = "<group>"; };
 		283771961BC3A329001B06D3 /* ICYPostImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYPostImageCell.swift; path = Classes/ICYPostImageCell.swift; sourceTree = "<group>"; };
 		283771971BC3A329001B06D3 /* ICYPostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ICYPostImageCell.xib; path = Classes/ICYPostImageCell.xib; sourceTree = "<group>"; };
+		2837719C1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYCollectionViewSingleImageCell.swift; path = Classes/ICYCollectionViewSingleImageCell.swift; sourceTree = "<group>"; };
+		2837719D1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ICYCollectionViewSingleImageCell.xib; path = Classes/ICYCollectionViewSingleImageCell.xib; sourceTree = "<group>"; };
 		2857784A1BC25DC600533E8E /* ICYPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYPostCell.swift; path = Classes/ICYPostCell.swift; sourceTree = "<group>"; };
 		2857784B1BC25DC600533E8E /* ICYPostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ICYPostCell.xib; path = Classes/ICYPostCell.xib; sourceTree = "<group>"; };
 		285778501BC272E000533E8E /* ICYTagButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYTagButton.swift; path = Classes/ICYTagButton.swift; sourceTree = "<group>"; };
@@ -541,6 +545,8 @@
 				2857784B1BC25DC600533E8E /* ICYPostCell.xib */,
 				283771961BC3A329001B06D3 /* ICYPostImageCell.swift */,
 				283771971BC3A329001B06D3 /* ICYPostImageCell.xib */,
+				2837719C1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.swift */,
+				2837719D1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.xib */,
 				1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */,
 				1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */,
 				1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */,
@@ -967,6 +973,7 @@
 				D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */,
 				D0DB07D71B9D1B5200C06C4E /* NotificationView.xib in Resources */,
 				29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */,
+				2837719F1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.xib in Resources */,
 				1FB69E661BB2A0E9009D0C96 /* RecommendStationTableViewCell.xib in Resources */,
 				296D8BC41AFC5A680058D400 /* Main.storyboard in Resources */,
 				29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */,
@@ -1114,6 +1121,7 @@
 				290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */,
 				1F1176AE1B983D280049D9F5 /* SwiftRegex.swift in Sources */,
 				29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */,
+				2837719E1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.swift in Sources */,
 				29539C791B13175D00545509 /* CommonMessageController.swift in Sources */,
 				2994AF911B019AA100656C39 /* GCD.swift in Sources */,
 				1FA76B021BA2A01D004776B0 /* GroupListViewController.swift in Sources */,
