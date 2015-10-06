@@ -105,6 +105,62 @@ class ICYPostCell: UITableViewCell {
     
     @IBOutlet weak var minorAvatarImageViewHeight: NSLayoutConstraint!
     
+    // MARK: - Actions
+    
+    @IBAction func bookmarkButtonPressed(sender: UIButton) {
+        if var post = post {
+            sender.userInteractionEnabled = false
+            AlamofireController.request(.PATCH, "/posts/\(post.id)/bookmark", success: { _ in
+                
+                me.bookmark = me.bookmark ?? []
+                post.bookmark = post.bookmark ?? []
+                
+                if me.bookmark!.contains(post.id) {
+                    me.bookmark!.remove(post.id)
+                    post.bookmark!.remove(me.id)
+                } else {
+                    me.bookmark!.append(post.id)
+                    post.bookmark!.append(me.id)
+                }
+                self.post = post
+                sender.tada {
+                    sender.userInteractionEnabled = true
+                }
+                }) { err in
+                    sender.userInteractionEnabled = true
+            }
+        }
+    }
+    
+    @IBAction func likeButtonPressed(sender: UIButton) {
+        if var post = post {
+            sender.userInteractionEnabled = false
+            AlamofireController.request(.PATCH, "/posts/\(post.id)/like", success: { _ in
+                
+                if let like = post.like {
+                    like.contains(me.id) ? post.like!.remove(me.id) : post.like!.append(me.id)
+                } else {
+                    post.like = [me.id]
+                }
+                
+                sender.bounce{
+                    self.post = post
+                    sender.userInteractionEnabled = true
+                }
+                }) { err in
+                    sender.userInteractionEnabled = true
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
