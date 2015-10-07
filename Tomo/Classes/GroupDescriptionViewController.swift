@@ -25,6 +25,7 @@ class GroupDescriptionViewController: BaseTableViewController {
                     memberCollectionView.reloadData()
                     memberCollectionViewHeightConstraint.constant = memberCollectionView.collectionViewLayout.collectionViewContentSize().height
                     tableView.reloadData()
+                    memberCollectionView.layoutIfNeeded()
                 }
             }
         }
