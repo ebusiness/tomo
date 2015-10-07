@@ -28,6 +28,9 @@ class ICYPostImageCell: ICYPostCell {
         super.awakeFromNib()
         let sigleImageCell = UINib(nibName: "ICYCollectionViewSingleImageCell", bundle: nil)
         imageCollectionView.registerNib(sigleImageCell, forCellWithReuseIdentifier: ICYCollectionViewSingleImageCell.identifier)
+        
+        majorAvatarImageView.layer.borderWidth = 2.0
+        majorAvatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
     }
     
     private let screenWidth = UIScreen.mainScreen().bounds.width

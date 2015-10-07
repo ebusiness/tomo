@@ -72,9 +72,9 @@ class ICYPostCell: UITableViewCell {
     }
     
     // MARK: - Outlets
-    @IBOutlet private weak var majorAvatarImageView: UIImageView!
+    @IBOutlet weak var majorAvatarImageView: UIImageView!
     
-    @IBOutlet private weak var contentLabel: UILabel!
+    @IBOutlet weak var contentLabel: UILabel!
     
     @IBOutlet weak var userNameLabel: UILabel!
     

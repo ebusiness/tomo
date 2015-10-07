@@ -10,7 +10,7 @@ import UIKit
 
 class ICYTagButton: UIButton {
     
-    static let font = UIFont.systemFontOfSize(13)
+    static let font = UIFont.systemFontOfSize(12)
     
     class func defaultSize(string: String) -> CGSize {
         let size = string.boundingRectWithSize(CGSize(width: 5000, height: 24), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil).size
