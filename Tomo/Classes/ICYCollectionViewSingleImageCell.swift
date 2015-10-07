@@ -11,15 +11,29 @@ import UIKit
 class ICYCollectionViewSingleImageCell: UICollectionViewCell {
     static let identifier = "ICYCollectionViewSingleImageCellIdentifier"
     
+    static let minCenterScale = CGFloat(1.5)
+    static let maxAspectFitScale = CGFloat(3.5)
+    static let minAspectFitScale = CGFloat(1 / 3.5)
+    
     var imageURL: String? {
         didSet {
             let placeholderImage = UIImage(named: "placeholder")
             if let url = imageURL {
+                imageView.contentMode = .ScaleAspectFill
                 imageView.sd_setImageWithURL(NSURL(string: url), placeholderImage: placeholderImage, completed: { (image, _, _, _) -> Void in
+                    if image == nil {
+                        self.imageView.contentMode = .ScaleAspectFill
+                        return
+                    }
                     let size = image.size
-                    if size.height < 250 && size.width < UIScreen.mainScreen().bounds.width {
+                    let ratio = size.width / size.height
+                    if size.height < (self.imageView.bounds.height / ICYCollectionViewSingleImageCell.minCenterScale)
+                        && size.width < (self.imageView.bounds.width / ICYCollectionViewSingleImageCell.minCenterScale) {
                         self.imageView.contentMode = .Center
-                    } else {
+                    } else if ratio > ICYCollectionViewSingleImageCell.maxAspectFitScale
+                    || ratio < ICYCollectionViewSingleImageCell.minAspectFitScale {
+                        self.imageView.contentMode = .ScaleAspectFit
+                    }else {
                         self.imageView.contentMode = .ScaleAspectFill
                     }
                 })
