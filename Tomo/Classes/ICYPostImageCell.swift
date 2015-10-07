@@ -14,14 +14,22 @@ class ICYPostImageCell: ICYPostCell {
         didSet {
             if let post = post {
                 super.post = post
+                pageControl.numberOfPages = post.images?.count ?? 0
+                pageControlWidthConstraint.constant = pageControl.sizeForNumberOfPages(pageControl.numberOfPages + 1).width
             } else {
                 super.post = nil
+                pageControl.numberOfPages = 0
+                pageControlWidthConstraint.constant = 0
             }
             imageCollectionView.reloadData()
         }
     }
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
+    
+    @IBOutlet weak var pageControl: UIPageControl!
+    
+    @IBOutlet weak var pageControlWidthConstraint: NSLayoutConstraint!
     
     
     override func awakeFromNib() {
@@ -31,6 +39,8 @@ class ICYPostImageCell: ICYPostCell {
         
         majorAvatarImageView.layer.borderWidth = 2.0
         majorAvatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        
+        pageControl.layer.cornerRadius = pageControl.bounds.height / 2.0
     }
     
 }
@@ -69,6 +79,16 @@ extension ICYPostImageCell: UICollectionViewDelegate, UICollectionViewDataSource
                 let postVC = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
                 postVC.post = post
                 delegate?.navigationController?.pushViewController(postVC, animated: true)
+            }
+        } else {
+        }
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView == imageCollectionView {
+            if let count = post?.images?.count where count > 1 {
+                let currentPage = Int(floor((scrollView.contentOffset.x + screenWidth / 2.0) / screenWidth))
+                pageControl.currentPage = currentPage
             }
         } else {
         }

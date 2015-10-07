@@ -106,6 +106,8 @@ class ICYPostCell: UITableViewCell {
     
     @IBOutlet weak var commentView: UIView!
     
+
+    
     @IBOutlet weak var flowLayout: ICYFlowLayout!
     
     

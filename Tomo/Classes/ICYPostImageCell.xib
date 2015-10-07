@@ -169,6 +169,15 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
+                            <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="djH-M3-Jsj">
+                                <rect key="frame" x="138" y="222" width="39" height="20"/>
+                                <animations/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="0.55431034482758623" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="06M-op-A6k"/>
+                                    <constraint firstAttribute="width" constant="39" id="bIB-az-uMA"/>
+                                </constraints>
+                            </pageControl>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -193,8 +202,10 @@
                             <constraint firstItem="XuU-Hv-w6D" firstAttribute="bottom" secondItem="FFq-2v-BOP" secondAttribute="centerY" id="jiJ-L1-a7i"/>
                             <constraint firstItem="J74-PS-B6b" firstAttribute="leading" secondItem="AfO-VT-fSv" secondAttribute="leading" constant="16" id="k7t-LE-d5q"/>
                             <constraint firstItem="xfO-UH-rq5" firstAttribute="top" secondItem="kGR-hJ-Vwc" secondAttribute="bottom" id="lOM-yg-BM0"/>
+                            <constraint firstItem="djH-M3-Jsj" firstAttribute="centerX" secondItem="XuU-Hv-w6D" secondAttribute="centerX" id="mdf-Rs-fBH"/>
                             <constraint firstItem="J74-PS-B6b" firstAttribute="top" secondItem="FFq-2v-BOP" secondAttribute="bottom" constant="8" id="r2G-8A-k3y"/>
                             <constraint firstAttribute="bottom" secondItem="xfO-UH-rq5" secondAttribute="bottom" constant="8" id="rPX-ye-QnR"/>
+                            <constraint firstItem="XuU-Hv-w6D" firstAttribute="bottom" secondItem="djH-M3-Jsj" secondAttribute="bottom" constant="8" id="sdd-ZF-zH3"/>
                             <constraint firstItem="1it-KP-iAZ" firstAttribute="leading" secondItem="lkc-gW-6rk" secondAttribute="trailing" constant="8" id="y8N-1L-T9P"/>
                             <constraint firstItem="kGR-hJ-Vwc" firstAttribute="top" secondItem="J74-PS-B6b" secondAttribute="bottom" constant="8" id="zpq-t3-fiD"/>
                         </constraints>
@@ -229,6 +240,8 @@
                 <outlet property="likeButton" destination="1KV-Wy-XX4" id="7tS-hU-1yW"/>
                 <outlet property="majorAvatarImageView" destination="FFq-2v-BOP" id="uuJ-Xb-ii8"/>
                 <outlet property="minorAvatarImageViewHeight" destination="B1d-AE-rI2" id="qLo-BP-3dV"/>
+                <outlet property="pageControl" destination="djH-M3-Jsj" id="TLd-vt-vEz"/>
+                <outlet property="pageControlWidthConstraint" destination="bIB-az-uMA" id="NkA-8y-R77"/>
                 <outlet property="userNameLabel" destination="lkc-gW-6rk" id="RRT-bM-coA"/>
             </connections>
             <point key="canvasLocation" x="231" y="495.5"/>
