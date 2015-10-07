@@ -130,14 +130,11 @@ class ICYPostCell: UITableViewCell {
             sender.userInteractionEnabled = false
             AlamofireController.request(.PATCH, "/posts/\(post.id)/bookmark", success: { _ in
                 
-                me.bookmark = me.bookmark ?? []
                 post.bookmark = post.bookmark ?? []
                 
-                if me.bookmark!.contains(post.id) {
-                    me.bookmark!.remove(post.id)
+                if post.bookmark!.contains(me.id) {
                     post.bookmark!.remove(me.id)
                 } else {
-                    me.bookmark!.append(post.id)
                     post.bookmark!.append(me.id)
                 }
                 self.post = post
@@ -160,9 +157,8 @@ class ICYPostCell: UITableViewCell {
                 } else {
                     post.like = [me.id]
                 }
-                
+                self.post = post
                 sender.bounce{
-                    self.post = post
                     sender.userInteractionEnabled = true
                 }
                 }) { err in

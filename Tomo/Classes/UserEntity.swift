@@ -40,8 +40,6 @@ class UserEntity: Entity {
     
     var stations: [String]?
     
-    var bookmark: [String]?
-    
     var friendInvitations: [NotificationEntity]!
     
     var newMessages: [MessageEntity]!
@@ -93,8 +91,6 @@ class UserEntity: Entity {
         self.groups = json["groups"].arrayObject as? [String]
         
         self.stations = json["stations"].arrayObject as? [String]
-        
-        self.bookmark = json["firstName"].arrayObject as? [String]
         
         self.friendInvitations = []
         if let invitations = json["friendInvitations"].array {

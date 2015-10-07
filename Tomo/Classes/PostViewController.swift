@@ -139,14 +139,11 @@ class PostViewController: BaseViewController{
         sender.userInteractionEnabled = false
         AlamofireController.request(.PATCH, "/posts/\(self.post.id)/bookmark", success: { _ in
             
-            me.bookmark = me.bookmark ?? []
             self.post.bookmark = self.post.bookmark ?? []
             
-            if me.bookmark!.contains(self.post.id) {
-                me.bookmark!.remove(self.post.id)
+            if self.post.bookmark!.contains(me.id) {
                 self.post.bookmark!.remove(me.id)
             } else {
-                me.bookmark!.append(self.post.id)
                 self.post.bookmark!.append(me.id)
             }
             
