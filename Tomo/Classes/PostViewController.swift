@@ -15,6 +15,7 @@ class PostViewController: BaseViewController{
     @IBOutlet weak var avatarImageView: UIImageView!
 
     @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var commentInputView: UIView!
     @IBOutlet weak var commentTextView: UITextView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -60,12 +61,8 @@ class PostViewController: BaseViewController{
         self.postImageList.scrollsToTop = false
         self.headerHeight = self.listViewHeight - 64
         
-        avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
-        avatarImageView.layer.masksToBounds = true
+        self.setViewsLayer()
         
-        commentBtn.layer.cornerRadius = commentBtn.frame.size.width / 2
-        commentBtn.backgroundColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 1)
-        commentBtn.superview?.bringSubviewToFront(commentBtn)
         self.hideSendBtn(true)
         
         gcd.async(.Main) { // fix deadlock
@@ -237,6 +234,21 @@ class PostViewController: BaseViewController{
 
 extension PostViewController {
     
+    private func setViewsLayer() {
+        
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
+        avatarImageView.layer.masksToBounds = true
+        
+        commentBtn.layer.cornerRadius = commentBtn.frame.size.width / 2
+        commentBtn.backgroundColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 1)
+        commentBtn.superview?.bringSubviewToFront(commentBtn)
+        
+        let topLayer = CALayer()
+        topLayer.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 0.5)
+        topLayer.backgroundColor = UIColor.lightGrayColor().CGColor
+        commentInputView.layer.addSublayer(topLayer)
+    }
+    
     func setPostContent(){
         if let photo = self.post.owner.photo {
             avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
@@ -385,7 +397,7 @@ extension PostViewController {
             self.view.endEditing(true)
             return
         }
-        if let images = post.images, imageView = sender.view as? UIImageView, image = imageView.image where postImageList.subviews.count > 0 && images.count > 0 {
+        if let images = post.images, imageView = sender.view as? UIImageView where postImageList.subviews.count > 0 && images.count > 0 {
             
             var items = [MHGalleryItem]();
             
@@ -399,11 +411,11 @@ extension PostViewController {
                 
                 for i in 0..images.count {
                     if i == left.tag {
-                        items.append(MHGalleryItem(image: left.image!))
+                        items.append(self.getGalleryItem(i, image: left.image))
                     } else if i == center.tag {
-                        items.append(MHGalleryItem(image: center.image!))
+                        items.append(self.getGalleryItem(i, image: center.image))
                     } else if i == right.tag {
-                        items.append(MHGalleryItem(image: right.image!))
+                        items.append(self.getGalleryItem(i, image: right.image))
                     } else {
                         items.append(MHGalleryItem(URL: images[i], galleryType: .Image))
                     }
@@ -431,6 +443,16 @@ extension PostViewController {
             }
             
             presentMHGalleryController(gallery, animated: true, completion: nil)
+        }
+    }
+    
+    private func getGalleryItem(index: Int, image: UIImage?) -> MHGalleryItem {
+        if let image = image {
+            return MHGalleryItem(image: image)
+        } else if let images = post.images where images.count > index {
+            return MHGalleryItem(URL: images[index], galleryType: .Image)
+        } else {
+            return MHGalleryItem(image: UIImage(named: "file_broken")!)
         }
     }
     

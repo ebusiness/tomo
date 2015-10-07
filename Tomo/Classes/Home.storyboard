@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Jcg-er-U91">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Jcg-er-U91">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -652,6 +652,7 @@
                         <outlet property="bookmarkBtn" destination="y7L-aG-3Ra" id="w6g-Zk-l4D"/>
                         <outlet property="bottomConstraint" destination="0g3-9j-AM5" id="sjf-GQ-Nst"/>
                         <outlet property="commentBtn" destination="9Yi-Zc-bB7" id="l23-oN-POF"/>
+                        <outlet property="commentInputView" destination="li2-NL-h6M" id="Qhd-32-t93"/>
                         <outlet property="commentInputViewConstraint" destination="UYb-GR-aGN" id="lYh-lQ-rdz"/>
                         <outlet property="commentTextView" destination="K4j-XA-dbD" id="aqF-fv-d6w"/>
                         <outlet property="contentLabel" destination="UxZ-3f-CRH" id="yji-TX-NfI"/>

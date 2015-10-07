@@ -29,6 +29,12 @@ class CommonMessageController: JSQMessagesViewController {
     private let navigationBarImage = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
     static let BubbleFactory = JSQMessagesBubbleImageFactory()
     
+    var recordTap: UILongPressGestureRecognizer! {
+        get {
+            return UILongPressGestureRecognizer(target: self,action:"record:")
+        }
+    }
+    
     let outgoingBubbleImageData = BubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleLightGrayColor())
     let incomingBubbleImageData = BubbleFactory.incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleGreenColor())
     
@@ -57,8 +63,12 @@ class CommonMessageController: JSQMessagesViewController {
         
         // adjust text bubble inset
         collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7, 14, 3, 14)
+
+        // remove the leftBarButtonItem
+        self.inputToolbar.contentView.leftBarButtonItem = nil
         // TODO: adjust
-        setAccessoryButtonImageView()
+//        setAccessoryButtonImageView()
+        
         navigationController?.navigationBar.setBackgroundImage(navigationBarImage, forBarMetrics: .Default)
     }
     
@@ -134,8 +144,7 @@ extension CommonMessageController {
         
         self.icon_keyboard_normal = icon_keyboard.jsq_imageMaskedWithColor(UIColor.lightGrayColor())
         self.icon_keyboard_highlighted = icon_keyboard.jsq_imageMaskedWithColor(UIColor.darkGrayColor())
-        
-        self.inputToolbar.contentView.leftBarButtonItem.frame = CGRectMake(0,2,26,26)
+        self.inputToolbar.contentView.leftBarButtonItemWidth = 32
         self.changeAccessoryButtonImage(0)
     }
     
@@ -223,6 +232,7 @@ extension CommonMessageController {
             self.inputToolbar!.contentView.textView.text = textView_text
             textView_text = ""
             btn_voice?.removeFromSuperview()
+            self.inputToolbar!.contentView.removeGestureRecognizer(self.recordTap)
             self.inputToolbar!.contentView.textView.becomeFirstResponder()
             return
         }
@@ -272,7 +282,8 @@ extension CommonMessageController {
         
         btn_voice?.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         
-        btn_voice?.addGestureRecognizer(UILongPressGestureRecognizer(target: self,action:"record:"))
+        self.inputToolbar!.contentView.addGestureRecognizer(self.recordTap)
+//        btn_voice?.addGestureRecognizer(UILongPressGestureRecognizer(target: self,action:"record:"))
         //btn_voice?.addTarget(self, action: "holdOn", forControlEvents: UIControlEvents.TouchDown)
         //btn_voice?.addTarget(self, action: "sendVoice", forControlEvents: UIControlEvents.TouchUpInside)
     }
