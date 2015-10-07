@@ -157,8 +157,8 @@ class ICYPostCell: UITableViewCell {
                 } else {
                     post.like = [me.id]
                 }
-                self.post = post
                 sender.bounce{
+                    self.post = post
                     sender.userInteractionEnabled = true
                 }
                 }) { err in
