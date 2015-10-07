@@ -33,8 +33,6 @@ class ICYPostImageCell: ICYPostCell {
         majorAvatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
     }
     
-    private let screenWidth = UIScreen.mainScreen().bounds.width
-    
 }
 
 extension ICYPostImageCell: UICollectionViewDelegate, UICollectionViewDataSource {

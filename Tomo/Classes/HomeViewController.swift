@@ -47,8 +47,6 @@ final class HomeViewController: BaseTableViewController {
         
         self.setupRefreshControll()
         
-        //        self.setupTableRowHeight()
-        
         self.setupLocationManager()
         
         self.getLocation()

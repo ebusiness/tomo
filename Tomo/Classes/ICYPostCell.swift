@@ -41,6 +41,15 @@ class ICYPostCell: UITableViewCell {
                 }
                 // content
                 contentLabel.text = post.content
+                let contentWidth = screenWidth - 32.0
+                let contentEstimatedSize = post.content.boundingRectWithSize(
+                    CGSize(width: contentWidth, height: 2000000),
+                    options: NSStringDrawingOptions.UsesLineFragmentOrigin,
+                    attributes: [NSFontAttributeName: UIFont.systemFontOfSize(15)],
+                    context: nil)
+                
+                
+                contentHeight.constant = (contentEstimatedSize.height <= 200 ? contentEstimatedSize.height : 200) + 3
                 // tag
                 if let group = post.group {
                     collectionViewHeight.constant = 30.0
@@ -109,6 +118,10 @@ class ICYPostCell: UITableViewCell {
     @IBOutlet weak var commentViewHeight: NSLayoutConstraint!
     
     @IBOutlet weak var minorAvatarImageViewHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var contentHeight: NSLayoutConstraint!
+    
+    
     
     // MARK: - Actions
     
@@ -185,7 +198,7 @@ class ICYPostCell: UITableViewCell {
     
     
     
-    
+    let screenWidth = UIScreen.mainScreen().bounds.width
     
     override func awakeFromNib() {
         super.awakeFromNib()
