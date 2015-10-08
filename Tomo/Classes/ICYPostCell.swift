@@ -249,7 +249,7 @@ extension ICYPostCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
                 switch tomoTag.type {
                 case .Group:
                     let group = tomoTag.content as! GroupEntity
-                    let groupVC = Util.createViewControllerWithIdentifier("groupDescriptionVC", storyboardName: "Group") as! GroupDescriptionViewController
+                    let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
                     groupVC.group = group
                     self.delegate?.navigationController?.pushViewController(groupVC, animated: true)
                 }
