@@ -21,15 +21,28 @@ class UserPostsViewController: ProfileBaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var postCellNib = UINib(nibName: "PostCell", bundle: nil)
-        self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "PostCell")
+        var postCellNib = UINib(nibName: "ICYPostCell", bundle: nil)
+        self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "ICYPostCellIdentifier")
         
-        var postImageCellNib = UINib(nibName: "PostImageCell", bundle: nil)
-        self.tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
+        var postImageCellNib = UINib(nibName: "ICYPostImageCell", bundle: nil)
+        self.tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "ICYPostImageCellIdentifier")
         
         self.clearsSelectionOnViewWillAppear = false
         
         loadMoreContent()
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        super.prepareForSegue(segue, sender: sender)
+        if let vc = segue.destinationViewController as? ProfileHeaderViewController {
+            
+            vc.photoImageViewTapped = { (sender)->() in
+                
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+        }
     }
 }
 
@@ -46,24 +59,16 @@ extension UserPostsViewController: UITableViewDataSource {
         var post = posts[indexPath.row]
         post.owner = self.user
         
-        var cell: PostCell!
+        var cell: ICYPostCell!
         
         if post.images?.count > 0 {
-            
-            cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell", forIndexPath: indexPath) as! PostImageCell
-            
-            let subviews = (cell as! PostImageCell).scrollView.subviews
-            
-            for subview in subviews {
-                subview.removeFromSuperview()
-            }
-            
+            cell = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier", forIndexPath: indexPath) as! ICYPostImageCell
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("PostCell", forIndexPath: indexPath) as! PostCell
+            cell = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier", forIndexPath: indexPath) as! ICYPostCell
         }
         
         cell.post = post
-        cell.setupDisplay()
+        cell.delegate = self
         
         return cell
     }

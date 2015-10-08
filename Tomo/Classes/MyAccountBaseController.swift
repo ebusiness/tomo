@@ -24,6 +24,12 @@ class MyAccountBaseController: BaseTableViewController {
         
         if let vc = segue.destinationViewController as? MyAccountHeaderViewController{
             
+            if let childvcs = self.navigationController?.childViewControllers where childvcs.count > 1 {
+                vc.photoImageViewTapped = { (sender)->() in
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+            }
+            
             self.whenShowNavigationBar = { (OffsetY)->() in
                 
                 self.setNavigationBarBackgroundImage(vc.coverImageView.image)

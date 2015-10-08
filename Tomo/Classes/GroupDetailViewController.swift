@@ -22,8 +22,8 @@ final class GroupDetailViewController: BaseTableViewController {
         super.viewDidLoad()
         self.updateUI()
         
-        tableView.registerNib(UINib(nibName: "PostCell", bundle: nil), forCellReuseIdentifier: "PostCell")
-        tableView.registerNib(UINib(nibName: "PostImageCell", bundle: nil), forCellReuseIdentifier: "PostImageCell")
+        tableView.registerNib(UINib(nibName: "ICYPostCell", bundle: nil), forCellReuseIdentifier: "ICYPostCellIdentifier")
+        tableView.registerNib(UINib(nibName: "ICYPostImageCell", bundle: nil), forCellReuseIdentifier: "ICYPostImageCellIdentifier")
         tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor.groupTableViewBackgroundColor()
         
@@ -142,25 +142,17 @@ extension GroupDetailViewController {
         }
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: PostCell!
+        var cell: ICYPostCell!
         
         let post = posts![indexPath.row]
         if post.images?.count > 0 {
-            
-            cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell", forIndexPath: indexPath) as! PostImageCell
-            
-            let subviews = (cell as! PostImageCell).scrollView.subviews
-            
-            for subview in subviews {
-                subview.removeFromSuperview()
-            }
-            
+            cell = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier", forIndexPath: indexPath) as! ICYPostImageCell
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("PostCell", forIndexPath: indexPath) as! PostCell
+            cell = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier", forIndexPath: indexPath) as! ICYPostCell
         }
         
         cell.post = post
-        cell.setupDisplay()
+        cell.delegate = self
         
         return cell
     }

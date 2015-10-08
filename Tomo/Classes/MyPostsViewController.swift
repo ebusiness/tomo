@@ -21,11 +21,11 @@ final class MyPostsViewController: MyAccountBaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var postCellNib = UINib(nibName: "PostCell", bundle: nil)
-        self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "PostCell")
+        var postCellNib = UINib(nibName: "ICYPostCell", bundle: nil)
+        self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "ICYPostCellIdentifier")
         
-        var postImageCellNib = UINib(nibName: "PostImageCell", bundle: nil)
-        self.tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
+        var postImageCellNib = UINib(nibName: "ICYPostImageCell", bundle: nil)
+        self.tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "ICYPostImageCellIdentifier")
         
         self.clearsSelectionOnViewWillAppear = false
         
@@ -49,24 +49,16 @@ extension MyPostsViewController: UITableViewDataSource {
         var post = posts[indexPath.row] as! PostEntity
         post.owner = me
         
-        var cell: PostCell!
+        var cell: ICYPostCell!
         
         if post.images?.count > 0 {
-            
-            cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell", forIndexPath: indexPath) as! PostImageCell
-            
-            let subviews = (cell as! PostImageCell).scrollView.subviews
-            
-            for subview in subviews {
-                subview.removeFromSuperview()
-            }
-            
+            cell = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier", forIndexPath: indexPath) as! ICYPostImageCell
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("PostCell", forIndexPath: indexPath) as! PostCell
+            cell = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier", forIndexPath: indexPath) as! ICYPostCell
         }
         
         cell.post = post
-        cell.setupDisplay()
+        cell.delegate = self
         
         return cell
     }
@@ -193,15 +185,15 @@ extension MyPostsViewController {
         ListenerEvent.PostBookmarked.addObserver(self, selector: Selector("receivePostBookmarked:"))
     }
     
-    private func receivePost(notification: NSNotification,done: (cell: PostCell,user: UserEntity)->() ){
+    private func receivePost(notification: NSNotification,done: (cell: ICYPostCell,user: UserEntity)->() ){
         
         if let userInfo = notification.userInfo {
             let json = JSON(userInfo)
             let postid = json["targetId"].stringValue
             let user = UserEntity(json["from"])
             
-            let cell: AnyObject? = self.tableView.visibleCells().find { ($0 as! PostCell).post.id == postid }
-            if let cell = cell as? PostCell {
+            let cell: AnyObject? = self.tableView.visibleCells().find { ($0 as! ICYPostCell).post?.id == postid }
+            if let cell = cell as? ICYPostCell {
                 gcd.sync(.Main) {
                     done(cell: cell, user: user)
                 }
@@ -211,13 +203,15 @@ extension MyPostsViewController {
     
     func receivePostLiked(notification: NSNotification) {
         self.receivePost(notification) { (cell, user) -> () in
+            if let post = cell.post {
+                post.like = post.like ?? []
+                post.like!.append(user.id)
+                
+                cell.likeButton.bounce({ () -> Void in
+                    cell.post = post
+                })
+            }
             
-            cell.post.like = cell.post.like ?? []
-            cell.post.like!.append(user.id)
-            
-            cell.likeButton.bounce({ () -> Void in
-                cell.setupDisplay()
-            })
         }
     }
     
@@ -231,7 +225,7 @@ extension MyPostsViewController {
     func receivePostBookmarked(notification: NSNotification) {
         self.receivePost(notification) { (cell, _) -> () in
             
-            cell.bookmarkButton.tada(nil)
+            cell.collectionButton.tada(nil)
         }
     }
     

@@ -52,8 +52,6 @@
 		1F79C1B41B5E10DC008800E1 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B31B5E10DC008800E1 /* FriendCell.swift */; };
 		1F79C1B61B5E55D5008800E1 /* InvitationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B51B5E55D5008800E1 /* InvitationCell.swift */; };
 		1F79C1B81B5E730E008800E1 /* SearchFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */; };
-		1F8BF0111B53639F00090079 /* PostImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8BF0101B53639F00090079 /* PostImageCell.swift */; };
-		1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8BF0121B536D9500090079 /* PostImageCell.xib */; };
 		1F8DEBE01BBD22600037FD1C /* PostCallOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8DEBDE1BBD22600037FD1C /* PostCallOutViewController.swift */; };
 		1F8DEBE11BBD22600037FD1C /* PostCallOutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8DEBDF1BBD22600037FD1C /* PostCallOutView.xib */; };
 		1F902D771B7D9C2800F6DC2D /* EmptyFriends.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F902D761B7D9C2800F6DC2D /* EmptyFriends.xib */; };
@@ -97,8 +95,6 @@
 		1FEA3D031BB3DEA20037F3C5 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA3D021BB3DEA20037F3C5 /* Palette.swift */; };
 		1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE80E71B4E552A0061B913 /* Home.storyboard */; };
 		1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */; };
-		1FEE80EC1B4E5C540061B913 /* PostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE80EB1B4E5C540061B913 /* PostCell.xib */; };
-		1FEE80EE1B4E60850061B913 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE80ED1B4E60850061B913 /* PostCell.swift */; };
 		1FFD21FF1BABD57C00204080 /* GroupSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */; };
 		1FFD22011BABD77E00204080 /* GroupSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */; };
 		283771911BC37653001B06D3 /* ICYFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283771901BC37653001B06D3 /* ICYFlowLayout.swift */; };
@@ -230,8 +226,6 @@
 		1F79C1B31B5E10DC008800E1 /* FriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendCell.swift; path = Classes/FriendCell.swift; sourceTree = "<group>"; };
 		1F79C1B51B5E55D5008800E1 /* InvitationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvitationCell.swift; path = Classes/InvitationCell.swift; sourceTree = "<group>"; };
 		1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchFriendViewController.swift; path = Classes/SearchFriendViewController.swift; sourceTree = "<group>"; };
-		1F8BF0101B53639F00090079 /* PostImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostImageCell.swift; path = Classes/PostImageCell.swift; sourceTree = "<group>"; };
-		1F8BF0121B536D9500090079 /* PostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostImageCell.xib; path = Classes/PostImageCell.xib; sourceTree = "<group>"; };
 		1F8DEBDE1BBD22600037FD1C /* PostCallOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCallOutViewController.swift; path = Classes/PostCallOutViewController.swift; sourceTree = "<group>"; };
 		1F8DEBDF1BBD22600037FD1C /* PostCallOutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostCallOutView.xib; path = Classes/PostCallOutView.xib; sourceTree = "<group>"; };
 		1F902D761B7D9C2800F6DC2D /* EmptyFriends.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptyFriends.xib; path = Classes/EmptyFriends.xib; sourceTree = "<group>"; };
@@ -277,8 +271,6 @@
 		1FEA3D021BB3DEA20037F3C5 /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Palette.swift; path = Classes/Palette.swift; sourceTree = SOURCE_ROOT; };
 		1FEE80E71B4E552A0061B913 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Home.storyboard; path = Classes/Home.storyboard; sourceTree = "<group>"; };
 		1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Classes/HomeViewController.swift; sourceTree = "<group>"; };
-		1FEE80EB1B4E5C540061B913 /* PostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostCell.xib; path = Classes/PostCell.xib; sourceTree = "<group>"; };
-		1FEE80ED1B4E60850061B913 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCell.swift; path = Classes/PostCell.swift; sourceTree = "<group>"; };
 		1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupSectionHeaderView.xib; path = Classes/GroupSectionHeaderView.xib; sourceTree = "<group>"; };
 		1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupSectionHeaderView.swift; path = Classes/GroupSectionHeaderView.swift; sourceTree = "<group>"; };
 		283771901BC37653001B06D3 /* ICYFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYFlowLayout.swift; path = Classes/ICYFlowLayout.swift; sourceTree = "<group>"; };
@@ -545,10 +537,6 @@
 		1FC051081BAF9F3B00886F67 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				1FEE80ED1B4E60850061B913 /* PostCell.swift */,
-				1FEE80EB1B4E5C540061B913 /* PostCell.xib */,
-				1F8BF0101B53639F00090079 /* PostImageCell.swift */,
-				1F8BF0121B536D9500090079 /* PostImageCell.xib */,
 				285778541BC29AEC00533E8E /* ICYTagCollectionViewCell.swift */,
 				285778551BC29AEC00533E8E /* ICYTagCollectionViewCell.xib */,
 				2857784A1BC25DC600533E8E /* ICYPostCell.swift */,
@@ -998,7 +986,6 @@
 				29CA441A1AD4CA48009EB177 /* Contacts.storyboard in Resources */,
 				1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */,
 				2857784D1BC25DC600533E8E /* ICYPostCell.xib in Resources */,
-				1F8BF0131B536D9500090079 /* PostImageCell.xib in Resources */,
 				283771991BC3A329001B06D3 /* ICYPostImageCell.xib in Resources */,
 				1FFD21FF1BABD57C00204080 /* GroupSectionHeaderView.xib in Resources */,
 				D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */,
@@ -1017,7 +1004,6 @@
 				29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */,
 				1F902D771B7D9C2800F6DC2D /* EmptyFriends.xib in Resources */,
 				1F19D9541BA9550A007C9919 /* RecommendSiteTableCell.xib in Resources */,
-				1FEE80EC1B4E5C540061B913 /* PostCell.xib in Resources */,
 				1F19D95A1BA96B3E007C9919 /* GroupCollectionViewCell.xib in Resources */,
 				1FEA3CFF1BB39F160037F3C5 /* StationCollectionViewCell.xib in Resources */,
 				1F6462D31BC14845007D0906 /* GroupCallOutView.xib in Resources */,
@@ -1147,7 +1133,6 @@
 				1F1176A81B983D280049D9F5 /* SocketFixUTF8.swift in Sources */,
 				1F1176AD1B983D280049D9F5 /* SocketTypes.swift in Sources */,
 				29DCEFE91B14519300A7C7AF /* TomoVideoMediaItem.swift in Sources */,
-				1FEE80EE1B4E60850061B913 /* PostCell.swift in Sources */,
 				17B993011AF353D000204E97 /* amrFileCodec.m in Sources */,
 				1F05345C1BC3635700C99DF0 /* PeriodPickerTableViewController.swift in Sources */,
 				D0DB07D91B9D224900C06C4E /* NotificationView.swift in Sources */,
@@ -1216,7 +1201,6 @@
 				1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */,
 				1F1176A71B983D280049D9F5 /* SocketEventHandler.swift in Sources */,
 				D0E788751B6F5BD3009255B9 /* AlamofireController.swift in Sources */,
-				1F8BF0111B53639F00090079 /* PostImageCell.swift in Sources */,
 				285778561BC29AEC00533E8E /* ICYTagCollectionViewCell.swift in Sources */,
 				D07793871B704F410056B7CB /* DatePickerViewController.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,

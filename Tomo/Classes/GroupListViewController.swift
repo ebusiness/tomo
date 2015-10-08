@@ -24,11 +24,11 @@ final class GroupListViewController: BaseTableViewController {
         let GroupSectionHeaderNib = UINib(nibName: "GroupSectionHeaderView", bundle: nil)
         self.tableView.registerNib(GroupSectionHeaderNib, forHeaderFooterViewReuseIdentifier: "GroupHeader")
         
-        let postCellNib = UINib(nibName: "PostCell", bundle: nil)
-        self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "PostCell")
+        let postCellNib = UINib(nibName: "ICYPostCell", bundle: nil)
+        self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "ICYPostCellIdentifier")
         
-        let postImageCellNib = UINib(nibName: "PostImageCell", bundle: nil)
-        self.tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "PostImageCell")
+        let postImageCellNib = UINib(nibName: "ICYPostImageCell", bundle: nil)
+        self.tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "ICYPostImageCellIdentifier")
         
         self.tableView.estimatedRowHeight = 550
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -99,20 +99,20 @@ extension GroupListViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell: PostCell!
+        var cell: ICYPostCell!
         
         if let posts = self.groups[indexPath.section].posts {
             
             let post = posts[indexPath.row]
             
             if post.images?.count > 0 {
-                cell = tableView.dequeueReusableCellWithIdentifier("PostImageCell", forIndexPath: indexPath) as! PostImageCell
+                cell = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier", forIndexPath: indexPath) as! ICYPostImageCell
             } else {
-                cell = tableView.dequeueReusableCellWithIdentifier("PostCell", forIndexPath: indexPath) as! PostCell
+                cell = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier", forIndexPath: indexPath) as! ICYPostCell
             }
             
             cell.post = post
-            cell.setupDisplay()
+            cell.delegate = self
         }
         
         return cell
