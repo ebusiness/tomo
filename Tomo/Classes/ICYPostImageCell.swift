@@ -80,6 +80,9 @@ extension ICYPostImageCell: UICollectionViewDelegate, UICollectionViewDataSource
             if let post = post {
                 let postVC = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
                 postVC.post = post
+                if indexPath.row != 0 {
+                    postVC.initialImageIndex = indexPath.row
+                }
                 delegate?.navigationController?.pushViewController(postVC, animated: true)
             }
         } else {

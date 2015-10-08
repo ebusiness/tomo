@@ -32,6 +32,7 @@ class PostViewController: BaseViewController{
     var isKeyboardShown: Bool = false
     
     var isCommentInitial = false
+    var initialImageIndex: Int?
     
     var listViewHeight:CGFloat = UIScreen.mainScreen().bounds.size.height * 0.618 //  250
     let profileHeaderHeight:CGFloat = 100
@@ -373,6 +374,10 @@ extension PostViewController {
             postImageList.contentOffset.x = imageWidth
         }
         postImageList.addConstraints(constraint)
+        
+        if let initialImageIndex = initialImageIndex {
+            changeImageTo(initialImageIndex)
+        }
     }
     
     func changeImageTo(index: Int){
