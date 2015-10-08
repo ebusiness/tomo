@@ -221,6 +221,8 @@ class ICYPostCell: UITableViewCell {
         // comment tap
         let commentTap = UITapGestureRecognizer(target: self, action: "commentTapped")
         commentView.addGestureRecognizer(commentTap)
+        
+        collectionView.scrollsToTop = false
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

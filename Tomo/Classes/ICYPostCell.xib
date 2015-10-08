@@ -72,15 +72,6 @@
                                     <action selector="likeButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7ks-fG-BIc"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AS9-Bd-jfS" userLabel="内容">
-                                <rect key="frame" x="16" y="94" width="358" height="200"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="Zdj-k5-6qF"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="15k-go-EnM" userLabel="TAG！">
                                 <rect key="frame" x="8" y="302" width="374" height="80"/>
                                 <animations/>
@@ -151,6 +142,15 @@
                                     <constraint firstItem="8YU-cG-kFw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Vjq-qI-D1O" secondAttribute="trailing" constant="8" id="zWC-gE-gSk"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AS9-Bd-jfS" userLabel="内容">
+                                <rect key="frame" x="16" y="94" width="358" height="200"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="Zdj-k5-6qF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

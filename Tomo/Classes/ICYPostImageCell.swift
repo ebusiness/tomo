@@ -41,6 +41,8 @@ class ICYPostImageCell: ICYPostCell {
         majorAvatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
         
         pageControl.layer.cornerRadius = pageControl.bounds.height / 2.0
+        
+        imageCollectionView.scrollsToTop = false
     }
     
 }
