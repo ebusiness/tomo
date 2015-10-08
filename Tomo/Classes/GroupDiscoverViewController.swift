@@ -35,7 +35,7 @@ final class GroupDiscoverViewController: BaseViewController {
         self.alwaysShowNavigationBar = true
         
         
-        self.collectionView.registerNib(UINib(nibName: "GroupCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+        self.collectionView.registerNib(UINib(nibName: "MyGroupCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         
         self.loadMoreContent()
     }
@@ -106,7 +106,7 @@ extension GroupDiscoverViewController {
 extension GroupDiscoverViewController {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! GroupCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! MyGroupCollectionViewCell
         
         cell.group = self.groups[indexPath.item]
         cell.setupDisplay()

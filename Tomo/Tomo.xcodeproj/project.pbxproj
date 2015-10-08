@@ -151,6 +151,8 @@
 		D012F5971BBBC4DD00D5293D /* MyStationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */; };
 		D04447B31BBA9DF300AD7B0C /* GroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */; };
 		D04608D21B6BA33F00D30B77 /* TestDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404B1ACE68C500D2A338 /* TestDataTests.swift */; };
+		D05418401BC6592900C606F0 /* MyGroupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D054183E1BC6592900C606F0 /* MyGroupCollectionViewCell.xib */; };
+		D05418431BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05418421BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift */; };
 		D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D057BAF11B670687007D14D2 /* RequestFriendCell.swift */; };
 		D073E6F81B84C1BF00066F42 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073E6F71B84C1BF00066F42 /* CameraController.swift */; };
 		D07793851B704F290056B7CB /* PickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07793841B704F290056B7CB /* PickerTableViewController.swift */; };
@@ -339,6 +341,8 @@
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyStationsViewController.swift; path = Classes/MyStationsViewController.swift; sourceTree = "<group>"; };
+		D054183E1BC6592900C606F0 /* MyGroupCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyGroupCollectionViewCell.xib; path = Classes/MyGroupCollectionViewCell.xib; sourceTree = "<group>"; };
+		D05418421BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyGroupCollectionViewCell.swift; path = Classes/MyGroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		D057BAF11B670687007D14D2 /* RequestFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestFriendCell.swift; path = Classes/RequestFriendCell.swift; sourceTree = "<group>"; };
 		D073E6F71B84C1BF00066F42 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraController.swift; path = Classes/CameraController.swift; sourceTree = "<group>"; };
 		D07793841B704F290056B7CB /* PickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PickerTableViewController.swift; path = Classes/PickerTableViewController.swift; sourceTree = "<group>"; };
@@ -498,13 +502,13 @@
 		1FA76AFF1BA29D43004776B0 /* Group */ = {
 			isa = PBXGroup;
 			children = (
+				D054183C1BC6591200C606F0 /* MyGroup */,
 				1FC051091BAF9F9200886F67 /* Components */,
 				1FA76B011BA2A01D004776B0 /* GroupListViewController.swift */,
 				1FA76B031BA2AC03004776B0 /* GroupDiscoverViewController.swift */,
 				1FA76B081BA2C642004776B0 /* GroupCreateViewController.swift */,
 				1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */,
 				28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */,
-				D0960AAD1BC3CE2600A63733 /* MyGroupListViewController.swift */,
 			);
 			name = Group;
 			sourceTree = "<group>";
@@ -840,6 +844,24 @@
 			name = UserProfile;
 			sourceTree = "<group>";
 		};
+		D054183C1BC6591200C606F0 /* MyGroup */ = {
+			isa = PBXGroup;
+			children = (
+				D054183D1BC6592100C606F0 /* Components */,
+				D0960AAD1BC3CE2600A63733 /* MyGroupListViewController.swift */,
+			);
+			name = MyGroup;
+			sourceTree = "<group>";
+		};
+		D054183D1BC6592100C606F0 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D05418421BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift */,
+				D054183E1BC6592900C606F0 /* MyGroupCollectionViewCell.xib */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
 		D07793831B704EA00056B7CB /* picker */ = {
 			isa = PBXGroup;
 			children = (
@@ -988,6 +1010,7 @@
 				29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */,
 				1F985E621B60C19F008D5369 /* Info.plist in Resources */,
 				1FA76AFE1BA27B1E004776B0 /* Group.storyboard in Resources */,
+				D05418401BC6592900C606F0 /* MyGroupCollectionViewCell.xib in Resources */,
 				285778571BC29AEC00533E8E /* ICYTagCollectionViewCell.xib in Resources */,
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
 				296D8BC31AFC5A680058D400 /* LaunchScreen.xib in Resources */,
@@ -1208,6 +1231,7 @@
 				1F26B29A1BAA61D10063AC6B /* GroupDetailViewController.swift in Sources */,
 				285778511BC272E000533E8E /* ICYTagButton.swift in Sources */,
 				D0960AAC1BC376FB00A63733 /* UltravisualLayout.swift in Sources */,
+				D05418431BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift in Sources */,
 				295272D01AD51B2300FC7833 /* S3.swift in Sources */,
 				D0F44FAD1B5E534B009E12AA /* MyPostsViewController.swift in Sources */,
 				D07D8A1A1B99A3DF00D13096 /* NotificationListViewController.swift in Sources */,

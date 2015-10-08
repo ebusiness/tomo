@@ -10,6 +10,14 @@ import UIKit
 
 class MyAccountBaseController: BaseTableViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        var resizeHeaderHeight:CGFloat = UIScreen.mainScreen().bounds.size.height * 0.618 + 80
+        self.headerHeight = resizeHeaderHeight - 80 - 64
+        self.changeHeaderView(height: resizeHeaderHeight, done: nil)
+    }
+    
     // MARK: - segue for profile header
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

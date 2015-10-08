@@ -19,7 +19,7 @@ class MyGroupListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast
-        self.collectionView.registerNib(UINib(nibName: "GroupCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+        self.collectionView.registerNib(UINib(nibName: "MyGroupCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -56,7 +56,7 @@ extension MyGroupListViewController {
 extension MyGroupListViewController {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! GroupCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! MyGroupCollectionViewCell
         
         cell.group = self.groups[indexPath.item]
         cell.setupDisplay()
