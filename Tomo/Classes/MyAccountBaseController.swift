@@ -36,7 +36,7 @@ class MyAccountBaseController: BaseTableViewController {
                     if let constraint = constraint as? NSLayoutConstraint
                         where constraint.firstAttribute == .Width || constraint.firstAttribute == .Height
                     {
-                        var constant = (1 - (OffsetY / self.headerHeight) ) * 100 //speed
+                        var constant = (1 - (OffsetY * 0.5 / self.headerHeight) ) * 100 //speed
                         if constant > 100 { constant = 100 }
                         else if constant < 60 { constant = 60 }
                         constraint.constant = constant
@@ -49,7 +49,7 @@ class MyAccountBaseController: BaseTableViewController {
                     if let constraint = constraint as? NSLayoutConstraint
                         where constraint.firstAttribute == .CenterY
                     {
-                        var constant = OffsetY / self.headerHeight * 100 //speed
+                        var constant = OffsetY * 0.5 / self.headerHeight * 100 //speed
                         if constant > 40 { constant = 40 }
                         else if constant < 0 { constant = 0 }
                         constraint.constant = constant
