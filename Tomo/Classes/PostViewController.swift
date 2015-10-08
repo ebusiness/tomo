@@ -81,6 +81,7 @@ class PostViewController: BaseViewController{
         super.viewWillAppear(animated)
         if isCommentInitial {
             tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Middle, animated: false)
+            isCommentInitial = false
         }
     }
     
