@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AfO-VT-fSv">
-                        <rect key="frame" x="0.0" y="8" width="314" height="645"/>
+                        <rect key="frame" x="0.0" y="8" width="314" height="661"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="XuU-Hv-w6D">
                                 <rect key="frame" x="0.0" y="0.0" width="314" height="250"/>
@@ -42,14 +42,14 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="500" misplaced="YES" text="日期" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1it-KP-iAZ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="500" text="日期" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1it-KP-iAZ">
                                 <rect key="frame" x="153" y="261" width="24" height="14.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXg-b1-Plu" userLabel="收藏">
+                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXg-b1-Plu" userLabel="收藏">
                                 <rect key="frame" x="226" y="260" width="25" height="25"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -77,7 +77,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J74-PS-B6b" userLabel="内容">
-                                <rect key="frame" x="16" y="293" width="282" height="200"/>
+                                <rect key="frame" x="16" y="301" width="282" height="200"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="dhJ-0T-jjO"/>
@@ -86,7 +86,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="kGR-hJ-Vwc" userLabel="TAG！">
-                                <rect key="frame" x="8" y="501" width="298" height="80"/>
+                                <rect key="frame" x="8" y="517" width="298" height="80"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -99,7 +99,7 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xfO-UH-rq5" userLabel="评论">
-                                <rect key="frame" x="8" y="581" width="298" height="56"/>
+                                <rect key="frame" x="8" y="597" width="298" height="56"/>
                                 <subviews>
                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p3n-Ex-dmY" userLabel="小头像">
                                         <rect key="frame" x="8" y="8" width="40" height="40"/>
@@ -203,11 +203,11 @@
                             <constraint firstItem="J74-PS-B6b" firstAttribute="leading" secondItem="AfO-VT-fSv" secondAttribute="leading" constant="16" id="k7t-LE-d5q"/>
                             <constraint firstItem="xfO-UH-rq5" firstAttribute="top" secondItem="kGR-hJ-Vwc" secondAttribute="bottom" id="lOM-yg-BM0"/>
                             <constraint firstItem="djH-M3-Jsj" firstAttribute="centerX" secondItem="XuU-Hv-w6D" secondAttribute="centerX" id="mdf-Rs-fBH"/>
-                            <constraint firstItem="J74-PS-B6b" firstAttribute="top" secondItem="FFq-2v-BOP" secondAttribute="bottom" constant="8" id="r2G-8A-k3y"/>
+                            <constraint firstItem="J74-PS-B6b" firstAttribute="top" secondItem="FFq-2v-BOP" secondAttribute="bottom" constant="16" id="r2G-8A-k3y"/>
                             <constraint firstAttribute="bottom" secondItem="xfO-UH-rq5" secondAttribute="bottom" constant="8" id="rPX-ye-QnR"/>
                             <constraint firstItem="XuU-Hv-w6D" firstAttribute="bottom" secondItem="djH-M3-Jsj" secondAttribute="bottom" constant="8" id="sdd-ZF-zH3"/>
                             <constraint firstItem="1it-KP-iAZ" firstAttribute="leading" secondItem="lkc-gW-6rk" secondAttribute="trailing" constant="8" id="y8N-1L-T9P"/>
-                            <constraint firstItem="kGR-hJ-Vwc" firstAttribute="top" secondItem="J74-PS-B6b" secondAttribute="bottom" constant="8" id="zpq-t3-fiD"/>
+                            <constraint firstItem="kGR-hJ-Vwc" firstAttribute="top" secondItem="J74-PS-B6b" secondAttribute="bottom" constant="16" id="zpq-t3-fiD"/>
                         </constraints>
                     </view>
                 </subviews>

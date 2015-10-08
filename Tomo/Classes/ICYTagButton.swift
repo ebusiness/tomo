@@ -14,7 +14,7 @@ class ICYTagButton: UIButton {
     
     class func defaultSize(string: String) -> CGSize {
         let size = string.boundingRectWithSize(CGSize(width: 5000, height: 24), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil).size
-        let expandedSize = CGSizeMake(size.width + 14.0, 24.0)
+        let expandedSize = CGSizeMake(size.width + 16.0, size.height + 8.0)
         return expandedSize
     }
     
@@ -25,7 +25,10 @@ class ICYTagButton: UIButton {
                 switch tag.type {
                 case .Group:
                     let group = tag.content as! GroupEntity
-                    setTitle(" " + group.name + " ", forState: UIControlState.Normal)
+                    setTitle(group.name, forState: UIControlState.Normal)
+                    let size = ICYTagButton.defaultSize(group.name)
+                    widthConstraint.constant = size.width
+                    heightConstraint.constant = size.height
                 }
             } else {
                 setTitle(nil, forState: UIControlState.Normal)
@@ -36,6 +39,9 @@ class ICYTagButton: UIButton {
     typealias tagClickActionType = ((tomoTag: TomoTag) ->())
     
     private var tagClicked: tagClickActionType?
+    
+    private var widthConstraint: NSLayoutConstraint!
+    private var heightConstraint: NSLayoutConstraint!
     
     func setTagClickAction(action: tagClickActionType?) {
         tagClicked = action
@@ -50,6 +56,10 @@ class ICYTagButton: UIButton {
         layer.cornerRadius = 3.0
         layer.borderColor = Palette.Blue.getPrimaryColor().CGColor
         layer.borderWidth = 1.0
+        
+        widthConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 20.0)
+        heightConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 24.0)
+        addConstraints([widthConstraint, heightConstraint])
     }
     
     func buttonClicked() {

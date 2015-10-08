@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="asU-Al-bof">
-                        <rect key="frame" x="0.0" y="8" width="390" height="446"/>
+                        <rect key="frame" x="0.0" y="8" width="390" height="462"/>
                         <subviews>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="lqq-BY-PVH" userLabel="大头像">
                                 <rect key="frame" x="16" y="16" width="70" height="70"/>
@@ -46,7 +46,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gxT-CO-85S" userLabel="收藏">
-                                <rect key="frame" x="310" y="38" width="25" height="25"/>
+                                <rect key="frame" x="302" y="38" width="25" height="25"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" image="star">
@@ -58,7 +58,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RA8-TD-WaY" userLabel="点赞">
-                                <rect key="frame" x="343" y="38" width="39" height="25"/>
+                                <rect key="frame" x="335" y="38" width="39" height="25"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="aZZ-NF-yhZ"/>
@@ -73,7 +73,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="15k-go-EnM" userLabel="TAG！">
-                                <rect key="frame" x="8" y="302" width="374" height="80"/>
+                                <rect key="frame" x="8" y="318" width="374" height="80"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -86,7 +86,7 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RK9-Fx-ODM" userLabel="评论">
-                                <rect key="frame" x="8" y="382" width="374" height="56"/>
+                                <rect key="frame" x="8" y="398" width="374" height="56"/>
                                 <subviews>
                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tWN-jG-Ujd" userLabel="小头像">
                                         <rect key="frame" x="8" y="8" width="40" height="40"/>
@@ -143,7 +143,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AS9-Bd-jfS" userLabel="内容">
-                                <rect key="frame" x="16" y="94" width="358" height="200"/>
+                                <rect key="frame" x="16" y="102" width="358" height="200"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="Zdj-k5-6qF"/>
@@ -156,16 +156,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="lqq-BY-PVH" firstAttribute="leading" secondItem="asU-Al-bof" secondAttribute="leading" constant="16" id="2CR-9s-Dud"/>
-                            <constraint firstAttribute="trailing" secondItem="RA8-TD-WaY" secondAttribute="trailing" constant="8" id="2GQ-MT-4Q0"/>
+                            <constraint firstAttribute="trailing" secondItem="RA8-TD-WaY" secondAttribute="trailing" constant="16" id="2GQ-MT-4Q0"/>
                             <constraint firstAttribute="trailing" secondItem="RK9-Fx-ODM" secondAttribute="trailing" constant="8" id="5X3-AY-pWp"/>
                             <constraint firstItem="gxT-CO-85S" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="IVD-VP-htr" secondAttribute="trailing" constant="8" id="9lz-ja-oNB"/>
                             <constraint firstItem="gxT-CO-85S" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vhs-65-kYL" secondAttribute="trailing" constant="8" id="EoU-Br-glK"/>
                             <constraint firstItem="lqq-BY-PVH" firstAttribute="top" secondItem="asU-Al-bof" secondAttribute="top" constant="16" id="FuD-Eo-d1v"/>
                             <constraint firstItem="vhs-65-kYL" firstAttribute="top" secondItem="lqq-BY-PVH" secondAttribute="centerY" constant="8" id="Iwf-9z-hxh"/>
-                            <constraint firstItem="15k-go-EnM" firstAttribute="top" secondItem="AS9-Bd-jfS" secondAttribute="bottom" constant="8" id="J8Y-tq-25F"/>
+                            <constraint firstItem="15k-go-EnM" firstAttribute="top" secondItem="AS9-Bd-jfS" secondAttribute="bottom" constant="16" id="J8Y-tq-25F"/>
                             <constraint firstItem="RA8-TD-WaY" firstAttribute="centerY" secondItem="lqq-BY-PVH" secondAttribute="centerY" id="Jqj-L2-pa4"/>
                             <constraint firstItem="IVD-VP-htr" firstAttribute="leading" secondItem="lqq-BY-PVH" secondAttribute="trailing" constant="8" id="KB9-Lg-wgk"/>
-                            <constraint firstItem="AS9-Bd-jfS" firstAttribute="top" secondItem="lqq-BY-PVH" secondAttribute="bottom" constant="8" id="Lfj-dg-qxf"/>
+                            <constraint firstItem="AS9-Bd-jfS" firstAttribute="top" secondItem="lqq-BY-PVH" secondAttribute="bottom" constant="16" id="Lfj-dg-qxf"/>
                             <constraint firstItem="lqq-BY-PVH" firstAttribute="centerY" secondItem="IVD-VP-htr" secondAttribute="bottom" id="Plr-cv-6NY"/>
                             <constraint firstItem="RK9-Fx-ODM" firstAttribute="leading" secondItem="asU-Al-bof" secondAttribute="leading" constant="8" id="VcJ-uD-FRT"/>
                             <constraint firstItem="15k-go-EnM" firstAttribute="leading" secondItem="asU-Al-bof" secondAttribute="leading" constant="8" id="Wn1-Hy-khl"/>
