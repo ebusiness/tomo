@@ -15,10 +15,12 @@ class ICYPostImageCell: ICYPostCell {
             if let post = post {
                 super.post = post
                 pageControl.numberOfPages = post.images?.count ?? 0
+                pageControl.currentPage = 0
                 pageControlWidthConstraint.constant = pageControl.sizeForNumberOfPages(pageControl.numberOfPages + 1).width
             } else {
                 super.post = nil
                 pageControl.numberOfPages = 0
+                pageControl.currentPage = 0
                 pageControlWidthConstraint.constant = 0
             }
             imageCollectionView.reloadData()
