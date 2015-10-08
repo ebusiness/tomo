@@ -43,11 +43,51 @@ class StationAnnotationView: AggregatableAnnotationView {
     }
     
     override func setupDisplay() {
-        super.setupDisplay()
         
-        let annotation = self.annotation as! StationAnnotation
-        nameLabel.text = annotation.station.name
-        nameLabel.backgroundColor = Util.colorWithHexString(annotation.station.color!)
+        let annotation = self.annotation as! GroupAnnotation
+        
+        var count = annotation.group.posts!.count
+        
+        if let containedAnnotations = annotation.containedAnnotations {
+            
+            count = containedAnnotations.reduce(count, combine: { (initCount, containedAnnotation) -> Int in
+                let containedAnnotation = containedAnnotation as! GroupAnnotation
+                return initCount + containedAnnotation.group.posts!.count
+            })
+        }
+        
+        var exRate = CGFloat(1)
+        
+        if count > 0 {
+            numberBadge.text = "\(count)"
+            addSubview(numberBadge)
+        } else {
+            numberBadge.removeFromSuperview()
+        }
+        
+        switch count {
+        case 1..<10:
+            exRate = CGFloat(1.0)
+        case 10..<20:
+            exRate = CGFloat(1.1)
+        case 20..<30:
+            exRate = CGFloat(1.3)
+        case 30..<40:
+            exRate = CGFloat(1.5)
+        case 40..<Int.max:
+            exRate = CGFloat(1.7)
+        default:
+            exRate = 1
+        }
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.transform = CGAffineTransformMakeScale(exRate, exRate)
+        })
 
+        nameLabel.text = annotation.group.name
+        
+        if let station = annotation.group.station, color = station.color {
+            nameLabel.backgroundColor = Util.colorWithHexString(color)
+        }
     }
 }

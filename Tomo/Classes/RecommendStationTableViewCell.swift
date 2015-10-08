@@ -63,7 +63,7 @@ extension RecommendStationTableCell:UICollectionViewDelegate {
         
         let station = self.stations[indexPath.item]
         
-        AlamofireController.request(.PATCH, "/me", parameters: ["$addToSet": ["stations":station.id]], encoding: .URL, success: { (result) -> () in
+        AlamofireController.request(.POST, "/stations/\(station.id)", parameters: nil, encoding: .URL, success: { (result) -> () in
             self.stations.removeAtIndex(indexPath.item)
             collectionView.deleteItemsAtIndexPaths([indexPath])
             self.delegate.synchronizeRecommendStations(self.stations)

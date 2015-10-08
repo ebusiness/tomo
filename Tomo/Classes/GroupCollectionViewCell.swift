@@ -23,6 +23,9 @@ class GroupCollectionViewCell: UICollectionViewCell {
         self.imageView.setImageWithURL(NSURL(string: group.cover), usingActivityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
         self.siteNameLabel.text = group.name
         self.siteIntroductionLabel.text = group.introduction
-        self.stationLabel.text = group.station
+        
+        if let station = group.station {
+            self.stationLabel.text = station.name
+        }
     }
 }

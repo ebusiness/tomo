@@ -18,7 +18,9 @@ class GroupDescriptionViewController: BaseTableViewController {
             if let detailedGroup = detailedGroup {
                 // 刷新界面
                 addressLabel.text = detailedGroup.address
-                stationLabel.text = detailedGroup.station
+                if let station = detailedGroup.station {
+                    stationLabel.text = station.name
+                }
                 introductionLabel.text = detailedGroup.introduction
                 groupCoverImageView.sd_setImageWithURL(NSURL(string: detailedGroup.cover), placeholderImage: UIImage(named: "group_cover_default"))
                 if (detailedGroup.members ?? []).count > 0 {

@@ -24,7 +24,6 @@
 		17B993011AF353D000204E97 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B993001AF353D000204E97 /* amrFileCodec.m */; };
 		17B993081AF3540D00204E97 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17B993071AF3540D00204E97 /* libopencore-amrnb.a */; };
 		17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993181AF3712C00204E97 /* OpenidController.swift */; };
-		1F05345C1BC3635700C99DF0 /* PeriodPickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F05345B1BC3635700C99DF0 /* PeriodPickerTableViewController.swift */; };
 		1F1176A31B983D280049D9F5 /* SocketAckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1176961B983D280049D9F5 /* SocketAckManager.swift */; };
 		1F1176A41B983D280049D9F5 /* SocketAnyEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1176971B983D280049D9F5 /* SocketAnyEvent.swift */; };
 		1F1176A51B983D280049D9F5 /* SocketEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1176981B983D280049D9F5 /* SocketEngine.swift */; };
@@ -198,7 +197,6 @@
 		17B993051AF353F600204E97 /* interf_enc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interf_enc.h; path = "opencore-amr/include/opencore-amrnb/interf_enc.h"; sourceTree = "<group>"; };
 		17B993071AF3540D00204E97 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libopencore-amrnb.a"; path = "opencore-amr/lib/libopencore-amrnb.a"; sourceTree = "<group>"; };
 		17B993181AF3712C00204E97 /* OpenidController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidController.swift; path = Classes/OpenidController.swift; sourceTree = "<group>"; };
-		1F05345B1BC3635700C99DF0 /* PeriodPickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeriodPickerTableViewController.swift; path = Classes/PeriodPickerTableViewController.swift; sourceTree = "<group>"; };
 		1F1176961B983D280049D9F5 /* SocketAckManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAckManager.swift; sourceTree = "<group>"; };
 		1F1176971B983D280049D9F5 /* SocketAnyEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAnyEvent.swift; sourceTree = "<group>"; };
 		1F1176981B983D280049D9F5 /* SocketEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketEngine.swift; sourceTree = "<group>"; };
@@ -518,7 +516,6 @@
 				1F8DEBDE1BBD22600037FD1C /* PostCallOutViewController.swift */,
 				1FAA70FB1BBBF97B00BCE5AF /* StationAnnotation.swift */,
 				1FAA70FD1BBBF99100BCE5AF /* StationAnnotationView.swift */,
-				1F05345B1BC3635700C99DF0 /* PeriodPickerTableViewController.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -1134,7 +1131,6 @@
 				1F1176AD1B983D280049D9F5 /* SocketTypes.swift in Sources */,
 				29DCEFE91B14519300A7C7AF /* TomoVideoMediaItem.swift in Sources */,
 				17B993011AF353D000204E97 /* amrFileCodec.m in Sources */,
-				1F05345C1BC3635700C99DF0 /* PeriodPickerTableViewController.swift in Sources */,
 				D0DB07D91B9D224900C06C4E /* NotificationView.swift in Sources */,
 				290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */,
 				1F1176AE1B983D280049D9F5 /* SwiftRegex.swift in Sources */,
