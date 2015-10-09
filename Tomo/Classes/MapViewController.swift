@@ -17,8 +17,6 @@ final class MapViewController: UIViewController {
     
     var mode = InterfaceMode.HotStation
     
-    let pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
-    
     let PostAnnotationViewIdentifier = "PostAnnotationView"
     let GroupAnnotationViewIdentifier = "GroupAnnotationView"
     let StationAnnotationViewIdentifier = "StationAnnotationView"
@@ -28,12 +26,6 @@ final class MapViewController: UIViewController {
     
     var contents = [AnyObject]()
     
-    var displayDate = NSDate()
-    let calendar = NSCalendar.currentCalendar()
-    let unitFlag = (NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay)
-    
-    var displayGroup: GroupEntity?
-    
     let tokyoCenter = CLLocationCoordinate2D(latitude: 35.693889, longitude: 139.753611)
     let tokyoSpan = MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
     
@@ -41,6 +33,9 @@ final class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
         
         self.allAnnotationMapView = MKMapView(frame: CGRectZero)
         
@@ -61,7 +56,16 @@ final class MapViewController: UIViewController {
         default:
             return
         }
-        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        let time = Defaults["mapLastTimeStamp"].date
+        println("will use time \(time)")
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        println("will save time \(NSDate())")
+        Defaults["mapLastTimeStamp"] = NSDate()
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -78,6 +82,18 @@ extension MapViewController {
         self.mapView.setRegion(MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 10000, 10000), animated: true)
     }
     
+    @IBAction func changeMode(sender: AnyObject) {
+        
+        let segmentControl = sender as! UISegmentedControl
+        
+        if segmentControl.selectedSegmentIndex == 0 {
+            self.mode = .HotStation
+        } else {
+            self.mode = .MyStation
+        }
+        
+        self.loadContentsu()
+    }
 }
 
 extension MapViewController: UIPopoverPresentationControllerDelegate, UIAdaptivePresentationControllerDelegate {
@@ -194,7 +210,7 @@ extension MapViewController: MKMapViewDelegate {
                 let pvc = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
                 pvc.group = groupAnnotation.group
                 
-                self.presentViewController(pvc, animated: true, completion: nil)
+                self.navigationController?.pushViewController(pvc, animated: true)
                 
             } else {
                 
@@ -271,21 +287,6 @@ extension MapViewController {
         })
     }
     
-    private func showPopover(viewController: UIViewController, onView view: UIView) {
-        
-        pageViewController.setViewControllers([viewController], direction: .Forward, animated: false, completion: nil)
-        pageViewController.modalPresentationStyle = .Popover
-        pageViewController.popoverPresentationController?.delegate = self
-        
-        self.presentViewController(pageViewController, animated: true, completion: nil)
-        
-        if let pop = pageViewController.popoverPresentationController {
-            pop.backgroundColor = UIColor.whiteColor()
-            pop.sourceView = view
-            pop.sourceRect = view.bounds
-        }
-    }
-    
     private func getCurrentBox() -> [Double] {
         
         let visibleRect = mapView.visibleMapRect
@@ -303,46 +304,19 @@ extension MapViewController {
         return [leftBottom.latitude, leftBottom.longitude, rightTop.latitude, rightTop.longitude]
     }
     
-//    func nextDay() {
-//        
-//        let dateComponent = NSDateComponents()
-//        dateComponent.day = 1
-//        
-//        let nextDate = calendar.dateByAddingComponents(dateComponent, toDate: displayDate, options: NSCalendarOptions.allZeros)
-//        
-//        displayDate = nextDate!
-//        self.chooseDateButton.setTitle(displayDate.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle, doesRelativeDateFormatting: false), forState: .Normal)
-//        
-//        self.loadContents()
-//    }
-//    
-//    func previousDay() {
-//        
-//        let dateComponent = NSDateComponents()
-//        dateComponent.day = -1
-//        
-//        let previousDate = calendar.dateByAddingComponents(dateComponent, toDate: displayDate, options: NSCalendarOptions.allZeros)
-//        
-//        displayDate = previousDate!
-//        self.chooseDateButton.setTitle(displayDate.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle, doesRelativeDateFormatting: false), forState: .Normal)
-//        
-//        self.loadContents()
-//    }
-    
     private func loadContents() {
-        
-        let todayComponents = calendar.components(unitFlag, fromDate: NSDate())
-        let today = calendar.dateFromComponents(todayComponents)
-        
-        let requestDayComponents = calendar.components(unitFlag, fromDate: displayDate)
-        let requestDay = calendar.dateFromComponents(requestDayComponents)
         
         self.allAnnotationMapView.removeAnnotations(self.allAnnotationMapView.annotations)
         self.mapView.removeAnnotations(self.mapView.annotations)
         
+        var lastTimeStamp = Defaults["mapLastTimeStamp"].date
+        if lastTimeStamp == nil {
+            lastTimeStamp = NSDate()
+        }
+        
         switch self.mode {
         case .HotStation:
-            AlamofireController.request(.GET, "/map/groups", parameters: ["type": "station"], success: { groupData in
+            AlamofireController.request(.GET, "/map/groups", parameters: ["type": "station", "after": lastTimeStamp!.timeIntervalSince1970], success: { groupData in
                 if let groups:[GroupEntity] = GroupEntity.collection(groupData) {
                     
                     let annotations = groups.map { group -> GroupAnnotation in
@@ -468,8 +442,6 @@ extension MapViewController {
     }
     
     private func adjustRegion(annotations: [AnyObject]) {
-        
-//        let annotations = allAnnotationMapView.annotations
         
         if annotations.count > 0 {
             

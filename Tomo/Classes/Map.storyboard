@@ -17,17 +17,39 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" showsUserLocation="YES" showsBuildings="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKM-D9-brj">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
                                 <connections>
                                     <outlet property="delegate" destination="OpP-6Y-mbl" id="Izv-tq-Wk5"/>
                                 </connections>
                             </mapView>
-                            <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HAh-3k-lh9" userLabel="模式按钮区">
-                                <rect key="frame" x="242" y="16" width="62" height="46"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xi3-wd-alO" userLabel="显示当前位置">
-                                <rect key="frame" x="258" y="24" width="30" height="30"/>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="UKM-D9-brj" firstAttribute="leading" secondItem="wVk-fz-608" secondAttribute="leading" id="7B1-hi-sXs"/>
+                            <constraint firstItem="UKM-D9-brj" firstAttribute="top" secondItem="cbP-3X-ubl" secondAttribute="top" id="8gF-0R-Qaq"/>
+                            <constraint firstAttribute="trailing" secondItem="UKM-D9-brj" secondAttribute="trailing" id="DLL-Kd-ZdR"/>
+                            <constraint firstItem="Cpn-4Z-PSd" firstAttribute="top" secondItem="UKM-D9-brj" secondAttribute="bottom" id="r8E-t3-iXV"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="KKw-VS-iwT">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" id="rYp-mw-Lf7">
+                            <rect key="frame" x="93.5" y="7" width="133" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <segments>
+                                <segment title="当前热点"/>
+                                <segment title="我的关注"/>
+                            </segments>
+                            <connections>
+                                <action selector="changeMode:" destination="OpP-6Y-mbl" eventType="valueChanged" id="sJL-JG-Lwy"/>
+                            </connections>
+                        </segmentedControl>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="kTW-et-JAR">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xi3-wd-alO" userLabel="显示当前位置">
+                                <rect key="frame" x="258" y="68" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="Eci-sG-t69"/>
                                     <constraint firstAttribute="height" constant="30" id="eD9-HA-FUl"/>
@@ -39,30 +61,8 @@
                                     <action selector="showCurrentLocation" destination="OpP-6Y-mbl" eventType="touchUpInside" id="qcR-VR-LnZ"/>
                                 </connections>
                             </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" momentary="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rYp-mw-Lf7">
-                                <rect key="frame" x="99" y="8" width="123" height="29"/>
-                                <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                </segments>
-                            </segmentedControl>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="xi3-wd-alO" firstAttribute="top" secondItem="HAh-3k-lh9" secondAttribute="top" constant="8" id="0MX-Kv-hdQ"/>
-                            <constraint firstItem="xi3-wd-alO" firstAttribute="trailing" secondItem="HAh-3k-lh9" secondAttribute="trailing" constant="-16" id="2ay-7T-nmK"/>
-                            <constraint firstAttribute="trailing" secondItem="HAh-3k-lh9" secondAttribute="trailing" constant="16" id="3pS-Ct-xfv"/>
-                            <constraint firstItem="UKM-D9-brj" firstAttribute="leading" secondItem="wVk-fz-608" secondAttribute="leading" id="7B1-hi-sXs"/>
-                            <constraint firstItem="xi3-wd-alO" firstAttribute="leading" secondItem="HAh-3k-lh9" secondAttribute="leading" constant="16" id="7dD-rx-TpW"/>
-                            <constraint firstItem="UKM-D9-brj" firstAttribute="top" secondItem="cbP-3X-ubl" secondAttribute="bottom" id="8gF-0R-Qaq"/>
-                            <constraint firstAttribute="trailing" secondItem="UKM-D9-brj" secondAttribute="trailing" id="DLL-Kd-ZdR"/>
-                            <constraint firstItem="HAh-3k-lh9" firstAttribute="top" secondItem="cbP-3X-ubl" secondAttribute="bottom" constant="16" id="F4x-xV-WFj"/>
-                            <constraint firstItem="xi3-wd-alO" firstAttribute="bottom" secondItem="HAh-3k-lh9" secondAttribute="bottom" constant="-8" id="e0b-mJ-1MP"/>
-                            <constraint firstItem="Cpn-4Z-PSd" firstAttribute="top" secondItem="UKM-D9-brj" secondAttribute="bottom" id="r8E-t3-iXV"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="KKw-VS-iwT"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="UKM-D9-brj" id="omH-2J-6xe"/>
@@ -75,7 +75,7 @@
         <!--Navigation Controller-->
         <scene sceneID="MOJ-Y9-CVB">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="lFe-YQ-9Zz" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lFe-YQ-9Zz" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="DAt-QF-5wW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
