@@ -638,6 +638,11 @@ extension CreatePostViewController: UICollectionViewDelegate {
         
         if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
             
+            if collectionView.indexPathsForSelectedItems().count > 10 {
+                collectionView.deselectItemAtIndexPath(indexPath, animated: false)
+                return
+            }
+            
             UIView.animateWithDuration(0.1, animations: { () -> Void in
                 cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
             }, completion: { (_) -> Void in
