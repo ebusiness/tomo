@@ -34,8 +34,7 @@ final class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.setupAppearance()
         
         self.allAnnotationMapView = MKMapView(frame: CGRectZero)
         
@@ -59,8 +58,7 @@ final class MapViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        let time = Defaults["mapLastTimeStamp"].date
-        println("will use time \(time)")
+        self.setupAppearance()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -210,6 +208,7 @@ extension MapViewController: MKMapViewDelegate {
                 let pvc = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
                 pvc.group = groupAnnotation.group
                 
+//                self.presentViewController(pvc, animated: true, completion: nil)
                 self.navigationController?.pushViewController(pvc, animated: true)
                 
             } else {
@@ -221,45 +220,21 @@ extension MapViewController: MKMapViewDelegate {
             }
         }
         
-//        if let view = view as? PostAnnotationView {
-//
-//            let pvc = PostCallOutViewController(nibName: "PostCallOutView", bundle: nil)
-//            pvc.postAnnotation = view.annotation as! PostAnnotation
-//            
-//            pageViewController.preferredContentSize = pvc.view.systemLayoutSizeFittingSize(CGSize(width: 300, height: 300), withHorizontalFittingPriority: 1000, verticalFittingPriority: 250)
-//            pageViewController.dataSource = view
-//            
-//            self.showPopover(pvc, onView: view)
-//            
-//        } else if let view = view as? GroupAnnotationView {
-//            
-//            let groupAnnotation = view.annotation as! GroupAnnotation
-//            
-//            if groupAnnotation.containedAnnotations?.count == 0 {
-//                
-//                self.displayGroup = groupAnnotation.group
-//                self.mode = .GroupMode
-//                self.loadContents()
-//                
-//            } else {
-//                
-//                let gvc = GroupCallOutViewController(nibName: "GroupCallOutView", bundle: nil)
-//                gvc.groupAnnotation = view.annotation as! GroupAnnotation
-//                
-//                pageViewController.preferredContentSize = gvc.view.systemLayoutSizeFittingSize(CGSize(width: 320, height: 200), withHorizontalFittingPriority: 1000, verticalFittingPriority: 1000)
-//                pageViewController.dataSource = view
-//                
-//                self.showPopover(gvc, onView: view)
-//            }
-//            
-//        }
-        
     }
 }
 
 // MARK: Internal Methods
 
 extension MapViewController {
+    
+    private func setupAppearance() {
+        
+        if let navigationBar = self.navigationController?.navigationBar {
+            navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            navigationBar.shadowImage = UIImage()
+            navigationBar.tintColor = Palette.Blue.getPrimaryColor()
+        }
+    }
     
     private func showLocationServiceDisabledAlert() {
         
@@ -359,12 +334,12 @@ extension MapViewController {
         // This value to controls the number of off screen annotations are displayed.
         // A bigger number means more annotations, less chance of seeing annotation views pop in but decreased performance.
         // A smaller number means fewer annotations, more chance of seeing annotation views pop in but better performance.
-        let marginFactor = 0.0;
+        let marginFactor = 1.0;
         
         // Adjust this roughly based on the dimensions of your annotations views.
         // Bigger numbers more aggressively coalesce annotations (fewer annotations displayed but better performance).
         // Numbers too small result in overlapping annotations views and too many annotations on screen.
-        let bucketSize = 80.0;
+        let bucketSize = 120.0;
         
         // find all the annotations in the visible area + a wide margin to avoid popping annotation views in and out while panning the map.
         let visibleMapRect = mapView.visibleMapRect

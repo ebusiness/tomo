@@ -24,12 +24,12 @@ class StationAnnotationView: AggregatableAnnotationView {
         
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
-        frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        frame = CGRect(x: 0, y: 0, width: 40, height: 30)
         
-        nameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        nameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 30))
         nameLabel.textColor = UIColor.whiteColor()
         nameLabel.textAlignment = NSTextAlignment.Center
-        nameLabel.font = UIFont.systemFontOfSize(12)
+        nameLabel.font = UIFont.systemFontOfSize(11)
         nameLabel.numberOfLines = 0
         nameLabel.clipsToBounds = true
         nameLabel.layer.borderWidth = 1
@@ -38,7 +38,7 @@ class StationAnnotationView: AggregatableAnnotationView {
         
         addSubview(nameLabel)
         
-        numberBadge.frame = CGRect(x: 28, y: -8, width: 20, height: 20)
+        numberBadge.frame = CGRect(x: 28, y: -8, width: 15, height: 15)
         numberBadge.layer.cornerRadius = numberBadge.frame.width / 2
     }
     

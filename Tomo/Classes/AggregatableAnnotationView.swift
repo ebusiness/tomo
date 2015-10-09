@@ -29,7 +29,7 @@ class AggregatableAnnotationView: MKAnnotationView {
         numberBadge = UILabel()
         numberBadge.textColor = UIColor.whiteColor()
         numberBadge.textAlignment = NSTextAlignment.Center
-        numberBadge.font = UIFont.systemFontOfSize(12)
+        numberBadge.font = UIFont.systemFontOfSize(10)
         numberBadge.clipsToBounds = true
         numberBadge.layer.borderWidth = 1
         numberBadge.layer.borderColor = UIColor.whiteColor().CGColor
