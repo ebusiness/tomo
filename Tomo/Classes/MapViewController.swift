@@ -92,7 +92,7 @@ extension MapViewController {
             self.mode = .MyStation
         }
         
-        self.loadContentsu()
+        self.loadContents()
     }
 }
 
