@@ -373,9 +373,9 @@ extension HomeViewController {
             params["coordinate"] = [location.coordinate.latitude, location.coordinate.longitude];
         }
         
-        AlamofireController.request(.GET, "/map/groups", parameters: params, hideHUD: true, success: { groupData in
-            self.recommendGroups = GroupEntity.collection(groupData)
-        })
+//        AlamofireController.request(.GET, "/map/groups", parameters: params, hideHUD: true, success: { groupData in
+//            self.recommendGroups = GroupEntity.collection(groupData)
+//        })
         
         AlamofireController.request(.GET, "/map/stations", parameters: params, hideHUD: true, success: { stationData in
             self.recommendStations = StationEntity.collection(stationData)
