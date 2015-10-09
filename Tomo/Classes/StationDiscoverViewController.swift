@@ -170,8 +170,12 @@ extension StationDiscoverViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         let text = searchBar.text
         searchText = searchBar.text
+        var coordinate = location.coordinate
+        var parameter: [String: AnyObject] = ["name": text,
+            "coordinate": [coordinate.latitude, coordinate.longitude]
+        ];
         AlamofireController.request(.GET, "/map/stations",
-            parameters: ["name": text],
+            parameters: parameter,
             success: { (object) -> () in
                 self.stations = StationEntity.collection(object)
                 self.refresh()
