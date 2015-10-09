@@ -9,11 +9,11 @@
 import UIKit
 
 class PostViewController: BaseViewController{
-
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var postImageList: UIScrollView!
     @IBOutlet weak var avatarImageView: UIImageView!
-
+    
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var commentInputView: UIView!
     @IBOutlet weak var commentTextView: UITextView!
@@ -24,7 +24,7 @@ class PostViewController: BaseViewController{
     @IBOutlet weak var commentBtn: UIButton!
     @IBOutlet weak var likedBtn: UIButton!
     @IBOutlet weak var bookmarkBtn: UIButton!
-
+    
     @IBOutlet weak var commentInputViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var headerConstraint: NSLayoutConstraint!
@@ -36,12 +36,12 @@ class PostViewController: BaseViewController{
     
     var listViewHeight:CGFloat = UIScreen.mainScreen().bounds.size.height * 0.618 //  250
     let profileHeaderHeight:CGFloat = 100
-
+    
     var commentContent: String?
     var cellForHeight: CommentCell!
     
     let commentBackgroundView = UIView()
-
+    
     var post: PostEntity! {
         didSet {
             if let avatarImageView = avatarImageView {
@@ -49,13 +49,13 @@ class PostViewController: BaseViewController{
             }
         }
     }
-
+    
     var comments: [CommentEntity]? {
         get {
             return post.comments
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.alwaysShowNavigationBar = ( self.post.images?.count ?? 0 ) < 1
@@ -97,12 +97,12 @@ class PostViewController: BaseViewController{
                 changeImageTo(scrollView.subviews[2].tag)
             }
             pageControl.currentPage = scrollView.subviews[1].tag
-
+            
         }
     }
     
     @IBAction func avatarImageTapped(sender: UITapGestureRecognizer) {
-
+        
         if let childvcs = self.navigationController?.childViewControllers where childvcs.count > 4 {
             self.navigationController?.popViewControllerAnimated(true)
         } else {
@@ -113,7 +113,7 @@ class PostViewController: BaseViewController{
         }
         
     }
-
+    
     @IBAction func likeBtnTapped(sender: UIButton) {
         sender.userInteractionEnabled = false
         AlamofireController.request(.PATCH, "/posts/\(self.post.id)/like", success: { _ in
@@ -129,8 +129,8 @@ class PostViewController: BaseViewController{
                 sender.userInteractionEnabled = true
             }
             
-        }) { err in
-            sender.userInteractionEnabled = true
+            }) { err in
+                sender.userInteractionEnabled = true
         }
     }
     
@@ -150,11 +150,11 @@ class PostViewController: BaseViewController{
             self.bookmarkBtn.tada {
                 sender.userInteractionEnabled = true
             }
-        }) { err in
-            sender.userInteractionEnabled = true
+            }) { err in
+                sender.userInteractionEnabled = true
         }
     }
-
+    
     @IBAction func moreBtnTapped(sender: AnyObject) {
         
         let shareUrl = kAPIBaseURLString + "/mobile/share/post/" + self.post.id!
@@ -185,32 +185,32 @@ class PostViewController: BaseViewController{
                     AlamofireController.request(.DELETE, "/posts/\(self.post.id)", success: { _ in
                         Util.showInfo("帖子已删除")
                         self.navigationController?.popViewControllerAnimated(true)
-                    }) { err in
-                        
+                        }) { err in
+                            
                     }
                 })
             }
         }
-
+        
         Util.alertActionSheet(self, optionalDict: optionalList)
-
+        
     }
     
     @IBAction func tableViewTapped(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
-
+    
     @IBAction func sendCommentBtnTapped(sender: AnyObject) {
         
         var param = Dictionary<String, String>();
         param["content"] = commentContent;
-//        param["replyTo"] = "552220aa915a1dd84834731b";//コメントID
+        //        param["replyTo"] = "552220aa915a1dd84834731b";//コメントID
         
         self.commentContent = nil
         self.commentTextView.text = "评论:"
         self.commentTextView.textColor = UIColor.lightGrayColor()
         commentInputViewConstraint.constant = 50
-
+        
         self.hideSendBtn(true)
         self.view.endEditing(true)
         
@@ -225,10 +225,10 @@ class PostViewController: BaseViewController{
             self.post.comments?.append(comment)
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)], withRowAnimation: .Automatic)
             
-        }) { err in
-            
+            }) { err in
+                
         }
-
+        
     }
 }
 
@@ -266,7 +266,7 @@ extension PostViewController {
         }
         pageControl.numberOfPages = imageCount
         pageControl.hidden = imageCount < 2
-
+        
         let para = NSMutableParagraphStyle()
         para.minimumLineHeight = 30
         
@@ -275,12 +275,12 @@ extension PostViewController {
             ])
         
         contentLabel.attributedText = attributeString
-
+        
         self.contentLabel.bounds.size.width = UIScreen.mainScreen().bounds.size.width - 16 * 2
         let contentSize = self.contentLabel.sizeThatFits(self.contentLabel.bounds.size)
         
         let headerView = self.tableView.tableHeaderView as UIView!
-//        headerView.frame.size.width = UIScreen.mainScreen().bounds.size.width
+        //        headerView.frame.size.width = UIScreen.mainScreen().bounds.size.width
         
         let contentHeight = self.profileHeaderHeight + contentSize.height + 8 * 2
         if ( self.post.images?.count ?? 0 ) < 1 {
@@ -321,19 +321,42 @@ extension PostViewController {
         }
     }
     
+    func adjustContentMode(imgView: UIImageView, image: UIImage!) {
+        if image == nil {
+            imgView.contentMode = .ScaleAspectFill
+            return
+        }
+        let size = image.size
+        let ratio = size.width / size.height
+        if size.height < (self.listViewHeight / ICYCollectionViewSingleImageCell.minCenterScale)
+            && size.width < (UIScreen.mainScreen().bounds.width / ICYCollectionViewSingleImageCell.minCenterScale) {
+                imgView.contentMode = .Center
+                
+        } else if ratio > ICYCollectionViewSingleImageCell.maxAspectFitScale
+            || ratio < ICYCollectionViewSingleImageCell.minAspectFitScale {
+                imgView.contentMode = .ScaleAspectFit
+        }else {
+            imgView.contentMode = .ScaleAspectFill
+        }
+    }
+    
     func getImageView(index: Int) -> UIImageView {
         if  let images = post.images {
             
             let i = index > images.count ? index - images.count : index < 0 ? images.count + index : index
             
             let imgView = UIImageView(frame: CGRectZero )
-            imgView.setImageWithURL(NSURL(string: images[i] ), completed: nil, usingActivityIndicatorStyle: .Gray)
+            imgView.setImageWithURL(NSURL(string: images[i] ),
+                completed: {(image, _, _, _)-> Void in
+                    self.adjustContentMode(imgView, image: image)
+                },
+                usingActivityIndicatorStyle: .Gray)
             imgView.userInteractionEnabled = true
             imgView.tag = i
             let tap = UITapGestureRecognizer(target: self, action: Selector("postImageViewTapped:"))
             imgView.addGestureRecognizer(tap)
             imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
-            imgView.contentMode = UIViewContentMode.ScaleAspectFill
+//            imgView.contentMode = UIViewContentMode.ScaleAspectFill
             imgView.clipsToBounds = true
             return imgView
         }
@@ -390,14 +413,20 @@ extension PostViewController {
             center.tag = index
             right.tag = index == (images.count - 1) ? 0 : index + 1
             
-            left.setImageWithURL(NSURL(string: images[left.tag] ), completed: nil, usingActivityIndicatorStyle: .Gray)
-            center.setImageWithURL(NSURL(string: images[center.tag] ), completed: nil, usingActivityIndicatorStyle: .Gray)
-            right.setImageWithURL(NSURL(string: images[right.tag] ), completed: nil, usingActivityIndicatorStyle: .Gray)
+            left.setImageWithURL(NSURL(string: images[left.tag] ), completed: {(image, _, _, _)-> Void in
+                self.adjustContentMode(left, image: image)
+                }, usingActivityIndicatorStyle: .Gray)
+            center.setImageWithURL(NSURL(string: images[center.tag] ), completed: {(image, _, _, _)-> Void in
+                self.adjustContentMode(center, image: image)
+                }, usingActivityIndicatorStyle: .Gray)
+            right.setImageWithURL(NSURL(string: images[right.tag] ), completed: {(image, _, _, _)-> Void in
+                self.adjustContentMode(right, image: image)
+                }, usingActivityIndicatorStyle: .Gray)
             
             postImageList.contentOffset.x = UIScreen.mainScreen().bounds.size.width//postImageList.frame.size.width
         }
     }
-
+    
     func postImageViewTapped(sender: UITapGestureRecognizer) {
         if isKeyboardShown {
             self.view.endEditing(true)
@@ -432,9 +461,9 @@ extension PostViewController {
             gallery.galleryItems = items
             gallery.presentationIndex = imageView.tag
             
-//            if post.images?.count == 1 {
-                gallery.presentingFromImageView = imageView
-//            }
+            //            if post.images?.count == 1 {
+            gallery.presentingFromImageView = imageView
+            //            }
             
             gallery.UICustomization.useCustomBackButtonImageOnImageViewer = false
             gallery.UICustomization.showOverView = false
@@ -547,7 +576,7 @@ extension PostViewController {
                 self.commentBtn.transform = CGAffineTransformMakeScale(1, 1)
             }
             self.navigationController?.view.layoutIfNeeded()
-            })
+        })
     }
 }
 // MARK - NSNotificationCenter
@@ -581,5 +610,5 @@ extension PostViewController {
             })
         }
     }
-
+    
 }
