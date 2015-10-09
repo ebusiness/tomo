@@ -373,11 +373,11 @@ extension HomeViewController {
             params["coordinate"] = [location.coordinate.latitude, location.coordinate.longitude];
         }
         
-        AlamofireController.request(.GET, "/map/groups", parameters: params, success: { groupData in
+        AlamofireController.request(.GET, "/map/groups", parameters: params, hideHUD: true, success: { groupData in
             self.recommendGroups = GroupEntity.collection(groupData)
         })
         
-        AlamofireController.request(.GET, "/map/stations", parameters: params, success: { stationData in
+        AlamofireController.request(.GET, "/map/stations", parameters: params, hideHUD: true, success: { stationData in
             self.recommendStations = StationEntity.collection(stationData)
         })
     }
@@ -397,7 +397,7 @@ extension HomeViewController {
             params["before"] = oldestContent.createDate.timeIntervalSince1970
         }
         
-        AlamofireController.request(.GET, "/posts", parameters: params, success: { postData in
+        AlamofireController.request(.GET, "/posts", parameters: params, hideHUD: true, success: { postData in
             
             let posts: [PostEntity]? = PostEntity.collection(postData)
             
@@ -453,7 +453,7 @@ extension HomeViewController {
             params["after"] = latestContent.createDate.timeIntervalSince1970 + 1
         }
         
-        AlamofireController.request(.GET, "/posts", parameters: params, success: { result in
+        AlamofireController.request(.GET, "/posts", parameters: params, hideHUD: true, success: { result in
             
             if let loadPosts:[PostEntity] = PostEntity.collection(result) {
                 self.contents = loadPosts + self.contents

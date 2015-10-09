@@ -8,9 +8,12 @@
 
 class AlamofireController {
     
-    class func request(method: Method, _ URLString: String, parameters: [String: AnyObject]? = nil, encoding: ParameterEncoding = .URL, success: ((AnyObject)->())? = nil, failure: ((NSError?)->())? = nil ) {
+    class func request(method: Method, _ URLString: String, parameters: [String: AnyObject]? = nil, encoding: ParameterEncoding = .URL, hideHUD: Bool = false,success: ((AnyObject)->())? = nil, failure: ((NSError?)->())? = nil ) {
         
-        Util.showHUD()
+        if !hideHUD {
+            Util.showHUD()
+        }
+        
         let request = Manager.sharedInstance.request(method, kAPIBaseURLString + URLString, parameters: parameters, encoding: encoding).validate()
         
         if success == nil && failure == nil {
