@@ -403,29 +403,39 @@ extension HomeViewController {
             
             if let loadPosts: [AnyObject] = posts {
                 self.contents += loadPosts
-                self.appendRows(loadPosts.count)
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                    
+                    for content in loadPosts {
+                        if let content = content as? PostEntity {
+                            self.simulateLayout(content)
+                        }
+                    }
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.appendRows(loadPosts.count)
+                        let visibleCells = self.tableView.visibleCells()
+                        let visibleIndexPath = self.tableView.indexPathForCell(visibleCells.get(0) as! UITableViewCell)
+                        
+                        var insertIndexPath = NSIndexPath(forRow: visibleIndexPath!.row + 1, inSection: 0)
+                        
+                        if let stations: AnyObject = self.recommendStations as? AnyObject {
+                            self.contents.insert(stations, atIndex: Int(insertIndexPath.row))
+                            self.tableView.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Fade)
+                            self.recommendStations = nil
+                        }
+                        
+                        insertIndexPath = NSIndexPath(forRow: visibleIndexPath!.row + 4, inSection: 0)
+                        
+                        if let groups: AnyObject = self.recommendGroups as? AnyObject {
+                            self.contents.insert(groups, atIndex: Int(insertIndexPath.row))
+                            self.tableView.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Fade)
+                            self.recommendGroups = nil
+                        }
+                        
+                        self.isLoading = false
+                    });
+                });
             }
             
-            let visibleCells = self.tableView.visibleCells()
-            let visibleIndexPath = self.tableView.indexPathForCell(visibleCells.get(0) as! UITableViewCell)
-            
-            var insertIndexPath = NSIndexPath(forRow: visibleIndexPath!.row + 1, inSection: 0)
-            
-            if let stations: AnyObject = self.recommendStations as? AnyObject {
-                self.contents.insert(stations, atIndex: Int(insertIndexPath.row))
-                self.tableView.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Fade)
-                self.recommendStations = nil
-            }
-            
-            insertIndexPath = NSIndexPath(forRow: visibleIndexPath!.row + 4, inSection: 0)
-            
-            if let groups: AnyObject = self.recommendGroups as? AnyObject {
-                self.contents.insert(groups, atIndex: Int(insertIndexPath.row))
-                self.tableView.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Fade)
-                self.recommendGroups = nil
-            }
-            
-            self.isLoading = false
             
             }) { err in
                 
@@ -519,5 +529,25 @@ extension HomeViewController {
         tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
         tableView.endUpdates()
+    }
+    
+    func simulateLayout(post: PostEntity) {
+        if post.contentHeight == nil && tableView != nil {
+            if post.images?.count > 0 {
+                if postImageCellEstimator == nil {
+                    postImageCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier") as! ICYPostImageCell
+                }
+                postImageCellEstimator.post = post
+                let size = postImageCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+                post.contentHeight = size.height
+            } else {
+                if postCellEstimator == nil {
+                    postCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier") as! ICYPostCell
+                }
+                postCellEstimator.post = post
+                let size = postCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+                post.contentHeight = size.height
+            }
+        }
     }
 }
