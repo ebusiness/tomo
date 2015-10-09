@@ -34,44 +34,36 @@ class ProfileBaseController: BaseTableViewController {
             }
             
             self.whenShowNavigationBar = { (OffsetY)->() in
-                
                 self.setNavigationBarBackgroundImage(vc.coverImageView.image)
-                
             }
+            
+            let maxHeight: CGFloat = 100
+            var speed: CGFloat = 0.5 * maxHeight / (UIScreen.mainScreen().bounds.size.height * 0.618 - 64) //{ return 0.5 * maxHeight / self.headerHeight }
+            var photoImageViewConstraints: Dictionary<NSLayoutAttribute, NSLayoutConstraint>?
+            
             self.whenHideNavigationBar = { (OffsetY)->() in
                 
-                vc.photoImageView.constraints().map { (constraint:AnyObject) -> () in
-                    
-                    if let constraint = constraint as? NSLayoutConstraint
-                        where constraint.firstAttribute == .Width || constraint.firstAttribute == .Height
-                    {
-                        var constant = (1 - (OffsetY / self.headerHeight) ) * 100 //speed
-                        if constant > 100 { constant = 100 }
-                        else if constant < 60 { constant = 60 }
-                        constraint.constant = constant
-                        
-                        vc.photoImageView.layer.cornerRadius = constant / 2
-                    }
-                }
-                vc.photoImageView.superview?.constraints().map { (constraint:AnyObject) -> () in
-                    
-                    if let constraint = constraint as? NSLayoutConstraint
-                        where constraint.firstAttribute == .CenterY
-                    {
-                        var constant = OffsetY / self.headerHeight * 100 //speed
-                        if constant > 40 { constant = 40 }
-                        else if constant < 0 { constant = 0 }
-                        constraint.constant = constant
-                    }
-                    
+                if let photoImageView = vc.photoImageView where photoImageViewConstraints == nil {
+                    photoImageViewConstraints = self.getConstraint(photoImageView)
                 }
                 
-                //                let alpha = OffsetY / self.headerHeight
+                var constant = OffsetY * speed
+                if constant > 40 { constant = 40 }
+                else if constant < 0 { constant = 0 }
+                
+                photoImageViewConstraints?[.CenterY]?.constant = constant
+                
+                var wh = maxHeight - constant
+                if wh > maxHeight { wh = maxHeight }
+                //                else if wh < 60 { wh = 60 }
+                photoImageViewConstraints?[.Width]?.constant = wh
+                photoImageViewConstraints?[.Height]?.constant = wh
+                
+                vc.photoImageView.layer.cornerRadius = wh / 2
+                
+//                let alpha = OffsetY / self.headerHeight
                 self.setNavigationBarBackgroundImage(nil)
-                
             }
-
-            
         } else if let vc = segue.destinationViewController as? ProfileBaseController {
             vc.user = self.user
         }
@@ -95,5 +87,13 @@ extension ProfileBaseController {
     
     func updateUI() {
         Util.dismissHUD()
+    }
+    
+    private func getConstraint(photoImageView: UIView) -> Dictionary<NSLayoutAttribute, NSLayoutConstraint>? {
+        var constraints = Dictionary<NSLayoutAttribute, NSLayoutConstraint>()
+        constraints[.Width] = photoImageView.constraints().find { $0.firstAttribute == .Width } as? NSLayoutConstraint
+        constraints[.Height] = photoImageView.constraints().find { $0.firstAttribute == .Height } as? NSLayoutConstraint
+        constraints[.CenterY] = photoImageView.superview?.constraints().find { $0.firstAttribute == .CenterY } as? NSLayoutConstraint
+        return constraints
     }
 }

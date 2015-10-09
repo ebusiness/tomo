@@ -144,7 +144,7 @@ extension BaseTableViewController {
                     self.navigationImageView!.image = UIImage()
                     self.navigationImageView!.contentMode = UIViewContentMode.ScaleAspectFill
                     self.navigationImageView!.clipsToBounds = true
-//                    self.navigationImageView!.addSubview(self.navigationTextProtection!)
+                    self.navigationImageView!.addSubview(self.navigationTextProtection!)
                     
                     imageview.insertSubview(self.navigationImageView!, atIndex: 0)
                 }
