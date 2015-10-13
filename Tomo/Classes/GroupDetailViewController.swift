@@ -12,7 +12,7 @@ final class GroupDetailViewController: BaseTableViewController {
     
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var joinButton: UIButton!
-    @IBOutlet weak var groupDescriptionButton: UIButton!
+    @IBOutlet weak var groupNameLable: UILabel!
     
     var group: GroupEntity!
     
@@ -20,19 +20,28 @@ final class GroupDetailViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setTitleView()
         self.updateUI()
         
         tableView.registerNib(UINib(nibName: "ICYPostCell", bundle: nil), forCellReuseIdentifier: "ICYPostCellIdentifier")
         tableView.registerNib(UINib(nibName: "ICYPostImageCell", bundle: nil), forCellReuseIdentifier: "ICYPostImageCellIdentifier")
         tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor.groupTableViewBackgroundColor()
-        
-        groupDescriptionButton.setImage(Util.coloredImage(UIImage(named: "settings")!, color: UIColor.whiteColor()), forState: UIControlState.Normal)
+        //// /////////////
+        var resizeHeaderHeight:CGFloat = UIScreen.mainScreen().bounds.size.height * (0.618 - 0.1)
+        self.headerHeight = resizeHeaderHeight - 64
+        self.changeHeaderView(height: resizeHeaderHeight, done: nil)
+        //// /////////////
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         loadPosts()
+    }
+    
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        super.scrollViewDidScroll(scrollView)
+        self.moveTitleView(scrollView.contentOffset.y)
     }
     
     override func didReceiveMemoryWarning() {
@@ -69,10 +78,8 @@ extension GroupDetailViewController {
     
     private func updateUI() {
         
-        let postButton = UIBarButtonItem(image: UIImage(named: "create_new"), style: .Plain, target: self, action: "createPost")
-        self.navigationItem.rightBarButtonItem = postButton
-        
-        self.title = group.name
+//        self.title = group.name
+        self.groupNameLable.text = group.name
         self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: DefaultGroupImage)
         
         if let myGroups = me.groups {
@@ -184,4 +191,42 @@ extension GroupDetailViewController {
         postDetailVC.post = post
         navigationController?.pushViewController(postDetailVC, animated: true)
     }
+}
+
+// MARK: - FunnyNavigation
+
+extension GroupDetailViewController {
+    
+    private func setTitleView() {
+        
+        let postButton = UIBarButtonItem(image: UIImage(named: "create_new"), style: .Plain, target: self, action: "createPost")
+        self.navigationItem.rightBarButtonItem = postButton
+        
+        let titleView = UILabel(frame: CGRectZero)
+        titleView.text = self.group.name
+        titleView.font = UIFont.boldSystemFontOfSize(17)
+        titleView.textColor = UIColor.whiteColor()
+        titleView.sizeToFit()
+        titleView.textAlignment = .Center
+        titleView.hidden = true
+        
+        self.navigationItem.titleView = titleView
+//        self.navigationItem.titleView!.frame.origin.y = -64 // invalid
+    }
+    
+    private func moveTitleView(OffsetY: CGFloat) {
+        if let titleView = self.navigationItem.titleView {
+            if titleView.hidden {
+                titleView.hidden = false
+            }
+            var y = OffsetY - self.groupNameLable.frame.origin.y
+            if y > 12 {
+                y = 12
+            } else if y < -64 {
+                y = -64
+            }
+            titleView.frame.origin.y = y
+        }
+    }
+    
 }

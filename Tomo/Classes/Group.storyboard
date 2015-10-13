@@ -166,62 +166,74 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="XFX-mo-v5G">
-                            <rect key="frame" x="0.0" y="64" width="320" height="160"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="245"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Dr-UJ-fvg">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="245"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text1" translatesAutoresizingMaskIntoConstraints="NO" id="D5I-gk-3oY">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="245"/>
                                             <animations/>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text_protection" translatesAutoresizingMaskIntoConstraints="NO" id="QHT-gE-xts">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="245"/>
                                             <animations/>
+                                            <gestureRecognizers/>
                                         </imageView>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xp4-n8-ZXc">
-                                            <rect key="frame" x="16" y="119" width="100" height="33"/>
-                                            <animations/>
-                                            <color key="backgroundColor" red="0.29803921570000003" green="0.68627450980000004" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
-                                            <state key="normal" title="加入这个群组">
-                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="joinGroup:" destination="UlV-bz-zwx" eventType="touchUpInside" id="ysk-PS-nAZ"/>
-                                            </connections>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Tv-3U-s7g">
-                                            <rect key="frame" x="279" y="123" width="25" height="25"/>
-                                            <animations/>
-                                            <state key="normal" image="settings">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="groupDescriptionButtonPressed:" destination="UlV-bz-zwx" eventType="touchUpInside" id="I11-lZ-uQY"/>
-                                                <segue destination="cld-fn-BI9" kind="push" identifier="pushGroupDescription" id="eNK-BF-p6r"/>
-                                            </connections>
-                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="现场名称" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PcR-d9-tdg">
+                                            <rect key="frame" x="8" y="105" width="304" height="36"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dwi-7M-0xL">
+                                            <rect key="frame" x="0.0" y="149" width="320" height="44"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xp4-n8-ZXc">
+                                                    <rect key="frame" x="138" y="6" width="44" height="33"/>
+                                                    <animations/>
+                                                    <color key="backgroundColor" red="0.29803921570000003" green="0.68627450980000004" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                                    <state key="normal" title="参加">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="joinGroup:" destination="UlV-bz-zwx" eventType="touchUpInside" id="ysk-PS-nAZ"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="xp4-n8-ZXc" secondAttribute="centerY" id="J7Q-8S-Rhn"/>
+                                                <constraint firstAttribute="centerX" secondItem="xp4-n8-ZXc" secondAttribute="centerX" id="uBA-J5-P6w"/>
+                                                <constraint firstAttribute="height" constant="44" id="xIJ-mQ-Pjm"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <animations/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="xp4-n8-ZXc" firstAttribute="leading" secondItem="2Dr-UJ-fvg" secondAttribute="leading" constant="16" id="9W4-45-T19"/>
+                                        <constraint firstAttribute="trailing" secondItem="PcR-d9-tdg" secondAttribute="trailing" constant="8" id="0Xr-PD-e4T"/>
+                                        <constraint firstItem="dwi-7M-0xL" firstAttribute="leading" secondItem="2Dr-UJ-fvg" secondAttribute="leading" id="0zO-XD-hIh"/>
                                         <constraint firstAttribute="trailing" secondItem="D5I-gk-3oY" secondAttribute="trailing" id="B72-Ga-nF6"/>
-                                        <constraint firstAttribute="bottom" secondItem="xp4-n8-ZXc" secondAttribute="bottom" constant="8" id="NyE-iV-qz4"/>
+                                        <constraint firstAttribute="centerY" secondItem="PcR-d9-tdg" secondAttribute="centerY" id="Dto-9n-3Ww"/>
+                                        <constraint firstItem="dwi-7M-0xL" firstAttribute="top" secondItem="PcR-d9-tdg" secondAttribute="bottom" constant="8" id="Ioh-fl-cRJ"/>
                                         <constraint firstItem="QHT-gE-xts" firstAttribute="leading" secondItem="2Dr-UJ-fvg" secondAttribute="leading" id="Oej-B8-mpb"/>
                                         <constraint firstAttribute="bottom" secondItem="QHT-gE-xts" secondAttribute="bottom" id="RbR-zr-SWq"/>
+                                        <constraint firstItem="PcR-d9-tdg" firstAttribute="leading" secondItem="2Dr-UJ-fvg" secondAttribute="leading" constant="8" id="SZ0-tX-esB"/>
                                         <constraint firstAttribute="bottom" secondItem="D5I-gk-3oY" secondAttribute="bottom" id="VgD-DS-na8"/>
                                         <constraint firstAttribute="trailing" secondItem="QHT-gE-xts" secondAttribute="trailing" id="Wg5-P6-bH9"/>
                                         <constraint firstItem="D5I-gk-3oY" firstAttribute="leading" secondItem="2Dr-UJ-fvg" secondAttribute="leading" id="XJj-jW-Y5f"/>
-                                        <constraint firstItem="6Tv-3U-s7g" firstAttribute="centerY" secondItem="xp4-n8-ZXc" secondAttribute="centerY" id="gQZ-pn-4nq"/>
+                                        <constraint firstAttribute="trailing" secondItem="dwi-7M-0xL" secondAttribute="trailing" id="kBJ-0w-9m6"/>
                                         <constraint firstItem="D5I-gk-3oY" firstAttribute="top" secondItem="2Dr-UJ-fvg" secondAttribute="top" id="khY-BI-s8J"/>
                                         <constraint firstItem="QHT-gE-xts" firstAttribute="top" secondItem="2Dr-UJ-fvg" secondAttribute="top" id="paG-FW-C4N"/>
-                                        <constraint firstAttribute="trailing" secondItem="6Tv-3U-s7g" secondAttribute="trailing" constant="16" id="zMo-zZ-JdA"/>
                                     </constraints>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="yqR-QL-dTj" appends="YES" id="E8G-tl-SwH"/>
+                                    </connections>
                                 </view>
                             </subviews>
                             <animations/>
@@ -242,13 +254,18 @@
                     <navigationItem key="navigationItem" id="QjI-nM-k4U"/>
                     <connections>
                         <outlet property="coverImageView" destination="D5I-gk-3oY" id="7gc-ph-tUd"/>
-                        <outlet property="groupDescriptionButton" destination="6Tv-3U-s7g" id="dEE-Ez-btb"/>
+                        <outlet property="groupNameLable" destination="PcR-d9-tdg" id="cwK-uo-Ub1"/>
                         <outlet property="joinButton" destination="xp4-n8-ZXc" id="uJQ-BT-nB1"/>
                         <segue destination="Q6G-5u-zfh" kind="unwind" unwindAction="addedPost:" id="YNh-gf-wlF"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s9l-oX-kAz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Q6G-5u-zfh" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer id="yqR-QL-dTj">
+                    <connections>
+                        <segue destination="cld-fn-BI9" kind="push" identifier="pushGroupDescription" id="7oK-kg-pSz"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-89" y="2480"/>
         </scene>
@@ -858,7 +875,6 @@
         <image name="delete_sign" width="25" height="25"/>
         <image name="group_cover_default" width="414" height="160"/>
         <image name="plus_plus" width="25" height="25"/>
-        <image name="settings" width="25" height="25"/>
         <image name="text1" width="680" height="453"/>
         <image name="text_protection" width="320" height="160"/>
     </resources>

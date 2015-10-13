@@ -13,7 +13,7 @@ enum InterfaceMode: Int {
     case MyStation
 }
 
-final class MapViewController: UIViewController {
+final class MapViewController: BaseViewController {
     
     var mode = InterfaceMode.HotStation
     
@@ -33,9 +33,7 @@ final class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.setupAppearance()
-        
+
         self.allAnnotationMapView = MKMapView(frame: CGRectZero)
         
         self.loadContents()
@@ -55,10 +53,6 @@ final class MapViewController: UIViewController {
         default:
             return
         }
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        self.setupAppearance()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -226,15 +220,6 @@ extension MapViewController: MKMapViewDelegate {
 // MARK: Internal Methods
 
 extension MapViewController {
-    
-    private func setupAppearance() {
-        
-        if let navigationBar = self.navigationController?.navigationBar {
-            navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-            navigationBar.shadowImage = UIImage()
-            navigationBar.tintColor = Palette.Blue.getPrimaryColor()
-        }
-    }
     
     private func showLocationServiceDisabledAlert() {
         
