@@ -1,5 +1,5 @@
 //
-//  SettingViewController.swift
+//  MyAccountViewController.swift
 //  Tomo
 //
 //  Created by ebuser on 2015/07/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class SettingViewController: MyAccountBaseController {
+final class MyAccountViewController: MyAccountBaseController {
 
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var genderLabel: UILabel!
@@ -75,7 +75,7 @@ final class SettingViewController: MyAccountBaseController {
     }
 }
 
-extension SettingViewController {
+extension MyAccountViewController {
     
     private func updateUI() {
         user = me
@@ -101,7 +101,7 @@ extension SettingViewController {
 
 // MARK: NSNotificationCenter
 
-extension SettingViewController {
+extension MyAccountViewController {
     
     private func registerForNotifications() {
         ListenerEvent.Any.addObserver(self, selector: Selector("receiveAny:"))

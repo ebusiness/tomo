@@ -48,6 +48,8 @@ class UserEntity: Entity {
     
     var notifications: Int!
     
+    var pushSetting = PushSetting()
+    
     override init() {
         super.init()
     }
@@ -111,6 +113,8 @@ class UserEntity: Entity {
         }
         
         self.notifications = json["notifications"].intValue
+        
+        self.pushSetting = PushSetting(json["pushSetting"])
     }
 }
 
@@ -142,4 +146,44 @@ extension UserEntity {
         self.newMessages = self.newMessages.filter { $0.from.id != uid }
         self.friends?.remove(uid)
     }
+}
+
+extension UserEntity {
+    class PushSetting: Entity  {
+        var announcement: Bool = true
+        var message: Bool = true
+        var groupMessage: Bool = true
+        var friendInvited: Bool = true
+        var friendAccepted: Bool = true
+        var friendRefused: Bool = true
+        var friendBreak: Bool = true
+        var postNew: Bool = true
+        var postCommented: Bool = true
+        var postLiked: Bool = true
+        var postBookmarked: Bool = true
+        var groupJoined: Bool = true
+        
+        override init() {
+            super.init()
+        }
+        
+        required init(_ json: JSON) {
+            
+            super.init()
+            
+            self.announcement = json["announcement"].boolValue
+            self.message = json["message"].boolValue
+            self.groupMessage = json["groupMessage"].boolValue
+            self.friendInvited = json["friendInvited"].boolValue
+            self.friendAccepted = json["friendAccepted"].boolValue
+            self.friendRefused = json["friendRefused"].boolValue
+            self.friendBreak = json["friendBreak"].boolValue
+            self.postNew = json["postNew"].boolValue
+            self.postCommented = json["postCommented"].boolValue
+            self.postLiked = json["postLiked"].boolValue
+            self.postBookmarked = json["postBookmarked"].boolValue
+            self.groupJoined = json["groupJoined"].boolValue
+        }
+    }
+    
 }

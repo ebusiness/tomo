@@ -1,5 +1,5 @@
 //
-//  AccountEditViewController.swift
+//  MyAccountEditViewController.swift
 //  Tomo
 //
 //  Created by ebuser on 2015/07/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AccountEditViewController: MyAccountBaseController {
+class MyAccountEditViewController: MyAccountBaseController {
     
     @IBOutlet weak var nickNameTextField: UITextField!
     @IBOutlet weak var bioTextView: UITextView!
@@ -120,7 +120,7 @@ class AccountEditViewController: MyAccountBaseController {
     }
 }
 
-extension AccountEditViewController {
+extension MyAccountEditViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let cell = tableView.cellForRowAtIndexPath(indexPath) where cell.contentView.subviews.count > 0 {
@@ -134,7 +134,7 @@ extension AccountEditViewController {
     
 }
 
-extension AccountEditViewController: UITextViewDelegate {
+extension MyAccountEditViewController: UITextViewDelegate {
     var defaultbio:String {
         get {
             return "一个彰显个性的签名"
@@ -167,7 +167,7 @@ extension AccountEditViewController: UITextViewDelegate {
     }
 }
 
-extension AccountEditViewController:UIGestureRecognizerDelegate {
+extension MyAccountEditViewController:UIGestureRecognizerDelegate {
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         if NSStringFromClass(touch.view.classForCoder) == "UITableViewCellContentView" {
@@ -178,7 +178,7 @@ extension AccountEditViewController:UIGestureRecognizerDelegate {
     
 }
 
-extension AccountEditViewController {
+extension MyAccountEditViewController {
     
     @IBAction func textFieldDidChange(sender: UITextField) {
         
@@ -297,7 +297,7 @@ extension AccountEditViewController {
     }
 }
 
-extension AccountEditViewController {
+extension MyAccountEditViewController {
     
     func getMaxLength(inputView: UIView) -> Int{
         
