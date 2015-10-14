@@ -165,13 +165,13 @@ extension MyStationsViewController {
                 if indexPaths.count > 0 {
                     self.collectionView.performBatchUpdates({ _ in
                         self.collectionView.insertItemsAtIndexPaths(indexPaths)
-                    }) { finished in
-                            println(finished)
+                    }) { _ in
+                        NSLog("done")
                     }
                 }
                 self.loading = false
                 self.editButton.enabled = true
-        }) { error in
+            }) { _ in
                 self.loading = false
         }
     }

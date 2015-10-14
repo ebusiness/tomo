@@ -24,7 +24,7 @@ class RemoteNotification {
     
     func receiveRemoteNotification(userInfo: [NSObject : AnyObject]) {
         gcd.async(.Default) {
-            if let rootvc = UIApplication.sharedApplication().keyWindow?.rootViewController as? TabBarController{
+            if UIApplication.sharedApplication().keyWindow?.rootViewController is TabBarController{
                 
                 let type = JSON(userInfo)["type"].stringValue
                 

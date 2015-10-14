@@ -133,7 +133,7 @@ extension HomeViewController {
         if let post = contents[indexPath.row] as? PostEntity {
             self.performSegueWithIdentifier("postdetail", sender: post)
         }
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -156,9 +156,9 @@ extension HomeViewController {
                 }
             }
             return post.contentHeight!
-        } else if let stations = contents[indexPath.row] as? [StationEntity] {
+        } else if contents[indexPath.row] is [StationEntity] {
             return 423.0
-        } else if let groups = contents[indexPath.row] as? [GroupEntity] {
+        } else if contents[indexPath.row] is [GroupEntity] {
             return 623.0
         }
         return 0
@@ -288,10 +288,10 @@ extension HomeViewController {
     
     private func registerCell() {
         
-        var RecommendSiteTableCellNib = UINib(nibName: "RecommendSiteTableCell", bundle: nil)
+        let RecommendSiteTableCellNib = UINib(nibName: "RecommendSiteTableCell", bundle: nil)
         tableView.registerNib(RecommendSiteTableCellNib, forCellReuseIdentifier: "RecommendSiteTableCell")
         
-        var RecommendStationTableCellNib = UINib(nibName: "RecommendStationTableViewCell", bundle: nil)
+        let RecommendStationTableCellNib = UINib(nibName: "RecommendStationTableViewCell", bundle: nil)
         tableView.registerNib(RecommendStationTableCellNib, forCellReuseIdentifier: "RecommendStationTableCell")
         
         let ICYPostCellNib = UINib(nibName: "ICYPostCell", bundle: nil)
@@ -302,7 +302,7 @@ extension HomeViewController {
     }
     
     private func setupRefreshControll() {
-        var refresh = UIRefreshControl()
+        let refresh = UIRefreshControl()
         refresh.addTarget(self, action: "loadNewContent", forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl = refresh
     }
@@ -373,13 +373,20 @@ extension HomeViewController {
             params["coordinate"] = [location.coordinate.latitude, location.coordinate.longitude];
         }
         
-//        AlamofireController.request(.GET, "/map/groups", parameters: params, hideHUD: true, success: { groupData in
-//            self.recommendGroups = GroupEntity.collection(groupData)
-//        })
+//        let needToLoadGroups = self.recommendGroups == nil && self.contents.find { $0 is [GroupEntity] } == nil
+//        if needToLoadGroups {
+//            AlamofireController.request(.GET, "/map/groups", parameters: params, hideHUD: true, success: { groupData in
+//                self.recommendGroups = GroupEntity.collection(groupData)
+//            })
+//        }
         
-        AlamofireController.request(.GET, "/map/stations", parameters: params, hideHUD: true, success: { stationData in
-            self.recommendStations = StationEntity.collection(stationData)
-        })
+        let needToLoadStations = self.recommendStations == nil && self.contents.find { $0 is [StationEntity] } == nil
+        
+        if needToLoadStations {
+            AlamofireController.request(.GET, "/map/stations", parameters: params, hideHUD: true, success: { stationData in
+                self.recommendStations = StationEntity.collection(stationData)
+            })
+        }
     }
     
     private func loadMoreContent() {
@@ -403,44 +410,47 @@ extension HomeViewController {
             
             if let loadPosts: [AnyObject] = posts {
                 self.contents += loadPosts
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                    
+                
+                gcd.async(.Default) {
                     for content in loadPosts {
                         if let content = content as? PostEntity {
                             self.simulateLayout(content)
                         }
                     }
-                    dispatch_async(dispatch_get_main_queue(), {
+                    
+//                    let needToInsertStations = self.recommendStations != nil && self.contents.find { $0 is [StationEntity] } == nil
+//                    let needToInsertGroups = self.recommendGroups != nil && self.contents.find { $0 is [GroupEntity] } == nil
+
+                    gcd.async(.Main) {
                         self.appendRows(loadPosts.count)
+                        
                         let visibleCells = self.tableView.visibleCells()
                         let visibleIndexPath = self.tableView.indexPathForCell(visibleCells.get(0) as! UITableViewCell)
                         
-                        var insertIndexPath = NSIndexPath(forRow: visibleIndexPath!.row + 1, inSection: 0)
-                        
-                        if let stations: AnyObject = self.recommendStations as? AnyObject {
-                            self.contents.insert(stations, atIndex: Int(insertIndexPath.row))
-                            self.tableView.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Fade)
+                        if let recommendStations: AnyObject = self.recommendStations as? AnyObject {
+                            let row = visibleIndexPath!.row + 1
+                            self.contents.insert(recommendStations, atIndex: Int(row))
+                            let stationsInsertIndexPath = NSIndexPath(forRow: row, inSection: 0)
+                            self.tableView.insertRowsAtIndexPaths([stationsInsertIndexPath], withRowAnimation: .Fade)
                             self.recommendStations = nil
                         }
                         
-                        insertIndexPath = NSIndexPath(forRow: visibleIndexPath!.row + 4, inSection: 0)
-                        
-                        if let groups: AnyObject = self.recommendGroups as? AnyObject {
-                            self.contents.insert(groups, atIndex: Int(insertIndexPath.row))
-                            self.tableView.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Fade)
+                        if let recommendGroups: AnyObject = self.recommendGroups as? AnyObject {
+                            let row = visibleIndexPath!.row + 4
+                            self.contents.insert(recommendGroups, atIndex: Int(row))
+                            let groupsInsertIndexPath = NSIndexPath(forRow: row, inSection: 0)
+                            self.tableView.insertRowsAtIndexPaths([groupsInsertIndexPath], withRowAnimation: .Fade)
                             self.recommendGroups = nil
                         }
                         
                         self.isLoading = false
-                    });
-                });
+                    }
+                }
             }
-            
-            
-            }) { err in
+        }) { _ in
                 
-                self.isLoading = false
-                self.isExhausted = true
+            self.isLoading = false
+            self.isExhausted = true
         }
     }
     
@@ -474,7 +484,7 @@ extension HomeViewController {
             
             self.endRefreshing()
             
-            }) { err in
+        }) { _ in
                 
                 self.endRefreshing()
         }

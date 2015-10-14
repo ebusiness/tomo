@@ -21,10 +21,10 @@ class BookmarkedPostsViewController: MyAccountBaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var postCellNib = UINib(nibName: "ICYPostCell", bundle: nil)
+        let postCellNib = UINib(nibName: "ICYPostCell", bundle: nil)
         self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "ICYPostCellIdentifier")
         
-        var postImageCellNib = UINib(nibName: "ICYPostImageCell", bundle: nil)
+        let postImageCellNib = UINib(nibName: "ICYPostImageCell", bundle: nil)
         self.tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "ICYPostImageCellIdentifier")
         
 //        tableView.backgroundView = UIImageView(image: UIImage(named: "pattern"))
@@ -43,7 +43,7 @@ extension BookmarkedPostsViewController: UITableViewDataSource {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var post = bookmarks[indexPath.row] as! PostEntity
+        let post = bookmarks[indexPath.row] as! PostEntity
         var cell: ICYPostCell!
         
         if post.images?.count > 0 {
@@ -138,7 +138,7 @@ extension BookmarkedPostsViewController {
             }
             self.isLoading = false
             
-        }) { err in
+        }) { _ in
             
             self.isLoading = false
             self.isExhausted = true

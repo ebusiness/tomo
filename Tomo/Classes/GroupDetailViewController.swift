@@ -28,7 +28,7 @@ final class GroupDetailViewController: BaseTableViewController {
         tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor.groupTableViewBackgroundColor()
         //// /////////////
-        var resizeHeaderHeight:CGFloat = UIScreen.mainScreen().bounds.size.height * (0.618 - 0.1)
+        let resizeHeaderHeight:CGFloat = UIScreen.mainScreen().bounds.size.height * (0.618 - 0.1)
         self.headerHeight = resizeHeaderHeight - 64
         self.changeHeaderView(height: resizeHeaderHeight, done: nil)
         //// /////////////
@@ -53,9 +53,7 @@ final class GroupDetailViewController: BaseTableViewController {
         AlamofireController.request(.GET, "/groups/\(group.id)/posts", parameters: nil, encoding: .JSON, success: { (object) -> () in
             self.posts = PostEntity.collection(object)
             self.tableView.reloadData()
-            }) { (_) -> () in
-                
-        }
+        })
     }
     
     override func viewDidLayoutSubviews() {
@@ -102,10 +100,11 @@ extension GroupDetailViewController {
         
         sender.userInteractionEnabled = false
         AlamofireController.request(.PATCH, "/groups/\(self.group.id)/join", success: { _ in
-            me.groups?.append(self.group.id)
+            me.groups = me.groups ?? []
+            me.groups!.append(self.group.id)
             self.updateUI()
-            }) { err in
-                sender.userInteractionEnabled = true
+        }) { _ in
+            sender.userInteractionEnabled = true
         }
     }
     
@@ -117,9 +116,6 @@ extension GroupDetailViewController {
         let postCreateViewController = Util.createViewControllerWithIdentifier("PostCreateView", storyboardName: "Home") as! CreatePostViewController
         postCreateViewController.group = self.group
         self.presentViewController(postCreateViewController, animated: true, completion: nil)
-    }
-    
-    @IBAction func groupDescriptionButtonPressed(sender: UIButton) {
     }
     
 }

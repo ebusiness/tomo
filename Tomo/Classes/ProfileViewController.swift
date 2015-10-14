@@ -30,7 +30,7 @@ final class ProfileViewController: ProfileBaseController {
     override func updateUI() {
         super.updateUI()
         
-        if let firstName = user.firstName, lastName = user.lastName {
+        if nil != user.firstName && nil != user.lastName {
             fullNameLabel.text = user.fullName()
         }
         
@@ -58,7 +58,7 @@ final class ProfileViewController: ProfileBaseController {
             
         } else {
             
-            if let invitation = self.getUserInvitation() {
+            if nil != self.getUserInvitation() {
                 
                 self.invitedView.hidden = false
                 

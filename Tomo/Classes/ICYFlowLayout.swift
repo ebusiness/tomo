@@ -20,7 +20,7 @@ class ICYFlowLayout: UICollectionViewFlowLayout {
     }
     private func leftAlignedAttributes(attributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         let indexPath = attributes.indexPath
-        var newAttributes = attributes
+        let newAttributes = attributes
         if indexPath.row == 0 &&
             collectionView?.numberOfItemsInSection(indexPath.section) == 1 {
             newAttributes.frame.origin.x = sectionInset.left

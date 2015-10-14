@@ -95,7 +95,7 @@ extension NotificationListViewController {
             self.appendRows(loadNotifications?.count ?? 0)
             self.isLoading = false
             
-        }) { err in
+        }) { _ in
             
             self.isLoading = false
             self.isExhausted = true
@@ -137,7 +137,7 @@ extension NotificationListViewController {
                 }
             }
             
-            if let notifications = self.notifications {
+            if nil != self.notifications {
                 self.notifications!.insert(remoteNotification, atIndex: 0)
             } else {
                 self.notifications = [remoteNotification]

@@ -58,14 +58,14 @@ class CommonMessageController: JSQMessagesViewController {
         senderDisplayName = me.nickName
         
         // customize avatar size
-        collectionView.collectionViewLayout.incomingAvatarViewSize = avatarSize
-        collectionView.collectionViewLayout.outgoingAvatarViewSize = avatarSize
+        collectionView!.collectionViewLayout.incomingAvatarViewSize = avatarSize
+        collectionView!.collectionViewLayout.outgoingAvatarViewSize = avatarSize
         
         // adjust text bubble inset
-        collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7, 14, 3, 14)
+        collectionView!.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7, 14, 3, 14)
 
         // remove the leftBarButtonItem
-        self.inputToolbar.contentView.leftBarButtonItem = nil
+        self.inputToolbar!.contentView!.leftBarButtonItem = nil
         // TODO: adjust
 //        setAccessoryButtonImageView()
         
@@ -144,17 +144,17 @@ extension CommonMessageController {
         
         self.icon_keyboard_normal = icon_keyboard.jsq_imageMaskedWithColor(UIColor.lightGrayColor())
         self.icon_keyboard_highlighted = icon_keyboard.jsq_imageMaskedWithColor(UIColor.darkGrayColor())
-        self.inputToolbar.contentView.leftBarButtonItemWidth = 32
+        self.inputToolbar!.contentView!.leftBarButtonItemWidth = 32
         self.changeAccessoryButtonImage(0)
     }
     
     private func changeAccessoryButtonImage(tag: Int) {
         if tag == 0{
-            self.inputToolbar.contentView.leftBarButtonItem.setImage(self.icon_speaker_normal, forState: UIControlState.Normal)
-            self.inputToolbar.contentView.leftBarButtonItem.setImage(self.icon_speaker_highlighted, forState: UIControlState.Highlighted)
+            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_speaker_normal, forState: UIControlState.Normal)
+            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_speaker_highlighted, forState: UIControlState.Highlighted)
         }else{
-            self.inputToolbar.contentView.leftBarButtonItem.setImage(self.icon_keyboard_normal, forState: UIControlState.Normal)
-            self.inputToolbar.contentView.leftBarButtonItem.setImage(self.icon_keyboard_highlighted, forState: UIControlState.Highlighted)
+            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_keyboard_normal, forState: UIControlState.Normal)
+            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_keyboard_highlighted, forState: UIControlState.Highlighted)
         }
     }
 }
@@ -199,7 +199,7 @@ extension CommonMessageController {
                 let progressView = UIProgressView(frame: CGRectZero)
                 progressView.tintColor = UIColor.greenColor()
                 
-                let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! JSQMessagesCollectionViewCell
+                let cell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! JSQMessagesCollectionViewCell
                 cell.addSubview(progressView)
                 
                 progressView.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -229,11 +229,11 @@ extension CommonMessageController {
         if btn_voice?.tag == 1 {
             btn_voice?.tag = 0
             self.changeAccessoryButtonImage(0)
-            self.inputToolbar!.contentView.textView.text = textView_text
+            self.inputToolbar!.contentView!.textView!.text = textView_text
             textView_text = ""
             btn_voice?.removeFromSuperview()
-            self.inputToolbar!.contentView.removeGestureRecognizer(self.recordTap)
-            self.inputToolbar!.contentView.textView.becomeFirstResponder()
+            self.inputToolbar!.contentView!.removeGestureRecognizer(self.recordTap)
+            self.inputToolbar!.contentView!.textView!.becomeFirstResponder()
             return
         }
         
@@ -251,10 +251,10 @@ extension CommonMessageController {
                 if self.btn_voice?.tag == 0{
                     self.btn_voice?.tag = 1
                     self.changeAccessoryButtonImage(1)
-                    self.inputToolbar!.contentView.addSubview(self.btn_voice!)
-                    self.textView_text = self.inputToolbar!.contentView.textView.text
-                    self.inputToolbar!.contentView.textView.text = ""
-                    self.inputToolbar!.contentView.textView.resignFirstResponder()
+                    self.inputToolbar!.contentView!.addSubview(self.btn_voice!)
+                    self.textView_text = self.inputToolbar!.contentView!.textView!.text
+                    self.inputToolbar!.contentView!.textView!.text = ""
+                    self.inputToolbar!.contentView!.textView!.resignFirstResponder()
                 }
             }
             ])
@@ -264,11 +264,11 @@ extension CommonMessageController {
     hold on button
     */
     func setVoiceButton(){
-        var frame = self.inputToolbar!.contentView.textView.frame
+        var frame = self.inputToolbar!.contentView!.textView!.frame
         frame.size.height = 30;
         
         btn_voice = UIButton(frame:frame)
-        let l = self.inputToolbar!.contentView.textView.layer
+        let l = self.inputToolbar!.contentView!.textView!.layer
         
         btn_voice?.layer.borderWidth = l.borderWidth//0.5;
         btn_voice?.layer.borderColor = l.borderColor//UIColor.lightGrayColor().CGColor;
@@ -282,7 +282,7 @@ extension CommonMessageController {
         
         btn_voice?.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         
-        self.inputToolbar!.contentView.addGestureRecognizer(self.recordTap)
+        self.inputToolbar!.contentView!.addGestureRecognizer(self.recordTap)
 //        btn_voice?.addGestureRecognizer(UILongPressGestureRecognizer(target: self,action:"record:"))
         //btn_voice?.addTarget(self, action: "holdOn", forControlEvents: UIControlEvents.TouchDown)
         //btn_voice?.addTarget(self, action: "sendVoice", forControlEvents: UIControlEvents.TouchUpInside)
@@ -314,7 +314,7 @@ extension CommonMessageController {
                 self.delegate.createMessage(content)
                 self.delegate.sendMessage(content, done: nil)
                 
-                S3Controller.uploadFile(url, remotePath: MediaMessage.remotePath(fileName: name, type: .Voice), done: { (error) -> Void in
+                S3Controller.uploadFile(url, remotePath: MediaMessage.remotePath(fileName: name, type: .Voice), done: { error in
                     println("done")
                     println(error)
                 })

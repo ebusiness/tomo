@@ -112,7 +112,7 @@ extension MapViewController: MKMapViewDelegate {
             if annotationView == nil {
                 annotationView = PostAnnotationView(annotation: annotation, reuseIdentifier: PostAnnotationViewIdentifier)
             } else {
-                annotationView.annotation = annotation
+                annotationView!.annotation = annotation
             }
             (annotationView as! PostAnnotationView).setupDisplay()
             
@@ -128,7 +128,7 @@ extension MapViewController: MKMapViewDelegate {
                 if annotationView == nil {
                     annotationView = StationAnnotationView(annotation: annotation, reuseIdentifier: StationAnnotationViewIdentifier)
                 } else {
-                    annotationView.annotation = annotation
+                    annotationView!.annotation = annotation
                 }
                 (annotationView as! StationAnnotationView).setupDisplay()
                 
@@ -141,7 +141,7 @@ extension MapViewController: MKMapViewDelegate {
                 if annotationView == nil {
                     annotationView = GroupAnnotationView(annotation: annotation, reuseIdentifier: GroupAnnotationViewIdentifier)
                 } else {
-                    annotationView.annotation = annotation
+                    annotationView!.annotation = annotation
                 }
                 (annotationView as! GroupAnnotationView).setupDisplay()
                 

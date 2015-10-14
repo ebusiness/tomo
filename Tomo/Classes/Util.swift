@@ -24,16 +24,16 @@ class Util: NSObject {
         return UINib(nibName: name, bundle: nil).instantiateWithOwner(self, options: nil)[0] as! UIView
     }
     
-    class func changeRootViewController(#from: UIViewController, to: UIViewController) {
+    class func changeRootViewController(from fromVC: UIViewController, to toVC: UIViewController) {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         UIView.transitionWithView(appDelegate.window!, duration: 0.4, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
             
-            if let parent = from.presentingViewController {
-                from.dismissViewControllerAnimated(false, completion: { () -> Void in
-                    appDelegate.window!.rootViewController = to
+            if fromVC.presentingViewController != nil {
+                fromVC.dismissViewControllerAnimated(false, completion: { () -> Void in
+                    appDelegate.window!.rootViewController = toVC
                 })
             } else {
-                appDelegate.window!.rootViewController = to
+                appDelegate.window!.rootViewController = toVC
             }
             
 
@@ -119,7 +119,7 @@ class Util: NSObject {
                 notification.alertBody = "現場TOMOからのお知らせ"
                 
             default:
-                println("todo")
+                NSLog("todo")
             }
             
             UIApplication.sharedApplication().presentLocalNotificationNow(notification)
@@ -157,13 +157,13 @@ extension Util {
             cString = (cString as NSString).substringFromIndex(1)
         }
         
-        if (count(cString) != 6) {
+        if (cString.length != 6) {
             return UIColor.grayColor()
         }
         
-        var rString = (cString as NSString).substringToIndex(2)
-        var gString = ((cString as NSString).substringFromIndex(2) as NSString).substringToIndex(2)
-        var bString = ((cString as NSString).substringFromIndex(4) as NSString).substringToIndex(2)
+        let rString = (cString as NSString).substringToIndex(2)
+        let gString = ((cString as NSString).substringFromIndex(2) as NSString).substringToIndex(2)
+        let bString = ((cString as NSString).substringFromIndex(4) as NSString).substringToIndex(2)
         
         var r:CUnsignedInt = 0, g:CUnsignedInt = 0, b:CUnsignedInt = 0;
         NSScanner(string: rString).scanHexInt(&r)
@@ -179,15 +179,15 @@ extension Util {
         var rect = CGRectZero
         rect.size = size
         
-        var color = Util.UIColorFromRGB(rgbValue, alpha: alpha)
+        let color = Util.UIColorFromRGB(rgbValue, alpha: alpha)
         
         UIGraphicsBeginImageContext(rect.size)
-        var context = UIGraphicsGetCurrentContext();
+        let context = UIGraphicsGetCurrentContext();
         
         CGContextSetFillColorWithColor(context, color.CGColor)
         CGContextFillRect(context, rect)
         
-        var image = UIGraphicsGetImageFromCurrentImageContext()
+        let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
         return image
@@ -276,15 +276,12 @@ extension UIApplication {
 extension String {
     
     func isEmail() -> Bool {
-        let regex = NSRegularExpression(pattern: "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$", options: .CaseInsensitive, error: nil)
-        return regex?.firstMatchInString(self, options: nil, range: NSMakeRange(0, count(self))) != nil
+        return self =~ "^[a-zA-Z0-9\\._%+-]+@[a-zA-Z0-9\\.-]+\\.[a-zA-Z]{2,4}$"
     }
     
     func isValidPassword() -> Bool {
-        let regex = NSRegularExpression(pattern: "(?=^.{8,}$)(?=.*\\d)(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$", options: nil, error: nil)
-        return regex?.firstMatchInString(self, options: nil, range: NSMakeRange(0, count(self))) != nil
+        return self =~ "(?=^.{8,}$)(?=.*\\d)(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$"
     }
-    
 }
 
 extension UIImageView {

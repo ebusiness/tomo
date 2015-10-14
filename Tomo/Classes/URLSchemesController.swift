@@ -41,7 +41,7 @@ class URLSchemesController {
                 case .PostNew, .PostLiked, .PostCommented, .PostBookmarked:
                     openPost(id)
                 default:
-                    println(url) // TODO
+//                    println(url) // TODO
                     return false
                 }
                 return true
@@ -70,7 +70,7 @@ extension URLSchemesController{
         if self.tabBarController.childViewControllers.count > tabSelectedIndex {
             self.tabBarController.selectedIndex = tabSelectedIndex
 //            self.tabBarController.selectedViewController
-            self.tabBarController.childViewControllers[tabSelectedIndex].pushViewController(viewController, animated: true)
+            (self.tabBarController.childViewControllers[tabSelectedIndex] as? UINavigationController)?.pushViewController(viewController, animated: true)
         } else {
 //            println( self.tabBarController.childViewControllers )
         }
@@ -108,9 +108,7 @@ extension URLSchemesController{
             
             self.refreshViewControllerIfNeeded(1, key: vc.friend.id)
             
-        }) { err in
-                
-        }
+        })
     }
     
     private func openGroupMessage(id: String){
@@ -122,9 +120,7 @@ extension URLSchemesController{
             
             self.pushViewController(2, viewController: vc, animated: true)
             
-            }) { err in
-                
-        }
+        })
     }
     
     private func openProfile(id: String){
@@ -143,10 +139,7 @@ extension URLSchemesController{
             vc.post = PostEntity(result)
             
             self.pushViewController(0, viewController: vc, animated: true)
-        }) { err in
-            
-        }
-        
+        })        
     }
     
 }

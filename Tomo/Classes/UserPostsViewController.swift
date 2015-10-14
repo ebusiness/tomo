@@ -56,7 +56,7 @@ extension UserPostsViewController: UITableViewDataSource {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var post = posts[indexPath.row]
+        let post = posts[indexPath.row]
         post.owner = self.user
         
         var cell: ICYPostCell!
@@ -149,7 +149,7 @@ extension UserPostsViewController {
             }
             self.isLoading = false
             
-        }) { err in
+        }) { _ in
             
             self.isLoading = false
             self.isExhausted = true

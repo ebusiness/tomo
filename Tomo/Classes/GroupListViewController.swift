@@ -40,7 +40,7 @@ final class GroupListViewController: BaseTableViewController {
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
         } else {
-            var image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
+            let image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
             self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
             self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
         }
@@ -150,7 +150,7 @@ extension GroupListViewController {
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
             
-        }) { err in
+        }) { _ in
             self.isLoading = false
         }
         
@@ -168,7 +168,7 @@ extension GroupListViewController {
         
         let firstIndex = self.groups.count - rows
         
-        var indexSet = NSIndexSet(indexesInRange: NSMakeRange(firstIndex, rows))
+        let indexSet = NSIndexSet(indexesInRange: NSMakeRange(firstIndex, rows))
         
         self.tableView.beginUpdates()
         self.tableView.insertSections(indexSet, withRowAnimation: .Fade)

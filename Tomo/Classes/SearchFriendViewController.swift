@@ -84,9 +84,7 @@ extension SearchFriendViewController: UISearchBarDelegate {
                 
                 self.result = UserEntity.collection(results)
                 
-            }) { err in
-                
-            }
+            })
         }
     }
     

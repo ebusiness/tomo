@@ -76,7 +76,7 @@ extension BaseViewController: UIScrollViewDelegate {
                 topConstraint.constant = y
                 navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
             } else {
-                var image = Util.imageWithColor(NavigationBarColorHex, alpha: y/self.headerHeight)
+                let image = Util.imageWithColor(NavigationBarColorHex, alpha: y/self.headerHeight)
                 navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
                 
                 if self.headerHeight <= y {

@@ -213,8 +213,6 @@ extension FriendListViewController: FriendInvitationCellDelegate {
             self.tableView.endUpdates()
             self.updateBadgeNumber()
             
-        }, failure: { err in
-            println(err)
         })
     }
     
@@ -235,10 +233,7 @@ extension FriendListViewController: FriendInvitationCellDelegate {
                 }
                 self.updateBadgeNumber()
                 
-            }, failure: { err in
-                println(err)
             })
-            
         }
     }
 }

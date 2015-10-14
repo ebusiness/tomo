@@ -16,8 +16,6 @@ let wx_url_userinfo = "https://api.weixin.qq.com/sns/userinfo"
 let wx_url_access_token = "https://api.weixin.qq.com/sns/oauth2/access_token"
 let wx_url_refresh_token = "https://api.weixin.qq.com/sns/oauth2/refresh_token"
 
-let tomo_openid_login = kAPIBaseURLString + "/signin-wechat"
-
 class OpenidController: NSObject {
     
     typealias snsSuccessHandler = (res: Dictionary<String, AnyObject>) -> ()
@@ -38,16 +36,15 @@ class OpenidController: NSObject {
         WXApi.registerApp(wxAppid)
     }
     
-    func wxCheckAuth(#success:snsSuccessHandler,failure:snsFailureHandler?) {
+    func wxCheckAuth(success successHandler:snsSuccessHandler,failure failureHandler:snsFailureHandler?) {
         
-        self.whenSuccess = success
-        self.whenfailure = failure
+        self.whenSuccess = successHandler
+        self.whenfailure = failureHandler
         
         if (!WXApi.isWXAppInstalled()) {
             Util.showInfo("微信没有安装")
         } else {
-            
-            if let openid = Defaults["openid"].string, accessToken = Defaults["access_token"].string, refreshToken = Defaults["refresh_token"].string {
+            if Defaults["openid"].string != nil && Defaults["access_token"].string != nil && Defaults["refresh_token"].string != nil {
                 self.checkToken()
             } else {
                 self.wxSendAuth()
@@ -63,7 +60,7 @@ extension OpenidController {
     
     private func wxSendAuth(){
         
-        var req = SendAuthReq()
+        let req = SendAuthReq()
         req.scope = "snsapi_userinfo"
         req.state = csrf_state
         
@@ -78,18 +75,28 @@ extension OpenidController {
         param["openid"] = Defaults["openid"].string
         param["access_token"] = Defaults["access_token"].string
         
-        Manager.sharedInstance.request(.POST, tomo_openid_login, parameters: param)
-            .responseJSON { (_, res, json, _) in
-                
-                if res?.statusCode == 401 {
-                    self.refreshAccessToken()
-                } else if res?.statusCode == 404 {
-                    self.getUserInfo()
-                } else if (res?.statusCode == 200) {
-                    let result = json as! Dictionary<String, AnyObject>
-                    self.success(result)
-                }
+        AlamofireController.request(.POST, "/signin-wechat", parameters: param, success: { json in
+            let result = json as! Dictionary<String, AnyObject>
+            self.success(result)
+        }) { errCode in
+            if errCode == 401 {
+                self.refreshAccessToken()
+            } else if errCode == 404 {
+                self.getUserInfo()
             }
+        }
+//        Manager.sharedInstance.request(.POST, tomo_openid_login, parameters: param)
+//            .responseJSON { (_, res, json, _) in
+//                
+//                if res?.statusCode == 401 {
+//                    self.refreshAccessToken()
+//                } else if res?.statusCode == 404 {
+//                    self.getUserInfo()
+//                } else if (res?.statusCode == 200) {
+//                    let result = json as! Dictionary<String, AnyObject>
+//                    self.success(result)
+//                }
+//            }
     }
     
     private func getAccessToken(code:String){
@@ -156,7 +163,6 @@ extension OpenidController {
                         result["sex"] = "男"
                     }
                     
-                    // TODO: Error handle
                     AlamofireController.request(.POST, "/signup-wechat", parameters: result, success: { userinfo in
                         if let userinfo = userinfo as? Dictionary<String, AnyObject> {
                             self.success(userinfo)
@@ -182,8 +188,7 @@ extension OpenidController {
     
     private func success(result: Dictionary<String, AnyObject>){
         
-        if let id = result["id"] as? String,
-            nickName = result["nickName"] as? String{
+        if nil != result["id"] as? String && nil != result["nickName"] as? String {
                 
                 me = UserEntity(result)
         }

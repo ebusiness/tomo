@@ -89,8 +89,7 @@ class PushSettingViewController: MyAccountBaseController {
         
         AlamofireController.request(.PATCH, "/me", parameters: parameters, hideHUD: true, success: { result in
             me.pushSetting = UserEntity.PushSetting(JSON(result)["pushSetting"])
-        }) { err in
-        }
+        })
         
     }
     
@@ -124,7 +123,7 @@ extension PushSettingViewController {
     
     override func becomeActive() {
         super.becomeActive()
-        let settings = UIApplication.sharedApplication().currentUserNotificationSettings()
+        let settings = UIApplication.sharedApplication().currentUserNotificationSettings()!
         allowNotification = settings.types != UIUserNotificationType.None
         
         pushSwitch.setOn(allowNotification, animated: false)

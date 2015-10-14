@@ -28,7 +28,7 @@ final class GroupCreateViewController: BaseTableViewController {
     
     private var friends: [UserEntity]? {
         didSet {
-            if let friends = friends {
+            if nil != friends {
                 memberCollectionView.reloadData()
                 memberCollectionViewHeightConstraint.constant = memberCollectionView.collectionViewLayout.collectionViewContentSize().height
                 tableView.reloadData()
@@ -71,7 +71,7 @@ extension GroupCreateViewController {
         
         var param = Dictionary<String, AnyObject>()
         
-        if self.groupNameTextField.text.length > 0 {
+        if self.groupNameTextField.text!.length > 0 {
             param["name"] = self.groupNameTextField.text
         } else {
             return
@@ -95,7 +95,7 @@ extension GroupCreateViewController {
         AlamofireController.request(.POST, "/groups", parameters: param, success: { group in
             
             let groupInfo = GroupEntity(group)
-            if let cover = self.cover {
+            if nil != self.cover {
                 
                 let remotePath =  Constants.groupCoverPath(groupId: groupInfo.id)
                 
@@ -110,18 +110,13 @@ extension GroupCreateViewController {
                     let progress = Float(sendBytes)/Float(totalBytes)
                     
                     gcd.sync(.Main) { () -> () in
-                        progressView.progress = progress
-                        println(progress)
-                        
+                        progressView.progress = progress                        
                     }
                 }
             } else {
                 self.performSegueWithIdentifier("groupCreated", sender: groupInfo)
             }
-            
-        }) { err in
-            
-        }
+        })
     }
     
     @IBAction func changeCover(sender: UITapGestureRecognizer) {

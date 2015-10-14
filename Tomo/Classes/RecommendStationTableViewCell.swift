@@ -67,9 +67,7 @@ extension RecommendStationTableCell:UICollectionViewDelegate {
             self.stations.removeAtIndex(indexPath.item)
             collectionView.deleteItemsAtIndexPaths([indexPath])
             self.delegate.synchronizeRecommendStations(self.stations)
-        }) { (err) -> () in
-            
-        }
+        })
     }
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if scrollView == collectionView {

@@ -159,7 +159,7 @@ extension GroupDiscoverViewController {
             self.page++
             self.isLoading = false
             
-            }) { err in
+        }) { _ in
                 self.isLoading = false
                 self.isExhausted = true
         }
@@ -190,14 +190,18 @@ extension GroupDiscoverViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         let text = searchBar.text
         searchText = searchBar.text
-        AlamofireController.request(.GET, "/groups", parameters: ["name": text],
+        
+        var params = Dictionary<String, AnyObject>()
+        params["name"] = text
+        
+        AlamofireController.request(.GET, "/groups", parameters: params,
             success: { (object) -> () in
                 if let groups: [GroupEntity] = GroupEntity.collection(object) {
                     self.groups = groups
                     self.page = 0
                     self.refresh()
                 }
-            }) { (error) -> () in
+        }) { _ in
                 self.groups = [GroupEntity]()
                 self.refresh()
         }

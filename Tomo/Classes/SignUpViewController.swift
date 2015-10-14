@@ -133,7 +133,7 @@ extension SignUpViewController {
                 })
             self.presentViewController(alert, animated: true, completion: nil)
             
-        }) { err in
+        }) { _ in
             
             let alert = UIAlertController(title: "注册失败", message: "您输入的邮件地址已经被使用，请更换其他的邮件地址", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "好", style: .Default, handler: nil))
@@ -151,7 +151,7 @@ extension SignUpViewController: UITextFieldDelegate {
         
         if sender == self.nickNameTextField {
             
-            var nickName = self.nickNameTextField.text.trimmed()
+            let nickName = self.nickNameTextField.text!.trimmed()
             
             if nickName.length == 0 || nickName.length > 10 {
                 nickNameValid = false
@@ -164,7 +164,7 @@ extension SignUpViewController: UITextFieldDelegate {
         
         if sender == self.emailTextField {
             
-            var email = self.emailTextField.text
+            let email = self.emailTextField.text
             
             if !String(email).isEmail() {
                 emailValid = false
@@ -177,9 +177,9 @@ extension SignUpViewController: UITextFieldDelegate {
         
         if sender == self.passwordTextField {
             
-            var repass = self.repassTextField.text
+            let repass = self.repassTextField.text
             
-            var password = self.passwordTextField.text
+            let password = self.passwordTextField.text
             
             if !String(password).isValidPassword() {
                 passwordValid = false
@@ -200,9 +200,9 @@ extension SignUpViewController: UITextFieldDelegate {
         
         if sender == self.repassTextField {
             
-            var password = self.passwordTextField.text
+            let password = self.passwordTextField.text
             
-            var repass = self.repassTextField.text
+            let repass = self.repassTextField.text
             
             if repass != password {
                 repassValid = false

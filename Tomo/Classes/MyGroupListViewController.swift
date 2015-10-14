@@ -28,7 +28,7 @@ class MyGroupListViewController: BaseViewController {
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
         } else {
-            var image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
+            let image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
             self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
             self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
         }
@@ -86,8 +86,7 @@ extension MyGroupListViewController {
         isLoading = true
         
         AlamofireController.request(.GET, "/groups", parameters: ["category": "mine"], success: { groups in
-            
-            let oldDataCount = self.groups.count
+        
             let groups: [GroupEntity]? = GroupEntity.collection(groups)
             
             if let groups = groups {
@@ -98,8 +97,8 @@ extension MyGroupListViewController {
                 self.navigationController?.navigationBar.shadowImage = UIImage()
             }
             self.isLoading = false
-        }) { err in
-                self.isLoading = false
+        }) { _ in
+            self.isLoading = false
         }
         
     }

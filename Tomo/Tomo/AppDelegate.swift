@@ -41,9 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application( application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData ) {
         
         // <>と" "(空白)を取る
-        var characterSet: NSCharacterSet = NSCharacterSet( charactersInString: "<>" )
+        let characterSet = NSCharacterSet( charactersInString: "<>" )
         
-        var deviceTokenString: String = ( deviceToken.description as NSString )
+        let deviceTokenString: String = ( deviceToken.description as NSString )
             .stringByTrimmingCharactersInSet( characterSet )
             .stringByReplacingOccurrencesOfString( " ", withString: "" ) as String
         
@@ -58,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             param["model"] = UIDevice.currentDevice().model
             param["token"] = deviceTokenString;
             
-            Manager.sharedInstance.request(.POST, kAPIBaseURLString + "/device", parameters: param)
+            AlamofireController.request(.POST, "/device", parameters: param)
 
         }
     }

@@ -161,7 +161,6 @@ extension CreatePostViewController {
     }
     
     func keyboardWillBeHidden(notification: NSNotification) {
-        let info = notification.userInfo
         
         let paperViewHeight = screenHeight - navigationBarHeight - paperPadding * 2 - photoCollectionViewHeight
         self.paperViewHeight.constant = paperViewHeight
@@ -173,7 +172,7 @@ extension CreatePostViewController {
     
     private func updateNumberBadge() {
         
-        let selectedPics = self.collectionView.indexPathsForSelectedItems().count
+        let selectedPics = (self.collectionView.indexPathsForSelectedItems() ?? []).count
         
         if selectedPics > 0 {
             self.numberBadge.text = String(selectedPics)
@@ -377,7 +376,7 @@ extension CreatePostViewController {
     
     private func postContent(imageList: AnyObject?) {
         
-        println(imageList)
+//        println(imageList)
         
         var param = Dictionary<String, AnyObject>()
         
@@ -419,15 +418,13 @@ extension CreatePostViewController {
         AlamofireController.request(.POST, "/posts", parameters: param, encoding: .JSON,
             success: { post in
             self.performSegueWithIdentifier("postCreated", sender: post)
-        }) { err in
-            
-        }
+        })
     }
     
     // TODO - refactor out
     private func resize(image: UIImage) -> UIImage {
         
-        var imageData = UIImageJPEGRepresentation(image, 1)
+        let imageData = UIImageJPEGRepresentation(image, 1)!
         
         // if the image smaller than 1MB, do nothing
         if !(imageData.length/1024/1024 > 1) {
@@ -458,7 +455,7 @@ extension CreatePostViewController {
         
         Util.showHUD()
         
-        if collectionView.indexPathsForSelectedItems().count > 0 {
+        if (collectionView.indexPathsForSelectedItems() ?? []).count > 0 {
             self.uploadMeida(postContent)
         } else {
             self.postContent(nil)
@@ -638,7 +635,7 @@ extension CreatePostViewController: UICollectionViewDelegate {
         
         if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
             
-            if collectionView.indexPathsForSelectedItems().count > 10 {
+            if (collectionView.indexPathsForSelectedItems() ?? []).count > 10 {
                 collectionView.deselectItemAtIndexPath(indexPath, animated: false)
                 return
             }
@@ -765,11 +762,11 @@ extension CreatePostViewController: CLLocationManagerDelegate {
                 
                 self.performGeocoding = true
                 
-                self.geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+                self.geocoder.reverseGeocodeLocation(newLocation, completionHandler: { (placemarks, error) -> Void in
                     
                     self.geocodeError = error
                     
-                    if error == nil && !placemarks.isEmpty {
+                    if let placemarks = placemarks where error == nil && placemarks.count > 0 {
                         self.placemark = placemarks.last as? CLPlacemark
                     } else {
                         self.placemark = nil

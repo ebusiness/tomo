@@ -90,9 +90,7 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
                 me.stations = me.stations ?? []
                 me.stations!.append(station.id)
                 collectionView.deleteItemsAtIndexPaths([indexPath])
-            }) { err in
-                    
-            }
+            })
             
         }
     }
@@ -102,7 +100,7 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
 extension StationDiscoverViewController {
     private func loadInitData() {
         loading = true
-        var coordinate = location.coordinate
+        let coordinate = location.coordinate
         let parameter: [String: AnyObject] = [
             "coordinate": [coordinate.latitude, coordinate.longitude],
         ]
@@ -112,7 +110,7 @@ extension StationDiscoverViewController {
                 self.refresh()
                 self.loading = false
                 self.page = 1
-            }) { (error) -> () in
+            }) { _ in
                 self.loading = false
         }
     }
@@ -122,7 +120,7 @@ extension StationDiscoverViewController {
             return
         }
         loading = true
-        var coordinate = location.coordinate
+        let coordinate = location.coordinate
         var parameter: [String: AnyObject] = [
             "coordinate": [coordinate.latitude, coordinate.longitude],
             "page": page
@@ -138,7 +136,7 @@ extension StationDiscoverViewController {
                     self.page++
                 }
                 self.loading = false
-            }, failure: {error in
+            }, failure: { _ in
                 self.loading = false
             }
         )
@@ -171,7 +169,8 @@ extension StationDiscoverViewController: UISearchBarDelegate {
         let text = searchBar.text
         searchText = searchBar.text
         var coordinate = location.coordinate
-        var parameter: [String: AnyObject] = ["name": text,
+        var parameter: [String: AnyObject] = [
+            "name": text,
             "coordinate": [coordinate.latitude, coordinate.longitude]
         ];
         AlamofireController.request(.GET, "/map/stations",
@@ -179,7 +178,7 @@ extension StationDiscoverViewController: UISearchBarDelegate {
             success: { (object) -> () in
                 self.stations = StationEntity.collection(object)
                 self.refresh()
-            }) { (error) -> () in
+            }) { _ in
                 self.stations = nil
                 self.refresh()
         }

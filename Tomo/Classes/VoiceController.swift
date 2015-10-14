@@ -46,8 +46,8 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
         recorder.meteringEnabled = true
         //creates the file and gets ready to record. happens automatically on record.
         let res = recorder.prepareToRecord()
-        println("\(res)")
-        println("\(error)")
+//        println("\(res)")
+//        println("\(error)")
 
     }
     func start(){
@@ -57,7 +57,7 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
             AVAudioSession.sharedInstance().setActive(true, error: nil)
             
             let status = recorder.record() //start or resume
-            println("\(status)")
+//            println("\(status)")
         }
     }
     func stop()->String?{
@@ -119,7 +119,7 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
         }
     }
     
-    func playOrStop(#path: String) {
+    func playOrStop(path filepath: String) {
         if player != nil {
             if player.playing {
                 player.stop()
@@ -131,7 +131,7 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
             }
         }
         
-        play(path)
+        play(filepath)
     }
     
     func play(path:String!){
@@ -144,7 +144,7 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
         
         player.prepareToPlay()
         player.play()
-        println("play")
+//        println("play")
     }
     
     func wavToAmr(wavPath:String,savePath:String){

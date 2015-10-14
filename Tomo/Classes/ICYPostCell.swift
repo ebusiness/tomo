@@ -51,7 +51,7 @@ class ICYPostCell: UITableViewCell {
                 
                 contentHeight.constant = (contentEstimatedSize.height <= 200 ? contentEstimatedSize.height : 200) + 3
                 // tag
-                if let group = post.group {
+                if nil != post.group {
                     collectionViewHeight.constant = 30.0
                 } else {
                     collectionViewHeight.constant = 0.0
@@ -128,7 +128,7 @@ class ICYPostCell: UITableViewCell {
     // MARK: - Actions
     
     @IBAction func bookmarkButtonPressed(sender: UIButton) {
-        if var post = post {
+        if let post = post {
             sender.userInteractionEnabled = false
             AlamofireController.request(.PATCH, "/posts/\(post.id)/bookmark", success: { _ in
                 
@@ -143,14 +143,14 @@ class ICYPostCell: UITableViewCell {
                 sender.tada {
                     sender.userInteractionEnabled = true
                 }
-                }) { err in
+            }) { _ in
                     sender.userInteractionEnabled = true
             }
         }
     }
     
     @IBAction func likeButtonPressed(sender: UIButton) {
-        if var post = post {
+        if let post = post {
             sender.userInteractionEnabled = false
             AlamofireController.request(.PATCH, "/posts/\(post.id)/like", success: { _ in
                 
@@ -163,7 +163,7 @@ class ICYPostCell: UITableViewCell {
                     self.post = post
                     sender.userInteractionEnabled = true
                 }
-                }) { err in
+            }) { _ in
                     sender.userInteractionEnabled = true
             }
         }
@@ -186,7 +186,7 @@ class ICYPostCell: UITableViewCell {
     }
     
     func commentTapped() {
-        if let comment = post?.comments?.last {
+        if nil != post?.comments?.last {
             let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
             vc.post = post!
             vc.isCommentInitial = true
@@ -235,7 +235,7 @@ class ICYPostCell: UITableViewCell {
 
 extension ICYPostCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let group = post?.group {
+        if nil != post?.group {
             return 1
         } else {
             return 0

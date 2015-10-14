@@ -152,7 +152,7 @@ extension MyAccountEditViewController: UITextViewDelegate {
         if textView.markedTextRange == nil {
             let max = self.getMaxLength(textView)
             if textView.text.length > max {
-                textView.text = textView.text.substringToIndex(advance(textView.text.startIndex, max))
+                textView.text = textView.text[0..max]
             }
             self.setLengthToLabel(textView)
         }
@@ -184,8 +184,8 @@ extension MyAccountEditViewController {
         
         if sender.markedTextRange == nil {
             let max = self.getMaxLength(sender)
-            if sender.text.length > max {
-                sender.text = sender.text.substringToIndex(advance(sender.text.startIndex, max))
+            if sender.text!.length > max {
+                sender.text = sender.text![0..max]
             }
             
             self.setLengthToLabel(sender)
@@ -291,9 +291,7 @@ extension MyAccountEditViewController {
             me = UserEntity(result)
             self.user = me
             self.headerView.updateUI()
-        }) { err in
-                
-        }
+        })
     }
 }
 
@@ -320,7 +318,7 @@ extension MyAccountEditViewController {
             } else if let inputView = inputView as? UITextField {
                 textCount = (inputView.text ?? "" ).length
             }
-            label.text = toString( textCount )
+            label.text = String( textCount )
         }
     }
     

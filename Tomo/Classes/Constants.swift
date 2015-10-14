@@ -12,9 +12,9 @@ let kTomoService = "jp.co.e-business.tomo"
 let kTomoPushToken = "token.push.tomo"
 #if DEBUG
     let AmazonS3Bucket = "tomo-dev"
-//    let kAPIBaseURLString = "https://tomo.e-business.co.jp:81"
-    let kAPIBaseURLString = "https://192.168.11.90:81"
-//    let kAPIBaseURLString = "https://192.168.11.83:81"
+    let kAPIBaseURLString = "https://tomo.e-business.co.jp:81"
+//    let kAPIBaseURLString = "https://192.168.11.90:81"
+//    let kAPIBaseURLString = "https://192.168.11.86:81"
 #else
     let AmazonS3Bucket = "tomo-test"
     let kAPIBaseURLString = "https://tomo.e-business.co.jp"
@@ -39,8 +39,8 @@ let DefaultGroupImage = UIImage(named: "group_cover_default")!
 
 class Constants: NSObject {
    
-    class func postPath(#fileName: String) -> String {
-        return "/users/\(me.id)/post/\(fileName)"
+    class func postPath(fileName name: String) -> String {
+        return "/users/\(me.id)/post/\(name)"
     }
     
     class func avatarPath() -> String {
@@ -51,8 +51,8 @@ class Constants: NSObject {
         return "/users/\(me.id)/cover.png"
     }
     
-    class func groupCoverPath(#groupId: String) -> String {
-        return "/groups/\(groupId)/cover.png"
+    class func groupCoverPath(groupId id: String) -> String {
+        return "/groups/\(id)/cover.png"
     }
 
 }

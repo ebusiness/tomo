@@ -37,7 +37,7 @@ class FriendListSendRequestController: MyAccountBaseController {
                 self.invitedUsers = result
                 self.tableView.backgroundView = nil
             }
-        }) { err in
+        }) { _ in
             self.tableView.backgroundView = self.emptyView
         }
     }

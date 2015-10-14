@@ -99,13 +99,13 @@ extension BaseTableViewController {
         }
     }
     
-    func changeHeaderView(#height: CGFloat, done: ( ()->() )? = nil ){
+    func changeHeaderView(height h: CGFloat, done: ( ()->() )? = nil ){
         
         let headerView = self.tableView.tableHeaderView as UIView!
         
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             
-            headerView.frame.size.height = height
+            headerView.frame.size.height = h
             self.tableView.tableHeaderView = headerView
             self.tableView.layoutIfNeeded()
             done?()
@@ -131,7 +131,7 @@ extension BaseTableViewController {
                             return
                         }
                     }
-                    if let navigationImageView = self.navigationImageView { return }
+                    if self.navigationImageView != nil { return }
                     
                     self.navigationTextProtection = UIImageView(frame: frame)
                     self.navigationTextProtection!.image = UIImage(named: "text_protection")
@@ -153,7 +153,7 @@ extension BaseTableViewController {
         navigationImageView?.alpha = 1
         
         if let imageview = navigationImageView where imageview.image != image {
-            if let image = image {
+            if image != nil {
                 self.navigationTextProtection?.alpha = 1
                 self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
             } else {
@@ -193,7 +193,7 @@ extension BaseTableViewController {
                     navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
                 } else {
                     
-                    var image = Util.imageWithColor(NavigationBarColorHex, alpha: y/self.headerHeight)
+                    let image = Util.imageWithColor(NavigationBarColorHex, alpha: y/self.headerHeight)
                     navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
                     
                     if self.headerHeight <= y {

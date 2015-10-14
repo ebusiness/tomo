@@ -36,7 +36,8 @@ extension NotificationCell {
         if let type = ListenerEvent(rawValue: self.notification.type) {
             switch type {
             case .Announcement:
-                println("系统通知")
+//                println("系统通知")
+                return
             case .FriendAccepted, .FriendRefused, .FriendBreak: // User
 //                println("接受了您的好友请求")
 //                println("拒绝了您的好友邀请")
@@ -101,9 +102,7 @@ extension NotificationCell {
             let postVC = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
             postVC.post = PostEntity(result)
             vc.navigationController?.pushViewController(postVC, animated: true)
-        }) { err in
-                
-        }
+        })
     }
     
     private func presentGroupView(vc: UIViewController) {
@@ -111,8 +110,6 @@ extension NotificationCell {
             let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
             groupVC.group = GroupEntity(result)
             vc.navigationController?.pushViewController(groupVC, animated: true)
-        }) { err in
-                
-        }
+        })
     }
 }

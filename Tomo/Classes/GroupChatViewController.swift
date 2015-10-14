@@ -75,9 +75,7 @@ extension GroupChatViewController {
                 }
             }
             
-        }) { error in
-            
-        }
+        })
     }
     
     private func loadAvatarForUser(user: UserEntity){
@@ -93,12 +91,12 @@ extension GroupChatViewController {
                     
                     self.avatars[user.id] = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
                     
-                    self.collectionView.visibleCells().map { (cell) -> () in
+                    self.collectionView!.visibleCells().map { (cell) -> () in
                         
-                        if let indexPath = self.collectionView.indexPathForCell(cell as! UICollectionViewCell)
+                        if let indexPath = self.collectionView!.indexPathForCell(cell as! UICollectionViewCell)
                             where self.messages[indexPath.item].senderId() == user.id {
                                 
-                                self.collectionView.reloadItemsAtIndexPaths([indexPath])
+                                self.collectionView!.reloadItemsAtIndexPaths([indexPath])
                         }
                     }
                 }
@@ -138,19 +136,16 @@ extension GroupChatViewController {
                 }
                 
                 if self.oldestMessage == nil {
-                    self.collectionView.reloadData()
+                    self.collectionView!.reloadData()
                     self.scrollToBottomAnimated(false)
                     
-                    me.newMessages.filter({ (message) -> Bool in
-                        if message.group == self.group.id {
-                            me.newMessages.remove(message)
-                        }
-                        
+                    let newMessages = me.newMessages.filter { $0.group?.id != self.group.id }
+                    if me.newMessages != newMessages {
+                        me.newMessages = newMessages
                         if let tabBarController = self.navigationController?.tabBarController as? TabBarController {
                             tabBarController.updateBadgeNumber()
                         }
-                        return true
-                    })
+                    }
                 } else {
                     self.prependRows(messages.count)
                 }
@@ -158,8 +153,7 @@ extension GroupChatViewController {
                 self.oldestMessage = messages.last
                 self.isLoading = false
             }
-            }) { err in
-                println(err)
+        }) { _ in
                 self.isLoading = false
                 self.isExhausted = true
         }
@@ -173,7 +167,7 @@ extension GroupChatViewController {
             indexPathes.push(NSIndexPath(forRow: index, inSection: 0))
         }
         
-        collectionView.insertItemsAtIndexPaths(indexPathes)
+        collectionView!.insertItemsAtIndexPaths(indexPathes)
         
     }
     
@@ -196,7 +190,7 @@ extension GroupChatViewController: CommonMessageDelegate {
         self.messages.append(newMessage)
         
         let indexPath = NSIndexPath(forRow: self.messages.count - 1, inSection: 0)
-        self.collectionView.insertItemsAtIndexPaths([indexPath])
+        self.collectionView!.insertItemsAtIndexPaths([indexPath])
         return indexPath
         
     }
@@ -212,11 +206,8 @@ extension GroupChatViewController: CommonMessageDelegate {
             self.finishSendingMessageAnimated(true)
             done?()
             
-            }) { (err) -> () in
-                
-                println(err)
-                done?()
-                
+        }) { _ in
+            done?()
         }
     }
     
@@ -282,7 +273,7 @@ extension GroupChatViewController {
         
         let item = messages[indexPath.item]
         item.download { () -> () in
-            self.collectionView.reloadItemsAtIndexPaths([indexPath])
+            self.collectionView!.reloadItemsAtIndexPaths([indexPath])
         }
         
         return messages[indexPath.item]
@@ -332,7 +323,7 @@ extension GroupChatViewController {
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
         
-        if let topLabelText = self.collectionView(collectionView, attributedTextForCellTopLabelAtIndexPath: indexPath) {
+        if nil != self.collectionView(collectionView, attributedTextForCellTopLabelAtIndexPath: indexPath) {
             return 40
         }
         return 0
@@ -362,9 +353,9 @@ extension GroupChatViewController {
         if let content = message.text() {
             
             if MediaMessage.mediaMessage(content) == .Image || MediaMessage.mediaMessage(content) == .Video {
-                if let broken = message.brokenImage {
+                if nil != message.brokenImage {
                     message.reload({ () -> () in
-                        self.collectionView.reloadItemsAtIndexPaths([indexPath])
+                        self.collectionView!.reloadItemsAtIndexPaths([indexPath])
                     })
                 } else {
                     
@@ -393,7 +384,7 @@ extension GroupChatViewController {
     }
     
     func showGalleryView(indexPath: NSIndexPath, message: JSQMessageEntity) {
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as? JSQMessagesCollectionViewCell
+        let cell = collectionView!.cellForItemAtIndexPath(indexPath) as? JSQMessagesCollectionViewCell
         if let cell = cell, imageView = cell.mediaView as? UIImageView {
             var items = [MHGalleryItem]()
             var index = 0
@@ -435,12 +426,12 @@ extension GroupChatViewController {
             gallery.UICustomization.showMHShareViewInsteadOfActivityViewController = false
             
             gallery.finishedCallback = { [weak self] (currentIndex, image, transition, viewMode) -> Void in
-                let cell = self!.collectionView.cellForItemAtIndexPath(indexPath) as!JSQMessagesCollectionViewCell
+                let cell = self!.collectionView!.cellForItemAtIndexPath(indexPath) as!JSQMessagesCollectionViewCell
                 let imageView = cell.mediaView as! UIImageView
                 gcd.async(.Main, closure: { () -> () in
                     gallery.dismissViewControllerAnimated(true, dismissImageView: imageView, completion: { [weak self] () -> Void in
                         self!.automaticallyScrollsToMostRecentMessage = true
-                        self!.collectionView.reloadItemsAtIndexPaths([indexPath])
+                        self!.collectionView!.reloadItemsAtIndexPaths([indexPath])
                     })
                 })
             }
@@ -469,9 +460,9 @@ extension GroupChatViewController {
         
         if !message.isMediaMessage() {
             if message.senderId() == me.id {
-                cell.textView.textColor = UIColor.blackColor()
+                cell.textView?.textColor = UIColor.blackColor()
             } else {
-                cell.textView.textColor = UIColor.whiteColor()
+                cell.textView?.textColor = UIColor.whiteColor()
             }
         }
         

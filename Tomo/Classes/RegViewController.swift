@@ -144,11 +144,11 @@ extension RegViewController {
             AlamofireController.request(.POST, "/signin", parameters: params, success: { result in
                 let json = JSON(result)
                 
-                if let id = json["id"].string, nickName = json["nickName"].string {
+                if nil != json["id"].string && nil != json["nickName"].string {
                     me = UserEntity(json)
                     self.changeRootToTab()
                 }
-            }) { err in
+            }) { _ in
                 self.inputArea.hidden = false
                 
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -195,8 +195,6 @@ extension RegViewController {
                 UIView.animateWithDuration(0.3) { () -> Void in
                     self.inputArea.alpha = 1
                 }
-                println(errCode)
-                println(errMessage)
         })
     }
     
@@ -213,11 +211,11 @@ extension RegViewController {
             
             let json = JSON(result)
             
-            if let id = json["id"].string, nickName = json["nickName"].string {
+            if nil != json["id"].string && nil != json["nickName"].string {
                 me = UserEntity(json)
                 self.changeRootToTab()
             }
-        }) { err in
+        }) { _ in
             
             let alert = UIAlertController(title: "登录失败", message: "您输入的账号或密码不正确", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "重试", style: .Default, handler: nil))
@@ -291,7 +289,7 @@ extension RegViewController {
             
             let json = JSON(result)
             
-            if let id = json["id"].string, nickName = json["nickName"].string {
+            if nil != json["id"].string && nil != json["nickName"].string {
                 me = UserEntity(json)
                 self.changeRootToTab()
             }

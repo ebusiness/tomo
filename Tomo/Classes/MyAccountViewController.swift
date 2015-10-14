@@ -80,7 +80,7 @@ extension MyAccountViewController {
     private func updateUI() {
         user = me
         
-        if let firstName = user.firstName, lastName = user.lastName {
+        if nil != user.firstName && nil != user.lastName {
             fullNameLabel.text = user.fullName()
         }
         

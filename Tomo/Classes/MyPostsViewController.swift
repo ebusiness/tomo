@@ -21,10 +21,10 @@ final class MyPostsViewController: MyAccountBaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var postCellNib = UINib(nibName: "ICYPostCell", bundle: nil)
+        let postCellNib = UINib(nibName: "ICYPostCell", bundle: nil)
         self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "ICYPostCellIdentifier")
         
-        var postImageCellNib = UINib(nibName: "ICYPostImageCell", bundle: nil)
+        let postImageCellNib = UINib(nibName: "ICYPostImageCell", bundle: nil)
         self.tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "ICYPostImageCellIdentifier")
         
         self.clearsSelectionOnViewWillAppear = false
@@ -46,7 +46,7 @@ extension MyPostsViewController: UITableViewDataSource {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var post = posts[indexPath.row] as! PostEntity
+        let post = posts[indexPath.row] as! PostEntity
         post.owner = me
         
         var cell: ICYPostCell!
@@ -147,10 +147,10 @@ extension MyPostsViewController {
             }
             self.isLoading = false
             
-        }) { err in
+        }) { _ in
                 
-                self.isLoading = false
-                self.isExhausted = true
+            self.isLoading = false
+            self.isExhausted = true
         }
     }
     

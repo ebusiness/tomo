@@ -44,7 +44,7 @@ class PostViewController: BaseViewController{
     
     var post: PostEntity! {
         didSet {
-            if let avatarImageView = avatarImageView {
+            if nil != avatarImageView {
                 updateUIForHeader()
             }
         }
@@ -129,28 +129,29 @@ class PostViewController: BaseViewController{
                 sender.userInteractionEnabled = true
             }
             
-            }) { err in
+            }) { _ in
                 sender.userInteractionEnabled = true
         }
     }
     
     @IBAction func bookmarkBtnTapped(sender: UIButton) {
         sender.userInteractionEnabled = false
-        AlamofireController.request(.PATCH, "/posts/\(self.post.id)/bookmark", success: { _ in
-            
-            self.post.bookmark = self.post.bookmark ?? []
-            
-            if self.post.bookmark!.contains(me.id) {
-                self.post.bookmark!.remove(me.id)
-            } else {
-                self.post.bookmark!.append(me.id)
-            }
-            
-            self.updateUIForHeader()
-            self.bookmarkBtn.tada {
-                sender.userInteractionEnabled = true
-            }
-            }) { err in
+        AlamofireController.request(.PATCH, "/posts/\(self.post.id)/bookmark",
+            success: { _ in
+                
+                self.post.bookmark = self.post.bookmark ?? []
+                
+                if self.post.bookmark!.contains(me.id) {
+                    self.post.bookmark!.remove(me.id)
+                } else {
+                    self.post.bookmark!.append(me.id)
+                }
+                
+                self.updateUIForHeader()
+                self.bookmarkBtn.tada {
+                    sender.userInteractionEnabled = true
+                }
+            }) { _ in
                 sender.userInteractionEnabled = true
         }
     }
@@ -181,13 +182,10 @@ class PostViewController: BaseViewController{
             optionalList["删除"] = { (_) -> Void in
                 
                 Util.alert(self, title: "删除帖子", message: "确定删除该帖子么?", action: { (action) -> Void in
-                    
                     AlamofireController.request(.DELETE, "/posts/\(self.post.id)", success: { _ in
                         Util.showInfo("帖子已删除")
                         self.navigationController?.popViewControllerAnimated(true)
-                        }) { err in
-                            
-                    }
+                    })
                 })
             }
         }
@@ -225,9 +223,7 @@ class PostViewController: BaseViewController{
             self.post.comments?.append(comment)
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)], withRowAnimation: .Automatic)
             
-            }) { err in
-                
-        }
+        })
         
     }
 }

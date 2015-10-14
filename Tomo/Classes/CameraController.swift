@@ -35,8 +35,8 @@ class CameraController: NSObject {
         self.completion = completion
         picker.sourceType = sourceType
         picker.allowsEditing = allowsEditing
-        picker.mediaTypes = [kUTTypeImage]
-        if withVideo { picker.mediaTypes.append(kUTTypeMovie) }
+        picker.mediaTypes = [kUTTypeImage as String]
+        if withVideo { picker.mediaTypes.append(kUTTypeMovie as String) }
         self.vc = vc
         
         self.presentViewController()
@@ -112,7 +112,7 @@ extension CameraController: UIImagePickerControllerDelegate, UINavigationControl
         gcd.async(.Default) {
             let mediaType = info["UIImagePickerControllerMediaType"] as! String
             
-            if mediaType == kUTTypeMovie as! String {
+            if mediaType == kUTTypeMovie as String {
                 let url = info[UIImagePickerControllerMediaURL] as! NSURL
                 let path = url.path!
                 UISaveVideoAtPathToSavedPhotosAlbum(path, self, nil, nil)
@@ -148,7 +148,7 @@ extension CameraController: UIImagePickerControllerDelegate, UINavigationControl
     // TODO - refactor out
     private func resize(image: UIImage) -> UIImage {
         
-        var imageData = UIImageJPEGRepresentation(image, 1)
+        let imageData = UIImageJPEGRepresentation(image, 1)!
         
         // if the image smaller than 1MB, do nothing
         if !(imageData.length/1024/1024 > 1) {

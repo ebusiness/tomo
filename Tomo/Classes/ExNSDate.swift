@@ -12,9 +12,9 @@ extension NSDate {
     
     func monthDays () -> Int { return NSCalendar.currentCalendar().rangeOfUnit(.CalendarUnitDay, inUnit: .CalendarUnitMonth, forDate: self).length }
     
-    func toString(#dateStyle: NSDateFormatterStyle, timeStyle: NSDateFormatterStyle, doesRelativeDateFormatting: Bool = false) -> String
+    func toString(dateStyle style: NSDateFormatterStyle, timeStyle: NSDateFormatterStyle, doesRelativeDateFormatting: Bool = false) -> String
     {
-        formatter.dateStyle = dateStyle
+        formatter.dateStyle = style
         formatter.timeStyle = timeStyle
         formatter.doesRelativeDateFormatting = doesRelativeDateFormatting
         return formatter.stringFromDate(self)

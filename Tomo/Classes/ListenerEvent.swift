@@ -67,8 +67,8 @@ extension ListenerEvent {
             break
             
         case .GroupMessage:
-            println("GroupMessage")
 //            fallthrough /// - TODO
+            break
         case .Message:
             
             self.receiveMessage(tabBarController, userInfo: userInfo)

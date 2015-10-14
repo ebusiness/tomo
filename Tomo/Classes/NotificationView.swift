@@ -60,7 +60,7 @@ class NotificationView: UIView {
             switch event {
             case .Announcement:
                 
-                println("系统通知")
+//                println("系统通知")
                 return
                 
             case .GroupMessage: // GroupMessage
