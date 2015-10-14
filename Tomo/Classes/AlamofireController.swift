@@ -14,7 +14,7 @@ class AlamofireController {
         #if DEBUG
             /// allow invalid SSL certificates
             
-            let range = kAPIBaseURLString.matches("([a-zA-Z\\.\\-]+)")?[1].rangeAtIndex(0)// ?? 0...kAPIBaseURLString.length - 1
+            let range = kAPIBaseURLString.matches("([a-zA-Z\\d\\.\\-]+)")?[1].rangeAtIndex(0)// ?? 0...kAPIBaseURLString.length - 1
             
             /// "tomo.e-business.co.jp"
             let hostName = kAPIBaseURLString[range!.location..(range!.location + range!.length)]!
