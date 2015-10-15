@@ -173,7 +173,14 @@ class ICYPostCell: UITableViewCell {
         if let owner = post?.owner {
             let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
             vc.user = owner
-            delegate?.navigationController?.pushViewController(vc, animated: true)
+            
+            let profileViewController = delegate?.navigationController?.childViewControllers.find { $0 is ProfileViewController } as? ProfileViewController
+            
+            if let profileViewController = profileViewController {
+                delegate?.navigationController?.popToViewController(profileViewController, animated: true)
+            } else {
+                delegate?.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
     
@@ -181,6 +188,14 @@ class ICYPostCell: UITableViewCell {
         if let owner = post?.comments?.last?.owner {
             let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
             vc.user = owner
+            if owner.id == post?.owner.id {
+                let profileViewController = delegate?.navigationController?.childViewControllers.find { $0 is ProfileViewController } as? ProfileViewController
+                
+                if let profileViewController = profileViewController {
+                    delegate?.navigationController?.popToViewController(profileViewController, animated: true)
+                    return
+                }
+            }
             delegate?.navigationController?.pushViewController(vc, animated: true)
         }
     }

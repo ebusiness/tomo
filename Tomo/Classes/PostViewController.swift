@@ -103,15 +103,16 @@ class PostViewController: BaseViewController{
     
     @IBAction func avatarImageTapped(sender: UITapGestureRecognizer) {
         
-        if let childvcs = self.navigationController?.childViewControllers where childvcs.count > 4 {
-            self.navigationController?.popViewControllerAnimated(true)
+        let profileViewController = navigationController?.childViewControllers.find { $0 is ProfileViewController } as? ProfileViewController
+        
+        if let profileViewController = profileViewController {
+            navigationController?.popToViewController(profileViewController, animated: true)
         } else {
             let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
             vc.user = post.owner
             
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        
     }
     
     @IBAction func likeBtnTapped(sender: UIButton) {
