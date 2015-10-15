@@ -64,9 +64,16 @@ extension RecommendStationTableCell:UICollectionViewDelegate {
         let station = self.stations[indexPath.item]
         
         AlamofireController.request(.POST, "/stations/\(station.id)", parameters: nil, encoding: .URL, success: { (result) -> () in
-            self.stations.removeAtIndex(indexPath.item)
-            collectionView.deleteItemsAtIndexPaths([indexPath])
-            self.delegate.synchronizeRecommendStations(self.stations)
+            gcd.async(.Default) {
+                let group = GroupEntity(result)
+                me.addGroup(group.id)
+                me.addStation(station.id)
+                self.stations.removeAtIndex(indexPath.item)
+                self.delegate.synchronizeRecommendStations(self.stations)
+                gcd.async(.Main) {
+                    self.collectionView.deleteItemsAtIndexPaths([indexPath])
+                }
+            }
         })
     }
     func scrollViewDidScroll(scrollView: UIScrollView) {

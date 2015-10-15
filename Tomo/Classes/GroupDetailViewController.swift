@@ -100,8 +100,7 @@ extension GroupDetailViewController {
         
         sender.userInteractionEnabled = false
         AlamofireController.request(.PATCH, "/groups/\(self.group.id)/join", success: { _ in
-            me.groups = me.groups ?? []
-            me.groups!.append(self.group.id)
+            me.addGroup(self.group.id)
             self.updateUI()
         }) { _ in
             sender.userInteractionEnabled = true

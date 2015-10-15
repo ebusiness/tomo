@@ -85,13 +85,17 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if let station = stations?[indexPath.row] {
-            AlamofireController.request(.PATCH, "/me", parameters: ["$addToSet": ["stations":station.id]], encoding: .URL, success: { result in
-                self.stations?.remove(station)
-                me.stations = me.stations ?? []
-                me.stations!.append(station.id)
-                collectionView.deleteItemsAtIndexPaths([indexPath])
+            AlamofireController.request(.POST, "/stations/\(station.id)", parameters: nil, encoding: .URL, success: { (result) -> () in
+                gcd.async(.Default) {
+                    let group = GroupEntity(result)
+                    me.addGroup(group.id)
+                    me.addStation(station.id)
+                    self.stations?.remove(station)
+                    gcd.async(.Main) {
+                        self.collectionView.deleteItemsAtIndexPaths([indexPath])
+                    }
+                }
             })
-            
         }
     }
 }

@@ -147,6 +147,24 @@ extension UserEntity {
         self.friends?.remove(uid)
     }
 }
+// MARK: - group
+extension UserEntity {
+    func addGroup(groupId: String) {
+        if groupId.length > 0 {
+            self.groups = self.groups ?? []
+            self.groups!.append(groupId)
+        }
+    }
+}
+// MARK: - station
+extension UserEntity {
+    func addStation(stationId: String) {
+        if stationId.length > 0 {
+            self.stations = self.stations ?? []
+            self.stations!.append(stationId)
+        }
+    }
+}
 
 extension UserEntity {
     class PushSetting: Entity  {

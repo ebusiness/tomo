@@ -368,7 +368,7 @@ extension HomeViewController {
     private func getRecommendInfo() {
         
         var params = Dictionary<String, AnyObject>()
-        
+        params["category"] = "discover"
         if let location = self.location {
             params["coordinate"] = [location.coordinate.latitude, location.coordinate.longitude];
         }

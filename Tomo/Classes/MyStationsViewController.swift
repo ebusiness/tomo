@@ -184,11 +184,11 @@ extension MyStationsViewController {
                 selectedIndexes.map {
                     stationids.append(self.stations![$0.item].id)
                 }
-                var params = Dictionary<String, AnyObject>()
-                params["$pullAll"] = ["stations":stationids]
                 
-                AlamofireController.request(.PATCH, "/me", parameters: params, success: { result in
-                    
+                var params = Dictionary<String, AnyObject>()
+                params["stations"] = stationids
+                
+                AlamofireController.request(.DELETE, "/me/leave/stations", parameters: params, success: { (result) -> () in
                     self.collectionView.performBatchUpdates({ () -> Void in
                         /**
                         *  remove the mark of the selected cells
@@ -200,21 +200,20 @@ extension MyStationsViewController {
                         *  remove the cells of select
                         */
                         self.collectionView.deleteItemsAtIndexPaths(selectedIndexes)
-                        me.stations = me.stations?.filter { !stationids.contains($0) }
+                        let userinfo = UserEntity(result)
+                        me.stations = userinfo.stations
+                        me.groups = userinfo.groups
                         self.stations = self.stations?.filter { !stationids.contains($0.id) }
                         
                     }, completion: { finished in
-                        
+                            
                         if self.stations!.count < 1 {
                             self.editButton.enabled = false
                         }
 //                        self.collectionView.reloadItemsAtIndexPaths(self.collectionView.indexPathsForVisibleItems())
                     })
-                    
-                    
-                }) { err in
-                        
-                }
+                })
+                return ;
         }
     }
 }
