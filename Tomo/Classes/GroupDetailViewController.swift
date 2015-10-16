@@ -37,6 +37,7 @@ final class GroupDetailViewController: BaseTableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         loadPosts()
+        self.updateUI()
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {

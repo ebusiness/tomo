@@ -83,6 +83,8 @@ extension NotificationCell {
                 message = "收藏了您的帖子"
             case .GroupJoined:
                 message = "加入了您的群组"
+            case .GroupLeft:
+                message = "退出了您的群组"
             default:
                 break
             }

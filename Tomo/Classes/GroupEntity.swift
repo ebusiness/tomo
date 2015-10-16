@@ -85,3 +85,13 @@ class GroupEntity: Entity {
         
     }
 }
+// MARK: - group
+extension GroupEntity {
+    func addMember(user: UserEntity) {
+        self.members = self.members ?? []
+        self.members!.append(user)
+    }
+    func removeMember(user: UserEntity) {
+        self.members = self.members?.filter { $0.id != user.id }
+    }
+}

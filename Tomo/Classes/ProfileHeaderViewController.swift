@@ -29,6 +29,12 @@ class ProfileHeaderViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        photoImageView.layer.cornerRadius = photoImageView.frame.size.width / 2
+        photoImageView.layer.masksToBounds = true
+        photoImageView.layer.borderWidth = 2
+        photoImageView.layer.borderColor = avatarBorderColor
+        
         self.isDidLoad = true
     }
     
@@ -56,11 +62,6 @@ extension ProfileHeaderViewController {
     func updateUI(){
         
         if !isDidLoad { return }
-        
-        photoImageView.layer.cornerRadius = photoImageView.frame.size.width / 2
-        photoImageView.layer.masksToBounds = true
-        photoImageView.layer.borderWidth = 2
-        photoImageView.layer.borderColor = avatarBorderColor
         
         if let photo = user.photo {
             photoImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)

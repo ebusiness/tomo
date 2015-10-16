@@ -180,6 +180,7 @@ extension UserEntity {
         var postLiked: Bool = true
         var postBookmarked: Bool = true
         var groupJoined: Bool = true
+        var groupLeft: Bool = true
         
         override init() {
             super.init()
@@ -201,6 +202,7 @@ extension UserEntity {
             self.postLiked = json["postLiked"].boolValue
             self.postBookmarked = json["postBookmarked"].boolValue
             self.groupJoined = json["groupJoined"].boolValue
+            self.groupLeft = json["groupLeft"].boolValue
         }
     }
     

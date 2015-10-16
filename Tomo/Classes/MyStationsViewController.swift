@@ -188,7 +188,7 @@ extension MyStationsViewController {
                 var params = Dictionary<String, AnyObject>()
                 params["stations"] = stationids
                 
-                AlamofireController.request(.DELETE, "/me/leave/stations", parameters: params, success: { (result) -> () in
+                AlamofireController.request(.DELETE, "/me/stations", parameters: params, success: { (result) -> () in
                     self.collectionView.performBatchUpdates({ () -> Void in
                         /**
                         *  remove the mark of the selected cells

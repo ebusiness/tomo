@@ -25,6 +25,7 @@ class PushSettingViewController: MyAccountBaseController {
     @IBOutlet weak var switchPostLiked: UISwitch!
     @IBOutlet weak var switchPostBookmarked: UISwitch!
     @IBOutlet weak var switchGroupJoined: UISwitch!
+    @IBOutlet weak var switchGroupLeft: UISwitch!
     
     /// push setting
     var allowNotification = false {
@@ -54,6 +55,7 @@ class PushSettingViewController: MyAccountBaseController {
                 switchPostLiked.on = pushSettingProperty.postLiked
                 switchPostBookmarked.on = pushSettingProperty.postBookmarked
                 switchGroupJoined.on = pushSettingProperty.groupJoined
+                switchGroupLeft.on = pushSettingProperty.groupLeft
             }
         }
     }
@@ -80,6 +82,7 @@ class PushSettingViewController: MyAccountBaseController {
         params["postLiked"] = switchPostLiked.on
         params["postBookmarked"] = switchPostBookmarked.on
         params["groupJoined"] = switchGroupJoined.on
+        params["groupLeft"] = switchGroupLeft.on
         
         var parameters: Dictionary<String,AnyObject> = ["pushSetting": params]
         if !allowNotification {

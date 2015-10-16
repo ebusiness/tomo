@@ -25,6 +25,7 @@ enum ListenerEvent: String {
     case PostBookmarked = "post-bookmarked"
     
     case GroupJoined    = "group-joined"
+    case GroupLeft      = "group-left"
     
     case Any = "any"
     

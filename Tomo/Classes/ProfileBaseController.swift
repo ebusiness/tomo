@@ -75,14 +75,46 @@ extension ProfileBaseController {
     func getUserInfo(done: ()->() ){
         
         AlamofireController.request(.GET, "/users/\(self.user.id)", success: { result in
-            
+
             self.user = UserEntity(result)
             
-            if !(me.friends ?? []).contains(self.user.id) {
-                done()
-            }
+            self.updateFriendInfoIfNeeded()
+            
+            done()
+            
             self.updateUI()
         })
+    }
+    
+    private func updateFriendInfoIfNeeded(){
+        
+        if !(me.friends ?? []).contains(self.user.id) {
+            return
+        }
+        
+        (self.navigationController?.tabBarController?.childViewControllers ?? []).each { (index, childViewController) -> () in
+
+            let viewControllers = (childViewController as? UINavigationController)?.viewControllers
+            
+            if viewControllers == nil { return }
+            
+            if let friendListViewController = viewControllers!.first as? FriendListViewController {
+                let index = friendListViewController.friends.indexOf { $0.id == self.user.id }
+                
+                if let index = index {
+                    self.user.lastMessage = friendListViewController.friends[index].lastMessage
+                    friendListViewController.friends[index] = self.user
+                    friendListViewController.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: .None)
+                }
+            }
+            
+            let messageViewController = viewControllers!.find { $0 is MessageViewController } as? MessageViewController
+            
+            if let messageViewController = messageViewController where messageViewController.friend.id == self.user.id {
+                self.user.lastMessage = messageViewController.friend.lastMessage
+                messageViewController.friend = self.user
+            }
+        }
     }
     
     func updateUI() {

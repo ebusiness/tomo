@@ -65,7 +65,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <connections>
                             <outlet property="dataSource" destination="wq9-gX-hfP" id="85r-dG-M8u"/>
                             <outlet property="delegate" destination="wq9-gX-hfP" id="u0r-A8-vPa"/>
@@ -495,6 +495,64 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="dtw-mM-wbR" userLabel="退出/加入">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="yYI-bO-6Z9" userLabel="加入">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yYI-bO-6Z9" id="o6f-l4-u2a">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FKo-xW-XoJ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.59215686270000001" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <state key="normal" title="加入">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="joinGroup:" destination="cld-fn-BI9" eventType="touchUpInside" id="arv-3O-kc4"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="FKo-xW-XoJ" firstAttribute="top" secondItem="o6f-l4-u2a" secondAttribute="top" id="aV0-Iv-ff6"/>
+                                                <constraint firstAttribute="trailing" secondItem="FKo-xW-XoJ" secondAttribute="trailing" id="ihG-8g-ksh"/>
+                                                <constraint firstItem="FKo-xW-XoJ" firstAttribute="leading" secondItem="o6f-l4-u2a" secondAttribute="leading" id="nHR-wm-DZi"/>
+                                                <constraint firstAttribute="bottom" secondItem="FKo-xW-XoJ" secondAttribute="bottom" id="zJB-rJ-jjH"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="dFO-y4-Tqc" userLabel="退出">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dFO-y4-Tqc" id="XGe-Qp-SaK">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VGb-fN-Ycq">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                                    <color key="backgroundColor" red="0.95686274510000002" green="0.26274509800000001" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <state key="normal" title="退出">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="leaveGroup:" destination="cld-fn-BI9" eventType="touchUpInside" id="vqq-lg-8Wp"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="VGb-fN-Ycq" secondAttribute="bottom" id="01f-16-qNS"/>
+                                                <constraint firstItem="VGb-fN-Ycq" firstAttribute="top" secondItem="XGe-Qp-SaK" secondAttribute="top" id="3rL-j3-cXK"/>
+                                                <constraint firstAttribute="trailing" secondItem="VGb-fN-Ycq" secondAttribute="trailing" id="bXf-ht-Uy4"/>
+                                                <constraint firstItem="VGb-fN-Ycq" firstAttribute="leading" secondItem="XGe-Qp-SaK" secondAttribute="leading" id="ueR-uG-04A"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="cld-fn-BI9" id="Enl-m4-ylw"/>
@@ -506,6 +564,8 @@
                         <outlet property="addressLabel" destination="XBz-S5-d6K" id="N4w-6y-DoC"/>
                         <outlet property="groupCoverImageView" destination="mhF-xR-DuZ" id="zI9-er-oXL"/>
                         <outlet property="introductionLabel" destination="EwB-hN-ld5" id="gBP-Op-RDj"/>
+                        <outlet property="joinCell" destination="yYI-bO-6Z9" id="zFD-rY-qsu"/>
+                        <outlet property="leaveCell" destination="dFO-y4-Tqc" id="elh-jC-Xo6"/>
                         <outlet property="memberCollectionCell" destination="brb-rt-3dm" id="WXT-7r-SE2"/>
                         <outlet property="memberCollectionView" destination="pYr-Xj-Y5Y" id="Nwx-Q2-FrN"/>
                         <outlet property="memberCollectionViewHeightConstraint" destination="wRq-aQ-HJL" id="TMm-eR-TK6"/>
@@ -524,7 +584,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="sWg-QG-QCj">
                             <rect key="frame" x="0.0" y="64" width="320" height="160"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

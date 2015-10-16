@@ -10,7 +10,12 @@ import UIKit
 
 final class MessageViewController: CommonMessageController {
     
-    var friend: UserEntity!
+    var friend: UserEntity! {
+        didSet {
+            // load avatar
+            loadAvatars()
+        }
+    }
 
     var avatarFriend: JSQMessagesAvatarImage!
     
@@ -34,9 +39,6 @@ final class MessageViewController: CommonMessageController {
         
         // page title
         title = friend.nickName
-        
-        // load avatar
-        loadAvatars()
         
         loadMessages()
     }
@@ -68,6 +70,11 @@ extension MessageViewController {
                 self.avatarFriend = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
             } else {
                 self.avatarFriend = self.defaultAvatar
+            }
+            
+            if self.messages.count > 0 {
+                let indexPaths = self.collectionView!.indexPathsForVisibleItems()
+                self.collectionView!.reloadItemsAtIndexPaths(indexPaths)
             }
         }
     }
