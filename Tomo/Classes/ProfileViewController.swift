@@ -15,15 +15,20 @@ final class ProfileViewController: ProfileBaseController {
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var birthDayLabel: UILabel!
     
-    @IBOutlet weak var addFriendButton: UIButton!
     @IBOutlet weak var deleteFriendButton: UIButton!
-    @IBOutlet weak var sendMessageCell: UITableViewCell!
     
-    @IBOutlet weak var invitedView: UIView!
-    @IBOutlet weak var heightOfInvitedView: NSLayoutConstraint!
+    @IBOutlet weak var receivedInvitationCell: UITableViewCell!
+    @IBOutlet weak var sentInvitationCell: UITableViewCell!
+
+    @IBOutlet weak var sendMessageCell: UITableViewCell!
+    @IBOutlet weak var addFriendCell: UITableViewCell!
+    
+    let invitedSection = 0
+    let sendMessageSection = 3
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.reloadButtons()
         self.registerForNotifications()
     }
     
@@ -45,32 +50,12 @@ final class ProfileViewController: ProfileBaseController {
         if let address = user.address {
             addressLabel.text = address
         }
-        
-        self.addFriendButton.hidden = true
-        self.deleteFriendButton.hidden = true
-        self.sendMessageCell.hidden = true
-        self.invitedView.hidden = true
-        
-        if let friends = me.friends where friends.contains(self.user.id) {
-            
-            self.deleteFriendButton.hidden = false
-            self.sendMessageCell.hidden = false
-            
-        } else {
-            
-            if nil != self.getUserInvitation() {
-                
-                self.invitedView.hidden = false
-                
-                self.heightOfInvitedView.constant = 44
-                self.changeHeaderView(height:284)
-            } else if let invitations = me.invitations where invitations.contains(self.user.id) {
-                //invited
-            } else if user.id != me.id  {
-                self.addFriendButton.hidden = false
-            }
-        }
     }
+}
+
+// MARK: - @IBAction
+
+extension ProfileViewController {
     
     @IBAction func Approved(sender: UIButton) {
         
@@ -91,7 +76,7 @@ final class ProfileViewController: ProfileBaseController {
                 
                 me.removeFriend(self.user.id)
 //                self.navigationController?.popViewControllerAnimated(true)
-                self.updateUI()
+                self.reloadButtons()
 
             })
         })
@@ -99,8 +84,6 @@ final class ProfileViewController: ProfileBaseController {
     }
     
     @IBAction func addFriend(sender: UIButton) {
-        
-        Util.showHUD()
         
         var param = Dictionary<String, String>()
         param["id"] = self.user.id
@@ -112,23 +95,95 @@ final class ProfileViewController: ProfileBaseController {
             }
             me.invitations?.append(self.user.id)
             Util.showSuccess("已发送交友请求")
-            self.updateUI()
+            self.reloadButtons()
         })
     }
     
     @IBAction func sendMessage(sender: UIButton) {
         
-        let vc = MessageViewController()
-        vc.hidesBottomBarWhenPushed = true
+        let messageViewController = self.navigationController?.childViewControllers.find { ($0 as? MessageViewController)?.friend.id == self.user.id } as? MessageViewController
         
-        vc.friend = self.user
+        if let messageViewController = messageViewController {
+            self.navigationController?.popToViewController(messageViewController, animated: true)
+        } else {
+            let vc = MessageViewController()
+            vc.hidesBottomBarWhenPushed = true
+            
+            vc.friend = self.user
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
         
-        self.navigationController?.pushViewController(vc, animated: true)
         
     }
 }
 
+// MARK: - TableView DataSource & Delegate
+
 extension ProfileViewController {
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if section == invitedSection {
+            // if has any friendInvitations or invitations it's will show receivedInvitationCell / sentInvitationCell in this section
+            let hasInvitation = self.getUserInvitation() != nil || me.invitations?.find { $0 == self.user.id } != nil
+            
+            if hasInvitation {
+                return 1
+            } else {
+                return 0
+            }
+        }
+        
+        if section == sendMessageSection {
+            // if no friendInvitations or no invitations it's will show sendMessageCell / addFriendCell in this section
+            let hasInvitation = self.getUserInvitation() != nil || me.invitations?.find { $0 == self.user.id } != nil
+            
+            if hasInvitation {
+                return 0
+            } else {
+                return 1
+            }
+        }
+        
+        return super.tableView(self.tableView, numberOfRowsInSection: section)
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        if indexPath.section == invitedSection {
+            
+            let cell = self.getUserInvitation() == nil ? sentInvitationCell : receivedInvitationCell
+            
+            return cell
+        }
+        
+        if indexPath.section == sendMessageSection {
+            
+            let cell = (me.friends ?? []).contains(self.user.id) ? sendMessageCell : addFriendCell
+            
+            return cell
+        }
+        
+        return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
+    }
+}
+
+// MARK: - private
+
+extension ProfileViewController {
+    
+    private func reloadButtons() {
+        self.tableView.beginUpdates()
+        self.tableView.reloadSections(NSIndexSet(index: invitedSection), withRowAnimation: .Automatic)
+        self.tableView.reloadSections(NSIndexSet(index: sendMessageSection), withRowAnimation: .Automatic)
+        self.tableView.endUpdates()
+        if let friends = me.friends where friends.contains(self.user.id) {
+            self.deleteFriendButton.hidden = false
+        } else {
+            self.deleteFriendButton.hidden = true
+        }
+    }
     
     private func getUserInvitation() -> NotificationEntity? {
         return me.friendInvitations.find { $0.from.id == self.user.id }
@@ -138,7 +193,6 @@ extension ProfileViewController {
         
         if let invitation = self.getUserInvitation() {
             
-            Util.showHUD()
             var param = Dictionary<String, String>()
             param["result"] = isApproved ? "accept" : "refuse"
             
@@ -150,20 +204,12 @@ extension ProfileViewController {
                     me.addFriend(self.user.id)
                 } else {
                     me.invitations?.remove(self.user.id)
-                    Util.showMessage("您拒绝了 " + self.user.nickName + " 的好友邀请")
+                    Util.showSuccess("您拒绝了 " + self.user.nickName + " 的好友邀请")
                 }
                 
-                self.hideInvitationView()
+                self.reloadButtons()
             })
         }
-    }
-    
-    private func hideInvitationView(){
-        self.heightOfInvitedView.constant = 0
-        self.changeHeaderView(height:240,done: { () -> () in
-            
-            self.updateUI()
-        })
     }
 }
 
@@ -192,25 +238,25 @@ extension ProfileViewController {
     
     func receiveFriendBreak(notification: NSNotification) {
         self.receive(notification) {
-            self.updateUI()
+            self.reloadButtons()
         }
     }
     
     func receiveFriendInvited(notification: NSNotification) {
         self.receive(notification) {
-            self.updateUI()
+            self.reloadButtons()
         }
     }
     
     func receiveFriendAccepted(notification: NSNotification) {
         self.receive(notification) {
-            self.hideInvitationView()
+            self.reloadButtons()
         }
     }
     
     func receiveFriendRefused(notification: NSNotification) {
         self.receive(notification) {
-            self.hideInvitationView()
+            self.reloadButtons()
         }
     }
 }

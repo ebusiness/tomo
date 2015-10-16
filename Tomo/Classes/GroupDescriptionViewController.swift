@@ -97,8 +97,10 @@ extension GroupDescriptionViewController {
             me.addGroup(self.group.id)
             self.detailedGroup?.addMember(me)
             
+            self.tableView.beginUpdates()
             self.tableView.reloadSections(NSIndexSet(index: self.memberCollectionSection), withRowAnimation: .Automatic)
             self.tableView.reloadSections(NSIndexSet(index: self.joinOrLeaveSection), withRowAnimation: .Automatic)
+            self.tableView.endUpdates()
             
             let item = (self.detailedGroup?.members?.count ?? 1) - 1
             self.memberCollectionView.insertItemsAtIndexPaths([NSIndexPath(forItem: item, inSection: 0)])
@@ -129,8 +131,10 @@ extension GroupDescriptionViewController {
             let item = self.detailedGroup?.members?.indexOf { $0.id == me.id } ?? 0
             self.detailedGroup?.removeMember(me)
             
+            self.tableView.beginUpdates()
             self.tableView.reloadSections(NSIndexSet(index: self.memberCollectionSection), withRowAnimation: .Automatic)
             self.tableView.reloadSections(NSIndexSet(index: self.joinOrLeaveSection), withRowAnimation: .Automatic)
+            self.tableView.endUpdates()
             self.memberCollectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: item, inSection: 0)])
             
             sender.userInteractionEnabled = true
