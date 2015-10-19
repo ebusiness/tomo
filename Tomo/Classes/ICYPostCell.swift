@@ -238,6 +238,10 @@ class ICYPostCell: UITableViewCell {
         commentView.addGestureRecognizer(commentTap)
         
         collectionView.scrollsToTop = false
+        
+        let commentsColor = UIColor(red: 25.0/255.0, green: 118.0/255.0, blue: 210.0/255.0, alpha: 0.7)
+        let commentsImage = Util.coloredImage(UIImage(named: "comments")!, color: commentsColor)
+        commentCountButton.setImage(commentsImage, forState: UIControlState.Normal)
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
