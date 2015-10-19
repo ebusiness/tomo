@@ -66,7 +66,9 @@ class ICYPostCell: UITableViewCell {
                     lastCommentContent.text = lastComment.content
                     lastCommentDateLabel.text = lastComment.createDate.relativeTimeToString()
                     commentCountButton.setTitle("\(post.comments!.count)", forState: UIControlState.Normal)
-                    commentCountButton.setImage(UIImage(named: "comments"), forState: UIControlState.Normal)
+                    let commentsColor = UIColor(red: 25.0/255.0, green: 118.0/255.0, blue: 210.0/255.0, alpha: 0.7)
+                    let commentsImage = Util.coloredImage(UIImage(named: "comments")!, color: commentsColor)
+                    commentCountButton.setImage(commentsImage, forState: UIControlState.Normal)
                 } else {
                     commentViewHeight.constant = CGFloat.almostZero
                     minorAvatarImageViewHeight.constant = 0.0
@@ -106,7 +108,7 @@ class ICYPostCell: UITableViewCell {
     
     @IBOutlet weak var commentView: UIView!
     
-
+    
     
     @IBOutlet weak var flowLayout: ICYFlowLayout!
     
@@ -143,7 +145,7 @@ class ICYPostCell: UITableViewCell {
                 sender.tada {
                     sender.userInteractionEnabled = true
                 }
-            }) { _ in
+                }) { _ in
                     sender.userInteractionEnabled = true
             }
         }
@@ -163,7 +165,7 @@ class ICYPostCell: UITableViewCell {
                     self.post = post
                     sender.userInteractionEnabled = true
                 }
-            }) { _ in
+                }) { _ in
                     sender.userInteractionEnabled = true
             }
         }
@@ -238,10 +240,6 @@ class ICYPostCell: UITableViewCell {
         commentView.addGestureRecognizer(commentTap)
         
         collectionView.scrollsToTop = false
-        
-        let commentsColor = UIColor(red: 25.0/255.0, green: 118.0/255.0, blue: 210.0/255.0, alpha: 0.7)
-        let commentsImage = Util.coloredImage(UIImage(named: "comments")!, color: commentsColor)
-        commentCountButton.setImage(commentsImage, forState: UIControlState.Normal)
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
