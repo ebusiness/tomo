@@ -27,11 +27,22 @@ class PushSettingViewController: MyAccountBaseController {
     @IBOutlet weak var switchGroupJoined: UISwitch!
     @IBOutlet weak var switchGroupLeft: UISwitch!
     
+    let pushSettingSection = 0
+    let messageSection = 1
+    let friendSection = 2
+    let postSection = 3
+    let groupSection = 4
+    
     /// push setting
     var allowNotification = false {
         didSet {
             if oldValue != allowNotification {
-                self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
+                self.tableView.beginUpdates()
+                self.tableView.reloadSections(NSIndexSet(index: messageSection), withRowAnimation: .Automatic)
+                self.tableView.reloadSections(NSIndexSet(index: friendSection), withRowAnimation: .Automatic)
+                self.tableView.reloadSections(NSIndexSet(index: postSection), withRowAnimation: .Automatic)
+                self.tableView.reloadSections(NSIndexSet(index: groupSection), withRowAnimation: .Automatic)
+                self.tableView.endUpdates()
                 self.scrollViewDidScroll(self.tableView)
                 if Defaults["deviceToken"].string == nil && allowNotification {
                     Util.setupPush()
@@ -105,19 +116,19 @@ class PushSettingViewController: MyAccountBaseController {
 
 extension PushSettingViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 1 && !allowNotification {
+        if section != pushSettingSection && !allowNotification {
             return 0
-        } else {
-            return super.tableView(self.tableView, numberOfRowsInSection: section)
         }
+        
+        return super.tableView(self.tableView, numberOfRowsInSection: section)
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 1 && !allowNotification {
+        if section != pushSettingSection && !allowNotification {
             return nil
-        } else {
-            return super.tableView(self.tableView, titleForHeaderInSection: section)
         }
+        
+        return super.tableView(self.tableView, titleForHeaderInSection: section)
     }
 }
 
