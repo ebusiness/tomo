@@ -10,7 +10,6 @@ import UIKit
 
 class SearchFriendViewController: BaseTableViewController {
     
-    @IBOutlet weak var closeButton: UIButton!
     
     var result:[UserEntity]?{
         didSet{
@@ -23,14 +22,12 @@ class SearchFriendViewController: BaseTableViewController {
         
         let searchBar = UISearchBar()
         searchBar.placeholder = "输入昵称搜索"
-        searchBar.barTintColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 0.7)
+        searchBar.tintColor = Util.colorWithHexString("007AFF")
         searchBar.delegate = self
         self.navigationItem.titleView = searchBar
         searchBar.becomeFirstResponder()
         
         self.alwaysShowNavigationBar = true
-        
-        Util.changeImageColorForButton(closeButton,color: UIColor.whiteColor())
     }
 
     @IBAction func close(sender: AnyObject) {
