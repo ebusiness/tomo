@@ -161,9 +161,12 @@ class ICYPostCell: UITableViewCell {
                 } else {
                     post.like = [me.id]
                 }
-                sender.bounce{
-                    self.post = post
-                    sender.userInteractionEnabled = true
+                self.post = post
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.02 * Double(NSEC_PER_SEC))), dispatch_get_main_queue())
+                    {
+                        sender.bounce{
+                        sender.userInteractionEnabled = true
+                    }
                 }
                 }) { _ in
                     sender.userInteractionEnabled = true
