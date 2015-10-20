@@ -188,18 +188,24 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dwi-7M-0xL">
-                                            <rect key="frame" x="0.0" y="149" width="320" height="44"/>
+                                            <rect key="frame" x="0.0" y="141" width="320" height="104"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xp4-n8-ZXc">
-                                                    <rect key="frame" x="138" y="6" width="44" height="33"/>
+                                                    <rect key="frame" x="124" y="36" width="72" height="33"/>
                                                     <animations/>
                                                     <color key="backgroundColor" red="0.29803921570000003" green="0.68627450980000004" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
-                                                    <state key="normal" title="参加">
+                                                    <state key="normal" title="加入该组">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="joinGroup:" destination="UlV-bz-zwx" eventType="touchUpInside" id="ysk-PS-nAZ"/>
                                                     </connections>
@@ -209,7 +215,6 @@
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="xp4-n8-ZXc" secondAttribute="centerY" id="J7Q-8S-Rhn"/>
                                                 <constraint firstAttribute="centerX" secondItem="xp4-n8-ZXc" secondAttribute="centerX" id="uBA-J5-P6w"/>
-                                                <constraint firstAttribute="height" constant="44" id="xIJ-mQ-Pjm"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -219,8 +224,9 @@
                                         <constraint firstAttribute="trailing" secondItem="PcR-d9-tdg" secondAttribute="trailing" constant="8" id="0Xr-PD-e4T"/>
                                         <constraint firstItem="dwi-7M-0xL" firstAttribute="leading" secondItem="2Dr-UJ-fvg" secondAttribute="leading" id="0zO-XD-hIh"/>
                                         <constraint firstAttribute="trailing" secondItem="D5I-gk-3oY" secondAttribute="trailing" id="B72-Ga-nF6"/>
+                                        <constraint firstAttribute="bottom" secondItem="dwi-7M-0xL" secondAttribute="bottom" id="Cug-oh-teT"/>
                                         <constraint firstAttribute="centerY" secondItem="PcR-d9-tdg" secondAttribute="centerY" id="Dto-9n-3Ww"/>
-                                        <constraint firstItem="dwi-7M-0xL" firstAttribute="top" secondItem="PcR-d9-tdg" secondAttribute="bottom" constant="8" id="Ioh-fl-cRJ"/>
+                                        <constraint firstItem="dwi-7M-0xL" firstAttribute="top" secondItem="PcR-d9-tdg" secondAttribute="bottom" id="Ioh-fl-cRJ"/>
                                         <constraint firstItem="QHT-gE-xts" firstAttribute="leading" secondItem="2Dr-UJ-fvg" secondAttribute="leading" id="Oej-B8-mpb"/>
                                         <constraint firstAttribute="bottom" secondItem="QHT-gE-xts" secondAttribute="bottom" id="RbR-zr-SWq"/>
                                         <constraint firstItem="PcR-d9-tdg" firstAttribute="leading" secondItem="2Dr-UJ-fvg" secondAttribute="leading" constant="8" id="SZ0-tX-esB"/>
