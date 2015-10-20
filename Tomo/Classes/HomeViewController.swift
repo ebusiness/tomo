@@ -19,6 +19,7 @@ final class HomeViewController: BaseTableViewController {
     var updatingLocation = false
     
     let screenHeight = UIScreen.mainScreen().bounds.height
+    let screenWidth = UIScreen.mainScreen().bounds.width
     let loadTriggerHeight = CGFloat(88.0)
     
     var contents = [AnyObject]()
@@ -133,7 +134,7 @@ extension HomeViewController {
         if let post = contents[indexPath.row] as? PostEntity {
             self.performSegueWithIdentifier("postdetail", sender: post)
         }
-//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        //        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -373,12 +374,12 @@ extension HomeViewController {
             params["coordinate"] = [location.coordinate.latitude, location.coordinate.longitude];
         }
         
-//        let needToLoadGroups = self.recommendGroups == nil && self.contents.find { $0 is [GroupEntity] } == nil
-//        if needToLoadGroups {
-//            AlamofireController.request(.GET, "/map/groups", parameters: params, hideHUD: true, success: { groupData in
-//                self.recommendGroups = GroupEntity.collection(groupData)
-//            })
-//        }
+        //        let needToLoadGroups = self.recommendGroups == nil && self.contents.find { $0 is [GroupEntity] } == nil
+        //        if needToLoadGroups {
+        //            AlamofireController.request(.GET, "/map/groups", parameters: params, hideHUD: true, success: { groupData in
+        //                self.recommendGroups = GroupEntity.collection(groupData)
+        //            })
+        //        }
         
         let needToLoadStations = self.recommendStations == nil && self.contents.find { $0 is [StationEntity] } == nil
         
@@ -397,6 +398,16 @@ extension HomeViewController {
         }
         
         isLoading = true
+        let footerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: screenWidth, height: 40.0)))
+        footerView.backgroundColor = Util.colorWithHexString("EFEFF4")
+        let footerContentLabel = UILabel()
+        footerContentLabel.text = "正在加载更多数据……"
+        footerContentLabel.textColor = UIColor.darkGrayColor()
+        footerContentLabel.sizeToFit()
+        tableView.tableFooterView = footerView
+        footerView.addSubview(footerContentLabel)
+        footerContentLabel.center = CGPoint(x: screenWidth / 2.0, y: 20.0)
+        
         
         var params = Dictionary<String, NSTimeInterval>()
         
@@ -418,9 +429,9 @@ extension HomeViewController {
                         }
                     }
                     
-//                    let needToInsertStations = self.recommendStations != nil && self.contents.find { $0 is [StationEntity] } == nil
-//                    let needToInsertGroups = self.recommendGroups != nil && self.contents.find { $0 is [GroupEntity] } == nil
-
+                    //                    let needToInsertStations = self.recommendStations != nil && self.contents.find { $0 is [StationEntity] } == nil
+                    //                    let needToInsertGroups = self.recommendGroups != nil && self.contents.find { $0 is [GroupEntity] } == nil
+                    
                     gcd.async(.Main) {
                         self.appendRows(loadPosts.count)
                         
@@ -444,13 +455,15 @@ extension HomeViewController {
                         }
                         
                         self.isLoading = false
+                        self.tableView.tableFooterView = nil
                     }
                 }
             }
-        }) { _ in
+            }) { _ in
                 
-            self.isLoading = false
-            self.isExhausted = true
+                self.isLoading = false
+                self.isExhausted = true
+                self.tableView.tableFooterView = nil
         }
     }
     
@@ -484,7 +497,7 @@ extension HomeViewController {
             
             self.endRefreshing()
             
-        }) { _ in
+            }) { _ in
                 
                 self.endRefreshing()
         }
