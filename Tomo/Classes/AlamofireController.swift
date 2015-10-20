@@ -10,6 +10,12 @@ class AlamofireController {
     
     private static let badRequestCode = 400 //Bad Request
     
+    private static let window : UIWindow? = {
+        
+        return UIApplication.sharedApplication().keyWindow
+        
+        }()
+    
     private static let alamofireInstance: Manager = {
         #if DEBUG
             /// allow invalid SSL certificates
@@ -79,8 +85,6 @@ class AlamofireController {
         }
         
         /// Unauthorized
-        
-        let window = UIApplication.sharedApplication().keyWindow
         if let classForCoder: AnyClass = window?.rootViewController?.classForCoder where NSStringFromClass(classForCoder) != "tomo.RegViewController" {
             window!.rootViewController = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
         } else {
