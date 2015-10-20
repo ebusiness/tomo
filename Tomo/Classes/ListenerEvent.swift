@@ -204,6 +204,7 @@ extension ListenerEvent {
                 friendListViewController.tableView.beginUpdates()
                 friendListViewController.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation:  .Automatic)
                 friendListViewController.tableView.endUpdates()
+                friendListViewController.tableView.backgroundView = nil
             })
         }
     }

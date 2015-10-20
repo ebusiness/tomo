@@ -94,8 +94,10 @@ extension FriendListViewController {
             })
             self.tableView.reloadData()
         }) { _ in
-            let emptyView = Util.createViewWithNibName("EmptyFriends")
-            self.tableView.backgroundView = emptyView
+            if me.friendInvitations.count == 0 {
+                let emptyView = Util.createViewWithNibName("EmptyFriends")
+                self.tableView.backgroundView = emptyView
+            }
         }
     }
     
@@ -230,6 +232,10 @@ extension FriendListViewController: FriendInvitationCellDelegate {
                     self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                     self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
                     self.tableView.endUpdates()
+                    if me.friendInvitations.count == 0 && self.friends.count == 0 {
+                        let emptyView = Util.createViewWithNibName("EmptyFriends")
+                        self.tableView.backgroundView = emptyView
+                    }
                 }
                 self.updateBadgeNumber()
                 
