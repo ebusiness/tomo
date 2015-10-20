@@ -123,6 +123,9 @@ extension StationDiscoverViewController {
         if loading {
             return
         }
+        if stations == nil || stations?.count == 0 {
+            return
+        }
         loading = true
         let coordinate = location.coordinate
         var parameter: [String: AnyObject] = [
