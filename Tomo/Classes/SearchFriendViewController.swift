@@ -13,6 +13,11 @@ class SearchFriendViewController: BaseTableViewController {
     
     var result:[UserEntity]?{
         didSet{
+            if let count = result?.count where count != 0 {
+                tableView.backgroundView = nil
+            } else {
+                tableView.backgroundView = UINib(nibName: "EmptyStationResult", bundle: nil).instantiateWithOwner(nil, options: nil).first as? UIView
+            }
             self.tableView.reloadData()
         }
     }
@@ -81,7 +86,9 @@ extension SearchFriendViewController: UISearchBarDelegate {
                 
                 self.result = UserEntity.collection(results)
                 
-            })
+                }){ _ in
+                    self.result = nil
+            }
         }
     }
     
