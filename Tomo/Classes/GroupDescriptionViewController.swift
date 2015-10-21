@@ -97,13 +97,23 @@ extension GroupDescriptionViewController {
             me.addGroup(self.group.id)
             self.detailedGroup?.addMember(me)
             
-            self.tableView.beginUpdates()
-            self.tableView.reloadSections(NSIndexSet(index: self.memberCollectionSection), withRowAnimation: .Automatic)
-            self.tableView.reloadSections(NSIndexSet(index: self.joinOrLeaveSection), withRowAnimation: .Automatic)
-            self.tableView.endUpdates()
+            self.memberCollectionView.frame.size.width = self.tableView.frame.size.width
             
             let item = (self.detailedGroup?.members?.count ?? 1) - 1
-            self.memberCollectionView.insertItemsAtIndexPaths([NSIndexPath(forItem: item, inSection: 0)])
+            
+            if item == 0 {
+                self.memberCollectionView.reloadData()
+                self.tableView.reloadSections(NSIndexSet(index: self.memberCollectionSection), withRowAnimation: .Automatic)
+            } else {
+                self.memberCollectionView.insertItemsAtIndexPaths([NSIndexPath(forItem: item, inSection: 0)])
+            }
+            self.memberCollectionViewHeightConstraint.constant = self.memberCollectionView.collectionViewLayout.collectionViewContentSize().height
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.tableView.layoutIfNeeded()
+            })
+            
+            self.tableView.reloadSections(NSIndexSet(index: self.joinOrLeaveSection), withRowAnimation: .Automatic)
+            
             sender.userInteractionEnabled = true
         }
         
@@ -131,11 +141,18 @@ extension GroupDescriptionViewController {
             let item = self.detailedGroup?.members?.indexOf { $0.id == me.id } ?? 0
             self.detailedGroup?.removeMember(me)
             
-            self.tableView.beginUpdates()
-            self.tableView.reloadSections(NSIndexSet(index: self.memberCollectionSection), withRowAnimation: .Automatic)
-            self.tableView.reloadSections(NSIndexSet(index: self.joinOrLeaveSection), withRowAnimation: .Automatic)
-            self.tableView.endUpdates()
             self.memberCollectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: item, inSection: 0)])
+            
+            if (self.detailedGroup?.members?.count ?? 0) == 0 {
+                self.tableView.reloadSections(NSIndexSet(index: self.memberCollectionSection), withRowAnimation: .Automatic)
+            } else {
+                self.memberCollectionViewHeightConstraint.constant = self.memberCollectionView.collectionViewLayout.collectionViewContentSize().height
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.tableView.layoutIfNeeded()
+                })
+            }
+            
+            self.tableView.reloadSections(NSIndexSet(index: self.joinOrLeaveSection), withRowAnimation: .Automatic)
             
             sender.userInteractionEnabled = true
         }
