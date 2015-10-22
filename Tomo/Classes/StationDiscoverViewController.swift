@@ -31,7 +31,7 @@ class StationDiscoverViewController: UIViewController {
     let screenWidth = UIScreen.mainScreen().bounds.width
     let screenHeight = UIScreen.mainScreen().bounds.height
     
-    var stations: [StationEntity]?
+    var stations: [GroupEntity]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,7 +89,6 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
                 gcd.async(.Default) {
                     let group = GroupEntity(result)
                     me.addGroup(group.id)
-                    me.addStation(station.id)
                     self.stations?.remove(station)
                     gcd.async(.Main) {
                         self.collectionView.deleteItemsAtIndexPaths([indexPath])
@@ -107,10 +106,11 @@ extension StationDiscoverViewController {
         let coordinate = location.coordinate
         let parameter: [String: AnyObject] = [
             "coordinate": [coordinate.longitude, coordinate.latitude],
+            "type"      : "station"
         ]
-        AlamofireController.request(.GET, "/map/stations",
+        AlamofireController.request(.GET, "/map/groups",
             parameters: parameter, success: { (object) -> () in
-                self.stations = StationEntity.collection(object)
+                self.stations = GroupEntity.collection(object)
                 self.refresh()
                 self.loading = false
                 self.page = 1
@@ -137,7 +137,7 @@ extension StationDiscoverViewController {
         }
         AlamofireController.request(.GET, "/map/stations", parameters: parameter,
             success: { (object) -> () in
-                if let stations: [StationEntity] = StationEntity.collection(object) {
+                if let stations: [GroupEntity] = GroupEntity.collection(object) {
                     self.stations?.extend(stations)
                     self.appendCells(stations.count)
                     self.page++
@@ -183,7 +183,7 @@ extension StationDiscoverViewController: UISearchBarDelegate {
         AlamofireController.request(.GET, "/map/stations",
             parameters: parameter,
             success: { (object) -> () in
-                self.stations = StationEntity.collection(object)
+                self.stations = GroupEntity.collection(object)
                 self.refresh()
             }) { _ in
                 self.stations = nil

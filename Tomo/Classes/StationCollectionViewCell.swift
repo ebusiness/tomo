@@ -12,7 +12,7 @@ class StationCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     
-    var station: StationEntity!
+    var station: GroupEntity!
     
     func setupDisplay() {
         
@@ -23,9 +23,9 @@ class StationCollectionViewCell: UICollectionViewCell {
 //        self.nameLabel.textColor = UIColor.whiteColor()//color.getTextIconColor()
 //        self.lineLabel.textColor = UIColor.whiteColor()//color.getTextIconColor()
         
-        if let color = self.station.color {
-            self.backgroundColor = Util.colorWithHexString(color)//color.getPrimaryColor()
-        }
+//        if let color = self.station.color {
+//            self.backgroundColor = Util.colorWithHexString(color)//color.getPrimaryColor()
+//        }
         
     }
 }
