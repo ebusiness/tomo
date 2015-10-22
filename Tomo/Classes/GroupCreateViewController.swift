@@ -12,7 +12,6 @@ final class GroupCreateViewController: BaseTableViewController {
 
     @IBOutlet var groupNameTextField: UITextField!
     @IBOutlet var addressTextField: UITextField!
-    @IBOutlet var stationTextField: UITextField!
     @IBOutlet var introductionTextField: UITextField!
     
     @IBOutlet weak var groupCoverImageView: UIImageView!
@@ -79,7 +78,6 @@ extension GroupCreateViewController {
         
         param["introduction"] = self.introductionTextField.text
         param["address"] = self.addressTextField.text
-        param["station"] = self.stationTextField.text
         param["members"] = self.inviteFriends.map{ (user) -> String in
             return user.id
         }

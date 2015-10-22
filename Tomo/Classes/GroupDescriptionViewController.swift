@@ -12,8 +12,6 @@ class GroupDescriptionViewController: BaseTableViewController {
     
     /// 地址
     @IBOutlet weak var addressLabel: UILabel!
-    /// 车站
-    @IBOutlet weak var stationLabel: UILabel!
     /// 介绍
     @IBOutlet weak var introductionLabel: UILabel!
     /// 用于显示头像的Cell
@@ -39,9 +37,6 @@ class GroupDescriptionViewController: BaseTableViewController {
             if let detailedGroup = detailedGroup {
                 // 刷新界面
                 addressLabel.text = detailedGroup.address
-                if let station = detailedGroup.station {
-                    stationLabel.text = station.name
-                }
                 introductionLabel.text = detailedGroup.introduction
                 groupCoverImageView.sd_setImageWithURL(NSURL(string: detailedGroup.cover), placeholderImage: UIImage(named: "group_cover_default"))
                 if (detailedGroup.members ?? []).count > 0 {
@@ -88,12 +83,8 @@ extension GroupDescriptionViewController {
     @IBAction func joinGroup(sender: UIButton) {
         sender.userInteractionEnabled = false
         
-        let station = self.detailedGroup?.station
-        
         let successHandler: (AnyObject)->() = { _ in
-            if let station = station {
-                me.addStation(station.id)
-            }
+
             me.addGroup(self.group.id)
             self.detailedGroup?.addMember(me)
             
@@ -121,22 +112,14 @@ extension GroupDescriptionViewController {
             sender.userInteractionEnabled = true
         }
         
-        if let station = station {
-            AlamofireController.request(.POST, "/stations/\(station.id)", success: successHandler, failure: failureHandler)
-        } else {
-            AlamofireController.request(.PATCH, "/groups/\(self.group.id)/join", success: successHandler, failure: failureHandler)
-        }
+        AlamofireController.request(.PATCH, "/groups/\(self.group.id)/join", success: successHandler, failure: failureHandler)
     }
     
     @IBAction func leaveGroup(sender: UIButton) {
         sender.userInteractionEnabled = false
         
-        let station = self.detailedGroup?.station
-        
         let successHandler: (AnyObject)->() = { _ in
-            if let station = station {
-                me.stations?.remove(station.id)
-            }
+            
             me.groups?.remove(self.group.id)
             let item = self.detailedGroup?.members?.indexOf { $0.id == me.id } ?? 0
             self.detailedGroup?.removeMember(me)
@@ -161,14 +144,7 @@ extension GroupDescriptionViewController {
             sender.userInteractionEnabled = true
         }
         
-        if let station = station {
-            var params = Dictionary<String, AnyObject>()
-            params["stations"] = [station.id]
-            
-            AlamofireController.request(.DELETE, "/me/stations", parameters: params, success: successHandler, failure: failureHandler)
-        } else {
-            AlamofireController.request(.PATCH, "/groups/\(self.group.id)/leave", success: successHandler, failure: failureHandler)
-        }
+        AlamofireController.request(.PATCH, "/groups/\(self.group.id)/leave", success: successHandler, failure: failureHandler)
     }
 }
 

@@ -10,7 +10,6 @@ import UIKit
 
 class MyStationsViewController: BaseViewController {
     
-    @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet var collectionView: UICollectionView!
     
@@ -23,7 +22,7 @@ class MyStationsViewController: BaseViewController {
     
     var loading = false
     
-    var stations: [StationEntity]?
+    var groups: [GroupEntity]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +30,6 @@ class MyStationsViewController: BaseViewController {
         self.alwaysShowNavigationBar = true
         self.collectionView.allowsMultipleSelection = true
         
-        Util.changeImageColorForButton(editButton, color: UIColor.whiteColor())
         Util.changeImageColorForButton(addButton, color: UIColor.whiteColor())
         
         collectionView.registerNib(UINib(nibName: "StationCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "identifier")
@@ -42,26 +40,9 @@ class MyStationsViewController: BaseViewController {
         loadInitData()
     }
     
-    @IBAction func editTapped(sender: AnyObject) {
-        if 0 == editButton.tag {
-            editButton.tag = 1
-            editButton.setImage(saveImage, forState: .Normal)
-            
-        } else {
-            editButton.tag = 0
-            editButton.setImage(editImage, forState: .Normal)
-            self.deleteStation()
-        }
-
-    }
-    
     @IBAction func addTapped(sender: AnyObject) {
         let vc = Util.createViewControllerWithIdentifier("modalStationSelector", storyboardName: "Home")
         self.presentViewController(vc, animated: true, completion: nil)
-        
-        if 1 == editButton.tag {
-            self.editTapped(editButton)
-        }
     }
     
 }
@@ -70,13 +51,13 @@ class MyStationsViewController: BaseViewController {
 extension MyStationsViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return stations?.count ?? 0
+        return groups?.count ?? 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("identifier", forIndexPath: indexPath) as! StationCollectionViewCell
-        if let station = stations?[indexPath.row] {
-            cell.station = station
+        if let group = groups?[indexPath.item] {
+            cell.station = group
         }
         cell.setupDisplay()
 
@@ -91,39 +72,9 @@ extension MyStationsViewController: UICollectionViewDataSource, UICollectionView
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
-            
-            UIView.animateWithDuration(0.1, animations: { () -> Void in
-                cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
-            }, completion: { (_) -> Void in
-                let mark = UIImageView(image: self.markImage)
-                mark.layer.cornerRadius = 12.5
-                mark.layer.masksToBounds = true
-                mark.layer.borderWidth = 2
-                mark.layer.borderColor = UIColor.whiteColor().CGColor
-                mark.setTranslatesAutoresizingMaskIntoConstraints(false)
-                cell.contentView.addSubview(mark)
-                cell.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-5-[mark(25)]", options: nil, metrics: nil, views: ["mark" : mark]))
-                cell.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[mark(25)]-5-|", options: nil, metrics: nil, views: ["mark" : mark]))
-            })
-        }
-    }
-    
-    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        
-        if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
-            
-            UIView.animateWithDuration(0.1, animations: { () -> Void in
-                cell.transform = CGAffineTransformIdentity
-            }, completion: { (_) -> Void in
-                cell.contentView.subviews.last?.removeFromSuperview()
-            })
-        }
-    }
-    
-    
-    func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return editButton.tag == 1
+        let vc = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+        vc.group = self.groups?[indexPath.item]
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }
@@ -133,11 +84,11 @@ extension MyStationsViewController {
     
     private func loadInitData() {
         
-        if me.stations == nil {
+        if me.groups == nil {
             return
         }
         
-        if me.stations?.count == self.stations?.count {
+        if me.groups?.count == self.groups?.count {
             return
         }
         
@@ -148,17 +99,18 @@ extension MyStationsViewController {
         loading = true
         let parameter: [String: AnyObject] = [
             "category": "mine",
-            "size": (me.stations ?? []).count
+            "type": "station"
         ]
-        AlamofireController.request(.GET, "/stations",
+        
+        AlamofireController.request(.GET, "/map/groups",
             parameters: parameter, success: { object in
-                let oldStations = self.stations ?? []
-                self.stations = StationEntity.collection(object)
+                let oldGroups = self.groups ?? []
+                self.groups = GroupEntity.collection(object)
                 
                 var indexPaths = [NSIndexPath]()
-                self.stations?.each { (index, value) -> Void in
-                    let needInsertStation = oldStations.find { $0.id == value.id }
-                    if needInsertStation == nil {
+                self.groups?.each { (index, value) -> Void in
+                    let needInsertGroup = oldGroups.find { $0.id == value.id }
+                    if needInsertGroup == nil {
                         indexPaths.append(NSIndexPath(forItem: index, inSection: 0))
                     }
                 }
@@ -170,50 +122,8 @@ extension MyStationsViewController {
                     }
                 }
                 self.loading = false
-                self.editButton.enabled = true
             }) { _ in
                 self.loading = false
-        }
-    }
-    
-    func deleteStation(){
-        if let selectedIndexes = self.collectionView.indexPathsForSelectedItems() as? [NSIndexPath]
-            where selectedIndexes.count > 0 {
-                
-                var stationids = [String]()
-                selectedIndexes.map {
-                    stationids.append(self.stations![$0.item].id)
-                }
-                
-                var params = Dictionary<String, AnyObject>()
-                params["stations"] = stationids
-                
-                AlamofireController.request(.DELETE, "/me/stations", parameters: params, success: { (result) -> () in
-                    self.collectionView.performBatchUpdates({ () -> Void in
-                        /**
-                        *  remove the mark of the selected cells
-                        */
-                        selectedIndexes.map {
-                            self.collectionView(self.collectionView, didDeselectItemAtIndexPath: $0)
-                        }
-                        /**
-                        *  remove the cells of select
-                        */
-                        self.collectionView.deleteItemsAtIndexPaths(selectedIndexes)
-                        let userinfo = UserEntity(result)
-                        me.stations = userinfo.stations
-                        me.groups = userinfo.groups
-                        self.stations = self.stations?.filter { !stationids.contains($0.id) }
-                        
-                    }, completion: { finished in
-                            
-                        if self.stations!.count < 1 {
-                            self.editButton.enabled = false
-                        }
-//                        self.collectionView.reloadItemsAtIndexPaths(self.collectionView.indexPathsForVisibleItems())
-                    })
-                })
-                return ;
         }
     }
 }

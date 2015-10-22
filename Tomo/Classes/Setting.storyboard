@@ -1399,50 +1399,26 @@
                     </collectionView>
                     <navigationItem key="navigationItem" id="D79-Cq-gYz">
                         <nil key="title"/>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="SGJ-sY-x1K">
-                            <view key="customView" contentMode="scaleToFill" id="54o-W2-4Nd">
-                                <rect key="frame" x="0.0" y="0.0" width="71" height="33"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="XHR-89-Xys">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DzH-Uj-gCM">
+                                <rect key="frame" x="46" y="4" width="25" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SA2-ez-owm">
-                                        <rect key="frame" x="46" y="4" width="25" height="25"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="25" id="0IP-Oi-PNb"/>
-                                            <constraint firstAttribute="height" constant="25" id="zpQ-Pr-uF9"/>
-                                        </constraints>
-                                        <state key="normal" image="plus_plus">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="addTapped:" destination="pZt-Wk-dfy" eventType="touchUpInside" id="FFR-Fy-LG1"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QXM-Bz-SZQ">
-                                        <rect key="frame" x="5" y="4" width="25" height="25"/>
-                                        <state key="normal" image="delete_sign">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="editTapped:" destination="pZt-Wk-dfy" eventType="touchUpInside" id="ZcH-DF-1A4"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="QXM-Bz-SZQ" firstAttribute="centerY" secondItem="SA2-ez-owm" secondAttribute="centerY" id="8kW-43-Ka8"/>
-                                    <constraint firstItem="QXM-Bz-SZQ" firstAttribute="width" secondItem="SA2-ez-owm" secondAttribute="width" id="JKb-cG-Qzl"/>
-                                    <constraint firstAttribute="centerY" secondItem="SA2-ez-owm" secondAttribute="centerY" id="a1X-x3-OeO"/>
-                                    <constraint firstItem="SA2-ez-owm" firstAttribute="leading" secondItem="QXM-Bz-SZQ" secondAttribute="trailing" constant="16" id="gJB-K5-gCp"/>
-                                    <constraint firstItem="QXM-Bz-SZQ" firstAttribute="height" secondItem="SA2-ez-owm" secondAttribute="height" id="wa3-Rd-7qN"/>
-                                    <constraint firstAttribute="trailing" secondItem="SA2-ez-owm" secondAttribute="trailing" id="yFX-lC-R3m"/>
+                                    <constraint firstAttribute="width" constant="25" id="MBp-jE-E6R"/>
+                                    <constraint firstAttribute="height" constant="25" id="gVr-XH-4D6"/>
                                 </constraints>
-                            </view>
+                                <state key="normal" image="plus_plus">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addTapped:" destination="pZt-Wk-dfy" eventType="touchUpInside" id="KFC-wi-bV6"/>
+                                </connections>
+                            </button>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addButton" destination="SA2-ez-owm" id="fVH-b1-vw2"/>
+                        <outlet property="addButton" destination="DzH-Uj-gCM" id="DSm-aK-5c3"/>
                         <outlet property="collectionView" destination="X4X-eh-LJm" id="q78-AV-WEb"/>
-                        <outlet property="editButton" destination="QXM-Bz-SZQ" id="cFb-CS-KmH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JIk-yX-HDZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1870,7 +1846,6 @@
         <image name="add_user" width="25" height="25"/>
         <image name="avatar" width="80" height="80"/>
         <image name="checkmark" width="25" height="25"/>
-        <image name="delete_sign" width="25" height="25"/>
         <image name="edit_user" width="25" height="25"/>
         <image name="plus_plus" width="25" height="25"/>
         <image name="text_protection" width="320" height="160"/>

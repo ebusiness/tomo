@@ -359,39 +359,6 @@
                                         </tableViewCellContentView>
                                         <animations/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="gMV-Mk-GGr">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gMV-Mk-GGr" id="oSx-9H-eHu">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车站" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nLC-Sh-qaQ">
-                                                    <rect key="frame" x="16" y="11" width="34" height="21"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jd8-rY-ieg">
-                                                    <rect key="frame" x="295" y="8" width="5" height="28"/>
-                                                    <animations/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="28" id="wFF-qh-w5I"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="Jd8-rY-ieg" secondAttribute="trailing" constant="20" symbolic="YES" id="3Gr-1j-MlJ"/>
-                                                <constraint firstAttribute="centerY" secondItem="Jd8-rY-ieg" secondAttribute="centerY" id="PVH-XC-gcD"/>
-                                                <constraint firstItem="nLC-Sh-qaQ" firstAttribute="leading" secondItem="oSx-9H-eHu" secondAttribute="leading" constant="16" id="hZz-Ty-3Ik"/>
-                                                <constraint firstAttribute="centerY" secondItem="nLC-Sh-qaQ" secondAttribute="centerY" id="tVm-SQ-8hC"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <animations/>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="bLy-Dh-20A">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bLy-Dh-20A" id="aQR-Bx-YVh">
@@ -575,7 +542,6 @@
                         <outlet property="memberCollectionCell" destination="brb-rt-3dm" id="WXT-7r-SE2"/>
                         <outlet property="memberCollectionView" destination="pYr-Xj-Y5Y" id="Nwx-Q2-FrN"/>
                         <outlet property="memberCollectionViewHeightConstraint" destination="wRq-aQ-HJL" id="TMm-eR-TK6"/>
-                        <outlet property="stationLabel" destination="Jd8-rY-ieg" id="DhN-pZ-1i5"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Li-sh-F7t" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -693,36 +659,6 @@
                                                 <constraint firstAttribute="trailing" secondItem="dcd-ZP-5hB" secondAttribute="trailing" constant="32" id="cNL-y5-iCd"/>
                                                 <constraint firstItem="ova-dT-fye" firstAttribute="leading" secondItem="jib-2K-73A" secondAttribute="leading" constant="16" id="eWg-ZZ-y20"/>
                                                 <constraint firstAttribute="centerY" secondItem="ova-dT-fye" secondAttribute="centerY" id="rjC-4H-8wM"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <animations/>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="r1P-pJ-HTy">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="r1P-pJ-HTy" id="Vp7-RK-AOz">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车站" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Rf-NR-rrm">
-                                                    <rect key="frame" x="16" y="11" width="34" height="21"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="群组活动时主要使用的车站" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MYC-vQ-Fpt">
-                                                    <rect key="frame" x="66" y="13" width="222" height="17"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                            </subviews>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="MYC-vQ-Fpt" secondAttribute="centerY" id="9vv-nF-bDN"/>
-                                                <constraint firstAttribute="centerY" secondItem="3Rf-NR-rrm" secondAttribute="centerY" id="JvW-0Z-XoO"/>
-                                                <constraint firstAttribute="trailing" secondItem="MYC-vQ-Fpt" secondAttribute="trailing" constant="32" id="WBT-FF-ky0"/>
-                                                <constraint firstItem="3Rf-NR-rrm" firstAttribute="leading" secondItem="Vp7-RK-AOz" secondAttribute="leading" constant="16" id="bw5-GE-NFh"/>
-                                                <constraint firstItem="MYC-vQ-Fpt" firstAttribute="leading" secondItem="3Rf-NR-rrm" secondAttribute="trailing" constant="16" id="wOs-3a-f8t"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
@@ -877,7 +813,6 @@
                         <outlet property="inviteMark" destination="auY-Jk-sUb" id="fKB-mK-WhM"/>
                         <outlet property="memberCollectionView" destination="l6m-nz-hXa" id="3JD-bJ-nZT"/>
                         <outlet property="memberCollectionViewHeightConstraint" destination="MSm-SH-Pho" id="Lm1-Md-Q6p"/>
-                        <outlet property="stationTextField" destination="MYC-vQ-Fpt" id="cKR-hQ-d3D"/>
                         <segue destination="hKj-U8-sDu" kind="unwind" identifier="groupCreated" unwindAction="groupCreated:" id="ArB-0K-JE9"/>
                     </connections>
                 </tableViewController>
