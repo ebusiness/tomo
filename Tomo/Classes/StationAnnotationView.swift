@@ -32,6 +32,7 @@ class StationAnnotationView: AggregatableAnnotationView {
         nameLabel.font = UIFont.systemFontOfSize(11)
         nameLabel.numberOfLines = 0
         nameLabel.clipsToBounds = true
+        nameLabel.backgroundColor = Palette.Grey.getPrimaryColor()
         nameLabel.layer.borderWidth = 1
         nameLabel.layer.borderColor = Palette.Green.getPrimaryColor().CGColor
         nameLabel.layer.cornerRadius = 5

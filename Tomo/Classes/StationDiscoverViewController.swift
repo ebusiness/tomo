@@ -85,7 +85,7 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if let station = stations?[indexPath.row] {
-            AlamofireController.request(.POST, "/stations/\(station.id)", parameters: nil, encoding: .URL, success: { (result) -> () in
+            AlamofireController.request(.PATCH, "/groups/\(station.id)/join", parameters: nil, encoding: .URL, success: { (result) -> () in
                 gcd.async(.Default) {
                     let group = GroupEntity(result)
                     me.addGroup(group.id)
@@ -106,7 +106,8 @@ extension StationDiscoverViewController {
         let coordinate = location.coordinate
         let parameter: [String: AnyObject] = [
             "coordinate": [coordinate.longitude, coordinate.latitude],
-            "type"      : "station"
+            "type"      : "station",
+            "page": page
         ]
         AlamofireController.request(.GET, "/map/groups",
             parameters: parameter, success: { (object) -> () in
@@ -129,13 +130,15 @@ extension StationDiscoverViewController {
         loading = true
         let coordinate = location.coordinate
         var parameter: [String: AnyObject] = [
+            "type": "station",
             "coordinate": [coordinate.longitude, coordinate.latitude],
+            "category": "discover",
             "page": page
         ]
         if let searchText = searchText {
             parameter["name"] = searchText
         }
-        AlamofireController.request(.GET, "/map/stations", parameters: parameter,
+        AlamofireController.request(.GET, "/map/groups", parameters: parameter,
             success: { (object) -> () in
                 if let stations: [GroupEntity] = GroupEntity.collection(object) {
                     self.stations?.extend(stations)
@@ -178,9 +181,11 @@ extension StationDiscoverViewController: UISearchBarDelegate {
         var coordinate = location.coordinate
         var parameter: [String: AnyObject] = [
             "name": text,
+            "type": "station",
+            "category": "discover",
             "coordinate": [coordinate.longitude, coordinate.latitude]
         ];
-        AlamofireController.request(.GET, "/map/stations",
+        AlamofireController.request(.GET, "/map/groups",
             parameters: parameter,
             success: { (object) -> () in
                 self.stations = GroupEntity.collection(object)

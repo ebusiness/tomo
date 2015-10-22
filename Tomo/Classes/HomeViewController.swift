@@ -359,15 +359,16 @@ extension HomeViewController {
         
         var params = Dictionary<String, AnyObject>()
         params["category"] = "discover"
+        params["page"] = 0
         if let location = self.location {
-            params["coordinate"] = [location.coordinate.longitude, location.coordinate.latitude];
+            params["type"] = "station"
+            params["coordinate"] = [location.coordinate.longitude, location.coordinate.latitude]
         }
-        
         
         let needToLoadStations = self.recommendStations == nil && self.contents.find { $0 is [GroupEntity] } == nil
         
         if needToLoadStations {
-            AlamofireController.request(.GET, "/map/stations", parameters: params, hideHUD: true, success: { stationData in
+            AlamofireController.request(.GET, "/map/groups", parameters: params, hideHUD: true, success: { stationData in
                 self.recommendStations = GroupEntity.collection(stationData)
             })
         }

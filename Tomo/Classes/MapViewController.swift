@@ -285,8 +285,8 @@ extension MapViewController {
                     let annotations = groups.map { group -> GroupAnnotation in
                         let annotation = GroupAnnotation()
                         annotation.group = group
-                        if let lat = group.coordinate?.get(0), log = group.coordinate?.get(1) {
-                            annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: log)
+                        if let lon = group.coordinate?.get(0), lat = group.coordinate?.get(1) {
+                            annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
                         }
                         return annotation
                     }
@@ -303,8 +303,8 @@ extension MapViewController {
                     let annotations = groups.map { group -> GroupAnnotation in
                         let annotation = GroupAnnotation()
                         annotation.group = group
-                        if let lat = group.coordinate?.get(0), log = group.coordinate?.get(1) {
-                            annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: log)
+                        if let lon = group.coordinate?.get(0), lat = group.coordinate?.get(1) {
+                            annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
                         }
                         return annotation
                     }

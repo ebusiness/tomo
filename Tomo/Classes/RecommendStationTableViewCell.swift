@@ -63,7 +63,7 @@ extension RecommendStationTableCell:UICollectionViewDelegate {
         
         let station = self.stations[indexPath.item]
         
-        AlamofireController.request(.POST, "/stations/\(station.id)", parameters: nil, encoding: .URL, success: { (result) -> () in
+        AlamofireController.request(.PATCH, "/groups/\(station.id)/join", parameters: nil, encoding: .URL, success: { (result) -> () in
             gcd.async(.Default) {
                 let group = GroupEntity(result)
                 me.addGroup(group.id)
