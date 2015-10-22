@@ -371,7 +371,7 @@ extension HomeViewController {
         var params = Dictionary<String, AnyObject>()
         params["category"] = "discover"
         if let location = self.location {
-            params["coordinate"] = [location.coordinate.latitude, location.coordinate.longitude];
+            params["coordinate"] = [location.coordinate.longitude, location.coordinate.latitude];
         }
         
         //        let needToLoadGroups = self.recommendGroups == nil && self.contents.find { $0 is [GroupEntity] } == nil
