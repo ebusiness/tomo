@@ -87,7 +87,6 @@
 		1FCA1E651B7221F7000F2936 /* NotificationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */; };
 		1FCA1E671B722260000F2936 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E661B722260000F2936 /* MessageEntity.swift */; };
 		1FE7CEF51B8C9561006700FC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7CEF41B8C9561006700FC /* SignUpViewController.swift */; };
-		1FEA3CF91BB38F640037F3C5 /* StationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA3CF81BB38F640037F3C5 /* StationEntity.swift */; };
 		1FEA3CFB1BB391780037F3C5 /* RecommendStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */; };
 		1FEA3CFD1BB39E5A0037F3C5 /* StationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA3CFC1BB39E5A0037F3C5 /* StationCollectionViewCell.swift */; };
 		1FEA3CFF1BB39F160037F3C5 /* StationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FEA3CFE1BB39F160037F3C5 /* StationCollectionViewCell.xib */; };
@@ -273,7 +272,6 @@
 		1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationEntity.swift; path = Classes/NotificationEntity.swift; sourceTree = "<group>"; };
 		1FCA1E661B722260000F2936 /* MessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageEntity.swift; path = Classes/MessageEntity.swift; sourceTree = "<group>"; };
 		1FE7CEF41B8C9561006700FC /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = Classes/SignUpViewController.swift; sourceTree = "<group>"; };
-		1FEA3CF81BB38F640037F3C5 /* StationEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationEntity.swift; path = Classes/StationEntity.swift; sourceTree = "<group>"; };
 		1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendStationTableViewCell.swift; path = Classes/RecommendStationTableViewCell.swift; sourceTree = "<group>"; };
 		1FEA3CFC1BB39E5A0037F3C5 /* StationCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationCollectionViewCell.swift; path = Classes/StationCollectionViewCell.swift; sourceTree = "<group>"; };
 		1FEA3CFE1BB39F160037F3C5 /* StationCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StationCollectionViewCell.xib; path = Classes/StationCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -506,7 +504,6 @@
 				1FCA1E661B722260000F2936 /* MessageEntity.swift */,
 				1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */,
 				1F9ACAF91B69F99F00648A82 /* PostEntity.swift */,
-				1FEA3CF81BB38F640037F3C5 /* StationEntity.swift */,
 				1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */,
 			);
 			name = Entity;
@@ -1237,7 +1234,6 @@
 				1F985E581B60C19F008D5369 /* Character.swift in Sources */,
 				1F1176A91B983D280049D9F5 /* SocketIOClient.swift in Sources */,
 				1F9ACAFA1B69F99F00648A82 /* PostEntity.swift in Sources */,
-				1FEA3CF91BB38F640037F3C5 /* StationEntity.swift in Sources */,
 				1F937FE81B58EE8B009722CE /* MyAccountEditViewController.swift in Sources */,
 				1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */,
 				1F19D9561BA9616C007C9919 /* RecommendSiteTableCell.swift in Sources */,
