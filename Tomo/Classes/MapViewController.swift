@@ -39,9 +39,11 @@ final class MapViewController: BaseViewController {
         self.loadContents()
         
         self.mapView.region = MKCoordinateRegion(center: tokyoCenter, span: tokyoSpan)
+        self.navigationController?.navigationBarHidden = true
     }
     
     override func viewDidAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = true
         
         let authStatus = CLLocationManager.authorizationStatus()
         
@@ -56,6 +58,7 @@ final class MapViewController: BaseViewController {
     }
     
     override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = false
         println("will save time \(NSDate())")
         Defaults["mapLastTimeStamp"] = NSDate()
     }

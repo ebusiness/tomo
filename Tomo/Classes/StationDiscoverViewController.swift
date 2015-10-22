@@ -106,7 +106,7 @@ extension StationDiscoverViewController {
         loading = true
         let coordinate = location.coordinate
         let parameter: [String: AnyObject] = [
-            "coordinate": [coordinate.latitude, coordinate.longitude],
+            "coordinate": [coordinate.longitude, coordinate.latitude],
         ]
         AlamofireController.request(.GET, "/map/stations",
             parameters: parameter, success: { (object) -> () in
@@ -129,7 +129,7 @@ extension StationDiscoverViewController {
         loading = true
         let coordinate = location.coordinate
         var parameter: [String: AnyObject] = [
-            "coordinate": [coordinate.latitude, coordinate.longitude],
+            "coordinate": [coordinate.longitude, coordinate.latitude],
             "page": page
         ]
         if let searchText = searchText {
@@ -178,7 +178,7 @@ extension StationDiscoverViewController: UISearchBarDelegate {
         var coordinate = location.coordinate
         var parameter: [String: AnyObject] = [
             "name": text,
-            "coordinate": [coordinate.latitude, coordinate.longitude]
+            "coordinate": [coordinate.longitude, coordinate.latitude]
         ];
         AlamofireController.request(.GET, "/map/stations",
             parameters: parameter,

@@ -12,12 +12,12 @@ let kTomoService = "jp.co.e-business.tomo"
 let kTomoPushToken = "token.push.tomo"
 #if DEBUG
     let AmazonS3Bucket = "tomo-dev"
-    let kAPIBaseURLString = "https://tomo.e-business.co.jp:81"
+    let kAPIBaseURLString = "https://api.genbatomo.com:81"
 //    let kAPIBaseURLString = "https://192.168.11.90:81"
 //    let kAPIBaseURLString = "https://192.168.11.86:81"
 #else
     let AmazonS3Bucket = "tomo-test"
-    let kAPIBaseURLString = "https://tomo.e-business.co.jp"
+    let kAPIBaseURLString = "https://api.genbatomo.com"
 #endif
 
 let kS3BasePath = "https://s3-ap-northeast-1.amazonaws.com"
