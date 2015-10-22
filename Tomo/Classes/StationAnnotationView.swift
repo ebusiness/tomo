@@ -86,8 +86,8 @@ class StationAnnotationView: AggregatableAnnotationView {
 
         nameLabel.text = annotation.group.name
         
-        if let station = annotation.group.station, color = station.color {
-            nameLabel.backgroundColor = Util.colorWithHexString(color)
-        }
+//        if let station = annotation.group.station, color = station.color {
+//            nameLabel.backgroundColor = Util.colorWithHexString(color)
+//        }
     }
 }

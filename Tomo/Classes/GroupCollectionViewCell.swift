@@ -13,7 +13,6 @@ class GroupCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var siteNameLabel: UILabel!
     @IBOutlet weak var siteIntroductionLabel: UILabel!
-    @IBOutlet weak var stationLabel: UILabel!
     @IBOutlet weak var protectionView: UIImageView!
     
     var group: GroupEntity!
@@ -23,9 +22,5 @@ class GroupCollectionViewCell: UICollectionViewCell {
         self.imageView.setImageWithURL(NSURL(string: group.cover), usingActivityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
         self.siteNameLabel.text = group.name
         self.siteIntroductionLabel.text = group.introduction
-        
-        if let station = group.station {
-            self.stationLabel.text = station.name
-        }
     }
 }

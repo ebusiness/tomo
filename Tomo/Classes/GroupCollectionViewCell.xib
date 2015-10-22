@@ -19,12 +19,6 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text_protection_down" translatesAutoresizingMaskIntoConstraints="NO" id="1HM-0m-PFC">
                         <rect key="frame" x="0.0" y="0.0" width="187" height="173"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最近车站" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eyp-ny-uvY">
-                        <rect key="frame" x="8" y="107" width="171" height="15"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="现场名称" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Jm-bl-Vuc">
                         <rect key="frame" x="8" y="75" width="171" height="24"/>
                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -32,7 +26,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="现场介绍" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z1g-1S-8CT">
-                        <rect key="frame" x="8" y="130" width="171" height="15"/>
+                        <rect key="frame" x="8" y="107" width="171" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -42,19 +36,16 @@
             </view>
             <constraints>
                 <constraint firstItem="qwe-LJ-oLu" firstAttribute="leading" secondItem="EQf-S3-mXh" secondAttribute="leading" id="1a8-IC-DT0"/>
-                <constraint firstItem="Eyp-ny-uvY" firstAttribute="leading" secondItem="EQf-S3-mXh" secondAttribute="leading" constant="8" id="4Nv-nF-qNA"/>
                 <constraint firstAttribute="trailing" secondItem="9Jm-bl-Vuc" secondAttribute="trailing" constant="8" id="6vE-WA-Rf8"/>
                 <constraint firstItem="qwe-LJ-oLu" firstAttribute="top" secondItem="EQf-S3-mXh" secondAttribute="top" id="6wg-b1-jhv"/>
                 <constraint firstItem="1HM-0m-PFC" firstAttribute="bottom" secondItem="qwe-LJ-oLu" secondAttribute="bottom" id="8uU-je-O2F"/>
                 <constraint firstAttribute="trailing" secondItem="qwe-LJ-oLu" secondAttribute="trailing" id="IW1-rc-SCJ"/>
-                <constraint firstAttribute="trailing" secondItem="Eyp-ny-uvY" secondAttribute="trailing" constant="8" id="JMt-MH-YWN"/>
                 <constraint firstAttribute="bottom" secondItem="qwe-LJ-oLu" secondAttribute="bottom" id="KsM-zc-VNW"/>
-                <constraint firstItem="z1g-1S-8CT" firstAttribute="top" secondItem="Eyp-ny-uvY" secondAttribute="bottom" constant="8" id="OYh-6Z-PdH"/>
                 <constraint firstAttribute="trailing" secondItem="z1g-1S-8CT" secondAttribute="trailing" constant="8" id="Qfb-Wh-biE"/>
                 <constraint firstItem="1HM-0m-PFC" firstAttribute="leading" secondItem="qwe-LJ-oLu" secondAttribute="leading" id="gq8-U1-IjM"/>
                 <constraint firstItem="9Jm-bl-Vuc" firstAttribute="leading" secondItem="EQf-S3-mXh" secondAttribute="leading" constant="8" id="hav-4K-Xbb"/>
+                <constraint firstItem="z1g-1S-8CT" firstAttribute="top" secondItem="9Jm-bl-Vuc" secondAttribute="bottom" constant="8" id="hu4-0D-tmm"/>
                 <constraint firstItem="z1g-1S-8CT" firstAttribute="leading" secondItem="EQf-S3-mXh" secondAttribute="leading" constant="8" id="m3m-2K-c6b"/>
-                <constraint firstItem="Eyp-ny-uvY" firstAttribute="top" secondItem="9Jm-bl-Vuc" secondAttribute="bottom" constant="8" id="rOH-8O-eZc"/>
                 <constraint firstItem="1HM-0m-PFC" firstAttribute="trailing" secondItem="qwe-LJ-oLu" secondAttribute="trailing" id="u27-Gp-LJG"/>
                 <constraint firstAttribute="centerY" secondItem="9Jm-bl-Vuc" secondAttribute="centerY" id="wEl-01-ZCT"/>
                 <constraint firstItem="1HM-0m-PFC" firstAttribute="top" secondItem="qwe-LJ-oLu" secondAttribute="top" id="yjS-1l-SZW"/>
@@ -65,7 +56,6 @@
                 <outlet property="protectionView" destination="1HM-0m-PFC" id="HaO-9v-CAE"/>
                 <outlet property="siteIntroductionLabel" destination="z1g-1S-8CT" id="uGO-CY-APU"/>
                 <outlet property="siteNameLabel" destination="9Jm-bl-Vuc" id="sNE-ir-y7s"/>
-                <outlet property="stationLabel" destination="Eyp-ny-uvY" id="Z7q-Sg-ajN"/>
             </connections>
             <point key="canvasLocation" x="533.5" y="453.5"/>
         </collectionViewCell>

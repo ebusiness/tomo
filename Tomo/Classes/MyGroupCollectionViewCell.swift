@@ -27,7 +27,7 @@ class MyGroupCollectionViewCell: UICollectionViewCell {
         self.imageView.setImageWithURL(NSURL(string: group.cover), usingActivityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
         self.siteNameLabel.text = group.name
         self.siteIntroductionLabel.text = group.introduction
-        self.stationButton.titleLabel?.text = group.station?.name
+        self.stationButton.titleLabel?.text = group.name
         self.membersButton.titleLabel?.text = String(group.members?.count ?? 0)
         self.postButton.titleLabel?.text = String(group.posts?.count ?? 0)
     }
