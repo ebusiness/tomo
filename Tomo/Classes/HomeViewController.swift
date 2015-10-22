@@ -29,8 +29,7 @@ final class HomeViewController: BaseTableViewController {
     var isLoading = false
     var isExhausted = false
     
-    var recommendGroups: [GroupEntity]?
-    var recommendStations: [StationEntity]?
+    var recommendStations: [GroupEntity]?
     
     var timer: NSTimer?
     
@@ -99,7 +98,7 @@ extension HomeViewController {
             cell.setup()
             return cell
             
-        } else if let stations = contents[indexPath.item] as? [StationEntity] {
+        } else if let stations = contents[indexPath.item] as? [GroupEntity] {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("RecommendStationTableCell", forIndexPath: indexPath) as! RecommendStationTableCell
             cell.stations = stations
@@ -374,12 +373,6 @@ extension HomeViewController {
             params["coordinate"] = [location.coordinate.longitude, location.coordinate.latitude];
         }
         
-        //        let needToLoadGroups = self.recommendGroups == nil && self.contents.find { $0 is [GroupEntity] } == nil
-        //        if needToLoadGroups {
-        //            AlamofireController.request(.GET, "/map/groups", parameters: params, hideHUD: true, success: { groupData in
-        //                self.recommendGroups = GroupEntity.collection(groupData)
-        //            })
-        //        }
         
         let needToLoadStations = self.recommendStations == nil && self.contents.find { $0 is [StationEntity] } == nil
         
@@ -428,8 +421,6 @@ extension HomeViewController {
                         }
                     }
                     
-                    //                    let needToInsertStations = self.recommendStations != nil && self.contents.find { $0 is [StationEntity] } == nil
-                    //                    let needToInsertGroups = self.recommendGroups != nil && self.contents.find { $0 is [GroupEntity] } == nil
                     
                     gcd.async(.Main) {
                         self.appendRows(loadPosts.count)
@@ -445,13 +436,6 @@ extension HomeViewController {
                             self.recommendStations = nil
                         }
                         
-                        if let recommendGroups: AnyObject = self.recommendGroups as? AnyObject {
-                            let row = visibleIndexPath!.row + 4
-                            self.contents.insert(recommendGroups, atIndex: Int(row))
-                            let groupsInsertIndexPath = NSIndexPath(forRow: row, inSection: 0)
-                            self.tableView.insertRowsAtIndexPaths([groupsInsertIndexPath], withRowAnimation: .Fade)
-                            self.recommendGroups = nil
-                        }
                         
                         self.isLoading = false
                         self.tableView.tableFooterView = nil

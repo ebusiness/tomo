@@ -13,7 +13,7 @@ class RecommendStationTableCell: UITableViewCell {
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var pageControl: UIPageControl!
-    var stations: [StationEntity]!
+    var stations: [GroupEntity]!
     weak var delegate: HomeViewController!
     
     /// cell container --- used for search
@@ -67,7 +67,6 @@ extension RecommendStationTableCell:UICollectionViewDelegate {
             gcd.async(.Default) {
                 let group = GroupEntity(result)
                 me.addGroup(group.id)
-                me.addStation(station.id)
                 self.stations.removeAtIndex(indexPath.item)
                 self.delegate.synchronizeRecommendStations(self.stations)
                 gcd.async(.Main) {
