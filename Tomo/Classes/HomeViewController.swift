@@ -90,15 +90,7 @@ extension HomeViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if let groups = contents[indexPath.item] as? [GroupEntity] {
-            
-            let cell = tableView.dequeueReusableCellWithIdentifier("RecommendSiteTableCell", forIndexPath: indexPath) as! RecommendSiteTableCell
-            cell.groups = groups
-            cell.delegate = self
-            cell.setup()
-            return cell
-            
-        } else if let stations = contents[indexPath.item] as? [GroupEntity] {
+        if let stations = contents[indexPath.item] as? [GroupEntity] {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("RecommendStationTableCell", forIndexPath: indexPath) as! RecommendStationTableCell
             cell.stations = stations
@@ -156,10 +148,8 @@ extension HomeViewController {
                 }
             }
             return post.contentHeight!
-        } else if contents[indexPath.row] is [StationEntity] {
-            return 423.0
         } else if contents[indexPath.row] is [GroupEntity] {
-            return 623.0
+            return 423.0
         }
         return 0
     }
@@ -272,9 +262,9 @@ extension HomeViewController {
     func discoverMoreStation() {
         performSegueWithIdentifier("modalStationSelector", sender: nil)
     }
-    func synchronizeRecommendStations(newStations: [StationEntity]) {
+    func synchronizeRecommendStations(newStations: [GroupEntity]) {
         for index in 0..<contents.count {
-            if let _ = contents[index] as? [StationEntity] {
+            if let _ = contents[index] as? [GroupEntity] {
                 contents[index] = newStations
                 break
             }
@@ -374,11 +364,11 @@ extension HomeViewController {
         }
         
         
-        let needToLoadStations = self.recommendStations == nil && self.contents.find { $0 is [StationEntity] } == nil
+        let needToLoadStations = self.recommendStations == nil && self.contents.find { $0 is [GroupEntity] } == nil
         
         if needToLoadStations {
             AlamofireController.request(.GET, "/map/stations", parameters: params, hideHUD: true, success: { stationData in
-                self.recommendStations = StationEntity.collection(stationData)
+                self.recommendStations = GroupEntity.collection(stationData)
             })
         }
     }
