@@ -38,7 +38,7 @@ class UserEntity: Entity {
     
     var groups: [String]?
     
-    var stations: [String]?
+//    var stations: [String]?
     
     var friendInvitations: [NotificationEntity]!
     
@@ -92,7 +92,7 @@ class UserEntity: Entity {
         
         self.groups = json["groups"].arrayObject as? [String]
         
-        self.stations = json["stations"].arrayObject as? [String]
+//        self.stations = json["stations"].arrayObject as? [String]
         
         self.friendInvitations = []
         if let invitations = json["friendInvitations"].array {
@@ -157,14 +157,14 @@ extension UserEntity {
     }
 }
 // MARK: - station
-extension UserEntity {
-    func addStation(stationId: String) {
-        if stationId.length > 0 {
-            self.stations = self.stations ?? []
-            self.stations!.append(stationId)
-        }
-    }
-}
+//extension UserEntity {
+//    func addStation(stationId: String) {
+//        if stationId.length > 0 {
+//            self.stations = self.stations ?? []
+//            self.stations!.append(stationId)
+//        }
+//    }
+//}
 
 extension UserEntity {
     class PushSetting: Entity  {
