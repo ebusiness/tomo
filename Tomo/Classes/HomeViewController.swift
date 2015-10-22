@@ -400,20 +400,12 @@ extension HomeViewController {
         isLoading = true
         let footerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: screenWidth, height: 40.0)))
         footerView.backgroundColor = Util.colorWithHexString("EFEFF4")
-        let footerContentLabel = UILabel()
-        footerContentLabel.text = "加载中……"
-        footerContentLabel.textColor = UIColor.darkGrayColor()
-        footerContentLabel.font = UIFont.systemFontOfSize(14.0)
-        footerContentLabel.sizeToFit()
         tableView.tableFooterView = footerView
-        footerView.addSubview(footerContentLabel)
-        footerContentLabel.center = CGPoint(x: screenWidth / 2.0, y: 20.0)
         let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
         footerView.addSubview(loadingIndicator)
         loadingIndicator.sizeToFit()
         loadingIndicator.startAnimating()
         loadingIndicator.center = CGPoint(x: screenWidth / 2.0, y: 20.0)
-        loadingIndicator.frame.origin.x -= 50
         
         
         var params = Dictionary<String, NSTimeInterval>()
