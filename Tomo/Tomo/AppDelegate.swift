@@ -36,6 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return count
             }
         }
+        
+        println("will save time \(NSDate())")
+        Defaults["mapLastTimeStamp"] = NSDate()
     }
     
     func application( application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData ) {

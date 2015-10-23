@@ -43,6 +43,7 @@ final class MapViewController: BaseViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        
         self.navigationController?.navigationBarHidden = true
         
         let authStatus = CLLocationManager.authorizationStatus()
@@ -55,12 +56,11 @@ final class MapViewController: BaseViewController {
         default:
             return
         }
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
         self.navigationController?.navigationBarHidden = false
-        println("will save time \(NSDate())")
-        Defaults["mapLastTimeStamp"] = NSDate()
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -279,7 +279,13 @@ extension MapViewController {
         
         switch self.mode {
         case .HotStation:
-            AlamofireController.request(.GET, "/groups", parameters: ["type": "station", "after": lastTimeStamp!.timeIntervalSince1970], success: { groupData in
+            AlamofireController.request(.GET, "/groups",
+                parameters: [
+                    "type": "station",
+                    "hasMembers": true,
+                    "after": lastTimeStamp!.timeIntervalSince1970
+                ],
+                success: { groupData in
                 if let groups:[GroupEntity] = GroupEntity.collection(groupData) {
                     
                     let annotations = groups.map { group -> GroupAnnotation in

@@ -24,22 +24,22 @@ class StationAnnotationView: AggregatableAnnotationView {
         
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
-        frame = CGRect(x: 0, y: 0, width: 40, height: 30)
+        frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         
-        nameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 30))
+        nameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         nameLabel.textColor = UIColor.whiteColor()
         nameLabel.textAlignment = NSTextAlignment.Center
-        nameLabel.font = UIFont.systemFontOfSize(11)
+        nameLabel.font = UIFont.systemFontOfSize(10)
         nameLabel.numberOfLines = 0
         nameLabel.clipsToBounds = true
-        nameLabel.backgroundColor = Palette.Grey.getPrimaryColor()
-        nameLabel.layer.borderWidth = 1
-        nameLabel.layer.borderColor = Palette.Green.getPrimaryColor().CGColor
-        nameLabel.layer.cornerRadius = 5
+        nameLabel.backgroundColor = Palette.Red.getPrimaryColor()
+        nameLabel.layer.borderWidth = 2
+        nameLabel.layer.borderColor = UIColor.whiteColor().CGColor
+        nameLabel.layer.cornerRadius = 20
         
         addSubview(nameLabel)
         
-        numberBadge.frame = CGRect(x: 28, y: -8, width: 15, height: 15)
+        numberBadge.frame = CGRect(x: 25, y: 0, width: 15, height: 15)
         numberBadge.layer.cornerRadius = numberBadge.frame.width / 2
     }
     
@@ -57,7 +57,7 @@ class StationAnnotationView: AggregatableAnnotationView {
             })
         }
         
-        var exRate = CGFloat(1)
+        var color = Palette.Red.getLightPrimaryColor()
         
         if count > 0 {
             numberBadge.text = "\(count)"
@@ -68,21 +68,17 @@ class StationAnnotationView: AggregatableAnnotationView {
         
         switch count {
         case 1..<10:
-            exRate = CGFloat(1.0)
-        case 10..<20:
-            exRate = CGFloat(1.1)
-        case 20..<30:
-            exRate = CGFloat(1.3)
-        case 30..<40:
-            exRate = CGFloat(1.5)
-        case 40..<Int.max:
-            exRate = CGFloat(1.7)
+            color = Palette.Red.getAccentColor()
+        case 10..<30:
+            color = Palette.Red.getPrimaryColor()
+        case 30..<Int.max:
+            color = Palette.Red.getDarkPrimaryColor()
         default:
-            exRate = 1
+            color = Palette.Red.getAccentColor()
         }
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.transform = CGAffineTransformMakeScale(exRate, exRate)
+            self.nameLabel.backgroundColor = color
         })
 
         nameLabel.text = annotation.group.name
