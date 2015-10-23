@@ -13,7 +13,7 @@ class RecommendStationTableCell: UITableViewCell {
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var pageControl: UIPageControl!
-    var stations: [GroupEntity]!
+    var groups: [GroupEntity]!
     weak var delegate: HomeViewController!
     
     /// cell container --- used for search
@@ -28,7 +28,7 @@ class RecommendStationTableCell: UITableViewCell {
     }
     
     func setup() {
-        pageControl.numberOfPages = (stations.count - 1) / 12 + 1
+        pageControl.numberOfPages = (groups.count - 1) / 12 + 1
         collectionView.reloadData()
     }
 }
@@ -44,12 +44,12 @@ extension RecommendStationTableCell {
 extension RecommendStationTableCell: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return stations.count
+        return groups.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! StationCollectionViewCell
-        cell.station = stations[indexPath.item]
+        cell.group = groups[indexPath.item]
         cell.setupDisplay()
         return cell
     }
@@ -61,14 +61,14 @@ extension RecommendStationTableCell:UICollectionViewDelegate {
         
         collectionView.deselectItemAtIndexPath(indexPath, animated: true)
         
-        let station = self.stations[indexPath.item]
+        let group = self.groups[indexPath.item]
         
-        AlamofireController.request(.PATCH, "/groups/\(station.id)/join", parameters: nil, encoding: .URL, success: { (result) -> () in
+        AlamofireController.request(.PATCH, "/groups/\(group.id)/join", parameters: nil, encoding: .URL, success: { (result) -> () in
             gcd.async(.Default) {
                 let group = GroupEntity(result)
                 me.addGroup(group.id)
-                self.stations.removeAtIndex(indexPath.item)
-                self.delegate.synchronizeRecommendStations(self.stations)
+                self.groups.removeAtIndex(indexPath.item)
+                self.delegate.synchronizeRecommendStations(self.groups)
                 gcd.async(.Main) {
                     self.collectionView.deleteItemsAtIndexPaths([indexPath])
                 }

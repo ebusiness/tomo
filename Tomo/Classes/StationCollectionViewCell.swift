@@ -12,20 +12,9 @@ class StationCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     
-    var station: GroupEntity!
+    var group: GroupEntity!
     
     func setupDisplay() {
-        
-//        let color = Palette(index: Int(arc4random_uniform(UInt32(16))))
-        
-        self.nameLabel.text = self.station.name
-        
-//        self.nameLabel.textColor = UIColor.whiteColor()//color.getTextIconColor()
-//        self.lineLabel.textColor = UIColor.whiteColor()//color.getTextIconColor()
-        
-//        if let color = self.station.color {
-//            self.backgroundColor = Util.colorWithHexString(color)//color.getPrimaryColor()
-//        }
-        
+        self.nameLabel.text = self.group.name
     }
 }

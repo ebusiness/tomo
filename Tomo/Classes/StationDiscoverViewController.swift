@@ -31,7 +31,7 @@ class StationDiscoverViewController: UIViewController {
     let screenWidth = UIScreen.mainScreen().bounds.width
     let screenHeight = UIScreen.mainScreen().bounds.height
     
-    var stations: [GroupEntity]?
+    var groups: [GroupEntity]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,12 +68,12 @@ extension StationDiscoverViewController {
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 extension StationDiscoverViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return stations?.count ?? 0
+        return groups?.count ?? 0
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("identifier", forIndexPath: indexPath) as! StationCollectionViewCell
-        if let station = stations?[indexPath.row] {
-            cell.station = station
+        if let group = groups?[indexPath.row] {
+            cell.group = group
         }
         cell.setupDisplay()
         return cell
@@ -84,12 +84,12 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
         return CGSizeMake(width, height)
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if let station = stations?[indexPath.row] {
-            AlamofireController.request(.PATCH, "/groups/\(station.id)/join", parameters: nil, encoding: .URL, success: { (result) -> () in
+        if let group = groups?[indexPath.row] {
+            AlamofireController.request(.PATCH, "/groups/\(group.id)/join", parameters: nil, encoding: .URL, success: { (result) -> () in
                 gcd.async(.Default) {
-                    let group = GroupEntity(result)
-                    me.addGroup(group.id)
-                    self.stations?.remove(station)
+                    let vgroup = GroupEntity(result)
+                    me.addGroup(vgroup.id)
+                    self.groups?.remove(group)
                     gcd.async(.Main) {
                         self.collectionView.deleteItemsAtIndexPaths([indexPath])
                     }
@@ -111,7 +111,7 @@ extension StationDiscoverViewController {
         ]
         AlamofireController.request(.GET, "/map/groups",
             parameters: parameter, success: { (object) -> () in
-                self.stations = GroupEntity.collection(object)
+                self.groups = GroupEntity.collection(object)
                 self.refresh()
                 self.loading = false
                 self.page = 1
@@ -124,7 +124,7 @@ extension StationDiscoverViewController {
         if loading {
             return
         }
-        if stations == nil || stations?.count == 0 {
+        if groups == nil || groups?.count == 0 {
             return
         }
         loading = true
@@ -140,9 +140,9 @@ extension StationDiscoverViewController {
         }
         AlamofireController.request(.GET, "/map/groups", parameters: parameter,
             success: { (object) -> () in
-                if let stations: [GroupEntity] = GroupEntity.collection(object) {
-                    self.stations?.extend(stations)
-                    self.appendCells(stations.count)
+                if let groups: [GroupEntity] = GroupEntity.collection(object) {
+                    self.groups?.extend(groups)
+                    self.appendCells(groups.count)
                     self.page++
                 }
                 self.loading = false
@@ -154,14 +154,14 @@ extension StationDiscoverViewController {
     
     private func refresh() {
         collectionView.reloadData()
-        if let count = stations?.count where count != 0 {
+        if let count = groups?.count where count != 0 {
             collectionView.backgroundView = nil
         } else {
             collectionView.backgroundView = UINib(nibName: "EmptyStationResult", bundle: nil).instantiateWithOwner(nil, options: nil).first as? UIView
         }
     }
     private func appendCells(count: Int) {
-        if let totalCount = stations?.count {
+        if let totalCount = groups?.count {
             let startIndex = totalCount - count
             let endIndex = totalCount
             var indexPaths = [NSIndexPath]()
@@ -188,10 +188,10 @@ extension StationDiscoverViewController: UISearchBarDelegate {
         AlamofireController.request(.GET, "/map/groups",
             parameters: parameter,
             success: { (object) -> () in
-                self.stations = GroupEntity.collection(object)
+                self.groups = GroupEntity.collection(object)
                 self.refresh()
             }) { _ in
-                self.stations = nil
+                self.groups = nil
                 self.refresh()
         }
     }

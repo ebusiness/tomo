@@ -29,7 +29,7 @@ final class HomeViewController: BaseTableViewController {
     var isLoading = false
     var isExhausted = false
     
-    var recommendStations: [GroupEntity]?
+    var recommendGroups: [GroupEntity]?
     
     var timer: NSTimer?
     
@@ -90,10 +90,10 @@ extension HomeViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if let stations = contents[indexPath.item] as? [GroupEntity] {
+        if let groups = contents[indexPath.item] as? [GroupEntity] {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("RecommendStationTableCell", forIndexPath: indexPath) as! RecommendStationTableCell
-            cell.stations = stations
+            cell.groups = groups
             cell.delegate = self
             cell.tableViewController = self
             cell.setup()
@@ -365,11 +365,11 @@ extension HomeViewController {
             params["coordinate"] = [location.coordinate.longitude, location.coordinate.latitude]
         }
         
-        let needToLoadStations = self.recommendStations == nil && self.contents.find { $0 is [GroupEntity] } == nil
+        let needToLoadStations = self.recommendGroups == nil && self.contents.find { $0 is [GroupEntity] } == nil
         
         if needToLoadStations {
             AlamofireController.request(.GET, "/map/groups", parameters: params, hideHUD: true, success: { stationData in
-                self.recommendStations = GroupEntity.collection(stationData)
+                self.recommendGroups = GroupEntity.collection(stationData)
             })
         }
     }
@@ -419,12 +419,12 @@ extension HomeViewController {
                         let visibleCells = self.tableView.visibleCells()
                         let visibleIndexPath = self.tableView.indexPathForCell(visibleCells.get(0) as! UITableViewCell)
                         
-                        if let recommendStations: AnyObject = self.recommendStations as? AnyObject {
+                        if let recommendStations: AnyObject = self.recommendGroups as? AnyObject {
                             let row = visibleIndexPath!.row + 1
                             self.contents.insert(recommendStations, atIndex: Int(row))
                             let stationsInsertIndexPath = NSIndexPath(forRow: row, inSection: 0)
                             self.tableView.insertRowsAtIndexPaths([stationsInsertIndexPath], withRowAnimation: .Fade)
-                            self.recommendStations = nil
+                            self.recommendGroups = nil
                         }
                         
                         
