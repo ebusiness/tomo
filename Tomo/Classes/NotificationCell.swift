@@ -103,7 +103,11 @@ extension NotificationCell {
         AlamofireController.request(.GET, "/posts/\(self.notification.targetId)", success: { result in
             let postVC = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
             postVC.post = PostEntity(result)
-            vc.navigationController?.pushViewController(postVC, animated: true)
+            if postVC.post.id == self.notification.targetId {
+                vc.navigationController?.pushViewController(postVC, animated: true)
+            } else {
+                Util.showInfo("帖子已被删除")
+            }
         })
     }
     
