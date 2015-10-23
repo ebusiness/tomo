@@ -18,6 +18,12 @@ final class GroupDetailViewController: BaseTableViewController {
     
     var posts: [PostEntity]?
     
+    let screenHeight = UIScreen.mainScreen().bounds.height
+    let screenWidth = UIScreen.mainScreen().bounds.width
+    
+    var isLoading = false
+    var isExhausted = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setTitleView()
@@ -36,13 +42,24 @@ final class GroupDetailViewController: BaseTableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        loadPosts()
+        if posts == nil {
+            loadPosts()
+        }
         self.updateUI()
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
         self.moveTitleView(scrollView.contentOffset.y)
+        if scrollView == tableView {
+            let offsetY = scrollView.contentOffset.y
+            let contentHeight = scrollView.contentSize.height
+            
+            let loadTriggerHeight = CGFloat(40.0)
+            if (contentHeight - screenHeight - loadTriggerHeight) < offsetY {
+                loadMorePosts()
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -51,10 +68,51 @@ final class GroupDetailViewController: BaseTableViewController {
     }
     
     func loadPosts() {
-        AlamofireController.request(.GET, "/groups/\(group.id)/posts", parameters: nil, encoding: .JSON, success: { (object) -> () in
+        var parameter = Dictionary<String, AnyObject>()
+        AlamofireController.request(.GET, "/groups/\(group.id)/posts", parameters: parameter, success: { (object) -> () in
             self.posts = PostEntity.collection(object)
             self.tableView.reloadData()
         })
+    }
+    
+    func loadMorePosts() {
+        if isLoading || isExhausted {
+            return
+        }
+        
+        isLoading = true
+        
+        let footerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: screenWidth, height: 40.0)))
+        footerView.backgroundColor = Util.colorWithHexString("EFEFF4")
+        tableView.tableFooterView = footerView
+        let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+        footerView.addSubview(loadingIndicator)
+        loadingIndicator.sizeToFit()
+        loadingIndicator.startAnimating()
+        loadingIndicator.center = CGPoint(x: screenWidth / 2.0, y: 20.0)
+        
+        var parameter = Dictionary<String, AnyObject>()
+        if let posts = posts where posts.count != 0{
+            parameter["before"] = posts.last?.createDate.timeIntervalSince1970
+        }
+        AlamofireController.request(.GET, "/groups/\(group.id)/posts", parameters: parameter, success: { (object) -> () in
+            if let newPosts: [PostEntity] = PostEntity.collection(object) {
+                let startIndex = self.posts?.count ?? 0
+                let endIndex = startIndex + newPosts.count
+                self.posts?.extend(newPosts)
+                var indexPaths: [NSIndexPath] = []
+                for index in startIndex..<endIndex {
+                    indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
+                }
+                self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.tableView.tableFooterView = nil
+            }
+            self.isLoading = false
+            }) { _ in
+                self.isLoading = false
+                self.isExhausted = true
+                self.tableView.tableFooterView = nil
+        }
     }
     
     override func viewDidLayoutSubviews() {
