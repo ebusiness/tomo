@@ -22,7 +22,7 @@ class MyStationsViewController: BaseViewController {
     
     var loading = false
     
-    var groups: [GroupEntity]?
+    var groups = [GroupEntity]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,14 +51,12 @@ class MyStationsViewController: BaseViewController {
 extension MyStationsViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return groups?.count ?? 0
+        return groups.count ?? 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("identifier", forIndexPath: indexPath) as! StationCollectionViewCell
-        if let group = groups?[indexPath.item] {
-            cell.group = group
-        }
+        cell.group = self.groups[indexPath.item]
         cell.setupDisplay()
 
         return cell
@@ -73,7 +71,7 @@ extension MyStationsViewController: UICollectionViewDataSource, UICollectionView
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         let vc = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
-        vc.group = self.groups?[indexPath.item]
+        vc.group = self.groups[indexPath.item]
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -88,43 +86,76 @@ extension MyStationsViewController {
             return
         }
         
-        if me.groups?.count == self.groups?.count {
-            return
+        let updates: (() -> Void) = { _ in
+            self.deleteGroupsIfNeeded() {
+                if me.groups!.count != self.groups.count {
+                    self.loadMyStatios()
+                }
+            }
         }
         
+        self.collectionView.performBatchUpdates(updates, completion: nil)
+    }
+    
+    private func deleteGroupsIfNeeded(completion: ()->()) {
+        gcd.async(.Default) {
+            
+            var needDeleteIndexPaths = [NSIndexPath]()
+            
+            let myGroups = me.groups ?? []
+            
+            self.groups.each { (index, value) -> Void in
+                if !myGroups.contains(value.id) {
+                    needDeleteIndexPaths.append(NSIndexPath(forItem: index, inSection: 0))
+                    self.groups.removeAtIndex(index)
+                }
+            }
+            
+            gcd.async(.Main) {
+                if needDeleteIndexPaths.count > 0 {
+                    self.collectionView.deleteItemsAtIndexPaths(needDeleteIndexPaths)
+                }
+                completion()
+            }
+        }
+    }
+    
+    private func loadMyStatios(){
         if loading {
             return
         }
         
         loading = true
+        
         let parameter: [String: AnyObject] = [
             "category": "mine",
             "type": "station"
         ]
         
-        AlamofireController.request(.GET, "/groups",
-            parameters: parameter, success: { object in
-                let oldGroups = self.groups ?? []
-                self.groups = GroupEntity.collection(object)
+        AlamofireController.request(.GET, "/groups", parameters: parameter, success: { object in
+            gcd.async(.Default) {
+                let newGroups: [GroupEntity] = GroupEntity.collection(object) ?? []
                 
-                var indexPaths = [NSIndexPath]()
-                self.groups?.each { (index, value) -> Void in
-                    let needInsertGroup = oldGroups.find { $0.id == value.id }
-                    if needInsertGroup == nil {
-                        indexPaths.append(NSIndexPath(forItem: index, inSection: 0))
+                var needInsertIndexPaths = [NSIndexPath]()
+                newGroups.each { (_, group) -> Void in
+                    let needInsertGroup = self.groups.find { $0.id == group.id } == nil
+                    if needInsertGroup {
+                        needInsertIndexPaths.append(NSIndexPath(forItem: self.groups.count, inSection: 0))
+                        self.groups.append(group)
                     }
                 }
-                if indexPaths.count > 0 {
-                    self.collectionView.performBatchUpdates({ _ in
-                        self.collectionView.insertItemsAtIndexPaths(indexPaths)
-                    }) { _ in
-                        NSLog("done")
+                gcd.async(.Main) {
+                    if needInsertIndexPaths.count > 0 {
+                        self.collectionView.insertItemsAtIndexPaths(needInsertIndexPaths)
                     }
+                    self.loading = false
                 }
-                self.loading = false
-            }) { _ in
-                self.loading = false
+            }
+        }) { _ in
+            self.loading = false
         }
+
     }
+    
 }
 
