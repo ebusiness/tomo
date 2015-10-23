@@ -177,6 +177,7 @@ extension StationDiscoverViewController {
 
 extension StationDiscoverViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        page = 0;
         let text = searchBar.text
         searchText = searchBar.text
         var coordinate = location.coordinate
