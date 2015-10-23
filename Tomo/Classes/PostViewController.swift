@@ -20,6 +20,7 @@ class PostViewController: BaseViewController{
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var contentFooterLabel: UILabel!
     
     @IBOutlet weak var commentBtn: UIButton!
     @IBOutlet weak var likedBtn: UIButton!
@@ -273,13 +274,19 @@ extension PostViewController {
         
         contentLabel.attributedText = attributeString
         
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy年MM月dd日 HH:mm"
+        let dateString = dateFormatter.stringFromDate(post.createDate)
+        contentFooterLabel.text = dateString
+        
         self.contentLabel.bounds.size.width = UIScreen.mainScreen().bounds.size.width - 16 * 2
         let contentSize = self.contentLabel.sizeThatFits(self.contentLabel.bounds.size)
         
         let headerView = self.tableView.tableHeaderView as UIView!
         //        headerView.frame.size.width = UIScreen.mainScreen().bounds.size.width
         
-        let contentHeight = self.profileHeaderHeight + contentSize.height + 8 * 2
+        let contentFooterHeight: CGFloat = 16.0 + 22.0
+        let contentHeight = self.profileHeaderHeight + contentSize.height + contentFooterHeight + 8 * 2
         if ( self.post.images?.count ?? 0 ) < 1 {
             self.postImageList.hidden = true
             headerView.frame.size.height = contentHeight
