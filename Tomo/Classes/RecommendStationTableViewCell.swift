@@ -68,6 +68,7 @@ extension RecommendStationTableCell:UICollectionViewDelegate {
                 let group = GroupEntity(result)
                 me.addGroup(group.id)
                 self.groups.removeAtIndex(indexPath.item)
+                self.pageControl.numberOfPages = (self.groups.count - 1) / 12 + 1
                 self.delegate.synchronizeRecommendStations(self.groups)
                 gcd.async(.Main) {
                     self.collectionView.deleteItemsAtIndexPaths([indexPath])
