@@ -102,7 +102,7 @@ extension MyStationsViewController {
             "type": "station"
         ]
         
-        AlamofireController.request(.GET, "/map/groups",
+        AlamofireController.request(.GET, "/groups",
             parameters: parameter, success: { object in
                 let oldGroups = self.groups ?? []
                 self.groups = GroupEntity.collection(object)

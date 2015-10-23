@@ -368,7 +368,7 @@ extension HomeViewController {
         let needToLoadStations = self.recommendGroups == nil && self.contents.find { $0 is [GroupEntity] } == nil
         
         if needToLoadStations {
-            AlamofireController.request(.GET, "/map/groups", parameters: params, hideHUD: true, success: { stationData in
+            AlamofireController.request(.GET, "/groups", parameters: params, hideHUD: true, success: { stationData in
                 self.recommendGroups = GroupEntity.collection(stationData)
             })
         }

@@ -105,11 +105,12 @@ extension StationDiscoverViewController {
         loading = true
         let coordinate = location.coordinate
         let parameter: [String: AnyObject] = [
-            "coordinate": [coordinate.longitude, coordinate.latitude],
-            "type"      : "station",
-            "page": page
+            "page": page,
+            "type": "station",
+            "category": "discover",
+            "coordinate": [coordinate.longitude, coordinate.latitude]
         ]
-        AlamofireController.request(.GET, "/map/groups",
+        AlamofireController.request(.GET, "/groups",
             parameters: parameter, success: { (object) -> () in
                 self.groups = GroupEntity.collection(object)
                 self.refresh()
@@ -130,15 +131,15 @@ extension StationDiscoverViewController {
         loading = true
         let coordinate = location.coordinate
         var parameter: [String: AnyObject] = [
+            "page": page,
             "type": "station",
-            "coordinate": [coordinate.longitude, coordinate.latitude],
             "category": "discover",
-            "page": page
+            "coordinate": [coordinate.longitude, coordinate.latitude]
         ]
         if let searchText = searchText {
             parameter["name"] = searchText
         }
-        AlamofireController.request(.GET, "/map/groups", parameters: parameter,
+        AlamofireController.request(.GET, "/groups", parameters: parameter,
             success: { (object) -> () in
                 if let groups: [GroupEntity] = GroupEntity.collection(object) {
                     self.groups?.extend(groups)
@@ -181,11 +182,12 @@ extension StationDiscoverViewController: UISearchBarDelegate {
         var coordinate = location.coordinate
         var parameter: [String: AnyObject] = [
             "name": text,
+            "page": page,
             "type": "station",
             "category": "discover",
             "coordinate": [coordinate.longitude, coordinate.latitude]
         ];
-        AlamofireController.request(.GET, "/map/groups",
+        AlamofireController.request(.GET, "/groups",
             parameters: parameter,
             success: { (object) -> () in
                 self.groups = GroupEntity.collection(object)

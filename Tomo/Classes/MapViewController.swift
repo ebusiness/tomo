@@ -279,7 +279,7 @@ extension MapViewController {
         
         switch self.mode {
         case .HotStation:
-            AlamofireController.request(.GET, "/map/groups", parameters: ["type": "station", "after": lastTimeStamp!.timeIntervalSince1970], success: { groupData in
+            AlamofireController.request(.GET, "/groups", parameters: ["type": "station", "after": lastTimeStamp!.timeIntervalSince1970], success: { groupData in
                 if let groups:[GroupEntity] = GroupEntity.collection(groupData) {
                     
                     let annotations = groups.map { group -> GroupAnnotation in
@@ -297,7 +297,7 @@ extension MapViewController {
                 
             })
         case .MyStation:
-            AlamofireController.request(.GET, "/map/groups", parameters: ["category": "mine", "type": "station"], success: { groupData in
+            AlamofireController.request(.GET, "/groups", parameters: ["category": "mine", "type": "station"], success: { groupData in
                 if let groups:[GroupEntity] = GroupEntity.collection(groupData) {
                     
                     let annotations = groups.map { group -> GroupAnnotation in
