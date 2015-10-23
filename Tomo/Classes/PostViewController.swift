@@ -164,7 +164,7 @@ class PostViewController: BaseViewController{
         var shareImage:UIImage?
         if self.postImageList.subviews.count > 0 {
             if let imageView = self.postImageList.subviews[0] as? UIImageView {
-                shareImage = imageView.image!
+                shareImage = imageView.image
             }
         }
         
