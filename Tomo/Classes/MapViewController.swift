@@ -73,21 +73,25 @@ final class MapViewController: BaseViewController {
 
 extension MapViewController {
     
-    @IBAction func showCurrentLocation() {
-        self.mapView.setRegion(MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 10000, 10000), animated: true)
-    }
-    
     @IBAction func changeMode(sender: AnyObject) {
         
         let segmentControl = sender as! UISegmentedControl
         
-        if segmentControl.selectedSegmentIndex == 0 {
+        switch segmentControl.selectedSegmentIndex {
+            
+        case 0:
             self.mode = .HotStation
-        } else {
+            self.loadContents()
+        case 1:
             self.mode = .MyStation
+            self.loadContents()
+        case 2:
+            self.showCurrentLocation()
+        default :
+            return
         }
         
-        self.loadContents()
+//        self.loadContents()
     }
 }
 
@@ -248,6 +252,10 @@ extension MapViewController {
         UIView.animateWithDuration(1.0, animations: { () -> Void in
             self.mapView.camera = camera
         })
+    }
+    
+    func showCurrentLocation() {
+        self.mapView.setRegion(MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 1000, 1000), animated: true)
     }
     
     private func getCurrentBox() -> [Double] {

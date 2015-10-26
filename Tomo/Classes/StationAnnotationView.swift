@@ -68,13 +68,13 @@ class StationAnnotationView: AggregatableAnnotationView {
         
         switch count {
         case 1..<10:
-            color = Palette.Red.getAccentColor()
+            color = Palette.Pink.getAccentColor()
         case 10..<30:
-            color = Palette.Red.getPrimaryColor()
+            color = Palette.Pink.getPrimaryColor()
         case 30..<Int.max:
-            color = Palette.Red.getDarkPrimaryColor()
+            color = Palette.Pink.getDarkPrimaryColor()
         default:
-            color = Palette.Red.getAccentColor()
+            color = Palette.Pink.getAccentColor()
         }
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
