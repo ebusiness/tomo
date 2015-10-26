@@ -29,6 +29,8 @@ final class ProfileViewController: ProfileBaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.reloadButtons()
+        self.tableView.reloadSections(NSIndexSet(index: invitedSection), withRowAnimation: .Automatic)
+        self.tableView.reloadSections(NSIndexSet(index: sendMessageSection), withRowAnimation: .Automatic)
         self.registerForNotifications()
     }
     
