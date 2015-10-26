@@ -157,6 +157,7 @@
 		D08BFB0B1B744C2D00771F70 /* JSQMessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08BFB0A1B744C2D00771F70 /* JSQMessageEntity.swift */; };
 		D0960AAC1BC376FB00A63733 /* UltravisualLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0960AAB1BC376FB00A63733 /* UltravisualLayout.swift */; };
 		D0960AAE1BC3CE2600A63733 /* MyGroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0960AAD1BC3CE2600A63733 /* MyGroupListViewController.swift */; };
+		D099B6181BDA3B63006C9D01 /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D099B6171BDA3B63006C9D01 /* LocationController.swift */; };
 		D09D8DBA1BCDF07400071B3E /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D8DAF1BCDF07400071B3E /* Alamofire.swift */; };
 		D09D8DBB1BCDF07400071B3E /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D8DB01BCDF07400071B3E /* Download.swift */; };
 		D09D8DBC1BCDF07400071B3E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D09D8DB11BCDF07400071B3E /* Info.plist */; };
@@ -352,6 +353,7 @@
 		D08BFB0A1B744C2D00771F70 /* JSQMessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSQMessageEntity.swift; path = Classes/JSQMessageEntity.swift; sourceTree = "<group>"; };
 		D0960AAB1BC376FB00A63733 /* UltravisualLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UltravisualLayout.swift; sourceTree = "<group>"; };
 		D0960AAD1BC3CE2600A63733 /* MyGroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyGroupListViewController.swift; path = Classes/MyGroupListViewController.swift; sourceTree = "<group>"; };
+		D099B6171BDA3B63006C9D01 /* LocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationController.swift; path = Classes/LocationController.swift; sourceTree = "<group>"; };
 		D09D8DAE1BCDF07400071B3E /* Alamofire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alamofire.h; sourceTree = "<group>"; };
 		D09D8DAF1BCDF07400071B3E /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
 		D09D8DB01BCDF07400071B3E /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
@@ -719,6 +721,7 @@
 				29C1DA781AD36659009A02CC /* S3Controller.swift */,
 				D0E788741B6F5BD3009255B9 /* AlamofireController.swift */,
 				D073E6F71B84C1BF00066F42 /* CameraController.swift */,
+				D099B6171BDA3B63006C9D01 /* LocationController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1272,6 +1275,7 @@
 				2857784C1BC25DC600533E8E /* ICYPostCell.swift in Sources */,
 				1FEA3CFB1BB391780037F3C5 /* RecommendStationTableViewCell.swift in Sources */,
 				1FA76B091BA2C642004776B0 /* GroupCreateViewController.swift in Sources */,
+				D099B6181BDA3B63006C9D01 /* LocationController.swift in Sources */,
 				1F6AE7851B6F1A2300D7F488 /* PostAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

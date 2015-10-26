@@ -238,15 +238,17 @@ extension Util {
         }
     }
     
-    class func alert(parentvc: UIViewController, title: String, message: String, cancel: String = "取消",ok: String = "确定", action:((UIAlertAction!) -> Void)!){
+    class func alert(parentvc: UIViewController, title: String, message: String, cancel: String = "取消",ok: String = "确定", action:((UIAlertAction!) -> Void)? = nil){
         gcd.async(.Default) {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
             
             let cancelAction = UIAlertAction(title: cancel, style: .Cancel, handler: nil)
-            let okAction = UIAlertAction(title: ok, style: .Destructive, handler: action)
-            
             alertController.addAction(cancelAction)
-            alertController.addAction(okAction)
+            
+            if let action = action {
+                let okAction = UIAlertAction(title: ok, style: .Destructive, handler: action)
+                alertController.addAction(okAction)
+            }
             
             gcd.sync(.Main) {
                 parentvc.presentViewController(alertController, animated: true, completion: nil)
