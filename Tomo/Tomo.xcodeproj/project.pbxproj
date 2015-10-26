@@ -143,6 +143,7 @@
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		D012F5971BBBC4DD00D5293D /* MyStationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */; };
 		D029F7321BCCB39E00CDE18B /* PushSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029F7311BCCB39E00CDE18B /* PushSettingViewController.swift */; };
+		D040E1651BDDC00D00417174 /* RecommendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040E1641BDDC00D00417174 /* RecommendViewController.swift */; };
 		D04447B31BBA9DF300AD7B0C /* GroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */; };
 		D04608D21B6BA33F00D30B77 /* TestDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404B1ACE68C500D2A338 /* TestDataTests.swift */; };
 		D05418401BC6592900C606F0 /* MyGroupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D054183E1BC6592900C606F0 /* MyGroupCollectionViewCell.xib */; };
@@ -341,6 +342,7 @@
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyStationsViewController.swift; path = Classes/MyStationsViewController.swift; sourceTree = "<group>"; };
 		D029F7311BCCB39E00CDE18B /* PushSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PushSettingViewController.swift; path = Classes/PushSettingViewController.swift; sourceTree = "<group>"; };
+		D040E1641BDDC00D00417174 /* RecommendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendViewController.swift; path = Classes/RecommendViewController.swift; sourceTree = "<group>"; };
 		D054183E1BC6592900C606F0 /* MyGroupCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyGroupCollectionViewCell.xib; path = Classes/MyGroupCollectionViewCell.xib; sourceTree = "<group>"; };
 		D05418421BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyGroupCollectionViewCell.swift; path = Classes/MyGroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		D057BAF11B670687007D14D2 /* RequestFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestFriendCell.swift; path = Classes/RequestFriendCell.swift; sourceTree = "<group>"; };
@@ -746,6 +748,7 @@
 			children = (
 				29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */,
 				1FE7CEF41B8C9561006700FC /* SignUpViewController.swift */,
+				D040E1641BDDC00D00417174 /* RecommendViewController.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -1143,6 +1146,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				296D8BB31AFC5A250058D400 /* MessageViewController.swift in Sources */,
+				D040E1651BDDC00D00417174 /* RecommendViewController.swift in Sources */,
 				283771911BC37653001B06D3 /* ICYFlowLayout.swift in Sources */,
 				1FAA70FC1BBBF97B00BCE5AF /* StationAnnotation.swift in Sources */,
 				1FC268801BBABED8006F1FDA /* GroupAnnotation.swift in Sources */,

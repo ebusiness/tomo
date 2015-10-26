@@ -121,8 +121,7 @@ extension RegViewController {
             OpenidController.instance.wxCheckAuth(
                 
                 success: { (res) -> () in
-                    let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-                    Util.changeRootViewController(from: self, to: tab)
+                    self.changeRootToTab()
                 },
                 failure: { (errCode, errMessage) -> () in
                     
@@ -168,8 +167,13 @@ extension RegViewController {
     
     private func changeRootToTab(){
         Util.dismissHUD()
-        let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-        Util.changeRootViewController(from: self, to: tab)
+//        if let groups = me.groups where groups.count > 0 {
+            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+            Util.changeRootViewController(from: self, to: tab)
+//        } else {
+//            let main = Util.createViewControllerWithIdentifier("RecommendView", storyboardName: "Main")
+//            Util.changeRootViewController(from: self, to: main)
+//        }
     }
 }
 

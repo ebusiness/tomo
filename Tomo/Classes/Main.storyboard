@@ -35,7 +35,7 @@
                                 </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iEF-KW-nPh">
-                                <rect key="frame" x="32" y="97" width="164.5" height="42"/>
+                                <rect key="frame" x="32" y="97" width="165" height="42"/>
                                 <string key="text" base64-UTF8="YES">
 COePvuWgtFRvbW8
 </string>
@@ -44,7 +44,7 @@ COePvuWgtFRvbW8
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="—最懂IT职场的社交平台" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndm-VF-r07">
-                                <rect key="frame" x="70" y="171" width="217.5" height="24"/>
+                                <rect key="frame" x="70" y="171" width="218" height="24"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -234,7 +234,7 @@ COePvuWgtFRvbW8
                                             </connections>
                                         </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称最多10个字符" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihM-y8-GRV">
-                                            <rect key="frame" x="182" y="209" width="98" height="14.5"/>
+                                            <rect key="frame" x="182" y="209" width="98" height="15"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -255,7 +255,7 @@ COePvuWgtFRvbW8
                                             </connections>
                                         </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入有效的邮件地址" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z0V-Xu-tHf">
-                                            <rect key="frame" x="160" y="285" width="120" height="14.5"/>
+                                            <rect key="frame" x="160" y="285" width="120" height="15"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -275,7 +275,7 @@ COePvuWgtFRvbW8
                                             </connections>
                                         </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="由8个大小写字母，数字或符号组成的密码" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lhl-xz-LVl">
-                                            <rect key="frame" x="57" y="361" width="223" height="14.5"/>
+                                            <rect key="frame" x="57" y="361" width="223" height="15"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -295,7 +295,7 @@ COePvuWgtFRvbW8
                                             </connections>
                                         </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="两个密码不一致" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olO-sL-bNB">
-                                            <rect key="frame" x="196" y="437" width="84" height="14.5"/>
+                                            <rect key="frame" x="196" y="437" width="84" height="15"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -394,8 +394,139 @@ COePvuWgtFRvbW8
             </objects>
             <point key="canvasLocation" x="211" y="658"/>
         </scene>
+        <!--我常去的车站-->
+        <scene sceneID="6J5-fD-ME0">
+            <objects>
+                <viewController id="Tui-he-CHT" customClass="RecommendViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6lU-X0-Jem"/>
+                        <viewControllerLayoutGuide type="bottom" id="6C5-xN-D9m"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2Ka-aI-I4I">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="全城热点" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FDY-5I-ek1">
+                                <rect key="frame" x="16" y="72" width="68" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AD0-os-qfK">
+                                <rect key="frame" x="0.0" y="101" width="320" height="300"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="a3z-Yc-Imt"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="1" minimumInteritemSpacing="1" id="eY3-PS-f2p">
+                                    <size key="itemSize" width="100" height="100"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <connections>
+                                    <outlet property="dataSource" destination="Tui-he-CHT" id="XY6-Lp-fLY"/>
+                                    <outlet property="delegate" destination="Tui-he-CHT" id="TMS-J0-SJ9"/>
+                                </connections>
+                            </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的关注" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KDQ-gl-8mY">
+                                <rect key="frame" x="16" y="409" width="68" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="iFe-F9-gPE">
+                                <rect key="frame" x="0.0" y="438" width="320" height="130"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="P9T-kc-aac">
+                                    <size key="itemSize" width="100" height="100"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <connections>
+                                    <outlet property="dataSource" destination="Tui-he-CHT" id="WTU-Wm-ZNg"/>
+                                    <outlet property="delegate" destination="Tui-he-CHT" id="5zO-Mj-Ubf"/>
+                                </connections>
+                            </collectionView>
+                            <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="fND-tx-dP1">
+                                <rect key="frame" x="141" y="364" width="39" height="37"/>
+                            </pageControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ESf-gR-9Qt">
+                                <rect key="frame" x="274" y="73" width="30" height="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <state key="normal" title="更多">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="discoverMoreStation:" destination="Tui-he-CHT" eventType="touchUpInside" id="Hyd-UQ-hHJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="AD0-os-qfK" secondAttribute="trailing" id="63y-bZ-S5G"/>
+                            <constraint firstItem="6C5-xN-D9m" firstAttribute="top" secondItem="iFe-F9-gPE" secondAttribute="bottom" id="7p6-eU-b3d"/>
+                            <constraint firstItem="KDQ-gl-8mY" firstAttribute="leading" secondItem="2Ka-aI-I4I" secondAttribute="leading" constant="16" id="AOF-Qz-Td3"/>
+                            <constraint firstItem="iFe-F9-gPE" firstAttribute="top" secondItem="KDQ-gl-8mY" secondAttribute="bottom" constant="8" id="HXD-0m-ZDb"/>
+                            <constraint firstItem="FDY-5I-ek1" firstAttribute="leading" secondItem="2Ka-aI-I4I" secondAttribute="leading" constant="16" id="Ndi-9y-nZM"/>
+                            <constraint firstItem="AD0-os-qfK" firstAttribute="top" secondItem="ESf-gR-9Qt" secondAttribute="bottom" id="RbB-3C-BfW"/>
+                            <constraint firstItem="KDQ-gl-8mY" firstAttribute="top" secondItem="AD0-os-qfK" secondAttribute="bottom" constant="8" id="TSG-Pg-dYG"/>
+                            <constraint firstItem="AD0-os-qfK" firstAttribute="bottom" secondItem="fND-tx-dP1" secondAttribute="bottom" id="UQY-le-zrr"/>
+                            <constraint firstAttribute="trailing" secondItem="ESf-gR-9Qt" secondAttribute="trailing" constant="16" id="Y1D-49-WAL"/>
+                            <constraint firstItem="FDY-5I-ek1" firstAttribute="top" secondItem="2Ka-aI-I4I" secondAttribute="top" constant="72" id="aDd-h0-PS2"/>
+                            <constraint firstItem="iFe-F9-gPE" firstAttribute="leading" secondItem="2Ka-aI-I4I" secondAttribute="leading" id="cMW-MN-5NE"/>
+                            <constraint firstAttribute="trailing" secondItem="iFe-F9-gPE" secondAttribute="trailing" id="fzz-7D-KW8"/>
+                            <constraint firstAttribute="centerX" secondItem="fND-tx-dP1" secondAttribute="centerX" id="vcI-8A-23C"/>
+                            <constraint firstItem="AD0-os-qfK" firstAttribute="top" secondItem="FDY-5I-ek1" secondAttribute="bottom" constant="8" id="wk1-C1-Iwo"/>
+                            <constraint firstItem="AD0-os-qfK" firstAttribute="leading" secondItem="2Ka-aI-I4I" secondAttribute="leading" id="xbW-fZ-XJM"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="我常去的车站" id="OiO-hO-sFW">
+                        <barButtonItem key="leftBarButtonItem" image="delete_sign" id="jQ1-gz-M2W">
+                            <connections>
+                                <action selector="logout:" destination="Tui-he-CHT" id="TKY-nO-ZEJ"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="checkmark" id="5wh-fK-byw">
+                            <connections>
+                                <action selector="goon:" destination="Tui-he-CHT" id="LEg-yU-EZb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="myGroupCollectionView" destination="iFe-F9-gPE" id="iVU-LN-4i8"/>
+                        <outlet property="pageControl" destination="fND-tx-dP1" id="V1h-1N-PgN"/>
+                        <outlet property="recommendGroupCollectionView" destination="AD0-os-qfK" id="dVf-c5-LNA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QFj-iJ-hIz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="743" y="1336"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="EpZ-Zw-kKh">
+            <objects>
+                <navigationController storyboardIdentifier="RecommendView" automaticallyAdjustsScrollViewInsets="NO" id="bWe-4S-jHe" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="IB0-f5-u9h">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Tui-he-CHT" kind="relationship" relationship="rootViewController" id="3OV-Gr-2XO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oxj-Sp-rsu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="211" y="1336"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="checkmark" width="25" height="25"/>
+        <image name="delete_sign" width="25" height="25"/>
         <image name="icon_wx" width="49" height="47"/>
         <image name="splash10" width="1000" height="666"/>
     </resources>
