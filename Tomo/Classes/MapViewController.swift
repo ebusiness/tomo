@@ -29,6 +29,8 @@ final class MapViewController: BaseViewController {
     let tokyoCenter = CLLocationCoordinate2D(latitude: 35.693889, longitude: 139.753611)
     let tokyoSpan = MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
     
+    var lastLoadDate: NSDate?
+    
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
@@ -55,6 +57,13 @@ final class MapViewController: BaseViewController {
             showLocationServiceDisabledAlert()
         default:
             return
+        }
+        
+        if let lastDate = Defaults["mapLastTimeStamp"].date, lastLoadDate = self.lastLoadDate {
+            if lastDate.timeIntervalSince1970 != lastLoadDate.timeIntervalSince1970 {
+                println("will load new contents")
+                self.loadContents()
+            }
         }
         
     }
@@ -255,7 +264,7 @@ extension MapViewController {
     }
     
     func showCurrentLocation() {
-        self.mapView.setRegion(MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 1000, 1000), animated: true)
+        self.mapView.setRegion(MKCoordinateRegionMakeWithDistance(self.mapView.userLocation.coordinate, 2000, 2000), animated: true)
     }
     
     private func getCurrentBox() -> [Double] {
@@ -308,10 +317,17 @@ extension MapViewController {
                 }
                 self.adjustRegion(self.allAnnotationMapView.annotations)
                 self.updateVisibleAnnotations()
+                self.lastLoadDate = NSDate()
                 
             })
         case .MyStation:
-            AlamofireController.request(.GET, "/groups", parameters: ["category": "mine", "type": "station"], success: { groupData in
+            AlamofireController.request(.GET, "/groups",
+                parameters: [
+                    "category": "mine",
+                    "type": "station",
+                    "after": lastTimeStamp!.timeIntervalSince1970
+                ],
+                success: { groupData in
                 if let groups:[GroupEntity] = GroupEntity.collection(groupData) {
                     
                     let annotations = groups.map { group -> GroupAnnotation in
@@ -326,6 +342,7 @@ extension MapViewController {
                 }
                 self.adjustRegion(self.allAnnotationMapView.annotations)
                 self.updateVisibleAnnotations()
+                self.lastLoadDate = NSDate()
                 
             })
         }

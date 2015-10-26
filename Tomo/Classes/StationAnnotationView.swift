@@ -74,7 +74,7 @@ class StationAnnotationView: AggregatableAnnotationView {
         case 30..<Int.max:
             color = Palette.Pink.getDarkPrimaryColor()
         default:
-            color = Palette.Pink.getAccentColor()
+            color = Palette.Teal.getAccentColor()
         }
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
