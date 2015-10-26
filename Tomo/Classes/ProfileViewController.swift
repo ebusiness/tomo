@@ -174,8 +174,10 @@ extension ProfileViewController {
 extension ProfileViewController {
     
     private func reloadButtons() {
+        self.tableView.beginUpdates()
         self.tableView.reloadSections(NSIndexSet(index: invitedSection), withRowAnimation: .Automatic)
         self.tableView.reloadSections(NSIndexSet(index: sendMessageSection), withRowAnimation: .Automatic)
+        self.tableView.endUpdates()
         if let friends = me.friends where friends.contains(self.user.id) {
             self.deleteFriendButton.hidden = false
         } else {
