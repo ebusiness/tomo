@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -178,6 +178,14 @@
                                     <constraint firstAttribute="width" constant="39" id="bIB-az-uMA"/>
                                 </constraints>
                             </pageControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3A6-WY-H76">
+                                <rect key="frame" x="0.0" y="660" width="314" height="1"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="X9T-m5-llm"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -186,6 +194,8 @@
                             <constraint firstItem="XuU-Hv-w6D" firstAttribute="leading" secondItem="AfO-VT-fSv" secondAttribute="leading" id="3LP-lI-KLn"/>
                             <constraint firstItem="XuU-Hv-w6D" firstAttribute="top" secondItem="AfO-VT-fSv" secondAttribute="top" id="4S5-uU-noh"/>
                             <constraint firstAttribute="trailing" secondItem="1KV-Wy-XX4" secondAttribute="trailing" constant="16" id="5TK-1g-rwD"/>
+                            <constraint firstAttribute="bottom" secondItem="3A6-WY-H76" secondAttribute="bottom" id="7FN-Pm-S4Y"/>
+                            <constraint firstItem="3A6-WY-H76" firstAttribute="leading" secondItem="AfO-VT-fSv" secondAttribute="leading" id="7ft-so-8r0"/>
                             <constraint firstAttribute="trailing" secondItem="kGR-hJ-Vwc" secondAttribute="trailing" constant="8" id="8XH-9p-3Xg"/>
                             <constraint firstItem="1KV-Wy-XX4" firstAttribute="bottom" secondItem="FFq-2v-BOP" secondAttribute="bottom" id="9yC-pV-X5s"/>
                             <constraint firstItem="xfO-UH-rq5" firstAttribute="leading" secondItem="AfO-VT-fSv" secondAttribute="leading" constant="8" id="DEd-Ub-f9h"/>
@@ -194,6 +204,7 @@
                             <constraint firstItem="1it-KP-iAZ" firstAttribute="centerY" secondItem="lkc-gW-6rk" secondAttribute="centerY" id="I7X-sP-3bo"/>
                             <constraint firstItem="FFq-2v-BOP" firstAttribute="leading" secondItem="AfO-VT-fSv" secondAttribute="leading" constant="16" id="MNv-f4-CQ4"/>
                             <constraint firstItem="lkc-gW-6rk" firstAttribute="top" secondItem="XuU-Hv-w6D" secondAttribute="bottom" constant="8" id="N8t-hI-cSW"/>
+                            <constraint firstAttribute="trailing" secondItem="3A6-WY-H76" secondAttribute="trailing" id="S5I-WM-dSQ"/>
                             <constraint firstAttribute="trailing" secondItem="XuU-Hv-w6D" secondAttribute="trailing" id="UAf-ky-21I"/>
                             <constraint firstAttribute="trailing" secondItem="J74-PS-B6b" secondAttribute="trailing" constant="16" id="UpS-xt-uTt"/>
                             <constraint firstItem="1KV-Wy-XX4" firstAttribute="leading" secondItem="cXg-b1-Plu" secondAttribute="trailing" constant="8" id="dmY-d0-kbC"/>
