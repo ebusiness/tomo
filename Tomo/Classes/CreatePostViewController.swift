@@ -527,6 +527,7 @@ extension CreatePostViewController {
     }
     
     @IBAction func clearLocationButtonPressed(sender: AnyObject) {
+        self.stopLocationManager()
         location = nil
         placemark = nil
         updateLocationLabel()

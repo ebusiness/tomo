@@ -17,7 +17,7 @@ class AlamofireController {
         }()
     
     private static let alamofireInstance: Manager = {
-        #if DEBUG
+//        #if DEBUG
             /// allow invalid SSL certificates
             
             let range = kAPIBaseURLString.matches("([a-zA-Z\\d\\.\\-]+)")?[1].rangeAtIndex(0)// ?? 0...kAPIBaseURLString.length - 1
@@ -30,7 +30,7 @@ class AlamofireController {
             ]
             
             Manager.sharedInstance.session.serverTrustPolicyManager = ServerTrustPolicyManager(policies: serverTrustPolicies)
-        #endif
+//        #endif
         
         return Manager.sharedInstance
         

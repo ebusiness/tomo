@@ -196,6 +196,9 @@ extension ListenerEvent {
         
         let invitation = NotificationEntity(userInfo)
         invitation.id = invitation.targetId
+        let hadInvited =  me.friendInvitations.find { $0.from.id == invitation.from.id } == nil
+        if hadInvited { return }
+        
         me.friendInvitations.insert(invitation, atIndex: 0)
         
         if let friendListViewController = tabBarController.selectedViewController?.childViewControllers.last as? FriendListViewController {

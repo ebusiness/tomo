@@ -229,13 +229,13 @@ extension OpenidController {
         let message = self.wxGetRequestMesage(img, description: description)
         
         
-        message.messageExt = "附加消息：Come from 現場TOMO" //返回到程序之后用
+        message.messageExt = extInfo//"附加消息：Come from 現場TOMO" //返回到程序之后用
         message.mediaTagName = "WECHAT_TAG_JUMP_APP";
         //message.messageAction = "<action>\(messageAction)</action>" //不能返回  ..返回到程序之后用
         
         let ext = WXAppExtendObject()
-        ext.extInfo = "<xml>\(extInfo)</xml>" //返回到程序之后用
-        ext.url = "http://weixin.qq.com";//不设置 不能发朋友圈 设置了也没有作用  未安装APP的时候 会打开 微信开发者中心中 设定的 URL 如果没有设定 会打开 weixin.qq.com
+//        ext.extInfo = extInfo //返回到程序之后用
+        ext.url = "http://weixin.qq.com";//不设置不能发朋友圈. 虽然设置了,但未安装APP时,并不会访问该地址,而是微信开发者中心中设定的URL.如果没有设定,会打开 weixin.qq.com.
         let buffer:[UInt8] = [0x00, 0xff]
         let data = NSData(bytes: buffer, length: buffer.count)
         ext.fileData = data;
@@ -294,16 +294,17 @@ extension OpenidController: WXApiDelegate {
             
         } else if let temp = req as? ShowMessageFromWXReq {
             let msg = temp.message
-            if let obj = msg.mediaObject as? WXAppExtendObject {
-                //显示微信传过来的内容
-                NSLog("openID: %@, 标题：%@ \n内容：%@ \n附带信息：%@ \n缩略图:%u bytes\n附加消息:%@\n",
-                    temp.openID,
-                    msg.title,
-                    msg.description,
-                    obj.extInfo,
-                    msg.thumbData.length,
-                    msg.messageExt)
-            }
+            URLSchemesController.sharedInstance.handleOpenURL(NSURL(string: "tomo://post-new/\(msg.messageExt)")!)
+//            if let obj = msg.mediaObject as? WXAppExtendObject {
+//                //显示微信传过来的内容
+//                NSLog("openID: %@, 标题：%@ \n内容：%@ \n附带信息：%@ \n缩略图:%u bytes\n附加消息:%@\n",
+//                    temp.openID,
+//                    msg.title,
+//                    msg.description,
+//                    obj.extInfo,
+//                    msg.thumbData.length,
+//                    msg.messageExt)
+//            }
         } else if let temp = req as? LaunchFromWXReq {
             let msg = temp.message
             NSLog("openID: %@, messageExt:%@", temp.openID, msg.messageExt)

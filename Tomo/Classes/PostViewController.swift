@@ -160,7 +160,7 @@ class PostViewController: BaseViewController{
     
     @IBAction func moreBtnTapped(sender: AnyObject) {
         
-        let shareUrl = kAPIBaseURLString + "/mobile/share/post/" + self.post.id!
+//        let shareUrl = kAPIBaseURLString + "/mobile/share/post/" + self.post.id!
         
         var shareImage:UIImage?
         if self.postImageList.subviews.count > 0 {
@@ -173,11 +173,11 @@ class PostViewController: BaseViewController{
         var optionalList = Dictionary<String,((UIAlertAction!) -> Void)!>()
         
         optionalList["微信"] = { (_) -> Void in
-            OpenidController.instance.wxShare(0, img: shareImage, description: self.post.content!, url:shareUrl)
+            OpenidController.instance.wxShare(0, img: shareImage, description: self.post.content!, extInfo: self.post.id)
         }
         
         optionalList["朋友圈"] = { (_) -> Void in
-            OpenidController.instance.wxShare(1, img: shareImage, description: self.post.content!, url:shareUrl)
+            OpenidController.instance.wxShare(1, img: shareImage, description: self.post.content!, extInfo: self.post.id)
         }
         
         if post.owner.id == me.id {

@@ -87,10 +87,11 @@ extension ProfileViewController {
     
     @IBAction func addFriend(sender: UIButton) {
         
+        sender.userInteractionEnabled = false
         var param = Dictionary<String, String>()
         param["id"] = self.user.id
         
-        AlamofireController.request(.POST, "/invitations", parameters: param, success: { _ in
+        let successHandler: ((AnyObject)->()) = { _ in
             
             if me.invitations == nil {
                 me.invitations = []
@@ -98,7 +99,15 @@ extension ProfileViewController {
             me.invitations?.append(self.user.id)
             Util.showSuccess("已发送交友请求")
             self.reloadButtons()
-        })
+            
+            sender.userInteractionEnabled = true
+        }
+        
+        let failureHandler: (Int)->() = { _ in
+            sender.userInteractionEnabled = true
+        }
+        
+        AlamofireController.request(.POST, "/invitations", parameters: param, success: successHandler, failure: failureHandler)
     }
     
     @IBAction func sendMessage(sender: UIButton) {

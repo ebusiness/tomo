@@ -70,7 +70,10 @@ extension URLSchemesController{
         if self.tabBarController.childViewControllers.count > tabSelectedIndex {
             self.tabBarController.selectedIndex = tabSelectedIndex
 //            self.tabBarController.selectedViewController
-            (self.tabBarController.childViewControllers[tabSelectedIndex] as? UINavigationController)?.pushViewController(viewController, animated: true)
+            if let selectedViewController = self.tabBarController.childViewControllers[tabSelectedIndex] as? UINavigationController {
+                selectedViewController.popToRootViewControllerAnimated(false)
+                selectedViewController.pushViewController(viewController, animated: true)
+            }
         } else {
 //            println( self.tabBarController.childViewControllers )
         }

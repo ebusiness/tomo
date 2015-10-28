@@ -144,7 +144,9 @@ extension GroupDescriptionViewController {
             sender.userInteractionEnabled = true
         }
         
-        AlamofireController.request(.PATCH, "/groups/\(self.group.id)/leave", success: successHandler, failure: failureHandler)
+        Util.alert(self, title: "退出群组", message: "确定退出该群组么?") { (_) -> Void in
+            AlamofireController.request(.PATCH, "/groups/\(self.group.id)/leave", success: successHandler, failure: failureHandler)
+        }
     }
 }
 

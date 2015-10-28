@@ -18,7 +18,17 @@ final class LocationController: NSObject {
     typealias LocationClosure = ((location: CLLocation?)->())
     private var locationUpdated: LocationClosure?
     
-    private var location: CLLocation? {
+    /*
+    // KVO
+    LocationController.shareInstance.addObserver(self, forKeyPath: "location", options: .New, context: nil)
+    
+    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+        if let locationController = object as? LocationController {
+            println(locationController.location)
+        }
+    }
+    */
+    dynamic var location: CLLocation? {
         didSet {
             if let location = location {
                 // accuracy better than desiredAccuracy, stop locating
