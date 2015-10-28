@@ -29,6 +29,9 @@ final class GroupDetailViewController: BaseTableViewController {
         self.setTitleView()
         self.updateUI()
         
+        self.joinButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.joinButton.layer.borderWidth = 2
+        
         tableView.registerNib(UINib(nibName: "ICYPostCell", bundle: nil), forCellReuseIdentifier: "ICYPostCellIdentifier")
         tableView.registerNib(UINib(nibName: "ICYPostImageCell", bundle: nil), forCellReuseIdentifier: "ICYPostImageCellIdentifier")
         tableView.separatorStyle = .None
