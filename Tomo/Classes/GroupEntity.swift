@@ -26,7 +26,7 @@ class GroupEntity: Entity {
     
     var address: String?
     
-//    var station: StationEntity?
+    var pref: String?
     
     var members: [UserEntity]?
     
@@ -63,7 +63,7 @@ class GroupEntity: Entity {
         
         self.address = json["address"].stringValue
         
-//        self.station = StationEntity(json["station"])
+        self.pref = json["pref"].stringValue
         
         if let members = json["members"].array {
             self.members = []

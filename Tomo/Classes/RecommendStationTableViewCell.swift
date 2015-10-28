@@ -28,7 +28,7 @@ class RecommendStationTableCell: UITableViewCell {
     }
     
     func setup() {
-        pageControl.numberOfPages = (groups.count - 1) / 12 + 1
+        pageControl.numberOfPages = (groups.count - 1) / 9 + 1
         collectionView.reloadData()
     }
 }
@@ -95,7 +95,7 @@ extension RecommendStationTableCell: UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
         let width = screenWidth / 3 - 1
-        let height = collectionView.bounds.height / 4 - 1
+        let height = collectionView.bounds.height / 3 - 1
         
         return CGSizeMake(width, height)
     }

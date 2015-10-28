@@ -11,10 +11,12 @@ import UIKit
 class StationCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var prefLabel: UILabel!
     
     var group: GroupEntity!
     
     func setupDisplay() {
         self.nameLabel.text = self.group.name
+        self.prefLabel.text = self.group.pref
     }
 }
