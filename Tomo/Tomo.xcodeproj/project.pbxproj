@@ -181,6 +181,9 @@
 		D0B48E921BE19FE8007BD9BD /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E831BE19FE8007BD9BD /* Stream.swift */; };
 		D0B48E931BE19FE8007BD9BD /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E841BE19FE8007BD9BD /* Upload.swift */; };
 		D0B48E941BE19FE8007BD9BD /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E851BE19FE8007BD9BD /* Validation.swift */; };
+		D0B48E981BE1A6D2007BD9BD /* SocketAckEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E951BE1A6D2007BD9BD /* SocketAckEmitter.swift */; };
+		D0B48E991BE1A6D2007BD9BD /* SocketIOClientStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E961BE1A6D2007BD9BD /* SocketIOClientStatus.swift */; };
+		D0B48E9A1BE1A6D2007BD9BD /* SocketStringReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E971BE1A6D2007BD9BD /* SocketStringReader.swift */; };
 		D0B6364E1B81A9C70012C4E8 /* URLSchemesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */; };
 		D0B6EB121B5E7D09005A7E45 /* MyAccountHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */; };
 		D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */; };
@@ -382,6 +385,9 @@
 		D0B48E831BE19FE8007BD9BD /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
 		D0B48E841BE19FE8007BD9BD /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
 		D0B48E851BE19FE8007BD9BD /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
+		D0B48E951BE1A6D2007BD9BD /* SocketAckEmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketAckEmitter.swift; sourceTree = "<group>"; };
+		D0B48E961BE1A6D2007BD9BD /* SocketIOClientStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketIOClientStatus.swift; sourceTree = "<group>"; };
+		D0B48E971BE1A6D2007BD9BD /* SocketStringReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketStringReader.swift; sourceTree = "<group>"; };
 		D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLSchemesController.swift; path = Classes/URLSchemesController.swift; sourceTree = "<group>"; };
 		D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountHeaderViewController.swift; path = Classes/MyAccountHeaderViewController.swift; sourceTree = "<group>"; };
 		D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountBaseController.swift; path = Classes/MyAccountBaseController.swift; sourceTree = "<group>"; };
@@ -458,6 +464,9 @@
 		1F1176951B983D280049D9F5 /* SocketIOClientSwift */ = {
 			isa = PBXGroup;
 			children = (
+				D0B48E951BE1A6D2007BD9BD /* SocketAckEmitter.swift */,
+				D0B48E961BE1A6D2007BD9BD /* SocketIOClientStatus.swift */,
+				D0B48E971BE1A6D2007BD9BD /* SocketStringReader.swift */,
 				1F1176961B983D280049D9F5 /* SocketAckManager.swift */,
 				1F1176971B983D280049D9F5 /* SocketAnyEvent.swift */,
 				1F1176981B983D280049D9F5 /* SocketEngine.swift */,
@@ -1169,6 +1178,7 @@
 				D08BFB0B1B744C2D00771F70 /* JSQMessageEntity.swift in Sources */,
 				29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */,
 				1FCA1E671B722260000F2936 /* MessageEntity.swift in Sources */,
+				D0B48E9A1BE1A6D2007BD9BD /* SocketStringReader.swift in Sources */,
 				1F1176AC1B983D280049D9F5 /* SocketParser.swift in Sources */,
 				D0B48E8F1BE19FE8007BD9BD /* ResponseSerialization.swift in Sources */,
 				D0B48E901BE19FE8007BD9BD /* Result.swift in Sources */,
@@ -1212,6 +1222,7 @@
 				D07E48541B9EB35B00BF04B2 /* Entity.swift in Sources */,
 				1F985E6E1B60C19F008D5369 /* String.swift in Sources */,
 				D0B48E881BE19FE8007BD9BD /* Error.swift in Sources */,
+				D0B48E991BE1A6D2007BD9BD /* SocketIOClientStatus.swift in Sources */,
 				1F1176A61B983D280049D9F5 /* SocketEngineClient.swift in Sources */,
 				1FCA1E631B71D0C8000F2936 /* CommentEntity.swift in Sources */,
 				1FAA70FE1BBBF99100BCE5AF /* StationAnnotationView.swift in Sources */,
@@ -1274,6 +1285,7 @@
 				1F1176AA1B983D280049D9F5 /* SocketLogger.swift in Sources */,
 				1F8DEBE01BBD22600037FD1C /* PostCallOutViewController.swift in Sources */,
 				D0F44FAB1B5E4790009E12AA /* BookmarkedPostsViewController.swift in Sources */,
+				D0B48E981BE1A6D2007BD9BD /* SocketAckEmitter.swift in Sources */,
 				D0B6EB121B5E7D09005A7E45 /* MyAccountHeaderViewController.swift in Sources */,
 				D0B48E941BE19FE8007BD9BD /* Validation.swift in Sources */,
 				1F985E6A1B60C19F008D5369 /* Range.swift in Sources */,
