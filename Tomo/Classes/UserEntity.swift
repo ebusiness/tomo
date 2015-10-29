@@ -80,7 +80,7 @@ class UserEntity: Entity {
         self.lastName = json["lastName"].string
         
         if let birthDay = json["birthDay"].string {
-            self.birthDay = birthDay.toDate(format: kDateFormat)
+            self.birthDay = birthDay.toDate(kDateFormat)
         }
         self.telNo = json["telNo"].string
         
@@ -96,14 +96,14 @@ class UserEntity: Entity {
         
         self.friendInvitations = []
         if let invitations = json["friendInvitations"].array {
-            invitations.map { (invitation) -> () in
+            invitations.forEach { (invitation) -> () in
                 self.friendInvitations.append( NotificationEntity(invitation) )
             }
         }
         
         self.newMessages = []
         if let messages = json["newMessages"].array {
-            messages.map { (message) -> () in
+            messages.forEach { (message) -> () in
                 self.newMessages.append( MessageEntity(message) )
             }
         }

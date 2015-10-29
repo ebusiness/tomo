@@ -61,15 +61,15 @@ class PostEntity: Entity {
         
         if let postComments = json["comments"].array {
             self.comments = []
-            postComments.map { (commentJson) -> () in
-                var comment = CommentEntity(commentJson)
+            postComments.forEach { (commentJson) -> () in
+                let comment = CommentEntity(commentJson)
                 self.comments!.append(comment)
             }
         }
         
         self.coordinate = json["coordinate"].arrayObject as? [Double]
         
-        self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
+        self.createDate = json["createDate"].stringValue.toDate(kDateFormat)
         
     }
     

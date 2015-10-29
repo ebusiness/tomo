@@ -160,7 +160,7 @@ enum MediaMessage: Int {
     static func fileNameOfMessage(str: String) -> String? {
         for media in medias {
             if str.hasPrefix(media.messagePrefix) {
-                return str[media.messagePrefix.length..str.length]!
+                return str[media.messagePrefix.length..<str.length]!
             }
         }
         return nil
@@ -199,10 +199,13 @@ enum MediaMessage: Int {
     }
     
     static func fullPath(str: String) -> String {
-        return kS3BasePath.stringByAppendingPathComponent(AmazonS3Bucket).stringByAppendingPathComponent(remotePath(fileName: fileNameOfMessage(str)!, type: mediaMessage(str)!))
+        let fileName = fileNameOfMessage(str)!
+        let type = mediaMessage(str)!
+        return self.fullPath(fileName: fileName, type: type)
     }
     
     static func fullPath(fileName name: String, type: MediaMessage) -> String {
-        return kS3BasePath.stringByAppendingPathComponent(AmazonS3Bucket).stringByAppendingPathComponent(remotePath(fileName: name, type: type))
+        let remote = remotePath(fileName: name, type: type)
+        return "\(kS3BasePath)/\(AmazonS3Bucket)\(remote)"
     }
 }

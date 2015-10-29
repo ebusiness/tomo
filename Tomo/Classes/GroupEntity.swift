@@ -67,21 +67,21 @@ class GroupEntity: Entity {
         
         if let members = json["members"].array {
             self.members = []
-            members.map { (memberJson) -> () in
-                var member = UserEntity(memberJson)
+            members.forEach { memberJson in
+                let member = UserEntity(memberJson)
                 self.members!.append(member)
             }
         }
         
         if let posts = json["posts"].array {
             self.posts = []
-            posts.map { (postJson) -> () in
-                var post = PostEntity(postJson)
+            posts.forEach { postJson in
+                let post = PostEntity(postJson)
                 self.posts!.append(post)
             }
         }
         
-        self.createDate = json["createDate"].stringValue.toDate(format: kDateFormat)
+        self.createDate = json["createDate"].stringValue.toDate(kDateFormat)
         
     }
 }
