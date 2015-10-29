@@ -29,9 +29,9 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
     }
     
     private func setup(){
-        var recordSettings =
+        let recordSettings: [String:AnyObject] =
         [
-            AVFormatIDKey: kAudioFormatLinearPCM,
+            AVFormatIDKey: Int(kAudioFormatLinearPCM),
             AVSampleRateKey: 8000.00,
             AVNumberOfChannelsKey: 1,
             AVLinearPCMBitDepthKey: 16,
@@ -39,34 +39,40 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
             //AVLinearPCMIsBigEndianKey: false,
             //AVLinearPCMIsFloatKey: false,
         ]
-        var error:NSErrorPointer = nil
         
-        recorder = AVAudioRecorder(URL: NSURL(fileURLWithPath: self.path_wav), settings: recordSettings as [NSObject : AnyObject], error: error)
-        recorder.delegate = self
-        recorder.meteringEnabled = true
-        //creates the file and gets ready to record. happens automatically on record.
-        let res = recorder.prepareToRecord()
-//        println("\(res)")
-//        println("\(error)")
+        do {
+            recorder = try AVAudioRecorder(URL: NSURL(fileURLWithPath: self.path_wav), settings: recordSettings)
+            recorder.delegate = self
+            recorder.meteringEnabled = true
+            //creates the file and gets ready to record. happens automatically on record.
+            recorder.prepareToRecord()
+//          println("\(res)")
+//          println("\(error)")
+        } catch {
+            
+        }
 
     }
     func start(){
         if nil == recorder {
             self.setup()
-            AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord,error: nil)
-            AVAudioSession.sharedInstance().setActive(true, error: nil)
-            
-            let status = recorder.record() //start or resume
-//            println("\(status)")
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord,withOptions: .MixWithOthers)
+                try AVAudioSession.sharedInstance().setActive(true)
+                recorder.record() //start or resume
+            } catch {
+                
+            }
         }
     }
-    func stop()->String?{
+    func stop()-> (String, String)?{
         if nil != recorder {
             recorder.stop()
-            let path = "\(paths[0])/\(NSUUID().UUIDString.lowercaseString)"
+            let name = NSUUID().UUIDString.lowercaseString
+            let path = "\(paths[0])/\(name)"
             self.wavToAmr(self.path_wav, savePath: path)
             recorder = nil;
-            return path
+            return (path, name)
         }
         return nil
     }
@@ -100,7 +106,7 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
             }
         }
         
-        let path = paths[0].stringByAppendingPathComponent("test.amr")
+        let path = "\(paths[0])/test.amr"
         data.writeToFile(path, atomically: true)
         
         play(path)
@@ -138,13 +144,16 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
         /////
         self.amrToWav(path, savePath: self.path_wav)
         /////
-        player = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: self.path_wav), error: nil)
-//        player.delegate = self
-        AVAudioSession.sharedInstance().overrideOutputAudioPort(.Speaker, error: nil)
-        
-        player.prepareToPlay()
-        player.play()
-//        println("play")
+        do {
+            player = try AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: self.path_wav), fileTypeHint: nil)
+//            player.delegate = self
+            try AVAudioSession.sharedInstance().overrideOutputAudioPort(.Speaker)
+            
+            player.prepareToPlay()
+            player.play()
+        } catch {
+            
+        }
     }
     
     func wavToAmr(wavPath:String,savePath:String){

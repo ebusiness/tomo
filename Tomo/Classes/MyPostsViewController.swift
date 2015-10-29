@@ -38,7 +38,7 @@ final class MyPostsViewController: MyAccountBaseController {
 
 // MARK: UITableView DataSource
 
-extension MyPostsViewController: UITableViewDataSource {
+extension MyPostsViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
@@ -66,7 +66,7 @@ extension MyPostsViewController: UITableViewDataSource {
 
 // MARK: UITableView Delegate
 
-extension MyPostsViewController: UITableViewDelegate {
+extension MyPostsViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -192,7 +192,7 @@ extension MyPostsViewController {
             let postid = json["targetId"].stringValue
             let user = UserEntity(json["from"])
             
-            let cell: AnyObject? = self.tableView.visibleCells().find { ($0 as! ICYPostCell).post?.id == postid }
+            let cell: AnyObject? = self.tableView.visibleCells.find { ($0 as! ICYPostCell).post?.id == postid }
             if let cell = cell as? ICYPostCell {
                 gcd.sync(.Main) {
                     done(cell: cell, user: user)

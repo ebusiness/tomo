@@ -21,10 +21,10 @@ class UserPostsViewController: ProfileBaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var postCellNib = UINib(nibName: "ICYPostCell", bundle: nil)
+        let postCellNib = UINib(nibName: "ICYPostCell", bundle: nil)
         self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "ICYPostCellIdentifier")
         
-        var postImageCellNib = UINib(nibName: "ICYPostImageCell", bundle: nil)
+        let postImageCellNib = UINib(nibName: "ICYPostImageCell", bundle: nil)
         self.tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "ICYPostImageCellIdentifier")
         
         self.clearsSelectionOnViewWillAppear = false
@@ -48,7 +48,7 @@ class UserPostsViewController: ProfileBaseController {
 
 // MARK: UITableView DataSource
 
-extension UserPostsViewController: UITableViewDataSource {
+extension UserPostsViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
@@ -76,7 +76,7 @@ extension UserPostsViewController: UITableViewDataSource {
 
 // MARK: UITableView Delegate
 
-extension UserPostsViewController: UITableViewDelegate {
+extension UserPostsViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -164,7 +164,7 @@ extension UserPostsViewController {
         var indexPathes = [NSIndexPath]()
         
         for index in firstIndex..<lastIndex {
-            indexPathes.push(NSIndexPath(forRow: index, inSection: 0))
+            indexPathes.append(NSIndexPath(forRow: index, inSection: 0))
         }
         
         // hold the oldest content for pull-up loading

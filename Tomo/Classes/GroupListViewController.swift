@@ -157,7 +157,7 @@ extension GroupListViewController {
     }
 
     private func reloadCells(){
-        if let indexPaths = self.tableView.indexPathsForVisibleRows() {
+        if let indexPaths = self.tableView.indexPathsForVisibleRows {
             self.tableView.beginUpdates()
             self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Automatic)
             self.tableView.endUpdates()

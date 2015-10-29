@@ -94,7 +94,7 @@ extension RegViewController {
         
         if let info = notification.userInfo {
             
-            if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
+            if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height {
                 
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
                     self.inputAreaBottomSpace.constant = keyboardHeight
@@ -240,8 +240,8 @@ extension RegViewController: UITextFieldDelegate {
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         
-        var email = self.emailTextField.text as NSString
-        var password = self.passwordTextField.text as NSString
+        var email = (self.emailTextField.text ?? "") as NSString
+        var password = (self.passwordTextField.text ?? "") as NSString
         
         if textField == self.emailTextField {
             email = email.stringByReplacingCharactersInRange(range, withString: string).trimmed()

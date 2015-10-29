@@ -152,7 +152,7 @@ extension MyAccountEditViewController: UITextViewDelegate {
         if textView.markedTextRange == nil {
             let max = self.getMaxLength(textView)
             if textView.text.length > max {
-                textView.text = textView.text[0..max]
+                textView.text = textView.text[0..<max]
             }
             self.setLengthToLabel(textView)
         }
@@ -170,7 +170,7 @@ extension MyAccountEditViewController: UITextViewDelegate {
 extension MyAccountEditViewController:UIGestureRecognizerDelegate {
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        if NSStringFromClass(touch.view.classForCoder) == "UITableViewCellContentView" {
+        if NSStringFromClass(touch.view!.classForCoder) == "UITableViewCellContentView" {
             return false
         }
         return true
@@ -185,7 +185,7 @@ extension MyAccountEditViewController {
         if sender.markedTextRange == nil {
             let max = self.getMaxLength(sender)
             if sender.text!.length > max {
-                sender.text = sender.text![0..max]
+                sender.text = sender.text![0..<max]
             }
             
             self.setLengthToLabel(sender)
@@ -209,8 +209,8 @@ extension MyAccountEditViewController {
             
             S3Controller.uploadFile(path, remotePath: remotePath, done: { (error) -> Void in
                 #if DEBUG
-                    println(error)
-                    println("done")
+                    print(error)
+                    print("done")
                 #endif
                 
                 if error == nil {
@@ -301,7 +301,7 @@ extension MyAccountEditViewController {
         
         let views = inputView.superview?.subviews.filter { $0 is UILabel && $0.tag == 2 }
         
-        if let views = views, label = views.last as? UILabel ,count = label.text?.toInt(){
+        if let text = (views?.last as? UILabel)?.text ,count = Int(text){
             return count
         }
         

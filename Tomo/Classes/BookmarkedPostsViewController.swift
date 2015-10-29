@@ -35,7 +35,7 @@ class BookmarkedPostsViewController: MyAccountBaseController {
 
 // MARK: UITableView DataSource
 
-extension BookmarkedPostsViewController: UITableViewDataSource {
+extension BookmarkedPostsViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return bookmarks.count
@@ -61,7 +61,7 @@ extension BookmarkedPostsViewController: UITableViewDataSource {
 
 // MARK: UITableView Delegate
 
-extension BookmarkedPostsViewController: UITableViewDelegate {
+extension BookmarkedPostsViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         

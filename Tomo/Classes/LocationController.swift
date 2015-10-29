@@ -82,9 +82,9 @@ extension LocationController: CLLocationManagerDelegate {
         stopLocationManager()
     }
     
-    internal func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    internal func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        let newLocation = locations.last as! CLLocation
+        let newLocation = locations.last!
         
         let locationAge = -newLocation.timestamp.timeIntervalSinceNow
         
@@ -154,7 +154,7 @@ extension LocationController {
     }
     
     //location manager returned, call didcomplete closure
-    private func stopLocationManager(_ location: CLLocation? = nil) {
+    private func stopLocationManager(location: CLLocation? = nil) {
         locationManager.stopUpdatingLocation()
         locationUpdated?(location: location)
     }

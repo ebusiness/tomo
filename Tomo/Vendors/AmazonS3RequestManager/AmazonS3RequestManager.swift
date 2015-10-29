@@ -244,9 +244,9 @@ public class AmazonS3RequestManager {
     public func putObject(fileURL: NSURL, destinationPath: String, done: (NSError?) -> Void) -> Request {
         let putRequest = amazonURLRequest(.PUT, path: destinationPath)
         
-        return requestManager.upload(putRequest, file: fileURL).response({ (_, res, _, error) -> Void in
+        return requestManager.upload(putRequest, file: fileURL).response { (_, _, _, error) -> Void in
             done(error)
-        })
+        }
     }
   
   /**
@@ -287,7 +287,7 @@ public class AmazonS3RequestManager {
   }
   
   private func setContentType(inout URLRequest: NSMutableURLRequest) {
-    var contentTypeString = MIMEType(URLRequest) ?? "text/plain"
+    let contentTypeString = MIMEType(URLRequest) ?? "text/plain"
     
     URLRequest.setValue(contentTypeString, forHTTPHeaderField: "Content-Type")
   }
@@ -300,15 +300,17 @@ public class AmazonS3RequestManager {
     if let fileExtension = request.URL!.pathExtension {
       if !fileExtension.isEmpty {
         
-        let UTIRef = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, nil)
-        let UTI = UTIRef.takeUnretainedValue()
-        UTIRef.release()
+        if let UTIRef = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, nil) {
+            let UTI = UTIRef.takeUnretainedValue()
+            UTIRef.release()
+            if let MIMETypeRef = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType) {
+                let MIMEType = MIMETypeRef.takeUnretainedValue()
+                MIMETypeRef.release()
+            
+                return MIMEType as String
+            }
+        }
         
-        let MIMETypeRef = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType)
-        let MIMEType = MIMETypeRef.takeUnretainedValue()
-        MIMETypeRef.release()
-        
-        return MIMEType as String
         
       }
     }

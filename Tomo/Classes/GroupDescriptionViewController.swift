@@ -121,7 +121,13 @@ extension GroupDescriptionViewController {
         let successHandler: (AnyObject)->() = { _ in
             
             me.groups?.remove(self.group.id)
-            let item = self.detailedGroup?.members?.indexOf { $0.id == me.id } ?? 0
+            
+            var item = 0
+            let user = self.detailedGroup?.members?.find { $0.id == me.id }
+            if let user = user {
+                item = self.detailedGroup?.members?.indexOf(user) ?? 0
+            }
+            
             self.detailedGroup?.removeMember(me)
             
             self.memberCollectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: item, inSection: 0)])

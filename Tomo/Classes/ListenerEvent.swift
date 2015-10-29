@@ -126,7 +126,7 @@ extension ListenerEvent {
             
             let notificationView = self.getNotificationView()
             notificationView.notification = notification
-            let topConstraint: AnyObject? = notificationView.superview!.constraints().find { $0.firstAttribute == .Top && $0.firstItem is NotificationView }
+            let topConstraint: AnyObject? = notificationView.superview!.constraints.find { $0.firstAttribute == .Top && $0.firstItem is NotificationView }
             
             if let topConstraint = topConstraint as? NSLayoutConstraint {
                 topConstraint.constant = 0
@@ -146,11 +146,11 @@ extension ListenerEvent {
             return lastView
         } else {
             let notificationView = Util.createViewWithNibName("NotificationView") as! NotificationView
-            notificationView.setTranslatesAutoresizingMaskIntoConstraints(false)
+            notificationView.translatesAutoresizingMaskIntoConstraints = false
             let views = ["notificationView":notificationView]
             window.addSubview(notificationView)
-            window.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[notificationView]|", options: nil, metrics: nil, views: views))
-            window.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-(-64)-[notificationView(==64)]", options: nil, metrics: nil, views: views))
+            window.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[notificationView]|", options: [], metrics: nil, views: views))
+            window.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-(-64)-[notificationView(==64)]", options: [], metrics: nil, views: views))
             window.layoutIfNeeded()
             notificationView.layoutIfNeeded()
             

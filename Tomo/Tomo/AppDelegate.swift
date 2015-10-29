@@ -30,14 +30,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let rootvc = window?.rootViewController as? TabBarController{
             application.applicationIconBadgeNumber = rootvc.viewControllers!.reduce(0) { (count, vc ) -> Int in
-                if let vc = vc as? UIViewController, badgeValue = vc.tabBarItem.badgeValue, badge = badgeValue.toInt() {
+                if let badgeValue = vc.tabBarItem.badgeValue, badge = Int(badgeValue) {
                     return count + badge
                 }
                 return count
             }
         }
         
-        println("will save time \(NSDate())")
+        print("will save time \(NSDate())")
         Defaults["mapLastTimeStamp"] = NSDate()
     }
     
@@ -84,10 +84,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    }
     
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
-        return self.application(application, openURL: url, sourceApplication: nil, annotation: nil)
+        return self.application(application, openURL: url, sourceApplication: nil, annotation: [])
     }
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         return URLSchemesController.sharedInstance.handleOpenURL(url)
     }
 }

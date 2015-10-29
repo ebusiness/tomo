@@ -12,7 +12,7 @@ class GroupAnnotationView: AggregatableAnnotationView, UIPageViewControllerDataS
     
     var imageView: UIImageView!
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -59,7 +59,7 @@ class GroupAnnotationView: AggregatableAnnotationView, UIPageViewControllerDataS
             
             let callOutViewController = GroupCallOutViewController(nibName: "GroupCallOutView", bundle: nil)
             
-            if let index = find(containedAnnotations, currentGroup) {
+            if let index = containedAnnotations.indexOf(currentGroup) {
                 
                 if index < containedAnnotations.count - 1 {
                     callOutViewController.groupAnnotation = containedAnnotations.get(index + 1) as! GroupAnnotation
@@ -90,7 +90,7 @@ class GroupAnnotationView: AggregatableAnnotationView, UIPageViewControllerDataS
             
             let callOutViewController = GroupCallOutViewController(nibName: "GroupCallOutView", bundle: nil)
             
-            if let index = find(containedAnnotations, currentGroup) {
+            if let index = containedAnnotations.indexOf(currentGroup) {
                 
                 if index == 0 {
                     callOutViewController.groupAnnotation = annotation

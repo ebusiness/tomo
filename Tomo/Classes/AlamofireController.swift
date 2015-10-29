@@ -19,17 +19,20 @@ class AlamofireController {
     private static let alamofireInstance: Manager = {
 //        #if DEBUG
             /// allow invalid SSL certificates
-            
-            let range = kAPIBaseURLString.matches("([a-zA-Z\\d\\.\\-]+)")?[1].rangeAtIndex(0)// ?? 0...kAPIBaseURLString.length - 1
+        do {
+            let range = try kAPIBaseURLString.matches("([a-zA-Z\\d\\.\\-]+)")?[1].rangeAtIndex(0)// ?? 0...kAPIBaseURLString.length - 1
             
             /// "tomo.e-business.co.jp"
-            let hostName = kAPIBaseURLString[range!.location..(range!.location + range!.length)]!
+            let hostName = kAPIBaseURLString[range!.location..<(range!.location + range!.length)]!
             
             let serverTrustPolicies: [String: ServerTrustPolicy] = [
                 hostName: .DisableEvaluation
             ]
             
             Manager.sharedInstance.session.serverTrustPolicyManager = ServerTrustPolicyManager(policies: serverTrustPolicies)
+        } catch {
+            
+        }
 //        #endif
         
         return Manager.sharedInstance
@@ -53,19 +56,19 @@ class AlamofireController {
         }
         
         if let success = success {
-            request.responseJSON { (_, res, result, err) -> Void in
+            request.responseJSON { res in
                 Util.dismissHUD()
-                if let result: AnyObject = result where err == nil {
+                if let result: AnyObject = res.result.value where res.result.error == nil {
                     success(result)
                 } else {
-                    self.errorHanding(res, error: err, failure: failure)
+                    self.errorHanding(res.response, error: res.result.error, failure: failure)
                 }
             }
         } else {
-            request.response({ (_, res, _, err) -> Void in
+            request.response { (_, res, _, err) -> Void in
                 Util.dismissHUD()
                 self.errorHanding(res, error: err, failure: failure)
-            })
+            }
         }
     }
     
@@ -74,8 +77,8 @@ class AlamofireController {
     private class func errorHanding(res: NSHTTPURLResponse?, error: NSError?, failure: ((Int)->())?) {
         
         #if DEBUG
-            println(res?.URL)
-            println(error)
+            print(res?.URL)
+            print(error)
         #endif
         let statusCode = res?.statusCode ?? badRequestCode
         

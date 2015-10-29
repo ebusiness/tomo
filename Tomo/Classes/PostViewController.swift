@@ -359,7 +359,7 @@ extension PostViewController {
             imgView.tag = i
             let tap = UITapGestureRecognizer(target: self, action: Selector("postImageViewTapped:"))
             imgView.addGestureRecognizer(tap)
-            imgView.setTranslatesAutoresizingMaskIntoConstraints(false)
+            imgView.translatesAutoresizingMaskIntoConstraints = false
 //            imgView.contentMode = UIViewContentMode.ScaleAspectFill
             imgView.clipsToBounds = true
             return imgView
@@ -374,13 +374,13 @@ extension PostViewController {
             imageview.removeFromSuperview()
         }
         
-        var imageWidth = UIScreen.mainScreen().bounds.size.width
+        let imageWidth = UIScreen.mainScreen().bounds.size.width
         
         let centerImageView = getImageView (0)
         var views = ["centerImageView": centerImageView, "postImageList": postImageList]
         postImageList.addSubview(centerImageView)
         
-        var constraint = NSLayoutConstraint.constraintsWithVisualFormat("V:|[centerImageView(==postImageList)]", options: nil, metrics: nil, views: views)
+        var constraint = NSLayoutConstraint.constraintsWithVisualFormat("V:|[centerImageView(==postImageList)]", options: [], metrics: nil, views: views)
         
         if (post.images?.count ?? 0 ) == 1 {
             postImageList.contentSize.width = imageWidth
@@ -397,7 +397,7 @@ extension PostViewController {
             views["leftImageView"] = leftImageView
             views["rightImageView"] = rightImageView
             
-            constraint += NSLayoutConstraint.constraintsWithVisualFormat("H:|[leftImageView(==centerImageView)][centerImageView(==imageWidth)][rightImageView(==centerImageView)]", options: .AlignAllTop | .AlignAllBottom, metrics: ["imageWidth": imageWidth], views: views)
+            constraint += NSLayoutConstraint.constraintsWithVisualFormat("H:|[leftImageView(==centerImageView)][centerImageView(==imageWidth)][rightImageView(==centerImageView)]", options: [.AlignAllTop, .AlignAllBottom], metrics: ["imageWidth": imageWidth], views: views)
             postImageList.contentOffset.x = imageWidth
         }
         postImageList.addConstraints(constraint)
@@ -448,7 +448,7 @@ extension PostViewController {
                 let center =  (postImageList.subviews[1] as! UIImageView)
                 let right =  (postImageList.subviews.last as! UIImageView)
                 
-                for i in 0..images.count {
+                for i in 0..<images.count {
                     if i == left.tag {
                         items.append(self.getGalleryItem(i, image: left.image))
                     } else if i == center.tag {
@@ -594,7 +594,7 @@ extension PostViewController {
     
     func keyboardWillShow(notification: NSNotification) {
         isKeyboardShown = true
-        if let info = notification.userInfo, keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height ,duration = info[UIKeyboardAnimationDurationUserInfoKey] as? NSTimeInterval {
+        if let info = notification.userInfo, keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height ,duration = info[UIKeyboardAnimationDurationUserInfoKey] as? NSTimeInterval {
             
             self.bottomConstraint.constant = keyboardHeight
             UIView.animateWithDuration(duration, animations: { () -> Void in

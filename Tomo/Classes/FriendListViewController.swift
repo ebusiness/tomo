@@ -27,7 +27,7 @@ final class FriendListViewController: BaseTableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        if let indexPath = tableView.indexPathForSelectedRow() {
+        if let indexPath = tableView.indexPathForSelectedRow {
             let myfriends = me.friends ?? []
             
             if indexPath.section == 0 {
@@ -77,7 +77,7 @@ extension FriendListViewController {
         
         AlamofireController.request(.GET, "/friends", success: { (result) -> () in
             self.friends = UserEntity.collection(result)!
-            self.friends.sort({
+            self.friends.sortInPlace({
                 
                 if let msg1 = $0.lastMessage, msg2 = $1.lastMessage {
                     return msg1.createDate.timeIntervalSinceNow > msg2.createDate.timeIntervalSinceNow

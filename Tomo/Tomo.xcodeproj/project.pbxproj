@@ -1426,7 +1426,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(SRCROOT)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Tomo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1460,7 +1459,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(SRCROOT)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Tomo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

@@ -14,10 +14,10 @@ class Util: NSObject {
     class func createViewControllerWithIdentifier(id: String?, storyboardName: String) -> UIViewController {
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         if let id = id {
-            return storyboard.instantiateViewControllerWithIdentifier(id) as! UIViewController
+            return storyboard.instantiateViewControllerWithIdentifier(id) 
         }
         
-        return storyboard.instantiateInitialViewController() as! UIViewController
+        return storyboard.instantiateInitialViewController()!
     }
     
     class func createViewWithNibName(name: String) -> UIView {
@@ -51,19 +51,11 @@ class Util: NSObject {
     }
     
     class func setupPush() {
-        if iOS8() {
-            var types: UIUserNotificationType = UIUserNotificationType.Badge |
-                UIUserNotificationType.Alert |
-                UIUserNotificationType.Sound
-            
-            var settings: UIUserNotificationSettings = UIUserNotificationSettings( forTypes: types, categories: nil )
-            
-            let application = UIApplication.sharedApplication()
-            application.registerUserNotificationSettings( settings )
-            application.registerForRemoteNotifications()
-        } else {
-            UIApplication.sharedApplication().registerForRemoteNotificationTypes(.Alert | .Badge | .Sound);
-        }
+        let settings: UIUserNotificationSettings = UIUserNotificationSettings( forTypes: [.Badge, .Alert, .Sound], categories: nil )
+        
+        let application = UIApplication.sharedApplication()
+        application.registerUserNotificationSettings( settings )
+        application.registerForRemoteNotifications()
     }
     
     class func scale() -> CGFloat {
@@ -201,7 +193,7 @@ extension Util {
         image.drawInRect(rect)
         //CGContextSetRGBFillColor(context, red, green, blue, alpha)
         CGContextSetFillColorWithColor(context, color.CGColor)
-        CGContextSetBlendMode(context, kCGBlendModeSourceAtop)
+        CGContextSetBlendMode(context, CGBlendMode.SourceAtop)//kCGBlendModeSourceAtop
         CGContextFillRect(context, rect)
         let result = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -278,11 +270,19 @@ extension UIApplication {
 extension String {
     
     func isEmail() -> Bool {
-        return self =~ "^[a-zA-Z0-9\\._%+-]+@[a-zA-Z0-9\\.-]+\\.[a-zA-Z]{2,4}$"
+        do {
+            return try self =~ "^[a-zA-Z0-9\\._%+-]+@[a-zA-Z0-9\\.-]+\\.[a-zA-Z]{2,4}$"
+        } catch {
+            return false
+        }
     }
     
     func isValidPassword() -> Bool {
-        return self =~ "(?=^.{8,}$)(?=.*\\d)(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+        do {
+            return try self =~ "(?=^.{8,}$)(?=.*\\d)(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+        } catch {
+            return false
+        }
     }
 }
 

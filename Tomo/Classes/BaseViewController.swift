@@ -36,7 +36,7 @@ class BaseViewController: UIViewController {
             
             self.extendedLayoutIncludesOpaqueBars = false
             self.automaticallyAdjustsScrollViewInsets = true
-            var image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
+            let image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
             self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
             self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
         } else {
@@ -56,7 +56,7 @@ extension BaseViewController {
     func getTopConstraint() {
         if let headerView = (self.view.subviews.first as? UITableView)?.tableHeaderView where headerView.frame.size.height >=  self.headerHeight + 64 {
                 
-                self.topConstraint = headerView.constraints().find { $0.firstAttribute == .Top } as? NSLayoutConstraint
+                self.topConstraint = headerView.constraints.find { $0.firstAttribute == .Top }
         }
     }
 }

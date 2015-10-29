@@ -152,7 +152,7 @@ extension GroupDiscoverViewController {
             let groups: [GroupEntity]? = GroupEntity.collection(groups)
             
             if let groups = groups {
-                self.groups.extend(groups)
+                self.groups.appendContentsOf(groups)
                 self.appendRows(groups.count)
             }
             

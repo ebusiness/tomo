@@ -48,8 +48,8 @@ class ICYPostImageCell: ICYPostCell {
     }
     
 }
-
-extension ICYPostImageCell: UICollectionViewDelegate, UICollectionViewDataSource {
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+extension ICYPostImageCell {
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == imageCollectionView {
             return post?.images?.count ?? 0

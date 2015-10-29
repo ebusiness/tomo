@@ -12,7 +12,7 @@ class PostAnnotationView: AggregatableAnnotationView, UIPageViewControllerDataSo
     
     var imageView: UIImageView!
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -59,7 +59,8 @@ class PostAnnotationView: AggregatableAnnotationView, UIPageViewControllerDataSo
             
             let callOutViewController = PostCallOutViewController(nibName: "PostCallOutView", bundle: nil)
             
-            if let index = find(containedAnnotations, currentPost) {
+            
+            if let index = containedAnnotations.indexOf(currentPost) {
                 
                 if index < containedAnnotations.count - 1 {
                     callOutViewController.postAnnotation = containedAnnotations.get(index + 1) as! PostAnnotation
@@ -90,7 +91,7 @@ class PostAnnotationView: AggregatableAnnotationView, UIPageViewControllerDataSo
             
             let callOutViewController = PostCallOutViewController(nibName: "PostCallOutView", bundle: nil)
             
-            if let index = find(containedAnnotations, currentPost) {
+            if let index = containedAnnotations.indexOf(currentPost) {
                 
                 if index == 0 {
                     callOutViewController.postAnnotation = annotation

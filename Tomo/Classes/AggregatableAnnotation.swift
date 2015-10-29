@@ -21,11 +21,11 @@ class AggregatableAnnotation: NSObject, MKAnnotation {
         super.init()
     }
     
-    var title: String {
+    var title: String? {
         return ""
     }
     
-    var subtitle: String {
+    var subtitle: String? {
         return ""
     }
     

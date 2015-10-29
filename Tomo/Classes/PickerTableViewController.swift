@@ -20,8 +20,8 @@ class PickerTableViewController: BaseTableViewController {
     }
 }
 
-
-extension PickerTableViewController: UITableViewDataSource {
+// MARK: - UITableViewDataSource
+extension PickerTableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.pickerData.count
@@ -30,7 +30,7 @@ extension PickerTableViewController: UITableViewDataSource {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let label = self.pickerData[indexPath.row]
-        var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
         
         cell.accessoryType = .None
         if self.selected == label {
@@ -40,8 +40,8 @@ extension PickerTableViewController: UITableViewDataSource {
         return cell
     }
 }
-
-extension PickerTableViewController: UITableViewDelegate {
+// MARK: - UITableViewDelegate
+extension PickerTableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         

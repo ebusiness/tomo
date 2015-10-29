@@ -40,7 +40,7 @@ final class SocketController {
     
     class func disconnect() {
         gcd.async(.High) { () -> () in
-            self.sharedInstance.socket.close(fast: false)
+            self.sharedInstance.socket.close()
         }
     }
 }

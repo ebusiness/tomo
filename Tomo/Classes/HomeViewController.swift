@@ -182,7 +182,7 @@ extension HomeViewController {
 
 extension HomeViewController: CLLocationManagerDelegate {
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         
         // The location is currently unknown, but CoreLocation will keep trying
         if error.code == CLError.LocationUnknown.rawValue {
@@ -194,8 +194,8 @@ extension HomeViewController: CLLocationManagerDelegate {
         self.stopLocationManager()
     }
     
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        println(status)
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        print(status)
         
         switch status {
         case .AuthorizedAlways, .AuthorizedWhenInUse:
@@ -205,9 +205,9 @@ extension HomeViewController: CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        let newLocation = locations.last as! CLLocation
+        let newLocation = locations.last!
         
         // the location object was determine too long age, ignore it
         if newLocation.timestamp.timeIntervalSinceNow < -5 {
@@ -227,7 +227,7 @@ extension HomeViewController: CLLocationManagerDelegate {
         // new location object more accurate than previous one
         if self.location == nil || self.location!.horizontalAccuracy > newLocation.horizontalAccuracy {
             
-            println("***** location updated")
+            print("***** location updated")
             
             // accept the result
             self.locationError = nil
@@ -235,7 +235,7 @@ extension HomeViewController: CLLocationManagerDelegate {
             
             // accuracy better than desiredAccuracy, stop locating
             if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy {
-                println("***** normal done")
+                print("***** normal done")
                 self.stopLocationManager()
             }
             
@@ -247,7 +247,7 @@ extension HomeViewController: CLLocationManagerDelegate {
             let timeInterval = newLocation.timestamp.timeIntervalSinceDate(location!.timestamp)
             
             if timeInterval > 10 {
-                println("***** force done")
+                print("***** force done")
                 self.stopLocationManager()
                 self.getRecommendInfo()
             }
@@ -351,7 +351,7 @@ extension HomeViewController {
     }
     
     func didTimeOut() {
-        println("***** Time Out")
+        print("***** Time Out")
         self.stopLocationManager()
     }
     
@@ -416,8 +416,8 @@ extension HomeViewController {
                     gcd.async(.Main) {
                         self.appendRows(loadPosts.count)
                         
-                        let visibleCells = self.tableView.visibleCells()
-                        let visibleIndexPath = self.tableView.indexPathForCell(visibleCells.get(0) as! UITableViewCell)
+                        let visibleCells = self.tableView.visibleCells
+                        let visibleIndexPath = self.tableView.indexPathForCell(visibleCells.get(0)!)
                         
                         if let recommendStations: AnyObject = self.recommendGroups as? AnyObject {
                             let row = visibleIndexPath!.row + 1

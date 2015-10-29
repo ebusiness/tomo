@@ -71,7 +71,7 @@ final class GroupDetailViewController: BaseTableViewController {
     }
     
     func loadPosts() {
-        var parameter = Dictionary<String, AnyObject>()
+        let parameter = Dictionary<String, AnyObject>()
         AlamofireController.request(.GET, "/groups/\(group.id)/posts", parameters: parameter, success: { (object) -> () in
             self.posts = PostEntity.collection(object)
             self.tableView.reloadData()
@@ -102,7 +102,7 @@ final class GroupDetailViewController: BaseTableViewController {
             if let newPosts: [PostEntity] = PostEntity.collection(object) {
                 let startIndex = self.posts?.count ?? 0
                 let endIndex = startIndex + newPosts.count
-                self.posts?.extend(newPosts)
+                self.posts?.appendContentsOf(newPosts)
                 var indexPaths: [NSIndexPath] = []
                 for index in startIndex..<endIndex {
                     indexPaths.append(NSIndexPath(forRow: index, inSection: 0))

@@ -142,7 +142,7 @@ extension StationDiscoverViewController {
         AlamofireController.request(.GET, "/groups", parameters: parameter,
             success: { (object) -> () in
                 if let groups: [GroupEntity] = GroupEntity.collection(object) {
-                    self.groups?.extend(groups)
+                    self.groups?.appendContentsOf(groups)
                     self.appendCells(groups.count)
                     self.page++
                 }
@@ -178,10 +178,10 @@ extension StationDiscoverViewController {
 extension StationDiscoverViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         page = 0;
-        let text = searchBar.text
+        let text = searchBar.text ?? ""
         searchText = searchBar.text
-        var coordinate = location.coordinate
-        var parameter: [String: AnyObject] = [
+        let coordinate = location.coordinate
+        let parameter: [String: AnyObject] = [
             "name": text,
             "page": page,
             "type": "station",

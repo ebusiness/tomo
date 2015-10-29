@@ -122,7 +122,7 @@ extension CommonMessageController {
     
     private func loadAvatars() {
         
-        SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: me.photo!), options: nil, progress: nil) {
+        SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: me.photo!), options: .RetryFailed, progress: nil) {
             (image, error, _, _, _) -> Void in
             if let image = image {
                 self.avatarMe = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
@@ -202,9 +202,9 @@ extension CommonMessageController {
                 let cell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! JSQMessagesCollectionViewCell
                 cell.addSubview(progressView)
                 
-                progressView.setTranslatesAutoresizingMaskIntoConstraints(false)
-                cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[progressView(==1)]-0-|", options: nil, metrics: nil, views: ["progressView" : progressView]))
-                cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[progressView(==messageBubbleContainerView)]-0-[avatarContainerView]", options: nil, metrics: nil, views: ["messageBubbleContainerView" : cell.messageBubbleContainerView, "progressView" : progressView,"avatarContainerView":cell.avatarContainerView]))
+                progressView.translatesAutoresizingMaskIntoConstraints = false
+                cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[progressView(==1)]-0-|", options: [], metrics: nil, views: ["progressView" : progressView]))
+                cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[progressView(==messageBubbleContainerView)]-0-[avatarContainerView]", options: [], metrics: nil, views: ["messageBubbleContainerView" : cell.messageBubbleContainerView!, "progressView" : progressView,"avatarContainerView":cell.avatarContainerView!]))
                 
                 S3Controller.uploadFile(localURL.path!, remotePath: remotePath, done: { (error) -> Void in
                     self.delegate.sendMessage(messageContent){ ()->() in
@@ -308,15 +308,14 @@ extension CommonMessageController {
         else if longPressedRecognizer.state == UIGestureRecognizerState.Ended || longPressedRecognizer.state == UIGestureRecognizerState.Cancelled{
             
             btn_voice?.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
-            if let url = VoiceController.instance.stop() {
-                let name = url.lastPathComponent
+            if let (url, name) = VoiceController.instance.stop() {
                 let content = MediaMessage.mediaMessageStr(fileName: name, type: .Voice)
                 self.delegate.createMessage(content)
                 self.delegate.sendMessage(content, done: nil)
                 
                 S3Controller.uploadFile(url, remotePath: MediaMessage.remotePath(fileName: name, type: .Voice), done: { error in
-                    println("done")
-                    println(error)
+                    print("done")
+                    print(error)
                 })
             }
             //            VoiceController.instance.play(url)

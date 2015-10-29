@@ -109,10 +109,10 @@ extension OpenidController {
         params["grant_type"] = "authorization_code"
         
         Manager.sharedInstance.request(.GET, wx_url_access_token, parameters: params)
-            .responseJSON {(_, _, json, _) in
-                let result = json as! Dictionary<String, AnyObject>
+            .responseJSON { res -> Void in
+                let result = res.result.value as! Dictionary<String, AnyObject>
                 
-                if (!contains(result.keys, "errcode")) {
+                if !result.keys.contains("errcode") {
                     self.saveOpenId(result)
                     self.checkToken()
                 } else {
@@ -132,10 +132,10 @@ extension OpenidController {
         params["refresh_token"] = Defaults["refresh_token"].string
         
         Manager.sharedInstance.request(.GET, wx_url_refresh_token, parameters: params)
-            .responseJSON { (_, _, json, _) in
-                let result = json as! Dictionary<String, AnyObject>
+            .responseJSON { res -> Void in
+                let result = res.result.value as! Dictionary<String, AnyObject>
                 
-                if (!contains(result.keys, "errcode")) {
+                if !result.keys.contains("errcode") {
                     self.saveOpenId(result)
                     self.checkToken()
                 } else {
@@ -153,10 +153,10 @@ extension OpenidController {
         
         Manager.sharedInstance
             .request(.GET, wx_url_userinfo, parameters: params)
-            .responseJSON { (_, _, json, _) in
-                var result = json as! Dictionary<String, AnyObject>
+            .responseJSON { res -> Void in
+                var result = res.result.value as! Dictionary<String, AnyObject>
                 
-                if (!contains(result.keys, "errcode")) {
+                if !result.keys.contains("errcode") {
                     if let gender = result["sex"] as? String where gender == "2" {
                         result["sex"] = "女"
                     } else {
@@ -288,7 +288,7 @@ extension OpenidController: WXApiDelegate {
     
     // WeChat request callback
     func onReq(req:BaseReq){
-        if let temp = req as? GetMessageFromWXReq {
+        if let _ = req as? GetMessageFromWXReq {
             // 微信请求App提供内容， 需要app提供内容后使用sendRsp返回
 //            println(temp.openID)
             

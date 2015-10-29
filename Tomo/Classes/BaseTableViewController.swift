@@ -35,7 +35,7 @@ class BaseTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let indexPath = tableView.indexPathForSelectedRow() {
+        if let indexPath = tableView.indexPathForSelectedRow {
             tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
         }
         
@@ -43,7 +43,7 @@ class BaseTableViewController: UITableViewController {
             
             self.extendedLayoutIncludesOpaqueBars = false
             self.automaticallyAdjustsScrollViewInsets = true
-            var image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
+            let image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
             self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
             self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
             
@@ -95,7 +95,7 @@ extension BaseTableViewController {
         
         if let headerView = self.tableView.tableHeaderView where headerView.frame.size.height >= self.headerHeight + 64 {
             
-            self.topConstraint = headerView.constraints().find { $0.firstAttribute == .Top } as? NSLayoutConstraint
+            self.topConstraint = headerView.constraints.find { $0.firstAttribute == .Top }
         }
     }
     
@@ -115,8 +115,7 @@ extension BaseTableViewController {
     func setNavigationBarBackgroundImage(image: UIImage?){
         
         if let naviSubViews = self.navigationController?.navigationBar.subviews where navigationImageView == nil {
-            
-            naviSubViews.map{ (v) -> () in
+            naviSubViews.forEach { v in
                 
                 if let imageview = v as? UIImageView
                     where imageview.frame.size.width == self.navigationController?.navigationBar.frame.size.width
@@ -124,7 +123,7 @@ extension BaseTableViewController {
                     var frame = imageview.frame
                     frame.origin = CGPointMake(0, 0)
                     
-                    imageview.subviews.map{ (subimage) -> () in
+                    imageview.subviews.forEach { subimage in
                         if let subimage = subimage as? UIImageView where subimage.tag == 1 {
                             
                             self.navigationImageView = subimage

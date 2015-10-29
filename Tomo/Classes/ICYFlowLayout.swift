@@ -9,8 +9,8 @@
 import UIKit
 
 class ICYFlowLayout: UICollectionViewFlowLayout {
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
-        if let attributes = super.layoutAttributesForElementsInRect(rect) as? [UICollectionViewLayoutAttributes] {
+    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        if let attributes = super.layoutAttributesForElementsInRect(rect) {
             let newAttributes = attributes.map({
                 self.leftAlignedAttributes($0)
             })
@@ -18,6 +18,7 @@ class ICYFlowLayout: UICollectionViewFlowLayout {
         }
         return nil
     }
+    
     private func leftAlignedAttributes(attributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         let indexPath = attributes.indexPath
         let newAttributes = attributes

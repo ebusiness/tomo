@@ -32,7 +32,7 @@ class MyGroupCollectionViewCell: UICollectionViewCell {
         self.postButton.titleLabel?.text = String(group.posts?.count ?? 0)
     }
     
-    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes!) {
+    override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
         super.applyLayoutAttributes(layoutAttributes)
         
         let featuredHeight = UltravisualLayoutConstants.Cell.featuredHeight

@@ -88,7 +88,7 @@ final class CreatePostViewController: UIViewController {
                     homeViewController.latestContent = post
                     homeViewController.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Middle)
                     
-                } else if let groupDetailViewController = segue.destinationViewController as? GroupDetailViewController {
+                } else if let _ = segue.destinationViewController as? GroupDetailViewController {
                     
                 }
                 
@@ -148,7 +148,7 @@ extension CreatePostViewController {
     func keyboardWillShown(notification: NSNotification) {
         if let info = notification.userInfo {
             
-            if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
+            if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height {
                 
                 let paperViewHeight = screenHeight - navigationBarHeight - paperPadding * 2 - keyboardHeight
                 self.paperViewHeight.constant = paperViewHeight
@@ -227,7 +227,8 @@ extension CreatePostViewController {
         case .Authorized:
             return true
         case .NotDetermined:
-            PHPhotoLibrary.requestAuthorization(nil)
+            PHPhotoLibrary.requestAuthorization { _ in
+            }
             return false
         case .Restricted:
             return false
@@ -332,7 +333,7 @@ extension CreatePostViewController {
     
     private func uploadMeida(completion: (imagelist: AnyObject)->()) {
         
-        if let selectedIndexes = collectionView.indexPathsForSelectedItems() as? [NSIndexPath] {
+        if let selectedIndexes = collectionView.indexPathsForSelectedItems() {
             
             var imagelist = [String]()
             
@@ -349,14 +350,15 @@ extension CreatePostViewController {
                     
                     let asset = self.photos?[index.item - self.newPhotos.count] as? PHAsset
                     
-                    var options = PHImageRequestOptions()
+                    let options = PHImageRequestOptions()
                     options.synchronous = true
                     options.resizeMode = PHImageRequestOptionsResizeMode.Exact
                     
-                    PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: PHImageManagerMaximumSize, contentMode: .AspectFill, options: options) { (image: UIImage!, info: [NSObject : AnyObject]!) -> Void in
+                    PHImageManager.defaultManager().requestImageForAsset(asset!, targetSize: PHImageManagerMaximumSize, contentMode: .AspectFill, options: options) { (image, info) -> Void in
                         
-                        let scaledImage = self.resize(image)
-                        scaledImage.saveToPath(imagePath)
+                        if let image = image {
+                            self.resize(image).saveToPath(imagePath)
+                        }
                     }
                 }
                 
@@ -490,11 +492,11 @@ extension CreatePostViewController {
         
         if cameraServiceAuthorized() && UIImagePickerController.isSourceTypeAvailable(.Camera) {
 
-            if let availableMediaTypes = UIImagePickerController.availableMediaTypesForSourceType(.Camera) as? [String] {
+            if let _ = UIImagePickerController.availableMediaTypesForSourceType(.Camera) {
                 
                 let picker = UIImagePickerController()
                 picker.sourceType = .Camera
-                picker.mediaTypes = [kUTTypeImage]
+                picker.mediaTypes = [kUTTypeImage as String]
                 picker.delegate = self
                 self.presentViewController(picker, animated: true, completion: nil)
                 
@@ -575,7 +577,7 @@ extension CreatePostViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("defaultCell", forIndexPath: indexPath) as! UICollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("defaultCell", forIndexPath: indexPath) 
         
         // clear cell contents
         for subview in cell.contentView.subviews {
@@ -594,18 +596,18 @@ extension CreatePostViewController: UICollectionViewDataSource {
         // or show the photo in photo library
         } else if let asset = self.photos?[indexPath.item - self.newPhotos.count] as? PHAsset {
             
-            var options = PHImageRequestOptions()
+            let options = PHImageRequestOptions()
             options.deliveryMode = .HighQualityFormat
             options.resizeMode = .Exact
             
-            PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(200, 200), contentMode: .AspectFill, options: options) { (image: UIImage!, info: [NSObject : AnyObject]!) -> Void in
+            PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(200, 200), contentMode: .AspectFill, options: options) { (image, info) -> Void in
                 let imageView = UIImageView(image: image)
                 cell.contentView.insertSubview(imageView, atIndex: 0)
             }
         }
         
         // add visual clue for the selected cell
-        if let selectedIndexes = collectionView.indexPathsForSelectedItems() as? [NSIndexPath] {
+        if let selectedIndexes = collectionView.indexPathsForSelectedItems() {
             
             if selectedIndexes.contains(indexPath) {
                 
@@ -677,7 +679,7 @@ extension CreatePostViewController: UICollectionViewDelegate {
 
 extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
@@ -715,7 +717,7 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigatio
 
 extension CreatePostViewController: CLLocationManagerDelegate {
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         
         // The location is currently unknown, but CoreLocation will keep trying
         if error.code == CLError.LocationUnknown.rawValue {
@@ -727,9 +729,9 @@ extension CreatePostViewController: CLLocationManagerDelegate {
         self.stopLocationManager()
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        let newLocation = locations.last as! CLLocation
+        let newLocation = locations.last!
         
         // the location object was determine too long age, ignore it
         if newLocation.timestamp.timeIntervalSinceNow < -5 {
@@ -767,11 +769,7 @@ extension CreatePostViewController: CLLocationManagerDelegate {
                     
                     self.geocodeError = error
                     
-                    if let placemarks = placemarks where error == nil && placemarks.count > 0 {
-                        self.placemark = placemarks.last as? CLPlacemark
-                    } else {
-                        self.placemark = nil
-                    }
+                    self.placemark = placemarks?.last
                     
                     self.performGeocoding = false
                     self.updateLocationLabel()
@@ -784,7 +782,7 @@ extension CreatePostViewController: CLLocationManagerDelegate {
             let timeInterval = newLocation.timestamp.timeIntervalSinceDate(location!.timestamp)
             
             if timeInterval > 10 {
-                println("***** force done")
+                print("***** force done")
                 self.stopLocationManager()
                 self.updateLocationLabel()
             }

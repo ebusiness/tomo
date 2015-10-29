@@ -147,9 +147,9 @@ extension GroupCreateViewController {
         
         self.tableView.tableHeaderView!.addSubview(progressView)
         
-        progressView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.tableView.tableHeaderView!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[progressView(==20)]", options: nil, metrics: nil, views: ["progressView" : progressView]))
-        self.tableView.tableHeaderView!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[progressView]|", options: nil, metrics: nil, views: ["progressView" : progressView]))
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        self.tableView.tableHeaderView!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[progressView(==20)]", options: [], metrics: nil, views: ["progressView" : progressView]))
+        self.tableView.tableHeaderView!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[progressView]|", options: [], metrics: nil, views: ["progressView" : progressView]))
         return progressView
     }
     

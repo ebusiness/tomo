@@ -16,7 +16,7 @@ class S3Controller: NSObject {
             accessKey: AmazonS3AccessKey,
             secret: AmazonS3Secret)
         
-        return amazonS3Manager.putObject(NSURL(fileURLWithPath: localPath)!, destinationPath: remotePath, done: {(error) in
+        return amazonS3Manager.putObject(NSURL(fileURLWithPath: localPath), destinationPath: remotePath, done: {(error) in
             done(error)
         })
     }

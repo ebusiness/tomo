@@ -48,8 +48,8 @@ class FriendListSendRequestController: MyAccountBaseController {
     }
     
 }
-
-extension FriendListSendRequestController: UITableViewDataSource {
+// MARK: - UITableViewDataSource
+extension FriendListSendRequestController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return invitedUsers?.count ?? 0
@@ -68,8 +68,8 @@ extension FriendListSendRequestController: UITableViewDataSource {
         return cell
     }
 }
-
-extension FriendListSendRequestController: UITableViewDelegate {
+// MARK: - UITableViewDelegate
+extension FriendListSendRequestController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         

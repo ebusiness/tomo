@@ -41,7 +41,7 @@ class NotificationView: UIView {
 
     @IBAction func closeTapped() {
         gcd.async(.Default) {
-            let topConstraint: AnyObject? = self.superview!.constraints().find { $0.firstAttribute == .Top && $0.firstItem is NotificationView }
+            let topConstraint: AnyObject? = self.superview!.constraints.find { $0.firstAttribute == .Top && $0.firstItem is NotificationView }
             if let topConstraint = topConstraint as? NSLayoutConstraint {
                 gcd.sync(.Main) {
                     topConstraint.constant = -64

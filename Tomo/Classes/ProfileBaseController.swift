@@ -123,9 +123,9 @@ extension ProfileBaseController {
     
     private func getConstraint(photoImageView: UIView) -> Dictionary<NSLayoutAttribute, NSLayoutConstraint>? {
         var constraints = Dictionary<NSLayoutAttribute, NSLayoutConstraint>()
-        constraints[.Width] = photoImageView.constraints().find { $0.firstAttribute == .Width } as? NSLayoutConstraint
-        constraints[.Height] = photoImageView.constraints().find { $0.firstAttribute == .Height } as? NSLayoutConstraint
-        constraints[.CenterY] = photoImageView.superview?.constraints().find { $0.firstAttribute == .CenterY } as? NSLayoutConstraint
+        constraints[.Width] = photoImageView.constraints.find { $0.firstAttribute == .Width }
+        constraints[.Height] = photoImageView.constraints.find { $0.firstAttribute == .Height }
+        constraints[.CenterY] = photoImageView.superview?.constraints.find { $0.firstAttribute == .CenterY }
         return constraints
     }
 }

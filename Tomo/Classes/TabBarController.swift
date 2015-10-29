@@ -104,7 +104,7 @@ extension TabBarController {
     
     func updateBadgeNumber() {
         
-        if let vc = viewControllers?[1] as? UIViewController {
+        if let vc = viewControllers?[1] {
             let messageCount = me.friendInvitations.count + me.newMessages.count
             if messageCount > 0 {
                 vc.tabBarItem.badgeValue = String(messageCount)
@@ -113,7 +113,7 @@ extension TabBarController {
             }
         }
         
-        if let vc = viewControllers?.last as? UIViewController {
+        if let vc = viewControllers?.last {
             if me.notifications > 0 {
                 vc.tabBarItem.badgeValue = String(me.notifications)
             } else {

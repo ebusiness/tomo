@@ -51,8 +51,7 @@ extension SearchFriendViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SearchFriendCell", forIndexPath: indexPath) as! SearchFriendCell
-        var user = self.result![indexPath.row]
-        
+  
         cell.user = self.result![indexPath.row]
         return cell
     }
@@ -76,7 +75,7 @@ extension SearchFriendViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         
-        if searchBar.text.trimmed().length > 0 {
+        if let text = searchBar.text where text.trimmed().length > 0 {
             
             self.navigationItem.titleView?.endEditing(true)
             var param = Dictionary<String, String>()

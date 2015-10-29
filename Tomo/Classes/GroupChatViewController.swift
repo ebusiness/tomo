@@ -60,7 +60,7 @@ final class GroupChatViewController: CommonMessageController {
 extension GroupChatViewController {
     
     private func loadAvatars() {
-        self.group.members?.map { user in
+        self.group.members?.forEach { user in
             self.avatars[user.id] = self.defaultAvatar
         }
         
@@ -70,7 +70,7 @@ extension GroupChatViewController {
             
             if let members = self.group.members {
                 
-                members.map {
+                members.forEach {
                     self.loadAvatarForUser($0)
                 }
             }
@@ -86,14 +86,13 @@ extension GroupChatViewController {
         
         if let photo = user.photo {
             
-            var sdBlock: SDWebImageCompletionWithFinishedBlock = { (image, error, _, _, _) -> Void in
+            let sdBlock: SDWebImageCompletionWithFinishedBlock = { (image, error, _, _, _) -> Void in
                 if let image = image {
                     
                     self.avatars[user.id] = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
                     
-                    self.collectionView!.visibleCells().map { (cell) -> () in
-                        
-                        if let indexPath = self.collectionView!.indexPathForCell(cell as! UICollectionViewCell)
+                    self.collectionView!.visibleCells().forEach { cell in
+                        if let indexPath = self.collectionView!.indexPathForCell(cell )
                             where self.messages[indexPath.item].senderId() == user.id {
                                 
                                 self.collectionView!.reloadItemsAtIndexPaths([indexPath])
@@ -102,7 +101,7 @@ extension GroupChatViewController {
                 }
             }
             
-            SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: photo), options: nil, progress: nil, completed: sdBlock)
+            SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: photo), options: .RetryFailed, progress: nil, completed: sdBlock)
         }
     }
     

@@ -61,7 +61,7 @@ final class MapViewController: BaseViewController {
         
         if let lastDate = Defaults["mapLastTimeStamp"].date, lastLoadDate = self.lastLoadDate {
             if lastDate.timeIntervalSince1970 != lastLoadDate.timeIntervalSince1970 {
-                println("will load new contents")
+                print("will load new contents")
                 self.loadContents()
             }
         }
@@ -115,7 +115,7 @@ extension MapViewController: UIPopoverPresentationControllerDelegate, UIAdaptive
 
 extension MapViewController: MKMapViewDelegate {
     
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView? {
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
         if mapView != self.mapView {
             return nil
@@ -169,11 +169,11 @@ extension MapViewController: MKMapViewDelegate {
         }
     }
     
-    func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
+    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         self.updateVisibleAnnotations()
     }
     
-    func mapView(mapView: MKMapView!, didAddAnnotationViews views: [AnyObject]!) {
+    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
         
         for view in views {
             
@@ -205,7 +205,7 @@ extension MapViewController: MKMapViewDelegate {
         }
     }
     
-    func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         
         mapView.deselectAnnotation(view.annotation, animated: true)
         
@@ -385,45 +385,42 @@ extension MapViewController {
             gridMapRect.origin.x = startX
             while (MKMapRectGetMinX(gridMapRect) <= endX) {
                 
-                var allAnnotationsInBucket = allAnnotationMapView.annotationsInMapRect(gridMapRect)
+                let allAnnotationsInBucket = allAnnotationMapView.annotationsInMapRect(gridMapRect)
                 let visibleAnnotationsInBucket = mapView.annotationsInMapRect(gridMapRect)
                 
-                if let allAnnotationsInBucket = allAnnotationsInBucket {
-                    
-                    var allAnnotations = Array(allAnnotationsInBucket) as! [AggregatableAnnotation]
-                    
-                    if let annotationForGrid = annotationInGrid(gridMapRect, usingAnnotations: allAnnotations) as? AggregatableAnnotation {
-                        
-                        allAnnotations.remove(annotationForGrid)
+                var allAnnotations = Array(allAnnotationsInBucket) as! [AggregatableAnnotation]
                 
-                        // give the annotationForGrid a reference to all the annotations it will represent
-                        annotationForGrid.containedAnnotations = allAnnotations
+                if let annotationForGrid = annotationInGrid(gridMapRect, usingAnnotations: allAnnotations) as? AggregatableAnnotation {
+                    
+                    allAnnotations.remove(annotationForGrid)
+                    
+                    // give the annotationForGrid a reference to all the annotations it will represent
+                    annotationForGrid.containedAnnotations = allAnnotations
+                    
+                    mapView.addAnnotation(annotationForGrid)
+                    
+                    if let view = mapView.viewForAnnotation(annotationForGrid) as? AggregatableAnnotationView {
+                        view.setupDisplay()
+                    }
+                    
+                    for annotation in allAnnotations {
                         
-                        mapView.addAnnotation(annotationForGrid)
+                        // give all the other annotations a reference to the one which is representing them
+                        annotation.clusterAnnotation = annotationForGrid
+                        annotation.containedAnnotations = nil
                         
-                        if let view = mapView.viewForAnnotation(annotationForGrid) as? AggregatableAnnotationView {
-                            view.setupDisplay()
-                        }
-
-                        for annotation in allAnnotations {
+                        // remove annotations which we've decided to cluster
+                        if visibleAnnotationsInBucket.contains(annotation) {
                             
-                            // give all the other annotations a reference to the one which is representing them
-                            annotation.clusterAnnotation = annotationForGrid
-                            annotation.containedAnnotations = nil
+                            let actualCoordinate = annotation.coordinate
                             
-                            // remove annotations which we've decided to cluster
-                            if visibleAnnotationsInBucket.contains(annotation) {
-                                
-                                let actualCoordinate = annotation.coordinate
-                                
-                                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                                    annotation.coordinate = annotation.clusterAnnotation!.coordinate
+                            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                                annotation.coordinate = annotation.clusterAnnotation!.coordinate
                                 }, completion: { [unowned self, annotation, actualCoordinate](finished) -> Void in
                                     annotation.coordinate = actualCoordinate
                                     self.mapView.removeAnnotation(annotation)
                                 })
-                                
-                            }
+                            
                         }
                     }
                 }
@@ -439,7 +436,7 @@ extension MapViewController {
         
         if annotations.count > 0 {
             
-            let horizontalSortedAnnotations = annotations.sorted { (obj1, obj2) -> Bool in
+            let horizontalSortedAnnotations = annotations.sort { (obj1, obj2) -> Bool in
                 
                 let mapPoint1 = MKMapPointForCoordinate((obj1 as! MKAnnotation).coordinate)
                 let mapPoint2 = MKMapPointForCoordinate((obj2 as! MKAnnotation).coordinate)
@@ -451,7 +448,7 @@ extension MapViewController {
                 }
             }
             
-            let verticalSortedAnnotations = annotations.sorted { (obj1, obj2) -> Bool in
+            let verticalSortedAnnotations = annotations.sort { (obj1, obj2) -> Bool in
                 
                 let mapPoint1 = MKMapPointForCoordinate((obj1 as! MKAnnotation).coordinate)
                 let mapPoint2 = MKMapPointForCoordinate((obj2 as! MKAnnotation).coordinate)
@@ -494,7 +491,7 @@ extension MapViewController {
         // otherwise, sort the annotations based on their distance from the center of the grid square,
         // then choose the one closest to the center to show
         let centerMapPoint = MKMapPoint(x: MKMapRectGetMidX(gridMapRect), y: MKMapRectGetMidY(gridMapRect))
-        let sortedAnnotations = annotations.sorted { (obj1, obj2) -> Bool in
+        let sortedAnnotations = annotations.sort { (obj1, obj2) -> Bool in
             
             let mapPoint1 = MKMapPointForCoordinate((obj1 as! MKAnnotation).coordinate)
             let mapPoint2 = MKMapPointForCoordinate((obj2 as! MKAnnotation).coordinate)

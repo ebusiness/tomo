@@ -106,14 +106,8 @@ class UltravisualLayout: UICollectionViewLayout {
     }
     
     /* Return all attributes in the cache whose frame intersects with the rect passed to the method */
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
-        var layoutAttributes = [UICollectionViewLayoutAttributes]()
-        for attributes in cache {
-            if CGRectIntersectsRect(attributes.frame, rect) {
-                layoutAttributes.append(attributes)
-            }
-        }
-        return layoutAttributes
+    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        return cache.filter { CGRectIntersectsRect($0.frame, rect) }
     }
     
     /* Return the content offset of the nearest cell which achieves the nice snapping effect, similar to a paged UIScrollView */
@@ -128,7 +122,7 @@ class UltravisualLayout: UICollectionViewLayout {
         return true
     }
     
-    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
+    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
         let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
         /* Important because each cell has to slide over the top of the previous one */
         attributes.zIndex = indexPath.item
