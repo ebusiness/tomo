@@ -56,19 +56,6 @@
 		1F902D771B7D9C2800F6DC2D /* EmptyFriends.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F902D761B7D9C2800F6DC2D /* EmptyFriends.xib */; };
 		1F937FE61B58C2E3009722CE /* MyAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F937FE51B58C2E3009722CE /* MyAccountViewController.swift */; };
 		1F937FE81B58EE8B009722CE /* MyAccountEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F937FE71B58EE8B009722CE /* MyAccountEditViewController.swift */; };
-		1F985E541B60C19F008D5369 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E451B60C19F008D5369 /* Array.swift */; };
-		1F985E561B60C19F008D5369 /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E461B60C19F008D5369 /* Bool.swift */; };
-		1F985E581B60C19F008D5369 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E471B60C19F008D5369 /* Character.swift */; };
-		1F985E5A1B60C19F008D5369 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E481B60C19F008D5369 /* Dictionary.swift */; };
-		1F985E5C1B60C19F008D5369 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E491B60C19F008D5369 /* Double.swift */; };
-		1F985E5E1B60C19F008D5369 /* ExSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E4B1B60C19F008D5369 /* ExSwift.swift */; };
-		1F985E601B60C19F008D5369 /* Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E4C1B60C19F008D5369 /* Float.swift */; };
-		1F985E621B60C19F008D5369 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F985E4D1B60C19F008D5369 /* Info.plist */; };
-		1F985E641B60C19F008D5369 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E4E1B60C19F008D5369 /* Int.swift */; };
-		1F985E661B60C19F008D5369 /* NSArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E4F1B60C19F008D5369 /* NSArray.swift */; };
-		1F985E6A1B60C19F008D5369 /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E511B60C19F008D5369 /* Range.swift */; };
-		1F985E6C1B60C19F008D5369 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E521B60C19F008D5369 /* Sequence.swift */; };
-		1F985E6E1B60C19F008D5369 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E531B60C19F008D5369 /* String.swift */; };
 		1F9A32371BA6AD8B001C43CE /* GroupEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9A32361BA6AD8B001C43CE /* GroupEntity.swift */; };
 		1F9ACAFA1B69F99F00648A82 /* PostEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAF91B69F99F00648A82 /* PostEntity.swift */; };
 		1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */; };
@@ -149,6 +136,19 @@
 		D05418401BC6592900C606F0 /* MyGroupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D054183E1BC6592900C606F0 /* MyGroupCollectionViewCell.xib */; };
 		D05418431BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05418421BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift */; };
 		D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D057BAF11B670687007D14D2 /* RequestFriendCell.swift */; };
+		D07232331BE1C1C700122F52 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E451B60C19F008D5369 /* Array.swift */; };
+		D07232341BE1C1C700122F52 /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E461B60C19F008D5369 /* Bool.swift */; };
+		D07232351BE1C1C700122F52 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E471B60C19F008D5369 /* Character.swift */; };
+		D07232361BE1C1C700122F52 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E481B60C19F008D5369 /* Dictionary.swift */; };
+		D07232371BE1C1C700122F52 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E491B60C19F008D5369 /* Double.swift */; };
+		D07232381BE1C1C700122F52 /* ExSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E4B1B60C19F008D5369 /* ExSwift.swift */; };
+		D07232391BE1C1C700122F52 /* Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E4C1B60C19F008D5369 /* Float.swift */; };
+		D072323A1BE1C1C700122F52 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F985E4D1B60C19F008D5369 /* Info.plist */; };
+		D072323B1BE1C1C700122F52 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E4E1B60C19F008D5369 /* Int.swift */; };
+		D072323C1BE1C1C700122F52 /* NSArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E4F1B60C19F008D5369 /* NSArray.swift */; };
+		D072323D1BE1C1C700122F52 /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E511B60C19F008D5369 /* Range.swift */; };
+		D072323E1BE1C1C700122F52 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E521B60C19F008D5369 /* Sequence.swift */; };
+		D072323F1BE1C1C700122F52 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E531B60C19F008D5369 /* String.swift */; };
 		D073E6F81B84C1BF00066F42 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073E6F71B84C1BF00066F42 /* CameraController.swift */; };
 		D07793851B704F290056B7CB /* PickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07793841B704F290056B7CB /* PickerTableViewController.swift */; };
 		D07793871B704F410056B7CB /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07793861B704F410056B7CB /* DatePickerViewController.swift */; };
@@ -1000,8 +1000,9 @@
 		290134CA1AC3991C00BBFE29 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0710;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "&#24373;&#24535;&#33775;";
 				TargetAttributes = {
 					290134D11AC3991C00BBFE29 = {
@@ -1059,7 +1060,6 @@
 				1FB69E661BB2A0E9009D0C96 /* RecommendStationTableViewCell.xib in Resources */,
 				296D8BC41AFC5A680058D400 /* Main.storyboard in Resources */,
 				29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */,
-				1F985E621B60C19F008D5369 /* Info.plist in Resources */,
 				1FA76AFE1BA27B1E004776B0 /* Group.storyboard in Resources */,
 				D05418401BC6592900C606F0 /* MyGroupCollectionViewCell.xib in Resources */,
 				285778571BC29AEC00533E8E /* ICYTagCollectionViewCell.xib in Resources */,
@@ -1067,6 +1067,7 @@
 				296D8BC31AFC5A680058D400 /* LaunchScreen.xib in Resources */,
 				29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */,
 				D0B48E891BE19FE8007BD9BD /* Info.plist in Resources */,
+				D072323A1BE1C1C700122F52 /* Info.plist in Resources */,
 				1F902D771B7D9C2800F6DC2D /* EmptyFriends.xib in Resources */,
 				1F19D9541BA9550A007C9919 /* RecommendSiteTableCell.xib in Resources */,
 				1F19D95A1BA96B3E007C9919 /* GroupCollectionViewCell.xib in Resources */,
@@ -1167,14 +1168,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				296D8BB31AFC5A250058D400 /* MessageViewController.swift in Sources */,
+				D072323F1BE1C1C700122F52 /* String.swift in Sources */,
 				D040E1651BDDC00D00417174 /* RecommendViewController.swift in Sources */,
 				283771911BC37653001B06D3 /* ICYFlowLayout.swift in Sources */,
 				1FAA70FC1BBBF97B00BCE5AF /* StationAnnotation.swift in Sources */,
 				1FC268801BBABED8006F1FDA /* GroupAnnotation.swift in Sources */,
-				1F985E641B60C19F008D5369 /* Int.swift in Sources */,
 				D0A0C0341B5F5D0500ABFA5F /* UserPostsViewController.swift in Sources */,
-				1F985E661B60C19F008D5369 /* NSArray.swift in Sources */,
-				1F985E5A1B60C19F008D5369 /* Dictionary.swift in Sources */,
 				D08BFB0B1B744C2D00771F70 /* JSQMessageEntity.swift in Sources */,
 				29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */,
 				1FCA1E671B722260000F2936 /* MessageEntity.swift in Sources */,
@@ -1185,16 +1184,18 @@
 				D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
 				1FC268821BBABF20006F1FDA /* GroupAnnotationView.swift in Sources */,
-				1F985E541B60C19F008D5369 /* Array.swift in Sources */,
 				1FFD22011BABD77E00204080 /* GroupSectionHeaderView.swift in Sources */,
 				D0F44FAF1B5E540F009E12AA /* FriendListSendRequestController.swift in Sources */,
 				D073E6F81B84C1BF00066F42 /* CameraController.swift in Sources */,
+				D07232351BE1C1C700122F52 /* Character.swift in Sources */,
 				D0A0C0321B5F5BF900ABFA5F /* ProfileViewController.swift in Sources */,
 				D0DB07DB1B9D266900C06C4E /* NotificationCell.swift in Sources */,
 				1F1176AB1B983D280049D9F5 /* SocketPacket.swift in Sources */,
 				1F19D95C1BA96B8E007C9919 /* GroupCollectionViewCell.swift in Sources */,
+				D072323D1BE1C1C700122F52 /* Range.swift in Sources */,
 				1F1176A51B983D280049D9F5 /* SocketEngine.swift in Sources */,
 				293EB4251B132B06006BAF27 /* JSQVoiceMediaItem.m in Sources */,
+				D07232391BE1C1C700122F52 /* Float.swift in Sources */,
 				D0A0C02E1B5F594C00ABFA5F /* ProfileBaseController.swift in Sources */,
 				283771981BC3A329001B06D3 /* ICYPostImageCell.swift in Sources */,
 				1FCA1E651B7221F7000F2936 /* NotificationEntity.swift in Sources */,
@@ -1203,24 +1204,24 @@
 				D029F7321BCCB39E00CDE18B /* PushSettingViewController.swift in Sources */,
 				29DCEFE91B14519300A7C7AF /* TomoVideoMediaItem.swift in Sources */,
 				D0B48E871BE19FE8007BD9BD /* Download.swift in Sources */,
+				D07232371BE1C1C700122F52 /* Double.swift in Sources */,
 				17B993011AF353D000204E97 /* amrFileCodec.m in Sources */,
 				D0DB07D91B9D224900C06C4E /* NotificationView.swift in Sources */,
 				290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */,
 				1F1176AE1B983D280049D9F5 /* SwiftRegex.swift in Sources */,
+				D072323C1BE1C1C700122F52 /* NSArray.swift in Sources */,
 				29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */,
 				2837719E1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.swift in Sources */,
 				29539C791B13175D00545509 /* CommonMessageController.swift in Sources */,
 				2994AF911B019AA100656C39 /* GCD.swift in Sources */,
 				1FA76B021BA2A01D004776B0 /* GroupListViewController.swift in Sources */,
 				1FE7CEF51B8C9561006700FC /* SignUpViewController.swift in Sources */,
-				1F985E5C1B60C19F008D5369 /* Double.swift in Sources */,
 				D0B6364E1B81A9C70012C4E8 /* URLSchemesController.swift in Sources */,
 				296D8BAB1AFC59F10058D400 /* BaseViewController.swift in Sources */,
 				1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */,
 				D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */,
 				1F9A32371BA6AD8B001C43CE /* GroupEntity.swift in Sources */,
 				D07E48541B9EB35B00BF04B2 /* Entity.swift in Sources */,
-				1F985E6E1B60C19F008D5369 /* String.swift in Sources */,
 				D0B48E881BE19FE8007BD9BD /* Error.swift in Sources */,
 				D0B48E991BE1A6D2007BD9BD /* SocketIOClientStatus.swift in Sources */,
 				1F1176A61B983D280049D9F5 /* SocketEngineClient.swift in Sources */,
@@ -1239,17 +1240,15 @@
 				D0B48E931BE19FE8007BD9BD /* Upload.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				D012F5971BBBC4DD00D5293D /* MyStationsViewController.swift in Sources */,
-				1F985E561B60C19F008D5369 /* Bool.swift in Sources */,
 				17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */,
 				D0DB07E51B9D65BE00C06C4E /* ListenerEvent.swift in Sources */,
-				1F985E5E1B60C19F008D5369 /* ExSwift.swift in Sources */,
 				29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */,
 				1F937FE61B58C2E3009722CE /* MyAccountViewController.swift in Sources */,
 				D0B48E8B1BE19FE8007BD9BD /* MultipartFormData.swift in Sources */,
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
+				D07232381BE1C1C700122F52 /* ExSwift.swift in Sources */,
 				28CB45E71BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift in Sources */,
 				2869D71C1BB545FB00D1C479 /* StationDiscoverViewController.swift in Sources */,
-				1F985E601B60C19F008D5369 /* Float.swift in Sources */,
 				1FEA3D031BB3DEA20037F3C5 /* Palette.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				1F79C1B41B5E10DC008800E1 /* FriendCell.swift in Sources */,
@@ -1260,17 +1259,17 @@
 				29539C781B13175D00545509 /* VoiceController.swift in Sources */,
 				D0B48E8E1BE19FE8007BD9BD /* Response.swift in Sources */,
 				2993894A1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
+				D072323B1BE1C1C700122F52 /* Int.swift in Sources */,
+				D07232361BE1C1C700122F52 /* Dictionary.swift in Sources */,
 				1F350B2B1B68D32800088C1E /* PostAnnotationView.swift in Sources */,
 				D0B48E8D1BE19FE8007BD9BD /* Request.swift in Sources */,
 				D0DB07E01B9D3E1400C06C4E /* RemoteNotification.swift in Sources */,
-				1F985E581B60C19F008D5369 /* Character.swift in Sources */,
 				1F1176A91B983D280049D9F5 /* SocketIOClient.swift in Sources */,
 				D0B48E911BE19FE8007BD9BD /* ServerTrustPolicy.swift in Sources */,
 				1F9ACAFA1B69F99F00648A82 /* PostEntity.swift in Sources */,
 				1F937FE81B58EE8B009722CE /* MyAccountEditViewController.swift in Sources */,
 				1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */,
 				1F19D9561BA9616C007C9919 /* RecommendSiteTableCell.swift in Sources */,
-				1F985E6C1B60C19F008D5369 /* Sequence.swift in Sources */,
 				1FA76B041BA2AC03004776B0 /* GroupDiscoverViewController.swift in Sources */,
 				1F1176A31B983D280049D9F5 /* SocketAckManager.swift in Sources */,
 				28CB45E11BB13FB200182924 /* GroupDescriptionViewController.swift in Sources */,
@@ -1282,19 +1281,20 @@
 				D07793871B704F410056B7CB /* DatePickerViewController.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
 				1F1176A41B983D280049D9F5 /* SocketAnyEvent.swift in Sources */,
+				D07232331BE1C1C700122F52 /* Array.swift in Sources */,
 				1F1176AA1B983D280049D9F5 /* SocketLogger.swift in Sources */,
 				1F8DEBE01BBD22600037FD1C /* PostCallOutViewController.swift in Sources */,
 				D0F44FAB1B5E4790009E12AA /* BookmarkedPostsViewController.swift in Sources */,
 				D0B48E981BE1A6D2007BD9BD /* SocketAckEmitter.swift in Sources */,
 				D0B6EB121B5E7D09005A7E45 /* MyAccountHeaderViewController.swift in Sources */,
 				D0B48E941BE19FE8007BD9BD /* Validation.swift in Sources */,
-				1F985E6A1B60C19F008D5369 /* Range.swift in Sources */,
 				1F1176AF1B983D280049D9F5 /* WebSocket.swift in Sources */,
 				D0BA8DE71B55375A00271F2B /* PostViewController.swift in Sources */,
 				D0B48E861BE19FE8007BD9BD /* Alamofire.swift in Sources */,
 				1F26B29A1BAA61D10063AC6B /* GroupDetailViewController.swift in Sources */,
 				285778511BC272E000533E8E /* ICYTagButton.swift in Sources */,
 				D0960AAC1BC376FB00A63733 /* UltravisualLayout.swift in Sources */,
+				D072323E1BE1C1C700122F52 /* Sequence.swift in Sources */,
 				D05418431BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift in Sources */,
 				295272D01AD51B2300FC7833 /* S3.swift in Sources */,
 				D0F44FAD1B5E534B009E12AA /* MyPostsViewController.swift in Sources */,
@@ -1302,6 +1302,7 @@
 				1F79C1B61B5E55D5008800E1 /* InvitationCell.swift in Sources */,
 				296D8BAC1AFC59F10058D400 /* TabBarController.swift in Sources */,
 				D04447B31BBA9DF300AD7B0C /* GroupChatViewController.swift in Sources */,
+				D07232341BE1C1C700122F52 /* Bool.swift in Sources */,
 				1FEA3CFD1BB39E5A0037F3C5 /* StationCollectionViewCell.swift in Sources */,
 				D0B48E8C1BE19FE8007BD9BD /* ParameterEncoding.swift in Sources */,
 				2857784C1BC25DC600533E8E /* ICYPostCell.swift in Sources */,
@@ -1354,6 +1355,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1439,6 +1441,7 @@
 					Reveal,
 				);
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.e-business.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = tomo;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
@@ -1467,6 +1470,7 @@
 					"$(PROJECT_DIR)/Vendors/opencore-amr/lib",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.e-business.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = tomo;
 				PROVISIONING_PROFILE = "74e14230-e2f6-4cf2-b159-fce97c38ee39";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
@@ -1490,6 +1494,7 @@
 				);
 				INFOPLIST_FILE = TomoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.e-business.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
@@ -1509,6 +1514,7 @@
 				);
 				INFOPLIST_FILE = TomoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.e-business.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
