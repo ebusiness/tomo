@@ -235,7 +235,7 @@
                         <outlet property="coverImageView" destination="D5I-gk-3oY" id="7gc-ph-tUd"/>
                         <outlet property="groupNameLable" destination="PcR-d9-tdg" id="cwK-uo-Ub1"/>
                         <outlet property="joinButton" destination="xp4-n8-ZXc" id="uJQ-BT-nB1"/>
-                        <segue destination="Q6G-5u-zfh" kind="unwind" unwindAction="addedPost:" id="YNh-gf-wlF"/>
+                        <segue destination="Q6G-5u-zfh" kind="unwind" identifier="addedPost" unwindAction="addedPost:" id="YNh-gf-wlF"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s9l-oX-kAz" userLabel="First Responder" sceneMemberID="firstResponder"/>
