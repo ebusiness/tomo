@@ -10,7 +10,7 @@ PODS:
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
-  - SSWeChatSDK (1.5.0)
+  - SSWeChatSDK (1.6.0)
   - SVProgressHUD (1.1.3)
   - UIActivityIndicator-for-SDWebImage (1.2):
     - SDWebImage (~> 3.7)
@@ -22,7 +22,7 @@ DEPENDENCIES:
   - MHVideoPhotoGallery
   - NYXImagesKit
   - SDWebImage
-  - SSWeChatSDK (~> 1.5)
+  - SSWeChatSDK
   - SVProgressHUD
   - UIActivityIndicator-for-SDWebImage
 
@@ -34,8 +34,8 @@ SPEC CHECKSUMS:
   MHVideoPhotoGallery: d6433bc1ec2caf227ad960ee709500b23949bbb2
   NYXImagesKit: 8163e3335a40eaa173ca5bbbf81fafb57d3947eb
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
-  SSWeChatSDK: e4c8f8234285ef3ffc040424ff9ef472290e0ff6
+  SSWeChatSDK: beb140f738cc66c6e9b37933ff41d4686c72e745
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0
