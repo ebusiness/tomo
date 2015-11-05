@@ -261,6 +261,13 @@ extension ProfileViewController {
                     Util.showSuccess("您拒绝了 " + self.user.nickName + " 的好友邀请")
                 }
                 
+                if let friendListViewController = (self.tabBarController?.childViewControllers.get(1) as? UINavigationController)?.childViewControllers.get(0) as? FriendListViewController {
+                    if isApproved {
+                        friendListViewController.friends.insert(self.user, atIndex: 0)
+                    }
+                    friendListViewController.tableView.reloadData()
+                }
+                
                 self.reloadButtons()
             })
         }
