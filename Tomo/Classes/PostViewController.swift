@@ -184,7 +184,7 @@ class PostViewController: BaseViewController{
             optionalList["举报此内容"] = { (_) -> Void in
                 
                 Util.alert(self, title: "举报此内容", message: "您确定要举报此内容吗？", action: { (action) -> Void in
-                    AlamofireController.request(.PATCH, "/posts/\(self.post.id)/report", success: { _ in
+                    AlamofireController.request(.POST, "/reports/posts/\(self.post.id)", success: { _ in
                         Util.showInfo("举报信息已发送")
                         self.navigationController?.popViewControllerAnimated(true)
                     })

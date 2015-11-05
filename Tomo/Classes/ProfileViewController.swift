@@ -15,8 +15,6 @@ final class ProfileViewController: ProfileBaseController {
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var birthDayLabel: UILabel!
     
-    @IBOutlet weak var deleteFriendButton: UIButton!
-    
     @IBOutlet weak var receivedInvitationCell: UITableViewCell!
     @IBOutlet weak var sentInvitationCell: UITableViewCell!
 
@@ -27,8 +25,15 @@ final class ProfileViewController: ProfileBaseController {
     let sendMessageSection = 3
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
         self.reloadButtons()
+        
+        if self.user.id == me.id {
+            self.navigationItem.rightBarButtonItem = nil
+        }
+        
         self.tableView.reloadSections(NSIndexSet(index: invitedSection), withRowAnimation: .Automatic)
         self.tableView.reloadSections(NSIndexSet(index: sendMessageSection), withRowAnimation: .Automatic)
         self.registerForNotifications()
@@ -69,19 +74,62 @@ extension ProfileViewController {
             self.inviteAction(false)
         }
     }
-    
-    @IBAction func deleteFriend(sender: UIButton) {
-        
-        Util.alert(self, title: "删除好友", message: "确定删除该好友么?", action: { (_) -> Void in
-            
-            AlamofireController.request(.DELETE, "/friends/\(self.user.id)", success: { _ in
-                
-                me.removeFriend(self.user.id)
-//                self.navigationController?.popViewControllerAnimated(true)
-                self.reloadButtons()
 
-            })
-        })
+    @IBAction func moreBtnTapped(sender: AnyObject) {
+        
+        var optionalList = Dictionary<String,((UIAlertAction!) -> Void)!>()
+
+        if self.user.id != me.id {
+            optionalList["举报此用户"] = { (_) -> Void in
+                
+                Util.alert(self, title: "举报用户", message: "您确定要举报此用户吗？", action: { (action) -> Void in
+                    AlamofireController.request(.POST, "/reports/users/\(self.user.id)", success: { _ in
+                        Util.showInfo("举报信息已发送")
+                        self.navigationController?.popViewControllerAnimated(true)
+                    })
+                })
+            }
+        }
+        
+        if self.user.id != me.id {
+            
+            if let blockUsers = me.blockUsers where blockUsers.contains(self.user.id) {
+                
+                optionalList["取消屏蔽"] = { (_) -> Void in
+                    AlamofireController.request(.POST, "/blocks", parameters: ["id": self.user.id], success: {
+                        _ in
+                        me.blockUsers?.remove(self.user.id)
+                    })
+                }
+                
+            } else {
+                
+                optionalList["屏蔽此用户"] = { (_) -> Void in
+                    
+                    Util.alert(self, title: "屏蔽用户", message: "您确定要屏蔽此用户吗？", action: { (action) -> Void in
+                        AlamofireController.request(.POST, "/blocks", parameters: ["id": self.user.id], success: { _ in
+                            me.blockUsers?.append(self.user.id)
+                            self.navigationController?.popViewControllerAnimated(true)
+                        })
+                    })
+                }
+            }
+            
+        }
+        
+        if let friends = me.friends where friends.contains(self.user.id) {
+            optionalList["删除好友"] = { (_) -> Void in
+                
+                Util.alert(self, title: "删除好友", message: "确定删除该好友么?", action: { (_) -> Void in
+                    AlamofireController.request(.DELETE, "/friends/\(self.user.id)", success: { _ in
+                        me.removeFriend(self.user.id)
+                        self.reloadButtons()
+                    })
+                })
+            }
+        }
+        
+        Util.alertActionSheet(self, optionalDict: optionalList)
         
     }
     
@@ -189,11 +237,6 @@ extension ProfileViewController {
         self.tableView.reloadSections(NSIndexSet(index: invitedSection), withRowAnimation: .Automatic)
         self.tableView.reloadSections(NSIndexSet(index: sendMessageSection), withRowAnimation: .Automatic)
         self.tableView.endUpdates()
-        if let friends = me.friends where friends.contains(self.user.id) {
-            self.deleteFriendButton.hidden = false
-        } else {
-            self.deleteFriendButton.hidden = true
-        }
     }
     
     private func getUserInvitation() -> NotificationEntity? {
