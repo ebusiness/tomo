@@ -183,11 +183,8 @@ extension RegViewController {
     
     @IBAction func login_wechat(sender: AnyObject) {
         
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.inputArea.alpha = 0
-            }) { (_) -> Void in
-                self.inputArea.hidden = true
-        }
+        self.inputArea.alpha = 0
+        self.inputArea.hidden = true
         
         OpenidController.instance.wxCheckAuth(
             success: { (result) -> () in
@@ -196,9 +193,7 @@ extension RegViewController {
             failure: { (errCode, errMessage) -> () in
                 
                 self.inputArea.hidden = false
-                UIView.animateWithDuration(0.3) { () -> Void in
-                    self.inputArea.alpha = 1
-                }
+                self.inputArea.alpha = 1
         })
     }
     

@@ -43,6 +43,7 @@ class OpenidController: NSObject {
         
         if (!WXApi.isWXAppInstalled()) {
             Util.showInfo("微信没有安装")
+            self.failure(-2, errMessage: "微信没有安装")
         } else {
             if Defaults["openid"].string != nil && Defaults["access_token"].string != nil && Defaults["refresh_token"].string != nil {
                 self.checkToken()
