@@ -38,7 +38,7 @@ class UserEntity: Entity {
     
     var groups: [String]?
     
-//    var stations: [String]?
+    var blockUsers: [String]?
     
     var friendInvitations: [NotificationEntity]!
     
@@ -92,7 +92,7 @@ class UserEntity: Entity {
         
         self.groups = json["groups"].arrayObject as? [String]
         
-//        self.stations = json["stations"].arrayObject as? [String]
+        self.blockUsers = json["blockUsers"].arrayObject as? [String]
         
         self.friendInvitations = []
         if let invitations = json["friendInvitations"].array {
