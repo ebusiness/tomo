@@ -183,17 +183,12 @@ extension RegViewController {
     
     @IBAction func login_wechat(sender: AnyObject) {
         
-        self.inputArea.alpha = 0
-        self.inputArea.hidden = true
-        
         OpenidController.instance.wxCheckAuth(
             success: { (result) -> () in
                 self.changeRootToTab()
             },
             failure: { (errCode, errMessage) -> () in
                 
-                self.inputArea.hidden = false
-                self.inputArea.alpha = 1
         })
     }
     
