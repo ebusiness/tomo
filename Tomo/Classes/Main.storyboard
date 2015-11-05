@@ -228,14 +228,14 @@ COePvuWgtFRvbW8
                                             </vibrancyEffect>
                                         </visualEffectView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="新用户注册" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLz-2c-HRw">
-                                            <rect key="frame" x="32" y="77" width="175" height="42"/>
+                                            <rect key="frame" x="32" y="50" width="175" height="42"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="35"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="在Tomo中使用的昵称" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6db-nD-AFC">
-                                            <rect key="frame" x="40" y="175" width="240" height="30"/>
+                                            <rect key="frame" x="40" y="132" width="240" height="30"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="H4q-Hm-rcO"/>
@@ -251,14 +251,14 @@ COePvuWgtFRvbW8
                                             </connections>
                                         </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="昵称最多10个字符" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihM-y8-GRV">
-                                            <rect key="frame" x="182" y="209" width="98" height="15"/>
+                                            <rect key="frame" x="182" y="166" width="98" height="14.5"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="您的电子邮件地址" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9Rs-kf-xuD">
-                                            <rect key="frame" x="40" y="251" width="240" height="30"/>
+                                            <rect key="frame" x="40" y="202" width="240" height="30"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="818-yD-dbc"/>
@@ -274,14 +274,14 @@ COePvuWgtFRvbW8
                                             </connections>
                                         </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入有效的邮件地址" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z0V-Xu-tHf">
-                                            <rect key="frame" x="160" y="285" width="120" height="15"/>
+                                            <rect key="frame" x="160" y="236" width="120" height="14.5"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入一个密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nmz-02-c6P">
-                                            <rect key="frame" x="40" y="327" width="240" height="30"/>
+                                            <rect key="frame" x="40" y="272" width="240" height="30"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="5Ne-06-Ga2"/>
@@ -296,14 +296,14 @@ COePvuWgtFRvbW8
                                             </connections>
                                         </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="由8个大小写字母，数字或符号组成的密码" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lhl-xz-LVl">
-                                            <rect key="frame" x="57" y="361" width="223" height="15"/>
+                                            <rect key="frame" x="57" y="306" width="223" height="14.5"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请再一次输入密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rMI-Mb-Gbw">
-                                            <rect key="frame" x="40" y="403" width="240" height="30"/>
+                                            <rect key="frame" x="40" y="342" width="240" height="30"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="240" id="vwc-J6-wRF"/>
@@ -318,14 +318,14 @@ COePvuWgtFRvbW8
                                             </connections>
                                         </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="两个密码不一致" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="olO-sL-bNB">
-                                            <rect key="frame" x="196" y="437" width="84" height="15"/>
+                                            <rect key="frame" x="196" y="376" width="84" height="14.5"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="50x-kv-VTO">
-                                            <rect key="frame" x="188" y="489" width="34" height="33"/>
+                                            <rect key="frame" x="188" y="493.5" width="34" height="33"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <state key="normal" title="取消">
@@ -337,7 +337,7 @@ COePvuWgtFRvbW8
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="alR-a4-IJX">
-                                            <rect key="frame" x="81" y="483" width="68" height="44"/>
+                                            <rect key="frame" x="81" y="487.5" width="68" height="44"/>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="68" id="X7X-u7-Foz"/>
@@ -355,15 +355,8 @@ COePvuWgtFRvbW8
                                                 <action selector="signUp:" destination="S3k-TM-I3y" eventType="touchUpInside" id="5FK-JB-kQw"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击注册,即表示你已阅读,并同意了" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4eM-fw-InV">
-                                            <rect key="frame" x="16" y="453" width="188" height="15"/>
-                                            <animations/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pLD-e1-H8d">
-                                            <rect key="frame" x="204" y="447" width="108" height="27"/>
+                                            <rect key="frame" x="106" y="426.5" width="108" height="27"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                             <state key="normal" title="服务条款及用户协议">
@@ -373,34 +366,41 @@ COePvuWgtFRvbW8
                                                 <action selector="agreement:" destination="S3k-TM-I3y" eventType="touchUpInside" id="Dnc-j2-T2b"/>
                                             </connections>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击注册,即表示你已阅读,并同意了" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4eM-fw-InV">
+                                            <rect key="frame" x="67" y="412" width="187.5" height="14.5"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <animations/>
                                     <constraints>
                                         <constraint firstItem="Lhl-xz-LVl" firstAttribute="top" secondItem="Nmz-02-c6P" secondAttribute="bottom" constant="4" id="3Yt-bf-OB7"/>
-                                        <constraint firstItem="pLD-e1-H8d" firstAttribute="leading" secondItem="4eM-fw-InV" secondAttribute="trailing" id="3xe-kt-WYy"/>
                                         <constraint firstItem="6db-nD-AFC" firstAttribute="trailing" secondItem="ihM-y8-GRV" secondAttribute="trailing" id="603-0A-x1j"/>
                                         <constraint firstAttribute="centerX" secondItem="rMI-Mb-Gbw" secondAttribute="centerX" id="6mD-yN-m5T"/>
-                                        <constraint firstAttribute="centerX" secondItem="4eM-fw-InV" secondAttribute="centerX" constant="50" id="CbP-Ug-rkx"/>
+                                        <constraint firstAttribute="centerX" secondItem="4eM-fw-InV" secondAttribute="centerX" id="CbP-Ug-rkx"/>
                                         <constraint firstItem="rMI-Mb-Gbw" firstAttribute="trailing" secondItem="olO-sL-bNB" secondAttribute="trailing" id="DSh-mp-F6Y"/>
                                         <constraint firstItem="ihM-y8-GRV" firstAttribute="top" secondItem="6db-nD-AFC" secondAttribute="bottom" constant="4" id="Fc0-IL-z5j"/>
-                                        <constraint firstItem="pLD-e1-H8d" firstAttribute="centerY" secondItem="4eM-fw-InV" secondAttribute="centerY" id="Fqx-yL-3IS"/>
                                         <constraint firstAttribute="centerX" secondItem="Nmz-02-c6P" secondAttribute="centerX" id="HXw-qo-TbM"/>
                                         <constraint firstItem="RLz-2c-HRw" firstAttribute="leading" secondItem="AxJ-MI-sgP" secondAttribute="leading" constant="32" id="IAg-8e-Ua0"/>
                                         <constraint firstItem="Nmz-02-c6P" firstAttribute="trailing" secondItem="Lhl-xz-LVl" secondAttribute="trailing" id="IcR-cQ-zOQ"/>
                                         <constraint firstAttribute="centerX" secondItem="9Rs-kf-xuD" secondAttribute="centerX" id="Jwf-5a-un1"/>
                                         <constraint firstItem="alR-a4-IJX" firstAttribute="centerY" secondItem="50x-kv-VTO" secondAttribute="centerY" id="PZ8-uC-auR"/>
                                         <constraint firstAttribute="centerX" secondItem="alR-a4-IJX" secondAttribute="centerX" constant="45" id="QV2-Oz-TPe"/>
-                                        <constraint firstItem="50x-kv-VTO" firstAttribute="top" secondItem="4eM-fw-InV" secondAttribute="bottom" constant="21" id="QtH-1a-FE0"/>
-                                        <constraint firstItem="6db-nD-AFC" firstAttribute="top" secondItem="RLz-2c-HRw" secondAttribute="bottom" constant="56" id="S8d-iq-EhG"/>
+                                        <constraint firstItem="6db-nD-AFC" firstAttribute="top" secondItem="RLz-2c-HRw" secondAttribute="bottom" constant="40" id="S8d-iq-EhG"/>
+                                        <constraint firstItem="50x-kv-VTO" firstAttribute="top" secondItem="pLD-e1-H8d" secondAttribute="bottom" constant="40" id="Z2G-yb-ViP"/>
                                         <constraint firstItem="z0V-Xu-tHf" firstAttribute="top" secondItem="9Rs-kf-xuD" secondAttribute="bottom" constant="4" id="f0D-J7-aIN"/>
                                         <constraint firstAttribute="centerX" secondItem="6db-nD-AFC" secondAttribute="centerX" id="f8k-jV-GK4"/>
                                         <constraint firstAttribute="centerX" secondItem="50x-kv-VTO" secondAttribute="centerX" constant="-45" id="gnK-2o-E3x"/>
-                                        <constraint firstItem="50x-kv-VTO" firstAttribute="top" secondItem="rMI-Mb-Gbw" secondAttribute="bottom" constant="56" id="i9m-0J-JTi"/>
-                                        <constraint firstItem="Nmz-02-c6P" firstAttribute="top" secondItem="9Rs-kf-xuD" secondAttribute="bottom" constant="46" id="kGT-u2-Key"/>
+                                        <constraint firstItem="4eM-fw-InV" firstAttribute="top" secondItem="rMI-Mb-Gbw" secondAttribute="bottom" constant="40" id="jtd-Nn-efU"/>
+                                        <constraint firstItem="Nmz-02-c6P" firstAttribute="top" secondItem="9Rs-kf-xuD" secondAttribute="bottom" constant="40" id="kGT-u2-Key"/>
                                         <constraint firstItem="olO-sL-bNB" firstAttribute="top" secondItem="rMI-Mb-Gbw" secondAttribute="bottom" constant="4" id="kSn-bs-jgy"/>
-                                        <constraint firstItem="RLz-2c-HRw" firstAttribute="top" secondItem="AxJ-MI-sgP" secondAttribute="top" constant="77" id="ngS-yh-ERo"/>
-                                        <constraint firstItem="rMI-Mb-Gbw" firstAttribute="top" secondItem="Nmz-02-c6P" secondAttribute="bottom" constant="46" id="oed-ep-774"/>
-                                        <constraint firstItem="9Rs-kf-xuD" firstAttribute="top" secondItem="6db-nD-AFC" secondAttribute="bottom" constant="46" id="pvP-a9-vNN"/>
+                                        <constraint firstItem="RLz-2c-HRw" firstAttribute="top" secondItem="AxJ-MI-sgP" secondAttribute="top" constant="50" id="ngS-yh-ERo"/>
+                                        <constraint firstItem="rMI-Mb-Gbw" firstAttribute="top" secondItem="Nmz-02-c6P" secondAttribute="bottom" constant="40" id="oed-ep-774"/>
+                                        <constraint firstItem="9Rs-kf-xuD" firstAttribute="top" secondItem="6db-nD-AFC" secondAttribute="bottom" constant="40" id="pvP-a9-vNN"/>
+                                        <constraint firstAttribute="centerX" secondItem="pLD-e1-H8d" secondAttribute="centerX" id="u3W-EX-IVd"/>
+                                        <constraint firstItem="4eM-fw-InV" firstAttribute="bottom" secondItem="pLD-e1-H8d" secondAttribute="top" id="ufh-k4-7mx"/>
                                         <constraint firstItem="9Rs-kf-xuD" firstAttribute="trailing" secondItem="z0V-Xu-tHf" secondAttribute="trailing" id="vLY-W5-Id2"/>
                                     </constraints>
                                 </view>
@@ -489,7 +489,7 @@ COePvuWgtFRvbW8
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="iFe-F9-gPE">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="iFe-F9-gPE">
                                 <rect key="frame" x="0.0" y="438" width="320" height="130"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
