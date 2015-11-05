@@ -180,10 +180,22 @@ class PostViewController: BaseViewController{
             OpenidController.instance.wxShare(1, img: shareImage, description: self.post.content!, extInfo: self.post.id)
         }
         
+        if post.owner.id != me.id {
+            optionalList["举报此内容"] = { (_) -> Void in
+                
+                Util.alert(self, title: "举报此内容", message: "您确定要举报此内容吗？", action: { (action) -> Void in
+                    AlamofireController.request(.PATCH, "/posts/\(self.post.id)/report", success: { _ in
+                        Util.showInfo("举报信息已发送")
+                        self.navigationController?.popViewControllerAnimated(true)
+                    })
+                })
+            }
+        }
+        
         if post.owner.id == me.id {
             optionalList["删除"] = { (_) -> Void in
                 
-                Util.alert(self, title: "删除帖子", message: "确定删除该帖子么?", action: { (action) -> Void in
+                Util.alert(self, title: "删除帖子", message: "确定删除该帖子吗？", action: { (action) -> Void in
                     AlamofireController.request(.DELETE, "/posts/\(self.post.id)", success: { _ in
                         Util.showInfo("帖子已删除")
                         self.navigationController?.popViewControllerAnimated(true)
