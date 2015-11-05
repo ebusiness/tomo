@@ -83,10 +83,7 @@ extension ProfileViewController {
             optionalList["举报此用户"] = { (_) -> Void in
                 
                 Util.alert(self, title: "举报用户", message: "您确定要举报此用户吗？", action: { (action) -> Void in
-                    AlamofireController.request(.POST, "/reports/users/\(self.user.id)", success: { _ in
-                        Util.showInfo("举报信息已发送")
-                        self.navigationController?.popViewControllerAnimated(true)
-                    })
+                    AlamofireController.request(.POST, "/reports/users/\(self.user.id)")
                 })
             }
         }
