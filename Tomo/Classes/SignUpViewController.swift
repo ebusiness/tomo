@@ -141,6 +141,10 @@ extension SignUpViewController {
         }
         
     }
+    @IBAction func agreement(sender: UIButton) {
+        let agreementView = Util.createViewControllerWithIdentifier("AgreementView", storyboardName: "Setting")
+        self.presentViewController(agreementView, animated: true, completion: nil)
+    }
 }
 
 // MARK: - TextField Delegate

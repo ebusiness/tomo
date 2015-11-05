@@ -175,6 +175,8 @@
 		D0A0C0301B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */; };
 		D0A0C0321B5F5BF900ABFA5F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C0311B5F5BF900ABFA5F /* ProfileViewController.swift */; };
 		D0A0C0341B5F5D0500ABFA5F /* UserPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C0331B5F5D0500ABFA5F /* UserPostsViewController.swift */; };
+		D0A104911BEAF1C700AEE356 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A104901BEAF1C700AEE356 /* AgreementViewController.swift */; };
+		D0A104951BEB055100AEE356 /* statements.html in Resources */ = {isa = PBXBuildFile; fileRef = D0A104941BEB055100AEE356 /* statements.html */; };
 		D0B40BBF1B78AF0400685D67 /* ExNSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B40BBE1B78AF0400685D67 /* ExNSDate.swift */; };
 		D0B40BC01B78B8FA00685D67 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */; };
 		D0B6364E1B81A9C70012C4E8 /* URLSchemesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */; };
@@ -373,6 +375,8 @@
 		D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileHeaderViewController.swift; path = Classes/ProfileHeaderViewController.swift; sourceTree = "<group>"; };
 		D0A0C0311B5F5BF900ABFA5F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = Classes/ProfileViewController.swift; sourceTree = "<group>"; };
 		D0A0C0331B5F5D0500ABFA5F /* UserPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserPostsViewController.swift; path = Classes/UserPostsViewController.swift; sourceTree = "<group>"; };
+		D0A104901BEAF1C700AEE356 /* AgreementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AgreementViewController.swift; path = Classes/AgreementViewController.swift; sourceTree = "<group>"; };
+		D0A104941BEB055100AEE356 /* statements.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = statements.html; path = Resources/statements.html; sourceTree = SOURCE_ROOT; };
 		D0B40BBE1B78AF0400685D67 /* ExNSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExNSDate.swift; path = Classes/ExNSDate.swift; sourceTree = SOURCE_ROOT; };
 		D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLSchemesController.swift; path = Classes/URLSchemesController.swift; sourceTree = "<group>"; };
 		D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountHeaderViewController.swift; path = Classes/MyAccountHeaderViewController.swift; sourceTree = "<group>"; };
@@ -627,6 +631,7 @@
 		290134D51AC3991C00BBFE29 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D0A104941BEB055100AEE356 /* statements.html */,
 				296D8BBC1AFC5A680058D400 /* LaunchScreen.xib */,
 				290134FA1AC3A3D200BBFE29 /* Tomo-Bridging-Header.h */,
 				290134D61AC3991C00BBFE29 /* Info.plist */,
@@ -792,6 +797,7 @@
 				D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */,
 				D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */,
 				D029F7311BCCB39E00CDE18B /* PushSettingViewController.swift */,
+				D0A104901BEAF1C700AEE356 /* AgreementViewController.swift */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -1047,6 +1053,7 @@
 				29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */,
 				D09D8DBC1BCDF07400071B3E /* Info.plist in Resources */,
 				1F902D771B7D9C2800F6DC2D /* EmptyFriends.xib in Resources */,
+				D0A104951BEB055100AEE356 /* statements.html in Resources */,
 				1F19D9541BA9550A007C9919 /* RecommendSiteTableCell.xib in Resources */,
 				1F19D95A1BA96B3E007C9919 /* GroupCollectionViewCell.xib in Resources */,
 				1FEA3CFF1BB39F160037F3C5 /* StationCollectionViewCell.xib in Resources */,
@@ -1147,6 +1154,7 @@
 			files = (
 				296D8BB31AFC5A250058D400 /* MessageViewController.swift in Sources */,
 				D040E1651BDDC00D00417174 /* RecommendViewController.swift in Sources */,
+				D0A104911BEAF1C700AEE356 /* AgreementViewController.swift in Sources */,
 				283771911BC37653001B06D3 /* ICYFlowLayout.swift in Sources */,
 				1FAA70FC1BBBF97B00BCE5AF /* StationAnnotation.swift in Sources */,
 				1FC268801BBABED8006F1FDA /* GroupAnnotation.swift in Sources */,
