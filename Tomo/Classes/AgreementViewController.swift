@@ -18,7 +18,7 @@ final class AgreementViewController: BaseViewController {
         webView.scrollView.bounces = false
         
         if let htmlPath = NSBundle.mainBundle().pathForResource("statements", ofType: "html") {
-            let url = NSURL.fileURLWithPath(htmlPath)!
+            let url = NSURL.fileURLWithPath(htmlPath)
             let request = NSURLRequest(URL: url)
             webView.loadRequest(request)
         }
