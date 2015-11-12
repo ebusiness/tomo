@@ -40,11 +40,7 @@ class GroupDescriptionViewController: BaseTableViewController {
                 introductionLabel.text = detailedGroup.introduction
                 groupCoverImageView.sd_setImageWithURL(NSURL(string: detailedGroup.cover), placeholderImage: UIImage(named: "group_cover_default"))
                 if (detailedGroup.members ?? []).count > 0 {
-                    memberCollectionView.frame.size.width = tableView.frame.size.width
-                    memberCollectionView.reloadData()
-                    memberCollectionViewHeightConstraint.constant = memberCollectionView.collectionViewLayout.collectionViewContentSize().height
-                    tableView.reloadData()
-                    memberCollectionView.layoutIfNeeded()
+                    tableView.reloadSections(NSIndexSet(index: memberCollectionSection), withRowAnimation: .Automatic)
                 }
             }
         }
@@ -121,7 +117,13 @@ extension GroupDescriptionViewController {
         let successHandler: (AnyObject)->() = { _ in
             
             me.groups?.remove(self.group.id)
-            let item = self.detailedGroup?.members?.indexOf { $0.id == me.id } ?? 0
+            
+            var item = 0
+            let user = self.detailedGroup?.members?.find { $0.id == me.id }
+            if let user = user {
+                item = self.detailedGroup?.members?.indexOf(user) ?? 0
+            }
+            
             self.detailedGroup?.removeMember(me)
             
             self.memberCollectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: item, inSection: 0)])
@@ -208,6 +210,19 @@ extension GroupDescriptionViewController {
         }
         
         return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == memberCollectionSection && (detailedGroup?.members ?? []).count > 1 {
+            memberCollectionView.frame.size.width = tableView.frame.size.width
+            memberCollectionView.reloadData()
+            let constant = memberCollectionView.collectionViewLayout.collectionViewContentSize().height
+            memberCollectionViewHeightConstraint.constant = constant
+            memberCollectionView.layoutIfNeeded()
+            
+            return constant
+        }
+        return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
     }
 }
 
