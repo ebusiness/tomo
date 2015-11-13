@@ -18,11 +18,12 @@ final class RegViewController: BaseViewController {
     
     @IBOutlet weak var inputArea: UIView!
     @IBOutlet weak var inputAreaBottomSpace: NSLayoutConstraint!
+    @IBOutlet weak var registerBottomSpace: NSLayoutConstraint!
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+
         self.setupAppearance()
         
         self.registerForKeyboardNotifications()
@@ -72,12 +73,17 @@ extension RegViewController {
         
         // hide all controls on startup
         inputArea.hidden = true
-        
-        // customize wechat login button
-        loginButton.layer.borderColor = UIColor.whiteColor().CGColor
-        loginButton.layer.borderWidth = 1
-        loginButton.layer.cornerRadius = 2
-        
+
+        if (OpenidController.instance.isWXAppInstalled()) {
+            // customize wechat login button
+            loginButton.layer.borderColor = UIColor.whiteColor().CGColor
+            loginButton.layer.borderWidth = 1
+            loginButton.layer.cornerRadius = 2
+        } else {
+            registerBottomSpace.constant = 16
+            loginButton.hidden = true
+        }
+
         // customize email input field
         customizeTextField(emailTextField)
         customizeTextField(passwordTextField)
@@ -85,7 +91,6 @@ extension RegViewController {
     }
     
     private func registerForKeyboardNotifications() {
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShown:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
     }

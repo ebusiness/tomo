@@ -10,6 +10,11 @@ import UIKit
 
 class SignUpViewController: UIViewController {
 
+    @IBOutlet weak var scrollView: UIScrollView!
+
+    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var inputAreaHeight: NSLayoutConstraint!
+
     @IBOutlet weak var signUpButton: UIButton!
     
     @IBOutlet weak var nickNameTextField: UITextField!
@@ -29,9 +34,12 @@ class SignUpViewController: UIViewController {
     var repassValid = false
 
     override func viewDidLoad() {
+
         super.viewDidLoad()
 
         self.setupAppearance()
+
+        self.registerForKeyboardNotifications()
     }
 
     override func didReceiveMemoryWarning() {
@@ -78,7 +86,9 @@ extension SignUpViewController {
                 ])
             textField.attributedPlaceholder = attributeString
         }
-        
+
+        inputAreaHeight.constant = UIScreen.mainScreen().bounds.height
+
         // customize wechat login button
         signUpButton.layer.borderColor = UIColor.whiteColor().CGColor
         signUpButton.layer.borderWidth = 1
@@ -90,7 +100,50 @@ extension SignUpViewController {
         customizeTextField(passwordTextField)
         customizeTextField(repassTextField)
     }
-    
+
+    private func registerForKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShown:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+
+    func keyboardWillShown(notification: NSNotification) {
+
+        if let info = notification.userInfo {
+
+            if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
+
+                var duration = 0.3
+
+                if let keyboardDuration = info[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue {
+                    duration = keyboardDuration
+                }
+
+                self.scrollViewBottomConstraint.constant = keyboardHeight
+                UIView.animateWithDuration(duration, animations: { () -> Void in
+                    self.view.layoutIfNeeded()
+                })
+            }
+        }
+    }
+
+    func keyboardWillBeHidden(notification: NSNotification) {
+
+        if let info = notification.userInfo {
+
+            self.scrollViewBottomConstraint.constant = 0
+
+            var duration = 0.3
+
+            if let keyboardDuration = info[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue {
+                duration = keyboardDuration
+            }
+
+            UIView.animateWithDuration(duration, animations: { () -> Void in
+                self.view.layoutIfNeeded()
+            })
+        }
+    }
+
     private func showHintLabel(label: UILabel) {
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             label.alpha = 1.0
@@ -150,6 +203,10 @@ extension SignUpViewController {
 // MARK: - TextField Delegate
 
 extension SignUpViewController: UITextFieldDelegate {
+
+    @IBAction func textFieldTouchedUp(sender: UITextField) {
+        self.scrollView.scrollRectToVisible(sender.frame, animated: true)
+    }
 
     @IBAction func textFieldDidChange(sender: UITextField) {
         

@@ -35,7 +35,11 @@ class OpenidController: NSObject {
         super.init()
         WXApi.registerApp(wxAppid)
     }
-    
+
+    func isWXAppInstalled() -> Bool {
+        return WXApi.isWXAppInstalled()
+    }
+
     func wxCheckAuth(success successHandler:snsSuccessHandler,failure failureHandler:snsFailureHandler?) {
         
         self.whenSuccess = successHandler
