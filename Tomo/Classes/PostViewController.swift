@@ -172,16 +172,18 @@ class PostViewController: BaseViewController{
         
         var optionalList = Dictionary<String,((UIAlertAction!) -> Void)!>()
         
-        optionalList["微信"] = { (_) -> Void in
-            OpenidController.instance.wxShare(0, img: shareImage, description: self.post.content!, extInfo: self.post.id)
-        }
-        
-        optionalList["朋友圈"] = { (_) -> Void in
-            OpenidController.instance.wxShare(1, img: shareImage, description: self.post.content!, extInfo: self.post.id)
+        if (OpenidController.instance.isWXAppInstalled()) {
+            optionalList["微信"] = { _ in
+                OpenidController.instance.wxShare(0, img: shareImage, description: self.post.content!, extInfo: self.post.id)
+            }
+            
+            optionalList["朋友圈"] = { _ in
+                OpenidController.instance.wxShare(1, img: shareImage, description: self.post.content!, extInfo: self.post.id)
+            }
         }
         
         if post.owner.id != me.id {
-            optionalList["举报此内容"] = { (_) -> Void in
+            optionalList["举报此内容"] = { _ in
                 
                 Util.alert(self, title: "举报此内容", message: "您确定要举报此内容吗？", action: { (action) -> Void in
                     AlamofireController.request(.POST, "/reports/posts/\(self.post.id)", success: { _ in
@@ -193,7 +195,7 @@ class PostViewController: BaseViewController{
         }
         
         if post.owner.id == me.id {
-            optionalList["删除"] = { (_) -> Void in
+            optionalList["删除"] = { _ in
                 
                 Util.alert(self, title: "删除帖子", message: "确定删除该帖子吗？", action: { (action) -> Void in
                     AlamofireController.request(.DELETE, "/posts/\(self.post.id)", success: { _ in

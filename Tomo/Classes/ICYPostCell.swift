@@ -176,14 +176,14 @@ class ICYPostCell: UITableViewCell {
     
     func majorAvatarTapped() {
         if let owner = post?.owner {
-            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-            vc.user = owner
             
-            let profileViewController = delegate?.navigationController?.childViewControllers.find { $0 is ProfileViewController } as? ProfileViewController
+            let profileViewController = delegate?.navigationController?.childViewControllers.find { ($0 as? ProfileViewController)?.user.id == owner.id } as? ProfileViewController
             
             if let profileViewController = profileViewController {
                 delegate?.navigationController?.popToViewController(profileViewController, animated: true)
             } else {
+                let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+                vc.user = owner
                 delegate?.navigationController?.pushViewController(vc, animated: true)
             }
         }

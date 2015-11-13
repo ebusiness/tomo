@@ -213,7 +213,7 @@ extension GroupDescriptionViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == memberCollectionSection && (detailedGroup?.members ?? []).count > 1 {
+        if indexPath.section == memberCollectionSection && (detailedGroup?.members ?? []).count > 0 {
             memberCollectionView.frame.size.width = tableView.frame.size.width
             memberCollectionView.reloadData()
             let constant = memberCollectionView.collectionViewLayout.collectionViewContentSize().height
