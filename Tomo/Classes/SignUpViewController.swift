@@ -110,7 +110,7 @@ extension SignUpViewController {
 
         if let info = notification.userInfo {
 
-            if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
+            if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height {
 
                 var duration = 0.3
 
