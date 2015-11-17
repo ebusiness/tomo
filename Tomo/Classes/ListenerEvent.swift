@@ -196,7 +196,7 @@ extension ListenerEvent {
         
         let invitation = NotificationEntity(userInfo)
         invitation.id = invitation.targetId
-        let hadInvited =  me.friendInvitations.find { $0.from.id == invitation.from.id } == nil
+        let hadInvited =  me.friendInvitations.find { $0.from.id == invitation.from.id } != nil
         if hadInvited { return }
         
         me.friendInvitations.insert(invitation, atIndex: 0)
