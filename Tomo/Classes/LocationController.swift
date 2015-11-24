@@ -11,31 +11,24 @@ import CoreLocation
 
 final class LocationController: NSObject {
     
+    typealias LocationClosure = ((location: CLLocation?)->())
+    
     private var timeoutTimer: NSTimer?
     //location manager
     private let locationManager = CLLocationManager()
     
-    typealias LocationClosure = ((location: CLLocation?)->())
-    private var locationUpdated: LocationClosure?
+    private var locationRequests = [LocationClosure]()
     
-    /*
-    // KVO
-    LocationController.shareInstance.addObserver(self, forKeyPath: "location", options: .New, context: nil)
-    
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
-        if let locationController = object as? LocationController {
-            println(locationController.location)
-        }
-    }
-    */
-    dynamic var location: CLLocation? {
+    private var location: CLLocation? { //dynamic -> KVO
         didSet {
             if let location = location {
                 // accuracy better than desiredAccuracy, stop locating
                 if location.horizontalAccuracy <= locationManager.desiredAccuracy {
                     stopLocationManager(location)
                 } else {
-                    locationUpdated?(location: location)
+                    locationRequests.forEach { locationRequest in
+                        locationRequest(location: location)
+                    }
                 }
             }
         }
@@ -62,6 +55,8 @@ final class LocationController: NSObject {
     
 }
 
+// MARK: - CLLocationManagerDelegate
+
 extension LocationController: CLLocationManagerDelegate {
     
     //location authorization status changed
@@ -70,8 +65,12 @@ extension LocationController: CLLocationManagerDelegate {
         switch status {
         case .AuthorizedWhenInUse:
             self.locationManager.startUpdatingLocation()
+            if let timer = timeoutTimer {
+                timer.invalidate()
+            }
             timeoutTimer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "timeout", userInfo: nil, repeats: false)
         case .Denied:
+            locationRequests.removeAll()
             stopLocationManager()
         default:
             break
@@ -120,12 +119,48 @@ extension LocationController: CLLocationManagerDelegate {
     }
 }
 
+// MARK: - private method
+
+extension LocationController {
+    @objc private func timeout(){
+        stopLocationManager(nil)
+    }
+    
+    //location manager returned, call didcomplete closure
+    private func stopLocationManager(location: CLLocation? = nil) {
+        
+        if let timer = timeoutTimer {
+            timer.invalidate()
+        }
+        
+        locationManager.stopUpdatingLocation()
+        
+        if let location = location {
+            locationRequests.forEach { locationRequest in
+                locationRequest(location: location)
+            }
+        }
+        
+        locationRequests.removeAll()
+    }
+    
+    private func showLocationServiceDisabledAlert() {
+        if let vc = self.window?.rootViewController {
+            Util.alert(vc, title: "请启用定位服务", message: "设置隐私定位服务", cancel: "OK")
+        }
+    }
+}
+
+// MARK: - public method
+
 extension LocationController {
     
     //ask for location permissions, fetch 1 location, and return
     func fetchWithCompletion(completion: LocationClosure) {
         //store the completion closure
-        locationUpdated = completion
+        locationRequests.append(completion)
+        
+        if locationRequests.count > 1 { return }
         
         let authStatus = CLLocationManager.authorizationStatus()
         
@@ -143,25 +178,6 @@ extension LocationController {
             self.showLocationServiceDisabledAlert()
         default:
             break
-        }
-    }
-    
-    @objc private func timeout(){
-        if let timer = timeoutTimer {
-            timer.invalidate()
-        }
-        stopLocationManager(location)
-    }
-    
-    //location manager returned, call didcomplete closure
-    private func stopLocationManager(location: CLLocation? = nil) {
-        locationManager.stopUpdatingLocation()
-        locationUpdated?(location: location)
-    }
-    
-    private func showLocationServiceDisabledAlert() {
-        if let vc = self.window?.rootViewController {
-            Util.alert(vc, title: "请启用定位服务", message: "设置隐私定位服务", cancel: "OK")
         }
     }
 }
