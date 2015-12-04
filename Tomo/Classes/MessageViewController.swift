@@ -440,6 +440,31 @@ extension MessageViewController {
             }
         }
         
+        self.addBadgeViewIfNeeded(cell, message: message)
+        
         return cell
+    }
+}
+
+extension MessageViewController {
+    
+    func addBadgeViewIfNeeded (cell: JSQMessagesCollectionViewCell, message: JSQMessageEntity){
+        if message.senderId() == me.id { return }
+        if MediaMessage.mediaMessage(message.text()) == .Voice {
+            let width: CGFloat = 8
+            let avatarHeight: CGFloat = 50
+            let voiceBackgroundImageWidth: CGFloat = 100
+            
+            let badgeView = UIView(frame: CGRectZero)
+            badgeView.backgroundColor = UIColor.redColor()
+            badgeView.layer.cornerRadius = width / 2
+            badgeView.layer.masksToBounds = true
+            
+            cell.addSubview(badgeView)
+            badgeView.translatesAutoresizingMaskIntoConstraints = false
+            let views = ["badgeView" : badgeView]
+            cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[badgeView(==\(width))]-\(avatarHeight-width)-|", options: [], metrics: nil, views: views))
+            cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[badgeView(==\(width))]-\(avatarHeight+voiceBackgroundImageWidth)-|", options: [], metrics: nil, views:views))
+        }
     }
 }

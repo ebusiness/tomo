@@ -57,7 +57,7 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
         if nil == recorder {
             self.setup()
             do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord,withOptions: .MixWithOthers)
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord,withOptions: .DefaultToSpeaker)
                 try AVAudioSession.sharedInstance().setActive(true)
                 recorder.record() //start or resume
             } catch {
