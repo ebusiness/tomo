@@ -405,33 +405,27 @@ extension HomeViewController {
             if let loadPosts: [AnyObject] = posts {
                 self.contents += loadPosts
                 
-                gcd.async(.Default) {
-                    for content in loadPosts {
-                        if let content = content as? PostEntity {
-                            self.simulateLayout(content)
-                        }
-                    }
-                    
-                    
-                    gcd.async(.Main) {
-                        self.appendRows(loadPosts.count)
-                        
-                        let visibleCells = self.tableView.visibleCells
-                        let visibleIndexPath = self.tableView.indexPathForCell(visibleCells.get(0)!)
-                        
-                        if let recommendStations: AnyObject = self.recommendGroups as? AnyObject {
-                            let row = visibleIndexPath!.row + 1
-                            self.contents.insert(recommendStations, atIndex: Int(row))
-                            let stationsInsertIndexPath = NSIndexPath(forRow: row, inSection: 0)
-                            self.tableView.insertRowsAtIndexPaths([stationsInsertIndexPath], withRowAnimation: .Fade)
-                            self.recommendGroups = nil
-                        }
-                        
-                        
-                        self.isLoading = false
-                        self.tableView.tableFooterView = nil
+                for content in loadPosts {
+                    if let content = content as? PostEntity {
+                        self.simulateLayout(content)
                     }
                 }
+                
+                self.appendRows(loadPosts.count)
+                
+                let visibleCells = self.tableView.visibleCells
+                let visibleIndexPath = self.tableView.indexPathForCell(visibleCells.get(0)!)
+                
+                if let recommendStations: AnyObject = self.recommendGroups as? AnyObject {
+                    let row = visibleIndexPath!.row + 1
+                    self.contents.insert(recommendStations, atIndex: Int(row))
+                    let stationsInsertIndexPath = NSIndexPath(forRow: row, inSection: 0)
+                    self.tableView.insertRowsAtIndexPaths([stationsInsertIndexPath], withRowAnimation: .Fade)
+                    self.recommendGroups = nil
+                }
+                
+                self.isLoading = false
+                self.tableView.tableFooterView = nil
             }
             }) { _ in
                 
