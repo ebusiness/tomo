@@ -52,7 +52,7 @@
 
 - (CGSize)mediaViewDisplaySize
 {
-    return CGSizeMake(150.0f, 50.0f);
+    return CGSizeMake(100.0f, 50.0f);
 }
 
 #pragma mark - Setters
