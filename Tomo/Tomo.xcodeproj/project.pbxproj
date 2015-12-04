@@ -124,7 +124,6 @@
 		29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA441B1AD4CAAA009EB177 /* Map.storyboard */; };
 		29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA441D1AD4CAF0009EB177 /* Setting.storyboard */; };
 		29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA44921AD4EEBB009EB177 /* Tab.storyboard */; };
-		29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */; };
 		29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
 		29DCEFE91B14519300A7C7AF /* TomoVideoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */; };
 		29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */; };
@@ -348,7 +347,6 @@
 		29CA441B1AD4CAAA009EB177 /* Map.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Map.storyboard; path = Classes/Map.storyboard; sourceTree = "<group>"; };
 		29CA441D1AD4CAF0009EB177 /* Setting.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Setting.storyboard; path = Classes/Setting.storyboard; sourceTree = "<group>"; };
 		29CA44921AD4EEBB009EB177 /* Tab.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Tab.storyboard; path = Classes/Tab.storyboard; sourceTree = "<group>"; };
-		29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
 		29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TomoVideoMediaItem.swift; sourceTree = "<group>"; };
 		29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SocketController.swift; path = Classes/SocketController.swift; sourceTree = "<group>"; };
@@ -724,7 +722,6 @@
 				293EB4231B132B06006BAF27 /* JSQVoiceMediaItem.h */,
 				293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */,
 				2994AF901B019AA100656C39 /* GCD.swift */,
-				29CB42821ADD0CBF00EA8873 /* SwiftyJSON.swift */,
 				29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */,
 				29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */,
 				299389421AD3B33800043D91 /* AmazonS3RequestManager */,
@@ -1244,7 +1241,6 @@
 				1FC268801BBABED8006F1FDA /* GroupAnnotation.swift in Sources */,
 				D0A0C0341B5F5D0500ABFA5F /* UserPostsViewController.swift in Sources */,
 				D08BFB0B1B744C2D00771F70 /* JSQMessageEntity.swift in Sources */,
-				29CB42831ADD0CBF00EA8873 /* SwiftyJSON.swift in Sources */,
 				1FCA1E671B722260000F2936 /* MessageEntity.swift in Sources */,
 				D0B48E9A1BE1A6D2007BD9BD /* SocketStringReader.swift in Sources */,
 				1F1176AC1B983D280049D9F5 /* SocketParser.swift in Sources */,

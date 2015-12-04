@@ -6,6 +6,8 @@
 //  Copyright (c) 2015年 &#24373;&#24535;&#33775;. All rights reserved.
 //
 
+import SwiftyJSON
+
 public protocol CollectionSerializable {
     init(_ json: JSON)
     static func collection<T: CollectionSerializable>(json: JSON) -> [T]?

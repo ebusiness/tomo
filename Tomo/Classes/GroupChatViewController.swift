@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 import MobileCoreServices
 
 final class GroupChatViewController: CommonMessageController {
