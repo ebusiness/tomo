@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import Alamofire
 import MobileCoreServices
 
 final class GroupChatViewController: CommonMessageController {

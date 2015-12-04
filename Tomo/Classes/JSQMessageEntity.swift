@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 &#24373;&#24535;&#33775;. All rights reserved.
 //
 
+import Alamofire
 
 class JSQMessageEntity:NSObject, JSQMessageData {
     

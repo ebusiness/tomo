@@ -6,6 +6,8 @@
 //  Copyright (c) 2015年 &#24373;&#24535;&#33775;. All rights reserved.
 //
 
+import Alamofire
+
 class AlamofireController {
     
     private static let badRequestCode = 400 //Bad Request
@@ -17,30 +19,43 @@ class AlamofireController {
         }()
     
     private static let alamofireInstance: Manager = {
-//        #if DEBUG
-            /// allow invalid SSL certificates
-        do {
-            let range = try kAPIBaseURLString.matches("([a-zA-Z\\d\\.\\-]+)")?[1].rangeAtIndex(0)// ?? 0...kAPIBaseURLString.length - 1
-            
-            /// "tomo.e-business.co.jp"
-            let hostName = kAPIBaseURLString[range!.location..<(range!.location + range!.length)]!
-            
-            let serverTrustPolicies: [String: ServerTrustPolicy] = [
-                hostName: .DisableEvaluation
-            ]
-            
-            Manager.sharedInstance.session.serverTrustPolicyManager = ServerTrustPolicyManager(policies: serverTrustPolicies)
-        } catch {
-            
-        }
-//        #endif
-        
-        return Manager.sharedInstance
-        
+
+        let serverTrustPolicies: [String: ServerTrustPolicy] = [
+            "api.dev.genbatomo.com": .DisableEvaluation
+        ]
+
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.HTTPAdditionalHeaders = Alamofire.Manager.defaultHTTPHeaders
+
+        return Alamofire.Manager(
+            configuration: configuration,
+            serverTrustPolicyManager: ServerTrustPolicyManager(policies: serverTrustPolicies)
+        )
+
+////        #if DEBUG
+//            /// allow invalid SSL certificates
+//        do {
+//            let range = try kAPIBaseURLString.matches("([a-zA-Z\\d\\.\\-]+)")?[1].rangeAtIndex(0)// ?? 0...kAPIBaseURLString.length - 1
+//            
+//            /// "tomo.e-business.co.jp"
+//            let hostName = kAPIBaseURLString[range!.location..<(range!.location + range!.length)]!
+//            
+//            let serverTrustPolicies: [String: ServerTrustPolicy] = [
+//                hostName: .DisableEvaluation
+//            ]
+//            
+//            Manager.sharedInstance.session.serverTrustPolicyManager = ServerTrustPolicyManager(policies: serverTrustPolicies)
+//        } catch {
+//            
+//        }
+////        #endif
+//        
+//        return Manager.sharedInstance
+
         }()
     
     
-    class func request(method: Method, _ URLString: String, parameters: [String: AnyObject]? = nil, encoding: ParameterEncoding = .URL, hideHUD: Bool = false,success: ((AnyObject)->())? = nil, failure: ((Int)->())? = nil ) {
+    class func request(method: Alamofire.Method, _ URLString: String, parameters: [String: AnyObject]? = nil, encoding: ParameterEncoding = .URL, hideHUD: Bool = false,success: ((AnyObject)->())? = nil, failure: ((Int)->())? = nil ) {
         
         if !hideHUD {
             Util.showHUD()

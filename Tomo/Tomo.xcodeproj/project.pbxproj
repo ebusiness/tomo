@@ -157,21 +157,6 @@
 		D0A104951BEB055100AEE356 /* statements.html in Resources */ = {isa = PBXBuildFile; fileRef = D0A104941BEB055100AEE356 /* statements.html */; };
 		D0B40BBF1B78AF0400685D67 /* ExNSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B40BBE1B78AF0400685D67 /* ExNSDate.swift */; };
 		D0B40BC01B78B8FA00685D67 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */; };
-		D0B48E861BE19FE8007BD9BD /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E771BE19FE8007BD9BD /* Alamofire.swift */; };
-		D0B48E871BE19FE8007BD9BD /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E781BE19FE8007BD9BD /* Download.swift */; };
-		D0B48E881BE19FE8007BD9BD /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E791BE19FE8007BD9BD /* Error.swift */; };
-		D0B48E891BE19FE8007BD9BD /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0B48E7A1BE19FE8007BD9BD /* Info.plist */; };
-		D0B48E8A1BE19FE8007BD9BD /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E7B1BE19FE8007BD9BD /* Manager.swift */; };
-		D0B48E8B1BE19FE8007BD9BD /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E7C1BE19FE8007BD9BD /* MultipartFormData.swift */; };
-		D0B48E8C1BE19FE8007BD9BD /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E7D1BE19FE8007BD9BD /* ParameterEncoding.swift */; };
-		D0B48E8D1BE19FE8007BD9BD /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E7E1BE19FE8007BD9BD /* Request.swift */; };
-		D0B48E8E1BE19FE8007BD9BD /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E7F1BE19FE8007BD9BD /* Response.swift */; };
-		D0B48E8F1BE19FE8007BD9BD /* ResponseSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E801BE19FE8007BD9BD /* ResponseSerialization.swift */; };
-		D0B48E901BE19FE8007BD9BD /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E811BE19FE8007BD9BD /* Result.swift */; };
-		D0B48E911BE19FE8007BD9BD /* ServerTrustPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E821BE19FE8007BD9BD /* ServerTrustPolicy.swift */; };
-		D0B48E921BE19FE8007BD9BD /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E831BE19FE8007BD9BD /* Stream.swift */; };
-		D0B48E931BE19FE8007BD9BD /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E841BE19FE8007BD9BD /* Upload.swift */; };
-		D0B48E941BE19FE8007BD9BD /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B48E851BE19FE8007BD9BD /* Validation.swift */; };
 		D0B6364E1B81A9C70012C4E8 /* URLSchemesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */; };
 		D0B6EB121B5E7D09005A7E45 /* MyAccountHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */; };
 		D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */; };
@@ -348,22 +333,6 @@
 		D0A104901BEAF1C700AEE356 /* AgreementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AgreementViewController.swift; path = Classes/AgreementViewController.swift; sourceTree = "<group>"; };
 		D0A104941BEB055100AEE356 /* statements.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = statements.html; path = Resources/statements.html; sourceTree = SOURCE_ROOT; };
 		D0B40BBE1B78AF0400685D67 /* ExNSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExNSDate.swift; path = Classes/ExNSDate.swift; sourceTree = SOURCE_ROOT; };
-		D0B48E761BE19FE8007BD9BD /* Alamofire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alamofire.h; sourceTree = "<group>"; };
-		D0B48E771BE19FE8007BD9BD /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
-		D0B48E781BE19FE8007BD9BD /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
-		D0B48E791BE19FE8007BD9BD /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
-		D0B48E7A1BE19FE8007BD9BD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D0B48E7B1BE19FE8007BD9BD /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
-		D0B48E7C1BE19FE8007BD9BD /* MultipartFormData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
-		D0B48E7D1BE19FE8007BD9BD /* ParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
-		D0B48E7E1BE19FE8007BD9BD /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		D0B48E7F1BE19FE8007BD9BD /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
-		D0B48E801BE19FE8007BD9BD /* ResponseSerialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseSerialization.swift; sourceTree = "<group>"; };
-		D0B48E811BE19FE8007BD9BD /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
-		D0B48E821BE19FE8007BD9BD /* ServerTrustPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerTrustPolicy.swift; sourceTree = "<group>"; };
-		D0B48E831BE19FE8007BD9BD /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
-		D0B48E841BE19FE8007BD9BD /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
-		D0B48E851BE19FE8007BD9BD /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLSchemesController.swift; path = Classes/URLSchemesController.swift; sourceTree = "<group>"; };
 		D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountHeaderViewController.swift; path = Classes/MyAccountHeaderViewController.swift; sourceTree = "<group>"; };
 		D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountBaseController.swift; path = Classes/MyAccountBaseController.swift; sourceTree = "<group>"; };
@@ -661,7 +630,6 @@
 		296040441ACE669900D2A338 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
-				D09D8D941BCDEE7700071B3E /* Alamofire */,
 				1F985E441B60C19F008D5369 /* ExSwift */,
 				293EB4231B132B06006BAF27 /* JSQVoiceMediaItem.h */,
 				293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */,
@@ -856,29 +824,6 @@
 			name = picker;
 			sourceTree = "<group>";
 		};
-		D09D8D941BCDEE7700071B3E /* Alamofire */ = {
-			isa = PBXGroup;
-			children = (
-				D0B48E761BE19FE8007BD9BD /* Alamofire.h */,
-				D0B48E771BE19FE8007BD9BD /* Alamofire.swift */,
-				D0B48E781BE19FE8007BD9BD /* Download.swift */,
-				D0B48E791BE19FE8007BD9BD /* Error.swift */,
-				D0B48E7A1BE19FE8007BD9BD /* Info.plist */,
-				D0B48E7B1BE19FE8007BD9BD /* Manager.swift */,
-				D0B48E7C1BE19FE8007BD9BD /* MultipartFormData.swift */,
-				D0B48E7D1BE19FE8007BD9BD /* ParameterEncoding.swift */,
-				D0B48E7E1BE19FE8007BD9BD /* Request.swift */,
-				D0B48E7F1BE19FE8007BD9BD /* Response.swift */,
-				D0B48E801BE19FE8007BD9BD /* ResponseSerialization.swift */,
-				D0B48E811BE19FE8007BD9BD /* Result.swift */,
-				D0B48E821BE19FE8007BD9BD /* ServerTrustPolicy.swift */,
-				D0B48E831BE19FE8007BD9BD /* Stream.swift */,
-				D0B48E841BE19FE8007BD9BD /* Upload.swift */,
-				D0B48E851BE19FE8007BD9BD /* Validation.swift */,
-			);
-			path = Alamofire;
-			sourceTree = "<group>";
-		};
 		D0DB07DC1B9D26E200C06C4E /* Notification */ = {
 			isa = PBXGroup;
 			children = (
@@ -1028,7 +973,6 @@
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
 				296D8BC31AFC5A680058D400 /* LaunchScreen.xib in Resources */,
 				29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */,
-				D0B48E891BE19FE8007BD9BD /* Info.plist in Resources */,
 				D072323A1BE1C1C700122F52 /* Info.plist in Resources */,
 				1F902D771B7D9C2800F6DC2D /* EmptyFriends.xib in Resources */,
 				D0A104951BEB055100AEE356 /* statements.html in Resources */,
@@ -1186,8 +1130,6 @@
 				D0A0C0341B5F5D0500ABFA5F /* UserPostsViewController.swift in Sources */,
 				D08BFB0B1B744C2D00771F70 /* JSQMessageEntity.swift in Sources */,
 				1FCA1E671B722260000F2936 /* MessageEntity.swift in Sources */,
-				D0B48E8F1BE19FE8007BD9BD /* ResponseSerialization.swift in Sources */,
-				D0B48E901BE19FE8007BD9BD /* Result.swift in Sources */,
 				D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
 				1FC268821BBABF20006F1FDA /* GroupAnnotationView.swift in Sources */,
@@ -1206,7 +1148,6 @@
 				1FCA1E651B7221F7000F2936 /* NotificationEntity.swift in Sources */,
 				D029F7321BCCB39E00CDE18B /* PushSettingViewController.swift in Sources */,
 				29DCEFE91B14519300A7C7AF /* TomoVideoMediaItem.swift in Sources */,
-				D0B48E871BE19FE8007BD9BD /* Download.swift in Sources */,
 				D07232371BE1C1C700122F52 /* Double.swift in Sources */,
 				17B993011AF353D000204E97 /* amrFileCodec.m in Sources */,
 				D0DB07D91B9D224900C06C4E /* NotificationView.swift in Sources */,
@@ -1224,27 +1165,22 @@
 				D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */,
 				1F9A32371BA6AD8B001C43CE /* GroupEntity.swift in Sources */,
 				D07E48541B9EB35B00BF04B2 /* Entity.swift in Sources */,
-				D0B48E881BE19FE8007BD9BD /* Error.swift in Sources */,
 				1FCA1E631B71D0C8000F2936 /* CommentEntity.swift in Sources */,
 				1FAA70FE1BBBF99100BCE5AF /* StationAnnotationView.swift in Sources */,
 				291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */,
 				290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */,
 				29C1DA7A1AD36659009A02CC /* S3Controller.swift in Sources */,
-				D0B48E921BE19FE8007BD9BD /* Stream.swift in Sources */,
-				D0B48E8A1BE19FE8007BD9BD /* Manager.swift in Sources */,
 				D07793851B704F290056B7CB /* PickerTableViewController.swift in Sources */,
 				1F79C1B81B5E730E008800E1 /* SearchFriendViewController.swift in Sources */,
 				D0960AAE1BC3CE2600A63733 /* MyGroupListViewController.swift in Sources */,
 				D0A0C0301B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift in Sources */,
 				D0891C961B8AF5A600701CC7 /* SearchFriendCell.swift in Sources */,
-				D0B48E931BE19FE8007BD9BD /* Upload.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				D012F5971BBBC4DD00D5293D /* MyStationsViewController.swift in Sources */,
 				17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */,
 				D0DB07E51B9D65BE00C06C4E /* ListenerEvent.swift in Sources */,
 				29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */,
 				1F937FE61B58C2E3009722CE /* MyAccountViewController.swift in Sources */,
-				D0B48E8B1BE19FE8007BD9BD /* MultipartFormData.swift in Sources */,
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
 				D07232381BE1C1C700122F52 /* ExSwift.swift in Sources */,
 				28CB45E71BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift in Sources */,
@@ -1257,14 +1193,11 @@
 				1F79C1B21B5E0E22008800E1 /* FriendListViewController.swift in Sources */,
 				1F6462D21BC14845007D0906 /* GroupCallOutViewController.swift in Sources */,
 				29539C781B13175D00545509 /* VoiceController.swift in Sources */,
-				D0B48E8E1BE19FE8007BD9BD /* Response.swift in Sources */,
 				2993894A1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
 				D072323B1BE1C1C700122F52 /* Int.swift in Sources */,
 				D07232361BE1C1C700122F52 /* Dictionary.swift in Sources */,
 				1F350B2B1B68D32800088C1E /* PostAnnotationView.swift in Sources */,
-				D0B48E8D1BE19FE8007BD9BD /* Request.swift in Sources */,
 				D0DB07E01B9D3E1400C06C4E /* RemoteNotification.swift in Sources */,
-				D0B48E911BE19FE8007BD9BD /* ServerTrustPolicy.swift in Sources */,
 				1F9ACAFA1B69F99F00648A82 /* PostEntity.swift in Sources */,
 				1F937FE81B58EE8B009722CE /* MyAccountEditViewController.swift in Sources */,
 				1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */,
@@ -1281,9 +1214,7 @@
 				1F8DEBE01BBD22600037FD1C /* PostCallOutViewController.swift in Sources */,
 				D0F44FAB1B5E4790009E12AA /* BookmarkedPostsViewController.swift in Sources */,
 				D0B6EB121B5E7D09005A7E45 /* MyAccountHeaderViewController.swift in Sources */,
-				D0B48E941BE19FE8007BD9BD /* Validation.swift in Sources */,
 				D0BA8DE71B55375A00271F2B /* PostViewController.swift in Sources */,
-				D0B48E861BE19FE8007BD9BD /* Alamofire.swift in Sources */,
 				1F26B29A1BAA61D10063AC6B /* GroupDetailViewController.swift in Sources */,
 				285778511BC272E000533E8E /* ICYTagButton.swift in Sources */,
 				D0960AAC1BC376FB00A63733 /* UltravisualLayout.swift in Sources */,
@@ -1297,7 +1228,6 @@
 				D04447B31BBA9DF300AD7B0C /* GroupChatViewController.swift in Sources */,
 				D07232341BE1C1C700122F52 /* Bool.swift in Sources */,
 				1FEA3CFD1BB39E5A0037F3C5 /* StationCollectionViewCell.swift in Sources */,
-				D0B48E8C1BE19FE8007BD9BD /* ParameterEncoding.swift in Sources */,
 				2857784C1BC25DC600533E8E /* ICYPostCell.swift in Sources */,
 				1FEA3CFB1BB391780037F3C5 /* RecommendStationTableViewCell.swift in Sources */,
 				1FA76B091BA2C642004776B0 /* GroupCreateViewController.swift in Sources */,

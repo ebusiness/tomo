@@ -26,6 +26,7 @@
 
 
 import Foundation
+import Alamofire
 import MobileCoreServices
 
 /**
@@ -272,7 +273,7 @@ public class AmazonS3RequestManager {
   MARK: Amazon S3 Request Serialization
   */
   
-  public func amazonURLRequest(method: Method, path: String) -> NSURLRequest {
+  public func amazonURLRequest(method: Alamofire.Method, path: String) -> NSURLRequest {
     
     let url = endpointURL.URLByAppendingPathComponent(path)
     

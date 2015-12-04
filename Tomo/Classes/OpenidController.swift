@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 private let csrf_state = "73746172626f796368696e61"
 private let wxAppid = "wx4079dacf73fef72d"
