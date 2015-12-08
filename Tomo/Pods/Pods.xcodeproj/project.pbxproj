@@ -228,6 +228,7 @@
 		CFDAADEE739F0BEDE884DE4EB95ECBE9 /* NYXProgressiveImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EB9244F7D927B82A89ACB8438A4A5D /* NYXProgressiveImageView.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		CFDD0246C0B9EC18495DDC7C9E008CCE /* UIScrollView+Screenshot.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D8F35F0170E4755F4FFBE57C800EB2 /* UIScrollView+Screenshot.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D00143504974E2867C87D0AD5F838919 /* MHShareViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A1567C64D63A77A4ED848C490EA8848C /* MHShareViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D0314B401C16D61C00FB4D54 /* WechatAuthSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = D0314B3F1C16D61C00FB4D54 /* WechatAuthSDK.h */; };
 		D07D6DD6B5B7995537B32AA81B54FCF7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5616F68770EF4AD44BFD402DDE4B18C3 /* CoreGraphics.framework */; };
 		D0F7AAE616C407824CE6EEEBDFE5FA80 /* JSQVideoMediaItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BC316635059EBA9B6357A0E29B01DE6 /* JSQVideoMediaItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D2963EDE4989710154B81FFC93DFB3D8 /* MHCustomization.h in Headers */ = {isa = PBXBuildFile; fileRef = F10D143C42E02ED298B39EE244332944 /* MHCustomization.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -679,6 +680,7 @@
 		CF60E58947D41B1D70D6B54783C69E57 /* JSQMessagesCellTextView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSQMessagesCellTextView.h; path = JSQMessagesViewController/Views/JSQMessagesCellTextView.h; sourceTree = "<group>"; };
 		CF958D26E301DDBCA15A55E1C462822E /* JSQMessagesAssets.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = JSQMessagesAssets.bundle; path = JSQMessagesViewController/Assets/JSQMessagesAssets.bundle; sourceTree = "<group>"; };
 		CFC18F19BE6FFE8B394F1FE00E17B465 /* MHGallery.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MHGallery.m; path = MHVideoPhotoGallery/MMHVideoPhotoGallery/MHGallery/MHGallery.m; sourceTree = "<group>"; };
+		D0314B3F1C16D61C00FB4D54 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WechatAuthSDK.h; path = SDKExport/WechatAuthSDK.h; sourceTree = "<group>"; };
 		D034A275C6D8E5D7A110F7668399C9B1 /* UIDevice+JSQMessages.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+JSQMessages.m"; path = "JSQMessagesViewController/Categories/UIDevice+JSQMessages.m"; sourceTree = "<group>"; };
 		D0453D4DED3C0EECA870C114C68BE97A /* MASViewConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASViewConstraint.h; path = Masonry/MASViewConstraint.h; sourceTree = "<group>"; };
 		D0F8A9FA483C9AD4AEF1C75639E930D9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
@@ -1172,6 +1174,7 @@
 			children = (
 				3BC8AF43F367CF90D13FEAE711C48E35 /* WXApi.h */,
 				BC9174F8C94BB88E08B95012AE943B0A /* WXApiObject.h */,
+				D0314B3F1C16D61C00FB4D54 /* WechatAuthSDK.h */,
 				1C8FB27FCCA959C905822FBDD6975B29 /* Frameworks */,
 			);
 			path = SSWeChatSDK;
@@ -1566,6 +1569,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				77A72E6F18C0A6BEA8CE382A4E28AE87 /* UIView+DCAnimationKit.h in Headers */,
+				D0314B401C16D61C00FB4D54 /* WechatAuthSDK.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
