@@ -1033,6 +1033,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SocketIO.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/WechatKit.framework",
 			);
 			outputPaths = (
 			);
@@ -1362,6 +1363,7 @@
 					"$(inherited)",
 					"-framework",
 					Reveal,
+					"-l\"z\"",
 				);
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.e-business.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1395,7 +1397,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.e-business.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = tomo;
-				PROVISIONING_PROFILE = "74e14230-e2f6-4cf2-b159-fce97c38ee39";
+				PROVISIONING_PROFILE = "15768182-159d-4aa7-8365-74b535fb2bfc";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};

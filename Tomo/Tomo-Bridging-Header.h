@@ -9,7 +9,6 @@
 #import "AmazonS3SignatureHelpers.h"
 #import "JSQMessages.h"
 
-#import "WXApi.h"
 //voice
 #include "interf_dec.h"
 #include "interf_enc.h"
