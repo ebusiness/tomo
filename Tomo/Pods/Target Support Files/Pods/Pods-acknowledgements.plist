@@ -420,14 +420,6 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright (c) 2012 Tencent. All rights reserved.</string>
-			<key>Title</key>
-			<string>SSWeChatSDK</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
 			<string>Copyright (c) 2011-2014 Sam Vermette
 
 Permission is hereby granted, free of charge, to any person

@@ -375,10 +375,6 @@ THE SOFTWARE.
 
 
 
-## SSWeChatSDK
-
-Copyright (c) 2012 Tencent. All rights reserved.
-
 ## SVProgressHUD
 
 Copyright (c) 2011-2014 Sam Vermette
