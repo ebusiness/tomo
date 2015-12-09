@@ -22,11 +22,13 @@ class URLSchemesController {
     
     private init() {
         
+        WechatManager.appid = "wx4079dacf73fef72d"
+        WechatManager.sharedInstance.shareDelegate = self
     }
     
     func handleOpenURL(url:NSURL)->Bool {
         
-        if WXApi.handleOpenURL(url, delegate: OpenidController.instance) {
+        if WechatManager.sharedInstance.handleOpenURL(url) {
             return true
         } else if let rootvc = UIApplication.sharedApplication().keyWindow?.rootViewController as? TabBarController {
             self.tabBarController = rootvc
@@ -146,4 +148,10 @@ extension URLSchemesController{
         })        
     }
     
+}
+
+extension URLSchemesController: WechatManagerShareDelegate {
+    func showMessage(message: String) {
+        URLSchemesController.sharedInstance.handleOpenURL(NSURL(string: "tomo://post-new/\(message)")!)
+    }
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import WechatKit
 
 final class RegViewController: BaseViewController {
     
@@ -24,6 +25,8 @@ final class RegViewController: BaseViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        self.setupWechatManager()
 
         self.setupAppearance()
         
@@ -75,7 +78,7 @@ extension RegViewController {
         // hide all controls on startup
         inputArea.hidden = true
 
-        if (OpenidController.instance.isWXAppInstalled()) {
+        if (WechatManager.sharedInstance.isInstalled()) {
             // customize wechat login button
             loginButton.layer.borderColor = UIColor.whiteColor().CGColor
             loginButton.layer.borderWidth = 1
@@ -121,22 +124,8 @@ extension RegViewController {
     private func tryAutoLogin() {
         
         if Defaults["openid"].string != nil {
-            
-            Util.showHUD()
-            
-            OpenidController.instance.wxCheckAuth(
-                
-                success: { (res) -> () in
-                    self.changeRootToTab()
-                },
-                failure: { (errCode, errMessage) -> () in
-                    
-                    self.inputArea.hidden = false
-                    
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
-                        self.inputArea.alpha = 1
-                    })
-            })
+
+            WechatManager.sharedInstance.checkAuth()
             
         } else if Defaults["email"].string != nil && Defaults["password"].string != nil {
             
@@ -189,13 +178,7 @@ extension RegViewController {
     
     @IBAction func login_wechat(sender: AnyObject) {
         
-        OpenidController.instance.wxCheckAuth(
-            success: { (result) -> () in
-                self.changeRootToTab()
-            },
-            failure: { (errCode, errMessage) -> () in
-                
-        })
+        WechatManager.sharedInstance.checkAuth()
     }
     
     @IBAction func accountLogin(sender: AnyObject) {
@@ -298,4 +281,69 @@ extension RegViewController {
     }
 }
 
+// MARK: - WechatManager
+extension RegViewController {
+    
+    private func setupWechatManager() {
+        
+        WechatManager.appid = "wx4079dacf73fef72d"
+        WechatManager.appSecret = "d4ec5214ea3ac56752ff75692fb88f48"
+        WechatManager.openid = Defaults["openid"].string
+        WechatManager.access_token = Defaults["access_token"].string
+        WechatManager.refresh_token = Defaults["refresh_token"].string
+        
+        WechatManager.sharedInstance.authDelegate = self
+    }
+}
+
+// MARK: - WechatManagerDelegate
+extension RegViewController: WechatManagerAuthDelegate {
+    
+    func checkIfNeeded(var parameters: [String : AnyObject], completion: ((res: AnyObject?, errCode: Int?) -> ())) -> Bool {
+        
+        parameters["type"] = "wechat"
+        AlamofireController.request(.POST, "/signin-wechat", parameters: parameters, success: { json in
+            completion(res: json,errCode: nil)
+        }) { errCode in
+            completion(res: nil,errCode: errCode)
+        }
+        return true
+    }
+    
+    func signupIfNeeded(parameters: [String : AnyObject], completion: ((res: AnyObject) -> ())) {
+        
+        var userInfo = parameters["userinfo"] as! Dictionary<String, AnyObject>
+        
+        if let gender = userInfo["sex"] as? String where gender == "2" {
+            userInfo["sex"] = "女"
+        } else {
+            userInfo["sex"] = "男"
+        }
+        
+        AlamofireController.request(.POST, "/signup-wechat", parameters: userInfo, success: { userinfo in
+            if let userinfo = userinfo as? Dictionary<String, AnyObject> {
+                completion(res: userinfo)
+            }
+        }) { _ in
+            self.failure(400)
+        }
+    }
+    
+    func success(res: AnyObject) {
+        
+        Defaults["openid"] = WechatManager.openid
+        Defaults["access_token"] = WechatManager.access_token
+        Defaults["refresh_token"] = WechatManager.refresh_token
+        me = UserEntity(res)
+        self.changeRootToTab()
+    }
+    
+    func failure(errCode: Int) {
+        self.inputArea.hidden = false
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.inputArea.alpha = 1
+        })
+        
+    }
+}
 

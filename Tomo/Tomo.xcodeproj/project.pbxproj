@@ -23,7 +23,6 @@
 /* Begin PBXBuildFile section */
 		17B993011AF353D000204E97 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B993001AF353D000204E97 /* amrFileCodec.m */; };
 		17B993081AF3540D00204E97 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17B993071AF3540D00204E97 /* libopencore-amrnb.a */; };
-		17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B993181AF3712C00204E97 /* OpenidController.swift */; };
 		1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18B8331B844665003BD469 /* CreatePostViewController.swift */; };
 		1F19D9541BA9550A007C9919 /* RecommendSiteTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */; };
 		1F19D9561BA9616C007C9919 /* RecommendSiteTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */; };
@@ -188,7 +187,6 @@
 		17B993041AF353F600204E97 /* interf_dec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interf_dec.h; path = "opencore-amr/include/opencore-amrnb/interf_dec.h"; sourceTree = "<group>"; };
 		17B993051AF353F600204E97 /* interf_enc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interf_enc.h; path = "opencore-amr/include/opencore-amrnb/interf_enc.h"; sourceTree = "<group>"; };
 		17B993071AF3540D00204E97 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libopencore-amrnb.a"; path = "opencore-amr/lib/libopencore-amrnb.a"; sourceTree = "<group>"; };
-		17B993181AF3712C00204E97 /* OpenidController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenidController.swift; path = Classes/OpenidController.swift; sourceTree = "<group>"; };
 		1F18B8331B844665003BD469 /* CreatePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreatePostViewController.swift; path = Classes/CreatePostViewController.swift; sourceTree = "<group>"; };
 		1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RecommendSiteTableCell.xib; path = Classes/RecommendSiteTableCell.xib; sourceTree = "<group>"; };
 		1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendSiteTableCell.swift; path = Classes/RecommendSiteTableCell.swift; sourceTree = "<group>"; };
@@ -659,7 +657,6 @@
 			isa = PBXGroup;
 			children = (
 				D0DB07E31B9D655600C06C4E /* Listener */,
-				17B993181AF3712C00204E97 /* OpenidController.swift */,
 				29C1DA781AD36659009A02CC /* S3Controller.swift */,
 				D0E788741B6F5BD3009255B9 /* AlamofireController.swift */,
 				D073E6F71B84C1BF00066F42 /* CameraController.swift */,
@@ -1178,7 +1175,6 @@
 				D0891C961B8AF5A600701CC7 /* SearchFriendCell.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				D012F5971BBBC4DD00D5293D /* MyStationsViewController.swift in Sources */,
-				17B9931B1AF3712C00204E97 /* OpenidController.swift in Sources */,
 				D0DB07E51B9D65BE00C06C4E /* ListenerEvent.swift in Sources */,
 				29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */,
 				1F937FE61B58C2E3009722CE /* MyAccountViewController.swift in Sources */,

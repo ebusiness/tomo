@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WechatKit
 
 class PostViewController: BaseViewController{
     
@@ -101,7 +102,7 @@ class PostViewController: BaseViewController{
             
         }
     }
-    
+
     @IBAction func avatarImageTapped(sender: UITapGestureRecognizer) {
         
         let profileViewController = navigationController?.childViewControllers.find { $0 is ProfileViewController } as? ProfileViewController
@@ -162,23 +163,23 @@ class PostViewController: BaseViewController{
         
 //        let shareUrl = kAPIBaseURLString + "/mobile/share/post/" + self.post.id!
         
-        var shareImage:UIImage?
+        var shareImage:UIImage = UIImage(named: "Icon_logo")!
         if self.postImageList.subviews.count > 0 {
             if let imageView = self.postImageList.subviews[0] as? UIImageView {
-                shareImage = imageView.image
+                shareImage = imageView.image!
             }
         }
         
         
         var optionalList = Dictionary<String,((UIAlertAction!) -> Void)!>()
         
-        if (OpenidController.instance.isWXAppInstalled()) {
+        if (WechatManager.sharedInstance.isInstalled()) {
             optionalList["微信"] = { _ in
-                OpenidController.instance.wxShare(0, img: shareImage, description: self.post.content!, extInfo: self.post.id)
+                self.share(WXSceneSession, image: shareImage)
             }
             
             optionalList["朋友圈"] = { _ in
-                OpenidController.instance.wxShare(1, img: shareImage, description: self.post.content!, extInfo: self.post.id)
+                self.share(WXSceneTimeline, image: shareImage)
             }
         }
         
@@ -247,6 +248,10 @@ class PostViewController: BaseViewController{
 // MARK:HeaderView - Action
 
 extension PostViewController {
+    private func share(scence: WXScene, image: UIImage?) {
+        let url = "https://itunes.apple.com/app/xian-changtomo/id982470898?l=zh&amp;ls=1&amp;mt=8"
+        WechatManager.sharedInstance.share(scence, image: image, title: self.post.content!, description: "@現場Tomo", url: url, extInfo: self.post.id)
+    }
     
     private func setViewsLayer() {
         

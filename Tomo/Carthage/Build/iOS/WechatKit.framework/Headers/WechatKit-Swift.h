@@ -120,6 +120,12 @@ SWIFT_CLASS("_TtC9WechatKit13WechatManager")
 - (void)checkAuth;
 @end
 
+
+@interface WechatManager (SWIFT_EXTENSION(WechatKit))
+- (void)success:(id __nonnull)res;
+- (void)failure:(NSInteger)errCode;
+@end
+
 @class BaseReq;
 @class BaseResp;
 
@@ -131,8 +137,21 @@ SWIFT_CLASS("_TtC9WechatKit13WechatManager")
 @class UIImage;
 
 @interface WechatManager (SWIFT_EXTENSION(WechatKit))
-- (void)share:(int32_t)scence img:(UIImage * __nullable)img description:(NSString * __nonnull)description url:(NSString * __nullable)url;
-- (void)share:(int32_t)scence img:(UIImage * __nullable)img description:(NSString * __nonnull)description extInfo:(NSString * __nonnull)extInfo;
+
+/// 分享
+///
+/// \param scence 请求发送场景
+///
+/// \param image 消息缩略图
+///
+/// \param title 标题
+///
+/// \param description 描述内容
+///
+/// \param url 地址
+///
+/// \param extInfo app分享信息(点击分享内容返回程序时,会传给WechatManagerShareDelegate.showMessage(message: String)
+- (void)share:(enum WXScene)scence image:(UIImage * __nullable)image title:(NSString * __nonnull)title description:(NSString * __nonnull)description url:(NSString * __nullable)url extInfo:(NSString * __nullable)extInfo;
 @end
 
 
