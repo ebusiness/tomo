@@ -30,7 +30,7 @@ class GroupAnnotationView: AggregatableAnnotationView, UIPageViewControllerDataS
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = Palette.Red.getPrimaryColor().CGColor
+        imageView.layer.borderColor = Palette.Red.primaryColor.CGColor
         imageView.layer.cornerRadius = 5
         addSubview(imageView)
         

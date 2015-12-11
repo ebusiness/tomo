@@ -66,7 +66,6 @@
 		1FEA3CFB1BB391780037F3C5 /* RecommendStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */; };
 		1FEA3CFD1BB39E5A0037F3C5 /* StationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA3CFC1BB39E5A0037F3C5 /* StationCollectionViewCell.swift */; };
 		1FEA3CFF1BB39F160037F3C5 /* StationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FEA3CFE1BB39F160037F3C5 /* StationCollectionViewCell.xib */; };
-		1FEA3D031BB3DEA20037F3C5 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA3D021BB3DEA20037F3C5 /* Palette.swift */; };
 		1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE80E71B4E552A0061B913 /* Home.storyboard */; };
 		1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */; };
 		1FFD21FF1BABD57C00204080 /* GroupSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */; };
@@ -245,7 +244,6 @@
 		1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendStationTableViewCell.swift; path = Classes/RecommendStationTableViewCell.swift; sourceTree = "<group>"; };
 		1FEA3CFC1BB39E5A0037F3C5 /* StationCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationCollectionViewCell.swift; path = Classes/StationCollectionViewCell.swift; sourceTree = "<group>"; };
 		1FEA3CFE1BB39F160037F3C5 /* StationCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StationCollectionViewCell.xib; path = Classes/StationCollectionViewCell.xib; sourceTree = "<group>"; };
-		1FEA3D021BB3DEA20037F3C5 /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Palette.swift; path = Classes/Palette.swift; sourceTree = SOURCE_ROOT; };
 		1FEE80E71B4E552A0061B913 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Home.storyboard; path = Classes/Home.storyboard; sourceTree = "<group>"; };
 		1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Classes/HomeViewController.swift; sourceTree = "<group>"; };
 		1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupSectionHeaderView.xib; path = Classes/GroupSectionHeaderView.xib; sourceTree = "<group>"; };
@@ -573,7 +571,6 @@
 				290134D61AC3991C00BBFE29 /* Info.plist */,
 				290134D71AC3991C00BBFE29 /* AppDelegate.swift */,
 				2901351C1AC3A90C00BBFE29 /* Constants.swift */,
-				1FEA3D021BB3DEA20037F3C5 /* Palette.swift */,
 				295272CF1AD51B2300FC7833 /* S3.swift */,
 				29BE7E111AC54224008110B4 /* Util.swift */,
 				290134DE1AC3991C00BBFE29 /* Images.xcassets */,
@@ -1182,7 +1179,6 @@
 				D07232381BE1C1C700122F52 /* ExSwift.swift in Sources */,
 				28CB45E71BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift in Sources */,
 				2869D71C1BB545FB00D1C479 /* StationDiscoverViewController.swift in Sources */,
-				1FEA3D031BB3DEA20037F3C5 /* Palette.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				1F79C1B41B5E10DC008800E1 /* FriendCell.swift in Sources */,
 				D0B40BBF1B78AF0400685D67 /* ExNSDate.swift in Sources */,

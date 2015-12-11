@@ -32,7 +32,7 @@ class StationAnnotationView: AggregatableAnnotationView {
         nameLabel.font = UIFont.systemFontOfSize(10)
         nameLabel.numberOfLines = 0
         nameLabel.clipsToBounds = true
-        nameLabel.backgroundColor = Palette.Red.getPrimaryColor()
+        nameLabel.backgroundColor = Palette.Red.primaryColor
         nameLabel.layer.borderWidth = 2
         nameLabel.layer.borderColor = UIColor.whiteColor().CGColor
         nameLabel.layer.cornerRadius = 20
@@ -57,7 +57,7 @@ class StationAnnotationView: AggregatableAnnotationView {
             })
         }
         
-        var color = Palette.Red.getLightPrimaryColor()
+        var color = Palette.Red.lightPrimaryColor
         
         if count > 0 {
             numberBadge.text = "\(count)"
@@ -68,13 +68,13 @@ class StationAnnotationView: AggregatableAnnotationView {
         
         switch count {
         case 1..<10:
-            color = Palette.Pink.getAccentColor()
+            color = Palette.Pink.accentColor
         case 10..<30:
-            color = Palette.Pink.getPrimaryColor()
+            color = Palette.Pink.primaryColor
         case 30..<Int.max:
-            color = Palette.Pink.getDarkPrimaryColor()
+            color = Palette.Pink.darkPrimaryColor
         default:
-            color = Palette.Teal.getAccentColor()
+            color = Palette.Teal.accentColor
         }
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in

@@ -52,9 +52,9 @@ class ICYTagButton: UIButton {
         
         addTarget(self, action: "buttonClicked", forControlEvents: UIControlEvents.TouchUpInside)
         backgroundColor = UIColor.whiteColor()
-        setTitleColor(Palette.Blue.getPrimaryColor(), forState: UIControlState.Normal)
+        setTitleColor(Palette.Blue.primaryColor, forState: UIControlState.Normal)
         layer.cornerRadius = 3.0
-        layer.borderColor = Palette.Blue.getPrimaryColor().CGColor
+        layer.borderColor = Palette.Blue.primaryColor.CGColor
         layer.borderWidth = 1.0
         
         widthConstraint = NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: 20.0)
