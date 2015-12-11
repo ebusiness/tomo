@@ -6,31 +6,58 @@
 //  Copyright (c) 2015年 &#24373;&#24535;&#33775;. All rights reserved.
 //
 
-import UIKit
+struct TomoConfig {
 
-let kTomoService = "jp.co.e-business.tomo"
-let kTomoPushToken = "token.push.tomo"
 #if DEBUG
-    let AmazonS3Bucket = "tomo-dev"
-    let kAPIBaseURLString = "https://api.dev.genbatomo.com:81"
-//    let kAPIBaseURLString = "https://192.168.11.90:81"
-//    let kAPIBaseURLString = "https://192.168.11.86:81"
+    struct Api {
+
+        static let Protocol = "https"
+        static let Domain = "192.168.11.98"
+
+        static var Url: String {
+            return "\(self.Protocol)://\(self.Domain)"
+        }
+    }
+
+    struct AWS {
+        struct S3 {
+            static let Url = "https://s3-ap-northeast-1.amazonaws.com"
+            static let Bucket = "tomo-dev"
+        }
+    }
 #else
-    let AmazonS3Bucket = "tomo-prod"
-    let kAPIBaseURLString = "https://api.genbatomo.com"
+    struct Api {
+
+        static let Protocol = "https"
+        static let Domain = "api.genbatomo.com"
+
+        static var Url: String {
+            return "\(self.Protocol)://\(self.Domain)"
+        }
+    }
+
+    struct AWS {
+        struct S3 {
+            static let Url = "https://s3-ap-northeast-1.amazonaws.com"
+            static let Bucket = "tomo-prod"
+        }
+    }
 #endif
 
-let kS3BasePath = "https://s3-ap-northeast-1.amazonaws.com"
-let kDateFormat = "yyyy-MM-dd't'HH:mm:ss.SSSZ"
+    struct Date {
+        static let Format = "yyyy-MM-dd't'HH:mm:ss.SSSZ"
+    }
 
-let kAPIBaseURL = NSURL(string: kAPIBaseURLString)
+    struct Util {
+        
+    }
+}
+
+//let kDateFormat = "yyyy-MM-dd't'HH:mm:ss.SSSZ"
 
 let MaxWidth: CGFloat = 500
-let AvatarMaxWidth: CGFloat = 200
-let GroupImageWidth: CGFloat = 80
 
 let NavigationBarColorHex:UInt = 0x2196F3
-//let avatarBorderColor = Util.UIColorFromRGB(0xE0E0E0, alpha: 1).CGColor
 let avatarBorderColor = UIColor.whiteColor().CGColor
 
 let DefaultAvatarImage = UIImage(named: "avatar")!

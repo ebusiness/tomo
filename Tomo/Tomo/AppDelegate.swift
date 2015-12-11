@@ -17,8 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        window?.backgroundColor = UIColor.whiteColor()
-        
+//        window?.backgroundColor = UIColor.whiteColor()
+
         if let launchOpts = launchOptions, userInfo = launchOpts[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject] {
             self.application(application, didReceiveRemoteNotification: userInfo)
         }
@@ -42,46 +42,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application( application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData ) {
-        
-        // <>と" "(空白)を取る
-        let characterSet = NSCharacterSet( charactersInString: "<>" )
-        
-        let deviceTokenString: String = ( deviceToken.description as NSString )
-            .stringByTrimmingCharactersInSet( characterSet )
-            .stringByReplacingOccurrencesOfString( " ", withString: "" ) as String
-        
-        if let deviceToken = Defaults["deviceToken"].string where deviceTokenString == deviceToken {
-            
-        } else {
-            Defaults["deviceToken"] = deviceTokenString
-            
-            var param = Dictionary<String, String>();
-            param["os"] = UIDevice.currentDevice().systemName
-            param["version"] = UIDevice.currentDevice().systemVersion
-            param["model"] = UIDevice.currentDevice().model
-            param["token"] = deviceTokenString;
-            
-            AlamofireController.request(.POST, "/device", parameters: param)
 
-        }
+        let deviceTokenString = String(deviceToken.description.characters.filter {!"<> ".characters.contains($0)})
+        let device = UIDevice.currentDevice()
+
+        let param = [
+            "os": device.systemName,
+            "model": device.model,
+            "token": deviceTokenString,
+            "version": device.systemVersion
+        ]
+
+        AlamofireController.request(.POST, "/device", parameters: param)
     }
-    
+
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         RemoteNotification.sharedInstance.receiveRemoteNotification(userInfo)
     }
-    
-//    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-////        {
-////            "aps":{
-////                "content-available": 1,
-////                "alert":"Test",
-////                "sound":"default",
-////                "badge":0
-////            }
-////        }
-//        println(userInfo)
-//        completionHandler(.NewData)
-//    }
     
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
         return self.application(application, openURL: url, sourceApplication: nil, annotation: [])

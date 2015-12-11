@@ -19,13 +19,13 @@ final class SocketController {
         }
         return Static.instance
     }
-    
+
     private init() {}
     
     class func connect() {
         gcd.async(.Default) { () -> () in
             if self.sharedInstance.socket == nil {
-                self.sharedInstance.socket = SocketIOClient(socketURL: kAPIBaseURLString)
+                self.sharedInstance.socket = SocketIOClient(socketURL: TomoConfig.Api.Url)
                 self.sharedInstance.socket.onAny { (event) -> Void in
                     if let socketEvent = ListenerEvent(rawValue: event.event), data = event.items, result = data[0] as? [NSObject : AnyObject] {
                         gcd.async(.High) { () -> () in

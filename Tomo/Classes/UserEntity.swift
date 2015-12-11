@@ -81,7 +81,7 @@ class UserEntity: Entity {
         self.lastName = json["lastName"].string
         
         if let birthDay = json["birthDay"].string {
-            self.birthDay = birthDay.toDate(kDateFormat)
+            self.birthDay = birthDay.toDate(TomoConfig.Date.Format)
         }
         self.telNo = json["telNo"].string
         

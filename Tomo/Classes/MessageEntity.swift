@@ -41,7 +41,7 @@ class MessageEntity: Entity {
             self.group = GroupEntity(json["group"])
         }
         self.content = json["content"].string ?? json["aps"]["alert"].stringValue
-        self.createDate = json["createDate"].stringValue.toDate(kDateFormat)
+        self.createDate = json["createDate"].stringValue.toDate(TomoConfig.Date.Format)
         
     }
 }

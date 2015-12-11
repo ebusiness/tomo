@@ -207,6 +207,6 @@ enum MediaMessage: Int {
     
     static func fullPath(fileName name: String, type: MediaMessage) -> String {
         let remote = remotePath(fileName: name, type: type)
-        return "\(kS3BasePath)/\(AmazonS3Bucket)\(remote)"
+        return "\(TomoConfig.AWS.S3.Url)/\(TomoConfig.AWS.S3.Bucket)\(remote)"
     }
 }

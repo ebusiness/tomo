@@ -38,7 +38,7 @@ class NotificationEntity: Entity {
         self.type = json["type"].stringValue
         
         if let createDate = json["createDate"].string {
-            self.createDate = createDate.toDate(kDateFormat)
+            self.createDate = createDate.toDate(TomoConfig.Date.Format)
         } else {
             self.createDate = NSDate()
         }

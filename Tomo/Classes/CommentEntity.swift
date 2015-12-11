@@ -32,7 +32,7 @@ class CommentEntity: Entity {
         self.id = json["_id"].string ?? json["id"].stringValue
         self.owner = UserEntity(json["owner"])
         self.content = json["content"].stringValue
-        self.createDate = json["createDate"].stringValue.toDate(kDateFormat)
+        self.createDate = json["createDate"].stringValue.toDate(TomoConfig.Date.Format)
         
     }
 }

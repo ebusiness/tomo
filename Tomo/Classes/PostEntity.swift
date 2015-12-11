@@ -70,7 +70,7 @@ class PostEntity: Entity {
         
         self.coordinate = json["coordinate"].arrayObject as? [Double]
         
-        self.createDate = json["createDate"].stringValue.toDate(kDateFormat)
+        self.createDate = json["createDate"].stringValue.toDate(TomoConfig.Date.Format)
         
     }
     

@@ -82,7 +82,7 @@ class GroupEntity: Entity {
             }
         }
         
-        self.createDate = json["createDate"].stringValue.toDate(kDateFormat)
+        self.createDate = json["createDate"].stringValue.toDate(TomoConfig.Date.Format)
         
     }
 }

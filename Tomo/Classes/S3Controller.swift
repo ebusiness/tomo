@@ -12,7 +12,7 @@ import Alamofire
 class S3Controller: NSObject {
 
     class func uploadFile(localPath: String, remotePath: String, done: (NSError?) -> Void) -> Request {
-        let amazonS3Manager = AmazonS3RequestManager(bucket: AmazonS3Bucket,
+        let amazonS3Manager = AmazonS3RequestManager(bucket: TomoConfig.AWS.S3.Bucket,
             region: .APNortheast1,
             accessKey: AmazonS3AccessKey,
             secret: AmazonS3Secret)

@@ -21,7 +21,8 @@ class AlamofireController {
     private static let alamofireInstance: Manager = {
 
         let serverTrustPolicies: [String: ServerTrustPolicy] = [
-            "api.dev.genbatomo.com": .DisableEvaluation
+//            "api.dev.genbatomo.com": .DisableEvaluation
+            TomoConfig.Api.Domain: .DisableEvaluation
         ]
 
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -62,7 +63,7 @@ class AlamofireController {
         }
 
         
-        let request = alamofireInstance.request(method, kAPIBaseURLString + URLString, parameters: parameters, encoding: encoding).validate()
+        let request = alamofireInstance.request(method, TomoConfig.Api.Url + URLString, parameters: parameters, encoding: encoding).validate()
         
         if success == nil && failure == nil {
             
