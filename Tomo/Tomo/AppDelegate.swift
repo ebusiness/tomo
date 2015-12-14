@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
-var me = UserEntity()
+var me: UserEntity!
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,8 +18,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-//        window?.backgroundColor = UIColor.whiteColor()
+
+        self.window!.backgroundColor = UIColor.whiteColor()
+
+        AlamofireController.request(.GET, "/session", success: {
+
+            let userInfo = JSON($0)
+
+            if nil != userInfo["id"].string && nil != userInfo["nickName"].string {
+                me = UserEntity(userInfo)
+                let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+                Util.changeRootViewController(from: (self.window?.rootViewController)!, to: tab)
+            }
+
+        }) { _ in
+            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
+            Util.changeRootViewController(from: (self.window?.rootViewController)!, to: tab)
+        }
 
         if let launchOpts = launchOptions, userInfo = launchOpts[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject] {
             self.application(application, didReceiveRemoteNotification: userInfo)
@@ -37,7 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        print("will save time \(NSDate())")
         Defaults["mapLastTimeStamp"] = NSDate()
     }
     

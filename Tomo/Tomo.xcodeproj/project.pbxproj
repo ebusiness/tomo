@@ -6,20 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		290135031AC3A57E00BBFE29 /* Mogenerator */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 290135041AC3A57E00BBFE29 /* Build configuration list for PBXAggregateTarget "Mogenerator" */;
-			buildPhases = (
-				290135071AC3A58800BBFE29 /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = Mogenerator;
-			productName = Mogenerator;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		17B993011AF353D000204E97 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B993001AF353D000204E97 /* amrFileCodec.m */; };
 		17B993081AF3540D00204E97 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17B993071AF3540D00204E97 /* libopencore-amrnb.a */; };
@@ -68,6 +54,8 @@
 		1FEA3CFF1BB39F160037F3C5 /* StationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FEA3CFE1BB39F160037F3C5 /* StationCollectionViewCell.xib */; };
 		1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE80E71B4E552A0061B913 /* Home.storyboard */; };
 		1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */; };
+		1FF6930D1C1E95FC00777BD5 /* Landing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FF6930C1C1E95FC00777BD5 /* Landing.storyboard */; };
+		1FF693121C1EB88800777BD5 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF693111C1EB88800777BD5 /* LandingViewController.swift */; };
 		1FFD21FF1BABD57C00204080 /* GroupSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */; };
 		1FFD22011BABD77E00204080 /* GroupSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */; };
 		283771911BC37653001B06D3 /* ICYFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283771901BC37653001B06D3 /* ICYFlowLayout.swift */; };
@@ -249,6 +237,8 @@
 		1FEA3CFE1BB39F160037F3C5 /* StationCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StationCollectionViewCell.xib; path = Classes/StationCollectionViewCell.xib; sourceTree = "<group>"; };
 		1FEE80E71B4E552A0061B913 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Home.storyboard; path = Classes/Home.storyboard; sourceTree = "<group>"; };
 		1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Classes/HomeViewController.swift; sourceTree = "<group>"; };
+		1FF6930C1C1E95FC00777BD5 /* Landing.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Landing.storyboard; path = Classes/Landing.storyboard; sourceTree = "<group>"; };
+		1FF693111C1EB88800777BD5 /* LandingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LandingViewController.swift; path = Classes/LandingViewController.swift; sourceTree = "<group>"; };
 		1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupSectionHeaderView.xib; path = Classes/GroupSectionHeaderView.xib; sourceTree = "<group>"; };
 		1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupSectionHeaderView.swift; path = Classes/GroupSectionHeaderView.swift; sourceTree = "<group>"; };
 		283771901BC37653001B06D3 /* ICYFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYFlowLayout.swift; path = Classes/ICYFlowLayout.swift; sourceTree = "<group>"; };
@@ -680,6 +670,7 @@
 				29CA44921AD4EEBB009EB177 /* Tab.storyboard */,
 				1FEE80E71B4E552A0061B913 /* Home.storyboard */,
 				1FA76AFD1BA27B1E004776B0 /* Group.storyboard */,
+				1FF6930C1C1E95FC00777BD5 /* Landing.storyboard */,
 			);
 			name = storyboard;
 			sourceTree = "<group>";
@@ -690,6 +681,7 @@
 				29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */,
 				1FE7CEF41B8C9561006700FC /* SignUpViewController.swift */,
 				D040E1641BDDC00D00417174 /* RecommendViewController.swift */,
+				1FF693111C1EB88800777BD5 /* LandingViewController.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -944,9 +936,6 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 290134D11AC3991C00BBFE29;
 					};
-					290135031AC3A57E00BBFE29 = {
-						CreatedOnToolsVersion = 6.2;
-					};
 				};
 			};
 			buildConfigurationList = 290134CD1AC3991C00BBFE29 /* Build configuration list for PBXProject "Tomo" */;
@@ -963,7 +952,6 @@
 			targets = (
 				290134D11AC3991C00BBFE29 /* Tomo */,
 				290134E61AC3991C00BBFE29 /* TomoTests */,
-				290135031AC3A57E00BBFE29 /* Mogenerator */,
 			);
 		};
 /* End PBXProject section */
@@ -983,6 +971,7 @@
 				D0DB07D71B9D1B5200C06C4E /* NotificationView.xib in Resources */,
 				29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */,
 				2837719F1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.xib in Resources */,
+				1FF6930D1C1E95FC00777BD5 /* Landing.storyboard in Resources */,
 				1FB69E661BB2A0E9009D0C96 /* RecommendStationTableViewCell.xib in Resources */,
 				296D8BC41AFC5A680058D400 /* Main.storyboard in Resources */,
 				29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */,
@@ -1059,19 +1048,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-		290135071AC3A58800BBFE29 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd Model\n\nmogenerator --swift --template-var arc=true -m Model.xcdatamodeld/Model.xcdatamodel/ -M Machine/";
 		};
 		546DC43AB5936DB66E7B724A /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1191,6 +1167,7 @@
 				291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */,
 				290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */,
 				29C1DA7A1AD36659009A02CC /* S3Controller.swift in Sources */,
+				1FF693121C1EB88800777BD5 /* LandingViewController.swift in Sources */,
 				D07793851B704F290056B7CB /* PickerTableViewController.swift in Sources */,
 				1F79C1B81B5E730E008800E1 /* SearchFriendViewController.swift in Sources */,
 				D0960AAE1BC3CE2600A63733 /* MyGroupListViewController.swift in Sources */,
@@ -1419,7 +1396,7 @@
 				PRODUCT_NAME = tomo;
 				PROVISIONING_PROFILE = "15768182-159d-4aa7-8365-74b535fb2bfc";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
@@ -1467,20 +1444,6 @@
 			};
 			name = Release;
 		};
-		290135051AC3A57E00BBFE29 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		290135061AC3A57E00BBFE29 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1507,15 +1470,6 @@
 			buildConfigurations = (
 				290134F51AC3991D00BBFE29 /* Debug */,
 				290134F61AC3991D00BBFE29 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		290135041AC3A57E00BBFE29 /* Build configuration list for PBXAggregateTarget "Mogenerator" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				290135051AC3A57E00BBFE29 /* Debug */,
-				290135061AC3A57E00BBFE29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
