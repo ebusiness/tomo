@@ -168,6 +168,9 @@
 		D0F44FAB1B5E4790009E12AA /* BookmarkedPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */; };
 		D0F44FAD1B5E534B009E12AA /* MyPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */; };
 		D0F44FAF1B5E540F009E12AA /* FriendListSendRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */; };
+		D0FDC3521C1EA0670045826B /* APIRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FDC3511C1EA0670045826B /* APIRoute.swift */; };
+		D0FDC3541C1EA09F0045826B /* Alamofire-SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FDC3531C1EA09F0045826B /* Alamofire-SwiftyJSON.swift */; };
+		D0FDC3571C1EA30D0045826B /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FDC3561C1EA30D0045826B /* SignIn.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -342,6 +345,9 @@
 		D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BookmarkedPostsViewController.swift; path = Classes/BookmarkedPostsViewController.swift; sourceTree = "<group>"; };
 		D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyPostsViewController.swift; path = Classes/MyPostsViewController.swift; sourceTree = "<group>"; };
 		D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendListSendRequestController.swift; path = Classes/FriendListSendRequestController.swift; sourceTree = "<group>"; };
+		D0FDC3511C1EA0670045826B /* APIRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRoute.swift; path = Classes/APIRoute.swift; sourceTree = "<group>"; };
+		D0FDC3531C1EA09F0045826B /* Alamofire-SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Alamofire-SwiftyJSON.swift"; path = "Classes/Alamofire-SwiftyJSON.swift"; sourceTree = "<group>"; };
+		D0FDC3561C1EA30D0045826B /* SignIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignIn.swift; path = Classes/SignIn.swift; sourceTree = "<group>"; };
 		F1801CE63ECC013D9C8C9BB6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -541,6 +547,7 @@
 			isa = PBXGroup;
 			children = (
 				1F9ACAF61B69F96100648A82 /* Entity */,
+				D0FDC3501C1EA04C0045826B /* Router */,
 				299389531AD3C71500043D91 /* storyboard */,
 				299389561AD3C7CA00043D91 /* ViewController */,
 				299389521AD3C6FB00043D91 /* Controller */,
@@ -836,6 +843,24 @@
 				D0DB07E41B9D65BE00C06C4E /* ListenerEvent.swift */,
 			);
 			name = Listener;
+			sourceTree = "<group>";
+		};
+		D0FDC3501C1EA04C0045826B /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				D0FDC3551C1EA2F10045826B /* API */,
+				D0FDC3511C1EA0670045826B /* APIRoute.swift */,
+				D0FDC3531C1EA09F0045826B /* Alamofire-SwiftyJSON.swift */,
+			);
+			name = Router;
+			sourceTree = "<group>";
+		};
+		D0FDC3551C1EA2F10045826B /* API */ = {
+			isa = PBXGroup;
+			children = (
+				D0FDC3561C1EA30D0045826B /* SignIn.swift */,
+			);
+			name = API;
 			sourceTree = "<group>";
 		};
 		D4F3CDABDCA581BFF7D35DBA /* Frameworks */ = {
@@ -1141,6 +1166,7 @@
 				D0A0C02E1B5F594C00ABFA5F /* ProfileBaseController.swift in Sources */,
 				283771981BC3A329001B06D3 /* ICYPostImageCell.swift in Sources */,
 				1FCA1E651B7221F7000F2936 /* NotificationEntity.swift in Sources */,
+				D0FDC3541C1EA09F0045826B /* Alamofire-SwiftyJSON.swift in Sources */,
 				D029F7321BCCB39E00CDE18B /* PushSettingViewController.swift in Sources */,
 				29DCEFE91B14519300A7C7AF /* TomoVideoMediaItem.swift in Sources */,
 				D07232371BE1C1C700122F52 /* Double.swift in Sources */,
@@ -1181,6 +1207,8 @@
 				2869D71C1BB545FB00D1C479 /* StationDiscoverViewController.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				1F79C1B41B5E10DC008800E1 /* FriendCell.swift in Sources */,
+				D0FDC3571C1EA30D0045826B /* SignIn.swift in Sources */,
+				D0FDC3521C1EA0670045826B /* APIRoute.swift in Sources */,
 				D0B40BBF1B78AF0400685D67 /* ExNSDate.swift in Sources */,
 				1FAA70F71BBB8DBE00BCE5AF /* AggregatableAnnotationView.swift in Sources */,
 				1F79C1B21B5E0E22008800E1 /* FriendListViewController.swift in Sources */,

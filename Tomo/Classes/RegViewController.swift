@@ -183,27 +183,58 @@ extension RegViewController {
     
     @IBAction func accountLogin(sender: AnyObject) {
         
-        var params = [String:String]()
-        params["email"] = emailTextField.text
-        params["password"] = passwordTextField.text
-        
-        AlamofireController.request(.POST, "/signin", parameters: params, success: { result in
+        let success: JSON -> () = { json in
             
-            Defaults["email"] = params["email"]
-            Defaults["password"] = params["password"]
-            
-            let json = JSON(result)
+            Defaults["email"] = self.emailTextField.text
+            Defaults["password"] = self.passwordTextField.text
             
             if nil != json["id"].string && nil != json["nickName"].string {
                 me = UserEntity(json)
                 self.changeRootToTab()
             }
-        }) { _ in
+        }
+        
+        let failure: Int -> () = { err in
+            print(err)
             
             let alert = UIAlertController(title: "登录失败", message: "您输入的账号或密码不正确", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "重试", style: .Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }
+        
+        Router.SignIn(email: emailTextField.text!, password: passwordTextField.text!).response { ResponseSerializer in
+            switch ResponseSerializer.result {
+            case .Success(let value):
+                success(value)
+            case .Failure(let error):
+                failure(error.code)
+            }
+            print(ResponseSerializer.result.value)
+        }
+        
+        
+//        
+//        var params = [String:String]()
+//        params["email"] = emailTextField.text
+//        params["password"] = passwordTextField.text
+//        
+//        AlamofireController.request(.POST, "/signin", parameters: params, success: { result in
+//            
+//            Defaults["email"] = params["email"]
+//            Defaults["password"] = params["password"]
+//            
+//            let json = JSON(result)
+//            
+//            if nil != json["id"].string && nil != json["nickName"].string {
+//                me = UserEntity(json)
+//                self.changeRootToTab()
+//            }
+//        }) { _ in
+//            
+//            let alert = UIAlertController(title: "登录失败", message: "您输入的账号或密码不正确", preferredStyle: .Alert)
+//            alert.addAction(UIAlertAction(title: "重试", style: .Default, handler: nil))
+//            self.presentViewController(alert, animated: true, completion: nil)
+//        }
         
     }
     
@@ -299,9 +330,12 @@ extension RegViewController {
 // MARK: - WechatManagerDelegate
 extension RegViewController: WechatManagerAuthDelegate {
     
-    func checkIfNeeded(var parameters: [String : AnyObject], completion: ((res: AnyObject?, errCode: Int?) -> ())) -> Bool {
-        
-        parameters["type"] = "wechat"
+    func checkIfNeeded(completion: ((res: AnyObject?, errCode: Int?) -> ())) -> Bool {
+        let parameters = [
+            "type": "wechat",
+            "openid": WechatManager.openid,
+            "access_token": WechatManager.access_token ,
+        ]
         AlamofireController.request(.POST, "/signin-wechat", parameters: parameters, success: { json in
             completion(res: json,errCode: nil)
         }) { errCode in
@@ -310,17 +344,15 @@ extension RegViewController: WechatManagerAuthDelegate {
         return true
     }
     
-    func signupIfNeeded(parameters: [String : AnyObject], completion: ((res: AnyObject) -> ())) {
+    func signupIfNeeded(var parameters: [String : AnyObject], completion: ((res: AnyObject) -> ())) {
         
-        var userInfo = parameters["userinfo"] as! Dictionary<String, AnyObject>
-        
-        if let gender = userInfo["sex"] as? String where gender == "2" {
-            userInfo["sex"] = "女"
+        if let gender = parameters["sex"] as? String where gender == "2" {
+            parameters["sex"] = "女"
         } else {
-            userInfo["sex"] = "男"
+            parameters["sex"] = "男"
         }
         
-        AlamofireController.request(.POST, "/signup-wechat", parameters: userInfo, success: { userinfo in
+        AlamofireController.request(.POST, "/signup-wechat", parameters: parameters, success: { userinfo in
             if let userinfo = userinfo as? Dictionary<String, AnyObject> {
                 completion(res: userinfo)
             }
