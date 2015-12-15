@@ -9,6 +9,11 @@
 import Alamofire
 
 struct Router {
+
+    struct Session: APIRoute {
+        var path = "/session"
+    }
+
     class SignIn: NSObject, APIRoute {
         var path = "/signin"
         var method = Method.POST

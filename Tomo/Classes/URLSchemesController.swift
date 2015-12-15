@@ -13,13 +13,8 @@ class URLSchemesController {
     var taskURL: NSURL?
     
     // static initialize
-    class var sharedInstance : URLSchemesController {
-        struct Static {
-            static let instance : URLSchemesController = URLSchemesController()
-        }
-        return Static.instance
-    }
-    
+    static let sharedInstance : URLSchemesController = URLSchemesController()
+
     private init() {
         
         WechatManager.appid = "wx4079dacf73fef72d"

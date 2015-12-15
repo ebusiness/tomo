@@ -39,7 +39,7 @@ class AlamofireController {
             Util.showHUD()
         }
 
-        let requestUrl = TomoConfig.Api.Url + URLString
+        let requestUrl = TomoConfig.Api.UrlString + URLString
         let request = alamofireInstance.request(method, requestUrl, parameters: parameters, encoding: encoding).validate()
         
         if success == nil && failure == nil {

@@ -18,13 +18,8 @@ class CameraController: NSObject {
     private var completion: CameraBlock!
     private var vc:UIViewController!
     
-    class var sharedInstance : CameraController {
-        struct Static {
-            static let instance : CameraController = CameraController()
-        }
-        return Static.instance
-    }
-    
+    static let sharedInstance : CameraController = CameraController()
+
     private override init() {
         super.init()
         picker.delegate = self

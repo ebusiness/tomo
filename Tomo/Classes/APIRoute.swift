@@ -24,7 +24,7 @@ protocol APIRoute: URLRequestConvertible {
 extension APIRoute {
     
     var URLRequest: NSMutableURLRequest {
-        let requestUrl = NSURL(string: TomoConfig.Api.Url)!.URLByAppendingPathComponent(self.path)
+        let requestUrl = TomoConfig.Api.Url.URLByAppendingPathComponent(self.path)
         
         // Create a request with `requestUrl`, returning cached data if available, with a 15 second timeout.
         let mutableURLRequest = NSMutableURLRequest(URL: requestUrl, cachePolicy: NSURLRequestCachePolicy.ReturnCacheDataElseLoad, timeoutInterval: 15)
@@ -52,7 +52,7 @@ extension APIRoute {
         
         var parameters = [String: AnyObject]()
         
-        for i in 0...(count-1) {
+        for i in 0..<count {
             let key = String(UTF8String: property_getName(peopers[i]))!
             
             if "path" == key { continue }

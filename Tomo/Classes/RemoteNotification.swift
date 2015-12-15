@@ -14,13 +14,8 @@ class RemoteNotification {
     var taskUserInfo: [NSObject : AnyObject]?
     var constraints = [AnyObject]()
     
-    class var sharedInstance : RemoteNotification {
-        struct Static {
-            static let instance : RemoteNotification = RemoteNotification()
-        }
-        return Static.instance
-    }
-    
+    static let sharedInstance : RemoteNotification = RemoteNotification()
+
     private init() {}
     
     func receiveRemoteNotification(userInfo: [NSObject : AnyObject]) {

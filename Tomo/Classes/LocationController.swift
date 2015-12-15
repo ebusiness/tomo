@@ -41,9 +41,7 @@ final class LocationController: NSObject {
         
     }()
     
-    static let shareInstance: LocationController = {
-        return LocationController()
-    }()
+    static let shareInstance: LocationController = LocationController()
     
     private override init (){
         super.init()

@@ -31,8 +31,7 @@ final class RegViewController: BaseViewController {
         self.setupAppearance()
         
         self.registerForKeyboardNotifications()
-        
-        self.tryAutoLogin()
+
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -121,54 +120,15 @@ extension RegViewController {
         })
     }
     
-    private func tryAutoLogin() {
-        
-        if Defaults["openid"].string != nil {
-
-            WechatManager.sharedInstance.checkAuth()
-            
-        } else if Defaults["email"].string != nil && Defaults["password"].string != nil {
-            
-            Util.showHUD()
-            
-            var params = [String:String]()
-            params["email"] = Defaults["email"].string
-            params["password"] = Defaults["password"].string
-            
-            AlamofireController.request(.POST, "/signin", parameters: params, success: { result in
-                let json = JSON(result)
-                
-                if nil != json["id"].string && nil != json["nickName"].string {
-                    me = UserEntity(json)
-                    self.changeRootToTab()
-                }
-            }) { _ in
-                self.inputArea.hidden = false
-                
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    self.inputArea.alpha = 1
-                })
-                
-                let alert = UIAlertController(title: "登录失败", message: "您的账号或密码已经变更，请输入新的账号和密码", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "重试", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
-                
-            }
-            
-        } else {
-            inputArea.hidden = false
-        }
-    }
-    
     private func changeRootToTab(){
         Util.dismissHUD()
-//        if let groups = me.groups where groups.count > 0 {
+        if let groups = me.groups where groups.count > 0 {
             let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
             Util.changeRootViewController(from: self, to: tab)
-//        } else {
-//            let main = Util.createViewControllerWithIdentifier("RecommendView", storyboardName: "Main")
-//            Util.changeRootViewController(from: self, to: main)
-//        }
+        } else {
+            let main = Util.createViewControllerWithIdentifier("RecommendView", storyboardName: "Main")
+            Util.changeRootViewController(from: self, to: main)
+        }
     }
 }
 
@@ -195,8 +155,7 @@ extension RegViewController {
         }
         
         let failure: Int -> () = { err in
-            print(err)
-            
+
             let alert = UIAlertController(title: "登录失败", message: "您输入的账号或密码不正确", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "重试", style: .Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
@@ -211,30 +170,6 @@ extension RegViewController {
             }
             print(ResponseSerializer.result.value)
         }
-        
-        
-//        
-//        var params = [String:String]()
-//        params["email"] = emailTextField.text
-//        params["password"] = passwordTextField.text
-//        
-//        AlamofireController.request(.POST, "/signin", parameters: params, success: { result in
-//            
-//            Defaults["email"] = params["email"]
-//            Defaults["password"] = params["password"]
-//            
-//            let json = JSON(result)
-//            
-//            if nil != json["id"].string && nil != json["nickName"].string {
-//                me = UserEntity(json)
-//                self.changeRootToTab()
-//            }
-//        }) { _ in
-//            
-//            let alert = UIAlertController(title: "登录失败", message: "您输入的账号或密码不正确", preferredStyle: .Alert)
-//            alert.addAction(UIAlertAction(title: "重试", style: .Default, handler: nil))
-//            self.presentViewController(alert, animated: true, completion: nil)
-//        }
         
     }
     

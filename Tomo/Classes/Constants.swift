@@ -15,8 +15,12 @@ struct TomoConfig {
         static let Domain = "api.dev.genbatomo.com"
 //        static let Domain = "192.168.11.101"
 
-        static var Url: String {
+        static var UrlString: String {
             return "\(self.Protocol)://\(self.Domain)"
+        }
+
+        static var Url: NSURL {
+            return NSURL(string: self.UrlString)!
         }
     }
 
@@ -32,8 +36,12 @@ struct TomoConfig {
         static let Protocol = "https"
         static let Domain = "api.genbatomo.com"
 
-        static var Url: String {
+        static var UrlString: String {
             return "\(self.Protocol)://\(self.Domain)"
+        }
+
+        static var Url: NSURL {
+            return NSURL(string: self.UrlString)!
         }
     }
 
