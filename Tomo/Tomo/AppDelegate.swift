@@ -21,35 +21,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         self.window!.backgroundColor = UIColor.whiteColor()
 
-        var rootViewControllerName: String!
-
-        Router.Session().response {
-
-            if $0.result.isSuccess {
-                me = UserEntity($0.result.value!)
-                rootViewControllerName = "Tab"
-            } else {
-                rootViewControllerName = "Main"
-            }
-
-            let rootViewController = Util.createViewControllerWithIdentifier(nil, storyboardName: rootViewControllerName)
-            Util.changeRootViewController(from: (self.window?.rootViewController)!, to: rootViewController)
-        }
-
-//        AlamofireController.request(.GET, "/session", success: {
+//        var rootViewControllerName: String!
 //
-//            let userInfo = JSON($0)
+//        Router.Session().response {
 //
-//            if nil != userInfo["id"].string && nil != userInfo["nickName"].string {
-//                me = UserEntity(userInfo)
-//                let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-//                Util.changeRootViewController(from: (self.window?.rootViewController)!, to: tab)
+//            if $0.result.isSuccess {
+//                me = UserEntity($0.result.value!)
+//                rootViewControllerName = "Tab"
+//            } else {
+//                rootViewControllerName = "Main"
 //            }
 //
-//        }) { _ in
-//            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
-//            Util.changeRootViewController(from: (self.window?.rootViewController)!, to: tab)
+//            let rootViewController = Util.createViewControllerWithIdentifier(nil, storyboardName: rootViewControllerName)
+//            Util.changeRootViewController(from: (self.window?.rootViewController)!, to: rootViewController)
 //        }
+
+        AlamofireController.request(.GET, "/session", success: {
+
+            let userInfo = JSON($0)
+
+            if nil != userInfo["id"].string && nil != userInfo["nickName"].string {
+                me = UserEntity(userInfo)
+                let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+                Util.changeRootViewController(from: (self.window?.rootViewController)!, to: tab)
+            }
+
+        }) { _ in
+            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
+            Util.changeRootViewController(from: (self.window?.rootViewController)!, to: tab)
+        }
 
         if let launchOpts = launchOptions, userInfo = launchOpts[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject] {
             self.application(application, didReceiveRemoteNotification: userInfo)

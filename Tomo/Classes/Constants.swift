@@ -62,6 +62,19 @@ struct TomoConfig {
     }
 }
 
+struct TomoConst {
+
+    struct Geo {
+        static let CoordinateTokyo = [35.689521,139.691704]
+    }
+
+    struct Image {
+        static let DefaultAvatar = UIImage(named: "avatar")!
+        static let DefaultCover = UIImage(named: "user_cover_default")!
+        static let DefaultGroup = UIImage(named: "group_cover_default")!
+    }
+}
+
 let MaxWidth: CGFloat = 500
 
 let NavigationBarColorHex:UInt = 0x2196F3

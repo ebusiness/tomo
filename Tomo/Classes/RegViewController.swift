@@ -73,9 +73,6 @@ extension RegViewController {
         #if DEBUG
             testSegment.hidden = false
         #endif
-        
-        // hide all controls on startup
-        inputArea.hidden = true
 
         if (WechatManager.sharedInstance.isInstalled()) {
             // customize wechat login button
