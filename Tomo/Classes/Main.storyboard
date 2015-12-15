@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Reg View Controller-->
@@ -442,40 +443,43 @@ COePvuWgtFRvbW8
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" rotateEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIM-yx-ZYD">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="268"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="341"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Tui-he-CHT" id="ve2-CN-uVL"/>
+                                </connections>
                             </mapView>
                             <searchBar contentMode="redraw" placeholder="用车站名称检索" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tz7-oa-0xE">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Tui-he-CHT" id="Zxh-cB-JDw"/>
+                                </connections>
                             </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AD0-os-qfK">
-                                <rect key="frame" x="0.0" y="268" width="320" height="300"/>
+                                <rect key="frame" x="0.0" y="341" width="320" height="227"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="a3z-Yc-Imt"/>
-                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eY3-PS-f2p">
-                                    <size key="itemSize" width="200" height="280"/>
+                                    <size key="itemSize" width="200" height="228"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="defaultCell" id="k9j-vq-rI2" customClass="StationRecommendCollectionViewCell" customModule="tomo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="10" width="200" height="280"/>
+                                        <rect key="frame" x="0.0" y="-0.5" width="200" height="228"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="200" height="280"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="228"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group_cover_default" translatesAutoresizingMaskIntoConstraints="NO" id="anD-JQ-nAj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="280"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="228"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text_protection_down" translatesAutoresizingMaskIntoConstraints="NO" id="reh-t1-Dl3">
-                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="280"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="228"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车站名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L5O-HR-6vC">
-                                                    <rect key="frame" x="8" y="248" width="184" height="24"/>
+                                                    <rect key="frame" x="8" y="196" width="184" height="24"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -507,6 +511,22 @@ COePvuWgtFRvbW8
                                     <outlet property="delegate" destination="Tui-he-CHT" id="TMS-J0-SJ9"/>
                                 </connections>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jBW-pk-gqE">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="341"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请您选择一个所在的车站" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ttf-n3-nvc">
+                                        <rect key="frame" x="66.5" y="160.5" width="187" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.39674030172413793" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="ttf-n3-nvc" firstAttribute="centerY" secondItem="jBW-pk-gqE" secondAttribute="centerY" id="eJS-ck-pzJ"/>
+                                    <constraint firstItem="ttf-n3-nvc" firstAttribute="centerX" secondItem="jBW-pk-gqE" secondAttribute="centerX" id="vN0-pG-hek"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -514,16 +534,23 @@ COePvuWgtFRvbW8
                             <constraint firstAttribute="trailing" secondItem="AD0-os-qfK" secondAttribute="trailing" id="63y-bZ-S5G"/>
                             <constraint firstAttribute="trailing" secondItem="Tz7-oa-0xE" secondAttribute="trailing" id="6YF-qS-Lbj"/>
                             <constraint firstItem="Tz7-oa-0xE" firstAttribute="top" secondItem="6lU-X0-Jem" secondAttribute="bottom" id="9Vc-xx-rxI"/>
+                            <constraint firstItem="jBW-pk-gqE" firstAttribute="bottom" secondItem="HIM-yx-ZYD" secondAttribute="bottom" id="Efn-N2-ED7"/>
                             <constraint firstItem="AD0-os-qfK" firstAttribute="top" secondItem="HIM-yx-ZYD" secondAttribute="bottom" id="NKy-hw-ugf"/>
+                            <constraint firstItem="jBW-pk-gqE" firstAttribute="leading" secondItem="HIM-yx-ZYD" secondAttribute="leading" id="O8f-uc-tXq"/>
                             <constraint firstItem="6C5-xN-D9m" firstAttribute="top" secondItem="AD0-os-qfK" secondAttribute="bottom" id="SDu-93-KIR"/>
                             <constraint firstItem="Tz7-oa-0xE" firstAttribute="leading" secondItem="2Ka-aI-I4I" secondAttribute="leading" id="Ub9-Ry-zTr"/>
+                            <constraint firstItem="jBW-pk-gqE" firstAttribute="trailing" secondItem="HIM-yx-ZYD" secondAttribute="trailing" id="cUx-xP-80y"/>
+                            <constraint firstItem="jBW-pk-gqE" firstAttribute="top" secondItem="HIM-yx-ZYD" secondAttribute="top" id="ds6-4L-h9i"/>
                             <constraint firstAttribute="trailing" secondItem="HIM-yx-ZYD" secondAttribute="trailing" id="kOg-U4-iW8"/>
                             <constraint firstItem="HIM-yx-ZYD" firstAttribute="top" secondItem="2Ka-aI-I4I" secondAttribute="top" id="sfQ-Pm-0NG"/>
                             <constraint firstItem="AD0-os-qfK" firstAttribute="leading" secondItem="2Ka-aI-I4I" secondAttribute="leading" id="xbW-fZ-XJM"/>
+                            <constraint firstItem="AD0-os-qfK" firstAttribute="height" secondItem="HIM-yx-ZYD" secondAttribute="height" multiplier="0.6667" id="yBZ-XR-RQI"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="mapView" destination="HIM-yx-ZYD" id="loT-nK-92x"/>
+                        <outlet property="maskView" destination="jBW-pk-gqE" id="PaL-Lg-id7"/>
                         <outlet property="recommendGroupCollectionView" destination="AD0-os-qfK" id="dVf-c5-LNA"/>
                     </connections>
                 </viewController>
