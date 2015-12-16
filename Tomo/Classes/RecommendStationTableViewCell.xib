@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F1012" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="423" id="osL-lw-bmj" customClass="RecommendStationTableCell" customModule="tomo" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="443" height="423"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="363" id="osL-lw-bmj" customClass="RecommendStationTableCell" customModule="tomo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="443" height="363"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="osL-lw-bmj" id="dDJ-ZL-18R">
+                <rect key="frame" x="0.0" y="0.0" width="443" height="362.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3BF-Ej-w7T">
-                        <rect key="frame" x="0.0" y="8" width="443" height="406.5"/>
+                        <rect key="frame" x="0.0" y="8" width="443" height="346.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="railroad_car" translatesAutoresizingMaskIntoConstraints="NO" id="dDV-qy-V48">
                                 <rect key="frame" x="16" y="16" width="25" height="25"/>
@@ -29,7 +31,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05J-10-Nvt">
-                                <rect key="frame" x="219" y="364" width="208" height="25.5"/>
+                                <rect key="frame" x="219" y="304" width="208" height="25.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="没有找到？点击这里查看全部或搜索">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -40,38 +42,33 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zMa-Tn-nAT">
-                                <rect key="frame" x="0.0" y="405" width="443" height="1"/>
+                                <rect key="frame" x="0.0" y="345" width="443" height="1"/>
                                 <color key="backgroundColor" red="0.8666666666666667" green="0.8666666666666667" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="beX-xv-Euz"/>
                                 </constraints>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="V7J-uq-rTZ">
-                                <rect key="frame" x="0.0" y="56" width="443" height="300"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="V7J-uq-rTZ">
+                                <rect key="frame" x="0.0" y="56" width="443" height="240"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="7St-nw-9ai"/>
+                                    <constraint firstAttribute="height" constant="240" id="7St-nw-9ai"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="1" minimumInteritemSpacing="1" id="dFH-7X-Nih">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="5" minimumInteritemSpacing="5" id="dFH-7X-Nih">
                                     <size key="itemSize" width="100" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="2" minY="0.0" maxX="2" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <connections>
                                     <outlet property="dataSource" destination="osL-lw-bmj" id="O8D-BG-29E"/>
                                     <outlet property="delegate" destination="osL-lw-bmj" id="bKF-wv-obE"/>
                                 </connections>
                             </collectionView>
-                            <pageControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="5" translatesAutoresizingMaskIntoConstraints="NO" id="Uqe-Jf-YVX">
-                                <rect key="frame" x="186" y="319" width="71" height="37"/>
-                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="05J-10-Nvt" firstAttribute="top" secondItem="V7J-uq-rTZ" secondAttribute="bottom" constant="8" id="02z-nj-q5a"/>
-                            <constraint firstItem="Uqe-Jf-YVX" firstAttribute="bottom" secondItem="V7J-uq-rTZ" secondAttribute="bottom" id="0iv-uM-5aF"/>
-                            <constraint firstItem="Uqe-Jf-YVX" firstAttribute="centerX" secondItem="V7J-uq-rTZ" secondAttribute="centerX" id="1H4-0l-ext"/>
                             <constraint firstItem="dDV-qy-V48" firstAttribute="leading" secondItem="3BF-Ej-w7T" secondAttribute="leading" constant="16" id="4WM-IS-MYZ"/>
                             <constraint firstItem="V7J-uq-rTZ" firstAttribute="leading" secondItem="3BF-Ej-w7T" secondAttribute="leading" id="4vL-sx-bi0"/>
                             <constraint firstItem="dDV-qy-V48" firstAttribute="top" secondItem="3BF-Ej-w7T" secondAttribute="top" constant="16" id="85g-VR-EbB"/>
@@ -97,7 +94,6 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="collectionView" destination="V7J-uq-rTZ" id="UHd-NN-d5Y"/>
-                <outlet property="pageControl" destination="Uqe-Jf-YVX" id="Egu-GV-ePH"/>
             </connections>
             <point key="canvasLocation" x="442.5" y="437.5"/>
         </tableViewCell>

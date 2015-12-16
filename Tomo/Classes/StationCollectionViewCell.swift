@@ -12,11 +12,13 @@ class StationCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var prefLabel: UILabel!
+    @IBOutlet weak var backgroundImageView: UIImageView!
     
     var group: GroupEntity!
     
     func setupDisplay() {
         self.nameLabel.text = self.group.name
         self.prefLabel.text = self.group.pref
+        backgroundImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
     }
 }

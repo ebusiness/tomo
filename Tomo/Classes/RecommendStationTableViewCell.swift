@@ -12,7 +12,6 @@ class RecommendStationTableCell: UITableViewCell {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    @IBOutlet weak var pageControl: UIPageControl!
     var groups: [GroupEntity]!
     weak var delegate: HomeViewController!
     
@@ -28,7 +27,6 @@ class RecommendStationTableCell: UITableViewCell {
     }
     
     func setup() {
-        pageControl.numberOfPages = (groups.count - 1) / 9 + 1
         collectionView.reloadData()
     }
 }
@@ -68,7 +66,6 @@ extension RecommendStationTableCell:UICollectionViewDelegate {
                 let group = GroupEntity(result)
                 me.addGroup(group.id)
                 self.groups.removeAtIndex(indexPath.item)
-                self.pageControl.numberOfPages = (self.groups.count - 1) / 12 + 1
                 self.delegate.synchronizeRecommendStations(self.groups)
                 gcd.async(.Main) {
                     self.collectionView.deleteItemsAtIndexPaths([indexPath])
@@ -76,26 +73,14 @@ extension RecommendStationTableCell:UICollectionViewDelegate {
             }
         })
     }
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if scrollView == collectionView {
-            let contentOffsetX = scrollView.contentOffset.x + 20
-            if contentOffsetX < 30 {
-                pageControl.currentPage = 0
-            } else if contentOffsetX + screenWidth > scrollView.contentSize.width {
-                pageControl.currentPage = pageControl.numberOfPages - 1
-            } else {
-                pageControl.currentPage = Int(floor(contentOffsetX / screenWidth))
-            }
-        }
-    }
 }
 
 extension RecommendStationTableCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        
-        let width = screenWidth / 3 - 1
-        let height = collectionView.bounds.height / 3 - 1
+
+        let height = CGFloat(239.0)
+        let width = height / 4 * 3
         
         return CGSizeMake(width, height)
     }
