@@ -16,22 +16,15 @@ final class RecommendViewController: UIViewController {
     
     @IBOutlet weak var maskView: UIView!
 
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBarBottomConstraint: NSLayoutConstraint!
+    
     private var myGroups = [GroupEntity]()
     
     private var myLocation: CLLocation?
 
     private var currentAnnotationView: MKAnnotationView?
 
-//    lazy private var stationPopover: GroupCallOutViewController = {
-//
-//        let vc = GroupCallOutViewController()
-//        vc.loadView()
-//        vc.modalPresentationStyle = .Popover
-//        vc.presentationController?.delegate = self
-//
-//        return vc
-//    }()
-//    
     private let itemSize: CGSize = {
         let height = UIScreen.mainScreen().bounds.height * 0.3 - 8
         let width = height / 4 * 3
@@ -61,6 +54,8 @@ final class RecommendViewController: UIViewController {
 
 }
 
+// MARK: - interal methodes
+
 extension RecommendViewController {
 
     private func getRecommendInfo(location: CLLocation?, forceRefresh: Bool = false) {
@@ -74,7 +69,7 @@ extension RecommendViewController {
         if let location = location {
             params["coordinate"] = [location.coordinate.longitude, location.coordinate.latitude]
         } else {
-            params["coordinate"] = TomoConst.Geo.CoordinateTokyo //
+            params["coordinate"] = TomoConst.Geo.CoordinateTokyo
         }
         
         if nil == self.recommendGroups || forceRefresh {
@@ -145,7 +140,35 @@ extension RecommendViewController {
         self.mapView.addAnnotation(annotation)
     }
 
+
+    @IBAction func searchButtonTapped(sender: AnyObject) {
+
+        self.dismissViewControllerAnimated(true, completion: nil)
+        UIView.animateWithDuration(0.3, animations: {
+            self.searchBarBottomConstraint.constant = 0
+            self.view.layoutIfNeeded()
+        }) { _ in
+            self.searchBar.becomeFirstResponder()
+        }
+    }
+
+    @IBAction func exitButtonTapped(sender: AnyObject) {
+
+        AlamofireController.request(.GET, "/signout")
+
+        Defaults.remove("openid")
+        Defaults.remove("deviceToken")
+
+        Defaults.remove("email")
+        Defaults.remove("password")
+
+        me = nil
+        let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
+        Util.changeRootViewController(from: self, to: main)
+    }
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension RecommendViewController: UICollectionViewDataSource {
     
@@ -155,7 +178,7 @@ extension RecommendViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("defaultCell", forIndexPath: indexPath) as! StationRecommendCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("defaultCell", forIndexPath: indexPath) as! GroupRecommendCollectionViewCell
 
         let group = recommendGroups![indexPath.item]
 
@@ -166,54 +189,32 @@ extension RecommendViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+
 extension RecommendViewController: UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 
         self.dismissViewControllerAnimated(true, completion: nil)
 
-        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+//        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
 
         if let group = recommendGroups?[indexPath.row] {
 
             selectGroup(group)
 
             if maskView != nil {
-                maskView.removeFromSuperview()
+                UIView.animateWithDuration(0.3, animations: {
+                    self.maskView.alpha = 0
+                }, completion: { _ in
+                    self.maskView.removeFromSuperview()
+                })
             }
         }
     }
 }
 
-extension RecommendViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return itemSize
-    }
-}
-
-extension RecommendViewController: UIAdaptivePresentationControllerDelegate {
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        return .None
-    }
-}
-
-extension RecommendViewController: UISearchBarDelegate {
-
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        guard let text = searchBar.text where text.length > 0 else {
-            return
-        }
-        searchGroup(text)
-    }
-
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        if let text = searchBar.text, let location = myLocation where text.length == 0 {
-            getRecommendInfo(location, forceRefresh: true)
-        }
-    }
-}
+// MARK: - MKMapViewDelegate
 
 extension RecommendViewController: MKMapViewDelegate {
 
@@ -261,7 +262,53 @@ extension RecommendViewController: MKMapViewDelegate {
     }
 }
 
-class StationRecommendCollectionViewCell: UICollectionViewCell {
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension RecommendViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return itemSize
+    }
+}
+
+// MARK: - UISearchBarDelegate
+
+extension RecommendViewController: UISearchBarDelegate {
+
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        UIView.animateWithDuration(0.3, animations: {
+            self.searchBarBottomConstraint.constant = -44
+            self.view.layoutIfNeeded()
+        })
+        guard let text = searchBar.text where text.length > 0 else {
+            return
+        }
+        searchGroup(text)
+    }
+
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        UIView.animateWithDuration(0.3, animations: {
+            self.searchBarBottomConstraint.constant = -44
+            self.view.layoutIfNeeded()
+        })
+        if let text = searchBar.text, let location = myLocation where text.length == 0 {
+            getRecommendInfo(location, forceRefresh: true)
+        }
+    }
+}
+
+// MARK: - UIAdaptivePresentationControllerDelegate
+
+extension RecommendViewController: UIAdaptivePresentationControllerDelegate {
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .None
+    }
+}
+
+// MARK: - GroupRecommendCollectionViewCell
+
+class GroupRecommendCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var coverImageView: UIImageView!
 
@@ -275,6 +322,8 @@ class StationRecommendCollectionViewCell: UICollectionViewCell {
     
 }
 
+// MARK: - GroupPopoverViewController
+
 class GroupPopoverViewController: UIViewController {
 
     var groupAnnotation: GroupAnnotation! {
@@ -287,6 +336,7 @@ class GroupPopoverViewController: UIViewController {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak var joinButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -295,9 +345,20 @@ class GroupPopoverViewController: UIViewController {
 
     @IBAction func joinButtonTapped(sender: AnyObject) {
 
+        guard let delegate = UIApplication.sharedApplication().delegate else {return}
+        guard let window = delegate.window else {return}
+        guard let rootViewController = window?.rootViewController else {return}
+
+        let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+        Util.changeRootViewController(from: rootViewController, to: tab)
     }
 
     func setupDisplay() {
+
+        joinButton.layer.borderColor = UIColor.whiteColor().CGColor
+        joinButton.layer.borderWidth = 1
+        joinButton.layer.cornerRadius = 2
+
         if let group = groupAnnotation.group {
             self.nameLabel.text = group.name
             self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)

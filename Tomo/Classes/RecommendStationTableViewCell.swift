@@ -60,18 +60,11 @@ extension RecommendStationTableCell:UICollectionViewDelegate {
         collectionView.deselectItemAtIndexPath(indexPath, animated: true)
         
         let group = self.groups[indexPath.item]
-        
-        AlamofireController.request(.PATCH, "/groups/\(group.id)/join", parameters: nil, encoding: .URL, success: { (result) -> () in
-            gcd.async(.Default) {
-                let group = GroupEntity(result)
-                me.addGroup(group.id)
-                self.groups.removeAtIndex(indexPath.item)
-                self.delegate.synchronizeRecommendStations(self.groups)
-                gcd.async(.Main) {
-                    self.collectionView.deleteItemsAtIndexPaths([indexPath])
-                }
-            }
-        })
+
+        let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+        groupVC.group = group
+        self.delegate?.navigationController?.pushViewController(groupVC, animated: true)
+
     }
 }
 
@@ -79,7 +72,7 @@ extension RecommendStationTableCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
 
-        let height = CGFloat(239.0)
+        let height = CGFloat(300.0)
         let width = height / 4 * 3
         
         return CGSizeMake(width, height)

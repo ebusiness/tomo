@@ -149,7 +149,7 @@ extension HomeViewController {
             }
             return post.contentHeight!
         } else if contents[indexPath.row] is [GroupEntity] {
-            return 363.0
+            return 340.0
         }
         return 0
     }

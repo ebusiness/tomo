@@ -58,7 +58,7 @@ COePvuWgtFRvbW8
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="238"/>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="账号" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uDp-p7-Fph">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="电子邮件地址" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uDp-p7-Fph">
                                         <rect key="frame" x="40" y="16" width="240" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="240" id="J1A-RK-EwD"/>
@@ -448,30 +448,56 @@ COePvuWgtFRvbW8
                                     <outlet property="delegate" destination="Tui-he-CHT" id="ve2-CN-uVL"/>
                                 </connections>
                             </mapView>
-                            <searchBar contentMode="redraw" placeholder="用车站名称检索" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tz7-oa-0xE">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="Tui-he-CHT" id="Zxh-cB-JDw"/>
-                                </connections>
-                            </searchBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jBW-pk-gqE">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请您选择一个所在的车站" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ttf-n3-nvc">
-                                        <rect key="frame" x="66" y="217" width="187" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="worldwide_location" translatesAutoresizingMaskIntoConstraints="NO" id="EQ9-zA-coX">
+                                        <rect key="frame" x="112" y="130.5" width="96" height="96"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="96" id="ayz-73-mnL"/>
+                                            <constraint firstAttribute="width" constant="96" id="egc-7t-FOf"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="欢迎来到現場Tomo！" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ttf-n3-nvc">
+                                        <rect key="frame" x="64" y="243" width="193" height="24"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
+                                        <size key="shadowOffset" width="0.0" height="1"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="可以点击右上角的检索按钮进行检索" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bI2-9E-PYt">
+                                        <rect key="frame" x="48" y="347" width="224" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="在开始使用前，请您选择一个距离您现场最近的车站" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P8H-EB-Z7v">
+                                        <rect key="frame" x="40" y="275" width="240" height="48"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                        <size key="shadowOffset" width="0.0" height="1"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.39674030172413793" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bI2-9E-PYt" secondAttribute="trailing" constant="48" id="EkL-z6-9Uu"/>
+                                    <constraint firstItem="bI2-9E-PYt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jBW-pk-gqE" secondAttribute="leading" constant="48" id="Zl9-TO-CPK"/>
+                                    <constraint firstItem="ttf-n3-nvc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jBW-pk-gqE" secondAttribute="leading" constant="32" id="Zu7-1G-iew"/>
+                                    <constraint firstItem="P8H-EB-Z7v" firstAttribute="top" secondItem="ttf-n3-nvc" secondAttribute="bottom" constant="8" id="aMs-fR-9XQ"/>
+                                    <constraint firstItem="EQ9-zA-coX" firstAttribute="centerX" secondItem="jBW-pk-gqE" secondAttribute="centerX" id="anJ-ec-Dff"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="P8H-EB-Z7v" secondAttribute="trailing" constant="32" id="gkP-vG-LaS"/>
+                                    <constraint firstItem="bI2-9E-PYt" firstAttribute="top" secondItem="P8H-EB-Z7v" secondAttribute="bottom" constant="24" id="iT9-fQ-s6b"/>
+                                    <constraint firstItem="P8H-EB-Z7v" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jBW-pk-gqE" secondAttribute="leading" constant="32" id="nTt-Zd-DfD"/>
+                                    <constraint firstItem="P8H-EB-Z7v" firstAttribute="centerX" secondItem="jBW-pk-gqE" secondAttribute="centerX" id="t8P-TX-RAE"/>
+                                    <constraint firstItem="ttf-n3-nvc" firstAttribute="top" secondItem="EQ9-zA-coX" secondAttribute="bottom" constant="16" id="uQ6-v4-v3x"/>
                                     <constraint firstItem="ttf-n3-nvc" firstAttribute="centerX" secondItem="jBW-pk-gqE" secondAttribute="centerX" id="vN0-pG-hek"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ttf-n3-nvc" secondAttribute="trailing" constant="32" id="xus-vg-Sjf"/>
+                                    <constraint firstItem="bI2-9E-PYt" firstAttribute="centerX" secondItem="jBW-pk-gqE" secondAttribute="centerX" id="zKC-za-gL0"/>
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AD0-os-qfK">
-                                <rect key="frame" x="0.0" y="396.5" width="320" height="171.5"/>
+                                <rect key="frame" x="0.0" y="396" width="320" height="171.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eY3-PS-f2p">
                                     <size key="itemSize" width="140" height="170"/>
@@ -480,7 +506,7 @@ COePvuWgtFRvbW8
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="defaultCell" id="k9j-vq-rI2" customClass="StationRecommendCollectionViewCell" customModule="tomo" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="defaultCell" id="k9j-vq-rI2" customClass="GroupRecommendCollectionViewCell" customModule="tomo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="1" width="140" height="170"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -526,22 +552,55 @@ COePvuWgtFRvbW8
                                     <outlet property="delegate" destination="Tui-he-CHT" id="TMS-J0-SJ9"/>
                                 </connections>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4zT-eU-8q4">
+                                <rect key="frame" x="16" y="8" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="I35-ow-297"/>
+                                    <constraint firstAttribute="width" constant="24" id="ccQ-wS-I4M"/>
+                                </constraints>
+                                <state key="normal" image="exit"/>
+                                <connections>
+                                    <action selector="exitButtonTapped:" destination="Tui-he-CHT" eventType="touchUpInside" id="mwp-6i-TLQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iha-Eg-gNj">
+                                <rect key="frame" x="280" y="8" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="WzF-S7-nDR"/>
+                                    <constraint firstAttribute="width" constant="24" id="lB3-4L-dGa"/>
+                                </constraints>
+                                <state key="normal" image="search"/>
+                                <connections>
+                                    <action selector="searchButtonTapped:" destination="Tui-he-CHT" eventType="touchUpInside" id="vFI-tj-BEy"/>
+                                </connections>
+                            </button>
+                            <searchBar contentMode="redraw" placeholder="用车站名称检索" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tz7-oa-0xE">
+                                <rect key="frame" x="0.0" y="-44" width="320" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Tui-he-CHT" id="Zxh-cB-JDw"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="HIM-yx-ZYD" firstAttribute="leading" secondItem="2Ka-aI-I4I" secondAttribute="leading" id="5Yb-BD-E6z"/>
                             <constraint firstAttribute="trailing" secondItem="AD0-os-qfK" secondAttribute="trailing" id="63y-bZ-S5G"/>
                             <constraint firstAttribute="trailing" secondItem="Tz7-oa-0xE" secondAttribute="trailing" id="6YF-qS-Lbj"/>
-                            <constraint firstItem="Tz7-oa-0xE" firstAttribute="top" secondItem="6lU-X0-Jem" secondAttribute="bottom" id="9Vc-xx-rxI"/>
+                            <constraint firstItem="Tz7-oa-0xE" firstAttribute="top" secondItem="6lU-X0-Jem" secondAttribute="bottom" constant="-44" id="9Vc-xx-rxI"/>
+                            <constraint firstItem="4zT-eU-8q4" firstAttribute="leading" secondItem="2Ka-aI-I4I" secondAttribute="leading" constant="16" id="CTX-Ct-Ogu"/>
                             <constraint firstItem="6C5-xN-D9m" firstAttribute="top" secondItem="HIM-yx-ZYD" secondAttribute="bottom" id="Gey-P9-VZu"/>
+                            <constraint firstItem="Iha-Eg-gNj" firstAttribute="top" secondItem="6lU-X0-Jem" secondAttribute="bottom" constant="8" id="KFi-zt-SjL"/>
                             <constraint firstItem="jBW-pk-gqE" firstAttribute="leading" secondItem="HIM-yx-ZYD" secondAttribute="leading" id="O8f-uc-tXq"/>
+                            <constraint firstAttribute="trailing" secondItem="Iha-Eg-gNj" secondAttribute="trailing" constant="16" id="R7T-Zx-ZDZ"/>
                             <constraint firstItem="6C5-xN-D9m" firstAttribute="top" secondItem="AD0-os-qfK" secondAttribute="bottom" id="SDu-93-KIR"/>
                             <constraint firstItem="Tz7-oa-0xE" firstAttribute="leading" secondItem="2Ka-aI-I4I" secondAttribute="leading" id="Ub9-Ry-zTr"/>
+                            <constraint firstItem="4zT-eU-8q4" firstAttribute="top" secondItem="6lU-X0-Jem" secondAttribute="bottom" constant="8" id="Uo4-Rw-XZQ"/>
+                            <constraint firstItem="AD0-os-qfK" firstAttribute="top" secondItem="bI2-9E-PYt" secondAttribute="bottom" constant="32" id="bU7-5L-byx"/>
                             <constraint firstItem="jBW-pk-gqE" firstAttribute="trailing" secondItem="HIM-yx-ZYD" secondAttribute="trailing" id="cUx-xP-80y"/>
                             <constraint firstItem="jBW-pk-gqE" firstAttribute="top" secondItem="HIM-yx-ZYD" secondAttribute="top" id="ds6-4L-h9i"/>
                             <constraint firstItem="AD0-os-qfK" firstAttribute="height" secondItem="2Ka-aI-I4I" secondAttribute="height" multiplier="0.3" constant="1" id="ekC-eK-5jd"/>
                             <constraint firstAttribute="trailing" secondItem="HIM-yx-ZYD" secondAttribute="trailing" id="kOg-U4-iW8"/>
-                            <constraint firstItem="AD0-os-qfK" firstAttribute="top" secondItem="ttf-n3-nvc" secondAttribute="bottom" constant="159" id="mXz-gF-K93"/>
                             <constraint firstItem="HIM-yx-ZYD" firstAttribute="top" secondItem="2Ka-aI-I4I" secondAttribute="top" id="sfQ-Pm-0NG"/>
                             <constraint firstItem="AD0-os-qfK" firstAttribute="leading" secondItem="2Ka-aI-I4I" secondAttribute="leading" id="xbW-fZ-XJM"/>
                             <constraint firstItem="jBW-pk-gqE" firstAttribute="bottom" secondItem="AD0-os-qfK" secondAttribute="bottom" id="xit-Cw-fAE"/>
@@ -552,6 +611,8 @@ COePvuWgtFRvbW8
                         <outlet property="mapView" destination="HIM-yx-ZYD" id="loT-nK-92x"/>
                         <outlet property="maskView" destination="jBW-pk-gqE" id="PaL-Lg-id7"/>
                         <outlet property="recommendGroupCollectionView" destination="AD0-os-qfK" id="dVf-c5-LNA"/>
+                        <outlet property="searchBar" destination="Tz7-oa-0xE" id="BWs-Ma-1yg"/>
+                        <outlet property="searchBarBottomConstraint" destination="9Vc-xx-rxI" id="gK8-0K-Toh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QFj-iJ-hIz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -583,9 +644,11 @@ COePvuWgtFRvbW8
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cU5-Hk-auX">
-                                <rect key="frame" x="78" y="431" width="165" height="33"/>
+                                <rect key="frame" x="70" y="431" width="181" height="33"/>
+                                <color key="backgroundColor" red="0.29803921570000003" green="0.68627450980000004" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <state key="normal" title="在这里开始現場Tomo">
+                                <size key="titleShadowOffset" width="0.0" height="2.2250738585072014e-308"/>
+                                <state key="normal" title="  在这里开始現場Tomo  ">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -615,6 +678,7 @@ COePvuWgtFRvbW8
                     <size key="freeformSize" width="320" height="480"/>
                     <connections>
                         <outlet property="coverImageView" destination="fVQ-DQ-bNh" id="utV-iS-Z9Z"/>
+                        <outlet property="joinButton" destination="cU5-Hk-auX" id="Tpc-Ad-rBl"/>
                         <outlet property="nameLabel" destination="dao-H6-Ogl" id="6jz-AI-vpg"/>
                     </connections>
                 </viewController>
@@ -624,10 +688,13 @@ COePvuWgtFRvbW8
         </scene>
     </scenes>
     <resources>
+        <image name="exit" width="32" height="32"/>
         <image name="group_cover_default" width="414" height="160"/>
         <image name="icon_wx" width="49" height="47"/>
+        <image name="search" width="32" height="32"/>
         <image name="splash10" width="1000" height="666"/>
         <image name="text_protection" width="320" height="160"/>
         <image name="text_protection_down" width="320" height="160"/>
+        <image name="worldwide_location" width="32" height="32"/>
     </resources>
 </document>

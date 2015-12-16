@@ -17,43 +17,64 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jrc-3y-XoL">
                         <rect key="frame" x="0.0" y="0.0" width="176" height="167"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="都道府县" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvg-WG-g9y">
-                        <rect key="frame" x="8" y="141" width="57" height="18"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text_protection_down" translatesAutoresizingMaskIntoConstraints="NO" id="t9J-s2-W6J">
+                        <rect key="frame" x="0.0" y="0.0" width="176" height="167"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="车站名称" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kaH-j7-i0o">
+                        <rect key="frame" x="8" y="134" width="68" height="20.5"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                        <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hou-NC-Rb4">
+                        <rect key="frame" x="124" y="130" width="44" height="29"/>
+                        <color key="backgroundColor" red="0.29803921570000003" green="0.68627450980000004" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <size key="shadowOffset" width="1" height="1"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车站名称" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kaH-j7-i0o">
-                        <rect key="frame" x="8" y="111.5" width="69" height="21.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <size key="shadowOffset" width="1" height="1"/>
-                    </label>
+                        <state key="normal" title="  关注  ">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="watchButtonTapped:" destination="X6w-rF-SSv" eventType="touchUpInside" id="YZW-E3-glu"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Jrc-3y-XoL" secondAttribute="trailing" id="9vi-Kl-Ibc"/>
-                <constraint firstAttribute="bottom" secondItem="lvg-WG-g9y" secondAttribute="bottom" constant="8" id="PEz-Mm-L7J"/>
+                <constraint firstItem="t9J-s2-W6J" firstAttribute="leading" secondItem="X6w-rF-SSv" secondAttribute="leading" id="B6u-xp-ueP"/>
+                <constraint firstAttribute="bottom" secondItem="kaH-j7-i0o" secondAttribute="bottom" constant="8" id="HFD-od-JZ8"/>
+                <constraint firstAttribute="bottom" secondItem="hou-NC-Rb4" secondAttribute="bottom" constant="8" id="Ieg-Rd-ads"/>
+                <constraint firstAttribute="bottom" secondItem="t9J-s2-W6J" secondAttribute="bottom" id="Rzh-xI-6NJ"/>
+                <constraint firstItem="kaH-j7-i0o" firstAttribute="centerY" secondItem="hou-NC-Rb4" secondAttribute="centerY" id="SjY-hn-dNk"/>
+                <constraint firstItem="hou-NC-Rb4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kaH-j7-i0o" secondAttribute="trailing" constant="8" id="UL5-eA-mms"/>
+                <constraint firstAttribute="trailing" secondItem="hou-NC-Rb4" secondAttribute="trailing" constant="8" id="VnY-ah-DLR"/>
+                <constraint firstItem="t9J-s2-W6J" firstAttribute="top" secondItem="X6w-rF-SSv" secondAttribute="top" id="XFK-um-XTd"/>
                 <constraint firstItem="kaH-j7-i0o" firstAttribute="leading" secondItem="X6w-rF-SSv" secondAttribute="leading" constant="8" id="XNg-R7-k43"/>
-                <constraint firstItem="lvg-WG-g9y" firstAttribute="top" secondItem="kaH-j7-i0o" secondAttribute="bottom" constant="8" id="XWE-aU-vrz"/>
                 <constraint firstItem="Jrc-3y-XoL" firstAttribute="top" secondItem="X6w-rF-SSv" secondAttribute="top" id="ZDo-JK-rFr"/>
                 <constraint firstAttribute="bottom" secondItem="Jrc-3y-XoL" secondAttribute="bottom" id="dcy-XX-URv"/>
                 <constraint firstItem="Jrc-3y-XoL" firstAttribute="leading" secondItem="X6w-rF-SSv" secondAttribute="leading" id="g2Q-KD-aQc"/>
-                <constraint firstItem="lvg-WG-g9y" firstAttribute="leading" secondItem="X6w-rF-SSv" secondAttribute="leading" constant="8" id="gTZ-Nx-ziz"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kaH-j7-i0o" secondAttribute="trailing" constant="8" id="okx-bd-z6F"/>
+                <constraint firstAttribute="trailing" secondItem="t9J-s2-W6J" secondAttribute="trailing" id="vcV-cJ-W4g"/>
             </constraints>
             <size key="customSize" width="176" height="167"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="HFD-od-JZ8"/>
+                    <exclude reference="okx-bd-z6F"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="backgroundImageView" destination="Jrc-3y-XoL" id="GHl-Eb-GPr"/>
                 <outlet property="nameLabel" destination="kaH-j7-i0o" id="0eT-AJ-vzx"/>
-                <outlet property="prefLabel" destination="lvg-WG-g9y" id="D3w-YA-l1W"/>
+                <outlet property="watchButton" destination="hou-NC-Rb4" id="uS7-6m-0iD"/>
             </connections>
             <point key="canvasLocation" x="427" y="394.5"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="text_protection_down" width="320" height="160"/>
+    </resources>
 </document>
