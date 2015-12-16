@@ -19,7 +19,6 @@
 		1F1ECE091C1176F200A3CADA /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1ECE061C1176F200A3CADA /* SwiftyJSON.framework */; };
 		1F26B29A1BAA61D10063AC6B /* GroupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */; };
 		1F350B2B1B68D32800088C1E /* PostAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */; };
-		1F54447D1C1FBECB00485310 /* StationRecommendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54447C1C1FBECB00485310 /* StationRecommendCollectionViewCell.swift */; };
 		1F6462D21BC14845007D0906 /* GroupCallOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6462D01BC14845007D0906 /* GroupCallOutViewController.swift */; };
 		1F6462D31BC14845007D0906 /* GroupCallOutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F6462D11BC14845007D0906 /* GroupCallOutView.xib */; };
 		1F6AE7851B6F1A2300D7F488 /* PostAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */; };
@@ -188,7 +187,6 @@
 		1F1ECE061C1176F200A3CADA /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDetailViewController.swift; path = Classes/GroupDetailViewController.swift; sourceTree = "<group>"; };
 		1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostAnnotationView.swift; path = Classes/PostAnnotationView.swift; sourceTree = "<group>"; };
-		1F54447C1C1FBECB00485310 /* StationRecommendCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationRecommendCollectionViewCell.swift; path = Classes/StationRecommendCollectionViewCell.swift; sourceTree = "<group>"; };
 		1F6462D01BC14845007D0906 /* GroupCallOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCallOutViewController.swift; path = Classes/GroupCallOutViewController.swift; sourceTree = "<group>"; };
 		1F6462D11BC14845007D0906 /* GroupCallOutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupCallOutView.xib; path = Classes/GroupCallOutView.xib; sourceTree = "<group>"; };
 		1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostAnnotation.swift; path = Classes/PostAnnotation.swift; sourceTree = "<group>"; };
@@ -684,7 +682,6 @@
 				1FE7CEF41B8C9561006700FC /* SignUpViewController.swift */,
 				D040E1641BDDC00D00417174 /* RecommendViewController.swift */,
 				1FF693111C1EB88800777BD5 /* LandingViewController.swift */,
-				1F54447C1C1FBECB00485310 /* StationRecommendCollectionViewCell.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -1209,7 +1206,6 @@
 				1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */,
 				D0E788751B6F5BD3009255B9 /* AlamofireController.swift in Sources */,
 				285778561BC29AEC00533E8E /* ICYTagCollectionViewCell.swift in Sources */,
-				1F54447D1C1FBECB00485310 /* StationRecommendCollectionViewCell.swift in Sources */,
 				D07793871B704F410056B7CB /* DatePickerViewController.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
 				D07232331BE1C1C700122F52 /* Array.swift in Sources */,

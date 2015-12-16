@@ -39,11 +39,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AlamofireController.request(.GET, "/session", success: {
 
             let userInfo = JSON($0)
+            me = UserEntity(userInfo)
 
-            if nil != userInfo["id"].string && nil != userInfo["nickName"].string {
-                me = UserEntity(userInfo)
+            if let groups = me.groups where groups.count > 0 {
                 let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
                 Util.changeRootViewController(from: (self.window?.rootViewController)!, to: tab)
+            } else {
+                let main = Util.createViewControllerWithIdentifier("RecommendView", storyboardName: "Main")
+                Util.changeRootViewController(from: (self.window?.rootViewController)!, to: main)
             }
 
         }) { _ in

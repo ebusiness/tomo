@@ -15,17 +15,25 @@ final class RecommendViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     
     @IBOutlet weak var maskView: UIView!
-    
-    private var annotation: GroupEntityAnnotation?
 
     private var myGroups = [GroupEntity]()
     
     private var myLocation: CLLocation?
 
-    private let screenWidth = UIScreen.mainScreen().bounds.width
-    
+    private var currentAnnotationView: MKAnnotationView?
+
+//    lazy private var stationPopover: GroupCallOutViewController = {
+//
+//        let vc = GroupCallOutViewController()
+//        vc.loadView()
+//        vc.modalPresentationStyle = .Popover
+//        vc.presentationController?.delegate = self
+//
+//        return vc
+//    }()
+//    
     private let itemSize: CGSize = {
-        let height = UIScreen.mainScreen().bounds.height * 0.4 - 8
+        let height = UIScreen.mainScreen().bounds.height * 0.3 - 8
         let width = height / 4 * 3
         
         return CGSizeMake(width, height)
@@ -52,7 +60,6 @@ final class RecommendViewController: UIViewController {
     }
 
 }
-
 
 extension RecommendViewController {
 
@@ -91,41 +98,54 @@ extension RecommendViewController {
     }
     
     private func searchGroup(keyword: String) {
+
         let successHandler: (AnyObject)->() = {
             object in
             self.recommendGroups = GroupEntity.collection(object)
         }
-        var parameter: [String: AnyObject] = [
-        "name": keyword,
-        "page": 0,
-        "type": "station",
-        "category": "discover"
+
+        var params: [String : AnyObject] = [
+            "category": "discover",
+            "type": "station",
+            "name": keyword,
+            "page": 0
         ]
+
         if let location = myLocation {
-            parameter["coordinate"] = [location.coordinate.longitude, location.coordinate.latitude]
+            params["coordinate"] = [location.coordinate.longitude, location.coordinate.latitude]
         }
-        AlamofireController.request(.GET, "/groups", parameters: parameter, success: successHandler)
+
+        AlamofireController.request(.GET, "/groups", parameters: params, success: successHandler)
     }
     
     private func selectGroup(group: GroupEntity) {
+
         guard let latitude = group.coordinate?[1], longitude = group.coordinate?[0] else {
             return
         }
+
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let adjustedCoordinate = CLLocationCoordinate2D(latitude: coordinate.latitude + 0.007, longitude: coordinate.longitude)
-        let region = MKCoordinateRegion(center: adjustedCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.023, longitudeDelta: 0.023))
-        mapView.setRegion(region, animated: true)
+
+        let unit = MKMetersPerMapPointAtLatitude(latitude)
+
+        let point = MKMapPointForCoordinate(coordinate)
+        let origin = MKMapPoint(x: point.x - 1500/unit, y: point.y - 2100/unit)
+        let rect = MKMapRect(origin: origin, size: MKMapSize(width: 3000/unit, height: 3000/unit))
+
+        self.mapView.setVisibleMapRect(rect, animated: true)
         
-        if let annotation = annotation {
-            mapView.removeAnnotation(annotation)
+        self.mapView.removeAnnotations(self.mapView.annotations)
+
+        let annotation = GroupAnnotation()
+        annotation.group = group
+        if let lon = group.coordinate?.get(0), lat = group.coordinate?.get(1) {
+            annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         }
-        
-        annotation = GroupEntityAnnotation(group: group)
-        mapView.addAnnotation(annotation!)
+
+        self.mapView.addAnnotation(annotation)
     }
 
 }
-
 
 extension RecommendViewController: UICollectionViewDataSource {
     
@@ -149,15 +169,20 @@ extension RecommendViewController: UICollectionViewDataSource {
 extension RecommendViewController: UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+
+        self.dismissViewControllerAnimated(true, completion: nil)
+
         collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+
         if let group = recommendGroups?[indexPath.row] {
+
             selectGroup(group)
+
             if maskView != nil {
                 maskView.removeFromSuperview()
             }
         }
     }
-
 }
 
 extension RecommendViewController: UICollectionViewDelegateFlowLayout {
@@ -166,7 +191,14 @@ extension RecommendViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension RecommendViewController: UIAdaptivePresentationControllerDelegate {
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .None
+    }
+}
+
 extension RecommendViewController: UISearchBarDelegate {
+
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         guard let text = searchBar.text where text.length > 0 else {
@@ -174,6 +206,7 @@ extension RecommendViewController: UISearchBarDelegate {
         }
         searchGroup(text)
     }
+
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         if let text = searchBar.text, let location = myLocation where text.length == 0 {
@@ -183,48 +216,91 @@ extension RecommendViewController: UISearchBarDelegate {
 }
 
 extension RecommendViewController: MKMapViewDelegate {
+
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let annotation = annotation as? GroupEntityAnnotation else {
+
+        guard let annotation = annotation as? GroupAnnotation else {
             return nil
         }
-        let annotationView = GroupEntityAnnotationView(annotation: annotation, reuseIdentifier: "identifier")
-        annotationView.groupDescriptionLabel.text = annotation.group.name
-        annotationView.groupDescriptionLabel.sizeToFit()
-        return annotationView
-    }
-}
 
-class GroupEntityAnnotation: NSObject, MKAnnotation {
-    var coordinate: CLLocationCoordinate2D {
-        if let latitude = group.coordinate?[1], longitude = group.coordinate?[0] {
-            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        var stationAnnotationView = self.mapView.dequeueReusableAnnotationViewWithIdentifier("identifier")
+
+        if stationAnnotationView == nil {
+            stationAnnotationView = StationAnnotationView(annotation: annotation, reuseIdentifier: "identifier")
         } else {
-            return CLLocationCoordinate2D(latitude: 35.6833, longitude: 139.6833)
+            stationAnnotationView?.annotation = annotation
+        }
+
+        (stationAnnotationView as! StationAnnotationView).setupDisplay()
+
+        self.currentAnnotationView = stationAnnotationView
+
+        return stationAnnotationView
+    }
+
+    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+
+        if let annotationView = self.currentAnnotationView {
+
+            let vc = Util.createViewControllerWithIdentifier("GroupPopoverViewController", storyboardName: "Main") as! GroupPopoverViewController
+
+            vc.modalPresentationStyle = .Popover
+            vc.presentationController?.delegate = self
+
+            vc.groupAnnotation = annotationView.annotation as! GroupAnnotation
+
+            self.presentViewController(vc, animated: true, completion: nil)
+
+            if let pop = vc.popoverPresentationController {
+                pop.passthroughViews = [self.view]
+                pop.permittedArrowDirections = .Down
+                pop.sourceView = (self.currentAnnotationView as? UIView)
+                pop.sourceRect = (self.currentAnnotationView as? UIView)!.bounds
+            }
         }
     }
-    var group: GroupEntity
-    init(group: GroupEntity) {
-        self.group = group
-    }
 }
 
-class GroupEntityAnnotationView: MKAnnotationView {
-    
-    var groupDescriptionLabel: UILabel
-    
-    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
-        groupDescriptionLabel = UILabel()
-        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        addSubview(groupDescriptionLabel)
+class StationRecommendCollectionViewCell: UICollectionViewCell {
+
+    @IBOutlet weak var coverImageView: UIImageView!
+
+    @IBOutlet weak var nameLabel: UILabel!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.contentView.layer.cornerRadius = 5
+        self.contentView.clipsToBounds = true
     }
     
-    override init(frame: CGRect) {
-        groupDescriptionLabel = UILabel()
-        super.init(frame: frame)
-        addSubview(groupDescriptionLabel)
+}
+
+class GroupPopoverViewController: UIViewController {
+
+    var groupAnnotation: GroupAnnotation! {
+        didSet {
+            if self.isViewLoaded() {
+                self.setupDisplay()
+            }
+        }
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var coverImageView: UIImageView!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupDisplay()
+    }
+
+    @IBAction func joinButtonTapped(sender: AnyObject) {
+
+    }
+
+    func setupDisplay() {
+        if let group = groupAnnotation.group {
+            self.nameLabel.text = group.name
+            self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
+        }
     }
 }
