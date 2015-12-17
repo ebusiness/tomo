@@ -163,47 +163,39 @@ class PostViewController: BaseViewController{
         
 //        let shareUrl = kAPIBaseURLString + "/mobile/share/post/" + self.post.id!
         
-        var shareImage:UIImage = UIImage(named: "Icon_logo")!
-        if self.postImageList.subviews.count > 0 {
-            if let imageView = self.postImageList.subviews[0] as? UIImageView {
-                shareImage = imageView.image!
-            }
-        }
-        
-        
         var optionalList = Dictionary<String,((UIAlertAction!) -> Void)!>()
         
         if (WechatManager.sharedInstance.isInstalled()) {
             optionalList["微信"] = { _ in
-                self.share(WXSceneSession, image: shareImage)
+                self.share(WXSceneSession, image: self.getShareimage())
             }
             
             optionalList["朋友圈"] = { _ in
-                self.share(WXSceneTimeline, image: shareImage)
+                self.share(WXSceneTimeline, image: self.getShareimage())
             }
         }
         
         if post.owner.id != me.id {
             optionalList["举报此内容"] = { _ in
                 
-                Util.alert(self, title: "举报此内容", message: "您确定要举报此内容吗？", action: { (action) -> Void in
+                Util.alert(self, title: "举报此内容", message: "您确定要举报此内容吗？") { _ in
                     AlamofireController.request(.POST, "/reports/posts/\(self.post.id)", success: { _ in
                         Util.showInfo("举报信息已发送")
                         self.navigationController?.popViewControllerAnimated(true)
                     })
-                })
+                }
             }
         }
         
         if post.owner.id == me.id {
             optionalList["删除"] = { _ in
                 
-                Util.alert(self, title: "删除帖子", message: "确定删除该帖子吗？", action: { (action) -> Void in
+                Util.alert(self, title: "删除帖子", message: "确定删除该帖子吗？") { _ in
                     AlamofireController.request(.DELETE, "/posts/\(self.post.id)", success: { _ in
                         Util.showInfo("帖子已删除")
                         self.navigationController?.popViewControllerAnimated(true)
                     })
-                })
+                }
             }
         }
         
@@ -512,6 +504,19 @@ extension PostViewController {
         } else {
             return MHGalleryItem(image: UIImage(named: "file_broken")!)
         }
+    }
+    
+    private func getShareimage() -> UIImage {
+        
+        let shareImage: UIImage = UIImage(named: "Icon_logo")!
+        
+        guard self.postImageList.subviews.count > 0 else { return shareImage }
+        
+        guard let imageView = self.postImageList.subviews[0] as? UIImageView else { return shareImage }
+        
+        guard let image = imageView.image else { return shareImage }
+        
+        return image
     }
     
 }
