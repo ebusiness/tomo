@@ -13,6 +13,25 @@ public protocol CollectionSerializable {
     static func collection<T: CollectionSerializable>(json: JSON) -> [T]?
 }
 
+extension CollectionSerializable {
+    
+    init(_ respunse: AnyObject) {
+        self.init(JSON(respunse))
+    }
+    
+    static func collection<T: CollectionSerializable>(json: JSON) -> [T]? {
+        
+        if let array = json.array {
+            return array.map { T($0) }
+        }
+        return nil
+    }
+    
+    static func collection<T: CollectionSerializable>(respunse: AnyObject) -> [T]? {
+        return collection(JSON(respunse))
+    }
+}
+
 class Entity: NSObject, CollectionSerializable {
     
     //MARK - NSObject
@@ -24,25 +43,9 @@ class Entity: NSObject, CollectionSerializable {
     required init(_ json: JSON) {
         super.init()
     }
-    
-    class func collection<T: CollectionSerializable>(json: JSON) -> [T]? {
-        
-        if let array = json.array {
-            return array.map { T($0) }
-        }
-        return nil
-    }
 }
 
 //MARK - convenience
 
 extension Entity {
-    
-    convenience init(_ respunse: AnyObject) {
-        self.init(JSON(respunse))
-    }
-    
-    class func collection<T: CollectionSerializable>(respunse: AnyObject) -> [T]? {
-        return collection(JSON(respunse))
-    }
 }

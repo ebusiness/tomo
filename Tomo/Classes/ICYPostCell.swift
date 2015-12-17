@@ -132,7 +132,13 @@ class ICYPostCell: UITableViewCell {
     @IBAction func bookmarkButtonPressed(sender: UIButton) {
         if let post = post {
             sender.userInteractionEnabled = false
-            AlamofireController.request(.PATCH, "/posts/\(post.id)/bookmark", success: { _ in
+            
+            Router.Post.Bookmark(id: post.id).response {
+                
+                if $0.result.isFailure {
+                    sender.userInteractionEnabled = true
+                    return
+                }
                 
                 post.bookmark = post.bookmark ?? []
                 
@@ -145,8 +151,6 @@ class ICYPostCell: UITableViewCell {
                 sender.tada {
                     sender.userInteractionEnabled = true
                 }
-                }) { _ in
-                    sender.userInteractionEnabled = true
             }
         }
     }
@@ -154,22 +158,26 @@ class ICYPostCell: UITableViewCell {
     @IBAction func likeButtonPressed(sender: UIButton) {
         if let post = post {
             sender.userInteractionEnabled = false
-            AlamofireController.request(.PATCH, "/posts/\(post.id)/like", success: { _ in
+            
+            Router.Post.Like(id: post.id).response {
                 
+                if $0.result.isFailure {
+                    sender.userInteractionEnabled = true
+                    return
+                }
                 if let like = post.like {
                     like.contains(me.id) ? post.like!.remove(me.id) : post.like!.append(me.id)
                 } else {
                     post.like = [me.id]
                 }
                 self.post = post
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.02 * Double(NSEC_PER_SEC))), dispatch_get_main_queue())
-                    {
-                        sender.bounce{
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.02 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+                    sender.bounce{
                         sender.userInteractionEnabled = true
                     }
                 }
-                }) { _ in
-                    sender.userInteractionEnabled = true
+
             }
         }
     }

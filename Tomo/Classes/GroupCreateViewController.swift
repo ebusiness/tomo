@@ -44,10 +44,10 @@ final class GroupCreateViewController: BaseTableViewController {
         
         //no friends
         if (me.friends ?? []).count < 1 {
-            Util.alert(self, title: "添加好友", message: "您还没有好友,是否需要添加好友?", action: { _ in
+            Util.alert(self, title: "添加好友", message: "您还没有好友,是否需要添加好友?") { _ in
                 let vc = Util.createViewControllerWithIdentifier("SearchFriend", storyboardName: "Contacts")
                 self.presentViewController(vc, animated: true, completion: nil)
-            })
+            }
         }
     }
     
@@ -68,17 +68,13 @@ extension GroupCreateViewController {
     
     @IBAction func create(sender: AnyObject) {
         
-        var param = Dictionary<String, AnyObject>()
+        if self.groupNameTextField.text!.length < 1 { return }
         
-        if self.groupNameTextField.text!.length > 0 {
-            param["name"] = self.groupNameTextField.text
-        } else {
-            return
-        }
+        let creater = Router.Group.Creater(name: self.groupNameTextField.text!)
         
-        param["introduction"] = self.introductionTextField.text
-        param["address"] = self.addressTextField.text
-        param["members"] = self.inviteFriends.map{ (user) -> String in
+        creater.introduction = self.addressTextField.text
+        creater.address = self.addressTextField.text
+        creater.members = self.inviteFriends.map{ (user) -> String in
             return user.id
         }
         
@@ -87,34 +83,36 @@ extension GroupCreateViewController {
         
         if let cover = self.cover {
             cover.saveToPath(coverPath)
-            param["cover"] = coverName
+            creater.cover = coverName
         }
         
-        AlamofireController.request(.POST, "/groups", parameters: param, success: { group in
+        creater.response {
+            if $0.result.isFailure { return }
             
-            let groupInfo = GroupEntity(group)
-            if nil != self.cover {
-                
-                let remotePath =  Constants.groupCoverPath(groupId: groupInfo.id)
-                
-                let progressView = self.getProgressView()
-                
-                S3Controller.uploadFile(coverPath, remotePath: remotePath, done: { (error) -> Void in
-                    progressView.removeFromSuperview()
-                    self.performSegueWithIdentifier("groupCreated", sender: groupInfo)
-                    
-                }).progress { _, sendBytes, totalBytes in
-                    
-                    let progress = Float(sendBytes)/Float(totalBytes)
-                    
-                    gcd.sync(.Main) { () -> () in
-                        progressView.progress = progress                        
-                    }
-                }
-            } else {
+            let groupInfo = GroupEntity($0.result.value!)
+            
+            guard let _ = self.cover else {
                 self.performSegueWithIdentifier("groupCreated", sender: groupInfo)
+                return
             }
-        })
+            
+            let remotePath =  Constants.groupCoverPath(groupId: groupInfo.id)
+            
+            let progressView = self.getProgressView()
+            
+            S3Controller.uploadFile(coverPath, remotePath: remotePath, done: { _ in
+                progressView.removeFromSuperview()
+                self.performSegueWithIdentifier("groupCreated", sender: groupInfo)
+                
+            }).progress { _, sendBytes, totalBytes in
+                
+                let progress = Float(sendBytes)/Float(totalBytes)
+                
+                gcd.sync(.Main) { () -> () in
+                    progressView.progress = progress
+                }
+            }
+        }
     }
     
     @IBAction func changeCover(sender: UITapGestureRecognizer) {
@@ -183,11 +181,10 @@ extension GroupCreateViewController {
 // MARK: - Net methods
 extension GroupCreateViewController {
     private func loadFriends() {
-        AlamofireController.request(.GET, "/friends", success: { object in
-            
-            self.friends = UserEntity.collection(object)
-            
-        })
+        Router.Friends().response {
+            if $0.result.isFailure { return }
+            self.friends = UserEntity.collection($0.result.value!)
+        }
     }
 }
 

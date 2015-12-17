@@ -104,10 +104,15 @@
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		D012F5971BBBC4DD00D5293D /* MyStationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */; };
+		D0244C531C1FC65100EA87C1 /* SignupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C521C1FC65100EA87C1 /* SignupRouter.swift */; };
+		D0244C551C1FEBDC00EA87C1 /* SettingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C541C1FEBDC00EA87C1 /* SettingRouter.swift */; };
+		D0244C571C1FED7E00EA87C1 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C561C1FED7E00EA87C1 /* Router.swift */; };
+		D0244C591C1FF26D00EA87C1 /* PostRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C581C1FF26D00EA87C1 /* PostRouter.swift */; };
+		D0244C5B1C20034C00EA87C1 /* ConnectionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C5A1C20034C00EA87C1 /* ConnectionRouter.swift */; };
+		D0244C5D1C20130800EA87C1 /* GroupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C5C1C20130800EA87C1 /* GroupRouter.swift */; };
 		D029F7321BCCB39E00CDE18B /* PushSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029F7311BCCB39E00CDE18B /* PushSettingViewController.swift */; };
 		D040E1651BDDC00D00417174 /* RecommendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040E1641BDDC00D00417174 /* RecommendViewController.swift */; };
 		D04447B31BBA9DF300AD7B0C /* GroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */; };
-		D04608D21B6BA33F00D30B77 /* TestDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960404B1ACE68C500D2A338 /* TestDataTests.swift */; };
 		D05418401BC6592900C606F0 /* MyGroupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D054183E1BC6592900C606F0 /* MyGroupCollectionViewCell.xib */; };
 		D05418431BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05418421BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift */; };
 		D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D057BAF11B670687007D14D2 /* RequestFriendCell.swift */; };
@@ -158,7 +163,7 @@
 		D0F44FAF1B5E540F009E12AA /* FriendListSendRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */; };
 		D0FDC3521C1EA0670045826B /* APIRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FDC3511C1EA0670045826B /* APIRoute.swift */; };
 		D0FDC3541C1EA09F0045826B /* Alamofire-SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FDC3531C1EA09F0045826B /* Alamofire-SwiftyJSON.swift */; };
-		D0FDC3571C1EA30D0045826B /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FDC3561C1EA30D0045826B /* SignIn.swift */; };
+		D0FDC3571C1EA30D0045826B /* SigninRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FDC3561C1EA30D0045826B /* SigninRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -272,7 +277,6 @@
 		295272CF1AD51B2300FC7833 /* S3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3.swift; path = ../../../S3.swift; sourceTree = "<group>"; };
 		29539C761B13175D00545509 /* VoiceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VoiceController.swift; path = Classes/VoiceController.swift; sourceTree = "<group>"; };
 		29539C771B13175D00545509 /* CommonMessageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommonMessageController.swift; path = Classes/CommonMessageController.swift; sourceTree = "<group>"; };
-		2960404B1ACE68C500D2A338 /* TestDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDataTests.swift; sourceTree = "<group>"; };
 		296D8BA91AFC59F10058D400 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseViewController.swift; path = Classes/BaseViewController.swift; sourceTree = "<group>"; };
 		296D8BAA1AFC59F10058D400 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarController.swift; path = Classes/TabBarController.swift; sourceTree = "<group>"; };
 		296D8BB01AFC5A250058D400 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewController.swift; path = Classes/MessageViewController.swift; sourceTree = "<group>"; };
@@ -299,6 +303,12 @@
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyStationsViewController.swift; path = Classes/MyStationsViewController.swift; sourceTree = "<group>"; };
+		D0244C521C1FC65100EA87C1 /* SignupRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignupRouter.swift; path = Classes/SignupRouter.swift; sourceTree = "<group>"; };
+		D0244C541C1FEBDC00EA87C1 /* SettingRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingRouter.swift; path = Classes/SettingRouter.swift; sourceTree = "<group>"; };
+		D0244C561C1FED7E00EA87C1 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Router.swift; path = Classes/Router.swift; sourceTree = "<group>"; };
+		D0244C581C1FF26D00EA87C1 /* PostRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostRouter.swift; path = Classes/PostRouter.swift; sourceTree = "<group>"; };
+		D0244C5A1C20034C00EA87C1 /* ConnectionRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConnectionRouter.swift; path = Classes/ConnectionRouter.swift; sourceTree = "<group>"; };
+		D0244C5C1C20130800EA87C1 /* GroupRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupRouter.swift; path = Classes/GroupRouter.swift; sourceTree = "<group>"; };
 		D029F7311BCCB39E00CDE18B /* PushSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PushSettingViewController.swift; path = Classes/PushSettingViewController.swift; sourceTree = "<group>"; };
 		D040E1641BDDC00D00417174 /* RecommendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendViewController.swift; path = Classes/RecommendViewController.swift; sourceTree = "<group>"; };
 		D054183E1BC6592900C606F0 /* MyGroupCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyGroupCollectionViewCell.xib; path = Classes/MyGroupCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -337,7 +347,7 @@
 		D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendListSendRequestController.swift; path = Classes/FriendListSendRequestController.swift; sourceTree = "<group>"; };
 		D0FDC3511C1EA0670045826B /* APIRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRoute.swift; path = Classes/APIRoute.swift; sourceTree = "<group>"; };
 		D0FDC3531C1EA09F0045826B /* Alamofire-SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Alamofire-SwiftyJSON.swift"; path = "Classes/Alamofire-SwiftyJSON.swift"; sourceTree = "<group>"; };
-		D0FDC3561C1EA30D0045826B /* SignIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignIn.swift; path = Classes/SignIn.swift; sourceTree = "<group>"; };
+		D0FDC3561C1EA30D0045826B /* SigninRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninRouter.swift; path = Classes/SigninRouter.swift; sourceTree = "<group>"; };
 		F1801CE63ECC013D9C8C9BB6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -582,7 +592,6 @@
 				290134ED1AC3991D00BBFE29 /* TomoTests.swift */,
 				290134EB1AC3991D00BBFE29 /* Supporting Files */,
 				294BA32E1AC3D79100089204 /* ApiControllerTests.swift */,
-				2960404B1ACE68C500D2A338 /* TestDataTests.swift */,
 			);
 			path = TomoTests;
 			sourceTree = "<group>";
@@ -850,7 +859,13 @@
 		D0FDC3551C1EA2F10045826B /* API */ = {
 			isa = PBXGroup;
 			children = (
-				D0FDC3561C1EA30D0045826B /* SignIn.swift */,
+				D0244C561C1FED7E00EA87C1 /* Router.swift */,
+				D0FDC3561C1EA30D0045826B /* SigninRouter.swift */,
+				D0244C521C1FC65100EA87C1 /* SignupRouter.swift */,
+				D0244C541C1FEBDC00EA87C1 /* SettingRouter.swift */,
+				D0244C581C1FF26D00EA87C1 /* PostRouter.swift */,
+				D0244C5A1C20034C00EA87C1 /* ConnectionRouter.swift */,
+				D0244C5C1C20130800EA87C1 /* GroupRouter.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -1133,6 +1148,7 @@
 				D0F44FAF1B5E540F009E12AA /* FriendListSendRequestController.swift in Sources */,
 				D073E6F81B84C1BF00066F42 /* CameraController.swift in Sources */,
 				D07232351BE1C1C700122F52 /* Character.swift in Sources */,
+				D0244C551C1FEBDC00EA87C1 /* SettingRouter.swift in Sources */,
 				D0A0C0321B5F5BF900ABFA5F /* ProfileViewController.swift in Sources */,
 				D0DB07DB1B9D266900C06C4E /* NotificationCell.swift in Sources */,
 				1F19D95C1BA96B8E007C9919 /* GroupCollectionViewCell.swift in Sources */,
@@ -1157,6 +1173,8 @@
 				1FA76B021BA2A01D004776B0 /* GroupListViewController.swift in Sources */,
 				1FE7CEF51B8C9561006700FC /* SignUpViewController.swift in Sources */,
 				D0B6364E1B81A9C70012C4E8 /* URLSchemesController.swift in Sources */,
+				D0244C5B1C20034C00EA87C1 /* ConnectionRouter.swift in Sources */,
+				D0244C531C1FC65100EA87C1 /* SignupRouter.swift in Sources */,
 				296D8BAB1AFC59F10058D400 /* BaseViewController.swift in Sources */,
 				1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */,
 				D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */,
@@ -1184,15 +1202,17 @@
 				2869D71C1BB545FB00D1C479 /* StationDiscoverViewController.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				1F79C1B41B5E10DC008800E1 /* FriendCell.swift in Sources */,
-				D0FDC3571C1EA30D0045826B /* SignIn.swift in Sources */,
+				D0FDC3571C1EA30D0045826B /* SigninRouter.swift in Sources */,
 				D0FDC3521C1EA0670045826B /* APIRoute.swift in Sources */,
 				D0B40BBF1B78AF0400685D67 /* ExNSDate.swift in Sources */,
 				1FAA70F71BBB8DBE00BCE5AF /* AggregatableAnnotationView.swift in Sources */,
 				1F79C1B21B5E0E22008800E1 /* FriendListViewController.swift in Sources */,
 				1F6462D21BC14845007D0906 /* GroupCallOutViewController.swift in Sources */,
+				D0244C571C1FED7E00EA87C1 /* Router.swift in Sources */,
 				29539C781B13175D00545509 /* VoiceController.swift in Sources */,
 				2993894A1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
 				D072323B1BE1C1C700122F52 /* Int.swift in Sources */,
+				D0244C591C1FF26D00EA87C1 /* PostRouter.swift in Sources */,
 				D07232361BE1C1C700122F52 /* Dictionary.swift in Sources */,
 				1F350B2B1B68D32800088C1E /* PostAnnotationView.swift in Sources */,
 				D0DB07E01B9D3E1400C06C4E /* RemoteNotification.swift in Sources */,
@@ -1201,6 +1221,7 @@
 				1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */,
 				1F19D9561BA9616C007C9919 /* RecommendSiteTableCell.swift in Sources */,
 				1FA76B041BA2AC03004776B0 /* GroupDiscoverViewController.swift in Sources */,
+				D0244C5D1C20130800EA87C1 /* GroupRouter.swift in Sources */,
 				28CB45E11BB13FB200182924 /* GroupDescriptionViewController.swift in Sources */,
 				1FAA70F91BBB8EE600BCE5AF /* AggregatableAnnotation.swift in Sources */,
 				1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */,
@@ -1240,7 +1261,6 @@
 			files = (
 				D0B40BC01B78B8FA00685D67 /* AmazonS3SignatureHelpers.m in Sources */,
 				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
-				D04608D21B6BA33F00D30B77 /* TestDataTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

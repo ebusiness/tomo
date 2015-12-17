@@ -172,25 +172,21 @@ extension SignUpViewController {
     
     @IBAction func signUp(sender: AnyObject) {
         
-        var params = [String:String]()
-        params["nickName"] = nickNameTextField.text
-        params["email"] = emailTextField.text
-        params["password"] = passwordTextField.text
-        
-        AlamofireController.request(.POST, "/signup", parameters: params, success: { result in
+        Router.Signup.Email(email: emailTextField.text!, password: passwordTextField.text!, nickName: nickNameTextField.text!).response {
             
-            let alert = UIAlertController(title: "感谢您注册現場Tomo", message: "认证邮件已发送至您的邮箱，请查收。激活您的帐号后即可开始使用現場Tomo", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "好", style: .Default) {
-                _ -> () in
-                self.dismissViewControllerAnimated(true, completion: nil)
-                })
-            self.presentViewController(alert, animated: true, completion: nil)
+            let buttonTitle = "好"
+            var title = "注册失败"
+            var message = "您输入的邮件地址已经被使用，请更换其他的邮件地址"
+            var handler: ((UIAlertAction!) -> Void)?
             
-        }) { _ in
-            
-            let alert = UIAlertController(title: "注册失败", message: "您输入的邮件地址已经被使用，请更换其他的邮件地址", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "好", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            if $0.result.isSuccess {
+                title = "感谢您注册現場Tomo"
+                message = "认证邮件已发送至您的邮箱，请查收。激活您的帐号后即可开始使用現場Tomo"
+                handler = { _ in
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            }
+            Util.alert(self, title: title, message: message, cancel: buttonTitle, cancelHandler: handler)
         }
         
     }
@@ -225,9 +221,7 @@ extension SignUpViewController: UITextFieldDelegate {
         
         if sender == self.emailTextField {
             
-            let email = self.emailTextField.text
-            
-            if !String(email).isEmail() {
+            if !self.emailTextField.text!.isEmail() {
                 emailValid = false
                 showHintLabel(emailHintLabel)
             } else {
@@ -238,11 +232,11 @@ extension SignUpViewController: UITextFieldDelegate {
         
         if sender == self.passwordTextField {
             
-            let repass = self.repassTextField.text
+            let repass = self.repassTextField.text!
             
-            let password = self.passwordTextField.text
+            let password = self.passwordTextField.text!
             
-            if !String(password).isValidPassword() {
+            if !password.isValidPassword() {
                 passwordValid = false
                 showHintLabel(passwordHintLabel)
             } else {

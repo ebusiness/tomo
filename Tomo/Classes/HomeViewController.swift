@@ -19,7 +19,6 @@ final class HomeViewController: BaseTableViewController {
     var updatingLocation = false
     
     let screenHeight = UIScreen.mainScreen().bounds.height
-    let screenWidth = UIScreen.mainScreen().bounds.width
     let loadTriggerHeight = CGFloat(88.0)
     
     var contents = [AnyObject]()
@@ -35,6 +34,18 @@ final class HomeViewController: BaseTableViewController {
     
     var postCellEstimator: ICYPostCell!
     var postImageCellEstimator: ICYPostImageCell!
+    
+    private let footerView: UIView = {
+        let screenWidth = UIScreen.mainScreen().bounds.width
+        let footerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: screenWidth, height: 40.0)))
+        footerView.backgroundColor = Util.colorWithHexString("EFEFF4")
+        let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+        footerView.addSubview(loadingIndicator)
+        loadingIndicator.sizeToFit()
+        loadingIndicator.startAnimating()
+        loadingIndicator.center = CGPoint(x: screenWidth / 2.0, y: 20.0)
+        return footerView
+    }()
     
     /// true: comment, false: cell content
     private var selectCellOrComment = false
@@ -357,20 +368,20 @@ extension HomeViewController {
     
     private func getRecommendInfo() {
         
-        var params = Dictionary<String, AnyObject>()
-        params["category"] = "discover"
-        params["page"] = 0
-        if let location = self.location {
-            params["type"] = "station"
-            params["coordinate"] = [location.coordinate.longitude, location.coordinate.latitude]
-        }
-        
         let needToLoadStations = self.recommendGroups == nil && self.contents.find { $0 is [GroupEntity] } == nil
         
-        if needToLoadStations {
-            AlamofireController.request(.GET, "/groups", parameters: params, hideHUD: true, success: { stationData in
-                self.recommendGroups = GroupEntity.collection(stationData)
-            })
+        if !needToLoadStations { return }
+        
+        let finder = Router.Group.Finder(category: .discover)
+        if let location = self.location {
+            finder.type = .station
+            finder.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
+        }
+ 
+        finder.response {
+            if $0.result.isFailure { return }
+            self.recommendGroups = GroupEntity.collection($0.result.value!)
+            
         }
     }
     
@@ -382,25 +393,23 @@ extension HomeViewController {
         }
         
         isLoading = true
-        let footerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: screenWidth, height: 40.0)))
-        footerView.backgroundColor = Util.colorWithHexString("EFEFF4")
         tableView.tableFooterView = footerView
-        let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
-        footerView.addSubview(loadingIndicator)
-        loadingIndicator.sizeToFit()
-        loadingIndicator.startAnimating()
-        loadingIndicator.center = CGPoint(x: screenWidth / 2.0, y: 20.0)
         
-        
-        var params = Dictionary<String, NSTimeInterval>()
-        
+        let finder = Router.Post.Finder(category: .all)
         if let oldestContent = oldestContent as? PostEntity {
-            params["before"] = oldestContent.createDate.timeIntervalSince1970
+            finder.before = String(oldestContent.createDate.timeIntervalSince1970)
         }
         
-        AlamofireController.request(.GET, "/posts", parameters: params, hideHUD: true, success: { postData in
+        finder.response {
+            self.tableView.tableFooterView = nil
             
-            let posts: [PostEntity]? = PostEntity.collection(postData)
+            if $0.result.isFailure {
+                self.isLoading = false
+                self.isExhausted = true
+                return
+            }
+            
+            let posts: [PostEntity]? = PostEntity.collection($0.result.value!)
             
             if let loadPosts: [AnyObject] = posts {
                 self.contents += loadPosts
@@ -423,15 +432,8 @@ extension HomeViewController {
                     self.tableView.insertRowsAtIndexPaths([stationsInsertIndexPath], withRowAnimation: .Fade)
                     self.recommendGroups = nil
                 }
-                
-                self.isLoading = false
-                self.tableView.tableFooterView = nil
             }
-            }) { _ in
-                
-                self.isLoading = false
-                self.isExhausted = true
-                self.tableView.tableFooterView = nil
+            self.isLoading = false
         }
     }
     
@@ -447,27 +449,26 @@ extension HomeViewController {
         activityIndicator.startAnimating()
         indicatorLabel.text = "正在加载"
         
-        var params = Dictionary<String, NSTimeInterval>()
+        let finder = Router.Post.Finder(category: .all)
         
         if let latestContent = latestContent as? PostEntity {
             // TODO - This is a dirty solution
-            params["after"] = latestContent.createDate.timeIntervalSince1970 + 1
+            finder.after = String(latestContent.createDate.timeIntervalSince1970 + 1)
         }
         
-        AlamofireController.request(.GET, "/posts", parameters: params, hideHUD: true, success: { result in
+        finder.response {
+            if $0.result.isFailure {
+                self.endRefreshing()
+                return
+            }
             
-            if let loadPosts:[PostEntity] = PostEntity.collection(result) {
+            if let loadPosts:[PostEntity] = PostEntity.collection($0.result.value!) {
                 self.contents = loadPosts + self.contents
                 self.prependRows(loadPosts.count)
             }
             
-            
-            
             self.endRefreshing()
-            
-            }) { _ in
-                
-                self.endRefreshing()
+
         }
     }
     

@@ -119,29 +119,25 @@ extension BookmarkedPostsViewController {
         
         isLoading = true
         
-        var params = Dictionary<String, AnyObject>()
-        params["category"] = "bookmark"
+        let postFinder = Router.Post.Finder(category: .bookmark )
         
         if let oldestContent = oldestContent as? PostEntity {
-            params["before"] = oldestContent.createDate.timeIntervalSince1970
+            postFinder.before = String(oldestContent.createDate.timeIntervalSince1970)
         }
-        
-        AlamofireController.request(.GET, "/posts", parameters: params, success: { result in
+        postFinder.response {
             
-            let posts:[PostEntity]? = PostEntity.collection(result)
+            self.isLoading = false
+            if $0.result.isFailure {
+                self.isExhausted = true
+                return
+            }
+            
+            let posts:[PostEntity]? = PostEntity.collection($0.result.value!)
             
             if let loadPosts:[AnyObject] = posts {
                 self.bookmarks += loadPosts
                 self.appendRows(loadPosts.count)
-            } else {
-                // the response is not post
             }
-            self.isLoading = false
-            
-        }) { _ in
-            
-            self.isLoading = false
-            self.isExhausted = true
         }
     }
     

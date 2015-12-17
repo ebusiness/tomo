@@ -83,9 +83,9 @@ extension ProfileViewController {
         if self.user.id != me.id {
             optionalList["举报此用户"] = { (_) -> Void in
                 
-                Util.alert(self, title: "举报用户", message: "您确定要举报此用户吗？", action: { (action) -> Void in
+                Util.alert(self, title: "举报用户", message: "您确定要举报此用户吗？") { _ in
                     AlamofireController.request(.POST, "/reports/users/\(self.user.id)")
-                })
+                }
             }
         }
         
@@ -104,12 +104,12 @@ extension ProfileViewController {
                 
                 optionalList["屏蔽此用户"] = { (_) -> Void in
                     
-                    Util.alert(self, title: "屏蔽用户", message: "您确定要屏蔽此用户吗？", action: { (action) -> Void in
+                    Util.alert(self, title: "屏蔽用户", message: "您确定要屏蔽此用户吗？") { _ in
                         AlamofireController.request(.POST, "/blocks", parameters: ["id": self.user.id], success: { _ in
                             me.blockUsers?.append(self.user.id)
                             self.navigationController?.popViewControllerAnimated(true)
                         })
-                    })
+                    }
                 }
             }
             
@@ -118,12 +118,12 @@ extension ProfileViewController {
         if let friends = me.friends where friends.contains(self.user.id) {
             optionalList["删除好友"] = { (_) -> Void in
                 
-                Util.alert(self, title: "删除好友", message: "确定删除该好友么?", action: { (_) -> Void in
+                Util.alert(self, title: "删除好友", message: "确定删除该好友么?") { _ in
                     AlamofireController.request(.DELETE, "/friends/\(self.user.id)", success: { _ in
                         me.removeFriend(self.user.id)
                         self.reloadButtons()
                     })
-                })
+                }
             }
         }
         

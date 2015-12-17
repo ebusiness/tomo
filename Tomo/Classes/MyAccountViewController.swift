@@ -52,7 +52,7 @@ final class MyAccountViewController: MyAccountBaseController {
     }
 
     @IBAction func logoutTapped(sender: UIButton) {
-        Util.alert(self, title: "退出账号", message: "真的要退出当前的账号吗？", action: { (_) -> Void in
+        Util.alert(self, title: "退出账号", message: "真的要退出当前的账号吗？") { _ in
             
             AlamofireController.request(.GET, "/signout")
             
@@ -65,7 +65,7 @@ final class MyAccountViewController: MyAccountBaseController {
             me = UserEntity()
             let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
             Util.changeRootViewController(from: self, to: main)
-        })
+        }
     }
 
     // MARK: - Navigation

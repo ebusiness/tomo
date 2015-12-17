@@ -79,7 +79,7 @@ extension SearchFriendViewController: UISearchBarDelegate {
             
             self.navigationItem.titleView?.endEditing(true)
             var param = Dictionary<String, String>()
-            param["nickName"] = ".*?\(searchBar.text).*"
+            param["nickName"] = ".*?\(searchBar.text!).*"
             
             AlamofireController.request(.GET, "/users", parameters: param, success: { results in
                 

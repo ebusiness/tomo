@@ -230,15 +230,15 @@ extension Util {
         }
     }
     
-    class func alert(parentvc: UIViewController, title: String, message: String, cancel: String = "取消",ok: String = "确定", action:((UIAlertAction!) -> Void)? = nil){
+    class func alert(parentvc: UIViewController, title: String, message: String, cancel: String = "取消",ok: String = "确定", cancelHandler:((UIAlertAction!) -> Void)? = nil, okHandler:((UIAlertAction!) -> Void)? = nil){
         gcd.async(.Default) {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
             
-            let cancelAction = UIAlertAction(title: cancel, style: .Cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: cancel, style: .Cancel, handler: cancelHandler)
             alertController.addAction(cancelAction)
             
-            if let action = action {
-                let okAction = UIAlertAction(title: ok, style: .Destructive, handler: action)
+            if let okHandler = okHandler {
+                let okAction = UIAlertAction(title: ok, style: .Destructive, handler: okHandler)
                 alertController.addAction(okAction)
             }
             

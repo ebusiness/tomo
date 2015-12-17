@@ -53,7 +53,7 @@ final class GroupChatViewController: CommonMessageController {
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         // open all message when leave
-        AlamofireController.request(.GET, "/groups/\(self.group.id)/messages")
+        Router.GroupMessage.Finder(id: self.group.id).request
     }
 }
 
@@ -66,18 +66,16 @@ extension GroupChatViewController {
             self.avatars[user.id] = self.defaultAvatar
         }
         
-        AlamofireController.request(Method.GET, "/groups/\(group.id)", parameters: nil, encoding: ParameterEncoding.JSON, success: { object in
+        Router.Group.Detail(id: self.group.id).response {
+            if $0.result.isFailure { return }
             
-            self.group = GroupEntity(object)
-            
+            self.group = GroupEntity($0.result.value!)
             if let members = self.group.members {
-                
                 members.forEach {
                     self.loadAvatarForUser($0)
                 }
             }
-            
-        })
+        }
     }
     
     private func loadAvatarForUser(user: UserEntity){
@@ -115,16 +113,21 @@ extension GroupChatViewController {
         
         isLoading = true
         
-        var params = Dictionary<String, NSTimeInterval>()
+        
+        let finder = Router.GroupMessage.Finder(id: self.group.id)
         
         if let oldestMessage = oldestMessage {
-            params["before"] = oldestMessage.createDate.timeIntervalSince1970
+            finder.before = String(oldestMessage.createDate.timeIntervalSince1970)
         }
         
-        
-        AlamofireController.request(.GET, "/groups/\(self.group.id)/messages", parameters: params, success: { result in
+        finder.response {
             
-            if let messages:[MessageEntity] = MessageEntity.collection(result) {
+            self.isLoading = false
+            if $0.result.isFailure {
+                self.isExhausted = true
+                return
+            }
+            if let messages:[MessageEntity] = MessageEntity.collection($0.result.value!) {
                 
                 for message in messages {
                     
@@ -154,9 +157,6 @@ extension GroupChatViewController {
                 self.oldestMessage = messages.last
                 self.isLoading = false
             }
-        }) { _ in
-                self.isLoading = false
-                self.isExhausted = true
         }
     }
     
@@ -198,16 +198,11 @@ extension GroupChatViewController: CommonMessageDelegate {
     
     func sendMessage(text: String, done: ( ()->() )? = nil ) {
         
-        var params = Dictionary<String, String>()
-        params["content"] = text
-        
-        AlamofireController.request(.POST, "/groups/\(self.group.id)/messages", parameters: params, success: { _ in
-            
-            JSQSystemSoundPlayer.jsq_playMessageSentSound()
-            self.finishSendingMessageAnimated(true)
-            done?()
-            
-        }) { _ in
+        Router.GroupMessage.Creater(id: self.group.id, content: text).response {
+            if $0.result.isSuccess {
+                JSQSystemSoundPlayer.jsq_playMessageSentSound()
+                self.finishSendingMessageAnimated(true)
+            }
             done?()
         }
     }

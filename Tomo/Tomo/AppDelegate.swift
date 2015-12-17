@@ -21,37 +21,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         self.window!.backgroundColor = UIColor.whiteColor()
 
-//        var rootViewControllerName: String!
-//
-//        Router.Session().response {
-//
-//            if $0.result.isSuccess {
-//                me = UserEntity($0.result.value!)
-//                rootViewControllerName = "Tab"
-//            } else {
-//                rootViewControllerName = "Main"
-//            }
-//
-//            let rootViewController = Util.createViewControllerWithIdentifier(nil, storyboardName: rootViewControllerName)
-//            Util.changeRootViewController(from: (self.window?.rootViewController)!, to: rootViewController)
-//        }
+        var rootViewControllerName = "Main"
+        var viewIdentifier: String?
 
-        AlamofireController.request(.GET, "/session", success: {
+        Router.Session().response {
 
-            let userInfo = JSON($0)
-            me = UserEntity(userInfo)
-
-            if let groups = me.groups where groups.count > 0 {
-                let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-                Util.changeRootViewController(from: (self.window?.rootViewController)!, to: tab)
-            } else {
-                let main = Util.createViewControllerWithIdentifier("RecommendView", storyboardName: "Main")
-                Util.changeRootViewController(from: (self.window?.rootViewController)!, to: main)
+            if $0.result.isSuccess {
+                me = UserEntity($0.result.value!)
+                if let groups = me.groups where groups.count > 0 {
+                    rootViewControllerName = "Tab"
+                } else {
+                    viewIdentifier = "RecommendView"
+                }
             }
 
-        }) { _ in
-            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
-            Util.changeRootViewController(from: (self.window?.rootViewController)!, to: tab)
+            let rootViewController = Util.createViewControllerWithIdentifier(viewIdentifier, storyboardName: rootViewControllerName)
+            Util.changeRootViewController(from: (self.window?.rootViewController)!, to: rootViewController)
         }
 
         if let launchOpts = launchOptions, userInfo = launchOpts[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject] {
@@ -76,18 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application( application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData ) {
-
-        let deviceTokenString = String(deviceToken.description.characters.filter {!"<> ".characters.contains($0)})
-        let device = UIDevice.currentDevice()
-
-        let param = [
-            "os": device.systemName,
-            "model": device.model,
-            "token": deviceTokenString,
-            "version": device.systemVersion
-        ]
-
-        AlamofireController.request(.POST, "/device", parameters: param)
+        Router.Device(deviceToken: deviceToken).request
     }
 
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

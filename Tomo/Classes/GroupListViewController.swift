@@ -132,11 +132,15 @@ extension GroupListViewController {
         
         isLoading = true
         
-        AlamofireController.request(.GET, "/groups", parameters: ["category": "mine"], success: { groups in
+        Router.Group.Finder(category: .mine).response {
+            if $0.result.isFailure {
+                self.isLoading = false
+                return
+            }
             
             let oldDataCount = self.groups.count
-            let groups: [GroupEntity]? = GroupEntity.collection(groups)
-
+            let groups: [GroupEntity]? = GroupEntity.collection($0.result.value!)
+            
             if let groups = groups {
                 self.groups = groups
                 if oldDataCount > 0 {
@@ -149,9 +153,6 @@ extension GroupListViewController {
             
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
-            
-        }) { _ in
-            self.isLoading = false
         }
         
     }

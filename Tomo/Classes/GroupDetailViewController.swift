@@ -19,7 +19,6 @@ final class GroupDetailViewController: BaseTableViewController {
     var posts: [PostEntity]?
     
     let screenHeight = UIScreen.mainScreen().bounds.height
-    let screenWidth = UIScreen.mainScreen().bounds.width
     
     var isLoading = false
     var isExhausted = false
@@ -71,12 +70,25 @@ final class GroupDetailViewController: BaseTableViewController {
     }
     
     func loadPosts() {
-        let parameter = Dictionary<String, AnyObject>()
-        AlamofireController.request(.GET, "/groups/\(group.id)/posts", parameters: parameter, success: { (object) -> () in
-            self.posts = PostEntity.collection(object)
+        Router.Group.Posts(id: self.group.id).response {
+            if $0.result.isFailure { return }
+            
+            self.posts = PostEntity.collection($0.result.value!)
             self.tableView.reloadData()
-        })
+        }
     }
+    
+    let footerView: UIView = {
+        let screenWidth = UIScreen.mainScreen().bounds.width
+        let footerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: screenWidth, height: 40.0)))
+        footerView.backgroundColor = Util.colorWithHexString("EFEFF4")
+        let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+        footerView.addSubview(loadingIndicator)
+        loadingIndicator.sizeToFit()
+        loadingIndicator.startAnimating()
+        loadingIndicator.center = CGPoint(x: screenWidth / 2.0, y: 20.0)
+        return footerView
+    }()
     
     func loadMorePosts() {
         if isLoading || isExhausted {
@@ -85,21 +97,23 @@ final class GroupDetailViewController: BaseTableViewController {
         
         isLoading = true
         
-        let footerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: screenWidth, height: 40.0)))
-        footerView.backgroundColor = Util.colorWithHexString("EFEFF4")
         tableView.tableFooterView = footerView
-        let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
-        footerView.addSubview(loadingIndicator)
-        loadingIndicator.sizeToFit()
-        loadingIndicator.startAnimating()
-        loadingIndicator.center = CGPoint(x: screenWidth / 2.0, y: 20.0)
         
-        var parameter = Dictionary<String, AnyObject>()
+        let postRouter = Router.Group.Posts(id: self.group.id)
+        
         if let posts = posts where posts.count != 0{
-            parameter["before"] = posts.last?.createDate.timeIntervalSince1970
+            postRouter.before = String(posts.last!.createDate.timeIntervalSince1970)
         }
-        AlamofireController.request(.GET, "/groups/\(group.id)/posts", parameters: parameter, success: { (object) -> () in
-            if let newPosts: [PostEntity] = PostEntity.collection(object) {
+        postRouter.response {
+            
+            self.tableView.tableFooterView = nil
+            self.isLoading = false
+            
+            if $0.result.isFailure {
+                self.isExhausted = true
+                return
+            }
+            if let newPosts: [PostEntity] = PostEntity.collection($0.result.value!) {
                 let startIndex = self.posts?.count ?? 0
                 let endIndex = startIndex + newPosts.count
                 self.posts?.appendContentsOf(newPosts)
@@ -108,13 +122,7 @@ final class GroupDetailViewController: BaseTableViewController {
                     indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
                 }
                 self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Automatic)
-                self.tableView.tableFooterView = nil
             }
-            self.isLoading = false
-            }) { _ in
-                self.isLoading = false
-                self.isExhausted = true
-                self.tableView.tableFooterView = nil
         }
     }
     
@@ -159,13 +167,16 @@ extension GroupDetailViewController {
 extension GroupDetailViewController {
     
     @IBAction func joinGroup(sender: UIButton) {
-        
         sender.userInteractionEnabled = false
-        AlamofireController.request(.PATCH, "/groups/\(self.group.id)/join", success: { _ in
-            me.addGroup(self.group.id)
-            self.updateUI()
-        }) { _ in
-            sender.userInteractionEnabled = true
+        
+        Router.Group.Join(id: self.group.id).response {
+            if $0.result.isFailure {
+                sender.userInteractionEnabled = true
+                return
+            } else {
+                me.addGroup(self.group.id)
+                self.updateUI()
+            }
         }
     }
     

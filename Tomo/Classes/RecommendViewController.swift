@@ -59,23 +59,20 @@ final class RecommendViewController: UIViewController {
 extension RecommendViewController {
 
     private func getRecommendInfo(location: CLLocation?, forceRefresh: Bool = false) {
+        guard nil == self.recommendGroups || forceRefresh else { return }
         
-        var params = [
-            "category": "discover",
-            "type": "station",
-            "page": 0
-        ]
-
+        let finder = Router.Group.Finder(category: .discover)
+        finder.type = .station
+        
         if let location = location {
-            params["coordinate"] = [location.coordinate.longitude, location.coordinate.latitude]
+            finder.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
         } else {
-            params["coordinate"] = TomoConst.Geo.CoordinateTokyo
+            finder.coordinate = TomoConst.Geo.CoordinateTokyo
         }
         
-        if nil == self.recommendGroups || forceRefresh {
-            AlamofireController.request(.GET, "/groups", parameters: params, hideHUD: true, success: { stationData in
-                self.recommendGroups = GroupEntity.collection(stationData)
-            })
+        finder.response {
+            if $0.result.isFailure { return }
+            self.recommendGroups = GroupEntity.collection($0.result.value!)
         }
     }
     
@@ -83,34 +80,29 @@ extension RecommendViewController {
         
         let group = self.recommendGroups![indexPath.item]
         
-        let successHandler: (AnyObject)->() = { _ in
+        Router.Group.Join(id: group.id).response {
+            if $0.result.isFailure { return }
+            
             let removeGroup = self.recommendGroups!.removeAtIndex(indexPath.item)
             me.addGroup(removeGroup.id)
             self.myGroups.append(removeGroup)
         }
-        
-        AlamofireController.request(.PATCH, "/groups/\(group.id)/join", success: successHandler)
     }
     
     private func searchGroup(keyword: String) {
 
-        let successHandler: (AnyObject)->() = {
-            object in
-            self.recommendGroups = GroupEntity.collection(object)
-        }
-
-        var params: [String : AnyObject] = [
-            "category": "discover",
-            "type": "station",
-            "name": keyword,
-            "page": 0
-        ]
-
+        let finder = Router.Group.Finder(category: .discover)
+        finder.type = .station
+        finder.name = keyword
+        
         if let location = myLocation {
-            params["coordinate"] = [location.coordinate.longitude, location.coordinate.latitude]
+            finder.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
         }
-
-        AlamofireController.request(.GET, "/groups", parameters: params, success: successHandler)
+        
+        finder.response {
+            if $0.result.isFailure { return }
+            self.recommendGroups = GroupEntity.collection($0.result.value!)
+        }
     }
     
     private func selectGroup(group: GroupEntity) {
@@ -344,13 +336,19 @@ class GroupPopoverViewController: UIViewController {
     }
 
     @IBAction func joinButtonTapped(sender: AnyObject) {
-
         guard let delegate = UIApplication.sharedApplication().delegate else {return}
         guard let window = delegate.window else {return}
         guard let rootViewController = window?.rootViewController else {return}
-
-        let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-        Util.changeRootViewController(from: rootViewController, to: tab)
+        
+        Router.Group.Join(id: groupAnnotation.group.id).response {
+            if $0.result.isFailure {
+                Util.alert(self, title: "网络错误", message: "网络连接超时,请稍后重试.", cancel: "好")
+                return
+            }
+            
+            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+            Util.changeRootViewController(from: rootViewController, to: tab)
+        }
     }
 
     func setupDisplay() {

@@ -32,13 +32,15 @@ class FriendListSendRequestController: MyAccountBaseController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        AlamofireController.request(.GET, "/invitations", success: { result in
-            if let result:[UserEntity] = UserEntity.collection(result) {
+        Router.Invitations.Finder().response {
+            if $0.result.isFailure {
+                self.tableView.backgroundView = self.emptyView
+                return
+            }
+            if let result:[UserEntity] = UserEntity.collection($0.result.value!) {
                 self.invitedUsers = result
                 self.tableView.backgroundView = nil
             }
-        }) { _ in
-            self.tableView.backgroundView = self.emptyView
         }
     }
     

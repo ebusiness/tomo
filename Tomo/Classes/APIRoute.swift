@@ -8,6 +8,23 @@
 
 import Alamofire
 import SwiftyJSON
+
+/**
+ HTTP method definitions.
+ 
+ See https://tools.ietf.org/html/rfc7231#section-4.3
+ */
+public enum RouteMethod : String {
+    case OPTIONS
+    case GET
+    case HEAD
+    case POST
+    case PUT
+    case PATCH
+    case DELETE
+    case TRACE
+    case CONNECT
+}
 /**
 An API Route
 */
@@ -15,7 +32,7 @@ protocol APIRoute: URLRequestConvertible {
     /// url path
     var path: String { get }
     /// Method
-    var method: Alamofire.Method { get }
+    var method: RouteMethod { get }
     /// Encoding
     var encoding: Alamofire.ParameterEncoding { get }
 }
@@ -25,10 +42,14 @@ extension APIRoute {
     
     var URLRequest: NSMutableURLRequest {
         let requestUrl = TomoConfig.Api.Url.URLByAppendingPathComponent(self.path)
-        
-        // Create a request with `requestUrl`, returning cached data if available, with a 15 second timeout.
-        let mutableURLRequest = NSMutableURLRequest(URL: requestUrl, cachePolicy: NSURLRequestCachePolicy.ReturnCacheDataElseLoad, timeoutInterval: 15)
+        let mutableURLRequest = NSMutableURLRequest(URL: requestUrl)
         mutableURLRequest.HTTPMethod = self.method.rawValue
+        mutableURLRequest.timeoutInterval = 30
+        #if DEBUG
+            print("URL: \(requestUrl)")
+            print("Method: \(self.method.rawValue)")
+            print("Parameters: \(parameters)")
+        #endif
         guard let parameters = self.parameters else { return mutableURLRequest }
         return encoding.encode(mutableURLRequest, parameters: parameters).0
     }
@@ -36,8 +57,8 @@ extension APIRoute {
 
 // MARK: - Default
 extension APIRoute {
-    var method: Alamofire.Method { return .GET }
-    var encoding: Alamofire.ParameterEncoding { return .JSON }
+    var method: RouteMethod { return .GET }
+    var encoding: Alamofire.ParameterEncoding { return method == .GET ? .URL : .JSON }
 }
 
 // MARK: - extension
@@ -60,9 +81,7 @@ extension APIRoute {
             if let value = this.valueForKey(key) {
                 parameters[key] = value
             }
-            
         }
-        print(parameters)
         if parameters.count > 0 {
             return parameters
         } else {
@@ -74,7 +93,7 @@ extension APIRoute {
         return Manager.instance.request(self).validate()
     }
     
-    func response(completionHandler: Response<JSON, NSError> -> Void) -> Request {
+    func response(queue: dispatch_queue_t? = nil, completionHandler: Response<JSON, NSError> -> Void) -> Request {
         return request.responseSwiftyJSON(completionHandler: completionHandler)
     }
 }

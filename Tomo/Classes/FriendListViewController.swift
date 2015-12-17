@@ -76,8 +76,16 @@ extension FriendListViewController {
     
     private func getFriends(){
         
-        AlamofireController.request(.GET, "/friends", success: { (result) -> () in
-            self.friends = UserEntity.collection(result)!
+        Router.Friends().response {
+            if $0.result.isFailure {
+                if me.friendInvitations.count == 0 {
+                    let emptyView = Util.createViewWithNibName("EmptyFriends")
+                    self.tableView.backgroundView = emptyView
+                }
+                return
+            }
+            
+            self.friends = UserEntity.collection($0.result.value!)!
             self.friends.sortInPlace({
                 
                 if let msg1 = $0.lastMessage, msg2 = $1.lastMessage {
@@ -94,11 +102,6 @@ extension FriendListViewController {
                 return false
             })
             self.tableView.reloadData()
-        }) { _ in
-            if me.friendInvitations.count == 0 {
-                let emptyView = Util.createViewWithNibName("EmptyFriends")
-                self.tableView.backgroundView = emptyView
-            }
         }
     }
     
@@ -201,7 +204,8 @@ extension FriendListViewController: FriendInvitationCellDelegate {
     
     func friendInvitationAccept(cell: InvitationCell) {
         
-        AlamofireController.request(.PATCH, "/invitations/\(cell.friendInvitedNotification.id)", parameters: ["result": "accept"], success: { (result) -> () in
+        Router.Invitations.Updater(id: cell.friendInvitedNotification.id, accepted: true).response {
+            if $0.result.isFailure { return }
             
             self.tableView.beginUpdates()
             if let indexPath = self.tableView.indexPathForCell(cell) {
@@ -215,16 +219,14 @@ extension FriendListViewController: FriendInvitationCellDelegate {
             self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
             self.tableView.endUpdates()
             self.updateBadgeNumber()
-            
-        })
+        }
     }
     
     func friendInvitationDeclined(cell: InvitationCell) {
         
         Util.alert(self, title: "拒绝好友邀请", message: "拒绝 " + cell.friendInvitedNotification.from.nickName + " 的好友邀请么") { _ in
-            
-            AlamofireController.request(.PATCH, "/invitations/\(cell.friendInvitedNotification.id)", parameters: ["result": "refuse"], success: { (result) -> () in
-                
+            Router.Invitations.Updater(id: cell.friendInvitedNotification.id, accepted: false).response {
+                if $0.result.isFailure { return }
                 me.invitations?.remove(cell.friendInvitedNotification.from.id)
                 
                 if let indexPath = self.tableView.indexPathForCell(cell) {
@@ -239,8 +241,7 @@ extension FriendListViewController: FriendInvitationCellDelegate {
                     }
                 }
                 self.updateBadgeNumber()
-                
-            })
+            }
         }
     }
 }

@@ -80,8 +80,13 @@ extension GroupDescriptionViewController {
     @IBAction func joinGroup(sender: UIButton) {
         sender.userInteractionEnabled = false
         
-        let successHandler: (AnyObject)->() = { _ in
-
+        Router.Group.Join(id: self.group.id).response {
+            
+            if $0.result.isFailure {
+                sender.userInteractionEnabled = true
+                return
+            }
+            
             me.addGroup(self.group.id)
             self.detailedGroup?.addMember(me)
             
@@ -104,51 +109,43 @@ extension GroupDescriptionViewController {
             
             sender.userInteractionEnabled = true
         }
-        
-        let failureHandler: (Int)->() = { _ in
-            sender.userInteractionEnabled = true
-        }
-        
-        AlamofireController.request(.PATCH, "/groups/\(self.group.id)/join", success: successHandler, failure: failureHandler)
     }
     
     @IBAction func leaveGroup(sender: UIButton) {
         sender.userInteractionEnabled = false
         
-        let successHandler: (AnyObject)->() = { _ in
-            
-            me.groups?.remove(self.group.id)
-            
-            var item = 0
-            let user = self.detailedGroup?.members?.find { $0.id == me.id }
-            if let user = user {
-                item = self.detailedGroup?.members?.indexOf(user) ?? 0
+        Util.alert(self, title: "退出群组", message: "确定退出该群组么?") { _ in
+            Router.Group.Leave(id: self.group.id).response {
+                if $0.result.isFailure {
+                    sender.userInteractionEnabled = true
+                    return
+                }
+                
+                me.groups?.remove(self.group.id)
+                
+                var item = 0
+                let user = self.detailedGroup?.members?.find { $0.id == me.id }
+                if let user = user {
+                    item = self.detailedGroup?.members?.indexOf(user) ?? 0
+                }
+                
+                self.detailedGroup?.removeMember(me)
+                
+                self.memberCollectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: item, inSection: 0)])
+                
+                if (self.detailedGroup?.members?.count ?? 0) == 0 {
+                    self.tableView.reloadSections(NSIndexSet(index: self.memberCollectionSection), withRowAnimation: .Automatic)
+                } else {
+                    self.memberCollectionViewHeightConstraint.constant = self.memberCollectionView.collectionViewLayout.collectionViewContentSize().height
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        self.tableView.layoutIfNeeded()
+                    })
+                }
+                
+                self.tableView.reloadSections(NSIndexSet(index: self.joinOrLeaveSection), withRowAnimation: .Automatic)
+                
+                sender.userInteractionEnabled = true
             }
-            
-            self.detailedGroup?.removeMember(me)
-            
-            self.memberCollectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: item, inSection: 0)])
-            
-            if (self.detailedGroup?.members?.count ?? 0) == 0 {
-                self.tableView.reloadSections(NSIndexSet(index: self.memberCollectionSection), withRowAnimation: .Automatic)
-            } else {
-                self.memberCollectionViewHeightConstraint.constant = self.memberCollectionView.collectionViewLayout.collectionViewContentSize().height
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    self.tableView.layoutIfNeeded()
-                })
-            }
-            
-            self.tableView.reloadSections(NSIndexSet(index: self.joinOrLeaveSection), withRowAnimation: .Automatic)
-            
-            sender.userInteractionEnabled = true
-        }
-        
-        let failureHandler: (Int)->() = { _ in
-            sender.userInteractionEnabled = true
-        }
-        
-        Util.alert(self, title: "退出群组", message: "确定退出该群组么?") { (_) -> Void in
-            AlamofireController.request(.PATCH, "/groups/\(self.group.id)/leave", success: successHandler, failure: failureHandler)
         }
     }
 }
@@ -169,11 +166,11 @@ extension GroupDescriptionViewController {
 // MARK: - Net methods
 extension GroupDescriptionViewController {
     private func loadGroupDescription() {
-        AlamofireController.request(Method.GET, "/groups/\(group.id)", parameters: nil, encoding: ParameterEncoding.JSON, success: { (object) -> () in
-            
-            self.detailedGroup = GroupEntity(object)
-            
-        })
+        
+        Router.Group.Detail(id: group.id).response {
+            if $0.result.isFailure { return }
+            self.detailedGroup = GroupEntity($0.result.value!)
+        }
     }
 }
 

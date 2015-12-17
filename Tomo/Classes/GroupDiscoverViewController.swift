@@ -142,14 +142,21 @@ extension GroupDiscoverViewController {
         
         isLoading = true
         
-        var parameters: [String: AnyObject] = ["category": "discover", "page": self.page]
+        let finder = Router.Group.Finder(category: .discover, page: self.page)
+        
         if let searchText = searchText {
-            parameters["name"] = searchText
+            finder.name = searchText
         }
         
-        AlamofireController.request(.GET, "/groups", parameters: parameters, success: { groups in
+        finder.response {
+            self.isLoading = false
             
-            let groups: [GroupEntity]? = GroupEntity.collection(groups)
+            if $0.result.isFailure {
+                self.isExhausted = true
+                return
+            }
+            
+            let groups: [GroupEntity]? = GroupEntity.collection($0.result.value!)
             
             if let groups = groups {
                 self.groups.appendContentsOf(groups)
@@ -157,11 +164,6 @@ extension GroupDiscoverViewController {
             }
             
             self.page++
-            self.isLoading = false
-            
-        }) { _ in
-                self.isLoading = false
-                self.isExhausted = true
         }
         
     }
@@ -188,22 +190,25 @@ extension GroupDiscoverViewController {
 
 extension GroupDiscoverViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        let text = searchBar.text
-        searchText = searchBar.text
+        guard let text = searchBar.text where text.length > 0 else { return }
         
-        var params = Dictionary<String, AnyObject>()
-        params["name"] = text
+        self.searchText = text
+        self.page = 0
         
-        AlamofireController.request(.GET, "/groups", parameters: params,
-            success: { (object) -> () in
-                if let groups: [GroupEntity] = GroupEntity.collection(object) {
-                    self.groups = groups
-                    self.page = 0
-                    self.refresh()
-                }
-        }) { _ in
+        let finder = Router.Group.Finder(category: .all, page: self.page)
+        finder.name = text
+        finder.response {
+            if $0.result.isFailure {
                 self.groups = [GroupEntity]()
                 self.refresh()
+                return
+            }
+            
+            if let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) {
+                self.groups = groups
+                self.page = 0
+                self.refresh()
+            }
         }
     }
 }

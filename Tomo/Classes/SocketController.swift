@@ -19,8 +19,8 @@ final class SocketController {
         self.socket = SocketIOClient(socketURL: TomoConfig.Api.UrlString)
         self.socket.onAny {
 
-            guard let data = $0.items else {return}
-            guard let result = data[0] as? [NSObject : AnyObject] else {return}
+            guard let items = $0.items where items.count > 0 else {return}
+            guard let result = items[0] as? [NSObject : AnyObject] else {return}
             guard let socketEvent = ListenerEvent(rawValue: $0.event) else {return}
 
             gcd.async(.High) { () -> () in

@@ -37,10 +37,6 @@ final class RegViewController: BaseViewController {
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
-    
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
 
 }
 
@@ -73,6 +69,9 @@ extension RegViewController {
         #if DEBUG
             testSegment.hidden = false
         #endif
+
+        // hide all controls on startup
+        inputArea.hidden = false
 
         if (WechatManager.sharedInstance.isInstalled()) {
             // customize wechat login button
@@ -140,32 +139,20 @@ extension RegViewController {
     
     @IBAction func accountLogin(sender: AnyObject) {
         
-        let success: JSON -> () = { json in
-            
-            Defaults["email"] = self.emailTextField.text
-            Defaults["password"] = self.passwordTextField.text
-            
-            if nil != json["id"].string && nil != json["nickName"].string {
-                me = UserEntity(json)
-                self.changeRootToTab()
-            }
-        }
-        
-        let failure: Int -> () = { err in
-
-            let alert = UIAlertController(title: "登录失败", message: "您输入的账号或密码不正确", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "重试", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-        }
-        
-        Router.SignIn(email: emailTextField.text!, password: passwordTextField.text!).response { ResponseSerializer in
-            switch ResponseSerializer.result {
+        Router.Signin.Email(email: emailTextField.text!, password: passwordTextField.text!).response {
+            switch $0.result {
             case .Success(let value):
-                success(value)
-            case .Failure(let error):
-                failure(error.code)
+                
+                Defaults["email"] = self.emailTextField.text
+                Defaults["password"] = self.passwordTextField.text
+                
+                me = UserEntity(value)
+                self.changeRootToTab()
+                
+            case .Failure:
+                
+                Util.alert(self, title: "登录失败", message: "您输入的账号或密码不正确", cancel: "重试")
             }
-            print(ResponseSerializer.result.value)
         }
         
     }
@@ -209,38 +196,35 @@ extension RegViewController {
     
     @IBAction func testLogin(sender: UISegmentedControl) {
         
-        var param = Dictionary<String, String>()
+        sender.userInteractionEnabled = false
+        var id: String!
         
         switch testSegment.selectedSegmentIndex
         {
         case 0:
-            param["id"] = "55a319577b6eb5a66e91edaa"
+            id = "55a319577b6eb5a66e91edaa"
         case 1:
-            param["id"] = "55a31bc959a1af7373c1d099"
+            id = "55a31bc959a1af7373c1d099"
         case 2:
-            param["id"] = "55a31c7759a1af7373c1d09e"
+            id = "55a31c7759a1af7373c1d09e"
         case 3:
-            param["id"] = "55a31d0a59a1af7373c1d0a3"
+            id = "55a31d0a59a1af7373c1d0a3"
         case 4:
-            param["id"] = "55a31dcb59a1af7373c1d0a8"
+            id = "55a31dcb59a1af7373c1d0a8"
         case 5:
-            param["id"] = "55c86fd3a96768e7609cdf25"
+            id = "55c86fd3a96768e7609cdf25"
         case 6:
-            param["id"] = "55c870e3a96768e7609cdf2a"
+            id = "55c870e3a96768e7609cdf2a"
         default:
             break;
         }
         
-        AlamofireController.request(.GET, "/signin-test", parameters: param, success: { result in
-            
-            let json = JSON(result)
-            
-            if nil != json["id"].string && nil != json["nickName"].string {
-                me = UserEntity(json)
-                self.changeRootToTab()
-            }
-            
-        })
+        Router.Signin.Test(id: id).response {
+            sender.userInteractionEnabled = true
+            if $0.result.isFailure { return }
+            me = UserEntity($0.result.value!)
+            self.changeRootToTab()
+        }
     }
 }
 
@@ -263,33 +247,38 @@ extension RegViewController {
 extension RegViewController: WechatManagerAuthDelegate {
     
     func checkIfNeeded(completion: ((res: AnyObject?, errCode: Int?) -> ())) -> Bool {
-        let parameters = [
-            "type": "wechat",
-            "openid": WechatManager.openid,
-            "access_token": WechatManager.access_token ,
-        ]
-        AlamofireController.request(.POST, "/signin-wechat", parameters: parameters, success: { json in
-            completion(res: json,errCode: nil)
-        }) { errCode in
-            completion(res: nil,errCode: errCode)
+        
+        Router.Signin.WeChat(openid: WechatManager.openid, access_token: WechatManager.access_token).response {
+            switch $0.result {
+            case .Success(let value):
+                
+                completion(res: value.dictionaryObject, errCode: nil)
+                
+            case .Failure:
+                
+                let errCode = $0.response?.statusCode ?? $0.result.error?.code
+                completion(res: nil,errCode: errCode )
+            }
         }
         return true
     }
     
     func signupIfNeeded(var parameters: [String : AnyObject], completion: ((res: AnyObject) -> ())) {
         
-        if let gender = parameters["sex"] as? String where gender == "2" {
-            parameters["sex"] = "女"
-        } else {
-            parameters["sex"] = "男"
+        let wechat = Router.Signup.WeChat(openid: WechatManager.openid, nickname: parameters["nickname"] as? String ?? "")
+        wechat.headimgurl = parameters["headimgurl"] as? String ?? ""
+        
+        if let gender = parameters["sex"] as? String {
+            wechat.sex = gender == "2" ? "女" : "男"
         }
         
-        AlamofireController.request(.POST, "/signup-wechat", parameters: parameters, success: { userinfo in
-            if let userinfo = userinfo as? Dictionary<String, AnyObject> {
-                completion(res: userinfo)
+        wechat.response {
+            
+            if $0.result.isFailure {
+                self.failure(400)
+            } else {
+                completion(res: $0.result.value!.dictionaryObject!)
             }
-        }) { _ in
-            self.failure(400)
         }
     }
     

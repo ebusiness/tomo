@@ -79,7 +79,8 @@ final class CreatePostViewController: UIViewController {
             
             if let sender: AnyObject = sender {
                 
-                let post = PostEntity(sender)
+                guard let post = sender as? PostEntity else { return }
+                
                 post.owner = me
                 
                 if let homeViewController = segue.destinationViewController as? HomeViewController {
@@ -379,21 +380,18 @@ extension CreatePostViewController {
     private func postContent(imageList: AnyObject?) {
         
 //        println(imageList)
+        let postCreater = Router.Post.Creater(content: self.postTextView.text!)
         
-        var param = Dictionary<String, AnyObject>()
-        
-        param["content"] = self.postTextView.text
-        
-        if let imageList: AnyObject = imageList {
-            param["images"] = imageList
+        if let imageList = imageList as? [String] {
+            postCreater.images = imageList
         }
         
         if let group = self.group {
-            param["group"] = group.id
+            postCreater.group = group.id
         }
         
         if let location = self.location {
-            param["coordinate"] = [String(stringInterpolationSegment: location.coordinate.latitude),String(stringInterpolationSegment: location.coordinate.longitude)];
+            postCreater.coordinate = [String(stringInterpolationSegment: location.coordinate.latitude),String(stringInterpolationSegment: location.coordinate.longitude)];
         }
         
         if let placemark = placemark {
@@ -414,13 +412,19 @@ extension CreatePostViewController {
             if let houseNumber = placemark.subThoroughfare {
                 address += houseNumber
             }
-            param["location"] = address
+            postCreater.location = address
         }
         
-        AlamofireController.request(.POST, "/posts", parameters: param, encoding: .JSON,
-            success: { post in
-            self.performSegueWithIdentifier("postCreated", sender: post)
-        })
+        postCreater.response {
+            switch $0.result {
+            case .Success(let value):
+                self.performSegueWithIdentifier("postCreated", sender: PostEntity(value))
+            default:
+                break
+            }
+            
+            Util.showHUD()
+        }
     }
     
     // TODO - refactor out
