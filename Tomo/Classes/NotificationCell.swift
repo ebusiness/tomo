@@ -100,22 +100,26 @@ extension NotificationCell {
     }
     
     private func presentPostView(vc: UIViewController) {
-        AlamofireController.request(.GET, "/posts/\(self.notification.targetId)", success: { result in
+        Router.Post.Detail(id: self.notification.targetId).response {
+            if $0.result.isFailure { return }
+            
             let postVC = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
-            postVC.post = PostEntity(result)
+            postVC.post = PostEntity($0.result.value!)
             if postVC.post.id == self.notification.targetId {
                 vc.navigationController?.pushViewController(postVC, animated: true)
             } else {
                 Util.showInfo("帖子已被删除")
             }
-        })
+        }
     }
     
     private func presentGroupView(vc: UIViewController) {
-        AlamofireController.request(.GET, "/groupd/\(self.notification.targetId)", success: { result in
+        Router.Group.Detail(id: self.notification.targetId).response {
+            if $0.result.isFailure { return }
+            
             let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
-            groupVC.group = GroupEntity(result)
+            groupVC.group = GroupEntity($0.result.value!)
             vc.navigationController?.pushViewController(groupVC, animated: true)
-        })
+        }
     }
 }

@@ -58,7 +58,7 @@ extension APIRoute {
 // MARK: - Default
 extension APIRoute {
     var method: RouteMethod { return .GET }
-    var encoding: Alamofire.ParameterEncoding { return method == .GET ? .URL : .JSON }
+    var encoding: Alamofire.ParameterEncoding { return .URL }
 }
 
 // MARK: - extension
@@ -87,6 +87,10 @@ extension APIRoute {
         } else {
             return nil
         }
+    }
+    
+    func getParameters() -> [String : AnyObject]? {
+        return self.parameters
     }
     
     var request: Request {

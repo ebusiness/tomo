@@ -34,6 +34,5 @@ extension Router {
                 self.nickname = nickname
             }
         }
-
     }
 }

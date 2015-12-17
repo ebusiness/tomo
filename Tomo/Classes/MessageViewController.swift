@@ -57,7 +57,7 @@ final class MessageViewController: CommonMessageController {
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         // open all message when leave
-        AlamofireController.request(.GET, "/messages/\(friend.id)")
+        Router.Message.Finder(id: friend.id).request
     }
 }
 
@@ -89,51 +89,53 @@ extension MessageViewController {
         
         isLoading = true
         
-        var params = Dictionary<String, NSTimeInterval>()
+        let finder = Router.Message.Finder(id: friend.id)
         
         if let oldestMessage = oldestMessage {
-            params["before"] = oldestMessage.createDate.timeIntervalSince1970
+            finder.before = String(oldestMessage.createDate.timeIntervalSince1970)
         }
-
         
-        AlamofireController.request(.GET, "/messages/\(friend.id)", parameters: params, success: { result in
-            
-            if let messages:[MessageEntity] = MessageEntity.collection(result) {
-                
-                for message in messages {
-                    
-                    if message.from.id != me.id {
-                        message.from = self.friend
-                        message.to = me
-                    } else {
-                        message.from = me
-                        message.to = self.friend
-                    }
-                    self.messages.insert(JSQMessageEntity(message: message), atIndex: 0)
-                }
-                
-                if self.oldestMessage == nil {
-                    self.collectionView!.reloadData()
-                    self.scrollToBottomAnimated(false)
-                    let newMessages = me.newMessages.filter { $0.from.id != self.friend.id }
-                    if me.newMessages != newMessages {
-                        me.newMessages = newMessages
-                        if let tabBarController = self.navigationController?.tabBarController as? TabBarController {
-                            tabBarController.updateBadgeNumber()
-                        }
-                    }
-                } else {
-                    self.prependRows(messages.count)
-                }
-                
-                self.oldestMessage = messages.last
+        finder.response {
+            if $0.result.isFailure {
                 self.isLoading = false
+                self.isExhausted = true
+                return
             }
-        }) { _ in
+            
+            guard let messages: [MessageEntity] = MessageEntity.collection($0.result.value!) else {
+                self.isLoading = false
+                return
+            }
+            
+            for message in messages {
+                
+                if message.from.id != me.id {
+                    message.from = self.friend
+                    message.to = me
+                } else {
+                    message.from = me
+                    message.to = self.friend
+                }
+                self.messages.insert(JSQMessageEntity(message: message), atIndex: 0)
+            }
+            
+            if self.oldestMessage == nil {
+                self.collectionView!.reloadData()
+                self.scrollToBottomAnimated(false)
+                let newMessages = me.newMessages.filter { $0.from.id != self.friend.id }
+                if me.newMessages != newMessages {
+                    me.newMessages = newMessages
+                    if let tabBarController = self.navigationController?.tabBarController as? TabBarController {
+                        tabBarController.updateBadgeNumber()
+                    }
+                }
+            } else {
+                self.prependRows(messages.count)
+            }
+            
+            self.oldestMessage = messages.last
             self.isLoading = false
-            self.isExhausted = true
-        }
-    }
+        }    }
     
     private func prependRows(rows: Int) {
         
@@ -171,18 +173,14 @@ extension MessageViewController: CommonMessageDelegate {
     
     func sendMessage(text: String, done: ( ()->() )? = nil ) {
         
-        var params = Dictionary<String, String>()
-        params["to"] = friend.id
-        params["content"] = text
-        
-        AlamofireController.request(.POST, "/messages", parameters: params, success: { _ in
-            
-            JSQSystemSoundPlayer.jsq_playMessageSentSound()
-            self.finishSendingMessageAnimated(true)
-            done?()
-            
-        }) { _ in
-            done?()
+        Router.Message.Creater(to: friend.id, content: text).response {
+            if $0.result.isFailure {
+                done?()
+            } else {
+                JSQSystemSoundPlayer.jsq_playMessageSentSound()
+                self.finishSendingMessageAnimated(true)
+                done?()
+            }
         }
     }
     

@@ -54,17 +54,18 @@ final class MyAccountViewController: MyAccountBaseController {
     @IBAction func logoutTapped(sender: UIButton) {
         Util.alert(self, title: "退出账号", message: "真的要退出当前的账号吗？") { _ in
             
-            AlamofireController.request(.GET, "/signout")
+            Router.Signout().response { _ in
+                Defaults.remove("openid")
+                Defaults.remove("deviceToken")
+                
+                Defaults.remove("email")
+                Defaults.remove("password")
+                
+                me = UserEntity()
+                let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
+                Util.changeRootViewController(from: self, to: main)
+            }
             
-            Defaults.remove("openid")
-            Defaults.remove("deviceToken")
-            
-            Defaults.remove("email")
-            Defaults.remove("password")
-            
-            me = UserEntity()
-            let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
-            Util.changeRootViewController(from: self, to: main)
         }
     }
 

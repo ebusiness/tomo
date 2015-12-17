@@ -127,12 +127,14 @@ extension MyStationsViewController {
         
         loading = true
         
-        let parameter: [String: AnyObject] = [
-            "category": "mine",
-            "type": "station"
-        ]
-        
-        AlamofireController.request(.GET, "/groups", parameters: parameter, success: { object in
+        let finder = Router.Group.Finder(category: .mine)
+        finder.type = .station
+        finder.response {
+            if $0.result.isFailure {
+                self.loading = false
+                return
+            }
+            let object = $0.result.value!
             gcd.async(.Default) {
                 let newGroups: [GroupEntity] = GroupEntity.collection(object) ?? []
                 
@@ -151,10 +153,7 @@ extension MyStationsViewController {
                     self.loading = false
                 }
             }
-        }) { _ in
-            self.loading = false
         }
-
     }
     
 }

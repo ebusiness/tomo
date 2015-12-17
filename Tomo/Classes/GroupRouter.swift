@@ -22,16 +22,22 @@ extension Router {
         class Finder: NSObject, APIRoute {
             let path = "/groups"
             
-            let category: String
-            let page: Int
+            var category: String
             
-            var name: String?
+            var page: Int
             var type: Type?
+            var name: String?
+            var after: String?
             var coordinate: [Double]?
+            var hasMembers: Bool?
             
-            init(category: Category, page: Int = 0) {
+            init(category: Category = .all, page: Int = 0) {
                 self.category = category.rawValue
                 self.page = page
+            }
+            
+            func setCategory(category: Category){
+                self.category = category.rawValue
             }
         }
         
@@ -104,7 +110,7 @@ extension Router {
             let path: String
             var method = RouteMethod.POST
             
-            var content: String
+            let content: String
             
             init(id: String, content: String) {
                 self.path = "/groups/\(id)/messages"

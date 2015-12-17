@@ -294,57 +294,33 @@ extension MapViewController {
             lastTimeStamp = NSDate()
         }
         
+        let finder = Router.Group.Finder()
+        finder.type = .station
+        finder.after = String(lastTimeStamp!.timeIntervalSince1970)
+        
         switch self.mode {
         case .HotStation:
-            AlamofireController.request(.GET, "/groups",
-                parameters: [
-                    "type": "station",
-                    "hasMembers": true,
-                    "after": lastTimeStamp!.timeIntervalSince1970
-                ],
-                success: { groupData in
-                if let groups:[GroupEntity] = GroupEntity.collection(groupData) {
-                    
-                    let annotations = groups.map { group -> GroupAnnotation in
-                        let annotation = GroupAnnotation()
-                        annotation.group = group
-                        if let lon = group.coordinate?.get(0), lat = group.coordinate?.get(1) {
-                            annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                        }
-                        return annotation
-                    }
-                    self.allAnnotationMapView.addAnnotations(annotations)
-                }
-                self.adjustRegion(self.allAnnotationMapView.annotations)
-                self.updateVisibleAnnotations()
-                self.lastLoadDate = NSDate()
-                
-            })
+            finder.hasMembers = true
         case .MyStation:
-            AlamofireController.request(.GET, "/groups",
-                parameters: [
-                    "category": "mine",
-                    "type": "station",
-                    "after": lastTimeStamp!.timeIntervalSince1970
-                ],
-                success: { groupData in
-                if let groups:[GroupEntity] = GroupEntity.collection(groupData) {
-                    
-                    let annotations = groups.map { group -> GroupAnnotation in
-                        let annotation = GroupAnnotation()
-                        annotation.group = group
-                        if let lon = group.coordinate?.get(0), lat = group.coordinate?.get(1) {
-                            annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                        }
-                        return annotation
-                    }
-                    self.allAnnotationMapView.addAnnotations(annotations)
+            finder.setCategory(.mine)
+        }
+        finder.response {
+            if $0.result.isFailure { return }
+            
+            guard let groups:[GroupEntity] = GroupEntity.collection($0.result.value!) else { return }
+
+            let annotations = groups.map { group -> GroupAnnotation in
+                let annotation = GroupAnnotation()
+                annotation.group = group
+                if let lon = group.coordinate?.get(0), lat = group.coordinate?.get(1) {
+                    annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
                 }
-                self.adjustRegion(self.allAnnotationMapView.annotations)
-                self.updateVisibleAnnotations()
-                self.lastLoadDate = NSDate()
-                
-            })
+                return annotation
+            }
+            self.allAnnotationMapView.addAnnotations(annotations)
+            self.adjustRegion(self.allAnnotationMapView.annotations)
+            self.updateVisibleAnnotations()
+            self.lastLoadDate = NSDate()
         }
     }
     

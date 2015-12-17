@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application( application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData ) {
-        Router.Device(deviceToken: deviceToken).request
+        Router.Setting.Device(deviceToken: deviceToken).request
     }
 
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

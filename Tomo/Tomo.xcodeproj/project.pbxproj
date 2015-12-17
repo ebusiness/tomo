@@ -103,6 +103,7 @@
 		29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */; };
 		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
+		D00A81C31C22D1B20034D8D0 /* MessageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A81C21C22D1B20034D8D0 /* MessageRouter.swift */; };
 		D012F5971BBBC4DD00D5293D /* MyStationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */; };
 		D0244C531C1FC65100EA87C1 /* SignupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C521C1FC65100EA87C1 /* SignupRouter.swift */; };
 		D0244C551C1FEBDC00EA87C1 /* SettingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C541C1FEBDC00EA87C1 /* SettingRouter.swift */; };
@@ -302,6 +303,7 @@
 		29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTableViewController.swift; path = Classes/BaseTableViewController.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		D00A81C21C22D1B20034D8D0 /* MessageRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageRouter.swift; path = Classes/MessageRouter.swift; sourceTree = "<group>"; };
 		D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyStationsViewController.swift; path = Classes/MyStationsViewController.swift; sourceTree = "<group>"; };
 		D0244C521C1FC65100EA87C1 /* SignupRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignupRouter.swift; path = Classes/SignupRouter.swift; sourceTree = "<group>"; };
 		D0244C541C1FEBDC00EA87C1 /* SettingRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingRouter.swift; path = Classes/SettingRouter.swift; sourceTree = "<group>"; };
@@ -866,6 +868,7 @@
 				D0244C581C1FF26D00EA87C1 /* PostRouter.swift */,
 				D0244C5A1C20034C00EA87C1 /* ConnectionRouter.swift */,
 				D0244C5C1C20130800EA87C1 /* GroupRouter.swift */,
+				D00A81C21C22D1B20034D8D0 /* MessageRouter.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -1147,6 +1150,7 @@
 				1FFD22011BABD77E00204080 /* GroupSectionHeaderView.swift in Sources */,
 				D0F44FAF1B5E540F009E12AA /* FriendListSendRequestController.swift in Sources */,
 				D073E6F81B84C1BF00066F42 /* CameraController.swift in Sources */,
+				D00A81C31C22D1B20034D8D0 /* MessageRouter.swift in Sources */,
 				D07232351BE1C1C700122F52 /* Character.swift in Sources */,
 				D0244C551C1FEBDC00EA87C1 /* SettingRouter.swift in Sources */,
 				D0A0C0321B5F5BF900ABFA5F /* ProfileViewController.swift in Sources */,

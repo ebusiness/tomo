@@ -243,55 +243,66 @@ extension MyAccountEditViewController {
     }
     
     func updateUser(){
-        var params = Dictionary<String,AnyObject>()
+        
+        let updater = Router.Setting.Updater()
         
         if nickNameTextField.text != me.nickName {
-            params["nickName"] = nickNameTextField.text
+            updater.nickName = nickNameTextField.text!
             me.nickName = nickNameTextField.text
         }
         
         if firstNameTextField.text != me.firstName ?? "" {
-            params["firstName"] = firstNameTextField.text
+            updater.firstName = firstNameTextField.text!
             me.firstName = firstNameTextField.text == "" ? nil : firstNameTextField.text
         }
         
         if lastNameTextField.text != me.lastName ?? "" {
-            params["lastName"] = lastNameTextField.text
+            updater.lastName = lastNameTextField.text!
             me.lastName = lastNameTextField.text == "" ? nil : lastNameTextField.text
         }
         
         if telTextField.text != me.telNo ?? "" {
-            params["telNo"] = telTextField.text
+            updater.telNo = telTextField.text!
             me.telNo = telTextField.text
         }
         
         if addressTextField.text != me.address ?? "" {
-            params["address"] = addressTextField.text
+            updater.address = addressTextField.text!
             me.address = addressTextField.text == "" ? nil : addressTextField.text
         }
         
         if bioTextView.textColor == UIColor.blackColor() || bioTextView.text != defaultbio {
             if bioTextView.text != me.bio ?? "" {
-                params["bio"] = bioTextView.text
+                updater.bio = bioTextView.text!
                 me.bio = bioTextView.text == "" ? nil : bioTextView.text
             }
         }
         
-        params["gender"] = user.gender
-        params["birthDay"] = user.birthDay
-        params["photo"] = user.photo
-        params["cover"] = user.cover
+        if let gender = user.gender where me.gender != gender  {
+            updater.gender = gender
+            me.gender = gender
+        }
+        if let birthDay = user.birthDay {
+            updater.birthDay = birthDay
+            me.birthDay = birthDay
+        }
+        if let photo = user.photo where me.photo != photo {
+            updater.photo = photo
+            me.photo = photo
+        }
+        if let cover = user.cover where me.cover != cover {
+            updater.cover = cover
+            me.cover  = cover
+        }
         
-        me.gender = user.gender
-        me.birthDay = user.birthDay
-        me.photo = user.photo
-        me.cover  = user.cover
+        guard updater.getParameters() != nil else { return }
         
-        AlamofireController.request(.PATCH, "/me", parameters: params, success: { result in
-            me = UserEntity(result)
+        updater.response {
+            if $0.result.isFailure { return }
+            me = UserEntity($0.result.value!)
             self.user = me
             self.headerView.updateUI()
-        })
+        }
     }
 }
 

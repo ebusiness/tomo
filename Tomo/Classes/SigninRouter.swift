@@ -48,4 +48,8 @@ extension Router {
             }
         }
     }
+    
+    struct Signout: APIRoute {
+        let path = "/signout"
+    }
 }

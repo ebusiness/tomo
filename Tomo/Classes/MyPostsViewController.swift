@@ -126,19 +126,20 @@ extension MyPostsViewController {
         
         isLoading = true
         
-        var params = Dictionary<String, AnyObject>()
-        params["category"] = "mine"
+        let finder = Router.Post.Finder(category: .mine)
         
         if let oldestContent = oldestContent as? PostEntity {
-            params["before"] = oldestContent.createDate.timeIntervalSince1970
+            finder.before = String(oldestContent.createDate.timeIntervalSince1970)
         }
         
-        
-        
-        
-        AlamofireController.request(.GET, "/posts", parameters: params, success: { result in
+        finder.response {
+            if $0.result.isFailure {
+                self.isLoading = false
+                self.isExhausted = true
+                return
+            }
             
-            let posts:[PostEntity]? = PostEntity.collection(result)
+            let posts:[PostEntity]? = PostEntity.collection($0.result.value!)
             
             if let loadPosts:[AnyObject] = posts {
                 self.posts += loadPosts
@@ -147,11 +148,6 @@ extension MyPostsViewController {
                 // the response is not post
             }
             self.isLoading = false
-            
-        }) { _ in
-                
-            self.isLoading = false
-            self.isExhausted = true
         }
     }
     

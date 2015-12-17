@@ -12,7 +12,7 @@ extension Router {
     struct Post {
         
         enum Category: String  {
-            case all, bookmark
+            case all, bookmark, mine
         }
         
         class Finder: NSObject, APIRoute {
@@ -38,6 +38,14 @@ extension Router {
             init(content: String) {
                 
                 self.content = content
+            }
+        }
+        
+        struct Detail: APIRoute {
+            let path: String
+            
+            init(id: String) {
+                self.path = "/posts/\(id)"
             }
         }
         
