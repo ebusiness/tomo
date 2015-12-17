@@ -63,8 +63,8 @@ extension MyStationsViewController: UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let width = (screenWidth - 2.0) / 3.0
-        let height = width / 4.0 * 3.0
+        let width = (screenWidth - 2.0) / 2.0
+        let height = width / 3.0 * 4.0
         return CGSizeMake(width, height)
     }
     

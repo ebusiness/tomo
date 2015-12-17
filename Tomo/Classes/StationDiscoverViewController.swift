@@ -79,22 +79,27 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
         return cell
     }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let width = (screenWidth - 2.0) / 3.0
-        let height = width / 4.0 * 3.0
+        let width = (screenWidth - 2.0) / 2.0
+        let height = width / 3.0 * 4.0
         return CGSizeMake(width, height)
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if let group = groups?[indexPath.row] {
-            AlamofireController.request(.PATCH, "/groups/\(group.id)/join", parameters: nil, encoding: .URL, success: { (result) -> () in
-                gcd.async(.Default) {
-                    let vgroup = GroupEntity(result)
-                    me.addGroup(vgroup.id)
-                    self.groups?.remove(group)
-                    gcd.async(.Main) {
-                        self.collectionView.deleteItemsAtIndexPaths([indexPath])
-                    }
-                }
-            })
+
+            let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+            groupVC.group = group
+            self.navigationController?.pushViewController(groupVC, animated: true)
+
+//            AlamofireController.request(.PATCH, "/groups/\(group.id)/join", parameters: nil, encoding: .URL, success: { (result) -> () in
+//                gcd.async(.Default) {
+//                    let vgroup = GroupEntity(result)
+//                    me.addGroup(vgroup.id)
+//                    self.groups?.remove(group)
+//                    gcd.async(.Main) {
+//                        self.collectionView.deleteItemsAtIndexPaths([indexPath])
+//                    }
+//                }
+//            })
         }
     }
 }
