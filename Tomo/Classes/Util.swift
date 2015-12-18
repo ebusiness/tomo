@@ -39,17 +39,7 @@ class Util: NSObject {
 
             }, completion: nil)
     }
-    
-    class func dicFromPlist(name: String) -> NSDictionary {
-        let path = NSBundle.mainBundle().pathForResource(name, ofType: "plist")
-        return NSDictionary(contentsOfFile: path!)!
-    }
-    
-    class func arrayFromPlist(name: String) -> NSArray {
-        let path = NSBundle.mainBundle().pathForResource(name, ofType: "plist")
-        return NSArray(contentsOfFile: path!)!
-    }
-    
+
     class func setupPush() {
         let settings: UIUserNotificationSettings = UIUserNotificationSettings( forTypes: [.Badge, .Alert, .Sound], categories: nil )
         
@@ -57,11 +47,7 @@ class Util: NSObject {
         application.registerUserNotificationSettings( settings )
         application.registerForRemoteNotifications()
     }
-    
-    class func scale() -> CGFloat {
-        return UIScreen.mainScreen().scale
-    }
-    
+
     // MARK: - SVProgress
     
     class func showTodo() {
@@ -117,19 +103,7 @@ class Util: NSObject {
             UIApplication.sharedApplication().presentLocalNotificationNow(notification)
         }
     }
-    
-    class func iOS8() -> Bool {
-        return systemVersionGreaterThanOrEqualTo("8.0.0")
-    }
-    
-    class func systemVersionGreaterThanOrEqualTo(verison: String) -> Bool {
-        switch UIDevice.currentDevice().systemVersion.compare(verison, options: NSStringCompareOptions.NumericSearch) {
-        case .OrderedSame, .OrderedDescending:
-            return true
-        case .OrderedAscending:
-            return false
-        }
-    }
+
 }
 extension Util {
     //RGB To Color
@@ -301,19 +275,6 @@ extension UIImageView {
         get {
             return layer.masksToBounds == true && layer.cornerRadius == min(bounds.width, bounds.height) / 2.0
         }
-    }
-}
-
-extension UIView {
-    var parentViewController: UIViewController? {
-        var parentResponder: UIResponder? = self
-        while parentResponder != nil {
-            parentResponder = parentResponder!.nextResponder()
-            if let viewController = parentResponder as? UIViewController {
-                return viewController
-            }
-        }
-        return nil
     }
 }
 

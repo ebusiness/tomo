@@ -66,6 +66,7 @@ struct TomoConst {
 
     struct Geo {
         static let CoordinateTokyo = [35.689521,139.691704]
+        static let CLLocationTokyo = CLLocationCoordinate2D(latitude: 35.689521, longitude: 139.691704)
     }
 
     struct Image {
@@ -73,6 +74,31 @@ struct TomoConst {
         static let DefaultCover = UIImage(named: "user_cover_default")!
         static let DefaultGroup = UIImage(named: "group_cover_default")!
     }
+
+//    struct StroyBoard {
+//
+//        struct Home {
+//
+//            let name = "Home"
+//
+//            enum Scene: String {
+//                case PostList
+//                case PostDetail
+//                case PostCreate
+//            }
+//        }
+//
+//        struct Contacts {
+//
+//        }
+//
+//        struct Map {
+//
+//        }
+//
+//        struct
+//    }
+
 }
 
 let MaxWidth: CGFloat = 500
