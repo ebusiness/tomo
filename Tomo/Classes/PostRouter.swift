@@ -41,11 +41,34 @@ extension Router {
             }
         }
         
+        struct Delete: APIRoute {
+            let path: String
+            let method = RouteMethod.DELETE
+            
+            init(id: String) {
+                self.path = "/posts/\(id)"
+            }
+            
+        }
+        
         struct Detail: APIRoute {
             let path: String
             
             init(id: String) {
                 self.path = "/posts/\(id)"
+            }
+        }
+        
+        class Comment: NSObject, APIRoute {
+            let path: String
+            let method = RouteMethod.POST
+            
+            let content: String
+//            var replyTo: String?
+            
+            init(id: String, content: String) {
+                self.path = "/posts/\(id)/comments"
+                self.content = content
             }
         }
         

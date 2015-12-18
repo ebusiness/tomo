@@ -1,5 +1,5 @@
 //
-//  ConnectionRouter.swift
+//  InvitationRouter.swift
 //  Tomo
 //
 //  Created by starboychina on 2015/12/15.
@@ -9,7 +9,7 @@
 // MARK: - Connection
 extension Router {
     
-    struct Invitations {
+    struct Invitation {
         struct Finder: APIRoute {
             let path = "/invitations"
         }
@@ -25,10 +25,17 @@ extension Router {
                 self.result = accepted ? "accept" : "refuse"
             }
         }
-    }
-    
-    struct Friends: APIRoute {
-        let path = "/friends"
+        
+        class Add: NSObject, APIRoute {
+            let path = "/invitations"
+            let method = RouteMethod.POST
+            
+            let id: String
+            
+            init(id: String){
+                self.id = id
+            }
+        }
     }
     
 }

@@ -43,6 +43,14 @@ extension Router {
             cover: String?,
             birthDay: NSDate?
             
+            var removeDevice: String?, pushSetting: UserEntity.PushSetting?
+            
+        }
+        
+        class Notification: NSObject, APIRoute {
+            let path = "/notifications"
+            
+            var before: String?
         }
     }
     

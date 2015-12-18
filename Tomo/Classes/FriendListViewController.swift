@@ -76,7 +76,7 @@ extension FriendListViewController {
     
     private func getFriends(){
         
-        Router.Friends().response {
+        Router.Contact.List().response {
             if $0.result.isFailure {
                 if me.friendInvitations.count == 0 {
                     let emptyView = Util.createViewWithNibName("EmptyFriends")
@@ -204,7 +204,7 @@ extension FriendListViewController: FriendInvitationCellDelegate {
     
     func friendInvitationAccept(cell: InvitationCell) {
         
-        Router.Invitations.Updater(id: cell.friendInvitedNotification.id, accepted: true).response {
+        Router.Invitation.Updater(id: cell.friendInvitedNotification.id, accepted: true).response {
             if $0.result.isFailure { return }
             
             self.tableView.beginUpdates()
@@ -225,7 +225,7 @@ extension FriendListViewController: FriendInvitationCellDelegate {
     func friendInvitationDeclined(cell: InvitationCell) {
         
         Util.alert(self, title: "拒绝好友邀请", message: "拒绝 " + cell.friendInvitedNotification.from.nickName + " 的好友邀请么") { _ in
-            Router.Invitations.Updater(id: cell.friendInvitedNotification.id, accepted: false).response {
+            Router.Invitation.Updater(id: cell.friendInvitedNotification.id, accepted: false).response {
                 if $0.result.isFailure { return }
                 me.invitations?.remove(cell.friendInvitedNotification.from.id)
                 

@@ -56,35 +56,37 @@ class StationCollectionViewCell: UICollectionViewCell {
 
         if self.isWatched {
 
-            AlamofireController.request(.PATCH, "/groups/\(group.id)/leave", parameters: nil, encoding: .URL, success: { (result) -> () in
-
-                let group = GroupEntity(result)
+            Router.Group.Leave(id: group.id).response {
+                if $0.result.isFailure { return }
+                
+                let group = GroupEntity($0.result.value!)
                 me.groups?.remove(group.id)
                 self.isWatched = false
-
+                
                 UIView.animateWithDuration(0.3, animations: {
                     self.watchButton.backgroundColor = Palette.Green.primaryColor
                     self.watchButton.setTitle("  关注  ", forState: .Normal)
                     self.watchButton.sizeToFit()
                     self.setNeedsLayout()
                 })
-            })
+            }
 
         } else  {
-
-            AlamofireController.request(.PATCH, "/groups/\(group.id)/join", parameters: nil, encoding: .URL, success: { (result) -> () in
-
-                let group = GroupEntity(result)
+            
+            Router.Group.Join(id: group.id).response {
+                if $0.result.isFailure { return }
+                
+                let group = GroupEntity($0.result.value!)
                 me.addGroup(group.id)
                 self.isWatched = true
-
+                
                 UIView.animateWithDuration(0.3, animations: {
                     self.watchButton.backgroundColor = Palette.Red.primaryColor
                     self.watchButton.setTitle("  取消关注  ", forState: .Normal)
                     self.watchButton.sizeToFit()
                     self.setNeedsLayout()
                 })
-            })
+            }
         }
 
     }

@@ -100,28 +100,30 @@ extension URLSchemesController{
     
     private func openMessage(id: String){
         
-        AlamofireController.request(.GET, "/users/\(id)", success: { result in
+        Router.User.Profile(id: id).response {
+            if $0.result.isFailure { return }
+            
             let vc = MessageViewController()
             vc.hidesBottomBarWhenPushed = true
-            vc.friend = UserEntity(result)
+            vc.friend = UserEntity($0.result.value!)
             
             self.pushViewController(1, viewController: vc, animated: true)
             
             self.refreshViewControllerIfNeeded(1, key: vc.friend.id)
-            
-        })
+        }
     }
     
     private func openGroupMessage(id: String){
         
-        AlamofireController.request(.GET, "/groups/\(id)", success: { result in
+        Router.Group.Detail(id: id).response {
+            if $0.result.isFailure { return }
+            
             let vc = GroupChatViewController()
             vc.hidesBottomBarWhenPushed = true
-            vc.group = GroupEntity(result)
+            vc.group = GroupEntity($0.result.value!)
             
             self.pushViewController(2, viewController: vc, animated: true)
-            
-        })
+        }
     }
     
     private func openProfile(id: String){
@@ -135,12 +137,14 @@ extension URLSchemesController{
     
     private func openPost(id: String){
         
-        AlamofireController.request(.GET, "/posts/\(id)", success: { result in
+        Router.Post.Detail(id: id).response {
+            if $0.result.isFailure { return }
+            
             let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
-            vc.post = PostEntity(result)
+            vc.post = PostEntity($0.result.value!)
             
             self.pushViewController(0, viewController: vc, animated: true)
-        })        
+        }
     }
     
 }

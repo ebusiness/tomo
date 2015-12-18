@@ -78,15 +78,9 @@ extension SearchFriendViewController: UISearchBarDelegate {
         if let text = searchBar.text where text.trimmed().length > 0 {
             
             self.navigationItem.titleView?.endEditing(true)
-            var param = Dictionary<String, String>()
-            param["nickName"] = ".*?\(searchBar.text!).*"
             
-            AlamofireController.request(.GET, "/users", parameters: param, success: { results in
-                
-                self.result = UserEntity.collection(results)
-                
-                }){ _ in
-                    self.result = nil
+            Router.User.Finder(nickName: searchBar.text!).response {
+                self.result = $0.result.isFailure ? nil : UserEntity.collection($0.result.value!)
             }
         }
     }

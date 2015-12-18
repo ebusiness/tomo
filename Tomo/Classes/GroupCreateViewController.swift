@@ -181,7 +181,7 @@ extension GroupCreateViewController {
 // MARK: - Net methods
 extension GroupCreateViewController {
     private func loadFriends() {
-        Router.Friends().response {
+        Router.Contact.List().response {
             if $0.result.isFailure { return }
             self.friends = UserEntity.collection($0.result.value!)
         }

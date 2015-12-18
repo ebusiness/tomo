@@ -84,7 +84,7 @@ extension ProfileViewController {
             optionalList["举报此用户"] = { (_) -> Void in
                 
                 Util.alert(self, title: "举报用户", message: "您确定要举报此用户吗？") { _ in
-                    AlamofireController.request(.POST, "/reports/users/\(self.user.id)")
+                    Router.Report.User(id: self.user.id).request
                 }
             }
         }
@@ -94,10 +94,10 @@ extension ProfileViewController {
             if let blockUsers = me.blockUsers where blockUsers.contains(self.user.id) {
                 
                 optionalList["取消屏蔽"] = { (_) -> Void in
-                    AlamofireController.request(.POST, "/blocks", parameters: ["id": self.user.id], success: {
-                        _ in
+                    Router.User.Block(id: self.user.id).response {
+                        if $0.result.isFailure { return }
                         me.blockUsers?.remove(self.user.id)
-                    })
+                    }
                 }
                 
             } else {
@@ -105,10 +105,10 @@ extension ProfileViewController {
                 optionalList["屏蔽此用户"] = { (_) -> Void in
                     
                     Util.alert(self, title: "屏蔽用户", message: "您确定要屏蔽此用户吗？") { _ in
-                        AlamofireController.request(.POST, "/blocks", parameters: ["id": self.user.id], success: { _ in
+                        Router.User.Block(id: self.user.id).response {
+                            if $0.result.isFailure { return }
                             me.blockUsers?.append(self.user.id)
-                            self.navigationController?.popViewControllerAnimated(true)
-                        })
+                        }
                     }
                 }
             }
@@ -119,10 +119,11 @@ extension ProfileViewController {
             optionalList["删除好友"] = { (_) -> Void in
                 
                 Util.alert(self, title: "删除好友", message: "确定删除该好友么?") { _ in
-                    AlamofireController.request(.DELETE, "/friends/\(self.user.id)", success: { _ in
+                    Router.Contact.Delete(id: self.user.id).response {
+                        if $0.result.isFailure { return }
                         me.removeFriend(self.user.id)
                         self.reloadButtons()
-                    })
+                    }
                 }
             }
         }
@@ -134,10 +135,12 @@ extension ProfileViewController {
     @IBAction func addFriend(sender: UIButton) {
         
         sender.userInteractionEnabled = false
-        var param = Dictionary<String, String>()
-        param["id"] = self.user.id
         
-        let successHandler: ((AnyObject)->()) = { _ in
+        Router.Invitation.Add(id: self.user.id).response {
+            if $0.result.isFailure {
+                sender.userInteractionEnabled = true
+                return
+            }
             
             if me.invitations == nil {
                 me.invitations = []
@@ -148,12 +151,6 @@ extension ProfileViewController {
             
             sender.userInteractionEnabled = true
         }
-        
-        let failureHandler: (Int)->() = { _ in
-            sender.userInteractionEnabled = true
-        }
-        
-        AlamofireController.request(.POST, "/invitations", parameters: param, success: successHandler, failure: failureHandler)
     }
     
     @IBAction func sendMessage(sender: UIButton) {
@@ -245,10 +242,8 @@ extension ProfileViewController {
         
         if let invitation = self.getUserInvitation() {
             
-            var param = Dictionary<String, String>()
-            param["result"] = isApproved ? "accept" : "refuse"
-            
-            AlamofireController.request(.PATCH, "/invitations/\(invitation.id)", parameters: param, success: { _ in
+            Router.Invitation.Updater(id: invitation.id, accepted: isApproved).response {
+                if $0.result.isFailure { return }
                 
                 me.friendInvitations = me.friendInvitations.filter{ $0.from.id != self.user.id }
                 if isApproved {
@@ -267,7 +262,7 @@ extension ProfileViewController {
                 }
                 
                 self.reloadButtons()
-            })
+            }
         }
     }
 }

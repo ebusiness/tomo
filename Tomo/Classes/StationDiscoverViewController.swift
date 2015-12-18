@@ -108,21 +108,22 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
 extension StationDiscoverViewController {
     private func loadInitData() {
         loading = true
+        
+        let finder = Router.Group.Finder(category: .discover, page: page)
+        finder.type = .station
+        
         let coordinate = location.coordinate
-        let parameter: [String: AnyObject] = [
-            "page": page,
-            "type": "station",
-            "category": "discover",
-            "coordinate": [coordinate.longitude, coordinate.latitude]
-        ]
-        AlamofireController.request(.GET, "/groups",
-            parameters: parameter, success: { (object) -> () in
-                self.groups = GroupEntity.collection(object)
-                self.refresh()
+        finder.coordinate = [coordinate.longitude, coordinate.latitude]
+        
+        finder.response {
+            if $0.result.isFailure {
                 self.loading = false
-                self.page = 1
-            }) { _ in
-                self.loading = false
+                return
+            }
+            self.groups = GroupEntity.collection($0.result.value!)
+            self.refresh()
+            self.loading = false
+            self.page = 1
         }
     }
     
@@ -134,28 +135,30 @@ extension StationDiscoverViewController {
             return
         }
         loading = true
+        
+        let finder = Router.Group.Finder(category: .discover, page: page)
+        finder.type = .station
+        
         let coordinate = location.coordinate
-        var parameter: [String: AnyObject] = [
-            "page": page,
-            "type": "station",
-            "category": "discover",
-            "coordinate": [coordinate.longitude, coordinate.latitude]
-        ]
+        finder.coordinate = [coordinate.longitude, coordinate.latitude]
+        
         if let searchText = searchText {
-            parameter["name"] = searchText
+            finder.name = searchText
         }
-        AlamofireController.request(.GET, "/groups", parameters: parameter,
-            success: { (object) -> () in
-                if let groups: [GroupEntity] = GroupEntity.collection(object) {
-                    self.groups?.appendContentsOf(groups)
-                    self.appendCells(groups.count)
-                    self.page++
-                }
+        
+        finder.response {
+            if $0.result.isFailure {
                 self.loading = false
-            }, failure: { _ in
-                self.loading = false
+                return
             }
-        )
+            
+            if let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) {
+                self.groups?.appendContentsOf(groups)
+                self.appendCells(groups.count)
+                self.page++
+            }
+            self.loading = false
+        }
     }
     
     private func refresh() {
@@ -182,25 +185,20 @@ extension StationDiscoverViewController {
 
 extension StationDiscoverViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        page = 0;
-        let text = searchBar.text ?? ""
-        searchText = searchBar.text
+        guard let text = searchBar.text else { return }
+        self.searchText = text
+        self.page = 1
+        
+        let finder = Router.Group.Finder(category: .discover)
+        finder.type = .station
+        
         let coordinate = location.coordinate
-        let parameter: [String: AnyObject] = [
-            "name": text,
-            "page": page,
-            "type": "station",
-            "category": "discover",
-            "coordinate": [coordinate.longitude, coordinate.latitude]
-        ];
-        AlamofireController.request(.GET, "/groups",
-            parameters: parameter,
-            success: { (object) -> () in
-                self.groups = GroupEntity.collection(object)
-                self.refresh()
-            }) { _ in
-                self.groups = nil
-                self.refresh()
+        finder.coordinate = [coordinate.longitude, coordinate.latitude]
+        finder.name = text
+        
+        finder.response {
+            self.groups = $0.result.isFailure ? nil : GroupEntity.collection($0.result.value!)
+            self.refresh()
         }
     }
 }

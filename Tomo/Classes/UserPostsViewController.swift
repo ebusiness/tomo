@@ -133,26 +133,25 @@ extension UserPostsViewController {
         
         isLoading = true
         
-        var params = Dictionary<String, NSTimeInterval>()
+        let finder = Router.User.Posts(id: self.user.id)
         
         if let oldestContent = oldestContent {
-            params["before"] = oldestContent.createDate.timeIntervalSince1970
+            finder.before = String(oldestContent.createDate.timeIntervalSince1970)
         }
         
-        AlamofireController.request(.GET, "/users/\(self.user.id)/posts", parameters: params, success: { results in
-            
-            if let loadPosts:[PostEntity] = PostEntity.collection(results) {
+        finder.response {
+            if $0.result.isFailure {
+                self.isLoading = false
+                self.isExhausted = true
+                return
+            }
+            if let loadPosts:[PostEntity] = PostEntity.collection($0.result.value!) {
                 self.posts += loadPosts
                 self.appendRows(loadPosts.count)
             } else {
                 // the response is not post
             }
             self.isLoading = false
-            
-        }) { _ in
-            
-            self.isLoading = false
-            self.isExhausted = true
         }
     }
     

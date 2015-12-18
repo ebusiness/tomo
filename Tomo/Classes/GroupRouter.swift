@@ -92,33 +92,4 @@ extension Router {
     }
 }
 
-// MARK: - Group Messages
-extension Router {
-    
-    struct GroupMessage {
-        class Finder: NSObject, APIRoute {
-            let path: String
-            
-            var before: String?
-            
-            init(id: String) {
-                self.path = "/groups/\(id)/messages"
-            }
-        }
-        
-        class Creater: NSObject, APIRoute {
-            let path: String
-            var method = RouteMethod.POST
-            
-            let content: String
-            
-            init(id: String, content: String) {
-                self.path = "/groups/\(id)/messages"
-                self.content = content
-            }
-        }
-    }
-    
-    
-}
 

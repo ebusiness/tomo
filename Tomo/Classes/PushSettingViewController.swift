@@ -81,30 +81,39 @@ class PushSettingViewController: MyAccountBaseController {
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         
-        var params = Dictionary<String,AnyObject>()
-        params["announcement"] = switchAnnouncement.on
-        params["message"] = switchMessage.on
-        params["groupMessage"] = switchGroupMessage.on
-        params["friendInvited"] = switchFriendInvited.on
-        params["friendAccepted"] = switchFriendAccepted.on
-        params["friendRefused"] = switchFriendRefused.on
-        params["friendBreak"] = switchFriendBreak.on
-        params["postNew"] = switchPostNew.on
-        params["postCommented"] = switchPostCommented.on
-        params["postLiked"] = switchPostLiked.on
-        params["postBookmarked"] = switchPostBookmarked.on
-        params["groupJoined"] = switchGroupJoined.on
-        params["groupLeft"] = switchGroupLeft.on
+        let pushSetting = UserEntity.PushSetting()
         
-        var parameters: Dictionary<String,AnyObject> = ["pushSetting": params]
+        pushSetting.announcement = switchAnnouncement.on
+        pushSetting.message = switchMessage.on
+        pushSetting.groupMessage = switchGroupMessage.on
+        pushSetting.friendInvited = switchFriendInvited.on
+        pushSetting.friendAccepted = switchFriendAccepted.on
+        pushSetting.friendRefused = switchFriendRefused.on
+        pushSetting.friendBreak = switchFriendBreak.on
+        pushSetting.postNew = switchPostNew.on
+        pushSetting.postCommented = switchPostCommented.on
+        pushSetting.postLiked = switchPostLiked.on
+        pushSetting.postBookmarked = switchPostBookmarked.on
+        pushSetting.groupJoined = switchGroupJoined.on
+        pushSetting.groupLeft = switchGroupLeft.on
+        
+        let setting = Router.Setting.Updater()
+        
+        if me.pushSetting != pushSetting {
+            setting.pushSetting = pushSetting
+        }
+        
         if !allowNotification {
-            parameters["removeDevice"] = true
+            setting.removeDevice = "1"
             Defaults.remove("deviceToken")
         }
         
-        AlamofireController.request(.PATCH, "/me", parameters: parameters, hideHUD: true, success: { result in
-            me.pushSetting = UserEntity.PushSetting(JSON(result)["pushSetting"])
-        })
+        guard let _ = setting.getParameters() else { return }
+        
+        setting.response {
+            if $0.result.isFailure { return }
+            me.pushSetting = UserEntity.PushSetting($0.result.value!["pushSetting"])
+        }
         
     }
     

@@ -74,16 +74,18 @@ extension ProfileBaseController {
     
     func getUserInfo(done: ()->() ){
         
-        AlamofireController.request(.GET, "/users/\(self.user.id)", success: { result in
-
-            self.user = UserEntity(result)
+        Router.User.Profile(id: self.user.id).response {
+            if $0.result.isFailure { return }
+            
+            self.user = UserEntity($0.result.value!)
             
             self.updateFriendInfoIfNeeded()
             
             done()
             
             self.updateUI()
-        })
+            
+        }
     }
     
     private func updateFriendInfoIfNeeded(){

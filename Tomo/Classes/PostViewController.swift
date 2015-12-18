@@ -119,7 +119,11 @@ class PostViewController: BaseViewController{
     
     @IBAction func likeBtnTapped(sender: UIButton) {
         sender.userInteractionEnabled = false
-        AlamofireController.request(.PATCH, "/posts/\(self.post.id)/like", success: { _ in
+        Router.Post.Like(id: self.post.id).response {
+            if $0.result.isFailure {
+                sender.userInteractionEnabled = true
+                return
+            }
             
             if let like = self.post.like {
                 like.contains(me.id) ? self.post.like!.remove(me.id) : self.post.like!.append(me.id)
@@ -131,31 +135,29 @@ class PostViewController: BaseViewController{
                 self.updateUIForHeader()
                 sender.userInteractionEnabled = true
             }
-            
-            }) { _ in
-                sender.userInteractionEnabled = true
         }
     }
     
     @IBAction func bookmarkBtnTapped(sender: UIButton) {
         sender.userInteractionEnabled = false
-        AlamofireController.request(.PATCH, "/posts/\(self.post.id)/bookmark",
-            success: { _ in
-                
-                self.post.bookmark = self.post.bookmark ?? []
-                
-                if self.post.bookmark!.contains(me.id) {
-                    self.post.bookmark!.remove(me.id)
-                } else {
-                    self.post.bookmark!.append(me.id)
-                }
-                
-                self.updateUIForHeader()
-                self.bookmarkBtn.tada {
-                    sender.userInteractionEnabled = true
-                }
-            }) { _ in
+        Router.Post.Bookmark(id: self.post.id).response {
+            if $0.result.isFailure {
                 sender.userInteractionEnabled = true
+                return
+            }
+            
+            self.post.bookmark = self.post.bookmark ?? []
+            
+            if self.post.bookmark!.contains(me.id) {
+                self.post.bookmark!.remove(me.id)
+            } else {
+                self.post.bookmark!.append(me.id)
+            }
+            
+            self.updateUIForHeader()
+            self.bookmarkBtn.tada {
+                sender.userInteractionEnabled = true
+            }
         }
     }
     
@@ -167,11 +169,11 @@ class PostViewController: BaseViewController{
         
         if (WechatManager.sharedInstance.isInstalled()) {
             optionalList["微信"] = { _ in
-                self.share(WXSceneSession, image: self.getShareimage())
+                self.share(WXSceneSession)
             }
             
             optionalList["朋友圈"] = { _ in
-                self.share(WXSceneTimeline, image: self.getShareimage())
+                self.share(WXSceneTimeline)
             }
         }
         
@@ -179,22 +181,22 @@ class PostViewController: BaseViewController{
             optionalList["举报此内容"] = { _ in
                 
                 Util.alert(self, title: "举报此内容", message: "您确定要举报此内容吗？") { _ in
-                    AlamofireController.request(.POST, "/reports/posts/\(self.post.id)", success: { _ in
+                    Router.Report.Post(id: self.post.id).response { _ in
                         Util.showInfo("举报信息已发送")
                         self.navigationController?.popViewControllerAnimated(true)
-                    })
+                    }
                 }
             }
         }
         
         if post.owner.id == me.id {
             optionalList["删除"] = { _ in
-                
                 Util.alert(self, title: "删除帖子", message: "确定删除该帖子吗？") { _ in
-                    AlamofireController.request(.DELETE, "/posts/\(self.post.id)", success: { _ in
+                    Router.Post.Delete(id: self.post.id).response { _ in
                         Util.showInfo("帖子已删除")
+                        // TODO remove the post in HomeViewController
                         self.navigationController?.popViewControllerAnimated(true)
-                    })
+                    }
                 }
             }
         }
@@ -209,9 +211,7 @@ class PostViewController: BaseViewController{
     
     @IBAction func sendCommentBtnTapped(sender: AnyObject) {
         
-        var param = Dictionary<String, String>();
-        param["content"] = commentContent;
-        //        param["replyTo"] = "552220aa915a1dd84834731b";//コメントID
+        guard let commentContent = commentContent where commentContent.length > 0 else { return }
         
         self.commentContent = nil
         self.commentTextView.text = "评论:"
@@ -221,18 +221,18 @@ class PostViewController: BaseViewController{
         self.hideSendBtn(true)
         self.view.endEditing(true)
         
-        AlamofireController.request(.POST, "/posts/\(self.post.id)/comments", parameters: param, success: { result in
+        Router.Post.Comment(id: self.post.id, content: commentContent).response {
+            if $0.result.isFailure { return }
             
             let comment = CommentEntity()
             comment.owner = me
-            comment.content = param["content"]
+            comment.content = commentContent
             comment.createDate = NSDate()
             
             if self.comments == nil { self.post.comments = [] }
             self.post.comments?.append(comment)
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)], withRowAnimation: .Automatic)
-            
-        })
+        }
         
     }
 }
@@ -240,7 +240,8 @@ class PostViewController: BaseViewController{
 // MARK:HeaderView - Action
 
 extension PostViewController {
-    private func share(scence: WXScene, image: UIImage?) {
+    private func share(scence: WXScene) {
+        let image = self.getShareimage()
         let url = "https://itunes.apple.com/app/xian-changtomo/id982470898?l=zh&amp;ls=1&amp;mt=8"
         WechatManager.sharedInstance.share(scence, image: image, title: self.post.content!, description: "@現場Tomo", url: url, extInfo: self.post.id)
     }

@@ -146,17 +146,19 @@ extension RecommendViewController {
 
     @IBAction func exitButtonTapped(sender: AnyObject) {
 
-        AlamofireController.request(.GET, "/signout")
-
-        Defaults.remove("openid")
-        Defaults.remove("deviceToken")
-
-        Defaults.remove("email")
-        Defaults.remove("password")
-
-        me = nil
-        let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
-        Util.changeRootViewController(from: self, to: main)
+        Router.Signout().response { _ in
+        
+            Defaults.remove("openid")
+            Defaults.remove("deviceToken")
+            
+            Defaults.remove("email")
+            Defaults.remove("password")
+            
+            me = nil
+            let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
+            Util.changeRootViewController(from: self, to: main)
+            
+        }
     }
 }
 

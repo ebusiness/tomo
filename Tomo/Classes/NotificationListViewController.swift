@@ -74,19 +74,23 @@ extension NotificationListViewController {
         }
         
         isLoading = true
-        
-        var params = Dictionary<String, AnyObject>()
+        let notification = Router.Setting.Notification()
         
         if let oldestNotifications = self.notifications?.last {
-            params["before"] = oldestNotifications.createDate.timeIntervalSince1970
+            notification.before = String(oldestNotifications.createDate.timeIntervalSince1970)
         }
         
-        AlamofireController.request(.GET, "/notifications", parameters: params, success: { result in
+        notification.response {
+            if $0.result.isFailure {
+                self.isLoading = false
+                self.isExhausted = true
+                return
+            }
             
             me.notifications = 0
             self.navigationController?.tabBarItem.badgeValue = nil
             
-            let loadNotifications:[NotificationEntity]? = NotificationEntity.collection(result)
+            let loadNotifications:[NotificationEntity]? = NotificationEntity.collection($0.result.value!)
             if let notifications = self.notifications {
                 self.notifications = notifications + (loadNotifications ?? [])
             } else {
@@ -94,11 +98,6 @@ extension NotificationListViewController {
             }
             self.appendRows(loadNotifications?.count ?? 0)
             self.isLoading = false
-            
-        }) { _ in
-            
-            self.isLoading = false
-            self.isExhausted = true
         }
     }
     
