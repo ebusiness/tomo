@@ -53,7 +53,7 @@ final class GroupChatViewController: CommonMessageController {
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         // open all message when leave
-        Router.GroupMessage.Finder(id: self.group.id).request
+        Router.GroupMessage.FindByGroupId(id: self.group.id, before: nil).request
     }
 }
 
@@ -66,7 +66,7 @@ extension GroupChatViewController {
             self.avatars[user.id] = self.defaultAvatar
         }
         
-        Router.Group.Detail(id: self.group.id).response {
+        Router.Group.FindById(id: self.group.id).response {
             if $0.result.isFailure { return }
             
             self.group = GroupEntity($0.result.value!)
@@ -113,50 +113,44 @@ extension GroupChatViewController {
         
         isLoading = true
         
-        
-        let finder = Router.GroupMessage.Finder(id: self.group.id)
-        
-        if let oldestMessage = oldestMessage {
-            finder.before = String(oldestMessage.createDate.timeIntervalSince1970)
-        }
-        
-        finder.response {
-            
-            self.isLoading = false
-            if $0.result.isFailure {
-                self.isExhausted = true
-                return
-            }
-            if let messages:[MessageEntity] = MessageEntity.collection($0.result.value!) {
+        Router.GroupMessage.FindByGroupId(id: self.group.id, before: oldestMessage?.createDate.timeIntervalSince1970)
+            .response {
                 
-                for message in messages {
-                    
-                    message.group = self.group
-                    
-                    if message.from.id == me.id {
-                        message.from = me
-                    }
-                    self.messages.insert(JSQMessageEntity(message: message), atIndex: 0)
-                }
-                
-                if self.oldestMessage == nil {
-                    self.collectionView!.reloadData()
-                    self.scrollToBottomAnimated(false)
-                    
-                    let newMessages = me.newMessages.filter { $0.group?.id != self.group.id }
-                    if me.newMessages != newMessages {
-                        me.newMessages = newMessages
-                        if let tabBarController = self.navigationController?.tabBarController as? TabBarController {
-                            tabBarController.updateBadgeNumber()
-                        }
-                    }
-                } else {
-                    self.prependRows(messages.count)
-                }
-                
-                self.oldestMessage = messages.last
                 self.isLoading = false
-            }
+                if $0.result.isFailure {
+                    self.isExhausted = true
+                    return
+                }
+                if let messages:[MessageEntity] = MessageEntity.collection($0.result.value!) {
+                    
+                    for message in messages {
+                        
+                        message.group = self.group
+                        
+                        if message.from.id == me.id {
+                            message.from = me
+                        }
+                        self.messages.insert(JSQMessageEntity(message: message), atIndex: 0)
+                    }
+                    
+                    if self.oldestMessage == nil {
+                        self.collectionView!.reloadData()
+                        self.scrollToBottomAnimated(false)
+                        
+                        let newMessages = me.newMessages.filter { $0.group?.id != self.group.id }
+                        if me.newMessages != newMessages {
+                            me.newMessages = newMessages
+                            if let tabBarController = self.navigationController?.tabBarController as? TabBarController {
+                                tabBarController.updateBadgeNumber()
+                            }
+                        }
+                    } else {
+                        self.prependRows(messages.count)
+                    }
+                    
+                    self.oldestMessage = messages.last
+                    self.isLoading = false
+                }
         }
     }
     
@@ -198,7 +192,7 @@ extension GroupChatViewController: CommonMessageDelegate {
     
     func sendMessage(text: String, done: ( ()->() )? = nil ) {
         
-        Router.GroupMessage.Creater(id: self.group.id, content: text).response {
+        Router.GroupMessage.SendByGroupId(id: self.group.id, content: text).response {
             if $0.result.isSuccess {
                 JSQSystemSoundPlayer.jsq_playMessageSentSound()
                 self.finishSendingMessageAnimated(true)

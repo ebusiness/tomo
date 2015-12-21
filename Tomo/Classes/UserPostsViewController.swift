@@ -133,12 +133,7 @@ extension UserPostsViewController {
         
         isLoading = true
         
-        let finder = Router.User.Posts(id: self.user.id)
-        
-        if let oldestContent = oldestContent {
-            finder.before = String(oldestContent.createDate.timeIntervalSince1970)
-        }
-        
+        let finder = Router.User.Posts(id: self.user.id, before: oldestContent?.createDate.timeIntervalSince1970)
         finder.response {
             if $0.result.isFailure {
                 self.isLoading = false

@@ -265,12 +265,7 @@ extension RegViewController: WechatManagerAuthDelegate {
     
     func signupIfNeeded(var parameters: [String : AnyObject], completion: ((res: AnyObject) -> ())) {
         
-        let wechat = Router.Signup.WeChat(openid: WechatManager.openid, nickname: parameters["nickname"] as? String ?? "")
-        wechat.headimgurl = parameters["headimgurl"] as? String ?? ""
-        
-        if let gender = parameters["sex"] as? String {
-            wechat.sex = gender == "2" ? "女" : "男"
-        }
+        let wechat = Router.Signup.WeChat(openid: WechatManager.openid, nickname: parameters["nickname"] as? String ?? "", gender: parameters["sex"] as? String, headimgurl: parameters["headimgurl"] as? String)
         
         wechat.response {
             

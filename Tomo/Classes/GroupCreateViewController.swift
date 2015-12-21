@@ -70,11 +70,11 @@ extension GroupCreateViewController {
         
         if self.groupNameTextField.text!.length < 1 { return }
         
-        let creater = Router.Group.Creater(name: self.groupNameTextField.text!)
+        var parameters = Router.Group.CreateParameters(name: self.groupNameTextField.text!)
         
-        creater.introduction = self.addressTextField.text
-        creater.address = self.addressTextField.text
-        creater.members = self.inviteFriends.map{ (user) -> String in
+        parameters.introduction = self.addressTextField.text
+        parameters.address = self.addressTextField.text
+        parameters.members = self.inviteFriends.map{ (user) -> String in
             return user.id
         }
         
@@ -83,10 +83,10 @@ extension GroupCreateViewController {
         
         if let cover = self.cover {
             cover.saveToPath(coverPath)
-            creater.cover = coverName
+            parameters.cover = coverName
         }
         
-        creater.response {
+        Router.Group.Create(parameters: parameters).response {
             if $0.result.isFailure { return }
             
             let groupInfo = GroupEntity($0.result.value!)
@@ -181,7 +181,7 @@ extension GroupCreateViewController {
 // MARK: - Net methods
 extension GroupCreateViewController {
     private func loadFriends() {
-        Router.Contact.List().response {
+        Router.Contact.All.response {
             if $0.result.isFailure { return }
             self.friends = UserEntity.collection($0.result.value!)
         }

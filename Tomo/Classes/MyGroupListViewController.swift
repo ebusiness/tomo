@@ -84,8 +84,8 @@ extension MyGroupListViewController {
         }
         
         isLoading = true
-        
-        Router.Group.Finder(category: .mine).response {
+        let parameters = Router.Group.FindParameters(category: .mine)
+        Router.Group.Find(parameters: parameters).response {
             if $0.result.isFailure {
                 self.isLoading = false
                 return

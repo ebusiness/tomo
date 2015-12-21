@@ -372,13 +372,14 @@ extension HomeViewController {
         
         if !needToLoadStations { return }
         
-        let finder = Router.Group.Finder(category: .discover)
+        var parameters = Router.Group.FindParameters(category: .discover)
+        
         if let location = self.location {
-            finder.type = .station
-            finder.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
+            parameters.type = .station
+            parameters.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
         }
  
-        finder.response {
+        Router.Group.Find(parameters: parameters).response {
             if $0.result.isFailure { return }
             self.recommendGroups = GroupEntity.collection($0.result.value!)
             
@@ -395,12 +396,13 @@ extension HomeViewController {
         isLoading = true
         tableView.tableFooterView = footerView
         
-        let finder = Router.Post.Finder(category: .all)
+        var parameters = Router.Post.FindParameters(category: .all)
+    
         if let oldestContent = oldestContent as? PostEntity {
-            finder.before = String(oldestContent.createDate.timeIntervalSince1970)
+            parameters.before = oldestContent.createDate.timeIntervalSince1970
         }
         
-        finder.response {
+        Router.Post.Find(parameters: parameters).response {
             self.tableView.tableFooterView = nil
             
             if $0.result.isFailure {
@@ -449,14 +451,14 @@ extension HomeViewController {
         activityIndicator.startAnimating()
         indicatorLabel.text = "正在加载"
         
-        let finder = Router.Post.Finder(category: .all)
+        var parameters = Router.Post.FindParameters(category: .all)
         
         if let latestContent = latestContent as? PostEntity {
             // TODO - This is a dirty solution
-            finder.after = String(latestContent.createDate.timeIntervalSince1970 + 1)
+            parameters.after = latestContent.createDate.timeIntervalSince1970 + 1
         }
         
-        finder.response {
+        Router.Post.Find(parameters: parameters).response {
             if $0.result.isFailure {
                 self.endRefreshing()
                 return

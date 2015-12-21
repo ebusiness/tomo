@@ -57,7 +57,7 @@ final class MessageViewController: CommonMessageController {
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         // open all message when leave
-        Router.Message.Finder(id: friend.id).request
+        Router.Message.FindByUserId(id: friend.id, before: nil).request
     }
 }
 
@@ -89,11 +89,7 @@ extension MessageViewController {
         
         isLoading = true
         
-        let finder = Router.Message.Finder(id: friend.id)
-        
-        if let oldestMessage = oldestMessage {
-            finder.before = String(oldestMessage.createDate.timeIntervalSince1970)
-        }
+        let finder = Router.Message.FindByUserId(id: friend.id, before: oldestMessage?.createDate.timeIntervalSince1970)
         
         finder.response {
             if $0.result.isFailure {
@@ -135,7 +131,8 @@ extension MessageViewController {
             
             self.oldestMessage = messages.last
             self.isLoading = false
-        }    }
+        }
+    }
     
     private func prependRows(rows: Int) {
         
@@ -173,7 +170,7 @@ extension MessageViewController: CommonMessageDelegate {
     
     func sendMessage(text: String, done: ( ()->() )? = nil ) {
         
-        Router.Message.Creater(to: friend.id, content: text).response {
+        Router.Message.SendTo(id: friend.id, content: text).response {
             if $0.result.isFailure {
                 done?()
             } else {

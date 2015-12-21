@@ -12,44 +12,38 @@ extension Router {
         var path = "/session"
     }
     
-    struct Signin {
-        class Email: NSObject, APIRoute {
-            let path = "/signin"
-            let method = RouteMethod.POST
-            
-            let email: String, password: String
-            
-            init(email: String, password: String) {
-                self.email = email
-                self.password = password
-            }
-        }
-        
-        class WeChat: NSObject, APIRoute {
-            let path = "/signin-wechat"
-            let method = RouteMethod.POST
-            
-            private let type = "wechat"
-            let openid: String, access_token: String
-            
-            init(openid: String, access_token: String) {
-                self.openid = openid
-                self.access_token = access_token
-            }
-        }
-        
-        class Test: NSObject, APIRoute {
-            let path = "/signin-test"
-            
-            let id: String
-            
-            init(id: String){
-                self.id = id
-            }
-        }
-    }
-    
     struct Signout: APIRoute {
         let path = "/signout"
+    }
+    
+    enum Signin: APIRoute {
+        case Email(email: String, password: String)
+        case WeChat(openid: String, access_token: String)
+        case Test(id: String)
+        
+        var path: String {
+            switch self{
+            case Email: return "/signin"
+            case WeChat: return "/signin-wechat"
+            case Test: return "/signin-test"
+            }
+        }
+        var method: RouteMethod {
+            switch self{
+            case Email: return .POST
+            case WeChat: return .POST
+            case Test: return .GET
+            }
+        }
+        var parameters: [String: AnyObject]? {
+            switch self{
+            case Email(let email, let password):
+                return ["email": email, "password": password]
+            case WeChat(let openid, let access_token):
+                return ["openid": openid, "access_token": access_token, "type": "wechat"]
+            case Test(let id):
+                return ["id": id]
+            }
+        }
     }
 }

@@ -119,12 +119,12 @@ extension BookmarkedPostsViewController {
         
         isLoading = true
         
-        let postFinder = Router.Post.Finder(category: .bookmark )
+        var parameters = Router.Post.FindParameters(category: .bookmark)
         
         if let oldestContent = oldestContent as? PostEntity {
-            postFinder.before = String(oldestContent.createDate.timeIntervalSince1970)
+            parameters.before = oldestContent.createDate.timeIntervalSince1970
         }
-        postFinder.response {
+        Router.Post.Find(parameters: parameters).response {
             
             self.isLoading = false
             if $0.result.isFailure {

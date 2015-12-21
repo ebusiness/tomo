@@ -136,7 +136,7 @@ extension ProfileViewController {
         
         sender.userInteractionEnabled = false
         
-        Router.Invitation.Add(id: self.user.id).response {
+        Router.Invitation.SendTo(id: self.user.id).response {
             if $0.result.isFailure {
                 sender.userInteractionEnabled = true
                 return
@@ -242,7 +242,7 @@ extension ProfileViewController {
         
         if let invitation = self.getUserInvitation() {
             
-            Router.Invitation.Updater(id: invitation.id, accepted: isApproved).response {
+            Router.Invitation.ModifyById(id: invitation.id, accepted: isApproved).response {
                 if $0.result.isFailure { return }
                 
                 me.friendInvitations = me.friendInvitations.filter{ $0.from.id != self.user.id }

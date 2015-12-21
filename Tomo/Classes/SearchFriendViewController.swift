@@ -79,7 +79,7 @@ extension SearchFriendViewController: UISearchBarDelegate {
             
             self.navigationItem.titleView?.endEditing(true)
             
-            Router.User.Finder(nickName: searchBar.text!).response {
+            Router.User.FindByNickName(nickName: searchBar.text!).response {
                 self.result = $0.result.isFailure ? nil : UserEntity.collection($0.result.value!)
             }
         }

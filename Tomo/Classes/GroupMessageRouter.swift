@@ -9,27 +9,36 @@
 // MARK: - Group Messages
 extension Router {
     
-    struct GroupMessage {
-        class Finder: NSObject, APIRoute {
-            let path: String
-            
-            var before: String?
-            
-            init(id: String) {
-                self.path = "/groups/\(id)/messages"
+    enum GroupMessage: APIRoute {
+        case FindByGroupId(id: String, before: NSTimeInterval?)
+        case SendByGroupId(id: String, content: String)
+        
+        var path: String {
+            switch self {
+            case FindByGroupId(let id):
+                return "/groups/\(id)/messages"
+            case SendByGroupId(let id):
+                return "/groups/\(id)/messages"
             }
         }
-        
-        class Creater: NSObject, APIRoute {
-            let path: String
-            var method = RouteMethod.POST
-            
-            let content: String
-            
-            init(id: String, content: String) {
-                self.path = "/groups/\(id)/messages"
-                self.content = content
+        var method: RouteMethod {
+            switch self {
+            case SendByGroupId:
+                return .POST
+            default:
+                return .GET
             }
+        }
+        var parameters: [String: AnyObject]? {
+            switch self {
+            case FindByGroupId(_, let before):
+                if let before = before {
+                    return ["before": String(before)]
+                }
+            case SendByGroupId(_, let content):
+                return ["content": content]
+            }
+            return nil
         }
     }
     

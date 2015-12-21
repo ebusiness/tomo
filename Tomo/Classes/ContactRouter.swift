@@ -8,18 +8,25 @@
 
 extension Router {
     
-    struct Contact {
+    enum Contact: APIRoute {
+        case Delete(id: String)
+        case All
         
-        struct Delete: APIRoute {
-            let path: String
-            let method = RouteMethod.DELETE
-            init(id: String){
-                self.path = "/friends/\(id)"
+        var path: String {
+            switch self {
+            case Delete(let id):
+                return "/friends/\(id)"
+            case All:
+                return "/friends"
             }
         }
-        
-        struct List: APIRoute {
-            let path = "/friends"
+        var method: RouteMethod {
+            switch self {
+            case Delete:
+                return .DELETE
+            default:
+                return .GET
+            }
         }
     }
 }

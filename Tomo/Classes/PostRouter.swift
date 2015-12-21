@@ -9,85 +9,99 @@
 // MARK: - post
 extension Router {
     
-    struct Post {
+    enum Post: APIRoute {
+        case FindById(id: String)
+        case Find(parameters: FindParameters)
+
+        case Create(parameters: CreateParameters)
+        case Delete(id: String)
         
-        enum Category: String  {
-            case all, bookmark, mine
-        }
+        case Comment(id: String, content: String)
+        case Bookmark(id: String)
+        case Like(id: String)
         
-        class Finder: NSObject, APIRoute {
-            let path = "/posts"
-            
-            let category: String
-            var before: String?
-            var after: String?
-            
-            init(category: Category) {
-                
-                self.category = category.rawValue
+        var path: String {
+            switch self {
+            case FindById(let id): return "/posts/\(id)"
+            case Find: return "/posts"
+            case Create: return "/posts"
+            case Delete(let id): return "/posts/\(id)"
+            case Comment(let id): return "/posts/\(id)/comments"
+            case Bookmark(let id): return "/posts/\(id)/bookmark"
+            case Like(let id): return "/posts/\(id)/like"
             }
         }
         
-        class Creater: NSObject, APIRoute {
-            let path = "/posts"
-            let method = RouteMethod.POST
-            
-            let content: String
-            var images: [String]?, group: String?, coordinate: [String]?, location: String?
-            
-            init(content: String) {
-                
-                self.content = content
+        var method: RouteMethod {
+            switch self {
+            case Create: return .POST
+            case Delete: return .DELETE
+            case Comment: return .POST
+            case Bookmark: return .PATCH
+            case Like: return .PATCH
+            default: return .GET
             }
         }
         
-        struct Delete: APIRoute {
-            let path: String
-            let method = RouteMethod.DELETE
-            
-            init(id: String) {
-                self.path = "/posts/\(id)"
-            }
-            
-        }
-        
-        struct Detail: APIRoute {
-            let path: String
-            
-            init(id: String) {
-                self.path = "/posts/\(id)"
+        var parameters: [String : AnyObject]? {
+            switch self {
+            case Find(let parameters): return parameters.getParameters()
+            case Create(let parameters): return parameters.getParameters()
+            case Comment(_, let content): return ["content": content]
+            default: return nil
             }
         }
-        
-        class Comment: NSObject, APIRoute {
-            let path: String
-            let method = RouteMethod.POST
+    }
+}
+
+extension Router.Post {
+    
+    enum Category: String  {
+        case all, bookmark, mine
+    }
+    
+    struct FindParameters {
+        var category: Category
+        var before: NSTimeInterval?
+        var after: NSTimeInterval?
+        init(category: Category) {
             
-            let content: String
-//            var replyTo: String?
-            
-            init(id: String, content: String) {
-                self.path = "/posts/\(id)/comments"
-                self.content = content
-            }
+            self.category = category
         }
         
-        struct Bookmark: APIRoute {
-            let path: String
-            let method = RouteMethod.PATCH
+        func getParameters() -> [String: AnyObject] {
+            var parameters = [String: AnyObject]()
             
-            init(id: String) {
-                self.path = "/posts/\(id)/bookmark"
+            parameters["category"] = category.rawValue
+            if let before = before {
+                parameters["before"] = String(before)
             }
+            if let after = after {
+                parameters["after"] = String(after)
+            }
+            
+            return parameters
+        }
+    }
+    
+    struct CreateParameters {
+        var content: String
+        var images: [String]?, group: String?, coordinate: [String]?, location: String?
+        init(content: String) {
+            
+            self.content = content
         }
         
-        struct Like: APIRoute {
-            let path: String
-            let method = RouteMethod.PATCH
+        func getParameters() -> [String: AnyObject] {
+            var parameters = [String: AnyObject]()
             
-            init(id: String) {
-                self.path = "/posts/\(id)/like"
-            }
+            parameters["content"] = content
+            parameters["images"] = images
+            parameters["group"] = group
+            parameters["coordinate"] = coordinate
+            parameters["location"] = location
+            
+            return parameters
         }
     }
 }

@@ -167,7 +167,7 @@ extension GroupDescriptionViewController {
 extension GroupDescriptionViewController {
     private func loadGroupDescription() {
         
-        Router.Group.Detail(id: group.id).response {
+        Router.Group.FindById(id: group.id).response {
             if $0.result.isFailure { return }
             self.detailedGroup = GroupEntity($0.result.value!)
         }

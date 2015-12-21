@@ -380,18 +380,18 @@ extension CreatePostViewController {
     private func postContent(imageList: AnyObject?) {
         
 //        println(imageList)
-        let postCreater = Router.Post.Creater(content: self.postTextView.text!)
+        var parameters = Router.Post.CreateParameters(content: self.postTextView.text!)
         
         if let imageList = imageList as? [String] {
-            postCreater.images = imageList
+            parameters.images = imageList
         }
         
         if let group = self.group {
-            postCreater.group = group.id
+            parameters.group = group.id
         }
         
         if let location = self.location {
-            postCreater.coordinate = [String(stringInterpolationSegment: location.coordinate.latitude),String(stringInterpolationSegment: location.coordinate.longitude)];
+            parameters.coordinate = [String(stringInterpolationSegment: location.coordinate.latitude),String(stringInterpolationSegment: location.coordinate.longitude)];
         }
         
         if let placemark = placemark {
@@ -412,10 +412,10 @@ extension CreatePostViewController {
             if let houseNumber = placemark.subThoroughfare {
                 address += houseNumber
             }
-            postCreater.location = address
+            parameters.location = address
         }
         
-        postCreater.response {
+        Router.Post.Create(parameters: parameters).response {
             switch $0.result {
             case .Success(let value):
                 self.performSegueWithIdentifier("postCreated", sender: PostEntity(value))

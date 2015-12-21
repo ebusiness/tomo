@@ -7,31 +7,39 @@
 //
 
 extension Router {
-    struct Signup {
-        class Email: NSObject, APIRoute {
-            let path = "/signup"
-            let method = RouteMethod.POST
-            
-            let email: String, password: String, nickName: String
-            
-            init(email: String, password: String, nickName: String) {
-                self.nickName = nickName
-                self.email = email
-                self.password = password
+    enum Signup: APIRoute {
+        case Email(email: String, password: String, nickName: String)
+        case WeChat(openid: String, nickname: String, gender: String?, headimgurl: String?)
+        
+        var path: String {
+            switch self {
+            case Email: return "/signup"
+            case WeChat: return "/signup-wechat"
             }
         }
         
-        class WeChat: NSObject, APIRoute {
-            let path = "/signup-wechat"
-            let method = RouteMethod.POST
+        var method: RouteMethod {
+            return .POST
+        }
+        
+        var parameters: [String: AnyObject]? {
             
-            let openid: String, nickname: String
-            
-            var sex: String? = "男", headimgurl: String?
-            
-            init(openid: String, nickname: String) {
-                self.openid = openid
-                self.nickname = nickname
+            switch self {
+            case Email(let email, let password, let nickName):
+                return ["email": email, "password": password, "nickName": nickName]
+            case WeChat(let openid, let nickname, let gender, let headimgurl):
+                var parameters = ["openid": openid, "nickname": nickname]
+                
+                if let gender = gender {
+                    parameters["sex"] = gender == "2" ? "女" : "男"
+                } else {
+                    parameters["sex"] = "男"
+                }
+                
+                if let headimgurl = headimgurl {
+                    parameters["headimgurl"] = headimgurl
+                }
+                return parameters
             }
         }
     }

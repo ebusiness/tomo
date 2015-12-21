@@ -32,7 +32,7 @@ class FriendListSendRequestController: MyAccountBaseController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        Router.Invitation.Finder().response {
+        Router.Invitation.Find.response {
             if $0.result.isFailure {
                 self.tableView.backgroundView = self.emptyView
                 return

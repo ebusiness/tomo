@@ -100,7 +100,7 @@ extension NotificationCell {
     }
     
     private func presentPostView(vc: UIViewController) {
-        Router.Post.Detail(id: self.notification.targetId).response {
+        Router.Post.FindById(id: self.notification.targetId).response {
             if $0.result.isFailure { return }
             
             let postVC = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
@@ -114,7 +114,7 @@ extension NotificationCell {
     }
     
     private func presentGroupView(vc: UIViewController) {
-        Router.Group.Detail(id: self.notification.targetId).response {
+        Router.Group.FindById(id: self.notification.targetId).response {
             if $0.result.isFailure { return }
             
             let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController

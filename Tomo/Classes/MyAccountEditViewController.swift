@@ -244,60 +244,60 @@ extension MyAccountEditViewController {
     
     func updateUser(){
         
-        let updater = Router.Setting.Updater()
+        var parameters = Router.Setting.MeParameter()
         
         if nickNameTextField.text != me.nickName {
-            updater.nickName = nickNameTextField.text!
+            parameters.nickName = nickNameTextField.text!
             me.nickName = nickNameTextField.text
         }
         
         if firstNameTextField.text != me.firstName ?? "" {
-            updater.firstName = firstNameTextField.text!
+            parameters.firstName = firstNameTextField.text!
             me.firstName = firstNameTextField.text == "" ? nil : firstNameTextField.text
         }
         
         if lastNameTextField.text != me.lastName ?? "" {
-            updater.lastName = lastNameTextField.text!
+            parameters.lastName = lastNameTextField.text!
             me.lastName = lastNameTextField.text == "" ? nil : lastNameTextField.text
         }
         
         if telTextField.text != me.telNo ?? "" {
-            updater.telNo = telTextField.text!
+            parameters.telNo = telTextField.text!
             me.telNo = telTextField.text
         }
         
         if addressTextField.text != me.address ?? "" {
-            updater.address = addressTextField.text!
+            parameters.address = addressTextField.text!
             me.address = addressTextField.text == "" ? nil : addressTextField.text
         }
         
         if bioTextView.textColor == UIColor.blackColor() || bioTextView.text != defaultbio {
             if bioTextView.text != me.bio ?? "" {
-                updater.bio = bioTextView.text!
+                parameters.bio = bioTextView.text!
                 me.bio = bioTextView.text == "" ? nil : bioTextView.text
             }
         }
         
         if let gender = user.gender where me.gender != gender  {
-            updater.gender = gender
+            parameters.gender = gender
             me.gender = gender
         }
         if let birthDay = user.birthDay {
-            updater.birthDay = birthDay
+            parameters.birthDay = birthDay
             me.birthDay = birthDay
         }
         if let photo = user.photo where me.photo != photo {
-            updater.photo = photo
+            parameters.photo = photo
             me.photo = photo
         }
         if let cover = user.cover where me.cover != cover {
-            updater.cover = cover
+            parameters.cover = cover
             me.cover  = cover
         }
         
-        guard updater.getParameters() != nil else { return }
+        guard parameters.getParameters() != nil else { return }
         
-        updater.response {
+        Router.Setting.UpdateUserInfo(parameters: parameters).response {
             if $0.result.isFailure { return }
             me = UserEntity($0.result.value!)
             self.user = me

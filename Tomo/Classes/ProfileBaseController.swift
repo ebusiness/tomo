@@ -74,7 +74,7 @@ extension ProfileBaseController {
     
     func getUserInfo(done: ()->() ){
         
-        Router.User.Profile(id: self.user.id).response {
+        Router.User.FindById(id: self.user.id).response {
             if $0.result.isFailure { return }
             
             self.user = UserEntity($0.result.value!)

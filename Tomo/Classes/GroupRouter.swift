@@ -8,86 +8,154 @@
 
 // MARK: - Group
 extension Router {
+
+    enum Group: APIRoute {
+        
+        case FindById(id: String)
+        case Find(parameters: FindParameters)
+        case FindPosts(id: String, before: NSTimeInterval?)
+        
+        case Create(parameters: CreateParameters)
+        
+        case Join(id: String)
+        case Leave(id: String)
+        
+        var path: String {
+            switch self {
+            case FindById(let id):
+                return "/groups/\(id)"
+            case Join(let id):
+                return "/groups/\(id)/join"
+            case Leave(let id):
+                return "/groups/\(id)/leave"
+            case FindPosts(let id):
+                return "/groups/\(id)/posts"
+            default:
+                return "/groups"
+            }
+        }
+        var method: RouteMethod {
+            switch self {
+            case Create:
+                return .POST
+            case Join:
+                return .PATCH
+            case Leave:
+                return .PATCH
+            default:
+                return .GET
+            }
+        }
+        var parameters: [String: AnyObject]? {
+            switch self {
+            case Find(let parameters):
+                return parameters.getParameters()
+            case Create(let parameters):
+                return parameters.getParameters()
+            case FindPosts(_, let before):
+                if let before = before {
+                    return ["before": String(before)]
+                }
+            default:
+                return nil
+            }
+            return nil
+        }
+    }
+}
+
+extension Router.Group {
+    enum Category: String  {
+        case mine, discover, all
+    }
     
-    struct Group {
+    enum Type: String  {
+        case station
+    }
+    
+//    struct Parameter {
+//        var category = Category.all
+//        var name = ""
+//        
+//        var page: Int?, type: Type?, after: NSTimeInterval?, coordinate: [Double]?, hasMembers: Bool?
+//        var introduction: String?, address: String?, cover: String?, members: [String]?
+//        
+//        init() {
+//        }
+//        
+//        func getParameters(routerType: Router.Group) -> [String: AnyObject] {
+//            var parameters = [String: AnyObject]()
+//            
+//            switch routerType {
+//            case Find:
+//                
+//                parameters["category"] = category.rawValue
+//                parameters["page"] = page ?? 0
+//                parameters["type"] = type?.rawValue
+//                parameters["name"] = name
+//                if let after = after {
+//                    parameters["after"] = String(after)
+//                }
+//                parameters["coordinate"] = coordinate
+//                parameters["hasMembers"] = hasMembers
+//                
+//            case Create:
+//                
+//                parameters["name"] = name
+//                parameters["introduction"] = introduction
+//                parameters["address"] = address
+//                parameters["cover"] = cover
+//                parameters["members"] = members
+//            default:
+//                break
+//            }
+//            return parameters
+//        }
+//    }
+    
+    struct FindParameters {
+        var category: Category , page: Int?
+        var type: Type?, name: String?, after: NSTimeInterval?, coordinate: [Double]?, hasMembers: Bool?
         
-        enum Category: String  {
-            case mine, discover, all
+        init(category: Category) {
+            self.category = category
         }
         
-        enum Type: String  {
-            case station
+        func getParameters() -> [String: AnyObject] {
+            var parameters = [String: AnyObject]()
+            
+            parameters["category"] = category.rawValue
+            parameters["page"] = page ?? 0
+            parameters["type"] = type?.rawValue
+            parameters["name"] = name
+            if let after = after {
+                parameters["after"] = String(after)
+            }
+            parameters["coordinate"] = coordinate
+            parameters["hasMembers"] = hasMembers
+            
+            return parameters
+        }
+    }
+    
+    struct CreateParameters {
+        var name: String
+        var introduction: String?, address: String?, cover: String?, members: [String]?
+        
+        init(name: String) {
+            self.name = name
         }
         
-        class Finder: NSObject, APIRoute {
-            let path = "/groups"
+        func getParameters() -> [String: AnyObject] {
+            var parameters = [String: AnyObject]()
             
-            var category: String
+            parameters["name"] = name
+            parameters["introduction"] = introduction
+            parameters["address"] = address
+            parameters["cover"] = cover
+            parameters["members"] = members
             
-            var page: Int
-            var type: Type?
-            var name: String?
-            var after: String?
-            var coordinate: [Double]?
-            var hasMembers: Bool?
-            
-            init(category: Category = .all, page: Int = 0) {
-                self.category = category.rawValue
-                self.page = page
-            }
-            
-            func setCategory(category: Category){
-                self.category = category.rawValue
-            }
-        }
-        
-        class Creater: NSObject, APIRoute {
-            let path = "/groups"
-            let method = RouteMethod.POST
-            
-            let name: String
-            var introduction: String?, address: String?, cover: String?
-            var members: [String]?
-            
-            init(name: String) {
-                self.name = name
-            }
-        }
-        
-        struct Detail: APIRoute {
-            let path: String
-            
-            init(id: String) {
-                self.path = "/groups/\(id)"
-            }
-        }
-        
-        struct Join: APIRoute {
-            let path: String
-            let method = RouteMethod.PATCH
-            
-            init(id: String) {
-                self.path = "/groups/\(id)/join"
-            }
-        }
-        
-        struct Leave: APIRoute {
-            let path: String
-            let method = RouteMethod.PATCH
-            
-            init(id: String) {
-                self.path = "/groups/\(id)/leave"
-            }
-        }
-        
-        class Posts: NSObject, APIRoute {
-            let path: String
-            
-            var before: String?
-            
-            init(id: String) {
-                self.path = "/groups/\(id)/posts"
-            }
+            return parameters
         }
     }
 }

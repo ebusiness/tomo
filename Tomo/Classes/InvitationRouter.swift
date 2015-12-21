@@ -9,31 +9,33 @@
 // MARK: - Connection
 extension Router {
     
-    struct Invitation {
-        struct Finder: APIRoute {
-            let path = "/invitations"
-        }
+    enum Invitation: APIRoute {
         
-        class Updater: NSObject, APIRoute {
-            var path = "/invitations/"
-            let method = RouteMethod.PATCH
-            
-            let result: String
-            
-            init(id: String, accepted: Bool) {
-                self.path += id
-                self.result = accepted ? "accept" : "refuse"
+        case Find
+        case ModifyById(id: String, accepted: Bool)
+        case SendTo(id: String)
+        
+        var path: String {
+            switch self {
+            case ModifyById(let id):
+                return "/invitations/\(id)"
+            default:
+                return "/invitations"
+            }
+        }
+        var method: RouteMethod {
+            switch self {
+            case Find: return .GET
+            case ModifyById: return .PATCH
+            case SendTo: return .POST
             }
         }
         
-        class Add: NSObject, APIRoute {
-            let path = "/invitations"
-            let method = RouteMethod.POST
-            
-            let id: String
-            
-            init(id: String){
-                self.id = id
+        var parameters: [String : AnyObject]? {
+            switch self {
+            case Find: return nil
+            case ModifyById(_, let accepted): return ["result": accepted ? "accept" : "refuse"]
+            case SendTo(let id): return ["id": id]
             }
         }
     }

@@ -97,20 +97,20 @@ class PushSettingViewController: MyAccountBaseController {
         pushSetting.groupJoined = switchGroupJoined.on
         pushSetting.groupLeft = switchGroupLeft.on
         
-        let setting = Router.Setting.Updater()
+        var parameters = Router.Setting.MeParameter()
         
         if me.pushSetting != pushSetting {
-            setting.pushSetting = pushSetting
+            parameters.pushSetting = pushSetting
         }
         
         if !allowNotification {
-            setting.removeDevice = "1"
+            parameters.removeDevice = "1"
             Defaults.remove("deviceToken")
         }
         
-        guard let _ = setting.getParameters() else { return }
+        guard parameters.getParameters() != nil else { return }
         
-        setting.response {
+        Router.Setting.UpdateUserInfo(parameters: parameters).response {
             if $0.result.isFailure { return }
             me.pushSetting = UserEntity.PushSetting($0.result.value!["pushSetting"])
         }

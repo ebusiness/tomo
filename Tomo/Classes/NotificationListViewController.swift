@@ -74,11 +74,7 @@ extension NotificationListViewController {
         }
         
         isLoading = true
-        let notification = Router.Setting.Notification()
-        
-        if let oldestNotifications = self.notifications?.last {
-            notification.before = String(oldestNotifications.createDate.timeIntervalSince1970)
-        }
+        let notification = Router.Setting.FindNotification(before: self.notifications?.last?.createDate.timeIntervalSince1970)
         
         notification.response {
             if $0.result.isFailure {

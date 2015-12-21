@@ -141,14 +141,14 @@ extension GroupDiscoverViewController {
         }
         
         isLoading = true
-        
-        let finder = Router.Group.Finder(category: .discover, page: self.page)
+        var parameters = Router.Group.FindParameters(category: .discover)
+        parameters.page = page
         
         if let searchText = searchText {
-            finder.name = searchText
+            parameters.name = searchText
         }
         
-        finder.response {
+        Router.Group.Find(parameters: parameters).response {
             self.isLoading = false
             
             if $0.result.isFailure {
@@ -194,10 +194,10 @@ extension GroupDiscoverViewController: UISearchBarDelegate {
         
         self.searchText = text
         self.page = 0
-        
-        let finder = Router.Group.Finder(category: .all, page: self.page)
-        finder.name = text
-        finder.response {
+        var parameters = Router.Group.FindParameters(category: .all)
+        parameters.page = page
+        parameters.name = text
+        Router.Group.Find(parameters: parameters).response {
             if $0.result.isFailure {
                 self.groups = [GroupEntity]()
                 self.refresh()

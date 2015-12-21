@@ -9,42 +9,42 @@
 
 extension Router {
     
-    struct User {
+    enum User: APIRoute {
+        case FindByNickName(nickName: String)
+        case FindById(id: String)
+        case Posts(id: String, before: NSTimeInterval?)
+        case Block(id: String)
         
-        class Finder: NSObject, APIRoute {
-            let path = "/users"
-            
-            let nickName: String
-            init(nickName: String) {
-                self.nickName = nickName
+        var path: String {
+            switch self {
+            case FindByNickName: return "/users"
+            case FindById(let id): return "/users/\(id)"
+            case Posts(let id): return "/users/\(id)/posts"
+            case Block: return "/blocks"
             }
         }
         
-        struct Profile: APIRoute {
-            let path: String
-            init(id: String){
-                self.path = "/users/\(id)"
+        var method: RouteMethod {
+            switch self {
+            case Block: return .POST
+            default: return .GET
             }
         }
         
-        class Posts: NSObject, APIRoute {
-            let path: String
-            
-            var before: String?
-            
-            init(id: String){
-                self.path = "/users/\(id)/posts"
+        var parameters: [String : AnyObject]? {
+            switch self {
+            case FindByNickName(let nickName):
+                return ["nickName": nickName]
+            case Posts(_, let before):
+                if let before = before {
+                    return ["before": before]
+                }
+            case Block(let id):
+                return ["id": id]
+            default:
+                return nil
             }
-            
-        }
-        
-        struct Block: APIRoute {
-            let path = "/blocks"
-            let method = RouteMethod.POST
-            let id: String
-            init(id: String){
-                self.id = id
-            }
+            return nil
         }
     }
 }

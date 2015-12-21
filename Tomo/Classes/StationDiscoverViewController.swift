@@ -108,14 +108,14 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
 extension StationDiscoverViewController {
     private func loadInitData() {
         loading = true
-        
-        let finder = Router.Group.Finder(category: .discover, page: page)
-        finder.type = .station
+        var parameters = Router.Group.FindParameters(category: .discover)
+        parameters.page = page
+        parameters.type = .station
         
         let coordinate = location.coordinate
-        finder.coordinate = [coordinate.longitude, coordinate.latitude]
+        parameters.coordinate = [coordinate.longitude, coordinate.latitude]
         
-        finder.response {
+        Router.Group.Find(parameters: parameters).response {
             if $0.result.isFailure {
                 self.loading = false
                 return
@@ -135,18 +135,18 @@ extension StationDiscoverViewController {
             return
         }
         loading = true
-        
-        let finder = Router.Group.Finder(category: .discover, page: page)
-        finder.type = .station
+        var parameters = Router.Group.FindParameters(category: .discover)
+        parameters.page = page
+        parameters.type = .station
         
         let coordinate = location.coordinate
-        finder.coordinate = [coordinate.longitude, coordinate.latitude]
+        parameters.coordinate = [coordinate.longitude, coordinate.latitude]
         
         if let searchText = searchText {
-            finder.name = searchText
+            parameters.name = searchText
         }
         
-        finder.response {
+        Router.Group.Find(parameters: parameters).response {
             if $0.result.isFailure {
                 self.loading = false
                 return
@@ -188,15 +188,14 @@ extension StationDiscoverViewController: UISearchBarDelegate {
         guard let text = searchBar.text else { return }
         self.searchText = text
         self.page = 1
-        
-        let finder = Router.Group.Finder(category: .discover)
-        finder.type = .station
+        var parameters = Router.Group.FindParameters(category: .discover)
+        parameters.type = .station
         
         let coordinate = location.coordinate
-        finder.coordinate = [coordinate.longitude, coordinate.latitude]
-        finder.name = text
+        parameters.coordinate = [coordinate.longitude, coordinate.latitude]
+        parameters.name = text
         
-        finder.response {
+        Router.Group.Find(parameters: parameters).response {
             self.groups = $0.result.isFailure ? nil : GroupEntity.collection($0.result.value!)
             self.refresh()
         }

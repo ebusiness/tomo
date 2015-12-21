@@ -8,26 +8,30 @@
 
 extension Router {
     
-    struct Message {
-        class Finder: NSObject, APIRoute {
-            let path: String
-            
-            var before: String?
-            
-            init(id: String){
-                self.path = "/messages/\(id)"
+    enum Message: APIRoute {
+        case FindByUserId(id: String, before: NSTimeInterval?)
+        case SendTo(id: String, content: String)
+        
+        var path: String {
+            switch self {
+            case FindByUserId(let id):
+                return "/messages/\(id)"
+            case SendTo:
+                return "/messages"
             }
         }
         
-        class Creater: NSObject, APIRoute {
-            let path = "/messages"
-            let method = RouteMethod.POST
-            
-            let to: String, content: String
-            
-            init(to: String, content: String){
-                self.to = to
-                self.content = content
+        var method: RouteMethod {
+            switch self {
+            case FindByUserId: return .GET
+            case SendTo: return .POST
+            }
+        }
+        
+        var parameters: [String : AnyObject]? {
+            switch self {
+            case FindByUserId(_, let before): return ["before": String(before)]
+            case SendTo(let id, let content): return ["to": id, "content": content]
             }
         }
     }

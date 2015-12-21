@@ -126,13 +126,13 @@ extension MyPostsViewController {
         
         isLoading = true
         
-        let finder = Router.Post.Finder(category: .mine)
+        var parameters = Router.Post.FindParameters(category: .mine)
         
         if let oldestContent = oldestContent as? PostEntity {
-            finder.before = String(oldestContent.createDate.timeIntervalSince1970)
+            parameters.before = oldestContent.createDate.timeIntervalSince1970
         }
         
-        finder.response {
+        Router.Post.Find(parameters: parameters).response {
             if $0.result.isFailure {
                 self.isLoading = false
                 self.isExhausted = true

@@ -70,7 +70,7 @@ final class GroupDetailViewController: BaseTableViewController {
     }
     
     func loadPosts() {
-        Router.Group.Posts(id: self.group.id).response {
+        Router.Group.FindPosts(id: self.group.id, before: nil).response {
             if $0.result.isFailure { return }
             
             self.posts = PostEntity.collection($0.result.value!)
@@ -99,11 +99,8 @@ final class GroupDetailViewController: BaseTableViewController {
         
         tableView.tableFooterView = footerView
         
-        let postRouter = Router.Group.Posts(id: self.group.id)
-        
-        if let posts = posts where posts.count != 0{
-            postRouter.before = String(posts.last!.createDate.timeIntervalSince1970)
-        }
+        let postRouter = Router.Group.FindPosts(id: self.group.id, before: posts?.last!.createDate.timeIntervalSince1970)
+
         postRouter.response {
             
             self.tableView.tableFooterView = nil

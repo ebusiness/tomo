@@ -100,7 +100,7 @@ extension URLSchemesController{
     
     private func openMessage(id: String){
         
-        Router.User.Profile(id: id).response {
+        Router.User.FindById(id: id).response {
             if $0.result.isFailure { return }
             
             let vc = MessageViewController()
@@ -115,7 +115,7 @@ extension URLSchemesController{
     
     private func openGroupMessage(id: String){
         
-        Router.Group.Detail(id: id).response {
+        Router.Group.FindById(id: id).response {
             if $0.result.isFailure { return }
             
             let vc = GroupChatViewController()
@@ -137,7 +137,7 @@ extension URLSchemesController{
     
     private func openPost(id: String){
         
-        Router.Post.Detail(id: id).response {
+        Router.Post.FindById(id: id).response {
             if $0.result.isFailure { return }
             
             let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController

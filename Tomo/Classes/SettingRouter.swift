@@ -9,49 +9,138 @@
 // MARK: - user setting
 extension Router {
     
-    struct Setting {
-        class Device: NSObject, APIRoute {
-            let path = "/device"
-            let method = RouteMethod.POST
-            
-            let os: String, model: String, version: String
-            let token: String
-            
-            init(deviceToken: NSData) {
-                
-                self.token = String(deviceToken.description.characters.filter {!"<> ".characters.contains($0)})
-                
-                let device = UIDevice.currentDevice()
-                self.os = device.systemName
-                self.model = device.model
-                self.version = device.systemVersion
+    enum Setting: APIRoute {
+        case UpdateDevice(deviceToken: NSData)
+        case UpdateUserInfo(parameters: MeParameter)
+        case FindNotification(before: NSTimeInterval?)
+        
+        var path: String {
+            switch self{
+            case UpdateDevice: return "/device"
+            case UpdateUserInfo: return "/me"
+            case FindNotification: return "/notifications"
             }
         }
         
-        class Updater: NSObject, APIRoute {
-            let path = "/me"
-            let method = RouteMethod.PATCH
-            
-            var nickName: String?,
-            firstName: String?,
-            lastName: String?,
-            telNo: String?,
-            address: String?,
-            bio: String?,
-            gender: String?,
-            photo: String?,
-            cover: String?,
-            birthDay: NSDate?
-            
-            var removeDevice: String?, pushSetting: UserEntity.PushSetting?
-            
+        var method: RouteMethod {
+            switch self{
+            case UpdateDevice: return .POST
+            case UpdateUserInfo: return .PATCH
+            case FindNotification: return .GET
+            }
         }
         
-        class Notification: NSObject, APIRoute {
-            let path = "/notifications"
-            
-            var before: String?
+        var parameters: [String: AnyObject]? {
+            switch self{
+            case UpdateDevice(let deviceToken):
+                let token = String(deviceToken.description.characters.filter {!"<> ".characters.contains($0)})
+                let device = UIDevice.currentDevice()
+                return [
+                    "token": token,
+                    "os": device.systemName,
+                    "model": device.model,
+                    "version": device.systemVersion,
+                ]
+            case UpdateUserInfo(let parameters):
+                return parameters.getParameters()
+            case FindNotification(let before):
+                if let before = before {
+                    return ["before": String(before)]
+                } else {
+                    return nil
+                }
+            }
         }
     }
     
+}
+
+extension Router.Setting {
+    
+    struct MeParameter {
+        var nickName: String?,
+        firstName: String?,
+        lastName: String?,
+        telNo: String?,
+        address: String?,
+        bio: String?,
+        gender: String?,
+        photo: String?,
+        cover: String?,
+        birthDay: NSDate?
+        
+        var removeDevice: String?, pushSetting: UserEntity.PushSetting?
+        
+        init(){}
+        
+        func getParameters() -> [String: AnyObject]? {
+            
+            var parameters = [String: AnyObject]()
+            
+            if let nickName = nickName {
+                parameters["nickName"] = nickName
+            }
+            if let firstName = firstName {
+                parameters["firstName"] = firstName
+            }
+            if let lastName = lastName {
+                parameters["lastName"] = lastName
+            }
+            if let telNo = telNo {
+                parameters["telNo"] = telNo
+            }
+            if let address = address {
+                parameters["address"] = address
+            }
+            if let address = address {
+                parameters["address"] = address
+            }
+            if let bio = bio {
+                parameters["bio"] = bio
+            }
+            if let gender = gender {
+                parameters["gender"] = gender
+            }
+            if let photo = photo {
+                parameters["photo"] = photo
+            }
+            if let cover = cover {
+                parameters["cover"] = cover
+            }
+            if let birthDay = birthDay {
+                parameters["birthDay"] = birthDay
+            }
+            if let photo = photo {
+                parameters["photo"] = photo
+            }
+            if let removeDevice = removeDevice {
+                parameters["removeDevice"] = removeDevice
+            }
+            
+            
+            if let pushSetting = pushSetting {
+                parameters["pushSetting"] = [
+                    "announcement": pushSetting.announcement,
+                    "message": pushSetting.message,
+                    "groupMessage": pushSetting.groupMessage,
+                    "friendInvited": pushSetting.friendInvited,
+                    "friendAccepted": pushSetting.friendAccepted,
+                    "friendRefused": pushSetting.friendRefused,
+                    "friendBreak": pushSetting.friendBreak,
+                    "postNew": pushSetting.postNew,
+                    "postCommented": pushSetting.postCommented,
+                    "postLiked": pushSetting.postLiked,
+                    "postBookmarked": pushSetting.postBookmarked,
+                    "groupJoined": pushSetting.groupJoined,
+                    "groupLeft": pushSetting.groupLeft,
+                ]
+            }
+            if parameters.count > 0 {
+                return parameters
+            } else {
+                return nil
+            }
+        }
+    }
+
 }

@@ -126,10 +126,9 @@ extension MyStationsViewController {
         }
         
         loading = true
-        
-        let finder = Router.Group.Finder(category: .mine)
-        finder.type = .station
-        finder.response {
+        var parameters = Router.Group.FindParameters(category: .mine)
+        parameters.type = .station
+        Router.Group.Find(parameters: parameters).response {
             if $0.result.isFailure {
                 self.loading = false
                 return

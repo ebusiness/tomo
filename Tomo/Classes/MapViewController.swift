@@ -289,22 +289,20 @@ extension MapViewController {
         self.allAnnotationMapView.removeAnnotations(self.allAnnotationMapView.annotations)
         self.mapView.removeAnnotations(self.mapView.annotations)
         
-        var lastTimeStamp = Defaults["mapLastTimeStamp"].date
-        if lastTimeStamp == nil {
-            lastTimeStamp = NSDate()
-        }
+        let lastTimeStamp = Defaults["mapLastTimeStamp"].date ?? NSDate()
         
-        let finder = Router.Group.Finder()
-        finder.type = .station
-        finder.after = String(lastTimeStamp!.timeIntervalSince1970)
+        var parameters = Router.Group.FindParameters(category: .all)
+        parameters.type = .station
+        parameters.after = lastTimeStamp.timeIntervalSince1970
         
         switch self.mode {
         case .HotStation:
-            finder.hasMembers = true
+            parameters.hasMembers = true
         case .MyStation:
-            finder.setCategory(.mine)
+            parameters.category = .mine
         }
-        finder.response {
+        
+        Router.Group.Find(parameters: parameters).response {
             if $0.result.isFailure { return }
             
             guard let groups:[GroupEntity] = GroupEntity.collection($0.result.value!) else { return }
