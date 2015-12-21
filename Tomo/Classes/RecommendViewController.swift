@@ -11,30 +11,45 @@ import UIKit
 final class RecommendViewController: UIViewController {
     
     @IBOutlet weak var recommendGroupCollectionView: UICollectionView!
-    
     @IBOutlet weak var mapView: MKMapView!
-    
     @IBOutlet weak var maskView: UIView!
-
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchBarBottomConstraint: NSLayoutConstraint!
-    
-    private var myGroups = [GroupEntity]()
-    
-    private var myLocation: CLLocation?
 
     private var currentAnnotationView: MKAnnotationView?
+    private var currentSelectedIndexPath: NSIndexPath?
 
     private let itemSize: CGSize = {
         let height = UIScreen.mainScreen().bounds.height * 0.3 - 8
         let width = height / 4 * 3
-        
         return CGSizeMake(width, height)
     }()
     
     private var recommendGroups: [GroupEntity]? {
         didSet {
-            self.recommendGroupCollectionView.reloadData()
+
+            let firstItemIndex = NSIndexPath(forItem: 0, inSection: 0)
+            var removeIndex: [NSIndexPath] = []
+            var insertIndex: [NSIndexPath] = []
+
+            if let oldValue = oldValue {
+                for _ in oldValue {
+                    removeIndex.append(NSIndexPath(forItem: removeIndex.count, inSection: 0))
+                }
+            }
+
+            if let newValue = self.recommendGroups {
+                for _ in newValue {
+                    insertIndex.append(NSIndexPath(forItem: insertIndex.count, inSection: 0))
+                }
+            }
+
+            self.recommendGroupCollectionView.performBatchUpdates({ _ in
+                self.recommendGroupCollectionView.deleteItemsAtIndexPaths(removeIndex)
+                self.recommendGroupCollectionView.insertItemsAtIndexPaths(insertIndex)
+            }) { _ in
+                self.recommendGroupCollectionView.scrollToItemAtIndexPath(firstItemIndex, atScrollPosition: .Left, animated: true)
+            }
         }
     }
     
@@ -42,9 +57,8 @@ final class RecommendViewController: UIViewController {
 
         super.viewDidLoad()
 
-        LocationController.shareInstance.fetchWithCompletion { location in
-            self.getRecommendInfo(location)
-            self.myLocation = location
+        LocationController.shareInstance.doActionWithLocation {
+            self.getRecommendInfo($0)
         }
     }
 
@@ -58,9 +72,8 @@ final class RecommendViewController: UIViewController {
 
 extension RecommendViewController {
 
-    private func getRecommendInfo(location: CLLocation?, forceRefresh: Bool = false) {
-        guard nil == self.recommendGroups || forceRefresh else { return }
-        
+    private func getRecommendInfo(location: CLLocation?) {
+
         let finder = Router.Group.Finder(category: .discover)
         finder.type = .station
         
@@ -75,68 +88,12 @@ extension RecommendViewController {
             self.recommendGroups = GroupEntity.collection($0.result.value!)
         }
     }
-    
-    private func joinGroup(indexPath: NSIndexPath) {
-        
-        let group = self.recommendGroups![indexPath.item]
-        
-        Router.Group.Join(id: group.id).response {
-            if $0.result.isFailure { return }
-            
-            let removeGroup = self.recommendGroups!.removeAtIndex(indexPath.item)
-            me.addGroup(removeGroup.id)
-            self.myGroups.append(removeGroup)
-        }
-    }
-    
-    private func searchGroup(keyword: String) {
-
-        let finder = Router.Group.Finder(category: .discover)
-        finder.type = .station
-        finder.name = keyword
-        
-        if let location = myLocation {
-            finder.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
-        }
-        
-        finder.response {
-            if $0.result.isFailure { return }
-            self.recommendGroups = GroupEntity.collection($0.result.value!)
-        }
-    }
-    
-    private func selectGroup(group: GroupEntity) {
-
-        guard let latitude = group.coordinate?[1], longitude = group.coordinate?[0] else {
-            return
-        }
-
-        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-
-        let unit = MKMetersPerMapPointAtLatitude(latitude)
-
-        let point = MKMapPointForCoordinate(coordinate)
-        let origin = MKMapPoint(x: point.x - 1500/unit, y: point.y - 2100/unit)
-        let rect = MKMapRect(origin: origin, size: MKMapSize(width: 3000/unit, height: 3000/unit))
-
-        self.mapView.setVisibleMapRect(rect, animated: true)
-        
-        self.mapView.removeAnnotations(self.mapView.annotations)
-
-        let annotation = GroupAnnotation()
-        annotation.group = group
-        if let lon = group.coordinate?.get(0), lat = group.coordinate?.get(1) {
-            annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-        }
-
-        self.mapView.addAnnotation(annotation)
-    }
-
 
     @IBAction func searchButtonTapped(sender: AnyObject) {
 
         self.dismissViewControllerAnimated(true, completion: nil)
-        UIView.animateWithDuration(0.3, animations: {
+
+        UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
             self.searchBarBottomConstraint.constant = 0
             self.view.layoutIfNeeded()
         }) { _ in
@@ -167,14 +124,14 @@ extension RecommendViewController {
 extension RecommendViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return recommendGroups?.count ?? 0
+        return self.recommendGroups?.count ?? 0
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("defaultCell", forIndexPath: indexPath) as! GroupRecommendCollectionViewCell
 
-        let group = recommendGroups![indexPath.item]
+        let group = self.recommendGroups![indexPath.item]
 
         cell.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
         cell.nameLabel.text = group.name
@@ -189,22 +146,44 @@ extension RecommendViewController: UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 
-        self.dismissViewControllerAnimated(true, completion: nil)
+        guard self.currentSelectedIndexPath != indexPath else { return }
 
-//        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+        self.currentSelectedIndexPath = indexPath
+        self.dismissViewControllerAnimated(true, completion: nil)
 
         if let group = recommendGroups?[indexPath.row] {
 
-            selectGroup(group)
+            self.selectGroup(group)
 
-            if maskView != nil {
-                UIView.animateWithDuration(0.3, animations: {
-                    self.maskView.alpha = 0
-                }, completion: { _ in
-                    self.maskView.removeFromSuperview()
-                })
-            }
+            guard self.maskView.alpha > 0 else { return }
+
+            UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
+                self.maskView.alpha = 0
+            })
         }
+    }
+
+    private func selectGroup(group: GroupEntity) {
+
+        guard let latitude = group.coordinate?[1] else { return }
+        guard let longitude = group.coordinate?[0] else { return }
+
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+
+        let unit = MKMetersPerMapPointAtLatitude(latitude)
+
+        let point = MKMapPointForCoordinate(coordinate)
+        let origin = MKMapPoint(x: point.x - 1500/unit, y: point.y - 2100/unit)
+        let rect = MKMapRect(origin: origin, size: MKMapSize(width: 3000/unit, height: 3000/unit))
+
+        self.mapView.setVisibleMapRect(rect, animated: true)
+
+        let annotation = GroupAnnotation()
+        annotation.group = group
+        annotation.coordinate = coordinate
+
+        self.mapView.removeAnnotations(self.mapView.annotations)
+        self.mapView.addAnnotation(annotation)
     }
 }
 
@@ -249,8 +228,8 @@ extension RecommendViewController: MKMapViewDelegate {
             if let pop = vc.popoverPresentationController {
                 pop.passthroughViews = [self.view]
                 pop.permittedArrowDirections = .Down
-                pop.sourceView = (self.currentAnnotationView as? UIView)
-                pop.sourceRect = (self.currentAnnotationView as? UIView)!.bounds
+                pop.sourceView = annotationView
+                pop.sourceRect = annotationView.bounds
             }
         }
     }
@@ -269,25 +248,59 @@ extension RecommendViewController: UICollectionViewDelegateFlowLayout {
 extension RecommendViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        UIView.animateWithDuration(0.3, animations: {
-            self.searchBarBottomConstraint.constant = -44
-            self.view.layoutIfNeeded()
-        })
-        guard let text = searchBar.text where text.length > 0 else {
-            return
+
+        self.hideSearchBar()
+
+        guard let text = searchBar.text where text.length > 0 else { return }
+
+        LocationController.shareInstance.doActionWithLocation {
+            self.currentSelectedIndexPath = nil
+            self.searchGroupWith(text, location: $0)
         }
-        searchGroup(text)
     }
 
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        UIView.animateWithDuration(0.3, animations: {
-            self.searchBarBottomConstraint.constant = -44
+
+        self.hideSearchBar()
+
+        guard let text = searchBar.text where text.length == 0 else { return }
+
+        LocationController.shareInstance.doActionWithLocation {
+            self.currentSelectedIndexPath = nil
+            self.getRecommendInfo($0)
+        }
+    }
+
+    private func hideSearchBar() {
+
+        self.searchBar.resignFirstResponder()
+
+        UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
+            self.searchBarBottomConstraint.constant = -TomoConst.UI.TopBarHeight
             self.view.layoutIfNeeded()
         })
-        if let text = searchBar.text, let location = myLocation where text.length == 0 {
-            getRecommendInfo(location, forceRefresh: true)
+    }
+
+    private func searchGroupWith(keyword: String, location: CLLocation?) {
+
+        let finder = Router.Group.Finder(category: .discover)
+        finder.type = .station
+        finder.name = keyword
+
+        if let location = location {
+            finder.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
+        } else {
+            finder.coordinate = TomoConst.Geo.CoordinateTokyo
+        }
+
+        finder.response {
+            guard $0.result.isSuccess else {
+                let alert = UIAlertController(title: "没有找到相关的结果", message: "请试着用其他关键字检索一下吧", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "好", style: .Cancel, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+                return
+            }
+            self.recommendGroups = GroupEntity.collection($0.result.value!)
         }
     }
 }
@@ -302,7 +315,7 @@ extension RecommendViewController: UIAdaptivePresentationControllerDelegate {
 
 // MARK: - GroupRecommendCollectionViewCell
 
-class GroupRecommendCollectionViewCell: UICollectionViewCell {
+final class GroupRecommendCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var coverImageView: UIImageView!
 
@@ -318,7 +331,7 @@ class GroupRecommendCollectionViewCell: UICollectionViewCell {
 
 // MARK: - GroupPopoverViewController
 
-class GroupPopoverViewController: UIViewController {
+final class GroupPopoverViewController: UIViewController {
 
     var groupAnnotation: GroupAnnotation! {
         didSet {
@@ -329,6 +342,7 @@ class GroupPopoverViewController: UIViewController {
     }
 
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var introLabel: UILabel!
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var joinButton: UIButton!
 
@@ -338,29 +352,29 @@ class GroupPopoverViewController: UIViewController {
     }
 
     @IBAction func joinButtonTapped(sender: AnyObject) {
+
         guard let delegate = UIApplication.sharedApplication().delegate else {return}
         guard let window = delegate.window else {return}
         guard let rootViewController = window?.rootViewController else {return}
         
         Router.Group.Join(id: groupAnnotation.group.id).response {
-            if $0.result.isFailure {
-                Util.alert(self, title: "网络错误", message: "网络连接超时,请稍后重试.", cancel: "好")
-                return
-            }
+
+            guard $0.result.isSuccess else { return }
             
             let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
             Util.changeRootViewController(from: rootViewController, to: tab)
         }
     }
 
-    func setupDisplay() {
+    private func setupDisplay() {
 
-        joinButton.layer.borderColor = UIColor.whiteColor().CGColor
-        joinButton.layer.borderWidth = 1
-        joinButton.layer.cornerRadius = 2
+        self.joinButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.joinButton.layer.borderWidth = 1
+        self.joinButton.layer.cornerRadius = 2
 
         if let group = groupAnnotation.group {
             self.nameLabel.text = group.name
+            self.introLabel.text = group.introduction
             self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
         }
     }

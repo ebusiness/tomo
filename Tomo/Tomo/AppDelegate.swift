@@ -42,6 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let launchOpts = launchOptions, userInfo = launchOpts[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject] {
             self.application(application, didReceiveRemoteNotification: userInfo)
         }
+
+        // "touch" the LocationControll, so it been initialized here, 
+        // cause the didChangeAuthorizationStatus will called at once 
+        // after initialization that gonna mass the auth process
+        LocationController.shareInstance
         
         return true
     }

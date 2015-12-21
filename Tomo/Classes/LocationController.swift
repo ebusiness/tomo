@@ -10,44 +10,25 @@ import UIKit
 import CoreLocation
 
 final class LocationController: NSObject {
-    
-    typealias LocationClosure = ((location: CLLocation?)->())
-    
-    private var timeoutTimer: NSTimer?
-    //location manager
+
+    typealias Action = (CLLocation?) -> ()
+
+    static let shareInstance = LocationController()
+
     private let locationManager = CLLocationManager()
-    
-    private var locationRequests = [LocationClosure]()
-    
-    private var location: CLLocation? { //dynamic -> KVO
-        didSet {
-            if let location = location {
-                // accuracy better than desiredAccuracy, stop locating
-                if location.horizontalAccuracy <= locationManager.desiredAccuracy {
-                    stopLocationManager(location)
-                } else {
-                    locationRequests.forEach { locationRequest in
-                        locationRequest(location: location)
-                    }
-                }
-            }
-        }
-    }
-    
-    //window
-    private let window : UIWindow? = {
-        
-        return UIApplication.sharedApplication().keyWindow
-        
-    }()
-    
-    static let shareInstance: LocationController = LocationController()
-    
-    private override init (){
+
+    private var location: CLLocation?
+
+    private var action: Action?
+
+    private var timer: NSTimer?
+
+    private override init () {
+
         super.init()
-        
+
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.activityType = .Fitness
     }
     
@@ -58,124 +39,137 @@ final class LocationController: NSObject {
 extension LocationController: CLLocationManagerDelegate {
     
     //location authorization status changed
-    internal func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+
+        guard self.action != nil else { return }
         
         switch status {
-        case .AuthorizedWhenInUse:
+
+        case .AuthorizedWhenInUse, .AuthorizedAlways:
             self.locationManager.startUpdatingLocation()
-            if let timer = timeoutTimer {
-                timer.invalidate()
-            }
-            timeoutTimer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "timeout", userInfo: nil, repeats: false)
-        case .Denied:
-            locationRequests.removeAll()
-            stopLocationManager()
+
         default:
-            break
+            self.doAction()
+
         }
     }
-    
-    internal func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+
+        let newLocation = locations.last!
+        let accuracy = newLocation.horizontalAccuracy
+
+        // horizontalAccuracy less than 0 is invalid result, ignore it
+        guard accuracy >= 0 else { return }
+
+        // ignore the result that accuracy less than desiredAccuracy
+        guard accuracy <= locationManager.desiredAccuracy else { return }
+
+        // accept the result
+        self.location = newLocation
+
+        // stop locating
+        self.stopLocationManager()
+    }
+
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         stopLocationManager()
     }
-    
-    internal func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        let newLocation = locations.last!
-        
-        let locationAge = -newLocation.timestamp.timeIntervalSinceNow
-        
-        // the location object was determine too long age, ignore it
-        if locationAge > 5.0{
-            return
-        }
-        
-        // horizontalAccuracy less than 0 is invalid result, ignore it
-        if newLocation.horizontalAccuracy < 0 {
-            return
-        }
-        
-        var distance = CLLocationDistance(DBL_MAX)
-        if let location = self.location {
-            distance = newLocation.distanceFromLocation(location)
-        }
-        
-        // new location object more accurate than previous one
-        if self.location == nil || self.location!.horizontalAccuracy > newLocation.horizontalAccuracy {
-            // accept the result
-            self.location = newLocation
-            
-        // if the location didn't changed too much
-        } else if distance < 1.0 {
-            
-            let timeInterval = newLocation.timestamp.timeIntervalSinceDate(location!.timestamp)
-            
-            if timeInterval > 10 {
-                stopLocationManager(location)
-            }
-        }
-    }
+
 }
 
 // MARK: - private method
 
 extension LocationController {
-    @objc private func timeout(){
-        stopLocationManager(nil)
+
+    private func determineStatus() -> Bool {
+
+        guard CLLocationManager.locationServicesEnabled() else {
+            self.locationManager.startUpdatingLocation()
+            return false
+        }
+
+        switch CLLocationManager.authorizationStatus() {
+
+        case .AuthorizedAlways, .AuthorizedWhenInUse :
+            return true
+
+        case .NotDetermined:
+            self.locationManager.requestWhenInUseAuthorization()
+            return false
+
+        case .Restricted:
+            return false
+
+        case .Denied:
+            self.showRequestAuthorizationAlert()
+            return false
+        }
     }
-    
-    //location manager returned, call didcomplete closure
-    private func stopLocationManager(location: CLLocation? = nil) {
+
+    private func showRequestAuthorizationAlert() {
+
+        // TODO: don't know why, have to call this on main queue, but it is on main queue already (from debug view) 
+        dispatch_async(dispatch_get_main_queue()) {
+
+            let title = "请启用定位服务"
+            let message = "为了提供更好的服务，現場Tomo希望使用您的位置信息"
+
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+
+            alert.addAction(UIAlertAction(title: "不允许", style: .Cancel) { _ in
+                self.doAction()
+            })
+
+            alert.addAction(UIAlertAction(title: "设定", style: .Default) { _ in
+                let url = NSURL(string: UIApplicationOpenSettingsURLString)!
+                UIApplication.sharedApplication().openURL(url)
+            })
+
+            let rootViewController = UIApplication.sharedApplication().delegate!.window!!.rootViewController
+            rootViewController?.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+
+    func stopLocationManager() {
         
-        if let timer = timeoutTimer {
+        self.locationManager.stopUpdatingLocation()
+
+        if let timer = self.timer {
             timer.invalidate()
         }
-        
-        locationManager.stopUpdatingLocation()
-        
-        if let location = location {
-            locationRequests.forEach { locationRequest in
-                locationRequest(location: location)
-            }
-        }
-        
-        locationRequests.removeAll()
+
+        self.doAction()
+
+        self.location = nil
     }
-    
-    private func showLocationServiceDisabledAlert() {
-        if let vc = self.window?.rootViewController {
-            Util.alert(vc, title: "请启用定位服务", message: "设置隐私定位服务", cancel: "OK")
+
+    private func doAction() {
+
+        guard let action = self.action else { return }
+
+        if let location = self.location {
+            action(location)
+        } else {
+            action(nil)
         }
+
+        self.action = nil
     }
 }
 
 // MARK: - public method
 
 extension LocationController {
-    
-    //ask for location permissions, fetch 1 location, and return
-    func fetchWithCompletion(completion: LocationClosure) {
-        //store the completion closure
-        locationRequests.append(completion)
-        
-        if locationRequests.count > 1 { return }
-        
-        let authStatus = CLLocationManager.authorizationStatus()
-        
-        switch authStatus {
-        case .NotDetermined:
-            //check for description key and ask permissions
-            if (NSBundle.mainBundle().objectForInfoDictionaryKey("NSLocationWhenInUseUsageDescription") != nil) {
-                locationManager.requestWhenInUseAuthorization()
-            } else if (NSBundle.mainBundle().objectForInfoDictionaryKey("NSLocationAlwaysUsageDescription") != nil) {
-                locationManager.requestAlwaysAuthorization()
-            } else {
-                fatalError("To use location in iOS8 you need to define either NSLocationWhenInUseUsageDescription or NSLocationAlwaysUsageDescription in the app bundle's Info.plist file")
-            }
-        case .Denied, .Restricted:
-            self.showLocationServiceDisabledAlert()
-        default:
-            break
-        }
+
+    func doActionWithLocation(action: Action) {
+
+        self.action = action
+
+        guard self.determineStatus() else { return }
+
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(TomoConst.Timeout.Short, target: self, selector: Selector("stopLocationManager"), userInfo: nil, repeats: false)
+
+        self.locationManager.startUpdatingLocation()
     }
 }

@@ -64,15 +64,33 @@ struct TomoConfig {
 
 struct TomoConst {
 
+    struct Timeout {
+        static let Short = 10.0
+        static let Medium = 20.0
+        static let Long = 30.0
+    }
+
     struct Geo {
-        static let CoordinateTokyo = [35.689521,139.691704]
-        static let CLLocationTokyo = CLLocationCoordinate2D(latitude: 35.689521, longitude: 139.691704)
+        static let LatitudeTokyo = 35.689521
+        static let LongitudeTokyo = 139.691704
+        static let CoordinateTokyo = [LongitudeTokyo, LatitudeTokyo]
+        static let CLLocationTokyo = CLLocation(latitude: LatitudeTokyo, longitude: LongitudeTokyo)
     }
 
     struct Image {
         static let DefaultAvatar = UIImage(named: "avatar")!
         static let DefaultCover = UIImage(named: "user_cover_default")!
         static let DefaultGroup = UIImage(named: "group_cover_default")!
+    }
+
+    struct UI {
+        static let TopBarHeight = CGFloat(44)
+    }
+
+    struct Duration {
+        static let Short = 0.3
+        static let Medium = 0.6
+        static let Long = 0.9
     }
 
 //    struct StroyBoard {
