@@ -40,14 +40,14 @@ class StationCollectionViewCell: UICollectionViewCell {
 
             self.isWatched = true
             self.watchButton.backgroundColor = Palette.Red.primaryColor
-            self.watchButton.setTitle("  取消关注  ", forState: .Normal)
+            self.watchButton.setTitle("  退出  ", forState: .Normal)
             self.watchButton.sizeToFit()
 
         } else {
 
             self.isWatched = false
             self.watchButton.backgroundColor = Palette.Green.primaryColor
-            self.watchButton.setTitle("  关注  ", forState: .Normal)
+            self.watchButton.setTitle("  加入  ", forState: .Normal)
             self.watchButton.sizeToFit()
         }
     }
@@ -65,7 +65,7 @@ class StationCollectionViewCell: UICollectionViewCell {
                 
                 UIView.animateWithDuration(0.3, animations: {
                     self.watchButton.backgroundColor = Palette.Green.primaryColor
-                    self.watchButton.setTitle("  关注  ", forState: .Normal)
+                    self.watchButton.setTitle("  加入  ", forState: .Normal)
                     self.watchButton.sizeToFit()
                     self.setNeedsLayout()
                 })
@@ -82,7 +82,7 @@ class StationCollectionViewCell: UICollectionViewCell {
                 
                 UIView.animateWithDuration(0.3, animations: {
                     self.watchButton.backgroundColor = Palette.Red.primaryColor
-                    self.watchButton.setTitle("  取消关注  ", forState: .Normal)
+                    self.watchButton.setTitle("  退出  ", forState: .Normal)
                     self.watchButton.sizeToFit()
                     self.setNeedsLayout()
                 })

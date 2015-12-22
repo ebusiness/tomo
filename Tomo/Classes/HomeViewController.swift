@@ -13,11 +13,6 @@ final class HomeViewController: BaseTableViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var indicatorLabel: UILabel!
     
-    let locationManager = CLLocationManager()
-    var locationError: NSError?
-    var location: CLLocation?
-    var updatingLocation = false
-    
     let screenHeight = UIScreen.mainScreen().bounds.height
     let loadTriggerHeight = CGFloat(88.0)
     
@@ -29,8 +24,6 @@ final class HomeViewController: BaseTableViewController {
     var isExhausted = false
     
     var recommendGroups: [GroupEntity]?
-    
-    var timer: NSTimer?
     
     var postCellEstimator: ICYPostCell!
     var postImageCellEstimator: ICYPostImageCell!
@@ -57,10 +50,10 @@ final class HomeViewController: BaseTableViewController {
         self.registerCell()
         
         self.setupRefreshControll()
-        
-        self.setupLocationManager()
-        
-        self.getLocation()
+
+        LocationController.shareInstance.doActionWithLocation {
+            self.getRecommendInfo($0)
+        }
         
         self.loadMoreContent()
     }
@@ -68,6 +61,7 @@ final class HomeViewController: BaseTableViewController {
     override func becomeActive() {
         self.loadNewContent()
     }
+
     // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -77,13 +71,10 @@ final class HomeViewController: BaseTableViewController {
                 vc.post = post
             }
         }
-        if segue.identifier == "modalStationSelector" {
-            let nav = segue.destinationViewController as! UINavigationController
-            let vc = nav.viewControllers[0] as! StationDiscoverViewController
-            if let location = location {
-                vc.location = location
-            }
-        }
+//        if segue.identifier == "modalStationSelector" {
+//            let nav = segue.destinationViewController as! UINavigationController
+//            let vc = nav.viewControllers[0] as! StationDiscoverViewController
+//        }
     }
     
     @IBAction func addedPost(segue: UIStoryboardSegue) {
@@ -189,84 +180,6 @@ extension HomeViewController {
     }
 }
 
-// MARK: - CLLocationManager Delegate
-
-extension HomeViewController: CLLocationManagerDelegate {
-    
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        
-        // The location is currently unknown, but CoreLocation will keep trying
-        if error.code == CLError.LocationUnknown.rawValue {
-            return
-        }
-        
-        // or save the error and stop location manager
-        self.locationError = error
-        self.stopLocationManager()
-    }
-    
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        print(status)
-        
-        switch status {
-        case .AuthorizedAlways, .AuthorizedWhenInUse:
-            self.getLocation()
-        default:
-            return
-        }
-    }
-    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        let newLocation = locations.last!
-        
-        // the location object was determine too long age, ignore it
-        if newLocation.timestamp.timeIntervalSinceNow < -5 {
-            return
-        }
-        
-        // horizontalAccuracy less than 0 is invalid result, ignore it
-        if newLocation.horizontalAccuracy < 0 {
-            return
-        }
-        
-        var distance = CLLocationDistance(DBL_MAX)
-        if let location = self.location {
-            distance = newLocation.distanceFromLocation(location)
-        }
-        
-        // new location object more accurate than previous one
-        if self.location == nil || self.location!.horizontalAccuracy > newLocation.horizontalAccuracy {
-            
-            print("***** location updated")
-            
-            // accept the result
-            self.locationError = nil
-            self.location = newLocation
-            
-            // accuracy better than desiredAccuracy, stop locating
-            if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy {
-                print("***** normal done")
-                self.stopLocationManager()
-            }
-            
-            self.getRecommendInfo()
-            
-            // if the location didn't changed too much
-        } else if distance < 1.0 {
-            
-            let timeInterval = newLocation.timestamp.timeIntervalSinceDate(location!.timestamp)
-            
-            if timeInterval > 10 {
-                print("***** force done")
-                self.stopLocationManager()
-                self.getRecommendInfo()
-            }
-        }
-        
-    }
-}
-
 // MARK: - Actions
 
 extension HomeViewController {
@@ -308,65 +221,7 @@ extension HomeViewController {
         self.refreshControl = refresh
     }
     
-    private func setupLocationManager() {
-        self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        self.locationManager.activityType = .Fitness
-    }
-    
-    private func getLocation() {
-        
-        if CLLocationManager.locationServicesEnabled() && locationServiceAuthorized() {
-            
-            if !self.updatingLocation {
-                
-                self.location = nil
-                self.locationError = nil
-                
-                timer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: Selector("didTimeOut"), userInfo: nil, repeats: false)
-                
-                self.updatingLocation = true
-                self.locationManager.startUpdatingLocation()
-            }
-        }
-    }
-    
-    private func locationServiceAuthorized() -> Bool {
-        
-        let status = CLLocationManager.authorizationStatus()
-        
-        switch status {
-        case .AuthorizedAlways, .AuthorizedWhenInUse:
-            return true
-        case .NotDetermined:
-            self.locationManager.requestWhenInUseAuthorization()
-            return false
-        case .Restricted:
-            return false
-        case .Denied:
-            return false
-        }
-    }
-    
-    private func stopLocationManager() {
-        
-        if updatingLocation {
-            
-            if let timer = self.timer {
-                timer.invalidate()
-            }
-            
-            self.locationManager.stopUpdatingLocation()
-            self.updatingLocation = false
-        }
-    }
-    
-    func didTimeOut() {
-        print("***** Time Out")
-        self.stopLocationManager()
-    }
-    
-    private func getRecommendInfo() {
+    private func getRecommendInfo(location: CLLocation?) {
         
         let needToLoadStations = self.recommendGroups == nil && self.contents.find { $0 is [GroupEntity] } == nil
         
@@ -374,15 +229,17 @@ extension HomeViewController {
         
         var parameters = Router.Group.FindParameters(category: .discover)
         
-        if let location = self.location {
-            parameters.type = .station
+        parameters.type = .station
+
+        if let location = location {
             parameters.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
+        } else {
+            parameters.coordinate = TomoConst.Geo.CoordinateTokyo
         }
  
         Router.Group.Find(parameters: parameters).response {
             if $0.result.isFailure { return }
             self.recommendGroups = GroupEntity.collection($0.result.value!)
-            
         }
     }
     

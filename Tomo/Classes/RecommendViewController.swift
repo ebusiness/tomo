@@ -15,6 +15,7 @@ final class RecommendViewController: UIViewController {
     @IBOutlet weak var maskView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchBarBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     private var currentAnnotationView: MKAnnotationView?
     private var currentSelectedIndexPath: NSIndexPath?
@@ -82,8 +83,13 @@ extension RecommendViewController {
         } else {
             parameters.coordinate = TomoConst.Geo.CoordinateTokyo
         }
-        
+
+        self.activityIndicator.startAnimating()
+
         Router.Group.Find(parameters: parameters).response {
+
+            self.activityIndicator.stopAnimating()
+
             if $0.result.isFailure { return }
             self.recommendGroups = GroupEntity.collection($0.result.value!)
         }
@@ -293,7 +299,12 @@ extension RecommendViewController: UISearchBarDelegate {
             parameters.coordinate = TomoConst.Geo.CoordinateTokyo
         }
 
+        self.activityIndicator.startAnimating()
+
         Router.Group.Find(parameters: parameters).response {
+
+            self.activityIndicator.stopAnimating()
+
             guard $0.result.isSuccess else {
                 let alert = UIAlertController(title: "没有找到相关的结果", message: "请试着用其他关键字检索一下吧", preferredStyle: .Alert)
                 alert.addAction(UIAlertAction(title: "好", style: .Cancel, handler: nil))
