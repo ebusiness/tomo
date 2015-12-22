@@ -8,8 +8,6 @@
 
 import XCTest
 
-var me: UserEntity!
-
 class TomoTests: XCTestCase {
     
     override func setUp() {
