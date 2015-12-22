@@ -2,12 +2,13 @@
 //  TomoTests.swift
 //  TomoTests
 //
-//  Created by 張志華 on 2015/03/26.
-//  Copyright (c) 2015年 張志華. All rights reserved.
+//  Created by starboychina on 2015/12/21.
+//  Copyright © 2015年 &#24373;&#24535;&#33775;. All rights reserved.
 //
 
-import UIKit
 import XCTest
+
+var me: UserEntity!
 
 class TomoTests: XCTestCase {
     
@@ -23,13 +24,20 @@ class TomoTests: XCTestCase {
     
     func testExample() {
         // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock() {
-            // Put the code you want to measure the time of here.
+            
+        }
+    }
+    
+    func testLogin() {
+        Router.Session().response { _ in
+            
+            XCTAssert(true, "Pass")
         }
     }
     

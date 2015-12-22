@@ -74,7 +74,6 @@
 		28CB45E71BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB45E61BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift */; };
 		290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
 		290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290134DE1AC3991C00BBFE29 /* Images.xcassets */; };
-		290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134ED1AC3991D00BBFE29 /* TomoTests.swift */; };
 		290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144161ADF6D890048F3D8 /* MapViewController.swift */; };
 		291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF941AD229B3009D8BE3 /* CommentCell.swift */; };
 		293EB4251B132B06006BAF27 /* JSQVoiceMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */; };
@@ -101,8 +100,42 @@
 		29DCEFE91B14519300A7C7AF /* TomoVideoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */; };
 		29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */; };
 		29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */; };
-		92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
+		D000F17D1C2809DF00AD873C /* TomoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D000F17C1C2809DF00AD873C /* TomoTests.swift */; };
+		D000F1841C280C8000AD873C /* ContactRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07402E51C23A4D6002E7581 /* ContactRouter.swift */; };
+		D000F1851C280C8000AD873C /* GroupMessageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06DC6331C2407A1009B19D1 /* GroupMessageRouter.swift */; };
+		D000F1861C280C8000AD873C /* GroupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C5C1C20130800EA87C1 /* GroupRouter.swift */; };
+		D000F1871C280C8000AD873C /* InvitationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C5A1C20034C00EA87C1 /* InvitationRouter.swift */; };
+		D000F1881C280C8000AD873C /* MessageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A81C21C22D1B20034D8D0 /* MessageRouter.swift */; };
+		D000F1891C280C8000AD873C /* PostRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C581C1FF26D00EA87C1 /* PostRouter.swift */; };
+		D000F18A1C280C8000AD873C /* ReportRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07402E31C239DA6002E7581 /* ReportRouter.swift */; };
+		D000F18B1C280C8000AD873C /* SettingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C541C1FEBDC00EA87C1 /* SettingRouter.swift */; };
+		D000F18C1C280C8000AD873C /* SigninRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FDC3561C1EA30D0045826B /* SigninRouter.swift */; };
+		D000F18D1C280C8000AD873C /* SignupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C521C1FC65100EA87C1 /* SignupRouter.swift */; };
+		D000F18E1C280C8000AD873C /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06DC6311C240691009B19D1 /* UserRouter.swift */; };
+		D000F18F1C280C8000AD873C /* APIRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FDC3511C1EA0670045826B /* APIRoute.swift */; };
+		D000F1901C280C8000AD873C /* Alamofire-SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FDC3531C1EA09F0045826B /* Alamofire-SwiftyJSON.swift */; };
+		D000F1911C280CEC00AD873C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901351C1AC3A90C00BBFE29 /* Constants.swift */; };
+		D000F1931C281E3E00AD873C /* CommentEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */; };
+		D000F1941C281E3E00AD873C /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07E48531B9EB35B00BF04B2 /* Entity.swift */; };
+		D000F1951C281E3E00AD873C /* GroupEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9A32361BA6AD8B001C43CE /* GroupEntity.swift */; };
+		D000F1961C281E3E00AD873C /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E661B722260000F2936 /* MessageEntity.swift */; };
+		D000F1971C281E3E00AD873C /* NotificationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */; };
+		D000F1981C281E3E00AD873C /* PostEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAF91B69F99F00648A82 /* PostEntity.swift */; };
+		D000F1991C281E3E00AD873C /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */; };
+		D000F19A1C281E9300AD873C /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E451B60C19F008D5369 /* Array.swift */; };
+		D000F19B1C281E9300AD873C /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E461B60C19F008D5369 /* Bool.swift */; };
+		D000F19C1C281E9300AD873C /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E471B60C19F008D5369 /* Character.swift */; };
+		D000F19D1C281E9300AD873C /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E481B60C19F008D5369 /* Dictionary.swift */; };
+		D000F19E1C281E9300AD873C /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E491B60C19F008D5369 /* Double.swift */; };
+		D000F19F1C281E9300AD873C /* ExSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E4B1B60C19F008D5369 /* ExSwift.swift */; };
+		D000F1A01C281E9300AD873C /* Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E4C1B60C19F008D5369 /* Float.swift */; };
+		D000F1A11C281E9300AD873C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F985E4D1B60C19F008D5369 /* Info.plist */; };
+		D000F1A21C281E9300AD873C /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E4E1B60C19F008D5369 /* Int.swift */; };
+		D000F1A31C281E9300AD873C /* NSArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E4F1B60C19F008D5369 /* NSArray.swift */; };
+		D000F1A41C281E9300AD873C /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E511B60C19F008D5369 /* Range.swift */; };
+		D000F1A51C281E9300AD873C /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E521B60C19F008D5369 /* Sequence.swift */; };
+		D000F1A61C281E9300AD873C /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E531B60C19F008D5369 /* String.swift */; };
 		D00A81C31C22D1B20034D8D0 /* MessageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A81C21C22D1B20034D8D0 /* MessageRouter.swift */; };
 		D012F5971BBBC4DD00D5293D /* MyStationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */; };
 		D0244C531C1FC65100EA87C1 /* SignupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C521C1FC65100EA87C1 /* SignupRouter.swift */; };
@@ -151,7 +184,6 @@
 		D0A104911BEAF1C700AEE356 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A104901BEAF1C700AEE356 /* AgreementViewController.swift */; };
 		D0A104951BEB055100AEE356 /* statements.html in Resources */ = {isa = PBXBuildFile; fileRef = D0A104941BEB055100AEE356 /* statements.html */; };
 		D0B40BBF1B78AF0400685D67 /* ExNSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B40BBE1B78AF0400685D67 /* ExNSDate.swift */; };
-		D0B40BC01B78B8FA00685D67 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 299389461AD3B33800043D91 /* AmazonS3SignatureHelpers.m */; };
 		D0B6364E1B81A9C70012C4E8 /* URLSchemesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */; };
 		D0B6EB121B5E7D09005A7E45 /* MyAccountHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */; };
 		D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */; };
@@ -170,7 +202,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		290134E81AC3991C00BBFE29 /* PBXContainerItemProxy */ = {
+		D000F17F1C2809DF00AD873C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 290134CA1AC3991C00BBFE29 /* Project object */;
 			proxyType = 1;
@@ -267,16 +299,12 @@
 		290134D61AC3991C00BBFE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		290134D71AC3991C00BBFE29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		290134DE1AC3991C00BBFE29 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		290134E71AC3991C00BBFE29 /* TomoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TomoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		290134EC1AC3991D00BBFE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		290134ED1AC3991D00BBFE29 /* TomoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomoTests.swift; sourceTree = "<group>"; };
 		290134FA1AC3A3D200BBFE29 /* Tomo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tomo-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		2901351C1AC3A90C00BBFE29 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Classes/Constants.swift; sourceTree = "<group>"; };
 		290144161ADF6D890048F3D8 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = Classes/MapViewController.swift; sourceTree = "<group>"; };
 		291ADF941AD229B3009D8BE3 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentCell.swift; path = Classes/CommentCell.swift; sourceTree = "<group>"; };
 		293EB4231B132B06006BAF27 /* JSQVoiceMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQVoiceMediaItem.h; sourceTree = "<group>"; };
 		293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQVoiceMediaItem.m; sourceTree = "<group>"; };
-		294BA32E1AC3D79100089204 /* ApiControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiControllerTests.swift; sourceTree = "<group>"; };
 		295272CF1AD51B2300FC7833 /* S3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3.swift; path = ../../../S3.swift; sourceTree = "<group>"; };
 		29539C761B13175D00545509 /* VoiceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VoiceController.swift; path = Classes/VoiceController.swift; sourceTree = "<group>"; };
 		29539C771B13175D00545509 /* CommonMessageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommonMessageController.swift; path = Classes/CommonMessageController.swift; sourceTree = "<group>"; };
@@ -305,6 +333,10 @@
 		29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTableViewController.swift; path = Classes/BaseTableViewController.swift; sourceTree = "<group>"; };
 		543AF25BC3C38F0E432DD118 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5997E727845063A13A5D63E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		D000F17A1C2809DF00AD873C /* TomoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TomoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D000F17C1C2809DF00AD873C /* TomoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomoTests.swift; sourceTree = "<group>"; };
+		D000F17E1C2809DF00AD873C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D000F1921C281D7500AD873C /* TomoTests-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "TomoTests-Header.h"; path = "TomoTests/TomoTests-Header.h"; sourceTree = SOURCE_ROOT; };
 		D00A81C21C22D1B20034D8D0 /* MessageRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageRouter.swift; path = Classes/MessageRouter.swift; sourceTree = "<group>"; };
 		D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyStationsViewController.swift; path = Classes/MyStationsViewController.swift; sourceTree = "<group>"; };
 		D0244C521C1FC65100EA87C1 /* SignupRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignupRouter.swift; path = Classes/SignupRouter.swift; sourceTree = "<group>"; };
@@ -370,11 +402,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		290134E41AC3991C00BBFE29 /* Frameworks */ = {
+		D000F1771C2809DF00AD873C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92A2A34F53708B06343BB0B9 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,7 +590,7 @@
 				299389521AD3C6FB00043D91 /* Controller */,
 				290134D51AC3991C00BBFE29 /* Supporting Files */,
 				296040441ACE669900D2A338 /* Vendors */,
-				290134EA1AC3991D00BBFE29 /* TomoTests */,
+				D000F17B1C2809DF00AD873C /* TomoTests */,
 				290134D31AC3991C00BBFE29 /* Products */,
 				B0C026D5F93A7DC22E9DF996 /* Pods */,
 				D4F3CDABDCA581BFF7D35DBA /* Frameworks */,
@@ -570,7 +601,7 @@
 			isa = PBXGroup;
 			children = (
 				290134D21AC3991C00BBFE29 /* tomo.app */,
-				290134E71AC3991C00BBFE29 /* TomoTests.xctest */,
+				D000F17A1C2809DF00AD873C /* TomoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -590,24 +621,6 @@
 			);
 			name = "Supporting Files";
 			path = Tomo;
-			sourceTree = "<group>";
-		};
-		290134EA1AC3991D00BBFE29 /* TomoTests */ = {
-			isa = PBXGroup;
-			children = (
-				290134ED1AC3991D00BBFE29 /* TomoTests.swift */,
-				290134EB1AC3991D00BBFE29 /* Supporting Files */,
-				294BA32E1AC3D79100089204 /* ApiControllerTests.swift */,
-			);
-			path = TomoTests;
-			sourceTree = "<group>";
-		};
-		290134EB1AC3991D00BBFE29 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				290134EC1AC3991D00BBFE29 /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		290144181ADF92470048F3D8 /* Map */ = {
@@ -764,6 +777,16 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		D000F17B1C2809DF00AD873C /* TomoTests */ = {
+			isa = PBXGroup;
+			children = (
+				D000F17C1C2809DF00AD873C /* TomoTests.swift */,
+				D000F17E1C2809DF00AD873C /* Info.plist */,
+				D000F1921C281D7500AD873C /* TomoTests-Header.h */,
+			);
+			path = TomoTests;
+			sourceTree = "<group>";
+		};
 		D012F5901BBBC2D800D5293D /* MyAccount */ = {
 			isa = PBXGroup;
 			children = (
@@ -915,25 +938,22 @@
 			productReference = 290134D21AC3991C00BBFE29 /* tomo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		290134E61AC3991C00BBFE29 /* TomoTests */ = {
+		D000F1791C2809DF00AD873C /* TomoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 290134F41AC3991D00BBFE29 /* Build configuration list for PBXNativeTarget "TomoTests" */;
+			buildConfigurationList = D000F1811C2809DF00AD873C /* Build configuration list for PBXNativeTarget "TomoTests" */;
 			buildPhases = (
-				8E963728F90426AE784A2C71 /* Check Pods Manifest.lock */,
-				290134E31AC3991C00BBFE29 /* Sources */,
-				290134E41AC3991C00BBFE29 /* Frameworks */,
-				290134E51AC3991C00BBFE29 /* Resources */,
-				0E9A8AE38E84BD3F2EF236AC /* Copy Pods Resources */,
-				F040EFCBEE1D6EE010EED4EB /* Embed Pods Frameworks */,
+				D000F1761C2809DF00AD873C /* Sources */,
+				D000F1771C2809DF00AD873C /* Frameworks */,
+				D000F1781C2809DF00AD873C /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				290134E91AC3991C00BBFE29 /* PBXTargetDependency */,
+				D000F1801C2809DF00AD873C /* PBXTargetDependency */,
 			);
 			name = TomoTests;
 			productName = TomoTests;
-			productReference = 290134E71AC3991C00BBFE29 /* TomoTests.xctest */;
+			productReference = D000F17A1C2809DF00AD873C /* TomoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -943,7 +963,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0710;
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "&#24373;&#24535;&#33775;";
 				TargetAttributes = {
@@ -956,8 +976,8 @@
 							};
 						};
 					};
-					290134E61AC3991C00BBFE29 = {
-						CreatedOnToolsVersion = 6.2;
+					D000F1791C2809DF00AD873C = {
+						CreatedOnToolsVersion = 7.2;
 						TestTargetID = 290134D11AC3991C00BBFE29;
 					};
 				};
@@ -975,7 +995,7 @@
 			projectRoot = "";
 			targets = (
 				290134D11AC3991C00BBFE29 /* Tomo */,
-				290134E61AC3991C00BBFE29 /* TomoTests */,
+				D000F1791C2809DF00AD873C /* TomoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1016,31 +1036,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		290134E51AC3991C00BBFE29 /* Resources */ = {
+		D000F1781C2809DF00AD873C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D000F1A11C281E9300AD873C /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0E9A8AE38E84BD3F2EF236AC /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		1544E371E91842C363DA7DB2 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1088,37 +1094,7 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		8E963728F90426AE784A2C71 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		A6CFE07888C9786BB10DF709 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F040EFCBEE1D6EE010EED4EB /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1267,22 +1243,54 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		290134E31AC3991C00BBFE29 /* Sources */ = {
+		D000F1761C2809DF00AD873C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0B40BC01B78B8FA00685D67 /* AmazonS3SignatureHelpers.m in Sources */,
-				290134EE1AC3991D00BBFE29 /* TomoTests.swift in Sources */,
+				D000F1901C280C8000AD873C /* Alamofire-SwiftyJSON.swift in Sources */,
+				D000F18C1C280C8000AD873C /* SigninRouter.swift in Sources */,
+				D000F19F1C281E9300AD873C /* ExSwift.swift in Sources */,
+				D000F1961C281E3E00AD873C /* MessageEntity.swift in Sources */,
+				D000F19D1C281E9300AD873C /* Dictionary.swift in Sources */,
+				D000F1971C281E3E00AD873C /* NotificationEntity.swift in Sources */,
+				D000F18B1C280C8000AD873C /* SettingRouter.swift in Sources */,
+				D000F1881C280C8000AD873C /* MessageRouter.swift in Sources */,
+				D000F19E1C281E9300AD873C /* Double.swift in Sources */,
+				D000F19A1C281E9300AD873C /* Array.swift in Sources */,
+				D000F18F1C280C8000AD873C /* APIRoute.swift in Sources */,
+				D000F1A31C281E9300AD873C /* NSArray.swift in Sources */,
+				D000F1911C280CEC00AD873C /* Constants.swift in Sources */,
+				D000F1851C280C8000AD873C /* GroupMessageRouter.swift in Sources */,
+				D000F1A61C281E9300AD873C /* String.swift in Sources */,
+				D000F1941C281E3E00AD873C /* Entity.swift in Sources */,
+				D000F1981C281E3E00AD873C /* PostEntity.swift in Sources */,
+				D000F1991C281E3E00AD873C /* UserEntity.swift in Sources */,
+				D000F1A51C281E9300AD873C /* Sequence.swift in Sources */,
+				D000F18A1C280C8000AD873C /* ReportRouter.swift in Sources */,
+				D000F17D1C2809DF00AD873C /* TomoTests.swift in Sources */,
+				D000F1A41C281E9300AD873C /* Range.swift in Sources */,
+				D000F1951C281E3E00AD873C /* GroupEntity.swift in Sources */,
+				D000F1891C280C8000AD873C /* PostRouter.swift in Sources */,
+				D000F19B1C281E9300AD873C /* Bool.swift in Sources */,
+				D000F18E1C280C8000AD873C /* UserRouter.swift in Sources */,
+				D000F1861C280C8000AD873C /* GroupRouter.swift in Sources */,
+				D000F1A01C281E9300AD873C /* Float.swift in Sources */,
+				D000F1841C280C8000AD873C /* ContactRouter.swift in Sources */,
+				D000F1871C280C8000AD873C /* InvitationRouter.swift in Sources */,
+				D000F19C1C281E9300AD873C /* Character.swift in Sources */,
+				D000F1A21C281E9300AD873C /* Int.swift in Sources */,
+				D000F1931C281E3E00AD873C /* CommentEntity.swift in Sources */,
+				D000F18D1C280C8000AD873C /* SignupRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		290134E91AC3991C00BBFE29 /* PBXTargetDependency */ = {
+		D000F1801C2809DF00AD873C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 290134D11AC3991C00BBFE29 /* Tomo */;
-			targetProxy = 290134E81AC3991C00BBFE29 /* PBXContainerItemProxy */;
+			targetProxy = D000F17F1C2809DF00AD873C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1432,47 +1440,39 @@
 			};
 			name = Release;
 		};
-		290134F51AC3991D00BBFE29 /* Debug */ = {
+		D000F1821C2809DF00AD873C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1801CE63ECC013D9C8C9BB6 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
+				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = TomoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.e-business.$(PRODUCT_NAME:rfc1034identifier)";
+				OTHER_SWIFT_FLAGS = "-D TEST";
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.e-business.TomoTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tomo.app/Tomo";
+				SWIFT_OBJC_BRIDGING_HEADER = "TomoTests/TomoTests-Header.h";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tomo.app/tomo";
 			};
 			name = Debug;
 		};
-		290134F61AC3991D00BBFE29 /* Release */ = {
+		D000F1831C2809DF00AD873C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B5997E727845063A13A5D63E /* Pods.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
+				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = TomoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.e-business.$(PRODUCT_NAME:rfc1034identifier)";
+				OTHER_SWIFT_FLAGS = "-D TEST";
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.e-business.TomoTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Tomo-Bridging-Header.h";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tomo.app/Tomo";
+				SWIFT_OBJC_BRIDGING_HEADER = "TomoTests/TomoTests-Header.h";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tomo.app/tomo";
 			};
 			name = Release;
 		};
@@ -1497,11 +1497,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		290134F41AC3991D00BBFE29 /* Build configuration list for PBXNativeTarget "TomoTests" */ = {
+		D000F1811C2809DF00AD873C /* Build configuration list for PBXNativeTarget "TomoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				290134F51AC3991D00BBFE29 /* Debug */,
-				290134F61AC3991D00BBFE29 /* Release */,
+				D000F1821C2809DF00AD873C /* Debug */,
+				D000F1831C2809DF00AD873C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

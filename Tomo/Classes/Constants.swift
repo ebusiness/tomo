@@ -128,6 +128,7 @@ let DefaultAvatarImage = UIImage(named: "avatar")!
 let DefaultCoverImage = UIImage(named: "user_cover_default")!
 let DefaultGroupImage = UIImage(named: "group_cover_default")!
 
+#if !TEST
 class Constants: NSObject {
    
     class func postPath(fileName name: String) -> String {
@@ -368,3 +369,4 @@ enum Palette: Int {
         return Util.UIColorFromRGB(0xB6B6B6, alpha: 1.0)
     }
 }
+#endif
