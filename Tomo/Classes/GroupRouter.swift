@@ -85,7 +85,9 @@ extension Router.Group {
             var parameters = [String: AnyObject]()
             
             parameters["category"] = category.rawValue
-            parameters["page"] = page ?? 0
+            if let page = page {
+                parameters["page"] = page
+            }
             parameters["type"] = type?.rawValue
             parameters["name"] = name
             if let after = after {
