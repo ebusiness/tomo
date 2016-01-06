@@ -64,7 +64,8 @@ extension Router.Setting {
         gender: String?,
         photo: String?,
         cover: String?,
-        birthDay: NSDate?
+        birthDay: NSDate?,
+        primaryStation: String?
         
         var removeDevice: String?, pushSetting: UserEntity.PushSetting?
         
@@ -109,6 +110,9 @@ extension Router.Setting {
             }
             if let photo = photo {
                 parameters["photo"] = photo
+            }
+            if let primaryStation = primaryStation {
+                parameters["primaryStation"] = primaryStation
             }
             if let removeDevice = removeDevice {
                 parameters["removeDevice"] = removeDevice

@@ -1,14 +1,14 @@
 //
-//  StationAnnotationView.swift
+//  UserAnnotationView.swift
 //  Tomo
 //
-//  Created by ebuser on 2015/09/30.
-//  Copyright (c) 2015年 &#24373;&#24535;&#33775;. All rights reserved.
+//  Created by ebuser on 2016/01/07.
+//  Copyright © 2016年 &#24373;&#24535;&#33775;. All rights reserved.
 //
 
 import Foundation
 
-class StationAnnotationView: AggregatableAnnotationView {
+class UserAnnotationView: AggregatableAnnotationView {
 
     var imageView: UIImageView!
     var numberLabel: UILabel!
@@ -31,7 +31,7 @@ class StationAnnotationView: AggregatableAnnotationView {
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = Palette.Pink.primaryColor.CGColor
+        imageView.layer.borderColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 1).CGColor
         imageView.layer.cornerRadius = imageView.frame.width / 2
         addSubview(imageView)
 
@@ -39,16 +39,16 @@ class StationAnnotationView: AggregatableAnnotationView {
         numberLabel.textColor = UIColor.whiteColor()
         numberLabel.textAlignment = NSTextAlignment.Center
         numberLabel.font = UIFont.systemFontOfSize(10)
-        numberLabel.backgroundColor = Palette.Pink.primaryColor
+        numberLabel.backgroundColor = Palette.Blue.primaryColor
 
-        numberBadge.backgroundColor = Palette.Pink.primaryColor
+        numberBadge.backgroundColor = Palette.Blue.primaryColor
         numberBadge.frame = CGRect(x: 45, y: 0, width: 120, height: 20)
         numberBadge.layer.cornerRadius = numberBadge.frame.height / 2
     }
 
     override func setupDisplay() {
 
-        if let annotation = self.annotation as? GroupAnnotation {
+        if let annotation = self.annotation as? UserAnnotation {
 
             if let containedAnnotations = annotation.containedAnnotations {
 
@@ -61,15 +61,15 @@ class StationAnnotationView: AggregatableAnnotationView {
                     numberLabel.removeFromSuperview()
                 }
 
-                numberBadge.text = "\(annotation.group.name)"
+                numberBadge.text = "\(annotation.user.primaryStation!.name!)"
                 numberBadge.sizeToFit()
                 numberBadge.frame = CGRect(x: 45, y: 0, width: numberBadge.bounds.width + 10, height: numberBadge.bounds.height + 10)
                 numberBadge.layer.cornerRadius = numberBadge.frame.height / 2
                 addSubview(numberBadge)
             }
 
-            imageView.sd_setImageWithURL(NSURL(string:  annotation.group.cover), placeholderImage: DefaultGroupImage)
+            imageView.sd_setImageWithURL(NSURL(string:  annotation.user.photo!), placeholderImage: DefaultAvatarImage)
         }
     }
-    
+
 }

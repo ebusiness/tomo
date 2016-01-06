@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostAnnotationView: AggregatableAnnotationView, UIPageViewControllerDataSource {
+class PostAnnotationView: AggregatableAnnotationView {
     
     var imageView: UIImageView!
     
@@ -45,92 +45,5 @@ class PostAnnotationView: AggregatableAnnotationView, UIPageViewControllerDataSo
             imageView.sd_setImageWithURL(NSURL(string:  annotation.post.owner.photo!), placeholderImage: DefaultAvatarImage)
         }
     }
-    
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
-        
-        let currentPost = (viewController as! PostCallOutViewController).postAnnotation
-        let annotation = self.annotation as! PostAnnotation
-        
-        guard let containedAnnotations = annotation.containedAnnotations else { return nil }
-        
-        if containedAnnotations.count == 0 {
-            return nil
-        }
-        
-        let callOutViewController = PostCallOutViewController(nibName: "PostCallOutView", bundle: nil)
-        
-        
-        if let index = containedAnnotations.indexOf(currentPost) {
-            
-            if index < containedAnnotations.count - 1 {
-                callOutViewController.postAnnotation = containedAnnotations.get(index + 1) as! PostAnnotation
-            } else {
-                callOutViewController.postAnnotation = annotation
-            }
-            
-        } else {
-            callOutViewController.postAnnotation = containedAnnotations.first as! PostAnnotation
-        }
-        
-        return callOutViewController
-    }
-    
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-        
-        let currentPost = (viewController as! PostCallOutViewController).postAnnotation
-        let annotation = self.annotation as! PostAnnotation
-        
-        guard let containedAnnotations = annotation.containedAnnotations else { return nil }
-        
-        if containedAnnotations.count == 0 {
-            return nil
-        }
-        
-        let callOutViewController = PostCallOutViewController(nibName: "PostCallOutView", bundle: nil)
-        
-        if let index = containedAnnotations.indexOf(currentPost) {
-            
-            if index == 0 {
-                callOutViewController.postAnnotation = annotation
-            } else {
-                callOutViewController.postAnnotation = annotation.containedAnnotations?.get(index - 1) as! PostAnnotation
-            }
-            return callOutViewController
-            
-        } else {
-            callOutViewController.postAnnotation = containedAnnotations.last as! PostAnnotation
-        }
-        
-        return callOutViewController
-    }
-    
-//    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
-//        
-//        let annotation = self.annotation as! AggregatableAnnotation
-//        
-//        if let containedAnnotations = annotation.containedAnnotations {
-//            return containedAnnotations.count + 1
-//        } else {
-//            return 1
-//        }
-//    }
-//    
-//    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
-//        
-//        let page = pageViewController.viewControllers[0] as! PostCallOutViewController
-//        let postAnnotation = page.postAnnotation
-//        
-//        let annotation = self.annotation as! AggregatableAnnotation
-//        
-//        if let containedAnnotations = annotation.containedAnnotations {
-//            
-//            if let index = find(containedAnnotations, postAnnotation) {
-//                return index
-//            } else {
-//                return 0
-//            }
-//        } else {
-//            return 0
-//        }
-//    }
+
 }

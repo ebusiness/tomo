@@ -9,7 +9,7 @@
 import UIKit
 
 final class RecommendViewController: UIViewController {
-    
+
     @IBOutlet weak var recommendGroupCollectionView: UICollectionView!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var maskView: UIView!
@@ -25,7 +25,7 @@ final class RecommendViewController: UIViewController {
         let width = height / 4 * 3
         return CGSizeMake(width, height)
     }()
-    
+
     private var recommendGroups: [GroupEntity]? {
         didSet {
 
@@ -48,12 +48,12 @@ final class RecommendViewController: UIViewController {
             self.recommendGroupCollectionView.performBatchUpdates({ _ in
                 self.recommendGroupCollectionView.deleteItemsAtIndexPaths(removeIndex)
                 self.recommendGroupCollectionView.insertItemsAtIndexPaths(insertIndex)
-            }) { _ in
-                self.recommendGroupCollectionView.scrollToItemAtIndexPath(firstItemIndex, atScrollPosition: .Left, animated: true)
+                }) { _ in
+                    self.recommendGroupCollectionView.scrollToItemAtIndexPath(firstItemIndex, atScrollPosition: .Left, animated: true)
             }
         }
     }
-    
+
     override func viewDidLoad() {
 
         super.viewDidLoad()
@@ -77,7 +77,7 @@ extension RecommendViewController {
 
         var parameters = Router.Group.FindParameters(category: .discover)
         parameters.type = .station
-        
+
         if let location = location {
             parameters.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
         } else {
@@ -102,25 +102,25 @@ extension RecommendViewController {
         UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
             self.searchBarBottomConstraint.constant = 0
             self.view.layoutIfNeeded()
-        }) { _ in
-            self.searchBar.becomeFirstResponder()
+            }) { _ in
+                self.searchBar.becomeFirstResponder()
         }
     }
 
     @IBAction func exitButtonTapped(sender: AnyObject) {
 
         Router.Signout().response { _ in
-        
+
             Defaults.remove("openid")
             Defaults.remove("deviceToken")
-            
+
             Defaults.remove("email")
             Defaults.remove("password")
-            
+
             me = nil
             let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
             Util.changeRootViewController(from: self, to: main)
-            
+
         }
     }
 }
@@ -128,11 +128,11 @@ extension RecommendViewController {
 // MARK: - UICollectionViewDataSource
 
 extension RecommendViewController: UICollectionViewDataSource {
-    
+
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.recommendGroups?.count ?? 0
     }
-    
+
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("defaultCell", forIndexPath: indexPath) as! GroupRecommendCollectionViewCell
@@ -149,7 +149,7 @@ extension RecommendViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 
 extension RecommendViewController: UICollectionViewDelegate {
-    
+
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 
         guard self.currentSelectedIndexPath != indexPath else { return }
@@ -157,15 +157,16 @@ extension RecommendViewController: UICollectionViewDelegate {
         self.currentSelectedIndexPath = indexPath
         self.dismissViewControllerAnimated(true, completion: nil)
 
-        guard let group = recommendGroups?[indexPath.row] else { return }
-        
-        self.selectGroup(group)
-        
-        guard self.maskView.alpha > 0 else { return }
-        
-        UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
-            self.maskView.alpha = 0
-        })
+        if let group = recommendGroups?[indexPath.row] {
+
+            self.selectGroup(group)
+
+            guard self.maskView.alpha > 0 else { return }
+
+            UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
+                self.maskView.alpha = 0
+            })
+        }
     }
 
     private func selectGroup(group: GroupEntity) {
@@ -218,23 +219,25 @@ extension RecommendViewController: MKMapViewDelegate {
     }
 
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        guard let annotationView = self.currentAnnotationView else { return }
-        
-        let vc = Util.createViewControllerWithIdentifier("GroupPopoverViewController", storyboardName: "Main") as! GroupPopoverViewController
-        
-        vc.modalPresentationStyle = .Popover
-        vc.presentationController?.delegate = self
-        
-        vc.groupAnnotation = annotationView.annotation as! GroupAnnotation
-        
-        self.presentViewController(vc, animated: true, completion: nil)
-        
-        guard let pop = vc.popoverPresentationController else { return }
-        
-        pop.passthroughViews = [self.view]
-        pop.permittedArrowDirections = .Down
-        pop.sourceView = annotationView
-        pop.sourceRect = annotationView.bounds
+
+        if let annotationView = self.currentAnnotationView {
+
+            let vc = Util.createViewControllerWithIdentifier("GroupPopoverViewController", storyboardName: "Main") as! GroupPopoverViewController
+
+            vc.modalPresentationStyle = .Popover
+            vc.presentationController?.delegate = self
+
+            vc.groupAnnotation = annotationView.annotation as! GroupAnnotation
+
+            self.presentViewController(vc, animated: true, completion: nil)
+
+            if let pop = vc.popoverPresentationController {
+                pop.passthroughViews = [self.view]
+                pop.permittedArrowDirections = .Down
+                pop.sourceView = annotationView
+                pop.sourceRect = annotationView.bounds
+            }
+        }
     }
 }
 
@@ -334,7 +337,7 @@ final class GroupRecommendCollectionViewCell: UICollectionViewCell {
         self.contentView.layer.cornerRadius = 5
         self.contentView.clipsToBounds = true
     }
-    
+
 }
 
 // MARK: - GroupPopoverViewController
@@ -361,28 +364,37 @@ final class GroupPopoverViewController: UIViewController {
 
     @IBAction func joinButtonTapped(sender: AnyObject) {
 
-        guard let delegate = UIApplication.sharedApplication().delegate else {return}
-        guard let window = delegate.window else {return}
-        guard let rootViewController = window?.rootViewController else {return}
-        
+        guard let delegate = UIApplication.sharedApplication().delegate else { return }
+        guard let window = delegate.window else { return }
+        guard let rootViewController = window?.rootViewController else { return }
+
         Router.Group.Join(id: groupAnnotation.group.id).response {
 
             guard $0.result.isSuccess else { return }
-            
-            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-            Util.changeRootViewController(from: rootViewController, to: tab)
+
+            var param = Router.Setting.MeParameter()
+            param.primaryStation = self.groupAnnotation.group.id
+
+            Router.Setting.UpdateUserInfo(parameters: param).response {
+
+                guard $0.result.isSuccess else { return }
+
+                let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
+                Util.changeRootViewController(from: rootViewController, to: tab)
+            }
         }
     }
-
+    
     private func setupDisplay() {
-
+        
         self.joinButton.layer.borderColor = UIColor.whiteColor().CGColor
         self.joinButton.layer.borderWidth = 1
         self.joinButton.layer.cornerRadius = 2
-
-        guard let group = groupAnnotation.group else { return }
-        self.nameLabel.text = group.name
-        self.introLabel.text = group.introduction
-        self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
+        
+        if let group = groupAnnotation.group {
+            self.nameLabel.text = group.name
+            self.introLabel.text = group.introduction
+            self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
+        }
     }
 }

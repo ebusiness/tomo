@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             if $0.result.isSuccess {
                 me = UserEntity($0.result.value!)
-                if let groups = me.groups where groups.count > 0 {
+                if me.primaryStation != nil {
                     rootViewControllerName = "Tab"
                 } else {
                     viewIdentifier = "RecommendView"

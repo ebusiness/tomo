@@ -13,7 +13,7 @@ class FriendCell: UITableViewCell {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
-    @IBOutlet weak var countLabel: UILabel!//left right constraints == (sqrt(2)-1) * avatarImageView.frame.size.width / 2 / sqrt(2) - countLabel.frame.size.width / 2
+    @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     
     var user: UserEntity!

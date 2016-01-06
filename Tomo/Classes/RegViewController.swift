@@ -117,7 +117,7 @@ extension RegViewController {
     
     private func changeRootToTab(){
         Util.dismissHUD()
-        if let groups = me.groups where groups.count > 0 {
+        if me.primaryStation != nil {
             let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
             Util.changeRootViewController(from: self, to: tab)
         } else {
@@ -277,7 +277,6 @@ extension RegViewController: WechatManagerAuthDelegate {
     }
     
     func success(res: AnyObject) {
-        
         Defaults["openid"] = WechatManager.openid
         Defaults["access_token"] = WechatManager.access_token
         Defaults["refresh_token"] = WechatManager.refresh_token
@@ -290,7 +289,6 @@ extension RegViewController: WechatManagerAuthDelegate {
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.inputArea.alpha = 1
         })
-        
     }
 }
 

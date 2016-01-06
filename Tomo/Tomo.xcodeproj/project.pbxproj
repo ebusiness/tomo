@@ -19,15 +19,13 @@
 		1F1ECE091C1176F200A3CADA /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1ECE061C1176F200A3CADA /* SwiftyJSON.framework */; };
 		1F26B29A1BAA61D10063AC6B /* GroupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */; };
 		1F350B2B1B68D32800088C1E /* PostAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */; };
-		1F6462D21BC14845007D0906 /* GroupCallOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6462D01BC14845007D0906 /* GroupCallOutViewController.swift */; };
-		1F6462D31BC14845007D0906 /* GroupCallOutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F6462D11BC14845007D0906 /* GroupCallOutView.xib */; };
+		1F36D6E61C3E2DD8007769F0 /* UserAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36D6E51C3E2DD8007769F0 /* UserAnnotation.swift */; };
+		1F36D6E81C3E2E4C007769F0 /* UserAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36D6E71C3E2E4C007769F0 /* UserAnnotationView.swift */; };
 		1F6AE7851B6F1A2300D7F488 /* PostAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */; };
 		1F79C1B21B5E0E22008800E1 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B11B5E0E22008800E1 /* FriendListViewController.swift */; };
 		1F79C1B41B5E10DC008800E1 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B31B5E10DC008800E1 /* FriendCell.swift */; };
 		1F79C1B61B5E55D5008800E1 /* InvitationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B51B5E55D5008800E1 /* InvitationCell.swift */; };
 		1F79C1B81B5E730E008800E1 /* SearchFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */; };
-		1F8DEBE01BBD22600037FD1C /* PostCallOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8DEBDE1BBD22600037FD1C /* PostCallOutViewController.swift */; };
-		1F8DEBE11BBD22600037FD1C /* PostCallOutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F8DEBDF1BBD22600037FD1C /* PostCallOutView.xib */; };
 		1F902D771B7D9C2800F6DC2D /* EmptyFriends.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F902D761B7D9C2800F6DC2D /* EmptyFriends.xib */; };
 		1F937FE61B58C2E3009722CE /* MyAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F937FE51B58C2E3009722CE /* MyAccountViewController.swift */; };
 		1F937FE81B58EE8B009722CE /* MyAccountEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F937FE71B58EE8B009722CE /* MyAccountEditViewController.swift */; };
@@ -227,15 +225,13 @@
 		1F1ECE061C1176F200A3CADA /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDetailViewController.swift; path = Classes/GroupDetailViewController.swift; sourceTree = "<group>"; };
 		1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostAnnotationView.swift; path = Classes/PostAnnotationView.swift; sourceTree = "<group>"; };
-		1F6462D01BC14845007D0906 /* GroupCallOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCallOutViewController.swift; path = Classes/GroupCallOutViewController.swift; sourceTree = "<group>"; };
-		1F6462D11BC14845007D0906 /* GroupCallOutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupCallOutView.xib; path = Classes/GroupCallOutView.xib; sourceTree = "<group>"; };
+		1F36D6E51C3E2DD8007769F0 /* UserAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserAnnotation.swift; path = Classes/UserAnnotation.swift; sourceTree = "<group>"; };
+		1F36D6E71C3E2E4C007769F0 /* UserAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserAnnotationView.swift; path = Classes/UserAnnotationView.swift; sourceTree = "<group>"; };
 		1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostAnnotation.swift; path = Classes/PostAnnotation.swift; sourceTree = "<group>"; };
 		1F79C1B11B5E0E22008800E1 /* FriendListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendListViewController.swift; path = Classes/FriendListViewController.swift; sourceTree = "<group>"; };
 		1F79C1B31B5E10DC008800E1 /* FriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendCell.swift; path = Classes/FriendCell.swift; sourceTree = "<group>"; };
 		1F79C1B51B5E55D5008800E1 /* InvitationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvitationCell.swift; path = Classes/InvitationCell.swift; sourceTree = "<group>"; };
 		1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchFriendViewController.swift; path = Classes/SearchFriendViewController.swift; sourceTree = "<group>"; };
-		1F8DEBDE1BBD22600037FD1C /* PostCallOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCallOutViewController.swift; path = Classes/PostCallOutViewController.swift; sourceTree = "<group>"; };
-		1F8DEBDF1BBD22600037FD1C /* PostCallOutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PostCallOutView.xib; path = Classes/PostCallOutView.xib; sourceTree = "<group>"; };
 		1F902D761B7D9C2800F6DC2D /* EmptyFriends.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptyFriends.xib; path = Classes/EmptyFriends.xib; sourceTree = "<group>"; };
 		1F937FE51B58C2E3009722CE /* MyAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountViewController.swift; path = Classes/MyAccountViewController.swift; sourceTree = "<group>"; };
 		1F937FE71B58EE8B009722CE /* MyAccountEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountEditViewController.swift; path = Classes/MyAccountEditViewController.swift; sourceTree = "<group>"; };
@@ -513,14 +509,12 @@
 			children = (
 				1FC2687F1BBABED8006F1FDA /* GroupAnnotation.swift */,
 				1FC268811BBABF20006F1FDA /* GroupAnnotationView.swift */,
-				1F6462D11BC14845007D0906 /* GroupCallOutView.xib */,
-				1F6462D01BC14845007D0906 /* GroupCallOutViewController.swift */,
 				1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */,
 				1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */,
-				1F8DEBDF1BBD22600037FD1C /* PostCallOutView.xib */,
-				1F8DEBDE1BBD22600037FD1C /* PostCallOutViewController.swift */,
 				1FAA70FB1BBBF97B00BCE5AF /* StationAnnotation.swift */,
 				1FAA70FD1BBBF99100BCE5AF /* StationAnnotationView.swift */,
+				1F36D6E51C3E2DD8007769F0 /* UserAnnotation.swift */,
+				1F36D6E71C3E2E4C007769F0 /* UserAnnotationView.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -1031,8 +1025,6 @@
 				1F19D9541BA9550A007C9919 /* RecommendSiteTableCell.xib in Resources */,
 				1F19D95A1BA96B3E007C9919 /* GroupCollectionViewCell.xib in Resources */,
 				1FEA3CFF1BB39F160037F3C5 /* StationCollectionViewCell.xib in Resources */,
-				1F6462D31BC14845007D0906 /* GroupCallOutView.xib in Resources */,
-				1F8DEBE11BBD22600037FD1C /* PostCallOutView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1120,6 +1112,7 @@
 				D072323F1BE1C1C700122F52 /* String.swift in Sources */,
 				D06DC6341C2407A1009B19D1 /* GroupMessageRouter.swift in Sources */,
 				D040E1651BDDC00D00417174 /* RecommendViewController.swift in Sources */,
+				1F36D6E81C3E2E4C007769F0 /* UserAnnotationView.swift in Sources */,
 				D0A104911BEAF1C700AEE356 /* AgreementViewController.swift in Sources */,
 				283771911BC37653001B06D3 /* ICYFlowLayout.swift in Sources */,
 				1FAA70FC1BBBF97B00BCE5AF /* StationAnnotation.swift in Sources */,
@@ -1161,6 +1154,7 @@
 				1FE7CEF51B8C9561006700FC /* SignUpViewController.swift in Sources */,
 				D0B6364E1B81A9C70012C4E8 /* URLSchemesController.swift in Sources */,
 				D0244C5B1C20034C00EA87C1 /* InvitationRouter.swift in Sources */,
+				1F36D6E61C3E2DD8007769F0 /* UserAnnotation.swift in Sources */,
 				D0244C531C1FC65100EA87C1 /* SignupRouter.swift in Sources */,
 				296D8BAB1AFC59F10058D400 /* BaseViewController.swift in Sources */,
 				1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */,
@@ -1196,7 +1190,6 @@
 				D0B40BBF1B78AF0400685D67 /* ExNSDate.swift in Sources */,
 				1FAA70F71BBB8DBE00BCE5AF /* AggregatableAnnotationView.swift in Sources */,
 				1F79C1B21B5E0E22008800E1 /* FriendListViewController.swift in Sources */,
-				1F6462D21BC14845007D0906 /* GroupCallOutViewController.swift in Sources */,
 				29539C781B13175D00545509 /* VoiceController.swift in Sources */,
 				2993894A1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
 				D072323B1BE1C1C700122F52 /* Int.swift in Sources */,
@@ -1218,7 +1211,6 @@
 				D07793871B704F410056B7CB /* DatePickerViewController.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
 				D07232331BE1C1C700122F52 /* Array.swift in Sources */,
-				1F8DEBE01BBD22600037FD1C /* PostCallOutViewController.swift in Sources */,
 				D0F44FAB1B5E4790009E12AA /* BookmarkedPostsViewController.swift in Sources */,
 				D0B6EB121B5E7D09005A7E45 /* MyAccountHeaderViewController.swift in Sources */,
 				D0BA8DE71B55375A00271F2B /* PostViewController.swift in Sources */,

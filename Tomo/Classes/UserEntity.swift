@@ -40,6 +40,8 @@ class UserEntity: Entity {
     var groups: [String]?
     
     var blockUsers: [String]?
+
+    var primaryStation: GroupEntity?
     
     var friendInvitations: [NotificationEntity]!
     
@@ -94,7 +96,11 @@ class UserEntity: Entity {
         self.groups = json["groups"].arrayObject as? [String]
         
         self.blockUsers = json["blockUsers"].arrayObject as? [String]
-        
+
+        if !( json["primaryStation"].object is NSNull ) {
+            self.primaryStation = GroupEntity(json["primaryStation"])
+        }
+
         self.friendInvitations = []
         if let invitations = json["friendInvitations"].array {
             invitations.forEach { (invitation) -> () in
