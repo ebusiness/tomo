@@ -14,7 +14,7 @@ extension Router {
         
         var path: String {
             switch self {
-            case FindByUserId(let id):
+            case let FindByUserId(id, _):
                 return "/messages/\(id)"
             case SendTo:
                 return "/messages"
@@ -30,8 +30,10 @@ extension Router {
         
         var parameters: [String : AnyObject]? {
             switch self {
-            case FindByUserId(_, let before): return ["before": String(before)]
-            case SendTo(let id, let content): return ["to": id, "content": content]
+            case let FindByUserId(_, before):
+                guard let before = before else { return nil }
+                return ["before": String(before)]
+            case let SendTo(id, content): return ["to": id, "content": content]
             }
         }
     }

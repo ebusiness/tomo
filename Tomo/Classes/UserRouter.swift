@@ -18,8 +18,8 @@ extension Router {
         var path: String {
             switch self {
             case FindByNickName: return "/users"
-            case FindById(let id): return "/users/\(id)"
-            case Posts(let id): return "/users/\(id)/posts"
+            case let FindById(id): return "/users/\(id)"
+            case let Posts(id, _): return "/users/\(id)/posts"
             case Block: return "/blocks"
             }
         }
@@ -33,18 +33,16 @@ extension Router {
         
         var parameters: [String : AnyObject]? {
             switch self {
-            case FindByNickName(let nickName):
+            case let FindByNickName(nickName):
                 return ["nickName": nickName]
-            case Posts(_, let before):
-                if let before = before {
-                    return ["before": before]
-                }
-            case Block(let id):
+            case let Posts(_, before):
+                guard let before = before else { return nil }
+                return ["before": String(before)]
+            case let Block(id):
                 return ["id": id]
             default:
                 return nil
             }
-            return nil
         }
     }
 }

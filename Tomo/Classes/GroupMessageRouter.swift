@@ -15,9 +15,9 @@ extension Router {
         
         var path: String {
             switch self {
-            case FindByGroupId(let id):
+            case let FindByGroupId(id, _):
                 return "/groups/\(id)/messages"
-            case SendByGroupId(let id):
+            case let SendByGroupId(id, _):
                 return "/groups/\(id)/messages"
             }
         }
@@ -31,11 +31,11 @@ extension Router {
         }
         var parameters: [String: AnyObject]? {
             switch self {
-            case FindByGroupId(_, let before):
+            case let FindByGroupId(_, before):
                 if let before = before {
                     return ["before": String(before)]
                 }
-            case SendByGroupId(_, let content):
+            case let SendByGroupId(_, content):
                 return ["content": content]
             }
             return nil

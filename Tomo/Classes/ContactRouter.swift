@@ -14,7 +14,7 @@ extension Router {
         
         var path: String {
             switch self {
-            case Delete(let id):
+            case let Delete(id):
                 return "/friends/\(id)"
             case All:
                 return "/friends"

@@ -25,9 +25,9 @@ extension Router {
         var parameters: [String: AnyObject]? {
             
             switch self {
-            case Email(let email, let password, let nickName):
+            case let Email(email, password, nickName):
                 return ["email": email, "password": password, "nickName": nickName]
-            case WeChat(let openid, let nickname, let gender, let headimgurl):
+            case let WeChat(openid, nickname, gender, headimgurl):
                 var parameters = ["openid": openid, "nickname": nickname]
                 
                 if let gender = gender {

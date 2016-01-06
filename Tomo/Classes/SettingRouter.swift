@@ -32,7 +32,7 @@ extension Router {
         
         var parameters: [String: AnyObject]? {
             switch self{
-            case UpdateDevice(let deviceToken):
+            case let UpdateDevice(deviceToken):
                 let token = String(deviceToken.description.characters.filter {!"<> ".characters.contains($0)})
                 let device = UIDevice.currentDevice()
                 return [
@@ -41,14 +41,11 @@ extension Router {
                     "model": device.model,
                     "version": device.systemVersion,
                 ]
-            case UpdateUserInfo(let parameters):
+            case let UpdateUserInfo(parameters):
                 return parameters.getParameters()
-            case FindNotification(let before):
-                if let before = before {
-                    return ["before": String(before)]
-                } else {
-                    return nil
-                }
+            case let FindNotification(before):
+                guard let before = before else { return nil }
+                return ["before": String(before)]
             }
         }
     }

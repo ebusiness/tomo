@@ -37,11 +37,11 @@ extension Router {
         }
         var parameters: [String: AnyObject]? {
             switch self{
-            case Email(let email, let password):
+            case let Email(email, password):
                 return ["email": email, "password": password]
-            case WeChat(let openid, let access_token):
+            case let WeChat(openid, access_token):
                 return ["openid": openid, "access_token": access_token, "type": "wechat"]
-            case Test(let id):
+            case let Test(id):
                 return ["id": id]
             }
         }

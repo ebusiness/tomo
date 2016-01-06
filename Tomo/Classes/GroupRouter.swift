@@ -22,13 +22,13 @@ extension Router {
         
         var path: String {
             switch self {
-            case FindById(let id):
+            case let FindById(id):
                 return "/groups/\(id)"
-            case Join(let id):
+            case let Join(id):
                 return "/groups/\(id)/join"
-            case Leave(let id):
+            case let Leave(id):
                 return "/groups/\(id)/leave"
-            case FindPosts(let id):
+            case let FindPosts(id, _):
                 return "/groups/\(id)/posts"
             default:
                 return "/groups"
@@ -48,11 +48,11 @@ extension Router {
         }
         var parameters: [String: AnyObject]? {
             switch self {
-            case Find(let parameters):
+            case let Find(parameters):
                 return parameters.getParameters()
-            case Create(let parameters):
+            case let Create(parameters):
                 return parameters.getParameters()
-            case FindPosts(_, let before):
+            case let FindPosts(_, before):
                 if let before = before {
                     return ["before": String(before)]
                 }
@@ -72,46 +72,6 @@ extension Router.Group {
     enum Type: String  {
         case station
     }
-    
-//    struct Parameter {
-//        var category = Category.all
-//        var name = ""
-//        
-//        var page: Int?, type: Type?, after: NSTimeInterval?, coordinate: [Double]?, hasMembers: Bool?
-//        var introduction: String?, address: String?, cover: String?, members: [String]?
-//        
-//        init() {
-//        }
-//        
-//        func getParameters(routerType: Router.Group) -> [String: AnyObject] {
-//            var parameters = [String: AnyObject]()
-//            
-//            switch routerType {
-//            case Find:
-//                
-//                parameters["category"] = category.rawValue
-//                parameters["page"] = page ?? 0
-//                parameters["type"] = type?.rawValue
-//                parameters["name"] = name
-//                if let after = after {
-//                    parameters["after"] = String(after)
-//                }
-//                parameters["coordinate"] = coordinate
-//                parameters["hasMembers"] = hasMembers
-//                
-//            case Create:
-//                
-//                parameters["name"] = name
-//                parameters["introduction"] = introduction
-//                parameters["address"] = address
-//                parameters["cover"] = cover
-//                parameters["members"] = members
-//            default:
-//                break
-//            }
-//            return parameters
-//        }
-//    }
     
     struct FindParameters {
         var category: Category , page: Int?

@@ -22,13 +22,13 @@ extension Router {
         
         var path: String {
             switch self {
-            case FindById(let id): return "/posts/\(id)"
+            case let FindById(id): return "/posts/\(id)"
             case Find: return "/posts"
             case Create: return "/posts"
-            case Delete(let id): return "/posts/\(id)"
-            case Comment(let id): return "/posts/\(id)/comments"
-            case Bookmark(let id): return "/posts/\(id)/bookmark"
-            case Like(let id): return "/posts/\(id)/like"
+            case let Delete(id): return "/posts/\(id)"
+            case let Comment(id, _): return "/posts/\(id)/comments"
+            case let Bookmark(id): return "/posts/\(id)/bookmark"
+            case let Like(id): return "/posts/\(id)/like"
             }
         }
         
@@ -45,9 +45,9 @@ extension Router {
         
         var parameters: [String : AnyObject]? {
             switch self {
-            case Find(let parameters): return parameters.getParameters()
-            case Create(let parameters): return parameters.getParameters()
-            case Comment(_, let content): return ["content": content]
+            case let Find(parameters): return parameters.getParameters()
+            case let Create(parameters): return parameters.getParameters()
+            case let Comment(_, content): return ["content": content]
             default: return nil
             }
         }
