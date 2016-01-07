@@ -74,17 +74,13 @@ extension BookmarkedPostsViewController {
     }
     
     override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        guard let content = bookmarks.get(indexPath.row) as? PostEntity else { return UITableViewAutomaticDimension }
         
-        if let content = bookmarks.get(indexPath.row) as? PostEntity {
-            
-            if content.images?.count > 0 {
-                return 334
-            } else {
-                return 131
-            }
+        if content.images?.count > 0 {
+            return 334
+        } else {
+            return 131
         }
-        
-        return UITableViewAutomaticDimension
     }
     
 }

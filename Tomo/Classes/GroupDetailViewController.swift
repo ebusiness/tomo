@@ -147,14 +147,14 @@ extension GroupDetailViewController {
         self.groupNameLable.text = group.name
         self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: DefaultGroupImage)
         
-        if let myGroups = me.groups {
-            if myGroups.contains(self.group.id) {
-                navigationItem.rightBarButtonItem?.enabled = true
-                self.joinButton.hidden = true
-            } else {
-                navigationItem.rightBarButtonItem?.enabled = false
-                joinButton.hidden = false
-            }
+        guard let myGroups = me.groups else { return }
+        
+        if myGroups.contains(self.group.id) {
+            navigationItem.rightBarButtonItem?.enabled = true
+            self.joinButton.hidden = true
+        } else {
+            navigationItem.rightBarButtonItem?.enabled = false
+            joinButton.hidden = false
         }
     }
 }
@@ -280,18 +280,18 @@ extension GroupDetailViewController {
     }
     
     private func moveTitleView(OffsetY: CGFloat) {
-        if let titleView = self.navigationItem.titleView {
-            if titleView.hidden {
-                titleView.hidden = false
-            }
-            var y = OffsetY - self.groupNameLable.frame.origin.y
-            if y > 12 {
-                y = 12
-            } else if y < -64 {
-                y = -64
-            }
-            titleView.frame.origin.y = y
+        guard let titleView = self.navigationItem.titleView else { return }
+        
+        if titleView.hidden {
+            titleView.hidden = false
         }
+        var y = OffsetY - self.groupNameLable.frame.origin.y
+        if y > 12 {
+            y = 12
+        } else if y < -64 {
+            y = -64
+        }
+        titleView.frame.origin.y = y
     }
     
 }

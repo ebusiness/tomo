@@ -63,16 +63,17 @@ extension CommentCell {
         
         if let profileViewController = profileViewController {
             parentVC?.navigationController?.popToViewController(profileViewController, animated: true)
-        } else {
-            if let childvcs = self.parentVC?.navigationController?.childViewControllers where childvcs.count > 4 {
-                for index in 1..<(childvcs.count-1) {
-                    childvcs[index].removeFromParentViewController()
-                }
-            }
-            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-            vc.user = comment.owner
-            
-            parentVC?.navigationController?.pushViewController(vc, animated: true)
+            return
         }
+        
+        if let childvcs = self.parentVC?.navigationController?.childViewControllers where childvcs.count > 4 {
+            for index in 1..<(childvcs.count-1) {
+                childvcs[index].removeFromParentViewController()
+            }
+        }
+        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+        vc.user = comment.owner
+        
+        parentVC?.navigationController?.pushViewController(vc, animated: true)
     }
 }

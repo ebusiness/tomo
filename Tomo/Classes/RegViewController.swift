@@ -96,15 +96,14 @@ extension RegViewController {
     
     func keyboardWillShown(notification: NSNotification) {
         
-        if let info = notification.userInfo {
+        guard let info = notification.userInfo else { return }
+        
+        if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height {
             
-            if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height {
-                
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    self.inputAreaBottomSpace.constant = keyboardHeight
-                    self.view.layoutIfNeeded()
-                })
-            }
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.inputAreaBottomSpace.constant = keyboardHeight
+                self.view.layoutIfNeeded()
+            })
         }
     }
     

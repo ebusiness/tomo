@@ -27,23 +27,22 @@ class URLSchemesController {
             return true
         } else if let rootvc = UIApplication.sharedApplication().keyWindow?.rootViewController as? TabBarController {
             self.tabBarController = rootvc
-            if let host = url.host, id = url.path, event = ListenerEvent(rawValue: host) {
-                let id =  id.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-                switch event {
-                case .Message:
-                    openMessage(id)
-                case .GroupMessage:
-                    openGroupMessage(id)
-                case .FriendInvited, .FriendAccepted, .FriendRefused, .FriendBreak:
-                    openProfile(id)
-                case .PostNew, .PostLiked, .PostCommented, .PostBookmarked:
-                    openPost(id)
-                default:
-//                    println(url) // TODO
-                    return false
-                }
-                return true
+            guard let host = url.host, urlpath = url.path, event = ListenerEvent(rawValue: host) else { return false }
+            let id =  urlpath.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            switch event {
+            case .Message:
+                openMessage(id)
+            case .GroupMessage:
+                openGroupMessage(id)
+            case .FriendInvited, .FriendAccepted, .FriendRefused, .FriendBreak:
+                openProfile(id)
+            case .PostNew, .PostLiked, .PostCommented, .PostBookmarked:
+                openPost(id)
+            default:
+                //                    println(url) // TODO
+                return false
             }
+            return true
         } else {
             self.taskURL = url
         }

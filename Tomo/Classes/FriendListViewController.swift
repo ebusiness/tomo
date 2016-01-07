@@ -257,79 +257,74 @@ extension FriendListViewController {
     }
     
     func receiveMessage(notification: NSNotification) {
-        if let userInfo = notification.userInfo {
-            let json = JSON(userInfo)
+        guard let userInfo = notification.userInfo else { return }
+        
+        let json = JSON(userInfo)
+        
+        let friend = self.friends.find{ $0.id == json["from"]["id"].stringValue }
+        
+        guard let user = friend else { return }
+        
+        let message = MessageEntity(json)
+        message.to = me
+        message.from = user
+        user.lastMessage = message
+        
+        let row = self.friends.indexOf(user)!
+        let indexPath = NSIndexPath(forRow: row, inSection: 1)
+        
+        if 0 == row {
+            gcd.sync(.Main){
+                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            }
+        } else {
+            self.friends.remove(user)
+            self.friends.insert(user, atIndex: 0)
             
-            let user = self.friends.find{ $0.id == json["from"]["id"].stringValue }
-            
-            if let user = user {
+            gcd.sync(.Main){
                 
-                let message = MessageEntity(json)
-                message.to = me
-                message.from = user
-                user.lastMessage = message
+                let firstIndexPath =  NSIndexPath(forRow: 0, inSection: 1)
                 
-                let row = self.friends.indexOf(user)!
-                let indexPath = NSIndexPath(forRow: row, inSection: 1)
+                self.tableView.beginUpdates()
+                self.tableView.moveRowAtIndexPath(indexPath, toIndexPath: firstIndexPath)
+                self.tableView.endUpdates()
                 
-                if 0 == row {
-                    gcd.sync(.Main){
-                        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                    }
-                } else {
-                    self.friends.remove(user)
-                    self.friends.insert(user, atIndex: 0)
-                    
-                    gcd.sync(.Main){
-                        
-                        let firstIndexPath =  NSIndexPath(forRow: 0, inSection: 1)
-                        
-                        self.tableView.beginUpdates()
-                        self.tableView.moveRowAtIndexPath(indexPath, toIndexPath: firstIndexPath)
-                        self.tableView.endUpdates()
-                        
-                        self.tableView.beginUpdates()
-                        self.tableView.reloadRowsAtIndexPaths([firstIndexPath], withRowAnimation: .Automatic)
-                        self.tableView.endUpdates()
-                    }
-                }
+                self.tableView.beginUpdates()
+                self.tableView.reloadRowsAtIndexPaths([firstIndexPath], withRowAnimation: .Automatic)
+                self.tableView.endUpdates()
             }
         }
     }
     
     func receiveFriendAccepted(notification: NSNotification) {
-        if let userInfo = notification.userInfo {
-            
-            let from = UserEntity(JSON(userInfo)["from"])
-            
-            let index = self.friends.indexOf { $0.id == from.id }
-            
-            if index == nil {
-                self.friends.insert(from, atIndex: 0)
-                gcd.sync(.Main, closure: { () -> () in
-                    self.tableView.beginUpdates()
-                    self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
-                    self.tableView.endUpdates()
-                })
-            }
-        }
+        guard let userInfo = notification.userInfo else { return }
+        
+        let from = UserEntity(JSON(userInfo)["from"])
+        
+        let isFriend = self.friends.indexOf { $0.id == from.id } != nil
+        
+        if isFriend { return }
+        
+        self.friends.insert(from, atIndex: 0)
+        gcd.sync(.Main, closure: { () -> () in
+            self.tableView.beginUpdates()
+            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation:  .Automatic)
+            self.tableView.endUpdates()
+        })
     }
     
     func receiveFriendBreak(notification: NSNotification) {
-        if let userInfo = notification.userInfo {
-            
-            let from = UserEntity(JSON(userInfo)["from"])
-            
-            let index = self.friends.indexOf { $0.id == from.id }
-            
-            if let index = index {
-                self.friends.removeAtIndex(index)
-                gcd.sync(.Main, closure: { () -> () in
-                    self.tableView.beginUpdates()
-                    self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation:  .Automatic)
-                    self.tableView.endUpdates()
-                })
-            }
-        }
+        guard let userInfo = notification.userInfo else { return }
+        
+        let from = UserEntity(JSON(userInfo)["from"])
+        
+        guard let index = self.friends.indexOf({ $0.id == from.id }) else { return }
+        
+        self.friends.removeAtIndex(index)
+        gcd.sync(.Main, closure: { () -> () in
+            self.tableView.beginUpdates()
+            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation:  .Automatic)
+            self.tableView.endUpdates()
+        })
     }
 }

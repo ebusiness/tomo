@@ -69,21 +69,21 @@ extension BaseViewController: UIScrollViewDelegate {
         
         if self.automaticallyAdjustsScrollViewInsets { return } //nothing under the navigationBar
         
-        if let topConstraint = self.topConstraint {
-            let y = scrollView.contentOffset.y
+        guard let topConstraint = self.topConstraint else { return }
+        
+        let y = scrollView.contentOffset.y
+        
+        if y < 0 {
+            topConstraint.constant = y
+            navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        } else {
+            let image = Util.imageWithColor(NavigationBarColorHex, alpha: y/self.headerHeight)
+            navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
             
-            if y < 0 {
-                topConstraint.constant = y
-                navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            if self.headerHeight <= y {
+                self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
             } else {
-                let image = Util.imageWithColor(NavigationBarColorHex, alpha: y/self.headerHeight)
-                navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
-                
-                if self.headerHeight <= y {
-                    self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
-                } else {
-                    self.navigationController?.navigationBar.shadowImage = UIImage()
-                }
+                self.navigationController?.navigationBar.shadowImage = UIImage()
             }
         }
     }

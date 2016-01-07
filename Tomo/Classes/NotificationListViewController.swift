@@ -123,25 +123,24 @@ extension NotificationListViewController {
     }
     
     func receiveAny(notification: NSNotification) {
-        if let userInfo = notification.userInfo {
-            let remoteNotification = NotificationEntity(userInfo)
-            
-            if let type = ListenerEvent(rawValue: remoteNotification.type) {
-                if type == .FriendInvited || type == .Message || type == .GroupMessage { //receive it by friendlistviewcontroller
-                    return
-                }
+        guard let userInfo = notification.userInfo else { return}
+        let remoteNotification = NotificationEntity(userInfo)
+        
+        if let type = ListenerEvent(rawValue: remoteNotification.type) {
+            if type == .FriendInvited || type == .Message || type == .GroupMessage { //receive it by friendlistviewcontroller
+                return
             }
-            
-            if nil != self.notifications {
-                self.notifications!.insert(remoteNotification, atIndex: 0)
-            } else {
-                self.notifications = [remoteNotification]
-            }
-            gcd.sync(.Main) {
-                self.tableView.beginUpdates()
-                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Fade)
-                self.tableView.endUpdates()
-            }
+        }
+        
+        if nil != self.notifications {
+            self.notifications!.insert(remoteNotification, atIndex: 0)
+        } else {
+            self.notifications = [remoteNotification]
+        }
+        gcd.sync(.Main) {
+            self.tableView.beginUpdates()
+            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Fade)
+            self.tableView.endUpdates()
         }
     }
 }

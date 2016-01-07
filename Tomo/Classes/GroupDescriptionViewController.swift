@@ -211,16 +211,17 @@ extension GroupDescriptionViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == memberCollectionSection && (detailedGroup?.members ?? []).count > 0 {
-            memberCollectionView.frame.size.width = tableView.frame.size.width
-            memberCollectionView.reloadData()
-            let constant = memberCollectionView.collectionViewLayout.collectionViewContentSize().height
-            memberCollectionViewHeightConstraint.constant = constant
-            memberCollectionView.layoutIfNeeded()
-            
-            return constant
+        guard indexPath.section == memberCollectionSection && (detailedGroup?.members ?? []).count > 0 else {
+            return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
         }
-        return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+        
+        memberCollectionView.frame.size.width = tableView.frame.size.width
+        memberCollectionView.reloadData()
+        let constant = memberCollectionView.collectionViewLayout.collectionViewContentSize().height
+        memberCollectionViewHeightConstraint.constant = constant
+        memberCollectionView.layoutIfNeeded()
+        
+        return constant
     }
 }
 
@@ -237,10 +238,10 @@ extension GroupDescriptionViewController: UICollectionViewDataSource, UICollecti
         return cell;
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if let member = detailedGroup?.members?[indexPath.row] {
-            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-            vc.user = member
-            navigationController?.pushViewController(vc, animated: true)
-        }
+        guard let member = detailedGroup?.members?[indexPath.row] else { return }
+        
+        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+        vc.user = member
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

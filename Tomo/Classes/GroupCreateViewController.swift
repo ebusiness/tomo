@@ -42,12 +42,11 @@ final class GroupCreateViewController: BaseTableViewController {
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         
+        guard (me.friends ?? []).count < 1 else { return }
         //no friends
-        if (me.friends ?? []).count < 1 {
-            Util.alert(self, title: "添加好友", message: "您还没有好友,是否需要添加好友?") { _ in
-                let vc = Util.createViewControllerWithIdentifier("SearchFriend", storyboardName: "Contacts")
-                self.presentViewController(vc, animated: true, completion: nil)
-            }
+        Util.alert(self, title: "添加好友", message: "您还没有好友,是否需要添加好友?") { _ in
+            let vc = Util.createViewControllerWithIdentifier("SearchFriend", storyboardName: "Contacts")
+            self.presentViewController(vc, animated: true, completion: nil)
         }
     }
     
@@ -167,12 +166,10 @@ extension GroupCreateViewController {
 extension GroupCreateViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) where cell.contentView.subviews.count > 0 {
-            
-            let views: AnyObject? = cell.contentView.subviews.filter { $0 is UITextView || $0 is UITextField }
-            if let views = views as? [UIView], lastView = views.last {
-                lastView.becomeFirstResponder()
-            }
+        guard let cell = tableView.cellForRowAtIndexPath(indexPath) where cell.contentView.subviews.count > 0 else { return }
+        let views: AnyObject? = cell.contentView.subviews.filter { $0 is UITextView || $0 is UITextField }
+        if let views = views as? [UIView], lastView = views.last {
+            lastView.becomeFirstResponder()
         }
     }
     
@@ -213,43 +210,37 @@ extension GroupCreateViewController: UICollectionViewDataSource, UICollectionVie
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
-            
-            self.inviteFriends.append(self.friends![indexPath.item])
-            
-            self.refreshInviteMark()
-            
-            UIView.animateWithDuration(0.1, animations: { () -> Void in
-                cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) else { return }
+        self.inviteFriends.append(self.friends![indexPath.item])
+        
+        self.refreshInviteMark()
+        
+        UIView.animateWithDuration(0.1, animations: { () -> Void in
+            cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
             }, completion: { (_) -> Void in
                 let avatar: AnyObject? = cell.contentView.subviews.find { $0 is UIImageView }
                 if let avatar = avatar as? UIImageView {
                     avatar.layer.borderColor = Util.UIColorFromRGB(0x4CAF50, alpha: 1).CGColor
                     avatar.layer.borderWidth = 2
                 }
-            })
-        }
+        })
     }
     
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
         
-        if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
-            
-            self.inviteFriends.remove(self.friends![indexPath.item])
-            self.refreshInviteMark()
-            
-            UIView.animateWithDuration(0.1, animations: { () -> Void in
-                cell.transform = CGAffineTransformIdentity
+        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) else { return }
+        self.inviteFriends.remove(self.friends![indexPath.item])
+        self.refreshInviteMark()
+        
+        UIView.animateWithDuration(0.1, animations: { () -> Void in
+            cell.transform = CGAffineTransformIdentity
             }, completion: { (_) -> Void in
                 let avatar: AnyObject? = cell.contentView.subviews.find { $0 is UIImageView }
                 if let avatar = avatar as? UIImageView {
                     avatar.layer.borderWidth = 0
                 }
-            })
-        }
+        })
     }
-    
-    
 }
 
 extension GroupCreateViewController {
@@ -258,24 +249,24 @@ extension GroupCreateViewController {
         
         if inviteCount > 0 {
             inviteMark.text = String(inviteCount)
-            if inviteMark.hidden {
-                inviteMark.superview?.bringSubviewToFront(inviteMark)
-                inviteMark.transform = CGAffineTransformMakeScale(0, 0)
-                inviteMark.hidden = false
-                
-                UIView.animateWithDuration(0.3, animations: { _ in
-                    self.inviteMark.transform = CGAffineTransformMakeScale(1, 1)
-                }, completion: nil)
-            }
+            if !inviteMark.hidden { return }
+            
+            inviteMark.superview?.bringSubviewToFront(inviteMark)
+            inviteMark.transform = CGAffineTransformMakeScale(0, 0)
+            inviteMark.hidden = false
+            
+            UIView.animateWithDuration(0.3, animations: { _ in
+                self.inviteMark.transform = CGAffineTransformMakeScale(1, 1)
+            }, completion: nil)
             
         } else {
-            if !inviteMark.hidden {
-                UIView.animateWithDuration(0.1, animations: { _ in
-                    self.inviteMark.transform = CGAffineTransformMakeScale(0, 0)
-                }, completion: { (_) -> Void in
+            if inviteMark.hidden { return }
+            
+            UIView.animateWithDuration(0.1, animations: { _ in
+                self.inviteMark.transform = CGAffineTransformMakeScale(0, 0)
+            }, completion: { (_) -> Void in
                     self.inviteMark.hidden = true
-                })
-            }
+            })
         }
         
     }

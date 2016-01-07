@@ -17,11 +17,10 @@ final class AgreementViewController: BaseViewController {
         self.alwaysShowNavigationBar = true
         webView.scrollView.bounces = false
         
-        if let htmlPath = NSBundle.mainBundle().pathForResource("statements", ofType: "html") {
-            let url = NSURL.fileURLWithPath(htmlPath)
-            let request = NSURLRequest(URL: url)
-            webView.loadRequest(request)
-        }
+        guard let htmlPath = NSBundle.mainBundle().pathForResource("statements", ofType: "html") else { return }
+        let url = NSURL.fileURLWithPath(htmlPath)
+        let request = NSURLRequest(URL: url)
+        webView.loadRequest(request)
     }
     @IBAction func close(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)

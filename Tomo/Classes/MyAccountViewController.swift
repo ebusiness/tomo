@@ -109,19 +109,19 @@ extension MyAccountViewController {
     }
     
     func receiveAny(notification: NSNotification) {
-        if let userInfo = notification.userInfo {
-            let remoteNotification = NotificationEntity(userInfo)
-            
-            if let type = ListenerEvent(rawValue: remoteNotification.type) {
-                if type == .FriendInvited || type == .Message { //receive it by friendlistviewcontroller
-                    return
-                }
+        guard let userInfo = notification.userInfo else { return }
+        
+        let remoteNotification = NotificationEntity(userInfo)
+        
+        if let type = ListenerEvent(rawValue: remoteNotification.type) {
+            if type == .FriendInvited || type == .Message { //receive it by friendlistviewcontroller
+                return
             }
-            if me.notifications > 0 {
-                gcd.sync(.Main) {
-                    self.badgeView.text = String(me.notifications)
-                    self.notificationCell.accessoryView = self.badgeView
-                }
+        }
+        if me.notifications > 0 {
+            gcd.sync(.Main) {
+                self.badgeView.text = String(me.notifications)
+                self.notificationCell.accessoryView = self.badgeView
             }
         }
     }

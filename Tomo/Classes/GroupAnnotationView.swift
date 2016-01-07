@@ -51,30 +51,27 @@ class GroupAnnotationView: AggregatableAnnotationView, UIPageViewControllerDataS
         let currentGroup = (viewController as! GroupCallOutViewController).groupAnnotation
         let annotation = self.annotation as! GroupAnnotation
         
-        if let containedAnnotations = annotation.containedAnnotations {
-            
-            if containedAnnotations.count == 0 {
-                return nil
-            }
-            
-            let callOutViewController = GroupCallOutViewController(nibName: "GroupCallOutView", bundle: nil)
-            
-            if let index = containedAnnotations.indexOf(currentGroup) {
-                
-                if index < containedAnnotations.count - 1 {
-                    callOutViewController.groupAnnotation = containedAnnotations.get(index + 1) as! GroupAnnotation
-                } else {
-                    callOutViewController.groupAnnotation = annotation
-                }
-                
-            } else {
-                callOutViewController.groupAnnotation = containedAnnotations.first as! GroupAnnotation
-            }
-            
-            return callOutViewController
+        guard let containedAnnotations = annotation.containedAnnotations else { return nil }
+        
+        if containedAnnotations.count == 0 {
+            return nil
         }
         
-        return nil
+        let callOutViewController = GroupCallOutViewController(nibName: "GroupCallOutView", bundle: nil)
+        
+        if let index = containedAnnotations.indexOf(currentGroup) {
+            
+            if index < containedAnnotations.count - 1 {
+                callOutViewController.groupAnnotation = containedAnnotations.get(index + 1) as! GroupAnnotation
+            } else {
+                callOutViewController.groupAnnotation = annotation
+            }
+            
+        } else {
+            callOutViewController.groupAnnotation = containedAnnotations.first as! GroupAnnotation
+        }
+        
+        return callOutViewController
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
@@ -82,30 +79,27 @@ class GroupAnnotationView: AggregatableAnnotationView, UIPageViewControllerDataS
         let currentGroup = (viewController as! GroupCallOutViewController).groupAnnotation
         let annotation = self.annotation as! GroupAnnotation
         
-        if let containedAnnotations = annotation.containedAnnotations {
-            
-            if containedAnnotations.count == 0 {
-                return nil
-            }
-            
-            let callOutViewController = GroupCallOutViewController(nibName: "GroupCallOutView", bundle: nil)
-            
-            if let index = containedAnnotations.indexOf(currentGroup) {
-                
-                if index == 0 {
-                    callOutViewController.groupAnnotation = annotation
-                } else {
-                    callOutViewController.groupAnnotation = annotation.containedAnnotations?.get(index - 1) as! GroupAnnotation
-                }
-                return callOutViewController
-                
-            } else {
-                callOutViewController.groupAnnotation = containedAnnotations.last as! GroupAnnotation
-            }
-            
-            return callOutViewController
+        guard let containedAnnotations = annotation.containedAnnotations else { return nil }
+        
+        if containedAnnotations.count == 0 {
+            return nil
         }
         
-        return nil
+        let callOutViewController = GroupCallOutViewController(nibName: "GroupCallOutView", bundle: nil)
+        
+        if let index = containedAnnotations.indexOf(currentGroup) {
+            
+            if index == 0 {
+                callOutViewController.groupAnnotation = annotation
+            } else {
+                callOutViewController.groupAnnotation = annotation.containedAnnotations?.get(index - 1) as! GroupAnnotation
+            }
+            return callOutViewController
+            
+        } else {
+            callOutViewController.groupAnnotation = containedAnnotations.last as! GroupAnnotation
+        }
+        
+        return callOutViewController
     }
 }

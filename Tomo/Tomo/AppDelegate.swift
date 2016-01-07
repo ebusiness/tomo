@@ -52,17 +52,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(application: UIApplication) {
+        Defaults["mapLastTimeStamp"] = NSDate()
+        guard let rootvc = window?.rootViewController as? TabBarController else { return }
         
-        if let rootvc = window?.rootViewController as? TabBarController{
-            application.applicationIconBadgeNumber = rootvc.viewControllers!.reduce(0) { (count, vc ) -> Int in
-                if let badgeValue = vc.tabBarItem.badgeValue, badge = Int(badgeValue) {
-                    return count + badge
-                }
-                return count
+        application.applicationIconBadgeNumber = rootvc.viewControllers!.reduce(0) { (count, vc ) -> Int in
+            if let badgeValue = vc.tabBarItem.badgeValue, badge = Int(badgeValue) {
+                return count + badge
             }
+            return count
         }
         
-        Defaults["mapLastTimeStamp"] = NSDate()
     }
     
     func application( application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData ) {

@@ -157,16 +157,15 @@ extension RecommendViewController: UICollectionViewDelegate {
         self.currentSelectedIndexPath = indexPath
         self.dismissViewControllerAnimated(true, completion: nil)
 
-        if let group = recommendGroups?[indexPath.row] {
-
-            self.selectGroup(group)
-
-            guard self.maskView.alpha > 0 else { return }
-
-            UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
-                self.maskView.alpha = 0
-            })
-        }
+        guard let group = recommendGroups?[indexPath.row] else { return }
+        
+        self.selectGroup(group)
+        
+        guard self.maskView.alpha > 0 else { return }
+        
+        UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
+            self.maskView.alpha = 0
+        })
     }
 
     private func selectGroup(group: GroupEntity) {
@@ -219,25 +218,23 @@ extension RecommendViewController: MKMapViewDelegate {
     }
 
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-
-        if let annotationView = self.currentAnnotationView {
-
-            let vc = Util.createViewControllerWithIdentifier("GroupPopoverViewController", storyboardName: "Main") as! GroupPopoverViewController
-
-            vc.modalPresentationStyle = .Popover
-            vc.presentationController?.delegate = self
-
-            vc.groupAnnotation = annotationView.annotation as! GroupAnnotation
-
-            self.presentViewController(vc, animated: true, completion: nil)
-
-            if let pop = vc.popoverPresentationController {
-                pop.passthroughViews = [self.view]
-                pop.permittedArrowDirections = .Down
-                pop.sourceView = annotationView
-                pop.sourceRect = annotationView.bounds
-            }
-        }
+        guard let annotationView = self.currentAnnotationView else { return }
+        
+        let vc = Util.createViewControllerWithIdentifier("GroupPopoverViewController", storyboardName: "Main") as! GroupPopoverViewController
+        
+        vc.modalPresentationStyle = .Popover
+        vc.presentationController?.delegate = self
+        
+        vc.groupAnnotation = annotationView.annotation as! GroupAnnotation
+        
+        self.presentViewController(vc, animated: true, completion: nil)
+        
+        guard let pop = vc.popoverPresentationController else { return }
+        
+        pop.passthroughViews = [self.view]
+        pop.permittedArrowDirections = .Down
+        pop.sourceView = annotationView
+        pop.sourceRect = annotationView.bounds
     }
 }
 
@@ -383,10 +380,9 @@ final class GroupPopoverViewController: UIViewController {
         self.joinButton.layer.borderWidth = 1
         self.joinButton.layer.cornerRadius = 2
 
-        if let group = groupAnnotation.group {
-            self.nameLabel.text = group.name
-            self.introLabel.text = group.introduction
-            self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
-        }
+        guard let group = groupAnnotation.group else { return }
+        self.nameLabel.text = group.name
+        self.introLabel.text = group.introduction
+        self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
     }
 }

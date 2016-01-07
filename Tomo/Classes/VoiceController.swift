@@ -66,15 +66,14 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
         }
     }
     func stop()-> (String, String)?{
-        if nil != recorder {
-            recorder.stop()
-            let name = NSUUID().UUIDString.lowercaseString
-            let path = "\(paths[0])/\(name)"
-            self.wavToAmr(self.path_wav, savePath: path)
-            recorder = nil;
-            return (path, name)
-        }
-        return nil
+        if nil == recorder { return nil }
+        
+        recorder.stop()
+        let name = NSUUID().UUIDString.lowercaseString
+        let path = "\(paths[0])/\(name)"
+        self.wavToAmr(self.path_wav, savePath: path)
+        recorder = nil;
+        return (path, name)
     }
 
     func playOrStopTest() {
@@ -113,15 +112,14 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
     }
 
     func stopPlayer() {
-        if player != nil {
-            if player.playing {
-                player.stop()
-                player = nil
-                return
-            } else {
-                player.stop()
-                player = nil
-            }
+        if nil == player { return }
+        if player.playing {
+            player.stop()
+            player = nil
+            return
+        } else {
+            player.stop()
+            player = nil
         }
     }
     

@@ -8,7 +8,6 @@
 
 import UIKit
 import SwiftyJSON
-import Alamofire
 
 final class MessageViewController: CommonMessageController {
     
@@ -20,8 +19,6 @@ final class MessageViewController: CommonMessageController {
     }
 
     var avatarFriend: JSQMessagesAvatarImage!
-    
-    var messages = [JSQMessageEntity]()
     
     var oldestMessage: MessageEntity?
     
@@ -48,9 +45,9 @@ final class MessageViewController: CommonMessageController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let friend = me.friends where friend.contains(self.friend.id) {
-        } else {
+        guard let friend = me.friends where friend.contains(self.friend.id) else {
             self.navigationController?.popViewControllerAnimated(true)
+            return
         }
     }
     
@@ -134,17 +131,6 @@ extension MessageViewController {
         }
     }
     
-    private func prependRows(rows: Int) {
-        
-        var indexPathes = [NSIndexPath]()
-        
-        for index in 0..<rows {
-            indexPathes.append(NSIndexPath(forRow: index, inSection: 0))
-        }
-        
-        collectionView!.insertItemsAtIndexPaths(indexPathes)
-    }
-    
 }
 
 // MARK: - CommonMessageDelegate
@@ -188,25 +174,23 @@ extension MessageViewController: CommonMessageDelegate {
 extension MessageViewController {
     
     func receiveMessage(notification: NSNotification) {
-        if let userInfo = notification.userInfo {
-            let json = JSON(userInfo)
+        guard let userInfo = notification.userInfo else { return }
+        let json = JSON(userInfo)
+        
+        guard friend.id == json["from"]["id"].stringValue else { return }
+        let message = MessageEntity(json)
+        message.to = me
+        message.from = friend
+        
+        let newMessage = JSQMessageEntity(message: message)
+        
+        self.messages.append(newMessage)
+        
+        gcd.sync(.Main, closure: { () -> () in
             
-            if friend.id == json["from"]["id"].stringValue {
-                let message = MessageEntity(json)
-                message.to = me
-                message.from = friend
-                
-                let newMessage = JSQMessageEntity(message: message)
-
-                self.messages.append(newMessage)
-                
-                gcd.sync(.Main, closure: { () -> () in
-                    
-                    JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
-                    self.finishReceivingMessageAnimated(true)
-                })
-            }
-        }
+            JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
+            self.finishReceivingMessageAnimated(true)
+        })
     }
     
     func setting(){
@@ -234,27 +218,6 @@ extension MessageViewController {
 
 extension MessageViewController {
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
-        
-        let item = messages[indexPath.item]
-        item.download { () -> () in
-            self.collectionView!.reloadItemsAtIndexPaths([indexPath])
-        }
-        
-        return messages[indexPath.item]
-    }
-    
-    override func collectionView(collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
-        
-        let message = messages[indexPath.item]
-        
-        if message.senderId() != me.id {
-            return incomingBubbleImageData
-        }
-        
-        return outgoingBubbleImageData
-    }
-    
     override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
         
         let message = messages[indexPath.item]
@@ -266,41 +229,11 @@ extension MessageViewController {
         return avatarMe
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
-        
-        let jsqMessage = messages[indexPath.item]
-        if indexPath.item < 1 { return JSQMessagesTimestampFormatter.sharedFormatter().attributedTimestampForDate(jsqMessage.date()) }
-        
-        let diff = jsqMessage.date().timeIntervalSince1970 - messages[indexPath.item - 1].date().timeIntervalSince1970
-        
-        if diff > 90 {
-            return JSQMessagesTimestampFormatter.sharedFormatter().attributedTimestampForDate(jsqMessage.date())
-        }
-
-        return nil
-    }
-    
 }
 
 // MARK: - JSQMessagesCollectionView DelegateFlowLayout
 
 extension MessageViewController {
-    
-    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
-        
-        if nil != self.collectionView(collectionView, attributedTextForCellTopLabelAtIndexPath: indexPath) {
-            return 40
-        }
-        return 0
-    }
-    
-    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
-        return 20
-    }
-    
-    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellBottomLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
-        return 0
-    }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, didTapAvatarImageView avatarImageView: UIImageView!, atIndexPath indexPath: NSIndexPath!) {
         
@@ -310,156 +243,5 @@ extension MessageViewController {
         vc.user = message.senderId() == me.id ? me : friend
         
         self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAtIndexPath indexPath: NSIndexPath!) {
-        
-        let message = messages[indexPath.item]
-        
-        if let content = message.text() {
-            
-            if MediaMessage.mediaMessage(content) == .Image || MediaMessage.mediaMessage(content) == .Video {
-                if nil != message.brokenImage {
-//                    let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! JSQMessagesCollectionViewCell
-//                    cell.mediaView = UIImageView(image: broken)
-                    
-                    message.reload({ () -> () in
-                        self.collectionView!.reloadItemsAtIndexPaths([indexPath])
-                    })
-                } else {
-                
-                    showGalleryView(indexPath, message: message)
-                }
-            }
-            
-            if let fileName = MediaMessage.fileNameOfMessage(content) where MediaMessage.mediaMessage(content) == .Voice {
-                
-                if FCFileManager.existsItemAtPath(fileName) {
-                    VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(fileName).path!)
-                } else {
-                    Util.showHUD()
-                    Manager.sharedInstance.download(.GET, MediaMessage.fullPath(content)) { (tempUrl, res) -> (NSURL) in
-                        return FCFileManager.urlForItemAtPath(fileName)
-                    }.response { (_, _, _, error) -> Void in
-                        Util.dismissHUD()
-                        if error == nil {
-                            VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(fileName).path!)
-                        }
-                    }
-                }
-
-            }
-        }
-    }
-    
-    func showGalleryView(indexPath: NSIndexPath, message: JSQMessageEntity) {
-        let cell = collectionView!.cellForItemAtIndexPath(indexPath) as? JSQMessagesCollectionViewCell
-        if let cell = cell, imageView = cell.mediaView as? UIImageView {
-            var items = [MHGalleryItem]()
-            var index = 0
-            
-            for item in self.messages {
-                if let
-                    mediaItem = item.media() as? JSQMediaItem,
-                    media = MediaMessage.mediaMessage(item.message.content)
-                    
-                    where media == .Image || media == .Video {
-                        
-                        var galleryItem: MHGalleryItem!
-                        if let brokenImage = item.brokenImage {
-                            galleryItem = MHGalleryItem(image: brokenImage)
-                            items.append(galleryItem)
-                            continue
-                        }
-                        if self.messages[indexPath.item] == item {
-                            index = items.count
-                        }
-                        if mediaItem is JSQPhotoMediaItem {
-                            galleryItem = MHGalleryItem(image: ( mediaItem as! JSQPhotoMediaItem).image)
-                        } else if mediaItem is TomoVideoMediaItem {
-                            let videoPath = MediaMessage.fullPath(message.text())
-                            galleryItem = MHGalleryItem(URL: videoPath, galleryType: .Video)
-                            galleryItem.image = SDImageCache.sharedImageCache().imageFromDiskCacheForKey(videoPath)
-                        }
-                        items.append(galleryItem)
-                }
-            }
-            
-            let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.ImageViewerNavigationBarShown)
-            gallery.galleryItems = items
-            gallery.presentationIndex = index
-            gallery.presentingFromImageView = imageView
-            
-            gallery.UICustomization.useCustomBackButtonImageOnImageViewer = false
-            gallery.UICustomization.showOverView = false
-            gallery.UICustomization.showMHShareViewInsteadOfActivityViewController = false
-            
-            gallery.finishedCallback = { [weak self] (currentIndex, image, transition, viewMode) -> Void in
-                let cell = self!.collectionView!.cellForItemAtIndexPath(indexPath) as!JSQMessagesCollectionViewCell
-                let imageView = cell.mediaView as! UIImageView
-                gcd.async(.Main, closure: { () -> () in
-                    gallery.dismissViewControllerAnimated(true, dismissImageView: imageView, completion: { [weak self] () -> Void in
-                        self!.automaticallyScrollsToMostRecentMessage = true
-                        self!.collectionView!.reloadItemsAtIndexPaths([indexPath])
-                    })
-                })
-            }
-            
-            self.automaticallyScrollsToMostRecentMessage = false
-            presentMHGalleryController(gallery, animated: true, completion: nil)
-        } else {
-            
-        }
-    }
-}
-
-// MARK: - UICollectionView DataSource
-
-extension MessageViewController {
-    
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return messages.count
-    }
-    
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        
-        let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath) as! JSQMessagesCollectionViewCell
-        
-        let message = messages[indexPath.item]
-        
-        if !message.isMediaMessage() {
-            if message.senderId() == me.id {
-                cell.textView!.textColor = UIColor.blackColor()
-            } else {
-                cell.textView!.textColor = UIColor.whiteColor()
-            }
-        }
-        
-        self.addBadgeViewIfNeeded(cell, message: message)
-        
-        return cell
-    }
-}
-
-extension MessageViewController {
-    
-    func addBadgeViewIfNeeded (cell: JSQMessagesCollectionViewCell, message: JSQMessageEntity){
-        if message.senderId() == me.id { return }
-        if MediaMessage.mediaMessage(message.text()) == .Voice {
-            let width: CGFloat = 8
-            let avatarHeight: CGFloat = 50
-            let voiceBackgroundImageWidth: CGFloat = 100
-            
-            let badgeView = UIView(frame: CGRectZero)
-            badgeView.backgroundColor = UIColor.redColor()
-            badgeView.layer.cornerRadius = width / 2
-            badgeView.layer.masksToBounds = true
-            
-            cell.addSubview(badgeView)
-            badgeView.translatesAutoresizingMaskIntoConstraints = false
-            let views = ["badgeView" : badgeView]
-            cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[badgeView(==\(width))]-\(avatarHeight-width)-|", options: [], metrics: nil, views: views))
-            cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[badgeView(==\(width))]-\(avatarHeight+voiceBackgroundImageWidth)-|", options: [], metrics: nil, views:views))
-        }
     }
 }

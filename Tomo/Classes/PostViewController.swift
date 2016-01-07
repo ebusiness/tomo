@@ -357,26 +357,24 @@ extension PostViewController {
     }
     
     func getImageView(index: Int) -> UIImageView {
-        if  let images = post.images {
-            
-            let i = index > images.count ? index - images.count : index < 0 ? images.count + index : index
-            
-            let imgView = UIImageView(frame: CGRectZero )
-            imgView.setImageWithURL(NSURL(string: images[i] ),
-                completed: {(image, _, _, _)-> Void in
-                    self.adjustContentMode(imgView, image: image)
-                },
-                usingActivityIndicatorStyle: .Gray)
-            imgView.userInteractionEnabled = true
-            imgView.tag = i
-            let tap = UITapGestureRecognizer(target: self, action: Selector("postImageViewTapped:"))
-            imgView.addGestureRecognizer(tap)
-            imgView.translatesAutoresizingMaskIntoConstraints = false
-//            imgView.contentMode = UIViewContentMode.ScaleAspectFill
-            imgView.clipsToBounds = true
-            return imgView
-        }
-        return UIImageView()
+        guard let images = post.images else { return UIImageView() }
+        
+        let i = index > images.count ? index - images.count : index < 0 ? images.count + index : index
+        
+        let imgView = UIImageView(frame: CGRectZero )
+        imgView.setImageWithURL(NSURL(string: images[i] ),
+            completed: {(image, _, _, _)-> Void in
+                self.adjustContentMode(imgView, image: image)
+            },
+            usingActivityIndicatorStyle: .Gray)
+        imgView.userInteractionEnabled = true
+        imgView.tag = i
+        let tap = UITapGestureRecognizer(target: self, action: Selector("postImageViewTapped:"))
+        imgView.addGestureRecognizer(tap)
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+//        imgView.contentMode = UIViewContentMode.ScaleAspectFill
+        imgView.clipsToBounds = true
+        return imgView
         
     }
     
@@ -420,27 +418,26 @@ extension PostViewController {
     }
     
     func changeImageTo(index: Int){
-        if let images = post.images where postImageList.subviews.count == 3 {
-            let left = postImageList.subviews[0] as! UIImageView
-            let center = postImageList.subviews[1] as! UIImageView
-            let right = postImageList.subviews[2] as! UIImageView
-            
-            left.tag = index == 0 ? images.count - 1 : index - 1
-            center.tag = index
-            right.tag = index == (images.count - 1) ? 0 : index + 1
-            
-            left.setImageWithURL(NSURL(string: images[left.tag] ), completed: {(image, _, _, _)-> Void in
-                self.adjustContentMode(left, image: image)
-                }, usingActivityIndicatorStyle: .Gray)
-            center.setImageWithURL(NSURL(string: images[center.tag] ), completed: {(image, _, _, _)-> Void in
-                self.adjustContentMode(center, image: image)
-                }, usingActivityIndicatorStyle: .Gray)
-            right.setImageWithURL(NSURL(string: images[right.tag] ), completed: {(image, _, _, _)-> Void in
-                self.adjustContentMode(right, image: image)
-                }, usingActivityIndicatorStyle: .Gray)
-            
-            postImageList.contentOffset.x = UIScreen.mainScreen().bounds.size.width//postImageList.frame.size.width
-        }
+        guard let images = post.images where postImageList.subviews.count == 3 else { return }
+        let left = postImageList.subviews[0] as! UIImageView
+        let center = postImageList.subviews[1] as! UIImageView
+        let right = postImageList.subviews[2] as! UIImageView
+        
+        left.tag = index == 0 ? images.count - 1 : index - 1
+        center.tag = index
+        right.tag = index == (images.count - 1) ? 0 : index + 1
+        
+        left.setImageWithURL(NSURL(string: images[left.tag] ), completed: {(image, _, _, _)-> Void in
+            self.adjustContentMode(left, image: image)
+            }, usingActivityIndicatorStyle: .Gray)
+        center.setImageWithURL(NSURL(string: images[center.tag] ), completed: {(image, _, _, _)-> Void in
+            self.adjustContentMode(center, image: image)
+            }, usingActivityIndicatorStyle: .Gray)
+        right.setImageWithURL(NSURL(string: images[right.tag] ), completed: {(image, _, _, _)-> Void in
+            self.adjustContentMode(right, image: image)
+            }, usingActivityIndicatorStyle: .Gray)
+        
+        postImageList.contentOffset.x = UIScreen.mainScreen().bounds.size.width//postImageList.frame.size.width
     }
     
     func postImageViewTapped(sender: UITapGestureRecognizer) {
@@ -448,53 +445,56 @@ extension PostViewController {
             self.view.endEditing(true)
             return
         }
-        if let images = post.images, imageView = sender.view as? UIImageView where postImageList.subviews.count > 0 && images.count > 0 {
+        guard
+            let images = post.images,
+            imageView = sender.view as? UIImageView
+            where postImageList.subviews.count > 0 && images.count > 0
+            else { return }
+        
+        var items = [MHGalleryItem]();
+        
+        if postImageList.subviews.count == 1 {
+            let image =  (postImageList.subviews.first as! UIImageView).image
+            items.append(MHGalleryItem(image: image))
+        } else {
+            let left =  (postImageList.subviews.first as! UIImageView)
+            let center =  (postImageList.subviews[1] as! UIImageView)
+            let right =  (postImageList.subviews.last as! UIImageView)
             
-            var items = [MHGalleryItem]();
-            
-            if postImageList.subviews.count == 1 {
-                let image =  (postImageList.subviews.first as! UIImageView).image
-                items.append(MHGalleryItem(image: image))
-            } else {
-                let left =  (postImageList.subviews.first as! UIImageView)
-                let center =  (postImageList.subviews[1] as! UIImageView)
-                let right =  (postImageList.subviews.last as! UIImageView)
-                
-                for i in 0..<images.count {
-                    if i == left.tag {
-                        items.append(self.getGalleryItem(i, image: left.image))
-                    } else if i == center.tag {
-                        items.append(self.getGalleryItem(i, image: center.image))
-                    } else if i == right.tag {
-                        items.append(self.getGalleryItem(i, image: right.image))
-                    } else {
-                        items.append(MHGalleryItem(URL: images[i], galleryType: .Image))
-                    }
+            for i in 0..<images.count {
+                if i == left.tag {
+                    items.append(self.getGalleryItem(i, image: left.image))
+                } else if i == center.tag {
+                    items.append(self.getGalleryItem(i, image: center.image))
+                } else if i == right.tag {
+                    items.append(self.getGalleryItem(i, image: right.image))
+                } else {
+                    items.append(MHGalleryItem(URL: images[i], galleryType: .Image))
                 }
             }
-            
-            let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.ImageViewerNavigationBarShown)
-            gallery.galleryItems = items
-            gallery.presentationIndex = imageView.tag
-            
-            //            if post.images?.count == 1 {
-            gallery.presentingFromImageView = imageView
-            //            }
-            
-            gallery.UICustomization.useCustomBackButtonImageOnImageViewer = false
-            gallery.UICustomization.showOverView = false
-            gallery.UICustomization.showMHShareViewInsteadOfActivityViewController = false
-            
-            gallery.finishedCallback = { (currentIndex, image, transition, viewMode) -> Void in
-                gcd.async(.Main, closure: { () -> () in
-                    gallery.dismissViewControllerAnimated(true, dismissImageView: imageView, completion: { () -> Void in
-                    })
-                    
-                })
-            }
-            
-            presentMHGalleryController(gallery, animated: true, completion: nil)
         }
+        
+        let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.ImageViewerNavigationBarShown)
+        gallery.galleryItems = items
+        gallery.presentationIndex = imageView.tag
+        
+//        if post.images?.count == 1 {
+            gallery.presentingFromImageView = imageView
+//        }
+        
+        gallery.UICustomization.useCustomBackButtonImageOnImageViewer = false
+        gallery.UICustomization.showOverView = false
+        gallery.UICustomization.showMHShareViewInsteadOfActivityViewController = false
+        
+        gallery.finishedCallback = { (currentIndex, image, transition, viewMode) -> Void in
+            gcd.async(.Main, closure: { () -> () in
+                gallery.dismissViewControllerAnimated(true, dismissImageView: imageView, completion: { () -> Void in
+                })
+                
+            })
+        }
+        
+        presentMHGalleryController(gallery, animated: true, completion: nil)
     }
     
     private func getGalleryItem(index: Int, image: UIImage?) -> MHGalleryItem {
@@ -576,16 +576,16 @@ extension PostViewController: UITextViewDelegate {
         let viewheight = textView.contentSize.height + 2 * 8
         commentInputViewConstraint.constant = viewheight < 50 ? 50 : viewheight > 100 ? 100 : viewheight
         
-        if textView.markedTextRange == nil {
-            commentContent = textView.text.trimmed()
+        if nil != textView.markedTextRange { return }
+        
+        commentContent = textView.text.trimmed()
+        
+        if commentContent!.length > 0 {
             
-            if commentContent!.length > 0 {
-                
-                self.hideSendBtn(false)
-            } else {
-                
-                self.hideSendBtn(true)
-            }
+            self.hideSendBtn(false)
+        } else {
+            
+            self.hideSendBtn(true)
         }
     }
 }
@@ -619,25 +619,29 @@ extension PostViewController {
     
     func keyboardWillShow(notification: NSNotification) {
         isKeyboardShown = true
-        if let info = notification.userInfo, keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height ,duration = info[UIKeyboardAnimationDurationUserInfoKey] as? NSTimeInterval {
-            
-            self.bottomConstraint.constant = keyboardHeight
-            UIView.animateWithDuration(duration, animations: { () -> Void in
-                self.view.layoutIfNeeded()
-            })
-            
-        }
+        guard
+            let info = notification.userInfo,
+            keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height,
+            duration = info[UIKeyboardAnimationDurationUserInfoKey] as? NSTimeInterval
+            else { return }
+        
+        self.bottomConstraint.constant = keyboardHeight
+        UIView.animateWithDuration(duration, animations: { () -> Void in
+            self.view.layoutIfNeeded()
+        })
     }
     
     func keyboardWillBeHidden(notification: NSNotification) {
         isKeyboardShown = false
-        if let info = notification.userInfo, duration = info[UIKeyboardAnimationDurationUserInfoKey] as? NSTimeInterval {
-            
-            self.bottomConstraint.constant = 0
-            UIView.animateWithDuration(duration, animations: { () -> Void in
-                self.view.layoutIfNeeded()
-            })
-        }
+        guard
+            let info = notification.userInfo,
+            duration = info[UIKeyboardAnimationDurationUserInfoKey] as? NSTimeInterval
+            else { return }
+        
+        self.bottomConstraint.constant = 0
+        UIView.animateWithDuration(duration, animations: { () -> Void in
+            self.view.layoutIfNeeded()
+        })
     }
     
 }

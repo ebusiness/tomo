@@ -75,13 +75,12 @@ extension SearchFriendViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         
-        if let text = searchBar.text where text.trimmed().length > 0 {
-            
-            self.navigationItem.titleView?.endEditing(true)
-            
-            Router.User.FindByNickName(nickName: searchBar.text!).response {
-                self.result = $0.result.isFailure ? nil : UserEntity.collection($0.result.value!)
-            }
+        guard let text = searchBar.text where text.trimmed().length > 0 else { return }
+        
+        self.navigationItem.titleView?.endEditing(true)
+        
+        Router.User.FindByNickName(nickName: searchBar.text!).response {
+            self.result = $0.result.isFailure ? nil : UserEntity.collection($0.result.value!)
         }
     }
     

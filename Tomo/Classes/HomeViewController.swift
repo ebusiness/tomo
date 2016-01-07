@@ -131,29 +131,29 @@ extension HomeViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if let post = contents[indexPath.row] as? PostEntity {
-            if post.contentHeight == nil {
-                if post.images?.count > 0 {
-                    if postImageCellEstimator == nil {
-                        postImageCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier") as! ICYPostImageCell
-                    }
-                    postImageCellEstimator.post = post
-                    let size = postImageCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-                    post.contentHeight = size.height
-                } else {
-                    if postCellEstimator == nil {
-                        postCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier") as! ICYPostCell
-                    }
-                    postCellEstimator.post = post
-                    let size = postCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-                    post.contentHeight = size.height
-                }
-            }
-            return post.contentHeight!
-        } else if contents[indexPath.row] is [GroupEntity] {
+        if contents[indexPath.row] is [GroupEntity] {
             return 380.0
         }
-        return 0
+        guard let post = contents[indexPath.row] as? PostEntity else { return 0 }
+        
+        if post.contentHeight == nil {
+            if post.images?.count > 0 {
+                if postImageCellEstimator == nil {
+                    postImageCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier") as! ICYPostImageCell
+                }
+                postImageCellEstimator.post = post
+                let size = postImageCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+                post.contentHeight = size.height
+            } else {
+                if postCellEstimator == nil {
+                    postCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier") as! ICYPostCell
+                }
+                postCellEstimator.post = post
+                let size = postCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+                post.contentHeight = size.height
+            }
+        }
+        return post.contentHeight!
     }
     
 }

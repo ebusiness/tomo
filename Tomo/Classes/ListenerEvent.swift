@@ -201,15 +201,14 @@ extension ListenerEvent {
         
         me.friendInvitations.insert(invitation, atIndex: 0)
         
-        if let friendListViewController = tabBarController.selectedViewController?.childViewControllers.last as? FriendListViewController {
-            
-            gcd.sync(.Main, closure: { () -> () in
-                friendListViewController.tableView.beginUpdates()
-                friendListViewController.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation:  .Automatic)
-                friendListViewController.tableView.endUpdates()
-                friendListViewController.tableView.backgroundView = nil
-            })
-        }
+        guard let friendListViewController = tabBarController.selectedViewController?.childViewControllers.last as? FriendListViewController else { return }
+        
+        gcd.sync(.Main, closure: { () -> () in
+            friendListViewController.tableView.beginUpdates()
+            friendListViewController.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation:  .Automatic)
+            friendListViewController.tableView.endUpdates()
+            friendListViewController.tableView.backgroundView = nil
+        })
     }
     
     private func receiveFriendRelationship(tabBarController: TabBarController, userInfo: [NSObject : AnyObject]) {
@@ -242,22 +241,21 @@ extension ListenerEvent {
     
     private func receiveFriendAccepted(tabBarController: TabBarController, notification: NotificationEntity) {
         
-        if let friendListViewController = tabBarController.selectedViewController?.childViewControllers.last as? FriendListViewController {
+        me.addFriend(notification.from.id)
+        
+        guard let friendListViewController = tabBarController.selectedViewController?.childViewControllers.last as? FriendListViewController else { return }
+        
+        let invitationIndex = me.friendInvitations.indexOf { $0.from.id == notification.from.id }
+        if let invitationIndex = invitationIndex {
             
-            let invitationIndex = me.friendInvitations.indexOf { $0.from.id == notification.from.id }
-            if let invitationIndex = invitationIndex {
-                
-                let indexPaths = [NSIndexPath(forRow: invitationIndex, inSection: 0)]
-                
-                gcd.sync(.Main) {
-                    friendListViewController.tableView.beginUpdates()
-                    friendListViewController.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-                    friendListViewController.tableView.endUpdates()
-                }
+            let indexPaths = [NSIndexPath(forRow: invitationIndex, inSection: 0)]
+            
+            gcd.sync(.Main) {
+                friendListViewController.tableView.beginUpdates()
+                friendListViewController.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+                friendListViewController.tableView.endUpdates()
             }
         }
-        
-        me.addFriend(notification.from.id)
     }
 
 }

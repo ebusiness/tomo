@@ -84,23 +84,22 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
         return CGSizeMake(width, height)
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if let group = groups?[indexPath.row] {
-
-            let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
-            groupVC.group = group
-            self.navigationController?.pushViewController(groupVC, animated: true)
-
-//            AlamofireController.request(.PATCH, "/groups/\(group.id)/join", parameters: nil, encoding: .URL, success: { (result) -> () in
-//                gcd.async(.Default) {
-//                    let vgroup = GroupEntity(result)
-//                    me.addGroup(vgroup.id)
-//                    self.groups?.remove(group)
-//                    gcd.async(.Main) {
-//                        self.collectionView.deleteItemsAtIndexPaths([indexPath])
-//                    }
+        guard let group = groups?[indexPath.row] else { return }
+        
+        let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+        groupVC.group = group
+        self.navigationController?.pushViewController(groupVC, animated: true)
+        
+//        AlamofireController.request(.PATCH, "/groups/\(group.id)/join", parameters: nil, encoding: .URL, success: { (result) -> () in
+//            gcd.async(.Default) {
+//                let vgroup = GroupEntity(result)
+//                me.addGroup(vgroup.id)
+//                self.groups?.remove(group)
+//                gcd.async(.Main) {
+//                    self.collectionView.deleteItemsAtIndexPaths([indexPath])
 //                }
-//            })
-        }
+//            }
+//        })
     }
 }
 
@@ -170,16 +169,15 @@ extension StationDiscoverViewController {
         }
     }
     private func appendCells(count: Int) {
-        if let totalCount = groups?.count {
-            let startIndex = totalCount - count
-            let endIndex = totalCount
-            var indexPaths = [NSIndexPath]()
-            for i in startIndex..<endIndex {
-                let indexPath = NSIndexPath(forItem: i, inSection: 0)
-                indexPaths.append(indexPath)
-            }
-            collectionView.insertItemsAtIndexPaths(indexPaths)
+        guard let totalCount = groups?.count else { return }
+        let startIndex = totalCount - count
+        let endIndex = totalCount
+        var indexPaths = [NSIndexPath]()
+        for i in startIndex..<endIndex {
+            let indexPath = NSIndexPath(forItem: i, inSection: 0)
+            indexPaths.append(indexPath)
         }
+        collectionView.insertItemsAtIndexPaths(indexPaths)
     }
 }
 

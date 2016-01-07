@@ -58,17 +58,16 @@ extension ICYPostImageCell {
         }
     }
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        if collectionView == imageCollectionView {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ICYCollectionViewSingleImageCell.identifier, forIndexPath: indexPath) as! ICYCollectionViewSingleImageCell
-            if let imageURL = post?.images?.get(indexPath.row) {
-                cell.imageURL = imageURL
-            } else {
-                cell.imageURL = nil
-            }
-            return cell
-        } else {
+        guard collectionView == imageCollectionView else {
             return super.collectionView(collectionView, cellForItemAtIndexPath: indexPath)
         }
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ICYCollectionViewSingleImageCell.identifier, forIndexPath: indexPath) as! ICYCollectionViewSingleImageCell
+        if let imageURL = post?.images?.get(indexPath.row) {
+            cell.imageURL = imageURL
+        } else {
+            cell.imageURL = nil
+        }
+        return cell
     }
     override func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         if collectionView == imageCollectionView {
@@ -78,26 +77,22 @@ extension ICYPostImageCell {
         }
     }
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if collectionView == imageCollectionView {
-            if let post = post {
-                let postVC = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
-                postVC.post = post
-                if indexPath.row != 0 {
-                    postVC.initialImageIndex = indexPath.row
-                }
-                delegate?.navigationController?.pushViewController(postVC, animated: true)
+        guard collectionView == imageCollectionView else { return }
+        
+        if let post = post {
+            let postVC = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
+            postVC.post = post
+            if indexPath.row != 0 {
+                postVC.initialImageIndex = indexPath.row
             }
-        } else {
+            delegate?.navigationController?.pushViewController(postVC, animated: true)
         }
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        if scrollView == imageCollectionView {
-            if let count = post?.images?.count where count > 1 {
-                let currentPage = Int(floor((scrollView.contentOffset.x + screenWidth / 2.0) / screenWidth))
-                pageControl.currentPage = currentPage
-            }
-        } else {
-        }
+        if scrollView != imageCollectionView { return }
+        guard let count = post?.images?.count where count > 1 else { return }
+        let currentPage = Int(floor((scrollView.contentOffset.x + screenWidth / 2.0) / screenWidth))
+        pageControl.currentPage = currentPage
     }
 }

@@ -80,17 +80,13 @@ extension MyPostsViewController {
     }
     
     override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        guard let content = posts.get(indexPath.row) as? PostEntity else { return UITableViewAutomaticDimension }
         
-        if let content = posts.get(indexPath.row) as? PostEntity {
-            
-            if content.images?.count > 0 {
-                return 334
-            } else {
-                return 131
-            }
+        if content.images?.count > 0 {
+            return 334
+        } else {
+            return 131
         }
-        
-        return UITableViewAutomaticDimension
     }
     
 }
@@ -183,32 +179,28 @@ extension MyPostsViewController {
     }
     
     private func receivePost(notification: NSNotification,done: (cell: ICYPostCell,user: UserEntity)->() ){
+        guard let userInfo = notification.userInfo else { return }
+        let json = JSON(userInfo)
+        let postid = json["targetId"].stringValue
+        let user = UserEntity(json["from"])
         
-        if let userInfo = notification.userInfo {
-            let json = JSON(userInfo)
-            let postid = json["targetId"].stringValue
-            let user = UserEntity(json["from"])
-            
-            let cell: AnyObject? = self.tableView.visibleCells.find { ($0 as! ICYPostCell).post?.id == postid }
-            if let cell = cell as? ICYPostCell {
-                gcd.sync(.Main) {
-                    done(cell: cell, user: user)
-                }
+        let cell: AnyObject? = self.tableView.visibleCells.find { ($0 as! ICYPostCell).post?.id == postid }
+        if let cell = cell as? ICYPostCell {
+            gcd.sync(.Main) {
+                done(cell: cell, user: user)
             }
         }
     }
     
     func receivePostLiked(notification: NSNotification) {
         self.receivePost(notification) { (cell, user) -> () in
-            if let post = cell.post {
-                post.like = post.like ?? []
-                post.like!.append(user.id)
-                
-                cell.likeButton.bounce({ () -> Void in
-                    cell.post = post
-                })
-            }
+            guard let post = cell.post else { return }
+            post.like = post.like ?? []
+            post.like!.append(user.id)
             
+            cell.likeButton.bounce({ () -> Void in
+                cell.post = post
+            })            
         }
     }
     

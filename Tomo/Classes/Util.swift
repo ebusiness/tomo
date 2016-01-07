@@ -175,12 +175,11 @@ extension Util {
     }
     
     class func changeImageColorForButton(btn:UIButton?,color:UIColor){
-        if let image = btn?.imageView?.image {
-            gcd.async(.Default) {
-                let image = Util.coloredImage( image, color: color)
-                gcd.sync(.Main) {
-                    btn?.setImage(image, forState: .Normal)
-                }
+        guard let image = btn?.imageView?.image else { return }
+        gcd.async(.Default) {
+            let image = Util.coloredImage( image, color: color)
+            gcd.sync(.Main) {
+                btn?.setImage(image, forState: .Normal)
             }
         }
     }

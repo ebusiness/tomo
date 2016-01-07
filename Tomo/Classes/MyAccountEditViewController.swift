@@ -142,28 +142,25 @@ extension MyAccountEditViewController: UITextViewDelegate {
     }
     
     func textViewDidBeginEditing(textView: UITextView) {
-        if textView.text == defaultbio {
-            textView.text = ""
-            textView.textColor = UIColor.blackColor()
-        }
+        if textView.text != defaultbio { return }
+        textView.text = ""
+        textView.textColor = UIColor.blackColor()
     }
     
     func textViewDidChange(textView: UITextView) {
-        if textView.markedTextRange == nil {
-            let max = self.getMaxLength(textView)
-            if textView.text.length > max {
-                textView.text = textView.text[0..<max]
-            }
-            self.setLengthToLabel(textView)
+        if nil != textView.markedTextRange { return }
+        let max = self.getMaxLength(textView)
+        if textView.text.length > max {
+            textView.text = textView.text[0..<max]
         }
+        self.setLengthToLabel(textView)
     }
     
     func textViewDidEndEditing(textView: UITextView) {
-        if textView.text.trimmed().length == 0 {
-            
-            textView.textColor = UIColor.lightGrayColor()
-            textView.text = defaultbio
-        }
+        if 0 != textView.text.trimmed().length { return }
+        
+        textView.textColor = UIColor.lightGrayColor()
+        textView.text = defaultbio
     }
 }
 
@@ -181,15 +178,13 @@ extension MyAccountEditViewController:UIGestureRecognizerDelegate {
 extension MyAccountEditViewController {
     
     @IBAction func textFieldDidChange(sender: UITextField) {
-        
-        if sender.markedTextRange == nil {
-            let max = self.getMaxLength(sender)
-            if sender.text!.length > max {
-                sender.text = sender.text![0..<max]
-            }
-            
-            self.setLengthToLabel(sender)
+        if nil != sender.markedTextRange { return }
+        let max = self.getMaxLength(sender)
+        if sender.text!.length > max {
+            sender.text = sender.text![0..<max]
         }
+        
+        self.setLengthToLabel(sender)
     }
     
     @IBAction func tableTapped(sender: UITapGestureRecognizer) {
@@ -320,17 +315,18 @@ extension MyAccountEditViewController {
     }
 
     func setLengthToLabel(inputView: UIView){
-        let views = inputView.superview?.subviews.filter { $0 is UILabel && $0.tag == 1 }
+        guard
+            let views = inputView.superview?.subviews.filter ({ $0 is UILabel && $0.tag == 1 }),
+            label = views.last as? UILabel
+            else { return }
         
-        if let views = views, label = views.last as? UILabel {
-            var textCount = 0
-            if let inputView = inputView as? UITextView {
-                textCount = (inputView.text ?? "" ).length
-            } else if let inputView = inputView as? UITextField {
-                textCount = (inputView.text ?? "" ).length
-            }
-            label.text = String( textCount )
+        var textCount = 0
+        if let inputView = inputView as? UITextView {
+            textCount = (inputView.text ?? "" ).length
+        } else if let inputView = inputView as? UITextField {
+            textCount = (inputView.text ?? "" ).length
         }
+        label.text = String( textCount )
     }
     
 }

@@ -10,13 +10,12 @@ import UIKit
 
 class ICYFlowLayout: UICollectionViewFlowLayout {
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        if let attributes = super.layoutAttributesForElementsInRect(rect) {
-            let newAttributes = attributes.map({
-                self.leftAlignedAttributes($0)
-            })
-            return newAttributes
-        }
-        return nil
+        guard let attributes = super.layoutAttributesForElementsInRect(rect) else { return nil }
+        
+        let newAttributes = attributes.map({
+            self.leftAlignedAttributes($0)
+        })
+        return newAttributes
     }
     
     private func leftAlignedAttributes(attributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {

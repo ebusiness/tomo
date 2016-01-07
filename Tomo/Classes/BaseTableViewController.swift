@@ -113,55 +113,57 @@ extension BaseTableViewController {
     }
     
     func setNavigationBarBackgroundImage(image: UIImage?){
+        self.setNavigationImageView()
         
-        if let naviSubViews = self.navigationController?.navigationBar.subviews where navigationImageView == nil {
-            naviSubViews.forEach { v in
-                
-                if let imageview = v as? UIImageView
-                    where imageview.frame.size.width == self.navigationController?.navigationBar.frame.size.width
-                {
-                    var frame = imageview.frame
-                    frame.origin = CGPointMake(0, 0)
-                    
-                    imageview.subviews.forEach { subimage in
-                        if let subimage = subimage as? UIImageView where subimage.tag == 1 {
-                            
-                            self.navigationImageView = subimage
-                            return
-                        }
-                    }
-                    if self.navigationImageView != nil { return }
-                    
-                    self.navigationTextProtection = UIImageView(frame: frame)
-                    self.navigationTextProtection!.image = UIImage(named: "text_protection")
-                    self.navigationTextProtection!.contentMode = UIViewContentMode.ScaleToFill
-                    self.navigationTextProtection!.clipsToBounds = true
-                    self.navigationTextProtection!.alpha = 0
-                    
-                    self.navigationImageView = UIImageView(frame: frame)
-                    self.navigationImageView!.tag = 1
-                    self.navigationImageView!.image = UIImage()
-                    self.navigationImageView!.contentMode = UIViewContentMode.ScaleAspectFill
-                    self.navigationImageView!.clipsToBounds = true
-                    self.navigationImageView!.addSubview(self.navigationTextProtection!)
-                    
-                    imageview.insertSubview(self.navigationImageView!, atIndex: 0)
-                }
-            }
-        }
         navigationImageView?.alpha = 1
         
-        if let imageview = navigationImageView where imageview.image != image {
-            if image != nil {
-                self.navigationTextProtection?.alpha = 1
-                self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
-            } else {
-                self.navigationTextProtection?.alpha = 0
-                self.navigationController?.navigationBar.shadowImage = UIImage()
-            }
-            imageview.image = image
+        guard let imageview = navigationImageView where imageview.image != image else { return }
+        if image != nil {
+            self.navigationTextProtection?.alpha = 1
+            self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
+        } else {
+            self.navigationTextProtection?.alpha = 0
+            self.navigationController?.navigationBar.shadowImage = UIImage()
         }
+        imageview.image = image
         
+    }
+    
+    private func setNavigationImageView() {
+        guard let naviSubViews = self.navigationController?.navigationBar.subviews where navigationImageView == nil else { return }
+        
+        naviSubViews.forEach { v in
+            
+            guard let imageview = v as? UIImageView
+                where imageview.frame.size.width == self.navigationController?.navigationBar.frame.size.width
+                else {
+                    return
+            }
+            
+            var frame = imageview.frame
+            frame.origin = CGPointMake(0, 0)
+            
+            imageview.subviews.forEach { subimage in
+                guard let subimage = subimage as? UIImageView where subimage.tag == 1 else { return }
+                self.navigationImageView = subimage
+            }
+            if self.navigationImageView != nil { return }
+            
+            self.navigationTextProtection = UIImageView(frame: frame)
+            self.navigationTextProtection!.image = UIImage(named: "text_protection")
+            self.navigationTextProtection!.contentMode = UIViewContentMode.ScaleToFill
+            self.navigationTextProtection!.clipsToBounds = true
+            self.navigationTextProtection!.alpha = 0
+            
+            self.navigationImageView = UIImageView(frame: frame)
+            self.navigationImageView!.tag = 1
+            self.navigationImageView!.image = UIImage()
+            self.navigationImageView!.contentMode = UIViewContentMode.ScaleAspectFill
+            self.navigationImageView!.clipsToBounds = true
+            self.navigationImageView!.addSubview(self.navigationTextProtection!)
+            
+            imageview.insertSubview(self.navigationImageView!, atIndex: 0)
+        }
     }
 }
 
@@ -173,33 +175,33 @@ extension BaseTableViewController {
 
         if self.automaticallyAdjustsScrollViewInsets { return } //nothing under the navigationBar
         
-        if let topConstraint = self.topConstraint {
-            let y = scrollView.contentOffset.y
+        guard let topConstraint = self.topConstraint else { return }
+        
+        let y = scrollView.contentOffset.y
+        
+        if let whenHideNavigationBar = self.whenHideNavigationBar ,whenShowNavigationBar = self.whenShowNavigationBar {
             
-            if let whenHideNavigationBar = self.whenHideNavigationBar ,whenShowNavigationBar = self.whenShowNavigationBar {
-                
-                if y < 0 || self.headerHeight > y {
-                    whenHideNavigationBar(y)
-                    topConstraint.constant = y
-                } else {
-                    whenShowNavigationBar(y)
-                }
-                
+            if y < 0 || self.headerHeight > y {
+                whenHideNavigationBar(y)
+                topConstraint.constant = y
+            } else {
+                whenShowNavigationBar(y)
+            }
+            
+        } else {
+            
+            if y < 0 {
+                topConstraint.constant = y
+                navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
             } else {
                 
-                if y < 0 {
-                    topConstraint.constant = y
-                    navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+                let image = Util.imageWithColor(NavigationBarColorHex, alpha: y/self.headerHeight)
+                navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+                
+                if self.headerHeight <= y {
+                    self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
                 } else {
-                    
-                    let image = Util.imageWithColor(NavigationBarColorHex, alpha: y/self.headerHeight)
-                    navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
-                    
-                    if self.headerHeight <= y {
-                        self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
-                    } else {
-                        self.navigationController?.navigationBar.shadowImage = UIImage()
-                    }
+                    self.navigationController?.navigationBar.shadowImage = UIImage()
                 }
             }
         }

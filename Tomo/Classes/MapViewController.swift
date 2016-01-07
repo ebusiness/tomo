@@ -58,12 +58,10 @@ final class MapViewController: BaseViewController {
         default:
             return
         }
-        
-        if let lastDate = Defaults["mapLastTimeStamp"].date, lastLoadDate = self.lastLoadDate {
-            if lastDate.timeIntervalSince1970 != lastLoadDate.timeIntervalSince1970 {
-                print("will load new contents")
-                self.loadContents()
-            }
+        guard let lastDate = Defaults["mapLastTimeStamp"].date, lastLoadDate = self.lastLoadDate else { return }
+        if lastDate.timeIntervalSince1970 != lastLoadDate.timeIntervalSince1970 {
+            print("will load new contents")
+            self.loadContents()
         }
         
     }
@@ -209,25 +207,24 @@ extension MapViewController: MKMapViewDelegate {
         
         mapView.deselectAnnotation(view.annotation, animated: true)
         
-        if let view = view as? StationAnnotationView {
+        guard let view = view as? StationAnnotationView else { return }
+        
+        let groupAnnotation = view.annotation as! GroupAnnotation
+        
+        if groupAnnotation.containedAnnotations?.count == 0 {
             
-            let groupAnnotation = view.annotation as! GroupAnnotation
+            let pvc = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+            pvc.group = groupAnnotation.group
             
-            if groupAnnotation.containedAnnotations?.count == 0 {
-                
-                let pvc = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
-                pvc.group = groupAnnotation.group
-                
-//                self.presentViewController(pvc, animated: true, completion: nil)
-                self.navigationController?.pushViewController(pvc, animated: true)
-                
-            } else {
-                
-                var annotationForAdjust = groupAnnotation.containedAnnotations
-                annotationForAdjust?.push(groupAnnotation)
-                
-                self.adjustRegion(annotationForAdjust!)
-            }
+            //                self.presentViewController(pvc, animated: true, completion: nil)
+            self.navigationController?.pushViewController(pvc, animated: true)
+            
+        } else {
+            
+            var annotationForAdjust = groupAnnotation.containedAnnotations
+            annotationForAdjust?.push(groupAnnotation)
+            
+            self.adjustRegion(annotationForAdjust!)
         }
         
     }

@@ -130,96 +130,93 @@ class ICYPostCell: UITableViewCell {
     // MARK: - Actions
     
     @IBAction func bookmarkButtonPressed(sender: UIButton) {
-        if let post = post {
-            sender.userInteractionEnabled = false
+        guard let post = post else { return }
+        sender.userInteractionEnabled = false
+        
+        Router.Post.Bookmark(id: post.id).response {
             
-            Router.Post.Bookmark(id: post.id).response {
-                
-                if $0.result.isFailure {
-                    sender.userInteractionEnabled = true
-                    return
-                }
-                
-                post.bookmark = post.bookmark ?? []
-                
-                if post.bookmark!.contains(me.id) {
-                    post.bookmark!.remove(me.id)
-                } else {
-                    post.bookmark!.append(me.id)
-                }
-                self.post = post
-                sender.tada {
-                    sender.userInteractionEnabled = true
-                }
+            if $0.result.isFailure {
+                sender.userInteractionEnabled = true
+                return
+            }
+            
+            post.bookmark = post.bookmark ?? []
+            
+            if post.bookmark!.contains(me.id) {
+                post.bookmark!.remove(me.id)
+            } else {
+                post.bookmark!.append(me.id)
+            }
+            self.post = post
+            sender.tada {
+                sender.userInteractionEnabled = true
             }
         }
     }
     
     @IBAction func likeButtonPressed(sender: UIButton) {
-        if let post = post {
-            sender.userInteractionEnabled = false
+        guard let post = post else { return }
+        sender.userInteractionEnabled = false
+        
+        Router.Post.Like(id: post.id).response {
             
-            Router.Post.Like(id: post.id).response {
-                
-                if $0.result.isFailure {
-                    sender.userInteractionEnabled = true
-                    return
-                }
-                if let like = post.like {
-                    like.contains(me.id) ? post.like!.remove(me.id) : post.like!.append(me.id)
-                } else {
-                    post.like = [me.id]
-                }
-                self.post = post
-                
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.02 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
-                    sender.bounce{
-                        sender.userInteractionEnabled = true
-                    }
-                }
-
+            if $0.result.isFailure {
+                sender.userInteractionEnabled = true
+                return
             }
+            if let like = post.like {
+                like.contains(me.id) ? post.like!.remove(me.id) : post.like!.append(me.id)
+            } else {
+                post.like = [me.id]
+            }
+            self.post = post
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.02 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+                sender.bounce{
+                    sender.userInteractionEnabled = true
+                }
+            }
+            
         }
     }
     
     func majorAvatarTapped() {
-        if let owner = post?.owner {
-            
-            let profileViewController = delegate?.navigationController?.childViewControllers.find { ($0 as? ProfileViewController)?.user.id == owner.id } as? ProfileViewController
-            
-            if let profileViewController = profileViewController {
-                delegate?.navigationController?.popToViewController(profileViewController, animated: true)
-            } else {
-                let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-                vc.user = owner
-                delegate?.navigationController?.pushViewController(vc, animated: true)
-            }
+        guard let owner = post?.owner else { return }
+        
+        let profileViewController = delegate?.navigationController?.childViewControllers.find { ($0 as? ProfileViewController)?.user.id == owner.id } as? ProfileViewController
+        
+        if let profileViewController = profileViewController {
+            delegate?.navigationController?.popToViewController(profileViewController, animated: true)
+        } else {
+            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+            vc.user = owner
+            delegate?.navigationController?.pushViewController(vc, animated: true)
         }
     }
     
     func lastCommentAvatarTapped() {
-        if let owner = post?.comments?.last?.owner {
-            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-            vc.user = owner
-            if owner.id == post?.owner.id {
-                let profileViewController = delegate?.navigationController?.childViewControllers.find { $0 is ProfileViewController } as? ProfileViewController
-                
-                if let profileViewController = profileViewController {
-                    delegate?.navigationController?.popToViewController(profileViewController, animated: true)
-                    return
-                }
+        guard let owner = post?.comments?.last?.owner else { return }
+        
+        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+        vc.user = owner
+        if owner.id == post?.owner.id {
+            let profileViewController = delegate?.navigationController?.childViewControllers.find { $0 is ProfileViewController } as? ProfileViewController
+            
+            if let profileViewController = profileViewController {
+                delegate?.navigationController?.popToViewController(profileViewController, animated: true)
+                return
             }
-            delegate?.navigationController?.pushViewController(vc, animated: true)
         }
+        delegate?.navigationController?.pushViewController(vc, animated: true)
     }
     
     func commentTapped() {
-        if nil != post?.comments?.last {
-            let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
-            vc.post = post!
-            vc.isCommentInitial = true
-            delegate?.navigationController?.pushViewController(vc, animated: true)
-        }
+        if nil == post?.comments?.last { return }
+        
+        let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
+        vc.post = post!
+        vc.isCommentInitial = true
+        delegate?.navigationController?.pushViewController(vc, animated: true)
     }
     
     
@@ -271,33 +268,34 @@ extension ICYPostCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ICYTagCollectionViewCell.identifier, forIndexPath: indexPath) as! ICYTagCollectionViewCell
-        if let group = post?.group {
-            cell.tagButton.tomoTag = TomoTag(content: group)
-            cell.tagButton.setTagClickAction({ (tomoTag) -> () in
-                switch tomoTag.type {
-                case .Group:
-                    let group = tomoTag.content as! GroupEntity
-                    
-                    let groupDetailViewController = self.delegate?.navigationController?.childViewControllers.find { ($0 as? GroupDetailViewController)?.group.id == group.id } as? GroupDetailViewController
-                    
-                    if let groupDetailViewController = groupDetailViewController {
-                        self.delegate?.navigationController?.popToViewController(groupDetailViewController, animated: true)
-                        return
-                    }
-                    
-                    let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
-                    groupVC.group = group
-                    self.delegate?.navigationController?.pushViewController(groupVC, animated: true)
+        
+        guard let group = post?.group else { return cell }
+        
+        cell.tagButton.tomoTag = TomoTag(content: group)
+        cell.tagButton.setTagClickAction({ (tomoTag) -> () in
+            switch tomoTag.type {
+            case .Group:
+                let group = tomoTag.content as! GroupEntity
+                
+                let groupDetailViewController = self.delegate?.navigationController?.childViewControllers.find { ($0 as? GroupDetailViewController)?.group.id == group.id } as? GroupDetailViewController
+                
+                if let groupDetailViewController = groupDetailViewController {
+                    self.delegate?.navigationController?.popToViewController(groupDetailViewController, animated: true)
+                    return
                 }
-            })
-        }
+                
+                let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+                groupVC.group = group
+                self.delegate?.navigationController?.pushViewController(groupVC, animated: true)
+            }
+        })
+        
         return cell
     }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        if let tagString = post?.group?.name {
-            let size = ICYTagButton.defaultSize(tagString)
-            return size
-        }
-        return CGSizeZero
+        guard let tagString = post?.group?.name else { return CGSizeZero }
+        
+        let size = ICYTagButton.defaultSize(tagString)
+        return size
     }
 }

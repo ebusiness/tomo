@@ -107,41 +107,35 @@ extension SignUpViewController {
     }
 
     func keyboardWillShown(notification: NSNotification) {
-
-        if let info = notification.userInfo {
-
-            if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height {
-
-                var duration = 0.3
-
-                if let keyboardDuration = info[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue {
-                    duration = keyboardDuration
-                }
-
-                self.scrollViewBottomConstraint.constant = keyboardHeight
-                UIView.animateWithDuration(duration, animations: { () -> Void in
-                    self.view.layoutIfNeeded()
-                })
-            }
+        guard let info = notification.userInfo else { return }
+        guard let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height else { return }
+        
+        var duration = 0.3
+        
+        if let keyboardDuration = info[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue {
+            duration = keyboardDuration
         }
+        
+        self.scrollViewBottomConstraint.constant = keyboardHeight
+        UIView.animateWithDuration(duration, animations: { () -> Void in
+            self.view.layoutIfNeeded()
+        })
     }
 
     func keyboardWillBeHidden(notification: NSNotification) {
-
-        if let info = notification.userInfo {
-
-            self.scrollViewBottomConstraint.constant = 0
-
-            var duration = 0.3
-
-            if let keyboardDuration = info[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue {
-                duration = keyboardDuration
-            }
-
-            UIView.animateWithDuration(duration, animations: { () -> Void in
-                self.view.layoutIfNeeded()
-            })
+        guard let info = notification.userInfo else { return }
+        
+        self.scrollViewBottomConstraint.constant = 0
+        
+        var duration = 0.3
+        
+        if let keyboardDuration = info[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue {
+            duration = keyboardDuration
         }
+        
+        UIView.animateWithDuration(duration, animations: { () -> Void in
+            self.view.layoutIfNeeded()
+        })
     }
 
     private func showHintLabel(label: UILabel) {

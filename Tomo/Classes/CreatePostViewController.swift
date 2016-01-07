@@ -74,26 +74,24 @@ final class CreatePostViewController: UIViewController {
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier != "postCreated" { return }
         
-        if segue.identifier == "postCreated" {
+        if let sender: AnyObject = sender {
             
-            if let sender: AnyObject = sender {
+            guard let post = sender as? PostEntity else { return }
+            
+            post.owner = me
+            
+            if let homeViewController = segue.destinationViewController as? HomeViewController {
                 
-                guard let post = sender as? PostEntity else { return }
+                homeViewController.contents.insert(post, atIndex: 0)
+                homeViewController.latestContent = post
+                homeViewController.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Middle)
                 
-                post.owner = me
-                
-                if let homeViewController = segue.destinationViewController as? HomeViewController {
-                    
-                    homeViewController.contents.insert(post, atIndex: 0)
-                    homeViewController.latestContent = post
-                    homeViewController.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Middle)
-                    
-                } else if let _ = segue.destinationViewController as? GroupDetailViewController {
-                    
-                }
+            } else if let _ = segue.destinationViewController as? GroupDetailViewController {
                 
             }
+            
         }
     }
     
@@ -147,17 +145,16 @@ extension CreatePostViewController {
     }
     
     func keyboardWillShown(notification: NSNotification) {
-        if let info = notification.userInfo {
+        guard let info = notification.userInfo else { return }
+        
+        if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height {
             
-            if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height {
-                
-                let paperViewHeight = screenHeight - navigationBarHeight - paperPadding * 2 - keyboardHeight
-                self.paperViewHeight.constant = paperViewHeight
-
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    self.view.layoutIfNeeded()
-                })
-            }
+            let paperViewHeight = screenHeight - navigationBarHeight - paperPadding * 2 - keyboardHeight
+            self.paperViewHeight.constant = paperViewHeight
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.view.layoutIfNeeded()
+            })
         }
     }
     
@@ -320,59 +317,55 @@ extension CreatePostViewController {
     }
     
     private func stopLocationManager() {
+        if !updatingLocation { return }
         
-        if updatingLocation {
-            
-            if let timer = self.timer {
-                timer.invalidate()
-            }
-            
-            self.locationManager.stopUpdatingLocation()
-            self.updatingLocation = false
+        if let timer = self.timer {
+            timer.invalidate()
         }
+        
+        self.locationManager.stopUpdatingLocation()
+        self.updatingLocation = false
     }
     
     private func uploadMeida(completion: (imagelist: AnyObject)->()) {
+        guard let selectedIndexes = collectionView.indexPathsForSelectedItems() else { return }
         
-        if let selectedIndexes = collectionView.indexPathsForSelectedItems() {
+        var imagelist = [String]()
+        
+        for index in selectedIndexes {
             
-            var imagelist = [String]()
+            let name = NSUUID().UUIDString
+            let imagePath = NSTemporaryDirectory() + name
+            let remotePath = Constants.postPath(fileName: name)
             
-            for index in selectedIndexes {
+            if index.item < self.newPhotos.count {
+                let scaledImage = self.resize(self.newPhotos[index.item])
+                scaledImage.saveToPath(imagePath)
+            } else {
                 
-                let name = NSUUID().UUIDString
-                let imagePath = NSTemporaryDirectory() + name
-                let remotePath = Constants.postPath(fileName: name)
+                let asset = self.photos?[index.item - self.newPhotos.count] as? PHAsset
                 
-                if index.item < self.newPhotos.count {
-                    let scaledImage = self.resize(self.newPhotos[index.item])
-                    scaledImage.saveToPath(imagePath)
-                } else {
+                let options = PHImageRequestOptions()
+                options.synchronous = true
+                options.resizeMode = PHImageRequestOptionsResizeMode.Exact
+                
+                PHImageManager.defaultManager().requestImageForAsset(asset!, targetSize: PHImageManagerMaximumSize, contentMode: .AspectFill, options: options) { (image, info) -> Void in
                     
-                    let asset = self.photos?[index.item - self.newPhotos.count] as? PHAsset
-                    
-                    let options = PHImageRequestOptions()
-                    options.synchronous = true
-                    options.resizeMode = PHImageRequestOptionsResizeMode.Exact
-                    
-                    PHImageManager.defaultManager().requestImageForAsset(asset!, targetSize: PHImageManagerMaximumSize, contentMode: .AspectFill, options: options) { (image, info) -> Void in
-                        
-                        if let image = image {
-                            self.resize(image).saveToPath(imagePath)
-                        }
+                    if let image = image {
+                        self.resize(image).saveToPath(imagePath)
                     }
                 }
-                
-                S3Controller.uploadFile(imagePath, remotePath: remotePath, done: { (error) -> Void in
-                    
-                    imagelist.append(name)
-                    
-                    if error == nil && imagelist.count == selectedIndexes.count {
-                        completion(imagelist: imagelist)
-                    }
-                })
-                
             }
+            
+            S3Controller.uploadFile(imagePath, remotePath: remotePath, done: { (error) -> Void in
+                
+                imagelist.append(name)
+                
+                if error == nil && imagelist.count == selectedIndexes.count {
+                    completion(imagelist: imagelist)
+                }
+            })
+            
         }
         
     }
@@ -640,15 +633,15 @@ extension CreatePostViewController: UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
-            
-            if (collectionView.indexPathsForSelectedItems() ?? []).count > 10 {
-                collectionView.deselectItemAtIndexPath(indexPath, animated: false)
-                return
-            }
-            
-            UIView.animateWithDuration(0.1, animations: { () -> Void in
-                cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) else { return }
+        
+        if (collectionView.indexPathsForSelectedItems() ?? []).count > 10 {
+            collectionView.deselectItemAtIndexPath(indexPath, animated: false)
+            return
+        }
+        
+        UIView.animateWithDuration(0.1, animations: { () -> Void in
+            cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
             }, completion: { (_) -> Void in
                 let mark = UIImageView(image: UIImage(named: "ok"))
                 let position = CGPoint(x: 4, y: 4)
@@ -657,24 +650,21 @@ extension CreatePostViewController: UICollectionViewDelegate {
                 mark.layer.borderWidth = 2.0
                 mark.layer.borderColor = UIColor.whiteColor().CGColor
                 cell.contentView.addSubview(mark)
-            })
-            
-            self.updateNumberBadge()
-        }
+        })
+        
+        self.updateNumberBadge()
     }
     
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) else { return }
         
-        if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
-            
-            UIView.animateWithDuration(0.1, animations: { () -> Void in
-                cell.transform = CGAffineTransformIdentity
+        UIView.animateWithDuration(0.1, animations: { () -> Void in
+            cell.transform = CGAffineTransformIdentity
             }, completion: { (_) -> Void in
                 cell.contentView.subviews.last?.removeFromSuperview()
-            })
-            
-            self.updateNumberBadge()
-        }
+        })
+        
+        self.updateNumberBadge()
     }
     
 }
@@ -684,30 +674,28 @@ extension CreatePostViewController: UICollectionViewDelegate {
 extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            self.dismissViewControllerAnimated(true, completion: nil)
+            return
+        }
         
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        self.newPhotos.insert(image.normalizedImage(), atIndex: 0)
+        let insertPath = NSIndexPath(forItem: 0, inSection: 0)
+        
+        self.dismissViewControllerAnimated(true) {
             
-            self.newPhotos.insert(image.normalizedImage(), atIndex: 0)
-            let insertPath = NSIndexPath(forItem: 0, inSection: 0)
+            self.collectionView.insertItemsAtIndexPaths([insertPath])
+            self.collectionView.selectItemAtIndexPath(insertPath, animated: true, scrollPosition: .Left)
+            self.updateNumberBadge()
             
-            self.dismissViewControllerAnimated(true) {
-                
-                self.collectionView.insertItemsAtIndexPaths([insertPath])
-                self.collectionView.selectItemAtIndexPath(insertPath, animated: true, scrollPosition: .Left)
-                self.updateNumberBadge()
-                
-                if let cell = self.collectionView.cellForItemAtIndexPath(insertPath) {
-                    UIView.animateWithDuration(0.1, animations: { () -> Void in
-                        cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+            if let cell = self.collectionView.cellForItemAtIndexPath(insertPath) {
+                UIView.animateWithDuration(0.1, animations: { () -> Void in
+                    cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
                     }, completion: { (_) -> Void in
                         let mark = UIImageView(image: UIImage(named: "ok"))
                         cell.contentView.addSubview(mark)
-                    })
-                }
+                })
             }
-            
-        } else {
-            self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     

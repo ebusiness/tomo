@@ -55,39 +55,40 @@ class JSQMessageEntity:NSObject, JSQMessageData {
     }
     
     func media() -> JSQMessageMediaData! {
-        if let name = MediaMessage.fileNameOfMessage(message.content) {
+        guard let name = MediaMessage.fileNameOfMessage(message.content) else { return nil }
+        guard let mediaMessageType = MediaMessage.mediaMessage(message.content) else { return nil }
+        
+        var item: JSQMediaItem!
+        
+        let fileUrl = FCFileManager.urlForItemAtPath(name)
+        
+        switch mediaMessageType {
+        case .Video:
+            
+            item = TomoVideoMediaItem(fileURL: fileUrl, isReadyToPlay: true)
+            
+        case .Image:
+            
             if FCFileManager.existsItemAtPath(name) {
-                var item: JSQMediaItem!
-                
-                if MediaMessage.mediaMessage(message.content) == .Image {
-                    item = JSQPhotoMediaItem(image: UIImage(contentsOfFile: FCFileManager.urlForItemAtPath(name).path!))
-                } else if MediaMessage.mediaMessage(message.content) == .Voice {
-                    let imageName = message.from.id == me.id ? "SenderVoiceNodePlaying" : "ReceiverVoiceNodePlaying"
-                    item = JSQVoiceMediaItem(voice: NSData(contentsOfFile: FCFileManager.urlForItemAtPath(name).path!), image: UIImage(named: imageName))
-                } else if MediaMessage.mediaMessage(message.content) == .Video {
-                    item = TomoVideoMediaItem(fileURL: FCFileManager.urlForItemAtPath(name), isReadyToPlay: true)
-                }
-                
-                item.appliesMediaViewMaskAsOutgoing = message.from.id == me.id
-                
-                return item
+                item = JSQPhotoMediaItem(image: UIImage(contentsOfFile: fileUrl.path!))
             } else {
-                var item: JSQMediaItem!
-                if MediaMessage.mediaMessage(message.content) == .Image {
-                    item = JSQPhotoMediaItem(image: self.brokenImage)
-                } else if MediaMessage.mediaMessage(message.content) == .Voice {
-                    let imageName = message.from.id == me.id ? "SenderVoiceNodePlaying" : "ReceiverVoiceNodePlaying"
-                    item = JSQVoiceMediaItem(voice: nil, image: UIImage(named: imageName))
-                } else if MediaMessage.mediaMessage(message.content) == .Video {
-                    item = TomoVideoMediaItem(fileURL: FCFileManager.urlForItemAtPath(name), isReadyToPlay: true)
-                }
-                
-                item.appliesMediaViewMaskAsOutgoing = message.from.id == me.id
-                return item
+                item = JSQPhotoMediaItem(image: self.brokenImage)
             }
+            
+        case .Voice:
+            
+            let imageName = message.from.id == me.id ? "SenderVoiceNodePlaying" : "ReceiverVoiceNodePlaying"
+            let image = UIImage(named: imageName)
+            if FCFileManager.existsItemAtPath(name) {
+                item = JSQVoiceMediaItem(voice: NSData(contentsOfFile: fileUrl.path!), image: image)
+            } else {
+                item = JSQVoiceMediaItem(voice: nil, image: image)
+            }
+            
         }
         
-        return nil
+        item.appliesMediaViewMaskAsOutgoing = message.from.id == me.id
+        return item
     }
     
     func download(completion: ()->() ){
@@ -97,15 +98,21 @@ class JSQMessageEntity:NSObject, JSQMessageData {
             self.isTaskRunning = true
         }
         
-        if let name = MediaMessage.fileNameOfMessage(message.content) where MediaMessage.mediaMessage(message.content) == .Image && !FCFileManager.existsItemAtPath(name) {
-            
-            let url = MediaMessage.fullPath(message.content)
-            Manager.sharedInstance.download(.GET, url) { (tempUrl, res) -> (NSURL) in
-                if res.statusCode == 200 {
-                    return FCFileManager.urlForItemAtPath(name)
-                } else {
-                    return tempUrl
-                }
+        guard
+            let name = MediaMessage.fileNameOfMessage(message.content)
+            where MediaMessage.mediaMessage(message.content) == .Image && !FCFileManager.existsItemAtPath(name)
+            else {
+                return
+        }
+        
+        let url = MediaMessage.fullPath(message.content)
+        
+        Manager.sharedInstance.download(.GET, url) { (tempUrl, res) -> (NSURL) in
+            if res.statusCode == 200 {
+                return FCFileManager.urlForItemAtPath(name)
+            } else {
+                return tempUrl
+            }
             }.response { (_, _, _, error) -> Void in
                 self.isTaskRunning = false
                 
@@ -120,7 +127,6 @@ class JSQMessageEntity:NSObject, JSQMessageData {
                 } else {
                     completion() // reload collectionView
                 }
-            }
         }
     }
     

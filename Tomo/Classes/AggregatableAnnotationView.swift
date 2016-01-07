@@ -37,40 +37,39 @@ class AggregatableAnnotationView: MKAnnotationView {
     }
     
     func setupDisplay() {
+        guard
+            let annotation = self.annotation as? AggregatableAnnotation,
+            containedAnnotations = annotation.containedAnnotations
+            else { return }
         
-        let annotation = self.annotation as! AggregatableAnnotation
+        let count = containedAnnotations.count
+        var exRate = CGFloat(1)
         
-        if let containedAnnotations = annotation.containedAnnotations {
-            
-            let count = containedAnnotations.count
-            var exRate = CGFloat(1)
-            
-            if count > 0 {
-                numberBadge.text = "\(count + 1)"
-                addSubview(numberBadge)
-            } else {
-                numberBadge.removeFromSuperview()
-            }
-            
-            switch count {
-            case 1..<10:
-                exRate = CGFloat(1.2)
-            case 10..<20:
-                exRate = CGFloat(1.4)
-            case 20..<30:
-                exRate = CGFloat(1.6)
-            case 30..<40:
-                exRate = CGFloat(1.8)
-            case 40..<Int.max:
-                exRate = CGFloat(2.0)
-            default:
-                exRate = 1
-            }
-            
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.transform = CGAffineTransformMakeScale(exRate, exRate)
-            })
+        if count > 0 {
+            numberBadge.text = "\(count + 1)"
+            addSubview(numberBadge)
+        } else {
+            numberBadge.removeFromSuperview()
         }
+        
+        switch count {
+        case 1..<10:
+            exRate = CGFloat(1.2)
+        case 10..<20:
+            exRate = CGFloat(1.4)
+        case 20..<30:
+            exRate = CGFloat(1.6)
+        case 30..<40:
+            exRate = CGFloat(1.8)
+        case 40..<Int.max:
+            exRate = CGFloat(2.0)
+        default:
+            exRate = 1
+        }
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.transform = CGAffineTransformMakeScale(exRate, exRate)
+        })
     }
     
 }

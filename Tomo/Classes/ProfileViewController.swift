@@ -190,6 +190,7 @@ extension ProfileViewController {
         }
         
         if section == sendMessageSection {
+            if self.user.id == me.id { return 0 }
             // if no friendInvitations or no invitations it's will show sendMessageCell / addFriendCell in this section
             let hasInvitation = self.getUserInvitation() != nil || me.invitations?.find { $0 == self.user.id } != nil
             
@@ -239,30 +240,28 @@ extension ProfileViewController {
     }
     
     private func inviteAction(isApproved:Bool){
+        guard let invitation = self.getUserInvitation() else { return }
         
-        if let invitation = self.getUserInvitation() {
+        Router.Invitation.ModifyById(id: invitation.id, accepted: isApproved).response {
+            if $0.result.isFailure { return }
             
-            Router.Invitation.ModifyById(id: invitation.id, accepted: isApproved).response {
-                if $0.result.isFailure { return }
-                
-                me.friendInvitations = me.friendInvitations.filter{ $0.from.id != self.user.id }
-                if isApproved {
-                    Util.showSuccess(self.user.nickName + " 已成为您的好友")
-                    me.addFriend(self.user.id)
-                } else {
-                    me.invitations?.remove(self.user.id)
-                    Util.showSuccess("您拒绝了 " + self.user.nickName + " 的好友邀请")
-                }
-                
-                if let friendListViewController = (self.tabBarController?.childViewControllers.get(1) as? UINavigationController)?.childViewControllers.get(0) as? FriendListViewController {
-                    if isApproved {
-                        friendListViewController.friends.insert(self.user, atIndex: 0)
-                    }
-                    friendListViewController.tableView.reloadData()
-                }
-                
-                self.reloadButtons()
+            me.friendInvitations = me.friendInvitations.filter{ $0.from.id != self.user.id }
+            if isApproved {
+                Util.showSuccess(self.user.nickName + " 已成为您的好友")
+                me.addFriend(self.user.id)
+            } else {
+                me.invitations?.remove(self.user.id)
+                Util.showSuccess("您拒绝了 " + self.user.nickName + " 的好友邀请")
             }
+            
+            if let friendListViewController = (self.tabBarController?.childViewControllers.get(1) as? UINavigationController)?.childViewControllers.get(0) as? FriendListViewController {
+                if isApproved {
+                    friendListViewController.friends.insert(self.user, atIndex: 0)
+                }
+                friendListViewController.tableView.reloadData()
+            }
+            
+            self.reloadButtons()
         }
     }
 }
@@ -279,14 +278,13 @@ extension ProfileViewController {
     }
     
     private func receive(notification: NSNotification, done: ()->() ){
-        if let userInfo = notification.userInfo {
-            
-            let json = JSON(userInfo)
-            if self.user.id == json["from"]["id"].stringValue {
-                gcd.sync(.Main, closure: { () -> () in
-                    done()
-                })
-            }
+        guard let userInfo = notification.userInfo else { return }
+        
+        let json = JSON(userInfo)
+        if self.user.id == json["from"]["id"].stringValue {
+            gcd.sync(.Main, closure: { () -> () in
+                done()
+            })
         }
     }
     

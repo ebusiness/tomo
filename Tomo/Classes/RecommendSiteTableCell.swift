@@ -61,15 +61,15 @@ extension RecommendSiteTableCell:UICollectionViewDelegate {
         self.delegate.navigationController?.pushViewController(vc, animated: true)
     }
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        if scrollView == collectionView {
-            let contentOffsetX = scrollView.contentOffset.x + 20
-            if contentOffsetX < 30 {
-                pageControl.currentPage = 0
-            } else if contentOffsetX + screenWidth > scrollView.contentSize.width {
-                pageControl.currentPage = pageControl.numberOfPages - 1
-            } else {
-                pageControl.currentPage = Int(floor(contentOffsetX / screenWidth))
-            }
+        if scrollView != collectionView { return }
+        
+        let contentOffsetX = scrollView.contentOffset.x + 20
+        if contentOffsetX < 30 {
+            pageControl.currentPage = 0
+        } else if contentOffsetX + screenWidth > scrollView.contentSize.width {
+            pageControl.currentPage = pageControl.numberOfPages - 1
+        } else {
+            pageControl.currentPage = Int(floor(contentOffsetX / screenWidth))
         }
     }
 }

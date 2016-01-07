@@ -34,9 +34,8 @@ class RemoteNotification {
     }
     
     func runTask(){
-        if let userInfo = self.taskUserInfo {
-            self.taskUserInfo = nil
-            receiveRemoteNotification(userInfo)
-        }
+        guard let userInfo = self.taskUserInfo else { return }
+        self.taskUserInfo = nil
+        receiveRemoteNotification(userInfo)
     }
 }

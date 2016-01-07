@@ -51,31 +51,28 @@ class PostAnnotationView: AggregatableAnnotationView, UIPageViewControllerDataSo
         let currentPost = (viewController as! PostCallOutViewController).postAnnotation
         let annotation = self.annotation as! PostAnnotation
         
-        if let containedAnnotations = annotation.containedAnnotations {
-            
-            if containedAnnotations.count == 0 {
-                return nil
-            }
-            
-            let callOutViewController = PostCallOutViewController(nibName: "PostCallOutView", bundle: nil)
-            
-            
-            if let index = containedAnnotations.indexOf(currentPost) {
-                
-                if index < containedAnnotations.count - 1 {
-                    callOutViewController.postAnnotation = containedAnnotations.get(index + 1) as! PostAnnotation
-                } else {
-                    callOutViewController.postAnnotation = annotation
-                }
-                
-            } else {
-                callOutViewController.postAnnotation = containedAnnotations.first as! PostAnnotation
-            }
-
-            return callOutViewController
+        guard let containedAnnotations = annotation.containedAnnotations else { return nil }
+        
+        if containedAnnotations.count == 0 {
+            return nil
         }
         
-        return nil
+        let callOutViewController = PostCallOutViewController(nibName: "PostCallOutView", bundle: nil)
+        
+        
+        if let index = containedAnnotations.indexOf(currentPost) {
+            
+            if index < containedAnnotations.count - 1 {
+                callOutViewController.postAnnotation = containedAnnotations.get(index + 1) as! PostAnnotation
+            } else {
+                callOutViewController.postAnnotation = annotation
+            }
+            
+        } else {
+            callOutViewController.postAnnotation = containedAnnotations.first as! PostAnnotation
+        }
+        
+        return callOutViewController
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
@@ -83,31 +80,28 @@ class PostAnnotationView: AggregatableAnnotationView, UIPageViewControllerDataSo
         let currentPost = (viewController as! PostCallOutViewController).postAnnotation
         let annotation = self.annotation as! PostAnnotation
         
-        if let containedAnnotations = annotation.containedAnnotations {
-            
-            if containedAnnotations.count == 0 {
-                return nil
-            }
-            
-            let callOutViewController = PostCallOutViewController(nibName: "PostCallOutView", bundle: nil)
-            
-            if let index = containedAnnotations.indexOf(currentPost) {
-                
-                if index == 0 {
-                    callOutViewController.postAnnotation = annotation
-                } else {
-                    callOutViewController.postAnnotation = annotation.containedAnnotations?.get(index - 1) as! PostAnnotation
-                }
-                return callOutViewController
-                
-            } else {
-                callOutViewController.postAnnotation = containedAnnotations.last as! PostAnnotation
-            }
-            
-            return callOutViewController
+        guard let containedAnnotations = annotation.containedAnnotations else { return nil }
+        
+        if containedAnnotations.count == 0 {
+            return nil
         }
         
-        return nil
+        let callOutViewController = PostCallOutViewController(nibName: "PostCallOutView", bundle: nil)
+        
+        if let index = containedAnnotations.indexOf(currentPost) {
+            
+            if index == 0 {
+                callOutViewController.postAnnotation = annotation
+            } else {
+                callOutViewController.postAnnotation = annotation.containedAnnotations?.get(index - 1) as! PostAnnotation
+            }
+            return callOutViewController
+            
+        } else {
+            callOutViewController.postAnnotation = containedAnnotations.last as! PostAnnotation
+        }
+        
+        return callOutViewController
     }
     
 //    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
