@@ -41,10 +41,10 @@ final class GroupChatViewController: CommonMessageController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        guard let groups = me.groups where groups.contains(self.group.id) else {
-            self.navigationController?.popViewControllerAnimated(true)
-            return
-        }
+//        guard let groups = me.groups where groups.contains(self.group.id) else {
+//            self.navigationController?.popViewControllerAnimated(true)
+//            return
+//        }
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -76,14 +76,17 @@ extension GroupChatViewController {
     }
     
     private func loadAvatarForUser(user: UserEntity){
+
         if user.id == me.id {
             return
         }
+
         self.avatars[user.id] = self.defaultAvatar
         
         guard let photo = user.photo else { return }
         
         let sdBlock: SDWebImageCompletionWithFinishedBlock = { (image, error, _, _, _) -> Void in
+
             guard let image = image else { return }
             
             self.avatars[user.id] = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))

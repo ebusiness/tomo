@@ -186,7 +186,14 @@ extension GroupDetailViewController {
         postCreateViewController.group = self.group
         self.presentViewController(postCreateViewController, animated: true, completion: nil)
     }
-    
+
+    func toChat() {
+      let groupChatViewController = GroupChatViewController()
+      groupChatViewController.group = self.group
+      groupChatViewController.hidesBottomBarWhenPushed = true
+      self.navigationController?.pushViewController(groupChatViewController, animated: true)
+    }
+
 }
 
 // MARK: - Navigation
@@ -265,7 +272,8 @@ extension GroupDetailViewController {
     private func setTitleView() {
         
         let postButton = UIBarButtonItem(image: UIImage(named: "create_new"), style: .Plain, target: self, action: "createPost")
-        self.navigationItem.rightBarButtonItem = postButton
+        let chatButton = UIBarButtonItem(image: UIImage(named: "speech_bubble"), style: .Plain, target: self, action: "toChat")
+        self.navigationItem.rightBarButtonItems = [postButton, chatButton]
         
         let titleView = UILabel(frame: CGRectZero)
         titleView.text = self.group.name
