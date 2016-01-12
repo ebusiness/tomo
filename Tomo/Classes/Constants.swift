@@ -12,8 +12,8 @@ struct TomoConfig {
     struct Api {
 
         static let Protocol = "https"
-//        static let Domain = "api.dev.genbatomo.com"
-        static let Domain = "192.168.11.108"
+        static let Domain = "api.dev.genbatomo.com"
+//        static let Domain = "192.168.11.108"
 
         static var UrlString: String {
             return "\(self.Protocol)://\(self.Domain)"

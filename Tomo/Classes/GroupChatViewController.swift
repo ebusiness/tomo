@@ -31,9 +31,6 @@ final class GroupChatViewController: CommonMessageController {
         
         //receive notification
         self.registerForNotifications()
-        
-        // load avatar
-        self.loadAvatars()
 
         self.loadMessages()
     }
@@ -57,23 +54,6 @@ final class GroupChatViewController: CommonMessageController {
 // MARK: - Private Methods
 
 extension GroupChatViewController {
-    
-    private func loadAvatars() {
-        self.group.members?.forEach { user in
-            self.avatars[user.id] = self.defaultAvatar
-        }
-        
-        Router.Group.FindById(id: self.group.id).response {
-            if $0.result.isFailure { return }
-            
-            self.group = GroupEntity($0.result.value!)
-            guard let members = self.group.members else {return}
-            
-            members.forEach {
-                self.loadAvatarForUser($0)
-            }
-        }
-    }
     
     private func loadAvatarForUser(user: UserEntity){
 
@@ -123,14 +103,17 @@ extension GroupChatViewController {
                     return
                 }
                 
-                for message in messages {
+                messages.forEach {
+//                    $0.group = self.group
                     
-                    message.group = self.group
-                    
-                    if message.from.id == me.id {
-                        message.from = me
+                    if $0.from.id == me.id {
+                        $0.from = me
                     }
-                    self.messages.insert(JSQMessageEntity(message: message), atIndex: 0)
+                    self.messages.insert(JSQMessageEntity(message: $0), atIndex: 0)
+                    
+                    if nil == self.avatars[$0.from.id] {
+                        self.loadAvatarForUser($0.from)
+                    }
                 }
                 
                 if self.oldestMessage == nil {
@@ -208,13 +191,9 @@ extension GroupChatViewController {
         guard json["targetId"].stringValue == self.group.id else { return }
         
         let message = MessageEntity(json)
-        message.group = self.group
+//        message.group = self.group
         
-        let sender = self.group.members?.find { $0.id == message.from.id }
-        
-        if sender == nil {
-            self.group.members = self.group.members ?? []
-            self.group.members!.append(message.from)
+        if nil == self.avatars[message.from.id] {
             self.loadAvatarForUser(message.from)
         }
         
