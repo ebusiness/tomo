@@ -286,10 +286,7 @@ extension PostViewController {
         
         contentLabel.attributedText = attributeString
         
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy年MM月dd日 HH:mm"
-        let dateString = dateFormatter.stringFromDate(post.createDate)
-        contentFooterLabel.text = dateString
+        contentFooterLabel.text = post.createDate.toString()
         
         self.contentLabel.bounds.size.width = UIScreen.mainScreen().bounds.size.width - 16 * 2
         let contentSize = self.contentLabel.sizeThatFits(self.contentLabel.bounds.size)
