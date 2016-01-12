@@ -1,12 +1,13 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
-link_with 'Tomo'
 
-pod 'JSQMessagesViewController'
-pod 'NYXImagesKit'
-pod 'SVProgressHUD'
-pod 'SDWebImage'
-pod 'UIActivityIndicator-for-SDWebImage'
-pod 'FCFileManager'
-pod 'MHVideoPhotoGallery'
-pod 'DCAnimationKit'
+target "Tomo" do
+    pod 'JSQMessagesViewController'
+    pod 'NYXImagesKit'
+    pod 'SVProgressHUD'
+    pod 'SDWebImage'
+    pod 'UIActivityIndicator-for-SDWebImage'
+    pod 'FCFileManager'
+    pod 'MHVideoPhotoGallery'
+    pod 'DCAnimationKit'
+end
