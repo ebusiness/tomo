@@ -150,10 +150,14 @@ extension GroupDetailViewController {
         guard let myGroups = me.groups else { return }
         
         if myGroups.contains(self.group.id) {
-            navigationItem.rightBarButtonItem?.enabled = true
+            _ = navigationItem.rightBarButtonItems?.map {
+                $0.enabled = true
+            }
             self.joinButton.hidden = true
         } else {
-            navigationItem.rightBarButtonItem?.enabled = false
+            _ = navigationItem.rightBarButtonItems?.map {
+                $0.enabled = false
+            }
             joinButton.hidden = false
         }
     }
@@ -188,10 +192,10 @@ extension GroupDetailViewController {
     }
 
     func toChat() {
-      let groupChatViewController = GroupChatViewController()
-      groupChatViewController.group = self.group
-      groupChatViewController.hidesBottomBarWhenPushed = true
-      self.navigationController?.pushViewController(groupChatViewController, animated: true)
+        let groupChatViewController = GroupChatViewController()
+        groupChatViewController.group = self.group
+        groupChatViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(groupChatViewController, animated: true)
     }
 
 }
