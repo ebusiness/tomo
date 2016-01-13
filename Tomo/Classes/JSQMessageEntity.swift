@@ -8,55 +8,54 @@
 
 import Alamofire
 
-class JSQMessageEntity:NSObject, JSQMessageData {
+class JSQMessageEntity: MessageEntity, JSQMessageData {
     
-    var message: MessageEntity!
+//    var message: MessageEntity!
     var brokenImage: UIImage?
     
     private let broken = UIImage(named: "file_broken")!
     private var isTaskRunning: Bool = false
     private var taskTryCount = 2
+//    override init() {
+//        super.init()
+//        self.message = MessageEntity()
+//    }
     
-    override init() {
-        super.init()
-        self.message = MessageEntity()
-    }
-    
-    init(message: MessageEntity) {
-        self.message = message
-    }
+//    init(message: MessageEntity) {
+//        self.message = message
+//    }
     
     func senderId() -> String! {
-        return message.from.id
+        return self.from.id
     }
     
     func senderDisplayName() -> String! {
-        return message.from.nickName
+        return self.from.nickName
     }
     
     func date() -> NSDate! {
-        return message.createDate
+        return self.createDate
     }
     
     func isMediaMessage() -> Bool {
-        if MediaMessage.isMediaMessage(message.content) {
+        if MediaMessage.isMediaMessage(self.content) {
             return true
         }
         
         return false
     }
     
-    func text() -> String! {
-        return message.content
+    func messageHash() -> UInt {
+        return UInt(bitPattern: self.hash)
     }
     
-    func messageHash() -> UInt {
-        return UInt(bitPattern: message.hash)
+    func text() -> String! {
+        return self.content
     }
     
     func media() -> JSQMessageMediaData! {
-        guard let name = MediaMessage.fileNameOfMessage(message.content) else { return nil }
-        guard let mediaMessageType = MediaMessage.mediaMessage(message.content) else { return nil }
+        guard let name = MediaMessage.fileNameOfMessage(self.content) else { return nil }
+        guard let mediaMessageType = MediaMessage.mediaMessage(self.content) else { return nil }
         
         var item: JSQMediaItem!
         
@@ -77,7 +76,7 @@ class JSQMessageEntity:NSObject, JSQMessageData {
             
         case .Voice:
             
-            let imageName = message.from.id == me.id ? "SenderVoiceNodePlaying" : "ReceiverVoiceNodePlaying"
+            let imageName = self.from.id == me.id ? "SenderVoiceNodePlaying" : "ReceiverVoiceNodePlaying"
             let image = UIImage(named: imageName)
             if FCFileManager.existsItemAtPath(name) {
                 item = JSQVoiceMediaItem(voice: NSData(contentsOfFile: fileUrl.path!), image: image)
@@ -87,7 +86,7 @@ class JSQMessageEntity:NSObject, JSQMessageData {
             
         }
         
-        item.appliesMediaViewMaskAsOutgoing = message.from.id == me.id
+        item.appliesMediaViewMaskAsOutgoing = self.from.id == me.id
         return item
     }
     
@@ -99,13 +98,13 @@ class JSQMessageEntity:NSObject, JSQMessageData {
         }
         
         guard
-            let name = MediaMessage.fileNameOfMessage(message.content)
-            where MediaMessage.mediaMessage(message.content) == .Image && !FCFileManager.existsItemAtPath(name)
+            let name = MediaMessage.fileNameOfMessage(self.content)
+            where MediaMessage.mediaMessage(self.content) == .Image && !FCFileManager.existsItemAtPath(name)
             else {
                 return
         }
         
-        let url = MediaMessage.fullPath(message.content)
+        let url = MediaMessage.fullPath(self.content)
         
         Manager.sharedInstance.download(.GET, url) { (tempUrl, res) -> (NSURL) in
             if res.statusCode == 200 {

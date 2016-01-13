@@ -95,7 +95,7 @@ extension MessageViewController {
                 return
             }
             
-            guard let messages: [MessageEntity] = MessageEntity.collection($0.result.value!) else {
+            guard let messages: [JSQMessageEntity] = JSQMessageEntity.collection($0.result.value!) else {
                 self.isLoading = false
                 return
             }
@@ -109,7 +109,7 @@ extension MessageViewController {
                     message.from = me
                     message.to = self.friend
                 }
-                self.messages.insert(JSQMessageEntity(message: message), atIndex: 0)
+                self.messages.insert(message, atIndex: 0)
             }
             
             if self.oldestMessage == nil {
@@ -139,13 +139,13 @@ extension MessageViewController: CommonMessageDelegate {
     
     func createMessage(text: String) -> NSIndexPath {
         let newMessage = JSQMessageEntity()
-        newMessage.message.id = ""
-        newMessage.message.to = friend
-        newMessage.message.from = me
-        newMessage.message.content = text
-        newMessage.message.createDate = NSDate()
+        newMessage.id = ""
+        newMessage.to = friend
+        newMessage.from = me
+        newMessage.content = text
+        newMessage.createDate = NSDate()
         
-        friend.lastMessage = newMessage.message
+        friend.lastMessage = newMessage
         self.messages.append(newMessage)
         
         let indexPath = NSIndexPath(forRow: self.messages.count - 1, inSection: 0)
@@ -178,13 +178,11 @@ extension MessageViewController {
         let json = JSON(userInfo)
         
         guard friend.id == json["from"]["id"].stringValue else { return }
-        let message = MessageEntity(json)
+        let message = JSQMessageEntity(json)
         message.to = me
         message.from = friend
         
-        let newMessage = JSQMessageEntity(message: message)
-        
-        self.messages.append(newMessage)
+        self.messages.append(message)
         
         gcd.sync(.Main, closure: { () -> () in
             

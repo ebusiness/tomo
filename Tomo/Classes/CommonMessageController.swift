@@ -393,7 +393,7 @@ extension CommonMessageController {
         let message = messages[indexPath.item]
         
         let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-        vc.user = message.message.from
+        vc.user = message.from
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -502,7 +502,7 @@ extension CommonMessageController {
             
             guard let
                 mediaItem = item.media() as? JSQMediaItem,
-                media = MediaMessage.mediaMessage(item.message.content)
+                media = MediaMessage.mediaMessage(item.content)
                 where media == .Image || media == .Video
                 else { continue }
             

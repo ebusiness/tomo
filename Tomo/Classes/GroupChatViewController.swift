@@ -99,7 +99,7 @@ extension GroupChatViewController {
                     self.isExhausted = true
                     return
                 }
-                guard let messages:[MessageEntity] = MessageEntity.collection($0.result.value!) else {
+                guard let messages:[JSQMessageEntity] = JSQMessageEntity.collection($0.result.value!) else {
                     return
                 }
                 
@@ -109,7 +109,7 @@ extension GroupChatViewController {
                     if $0.from.id == me.id {
                         $0.from = me
                     }
-                    self.messages.insert(JSQMessageEntity(message: $0), atIndex: 0)
+                    self.messages.insert($0, atIndex: 0)
                     
                     if nil == self.avatars[$0.from.id] {
                         self.loadAvatarForUser($0.from)
@@ -145,11 +145,11 @@ extension GroupChatViewController: CommonMessageDelegate {
     func createMessage(text: String) -> NSIndexPath {
         
         let newMessage = JSQMessageEntity()
-        newMessage.message.id = ""
-        newMessage.message.from = me
-        newMessage.message.group = self.group
-        newMessage.message.content = text
-        newMessage.message.createDate = NSDate()
+        newMessage.id = ""
+        newMessage.from = me
+        newMessage.group = self.group
+        newMessage.content = text
+        newMessage.createDate = NSDate()
         
 //        friend.lastMessage = newMessage.message
         self.messages.append(newMessage)
@@ -190,16 +190,14 @@ extension GroupChatViewController {
         
         guard json["targetId"].stringValue == self.group.id else { return }
         
-        let message = MessageEntity(json)
+        let message = JSQMessageEntity(json)
 //        message.group = self.group
         
         if nil == self.avatars[message.from.id] {
             self.loadAvatarForUser(message.from)
         }
         
-        let newMessage = JSQMessageEntity(message: message)
-        
-        self.messages.append(newMessage)
+        self.messages.append(message)
         
         gcd.sync(.Main) { _ in
             
