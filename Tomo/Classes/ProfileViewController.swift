@@ -29,14 +29,9 @@ final class ProfileViewController: ProfileBaseController {
         
         super.viewDidLoad()
         
-        self.reloadButtons()
-        
         if self.user.id == me.id {
             self.navigationItem.rightBarButtonItem = nil
         }
-        
-        self.tableView.reloadSections(NSIndexSet(index: invitedSection), withRowAnimation: .Automatic)
-        self.tableView.reloadSections(NSIndexSet(index: sendMessageSection), withRowAnimation: .Automatic)
         self.registerForNotifications()
     }
     
