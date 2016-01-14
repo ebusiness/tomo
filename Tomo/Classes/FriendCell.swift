@@ -49,11 +49,7 @@ class FriendCell: UITableViewCell {
         }
         
         if let message = user.lastMessage {
-            if let media = MediaMessage.mediaMessage(message.content) {
-                messageLabel.text = self.getMediaString(media)
-            } else {
-                messageLabel.text = message.content
-            }
+            messageLabel.text = self.getMediaString(message)
             timeLabel.text = message.createDate.relativeTimeToString()
         } else {
             messageLabel.hidden = true
@@ -62,15 +58,17 @@ class FriendCell: UITableViewCell {
         
     }
     
-    private func getMediaString(media: MediaMessage)-> String {
+    private func getMediaString(message: MessageEntity)-> String {
         let msg = user.lastMessage?.from.id == me.id ? "您发送" : "发给您"
-        switch media {
-        case .Image:
+        switch message.type {
+        case .photo:
             return "\(msg)一张图片"
-        case .Voice:
+        case .voice:
             return "\(msg)一段语音"
-        case .Video:
+        case .video:
             return "\(msg)一段视频"
+        case .text:
+            return message.content
         }
     }
 

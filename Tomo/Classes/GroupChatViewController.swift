@@ -142,11 +142,12 @@ extension GroupChatViewController {
 
 extension GroupChatViewController: CommonMessageDelegate {
     
-    func createMessage(text: String) -> NSIndexPath {
+    func createMessage(type: MessageType, text: String) -> NSIndexPath {
         
         let newMessage = JSQMessageEntity()
         newMessage.id = ""
         newMessage.from = me
+        newMessage.type = type
         newMessage.group = self.group
         newMessage.content = text
         newMessage.createDate = NSDate()
@@ -160,9 +161,9 @@ extension GroupChatViewController: CommonMessageDelegate {
         
     }
     
-    func sendMessage(text: String, done: ( ()->() )? = nil ) {
+    func sendMessage(type: MessageType, text: String, done: ( ()->() )? = nil ) {
         
-        Router.GroupMessage.SendByGroupId(id: self.group.id, content: text).response {
+        Router.GroupMessage.SendByGroupId(id: self.group.id, type: type, content: text).response {
             if $0.result.isSuccess {
                 JSQSystemSoundPlayer.jsq_playMessageSentSound()
                 self.finishSendingMessageAnimated(true)

@@ -11,13 +11,13 @@ extension Router {
     
     enum GroupMessage: APIRoute {
         case FindByGroupId(id: String, before: NSTimeInterval?)
-        case SendByGroupId(id: String, content: String)
+        case SendByGroupId(id: String, type: MessageType, content: String)
         
         var path: String {
             switch self {
             case let FindByGroupId(id, _):
                 return "/groups/\(id)/messages"
-            case let SendByGroupId(id, _):
+            case let SendByGroupId(id, _, _):
                 return "/groups/\(id)/messages"
             }
         }
@@ -35,8 +35,8 @@ extension Router {
                 if let before = before {
                     return ["before": String(before)]
                 }
-            case let SendByGroupId(_, content):
-                return ["content": content]
+            case let SendByGroupId(_, type, content):
+                return ["type": type.rawValue, "content": content]
             }
             return nil
         }

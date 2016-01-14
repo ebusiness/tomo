@@ -15,7 +15,7 @@ class TomoVideoMediaItem: JSQVideoMediaItem {
     override func mediaView() -> UIView! {
         var view = super.mediaView()
         if let imageView = view as? UIImageView {
-            let image = SDImageCache.sharedImageCache().imageFromDiskCacheForKey(MediaMessage.fullPath(fileName: fileURL.lastPathComponent!, type: .Video))
+            let image = SDImageCache.sharedImageCache().imageFromDiskCacheForKey(MessageType.video.fullPath(fileURL.lastPathComponent!))
             if image != nil {
                 imageView.contentMode = .ScaleAspectFit
                 imageView.image = image

@@ -17,6 +17,8 @@ class MessageEntity: Entity {
     
     var from: UserEntity!
     
+    var type = MessageType.text
+    
     var group: GroupEntity?
     
     var content: String!
@@ -36,6 +38,9 @@ class MessageEntity: Entity {
         self.id = json["_id"].string ?? json["id"].stringValue
         self.to = UserEntity(json["to"])
         self.from = UserEntity(json["from"])
+        if let type = MessageType(rawValue: json["messagetype"].string ?? json["type"].stringValue) {
+            self.type = type
+        }
         
         if !(json["group"].object is NSNull) {
             self.group = GroupEntity(json["group"])
@@ -44,4 +49,26 @@ class MessageEntity: Entity {
         self.createDate = json["createDate"].stringValue.toDate(TomoConfig.Date.Format)
         
     }
+}
+
+public enum MessageType: String {
+    case voice, photo, video, text
+    
+    func remotePath(name: String) -> String {
+        switch self {
+        case .photo:
+            return "/messages/images/\(name)"
+        case .voice:
+            return "/messages/voices/\(name)"
+        case .video:
+            return "/messages/videos/\(name)"
+        default:
+            return "/messages/other/\(name)"
+        }
+    }
+    func fullPath(name: String) -> String {
+        let remote = remotePath(name)
+        return "\(TomoConfig.AWS.S3.Url)/\(TomoConfig.AWS.S3.Bucket)\(remote)"
+    }
+    
 }

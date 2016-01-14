@@ -10,7 +10,7 @@ extension Router {
     
     enum Message: APIRoute {
         case FindByUserId(id: String, before: NSTimeInterval?)
-        case SendTo(id: String, content: String)
+        case SendTo(id: String, type: MessageType, content: String)
         
         var path: String {
             switch self {
@@ -33,7 +33,7 @@ extension Router {
             case let FindByUserId(_, before):
                 guard let before = before else { return nil }
                 return ["before": String(before)]
-            case let SendTo(id, content): return ["to": id, "content": content]
+            case let SendTo(id, type, content): return ["to": id, "type": type.rawValue, "content": content]
             }
         }
     }

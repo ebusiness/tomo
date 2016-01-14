@@ -11,8 +11,8 @@ import Alamofire
 *  delegate
 */
 public protocol CommonMessageDelegate {
-    func createMessage(text: String) -> NSIndexPath
-    func sendMessage(text: String, done: ( ()->() )?)
+    func createMessage(type: MessageType, text: String) -> NSIndexPath
+    func sendMessage(type: MessageType, text: String, done: ( ()->() )?)
 }
 
 // MARK: - Voice
@@ -68,9 +68,9 @@ class CommonMessageController: JSQMessagesViewController {
         collectionView!.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7, 14, 3, 14)
 
         // remove the leftBarButtonItem
-        self.inputToolbar!.contentView!.leftBarButtonItem = nil
+//        self.inputToolbar!.contentView!.leftBarButtonItem = nil
         // TODO: adjust
-//        setAccessoryButtonImageView()
+        setAccessoryButtonImageView()
         
         navigationController?.navigationBar.setBackgroundImage(navigationBarImage, forBarMetrics: .Default)
     }
@@ -97,8 +97,8 @@ class CommonMessageController: JSQMessagesViewController {
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
         button.enabled = false
         
-        self.delegate.createMessage(text)
-        self.delegate.sendMessage(text, done: nil)
+        self.delegate.createMessage(.text,text: text)
+        self.delegate.sendMessage(.text, text: text, done: nil)
     }
     
     deinit {
@@ -170,34 +170,25 @@ extension CommonMessageController {
     var pressAccessoryBlock: CameraController.CameraBlock! {
         get {
             return { (image,videoPath) ->() in
-                var name: String!
-                var localURL: NSURL!
+                let fileName = NSUUID().UUIDString + (videoPath == nil ? ".png" : ".mp4" )
+                let localURL = FCFileManager.urlForItemAtPath(fileName)
                 var remotePath: String!
-                var messageContent: String!
+                var messaeType: MessageType!
                 
                 if let path = videoPath {
-                    name = NSUUID().UUIDString + ".MP4"
-                    localURL = FCFileManager.urlForItemAtPath(name)
                     FCFileManager.copyItemAtPath(path, toPath: localURL.path)
-                    
-                    remotePath = MediaMessage.remotePath(fileName: name, type: .Video)
-                    messageContent = MediaMessage.mediaMessageStr(fileName: name, type: .Video)
+                    messaeType = .video
                     
                 } else {
-                    name = NSUUID().UUIDString
-                    
-                    localURL = FCFileManager.urlForItemAtPath(name)
                     
                     let image = image!.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
-                    
                     image.saveToURL(localURL)
                     
-                    remotePath = MediaMessage.remotePath(fileName: name, type: .Image)
-                    
-                    messageContent = MediaMessage.mediaMessageStr(fileName: name, type: .Image)
+                    messaeType = .photo
                 }
                 
-                let indexPath = self.delegate.createMessage(messageContent)
+                remotePath = messaeType.remotePath(fileName)
+                let indexPath = self.delegate.createMessage(messaeType, text: fileName)
                 
                 let progressView = UIProgressView(frame: CGRectZero)
                 progressView.tintColor = UIColor.greenColor()
@@ -210,7 +201,7 @@ extension CommonMessageController {
                 cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[progressView(==messageBubbleContainerView)]-0-[avatarContainerView]", options: [], metrics: nil, views: ["messageBubbleContainerView" : cell.messageBubbleContainerView!, "progressView" : progressView,"avatarContainerView":cell.avatarContainerView!]))
                 
                 S3Controller.uploadFile(localURL.path!, remotePath: remotePath, done: { (error) -> Void in
-                    self.delegate.sendMessage(messageContent){ ()->() in
+                    self.delegate.sendMessage(messaeType, text: fileName){ ()->() in
                         progressView.removeFromSuperview()
                     }
                 }).progress { _, sendBytes, totalBytes in
@@ -311,12 +302,11 @@ extension CommonMessageController {
         else if longPressedRecognizer.state == UIGestureRecognizerState.Ended || longPressedRecognizer.state == UIGestureRecognizerState.Cancelled{
             
             btn_voice?.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
-            if let (url, name) = VoiceController.instance.stop() {
-                let content = MediaMessage.mediaMessageStr(fileName: name, type: .Voice)
-                self.delegate.createMessage(content)
-                self.delegate.sendMessage(content, done: nil)
+            if let (url, fileName) = VoiceController.instance.stop() {
+                self.delegate.createMessage(.voice, text: fileName)
+                self.delegate.sendMessage(.voice, text: fileName, done: nil)
                 
-                S3Controller.uploadFile(url, remotePath: MediaMessage.remotePath(fileName: name, type: .Voice), done: { error in
+                S3Controller.uploadFile(url, remotePath: MessageType.voice.remotePath(fileName), done: { error in
                     print("done")
                     print(error)
                 })
@@ -430,12 +420,11 @@ extension CommonMessageController {
         let message = messages[indexPath.item]
         
         guard let content = message.text() else { return }
-        guard let mediaMessageType = MediaMessage.mediaMessage(content) else { return }
         
-        switch mediaMessageType {
-        case .Image:
+        switch message.type {
+        case .photo:
             fallthrough
-        case .Video:
+        case .video:
             if nil != message.brokenImage {
                 //                let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! JSQMessagesCollectionViewCell
                 //                cell.mediaView = UIImageView(image: broken)
@@ -447,22 +436,24 @@ extension CommonMessageController {
                 
                 showGalleryView(indexPath, message: message)
             }
-        case .Voice:
-            guard let fileName = MediaMessage.fileNameOfMessage(content) else { return }
-            if FCFileManager.existsItemAtPath(fileName) {
-                VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(fileName).path!)
+        case .voice:
+            if FCFileManager.existsItemAtPath(content) {
+                VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(content).path!)
             } else {
                 Util.showHUD()
-                Manager.sharedInstance.download(.GET, MediaMessage.fullPath(content)) { (tempUrl, res) -> (NSURL) in
-                    return FCFileManager.urlForItemAtPath(fileName)
+                Manager.sharedInstance.download(.GET, message.type.fullPath(content)) { (tempUrl, res) -> (NSURL) in
+                    return FCFileManager.urlForItemAtPath(content)
                     }.response { (_, _, _, error) -> Void in
                         Util.dismissHUD()
                         if error == nil {
-                            VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(fileName).path!)
+                            VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(content).path!)
                         }
                 }
             }
+        default:
+            break
         }
+        
     }
 }
 
@@ -470,7 +461,7 @@ extension CommonMessageController {
     
     func addBadgeViewIfNeeded (cell: JSQMessagesCollectionViewCell, message: JSQMessageEntity){
         if message.senderId() == me.id { return }
-        guard MediaMessage.mediaMessage(message.text()) == .Voice else { return }
+        guard message.type == .voice else { return }
         
         let width: CGFloat = 8
         let avatarHeight: CGFloat = 50
@@ -501,9 +492,8 @@ extension CommonMessageController {
         for item in self.messages {
             
             guard let
-                mediaItem = item.media() as? JSQMediaItem,
-                media = MediaMessage.mediaMessage(item.content)
-                where media == .Image || media == .Video
+                mediaItem = item.media() as? JSQMediaItem
+                where item.type == .photo || item.type == .video
                 else { continue }
             
             var galleryItem: MHGalleryItem!
@@ -518,7 +508,7 @@ extension CommonMessageController {
             if mediaItem is JSQPhotoMediaItem {
                 galleryItem = MHGalleryItem(image: ( mediaItem as! JSQPhotoMediaItem).image)
             } else if mediaItem is TomoVideoMediaItem {
-                let videoPath = MediaMessage.fullPath(message.text())
+                let videoPath = message.type.fullPath(message.content)
                 galleryItem = MHGalleryItem(URL: videoPath, galleryType: .Video)
                 galleryItem.image = SDImageCache.sharedImageCache().imageFromDiskCacheForKey(videoPath)
             }

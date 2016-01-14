@@ -137,11 +137,12 @@ extension MessageViewController {
 
 extension MessageViewController: CommonMessageDelegate {
     
-    func createMessage(text: String) -> NSIndexPath {
+    func createMessage(type: MessageType, text: String) -> NSIndexPath {
         let newMessage = JSQMessageEntity()
         newMessage.id = ""
         newMessage.to = friend
         newMessage.from = me
+        newMessage.type = type
         newMessage.content = text
         newMessage.createDate = NSDate()
         
@@ -154,9 +155,9 @@ extension MessageViewController: CommonMessageDelegate {
         
     }
     
-    func sendMessage(text: String, done: ( ()->() )? = nil ) {
+    func sendMessage(type: MessageType, text: String, done: ( ()->() )? = nil ) {
         
-        Router.Message.SendTo(id: friend.id, content: text).response {
+        Router.Message.SendTo(id: friend.id, type: type, content: text).response {
             if $0.result.isFailure {
                 done?()
             } else {
