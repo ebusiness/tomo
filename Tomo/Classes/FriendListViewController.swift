@@ -17,6 +17,7 @@ final class FriendListViewController: BaseTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.alwaysShowNavigationBar = true
         
         self.registerForNotifications()
         
@@ -195,6 +196,11 @@ extension FriendListViewController {
         } else {
             return "最近的消息"
         }
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if me.friendInvitations.count < 1 { return 0 }
+        return 38
     }
 }
 
