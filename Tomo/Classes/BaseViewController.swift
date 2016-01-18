@@ -38,12 +38,11 @@ class BaseViewController: UIViewController {
             self.automaticallyAdjustsScrollViewInsets = true
             let image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
             self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
-            self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
         } else {
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
             self.navigationController?.navigationBar.translucent = true
-            self.navigationController?.navigationBar.shadowImage = UIImage()
         }
+        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     deinit {       
@@ -79,12 +78,6 @@ extension BaseViewController: UIScrollViewDelegate {
         } else {
             let image = Util.imageWithColor(NavigationBarColorHex, alpha: y/self.headerHeight)
             navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
-            
-            if self.headerHeight <= y {
-                self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
-            } else {
-                self.navigationController?.navigationBar.shadowImage = UIImage()
-            }
         }
     }
 }

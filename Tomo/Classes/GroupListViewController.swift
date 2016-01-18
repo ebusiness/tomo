@@ -38,12 +38,11 @@ final class GroupListViewController: BaseTableViewController {
 //        super.viewWillAppear(animated)
         if self.groups.count > 0 {
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-            self.navigationController?.navigationBar.shadowImage = UIImage()
         } else {
             let image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
             self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
-            self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
         }
+        self.navigationController?.navigationBar.shadowImage = UIImage()
         self.loadMoreContent()
     }
     
@@ -152,7 +151,6 @@ extension GroupListViewController {
             self.isLoading = false
             
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-            self.navigationController?.navigationBar.shadowImage = UIImage()
         }
         
     }

@@ -45,15 +45,14 @@ class BaseTableViewController: UITableViewController {
             self.automaticallyAdjustsScrollViewInsets = true
             let image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
             self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
-            self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
             
         } else {
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
             self.navigationController?.navigationBar.translucent = true
-            self.navigationController?.navigationBar.shadowImage = UIImage()
             self.setNavigationBarBackgroundImage(nil)
             self.navigationTextProtection?.alpha = 1
         }
+        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -120,10 +119,8 @@ extension BaseTableViewController {
         guard let imageview = navigationImageView where imageview.image != image else { return }
         if image != nil {
             self.navigationTextProtection?.alpha = 1
-            self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
         } else {
             self.navigationTextProtection?.alpha = 0
-            self.navigationController?.navigationBar.shadowImage = UIImage()
         }
         imageview.image = image
         
@@ -197,12 +194,6 @@ extension BaseTableViewController {
                 
                 let image = Util.imageWithColor(NavigationBarColorHex, alpha: y/self.headerHeight)
                 navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
-                
-                if self.headerHeight <= y {
-                    self.navigationController?.navigationBar.shadowImage = UIImage(named:"text_protection")?.scaleToFillSize(CGSizeMake(320, 5))
-                } else {
-                    self.navigationController?.navigationBar.shadowImage = UIImage()
-                }
             }
         }
     }
