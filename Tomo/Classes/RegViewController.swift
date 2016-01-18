@@ -145,7 +145,7 @@ extension RegViewController {
                 Defaults["email"] = self.emailTextField.text
                 Defaults["password"] = self.passwordTextField.text
                 
-                me = UserEntity(value)
+                me = Account(value)
                 self.changeRootToTab()
                 
             case .Failure:
@@ -221,7 +221,7 @@ extension RegViewController {
         Router.Signin.Test(id: id).response {
             sender.userInteractionEnabled = true
             if $0.result.isFailure { return }
-            me = UserEntity($0.result.value!)
+            me = Account($0.result.value!)
             self.changeRootToTab()
         }
     }
@@ -280,7 +280,7 @@ extension RegViewController: WechatManagerAuthDelegate {
         Defaults["openid"] = WechatManager.openid
         Defaults["access_token"] = WechatManager.access_token
         Defaults["refresh_token"] = WechatManager.refresh_token
-        me = UserEntity(res)
+        me = Account(res)
         self.changeRootToTab()
     }
     

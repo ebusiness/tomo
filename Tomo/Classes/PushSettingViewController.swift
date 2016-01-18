@@ -52,7 +52,7 @@ class PushSettingViewController: MyAccountBaseController {
         }
     }
     
-    var pushSettingProperty: UserEntity.PushSetting! {
+    var pushSettingProperty: Account.PushSetting! {
         didSet {
             if oldValue != pushSettingProperty {
                 switchAnnouncement.on = pushSettingProperty.announcement
@@ -81,7 +81,7 @@ class PushSettingViewController: MyAccountBaseController {
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         
-        let pushSetting = UserEntity.PushSetting()
+        let pushSetting = Account.PushSetting()
         
         pushSetting.announcement = switchAnnouncement.on
         pushSetting.message = switchMessage.on
@@ -112,7 +112,7 @@ class PushSettingViewController: MyAccountBaseController {
         
         Router.Setting.UpdateUserInfo(parameters: parameters).response {
             if $0.result.isFailure { return }
-            me.pushSetting = UserEntity.PushSetting($0.result.value!["pushSetting"])
+            me.pushSetting = Account.PushSetting($0.result.value!["pushSetting"])
         }
         
     }

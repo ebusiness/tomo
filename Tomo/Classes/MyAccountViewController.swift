@@ -17,7 +17,7 @@ final class MyAccountViewController: MyAccountBaseController {
     @IBOutlet weak var editButton: UIButton!
     
     @IBOutlet weak var notificationCell: UITableViewCell!
-    var user: UserEntity!
+    var user: Account!
     var notificationCellAccessoryView: UIView?
     let badgeView: UILabel! = {
         let label = UILabel(frame: CGRectMake(0, 0, 20, 20))
@@ -61,7 +61,7 @@ final class MyAccountViewController: MyAccountBaseController {
                 Defaults.remove("email")
                 Defaults.remove("password")
                 
-                me = UserEntity()
+                me = Account()
                 let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
                 Util.changeRootViewController(from: self, to: main)
             }

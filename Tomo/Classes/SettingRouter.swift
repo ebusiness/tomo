@@ -67,7 +67,7 @@ extension Router.Setting {
         birthDay: NSDate?,
         primaryStation: String?
         
-        var removeDevice: String?, pushSetting: UserEntity.PushSetting?
+        var removeDevice: String?, pushSetting: Account.PushSetting?
         
         init(){}
         

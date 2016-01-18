@@ -14,9 +14,6 @@
 		1F19D9561BA9616C007C9919 /* RecommendSiteTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */; };
 		1F19D95A1BA96B3E007C9919 /* GroupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F19D9591BA96B3E007C9919 /* GroupCollectionViewCell.xib */; };
 		1F19D95C1BA96B8E007C9919 /* GroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D95B1BA96B8E007C9919 /* GroupCollectionViewCell.swift */; };
-		1F1ECE071C1176F200A3CADA /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1ECE041C1176F200A3CADA /* Alamofire.framework */; };
-		1F1ECE081C1176F200A3CADA /* SocketIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1ECE051C1176F200A3CADA /* SocketIO.framework */; };
-		1F1ECE091C1176F200A3CADA /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1ECE061C1176F200A3CADA /* SwiftyJSON.framework */; };
 		1F26B29A1BAA61D10063AC6B /* GroupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */; };
 		1F350B2B1B68D32800088C1E /* PostAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */; };
 		1F36D6E61C3E2DD8007769F0 /* UserAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36D6E51C3E2DD8007769F0 /* UserAnnotation.swift */; };
@@ -191,6 +188,7 @@
 		D0DB07DB1B9D266900C06C4E /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB07DA1B9D266900C06C4E /* NotificationCell.swift */; };
 		D0DB07E01B9D3E1400C06C4E /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB07DF1B9D3E1400C06C4E /* RemoteNotification.swift */; };
 		D0DB07E51B9D65BE00C06C4E /* ListenerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB07E41B9D65BE00C06C4E /* ListenerEvent.swift */; };
+		D0E523211C4CEEB600B6CF7B /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E523201C4CEEB600B6CF7B /* Account.swift */; };
 		D0F44FAB1B5E4790009E12AA /* BookmarkedPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */; };
 		D0F44FAD1B5E534B009E12AA /* MyPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */; };
 		D0F44FAF1B5E540F009E12AA /* FriendListSendRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */; };
@@ -220,9 +218,6 @@
 		1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendSiteTableCell.swift; path = Classes/RecommendSiteTableCell.swift; sourceTree = "<group>"; };
 		1F19D9591BA96B3E007C9919 /* GroupCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupCollectionViewCell.xib; path = Classes/GroupCollectionViewCell.xib; sourceTree = "<group>"; };
 		1F19D95B1BA96B8E007C9919 /* GroupCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCollectionViewCell.swift; path = Classes/GroupCollectionViewCell.swift; sourceTree = "<group>"; };
-		1F1ECE041C1176F200A3CADA /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
-		1F1ECE051C1176F200A3CADA /* SocketIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketIO.framework; path = Carthage/Build/iOS/SocketIO.framework; sourceTree = "<group>"; };
-		1F1ECE061C1176F200A3CADA /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDetailViewController.swift; path = Classes/GroupDetailViewController.swift; sourceTree = "<group>"; };
 		1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostAnnotationView.swift; path = Classes/PostAnnotationView.swift; sourceTree = "<group>"; };
 		1F36D6E51C3E2DD8007769F0 /* UserAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserAnnotation.swift; path = Classes/UserAnnotation.swift; sourceTree = "<group>"; };
@@ -376,6 +371,7 @@
 		D0DB07DA1B9D266900C06C4E /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationCell.swift; path = Classes/NotificationCell.swift; sourceTree = "<group>"; };
 		D0DB07DF1B9D3E1400C06C4E /* RemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteNotification.swift; path = Classes/RemoteNotification.swift; sourceTree = "<group>"; };
 		D0DB07E41B9D65BE00C06C4E /* ListenerEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListenerEvent.swift; path = Classes/ListenerEvent.swift; sourceTree = "<group>"; };
+		D0E523201C4CEEB600B6CF7B /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Account.swift; path = Classes/Account.swift; sourceTree = "<group>"; };
 		D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BookmarkedPostsViewController.swift; path = Classes/BookmarkedPostsViewController.swift; sourceTree = "<group>"; };
 		D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyPostsViewController.swift; path = Classes/MyPostsViewController.swift; sourceTree = "<group>"; };
 		D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendListSendRequestController.swift; path = Classes/FriendListSendRequestController.swift; sourceTree = "<group>"; };
@@ -390,9 +386,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F1ECE071C1176F200A3CADA /* Alamofire.framework in Frameworks */,
-				1F1ECE081C1176F200A3CADA /* SocketIO.framework in Frameworks */,
-				1F1ECE091C1176F200A3CADA /* SwiftyJSON.framework in Frameworks */,
 				996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */,
 				17B993081AF3540D00204E97 /* libopencore-amrnb.a in Frameworks */,
 			);
@@ -486,6 +479,7 @@
 				1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */,
 				1F9ACAF91B69F99F00648A82 /* PostEntity.swift */,
 				1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */,
+				D0E523201C4CEEB600B6CF7B /* Account.swift */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -899,9 +893,6 @@
 		D4F3CDABDCA581BFF7D35DBA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1F1ECE041C1176F200A3CADA /* Alamofire.framework */,
-				1F1ECE051C1176F200A3CADA /* SocketIO.framework */,
-				1F1ECE061C1176F200A3CADA /* SwiftyJSON.framework */,
 				29A5D1E01ACCCFB400D95B77 /* Reveal.framework */,
 				543AF25BC3C38F0E432DD118 /* libPods.a */,
 			);
@@ -1231,6 +1222,7 @@
 				1FEA3CFB1BB391780037F3C5 /* RecommendStationTableViewCell.swift in Sources */,
 				1FA76B091BA2C642004776B0 /* GroupCreateViewController.swift in Sources */,
 				D099B6181BDA3B63006C9D01 /* LocationController.swift in Sources */,
+				D0E523211C4CEEB600B6CF7B /* Account.swift in Sources */,
 				1F6AE7851B6F1A2300D7F488 /* PostAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

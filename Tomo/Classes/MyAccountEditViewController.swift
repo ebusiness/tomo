@@ -21,7 +21,7 @@ class MyAccountEditViewController: MyAccountBaseController {
     
     @IBOutlet weak var birthDayLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
-    var user:UserEntity! {
+    var user: Account! {
         didSet{
             
             nickNameTextField.text = user.nickName
@@ -294,7 +294,7 @@ extension MyAccountEditViewController {
         
         Router.Setting.UpdateUserInfo(parameters: parameters).response {
             if $0.result.isFailure { return }
-            me = UserEntity($0.result.value!)
+            me = Account($0.result.value!)
             self.user = me
             self.headerView.updateUI()
         }

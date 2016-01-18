@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-var me: UserEntity!
+var me: Account!
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Router.Session().response {
 
             if $0.result.isSuccess {
-                me = UserEntity($0.result.value!)
+                me = Account($0.result.value!)
                 if me.primaryStation != nil {
                     rootViewControllerName = "Tab"
                 } else {
