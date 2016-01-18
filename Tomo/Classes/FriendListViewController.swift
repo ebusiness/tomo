@@ -60,6 +60,7 @@ final class FriendListViewController: BaseTableViewController {
             }
         }
         super.viewWillAppear(animated)
+        self.automaticallyAdjustsScrollViewInsets = false
     }
     
     override func becomeActive() {
