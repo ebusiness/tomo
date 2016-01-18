@@ -236,7 +236,7 @@ extension MapViewController: MKMapViewDelegate {
 
             if userAnnotation.containedAnnotations?.count == 0 {
 
-                let pvc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+                let pvc = Util.createViewControllerWithIdentifier("UserPostsView", storyboardName: "Profile") as! UserPostsViewController
                 pvc.user = userAnnotation.user
 
                 self.navigationController?.pushViewController(pvc, animated: true)
@@ -302,7 +302,7 @@ extension MapViewController: UITableViewDelegate {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
 
         if let userAnnotation = self.annotationsForTable![indexPath.item] as? UserAnnotation {
-            let pvc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+            let pvc = Util.createViewControllerWithIdentifier("UserPostsView", storyboardName: "Profile") as! UserPostsViewController
             pvc.user = userAnnotation.user
             self.navigationController?.pushViewController(pvc, animated: true)
         }

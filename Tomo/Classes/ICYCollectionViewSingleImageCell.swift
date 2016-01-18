@@ -34,8 +34,8 @@ class ICYCollectionViewSingleImageCell: UICollectionViewCell {
                     || ratio < ICYCollectionViewSingleImageCell.minAspectFitScale {
                         self.imageView.contentMode = .ScaleAspectFit
                     }else {
-//                        self.imageView.contentMode = .ScaleAspectFill
-                        self.imageView.faceAwareFill()
+                        self.imageView.contentMode = .ScaleAspectFill
+//                        self.imageView.faceAwareFill()
                     }
                 })
             } else {
