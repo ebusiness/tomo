@@ -38,8 +38,8 @@ final class HomeViewController: UITableViewController {
     }()
     
     /// true: comment, false: cell content
-    private var selectCellOrComment = false
-    
+//    private var selectCellOrComment = false
+
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -51,6 +51,8 @@ final class HomeViewController: UITableViewController {
         LocationController.shareInstance.doActionWithLocation {
             self.getRecommendInfo($0)
         }
+
+        self.tableView.estimatedRowHeight = 300
         
         self.loadMoreContent()
     }
@@ -95,14 +97,14 @@ extension HomeViewController {
             return cell
             
         } else if let post = contents[indexPath.row] as? PostEntity {
-            var cell: ICYPostCell!
+            var cell: TextPostCell!
             if post.images?.count > 0 {
-                cell = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier") as! ICYPostImageCell
+                cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostCell
             } else {
-                cell = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier") as! ICYPostCell
+                cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostCell
             }
             cell.post = post
-            cell.delegate = self
+//            cell.delegate = self
             return cell
             
         } else {
@@ -122,32 +124,32 @@ extension HomeViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if contents[indexPath.row] is [GroupEntity] {
-            return 330.0
-        }
-        guard let post = contents[indexPath.row] as? PostEntity else { return 0 }
-        
-        if post.contentHeight == nil {
-            if post.images?.count > 0 {
-                if postImageCellEstimator == nil {
-                    postImageCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier") as! ICYPostImageCell
-                }
-                postImageCellEstimator.post = post
-                let size = postImageCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-                post.contentHeight = size.height
-            } else {
-                if postCellEstimator == nil {
-                    postCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier") as! ICYPostCell
-                }
-                postCellEstimator.post = post
-                let size = postCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-                post.contentHeight = size.height
-            }
-        }
-        return post.contentHeight!
-    }
-    
+//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        if contents[indexPath.row] is [GroupEntity] {
+//            return 330.0
+//        }
+//        guard let post = contents[indexPath.row] as? PostEntity else { return 0 }
+//        
+//        if post.contentHeight == nil {
+//            if post.images?.count > 0 {
+//                if postImageCellEstimator == nil {
+//                    postImageCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier") as! ICYPostImageCell
+//                }
+//                postImageCellEstimator.post = post
+//                let size = postImageCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+//                post.contentHeight = size.height
+//            } else {
+//                if postCellEstimator == nil {
+//                    postCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier") as! ICYPostCell
+//                }
+//                postCellEstimator.post = post
+//                let size = postCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+//                post.contentHeight = size.height
+//            }
+//        }
+//        return post.contentHeight!
+//    }
+
 }
 
 // MARK: UIScrollView delegate
@@ -381,4 +383,32 @@ extension HomeViewController {
             }
         }
     }
+}
+
+class TextPostCell: UITableViewCell {
+
+    @IBOutlet weak var avatarImageVIew: UIImageView!
+
+    @IBOutlet weak var nickNameLabel: UILabel!
+
+    @IBOutlet weak var postDateLabel: UILabel!
+
+    @IBOutlet weak var contentLabel: UILabel!
+
+    @IBOutlet weak var infoLabel: UILabel!
+
+    var post: PostEntity! {
+        
+        didSet {
+            avatarImageVIew.sd_setImageWithURL(NSURL(string: post.owner.photo ?? ""), placeholderImage: UIImage(named: "avatar"))
+            nickNameLabel.text = post.owner.nickName
+            postDateLabel.text = post.createDate.relativeTimeToString()
+            contentLabel.text = post.content
+        }
+    }
+
+}
+
+final class ImagePostCell: TextPostCell {
+
 }
