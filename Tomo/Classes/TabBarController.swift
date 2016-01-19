@@ -9,19 +9,23 @@
 import UIKit
 
 enum TabItem: Int {
-    case Home, Contacts, Map, Setting
-    
-//    static let items = [Home, Contacts, Group, Map, Setting]
+
+    case Home
+
+    case Contacts
+
+    case Map
+
+    case Setting
+
     static let items = [Home, Contacts, Map, Setting]
     
-    func storyBoardName() -> String {
+    var storyBoard: String {
         switch self {
         case .Home:
             return "Home"
         case .Contacts:
             return "Contacts"
-//        case .Group:
-//            return "Group"
         case .Map:
             return "Map"
         case .Setting:
@@ -29,32 +33,38 @@ enum TabItem: Int {
         }
     }
     
-    func tabImage() -> UIImage {
-        var imageName: String
-        
+    var image: UIImage {
         switch self {
         case .Home:
-            imageName = "template"
+            return UIImage(named: "home_line")!
         case .Contacts:
-            imageName = "chat"
-//        case .Group:
-//            imageName = "group"
+            return UIImage(named: "speech_bubble")!
         case .Map:
-            imageName = "worldwide_location"
+            return UIImage(named: "globe")!
         case .Setting:
-            imageName = "home"
+            return UIImage(named: "user_male_circle")!
         }
-        
-        return UIImage(named: imageName)!
     }
-    
+
+    var title: String {
+        switch self {
+        case .Home:
+            return "动态"
+        case .Contacts:
+            return "聊天"
+        case .Map:
+            return "地图"
+        case .Setting:
+            return "我"
+        }
+    }
+
 }
 
 final class TabBarController: UITabBarController {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         setupViewControllers()
     }
     
@@ -84,17 +94,16 @@ final class TabBarController: UITabBarController {
 extension TabBarController {
     
     private func setupViewControllers() {
+
         var viewControllers = [UIViewController]()
         
         for tabItem in TabItem.items {
-            let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: tabItem.storyBoardName())
-            
-            vc.tabBarItem = UITabBarItem(title: nil, image: tabItem.tabImage(), selectedImage: tabItem.tabImage())
-            vc.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
+            let vc = Util.createViewControllerWithIdentifier(nil, storyboardName: tabItem.storyBoard)
+            vc.tabBarItem = UITabBarItem(title: tabItem.title, image: tabItem.image, selectedImage: tabItem.image)
             viewControllers.append(vc)
         }
+
         self.tabBar.barTintColor = UIColor.whiteColor()
-//        self.tabBar.tintColor = Util.UIColorFromRGB(0x1976D2, alpha: 1)
         
         self.viewControllers = viewControllers
         

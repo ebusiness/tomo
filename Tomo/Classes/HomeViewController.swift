@@ -8,11 +8,8 @@
 
 import UIKit
 
-final class HomeViewController: BaseTableViewController {
-    
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var indicatorLabel: UILabel!
-    
+final class HomeViewController: UITableViewController {
+
     let screenHeight = UIScreen.mainScreen().bounds.height
     let loadTriggerHeight = CGFloat(88.0)
     
@@ -58,7 +55,7 @@ final class HomeViewController: BaseTableViewController {
         self.loadMoreContent()
     }
     
-    override func becomeActive() {
+    func becomeActive() {
         self.loadNewContent()
     }
 
@@ -71,10 +68,6 @@ final class HomeViewController: BaseTableViewController {
                 vc.post = post
             }
         }
-//        if segue.identifier == "modalStationSelector" {
-//            let nav = segue.destinationViewController as! UINavigationController
-//            let vc = nav.viewControllers[0] as! StationDiscoverViewController
-//        }
     }
     
     @IBAction func addedPost(segue: UIStoryboardSegue) {
@@ -127,12 +120,11 @@ extension HomeViewController {
         if let post = contents[indexPath.row] as? PostEntity {
             self.performSegueWithIdentifier("postdetail", sender: post)
         }
-        //        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if contents[indexPath.row] is [GroupEntity] {
-            return 380.0
+            return 330.0
         }
         guard let post = contents[indexPath.row] as? PostEntity else { return 0 }
         
@@ -163,19 +155,12 @@ extension HomeViewController {
 extension HomeViewController {
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        
-        super.scrollViewDidScroll(scrollView)
-        
+
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         
         if (contentHeight - screenHeight - loadTriggerHeight) < offsetY {
             loadMoreContent()
-        }
-        
-        if offsetY < 0 {
-            indicatorLabel.alpha = abs(offsetY)/64
-            activityIndicator.alpha = abs(offsetY)/64
         }
     }
 }
@@ -202,9 +187,6 @@ extension HomeViewController {
     
     private func registerCell() {
         
-        let RecommendSiteTableCellNib = UINib(nibName: "RecommendSiteTableCell", bundle: nil)
-        tableView.registerNib(RecommendSiteTableCellNib, forCellReuseIdentifier: "RecommendSiteTableCell")
-        
         let RecommendStationTableCellNib = UINib(nibName: "RecommendStationTableViewCell", bundle: nil)
         tableView.registerNib(RecommendStationTableCellNib, forCellReuseIdentifier: "RecommendStationTableCell")
         
@@ -216,9 +198,10 @@ extension HomeViewController {
     }
     
     private func setupRefreshControll() {
-        let refresh = UIRefreshControl()
-        refresh.addTarget(self, action: "loadNewContent", forControlEvents: UIControlEvents.ValueChanged)
-        self.refreshControl = refresh
+        if let refreshControl = self.refreshControl {
+            refreshControl.tintColor = Palette.LightBlue.primaryColor
+            refreshControl.addTarget(self, action: "loadNewContent", forControlEvents: UIControlEvents.ValueChanged)
+        }
     }
     
     private func getRecommendInfo(location: CLLocation?) {
@@ -252,7 +235,7 @@ extension HomeViewController {
         
         isLoading = true
         tableView.tableFooterView = footerView
-        
+
         var parameters = Router.Post.FindParameters(category: .all)
     
         if let oldestContent = oldestContent as? PostEntity {
@@ -304,10 +287,7 @@ extension HomeViewController {
         }
         
         isLoading = true
-        
-        activityIndicator.startAnimating()
-        indicatorLabel.text = "正在加载"
-        
+
         var parameters = Router.Post.FindParameters(category: .all)
         
         if let latestContent = latestContent as? PostEntity {
@@ -335,10 +315,10 @@ extension HomeViewController {
         
         self.isLoading = false
         self.refreshControl?.endRefreshing()
-        self.activityIndicator.stopAnimating()
-        self.activityIndicator.alpha = 0
-        self.indicatorLabel.alpha = 0
-        self.indicatorLabel.text = "向下拉动加载更多内容"
+//        self.activityIndicator.stopAnimating()
+//        self.activityIndicator.alpha = 0
+//        self.indicatorLabel.alpha = 0
+//        self.indicatorLabel.text = "向下拉动加载更多内容"
     }
     
     private func appendRows(rows: Int) {

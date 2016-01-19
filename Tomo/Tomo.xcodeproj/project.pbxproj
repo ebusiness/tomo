@@ -10,8 +10,6 @@
 		17B993011AF353D000204E97 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B993001AF353D000204E97 /* amrFileCodec.m */; };
 		17B993081AF3540D00204E97 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17B993071AF3540D00204E97 /* libopencore-amrnb.a */; };
 		1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18B8331B844665003BD469 /* CreatePostViewController.swift */; };
-		1F19D9541BA9550A007C9919 /* RecommendSiteTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */; };
-		1F19D9561BA9616C007C9919 /* RecommendSiteTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */; };
 		1F19D95A1BA96B3E007C9919 /* GroupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F19D9591BA96B3E007C9919 /* GroupCollectionViewCell.xib */; };
 		1F19D95C1BA96B8E007C9919 /* GroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D95B1BA96B8E007C9919 /* GroupCollectionViewCell.swift */; };
 		1F26B29A1BAA61D10063AC6B /* GroupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */; };
@@ -214,8 +212,6 @@
 		17B993051AF353F600204E97 /* interf_enc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interf_enc.h; path = "opencore-amr/include/opencore-amrnb/interf_enc.h"; sourceTree = "<group>"; };
 		17B993071AF3540D00204E97 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libopencore-amrnb.a"; path = "opencore-amr/lib/libopencore-amrnb.a"; sourceTree = "<group>"; };
 		1F18B8331B844665003BD469 /* CreatePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreatePostViewController.swift; path = Classes/CreatePostViewController.swift; sourceTree = "<group>"; };
-		1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RecommendSiteTableCell.xib; path = Classes/RecommendSiteTableCell.xib; sourceTree = "<group>"; };
-		1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendSiteTableCell.swift; path = Classes/RecommendSiteTableCell.swift; sourceTree = "<group>"; };
 		1F19D9591BA96B3E007C9919 /* GroupCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupCollectionViewCell.xib; path = Classes/GroupCollectionViewCell.xib; sourceTree = "<group>"; };
 		1F19D95B1BA96B8E007C9919 /* GroupCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCollectionViewCell.swift; path = Classes/GroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDetailViewController.swift; path = Classes/GroupDetailViewController.swift; sourceTree = "<group>"; };
@@ -537,8 +533,6 @@
 				283771971BC3A329001B06D3 /* ICYPostImageCell.xib */,
 				2837719C1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.swift */,
 				2837719D1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.xib */,
-				1F19D9551BA9616C007C9919 /* RecommendSiteTableCell.swift */,
-				1F19D9531BA9550A007C9919 /* RecommendSiteTableCell.xib */,
 				1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */,
 				1FB69E651BB2A0E9009D0C96 /* RecommendStationTableViewCell.xib */,
 				1FEA3CFC1BB39E5A0037F3C5 /* StationCollectionViewCell.swift */,
@@ -1013,7 +1007,6 @@
 				D072323A1BE1C1C700122F52 /* Info.plist in Resources */,
 				1F902D771B7D9C2800F6DC2D /* EmptyFriends.xib in Resources */,
 				D0A104951BEB055100AEE356 /* statements.html in Resources */,
-				1F19D9541BA9550A007C9919 /* RecommendSiteTableCell.xib in Resources */,
 				1F19D95A1BA96B3E007C9919 /* GroupCollectionViewCell.xib in Resources */,
 				1FEA3CFF1BB39F160037F3C5 /* StationCollectionViewCell.xib in Resources */,
 			);
@@ -1191,7 +1184,6 @@
 				1F9ACAFA1B69F99F00648A82 /* PostEntity.swift in Sources */,
 				1F937FE81B58EE8B009722CE /* MyAccountEditViewController.swift in Sources */,
 				1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */,
-				1F19D9561BA9616C007C9919 /* RecommendSiteTableCell.swift in Sources */,
 				D07402E61C23A4D6002E7581 /* ContactRouter.swift in Sources */,
 				1FA76B041BA2AC03004776B0 /* GroupDiscoverViewController.swift in Sources */,
 				D0244C5D1C20130800EA87C1 /* GroupRouter.swift in Sources */,

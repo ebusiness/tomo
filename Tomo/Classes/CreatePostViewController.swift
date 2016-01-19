@@ -112,10 +112,10 @@ extension CreatePostViewController {
     
     private func setupAppearance() {
 
-        self.navigationBar.translucent = true
-        self.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationBar.barTintColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 0.7)
-        
+//        self.navigationBar.translucent = true
+//        self.navigationBar.tintColor = UIColor.whiteColor()
+//        self.navigationBar.barTintColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 0.7)
+
         if let group = self.group {
             self.groupLabel.text = "发布在：\(group.name)"
         } else {
