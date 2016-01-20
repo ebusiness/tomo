@@ -12,6 +12,8 @@
 		1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18B8331B844665003BD469 /* CreatePostViewController.swift */; };
 		1F19D95A1BA96B3E007C9919 /* GroupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F19D9591BA96B3E007C9919 /* GroupCollectionViewCell.xib */; };
 		1F19D95C1BA96B8E007C9919 /* GroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D95B1BA96B8E007C9919 /* GroupCollectionViewCell.swift */; };
+		1F1EBEB41C4F6C3300B3439F /* TextPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EBEB31C4F6C3300B3439F /* TextPostTableViewCell.swift */; };
+		1F1EBEB61C4F6C8A00B3439F /* ImagePostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EBEB51C4F6C8A00B3439F /* ImagePostTableViewCell.swift */; };
 		1F26B29A1BAA61D10063AC6B /* GroupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */; };
 		1F350B2B1B68D32800088C1E /* PostAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */; };
 		1F36D6E61C3E2DD8007769F0 /* UserAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F36D6E51C3E2DD8007769F0 /* UserAnnotation.swift */; };
@@ -35,7 +37,6 @@
 		1FAA70F91BBB8EE600BCE5AF /* AggregatableAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA70F81BBB8EE600BCE5AF /* AggregatableAnnotation.swift */; };
 		1FAA70FC1BBBF97B00BCE5AF /* StationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA70FB1BBBF97B00BCE5AF /* StationAnnotation.swift */; };
 		1FAA70FE1BBBF99100BCE5AF /* StationAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA70FD1BBBF99100BCE5AF /* StationAnnotationView.swift */; };
-		1FB69E661BB2A0E9009D0C96 /* RecommendStationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FB69E651BB2A0E9009D0C96 /* RecommendStationTableViewCell.xib */; };
 		1FC268801BBABED8006F1FDA /* GroupAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2687F1BBABED8006F1FDA /* GroupAnnotation.swift */; };
 		1FC268821BBABF20006F1FDA /* GroupAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC268811BBABF20006F1FDA /* GroupAnnotationView.swift */; };
 		1FCA1E631B71D0C8000F2936 /* CommentEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */; };
@@ -43,8 +44,6 @@
 		1FCA1E671B722260000F2936 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E661B722260000F2936 /* MessageEntity.swift */; };
 		1FE7CEF51B8C9561006700FC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE7CEF41B8C9561006700FC /* SignUpViewController.swift */; };
 		1FEA3CFB1BB391780037F3C5 /* RecommendStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */; };
-		1FEA3CFD1BB39E5A0037F3C5 /* StationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA3CFC1BB39E5A0037F3C5 /* StationCollectionViewCell.swift */; };
-		1FEA3CFF1BB39F160037F3C5 /* StationCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FEA3CFE1BB39F160037F3C5 /* StationCollectionViewCell.xib */; };
 		1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE80E71B4E552A0061B913 /* Home.storyboard */; };
 		1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */; };
 		1FF6930D1C1E95FC00777BD5 /* Landing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FF6930C1C1E95FC00777BD5 /* Landing.storyboard */; };
@@ -214,6 +213,8 @@
 		1F18B8331B844665003BD469 /* CreatePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreatePostViewController.swift; path = Classes/CreatePostViewController.swift; sourceTree = "<group>"; };
 		1F19D9591BA96B3E007C9919 /* GroupCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupCollectionViewCell.xib; path = Classes/GroupCollectionViewCell.xib; sourceTree = "<group>"; };
 		1F19D95B1BA96B8E007C9919 /* GroupCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCollectionViewCell.swift; path = Classes/GroupCollectionViewCell.swift; sourceTree = "<group>"; };
+		1F1EBEB31C4F6C3300B3439F /* TextPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextPostTableViewCell.swift; path = Classes/TextPostTableViewCell.swift; sourceTree = "<group>"; };
+		1F1EBEB51C4F6C8A00B3439F /* ImagePostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagePostTableViewCell.swift; path = Classes/ImagePostTableViewCell.swift; sourceTree = "<group>"; };
 		1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDetailViewController.swift; path = Classes/GroupDetailViewController.swift; sourceTree = "<group>"; };
 		1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostAnnotationView.swift; path = Classes/PostAnnotationView.swift; sourceTree = "<group>"; };
 		1F36D6E51C3E2DD8007769F0 /* UserAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserAnnotation.swift; path = Classes/UserAnnotation.swift; sourceTree = "<group>"; };
@@ -252,7 +253,6 @@
 		1FAA70F81BBB8EE600BCE5AF /* AggregatableAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AggregatableAnnotation.swift; path = Classes/AggregatableAnnotation.swift; sourceTree = "<group>"; };
 		1FAA70FB1BBBF97B00BCE5AF /* StationAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationAnnotation.swift; path = Classes/StationAnnotation.swift; sourceTree = "<group>"; };
 		1FAA70FD1BBBF99100BCE5AF /* StationAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationAnnotationView.swift; path = Classes/StationAnnotationView.swift; sourceTree = "<group>"; };
-		1FB69E651BB2A0E9009D0C96 /* RecommendStationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RecommendStationTableViewCell.xib; path = Classes/RecommendStationTableViewCell.xib; sourceTree = "<group>"; };
 		1FC2687F1BBABED8006F1FDA /* GroupAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupAnnotation.swift; path = Classes/GroupAnnotation.swift; sourceTree = "<group>"; };
 		1FC268811BBABF20006F1FDA /* GroupAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupAnnotationView.swift; path = Classes/GroupAnnotationView.swift; sourceTree = "<group>"; };
 		1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentEntity.swift; path = Classes/CommentEntity.swift; sourceTree = "<group>"; };
@@ -260,8 +260,6 @@
 		1FCA1E661B722260000F2936 /* MessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageEntity.swift; path = Classes/MessageEntity.swift; sourceTree = "<group>"; };
 		1FE7CEF41B8C9561006700FC /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = Classes/SignUpViewController.swift; sourceTree = "<group>"; };
 		1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendStationTableViewCell.swift; path = Classes/RecommendStationTableViewCell.swift; sourceTree = "<group>"; };
-		1FEA3CFC1BB39E5A0037F3C5 /* StationCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationCollectionViewCell.swift; path = Classes/StationCollectionViewCell.swift; sourceTree = "<group>"; };
-		1FEA3CFE1BB39F160037F3C5 /* StationCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StationCollectionViewCell.xib; path = Classes/StationCollectionViewCell.xib; sourceTree = "<group>"; };
 		1FEE80E71B4E552A0061B913 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Home.storyboard; path = Classes/Home.storyboard; sourceTree = "<group>"; };
 		1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Classes/HomeViewController.swift; sourceTree = "<group>"; };
 		1FF6930C1C1E95FC00777BD5 /* Landing.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Landing.storyboard; path = Classes/Landing.storyboard; sourceTree = "<group>"; };
@@ -433,6 +431,16 @@
 			name = lib;
 			sourceTree = "<group>";
 		};
+		1F1EBEB21C4F6BAD00B3439F /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1F1EBEB31C4F6C3300B3439F /* TextPostTableViewCell.swift */,
+				1F1EBEB51C4F6C8A00B3439F /* ImagePostTableViewCell.swift */,
+				1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
 		1F985DF41B60B748008D5369 /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -520,7 +528,7 @@
 			name = Chat;
 			sourceTree = "<group>";
 		};
-		1FC051081BAF9F3B00886F67 /* Components */ = {
+		1FC051081BAF9F3B00886F67 /* Components-old */ = {
 			isa = PBXGroup;
 			children = (
 				285778541BC29AEC00533E8E /* ICYTagCollectionViewCell.swift */,
@@ -533,13 +541,9 @@
 				283771971BC3A329001B06D3 /* ICYPostImageCell.xib */,
 				2837719C1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.swift */,
 				2837719D1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.xib */,
-				1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */,
-				1FB69E651BB2A0E9009D0C96 /* RecommendStationTableViewCell.xib */,
-				1FEA3CFC1BB39E5A0037F3C5 /* StationCollectionViewCell.swift */,
-				1FEA3CFE1BB39F160037F3C5 /* StationCollectionViewCell.xib */,
 				28C647AF1BBE838200253647 /* EmptyStationResult.xib */,
 			);
-			name = Components;
+			name = "Components-old";
 			sourceTree = "<group>";
 		};
 		1FC051091BAF9F9200886F67 /* Components */ = {
@@ -714,7 +718,8 @@
 		299389571AD3D13700043D91 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				1FC051081BAF9F3B00886F67 /* Components */,
+				1F1EBEB21C4F6BAD00B3439F /* Components */,
+				1FC051081BAF9F3B00886F67 /* Components-old */,
 				291ADF941AD229B3009D8BE3 /* CommentCell.swift */,
 				1F18B8331B844665003BD469 /* CreatePostViewController.swift */,
 				1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */,
@@ -995,7 +1000,6 @@
 				29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */,
 				2837719F1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.xib in Resources */,
 				1FF6930D1C1E95FC00777BD5 /* Landing.storyboard in Resources */,
-				1FB69E661BB2A0E9009D0C96 /* RecommendStationTableViewCell.xib in Resources */,
 				296D8BC41AFC5A680058D400 /* Main.storyboard in Resources */,
 				29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */,
 				1FA76AFE1BA27B1E004776B0 /* Group.storyboard in Resources */,
@@ -1008,7 +1012,6 @@
 				1F902D771B7D9C2800F6DC2D /* EmptyFriends.xib in Resources */,
 				D0A104951BEB055100AEE356 /* statements.html in Resources */,
 				1F19D95A1BA96B3E007C9919 /* GroupCollectionViewCell.xib in Resources */,
-				1FEA3CFF1BB39F160037F3C5 /* StationCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1174,6 +1177,7 @@
 				D0B40BBF1B78AF0400685D67 /* ExNSDate.swift in Sources */,
 				1FAA70F71BBB8DBE00BCE5AF /* AggregatableAnnotationView.swift in Sources */,
 				1F79C1B21B5E0E22008800E1 /* FriendListViewController.swift in Sources */,
+				1F1EBEB41C4F6C3300B3439F /* TextPostTableViewCell.swift in Sources */,
 				29539C781B13175D00545509 /* VoiceController.swift in Sources */,
 				2993894A1AD3B33800043D91 /* AmazonS3SignatureHelpers.m in Sources */,
 				D072323B1BE1C1C700122F52 /* Int.swift in Sources */,
@@ -1200,6 +1204,7 @@
 				1F26B29A1BAA61D10063AC6B /* GroupDetailViewController.swift in Sources */,
 				285778511BC272E000533E8E /* ICYTagButton.swift in Sources */,
 				D0960AAC1BC376FB00A63733 /* UltravisualLayout.swift in Sources */,
+				1F1EBEB61C4F6C8A00B3439F /* ImagePostTableViewCell.swift in Sources */,
 				D072323E1BE1C1C700122F52 /* Sequence.swift in Sources */,
 				D05418431BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift in Sources */,
 				295272D01AD51B2300FC7833 /* S3.swift in Sources */,
@@ -1209,7 +1214,6 @@
 				296D8BAC1AFC59F10058D400 /* TabBarController.swift in Sources */,
 				D04447B31BBA9DF300AD7B0C /* GroupChatViewController.swift in Sources */,
 				D07232341BE1C1C700122F52 /* Bool.swift in Sources */,
-				1FEA3CFD1BB39E5A0037F3C5 /* StationCollectionViewCell.swift in Sources */,
 				2857784C1BC25DC600533E8E /* ICYPostCell.swift in Sources */,
 				1FEA3CFB1BB391780037F3C5 /* RecommendStationTableViewCell.swift in Sources */,
 				1FA76B091BA2C642004776B0 /* GroupCreateViewController.swift in Sources */,

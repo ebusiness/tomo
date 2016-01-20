@@ -81,9 +81,18 @@ struct TomoConst {
         static let DefaultAvatar = UIImage(named: "avatar")!
         static let DefaultCover = UIImage(named: "user_cover_default")!
         static let DefaultGroup = UIImage(named: "group_cover_default")!
+
+        static let EmptyHeart = UIImage(named: "hearts")!
+        static let FilledHeart = UIImage(named: "hearts_filled")!
+        
+        static let EmptyStar = UIImage(named: "star")!
+        static let FilledStar = UIImage(named: "star_filled")!
     }
 
     struct UI {
+        static let ScreenWidth = UIScreen.mainScreen().bounds.width
+        static let ScreenHeight = UIScreen.mainScreen().bounds.height
+        static let StatusBarHeight = CGFloat(20)
         static let TopBarHeight = CGFloat(44)
     }
 

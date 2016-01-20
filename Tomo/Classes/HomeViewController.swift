@@ -10,10 +10,9 @@ import UIKit
 
 final class HomeViewController: UITableViewController {
 
-    let screenHeight = UIScreen.mainScreen().bounds.height
-    let loadTriggerHeight = CGFloat(88.0)
-    
     var contents = [AnyObject]()
+    var rowHeights = [CGFloat]()
+
     var latestContent: AnyObject?
     var oldestContent: AnyObject?
     
@@ -21,45 +20,43 @@ final class HomeViewController: UITableViewController {
     var isExhausted = false
     
     var recommendGroups: [GroupEntity]?
-    
-    var postCellEstimator: ICYPostCell!
-    var postImageCellEstimator: ICYPostImageCell!
-    
+
     private let footerView: UIView = {
-        let screenWidth = UIScreen.mainScreen().bounds.width
-        let footerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: screenWidth, height: 40.0)))
-        footerView.backgroundColor = Util.colorWithHexString("EFEFF4")
-        let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
-        footerView.addSubview(loadingIndicator)
-        loadingIndicator.sizeToFit()
-        loadingIndicator.startAnimating()
-        loadingIndicator.center = CGPoint(x: screenWidth / 2.0, y: 20.0)
+
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        let footerSize = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.TopBarHeight)
+        let footerView = UIView(frame: CGRect(origin: CGPointZero, size: footerSize))
+
+        footerView.backgroundColor = UIColor.groupTableViewBackgroundColor()
+        footerView.addSubview(indicator)
+
+        indicator.center = footerView.center
+        indicator.startAnimating()
+
         return footerView
     }()
-    
-    /// true: comment, false: cell content
-//    private var selectCellOrComment = false
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        self.registerCell()
-        
-        self.setupRefreshControll()
+        if let refreshControl = self.refreshControl {
+            refreshControl.tintColor = Palette.LightBlue.lightPrimaryColor
+            refreshControl.addTarget(self, action: "loadNewContent", forControlEvents: UIControlEvents.ValueChanged)
+        }
+
+        self.tableView.tableFooterView = footerView
 
         LocationController.shareInstance.doActionWithLocation {
             self.getRecommendInfo($0)
         }
 
-        self.tableView.estimatedRowHeight = 300
-        
         self.loadMoreContent()
     }
     
-    func becomeActive() {
-        self.loadNewContent()
-    }
+//    func becomeActive() {
+//        self.loadNewContent()
+//    }
 
     // MARK: - Navigation
     
@@ -89,7 +86,7 @@ extension HomeViewController {
         
         if let groups = contents[indexPath.item] as? [GroupEntity] {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("RecommendStationTableCell", forIndexPath: indexPath) as! RecommendStationTableCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("StationRecommendCell", forIndexPath: indexPath) as! RecommendStationTableCell
             cell.groups = groups
             cell.delegate = self
             cell.tableViewController = self
@@ -97,14 +94,15 @@ extension HomeViewController {
             return cell
             
         } else if let post = contents[indexPath.row] as? PostEntity {
-            var cell: TextPostCell!
+            
+            var cell: TextPostTableViewCell!
             if post.images?.count > 0 {
-                cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostCell
+                cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostTableViewCell
             } else {
-                cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostCell
+                cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostTableViewCell
             }
             cell.post = post
-//            cell.delegate = self
+            cell.delegate = self
             return cell
             
         } else {
@@ -124,31 +122,9 @@ extension HomeViewController {
         }
     }
     
-//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        if contents[indexPath.row] is [GroupEntity] {
-//            return 330.0
-//        }
-//        guard let post = contents[indexPath.row] as? PostEntity else { return 0 }
-//        
-//        if post.contentHeight == nil {
-//            if post.images?.count > 0 {
-//                if postImageCellEstimator == nil {
-//                    postImageCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier") as! ICYPostImageCell
-//                }
-//                postImageCellEstimator.post = post
-//                let size = postImageCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-//                post.contentHeight = size.height
-//            } else {
-//                if postCellEstimator == nil {
-//                    postCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier") as! ICYPostCell
-//                }
-//                postCellEstimator.post = post
-//                let size = postCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-//                post.contentHeight = size.height
-//            }
-//        }
-//        return post.contentHeight!
-//    }
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return self.rowHeights[indexPath.item]
+    }
 
 }
 
@@ -161,7 +137,7 @@ extension HomeViewController {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         
-        if (contentHeight - screenHeight - loadTriggerHeight) < offsetY {
+        if (contentHeight - TomoConst.UI.ScreenHeight) < offsetY {
             loadMoreContent()
         }
     }
@@ -170,9 +146,11 @@ extension HomeViewController {
 // MARK: - Actions
 
 extension HomeViewController {
+
     func discoverMoreStation() {
         performSegueWithIdentifier("modalStationSelector", sender: nil)
     }
+
     func synchronizeRecommendStations(newStations: [GroupEntity]) {
         for index in 0..<contents.count {
             if let _ = contents[index] as? [GroupEntity] {
@@ -186,32 +164,9 @@ extension HomeViewController {
 // MARK: Internal methods
 
 extension HomeViewController {
-    
-    private func registerCell() {
-        
-        let RecommendStationTableCellNib = UINib(nibName: "RecommendStationTableViewCell", bundle: nil)
-        tableView.registerNib(RecommendStationTableCellNib, forCellReuseIdentifier: "RecommendStationTableCell")
-        
-        let ICYPostCellNib = UINib(nibName: "ICYPostCell", bundle: nil)
-        tableView.registerNib(ICYPostCellNib, forCellReuseIdentifier: "ICYPostCellIdentifier")
-        
-        let ICYPostImageCellNib = UINib(nibName: "ICYPostImageCell", bundle: nil)
-        tableView.registerNib(ICYPostImageCellNib, forCellReuseIdentifier: "ICYPostImageCellIdentifier")
-    }
-    
-    private func setupRefreshControll() {
-        if let refreshControl = self.refreshControl {
-            refreshControl.tintColor = Palette.LightBlue.primaryColor
-            refreshControl.addTarget(self, action: "loadNewContent", forControlEvents: UIControlEvents.ValueChanged)
-        }
-    }
-    
+
     private func getRecommendInfo(location: CLLocation?) {
-        
-        let needToLoadStations = self.recommendGroups == nil && self.contents.find { $0 is [GroupEntity] } == nil
-        
-        if !needToLoadStations { return }
-        
+
         var parameters = Router.Group.FindParameters(category: .discover)
         
         parameters.type = .station
@@ -231,12 +186,11 @@ extension HomeViewController {
     private func loadMoreContent() {
         
         // skip if already in loading
-        if isLoading || isExhausted {
+        if self.isLoading || self.isExhausted {
             return
         }
         
-        isLoading = true
-        tableView.tableFooterView = footerView
+        self.isLoading = true
 
         var parameters = Router.Post.FindParameters(category: .all)
     
@@ -245,8 +199,7 @@ extension HomeViewController {
         }
         
         Router.Post.Find(parameters: parameters).response {
-            self.tableView.tableFooterView = nil
-            
+
             if $0.result.isFailure {
                 self.isLoading = false
                 self.isExhausted = true
@@ -256,39 +209,35 @@ extension HomeViewController {
             let posts: [PostEntity]? = PostEntity.collection($0.result.value!)
             
             if let loadPosts: [AnyObject] = posts {
+
                 self.contents += loadPosts
-                
-                for content in loadPosts {
-                    if let content = content as? PostEntity {
-                        self.simulateLayout(content)
-                    }
+
+                self.rowHeights += loadPosts.map { post -> CGFloat in
+                    return self.simulateLayout(post as! PostEntity)
                 }
-                
+
                 self.appendRows(loadPosts.count)
                 
                 let visibleCells = self.tableView.visibleCells
                 let visibleIndexPath = self.tableView.indexPathForCell(visibleCells.get(0)!)
                 
                 if let recommendStations: AnyObject = self.recommendGroups as? AnyObject {
+
                     let row = visibleIndexPath!.row + 1
                     self.contents.insert(recommendStations, atIndex: Int(row))
+                    self.rowHeights.insert(362, atIndex: Int(row))
                     let stationsInsertIndexPath = NSIndexPath(forRow: row, inSection: 0)
                     self.tableView.insertRowsAtIndexPaths([stationsInsertIndexPath], withRowAnimation: .Fade)
                     self.recommendGroups = nil
                 }
+
             }
+
             self.isLoading = false
         }
     }
     
     func loadNewContent() {
-        
-        // skip if already in loading
-        if isLoading {
-            return
-        }
-        
-        isLoading = true
 
         var parameters = Router.Post.FindParameters(category: .all)
         
@@ -299,7 +248,7 @@ extension HomeViewController {
         
         Router.Post.Find(parameters: parameters).response {
             if $0.result.isFailure {
-                self.endRefreshing()
+                self.refreshControl!.endRefreshing()
                 return
             }
             
@@ -308,19 +257,9 @@ extension HomeViewController {
                 self.prependRows(loadPosts.count)
             }
             
-            self.endRefreshing()
+            self.refreshControl!.endRefreshing()
 
         }
-    }
-    
-    private func endRefreshing() {
-        
-        self.isLoading = false
-        self.refreshControl?.endRefreshing()
-//        self.activityIndicator.stopAnimating()
-//        self.activityIndicator.alpha = 0
-//        self.indicatorLabel.alpha = 0
-//        self.indicatorLabel.text = "向下拉动加载更多内容"
     }
     
     private func appendRows(rows: Int) {
@@ -364,51 +303,22 @@ extension HomeViewController {
         tableView.endUpdates()
     }
     
-    func simulateLayout(post: PostEntity) {
-        if post.contentHeight == nil && tableView != nil {
-            if post.images?.count > 0 {
-                if postImageCellEstimator == nil {
-                    postImageCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier") as! ICYPostImageCell
-                }
-                postImageCellEstimator.post = post
-                let size = postImageCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-                post.contentHeight = size.height
-            } else {
-                if postCellEstimator == nil {
-                    postCellEstimator = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier") as! ICYPostCell
-                }
-                postCellEstimator.post = post
-                let size = postCellEstimator.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
-                post.contentHeight = size.height
-            }
+    func simulateLayout(post: PostEntity) -> CGFloat {
+
+        let cell: TextPostTableViewCell
+
+        if post.images?.count > 0 {
+            cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostTableViewCell
+        } else {
+            cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostTableViewCell
         }
+
+        cell.post = post
+        cell.configDisplay()
+
+        let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+
+        return size.height
     }
-}
-
-class TextPostCell: UITableViewCell {
-
-    @IBOutlet weak var avatarImageVIew: UIImageView!
-
-    @IBOutlet weak var nickNameLabel: UILabel!
-
-    @IBOutlet weak var postDateLabel: UILabel!
-
-    @IBOutlet weak var contentLabel: UILabel!
-
-    @IBOutlet weak var infoLabel: UILabel!
-
-    var post: PostEntity! {
-        
-        didSet {
-            avatarImageVIew.sd_setImageWithURL(NSURL(string: post.owner.photo ?? ""), placeholderImage: UIImage(named: "avatar"))
-            nickNameLabel.text = post.owner.nickName
-            postDateLabel.text = post.createDate.relativeTimeToString()
-            contentLabel.text = post.content
-        }
-    }
-
-}
-
-final class ImagePostCell: TextPostCell {
 
 }
