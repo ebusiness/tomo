@@ -15,6 +15,7 @@ final class MyAccountViewController: MyAccountBaseController {
     @IBOutlet weak var birthDayLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var primaryStation: UILabel!
     
     @IBOutlet weak var notificationCell: UITableViewCell!
     var user: Account!
@@ -58,6 +59,7 @@ final class MyAccountViewController: MyAccountBaseController {
         }
         
         rvc.exitAction = {
+            self.updateUI()
             rvc.dismissViewControllerAnimated(true, completion: nil)
         }
         
@@ -108,6 +110,13 @@ extension MyAccountViewController {
         if let address = user.address {
             addressLabel.text = address
         }
+        
+        if let stationName = user.primaryStation?.name {
+            self.primaryStation.text = stationName
+//            self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 1)], withRowAnimation: .Automatic)
+        }
+        self.tableView.reloadData()
+        self.tableView.layoutIfNeeded()
         
     }
 }
