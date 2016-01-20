@@ -19,6 +19,8 @@ final class RecommendViewController: UIViewController {
 
     private var currentAnnotationView: MKAnnotationView?
     private var currentSelectedIndexPath: NSIndexPath?
+    
+    var exitAction: (()->())?
 
     private let itemSize: CGSize = {
         let height = UIScreen.mainScreen().bounds.height * 0.3 - 8
@@ -38,7 +40,9 @@ final class RecommendViewController: UIViewController {
                     removeIndex.append(NSIndexPath(forItem: removeIndex.count, inSection: 0))
                 }
             }
-
+            if let primaryStation = me.primaryStation {
+                self.recommendGroups?.insert(primaryStation, atIndex: 0)
+            }
             if let newValue = self.recommendGroups {
                 for _ in newValue {
                     insertIndex.append(NSIndexPath(forItem: insertIndex.count, inSection: 0))
@@ -57,7 +61,11 @@ final class RecommendViewController: UIViewController {
     override func viewDidLoad() {
 
         super.viewDidLoad()
-
+        
+        if let primaryStation = me.primaryStation {
+            self.maskView.alpha = 0
+            self.selectGroup(primaryStation)
+        }
         LocationController.shareInstance.doActionWithLocation {
             self.getRecommendInfo($0)
         }
@@ -96,8 +104,10 @@ extension RecommendViewController {
     }
 
     @IBAction func searchButtonTapped(sender: AnyObject) {
-
-        self.dismissViewControllerAnimated(true, completion: nil)
+        
+        if let presentedViewController = self.presentedViewController {
+            presentedViewController.dismissViewControllerAnimated(true, completion: nil)
+        }
 
         UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
             self.searchBarBottomConstraint.constant = 0
@@ -108,7 +118,10 @@ extension RecommendViewController {
     }
 
     @IBAction func exitButtonTapped(sender: AnyObject) {
-
+        if let exitAction = exitAction {
+            exitAction()
+            return
+        }
         Router.Signout().response { _ in
 
             Defaults.remove("openid")
@@ -153,24 +166,24 @@ extension RecommendViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 
         guard self.currentSelectedIndexPath != indexPath else { return }
+        guard let group = recommendGroups?[indexPath.row] else { return }
 
         self.currentSelectedIndexPath = indexPath
-        self.dismissViewControllerAnimated(true, completion: nil)
-
-        if let group = recommendGroups?[indexPath.row] {
-
-            self.selectGroup(group)
-
-            guard self.maskView.alpha > 0 else { return }
-
-            UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
-                self.maskView.alpha = 0
-            })
+        
+        if let presentedViewController = self.presentedViewController {
+            presentedViewController.dismissViewControllerAnimated(true, completion: nil)
         }
+
+        self.selectGroup(group)
+        
+        guard self.maskView.alpha > 0 else { return }
+        
+        UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
+            self.maskView.alpha = 0
+        })
     }
 
     private func selectGroup(group: GroupEntity) {
-
         guard let latitude = group.coordinate?[1] else { return }
         guard let longitude = group.coordinate?[0] else { return }
 
@@ -220,24 +233,28 @@ extension RecommendViewController: MKMapViewDelegate {
 
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
 
-        if let annotationView = self.currentAnnotationView {
+        guard let annotationView = self.currentAnnotationView else { return }
+        
+        let vc = Util.createViewControllerWithIdentifier("GroupPopoverViewController", storyboardName: "Main") as! GroupPopoverViewController
+        
+        vc.modalPresentationStyle = .Popover
+        vc.presentationController?.delegate = self
+        
+        vc.groupAnnotation = annotationView.annotation as! GroupAnnotation
 
-            let vc = Util.createViewControllerWithIdentifier("GroupPopoverViewController", storyboardName: "Main") as! GroupPopoverViewController
-
-            vc.modalPresentationStyle = .Popover
-            vc.presentationController?.delegate = self
-
-            vc.groupAnnotation = annotationView.annotation as! GroupAnnotation
-
-            self.presentViewController(vc, animated: true, completion: nil)
-
-            if let pop = vc.popoverPresentationController {
-                pop.passthroughViews = [self.view]
-                pop.permittedArrowDirections = .Down
-                pop.sourceView = annotationView
-                pop.sourceRect = annotationView.bounds
-            }
+        self.presentViewController(vc, animated: true, completion: nil)
+        
+        if let pop = vc.popoverPresentationController {
+            pop.passthroughViews = [self.view]
+            pop.permittedArrowDirections = .Down
+            pop.sourceView = annotationView
+            pop.sourceRect = annotationView.bounds
         }
+
+    }
+    
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        self.mapView(mapView, regionDidChangeAnimated: true)
     }
 }
 
@@ -363,7 +380,7 @@ final class GroupPopoverViewController: UIViewController {
     }
 
     @IBAction func joinButtonTapped(sender: AnyObject) {
-
+        
         guard let delegate = UIApplication.sharedApplication().delegate else { return }
         guard let window = delegate.window else { return }
         guard let rootViewController = window?.rootViewController else { return }
@@ -371,6 +388,7 @@ final class GroupPopoverViewController: UIViewController {
         Router.Group.Join(id: groupAnnotation.group.id).response {
 
             guard $0.result.isSuccess else { return }
+            me.primaryStation = self.groupAnnotation.group
 
             var param = Router.Setting.MeParameter()
             param.primaryStation = self.groupAnnotation.group.id
@@ -378,7 +396,16 @@ final class GroupPopoverViewController: UIViewController {
             Router.Setting.UpdateUserInfo(parameters: param).response {
 
                 guard $0.result.isSuccess else { return }
-
+                
+                
+                if let rvc = self.presentationController?.delegate as? RecommendViewController
+                    ,exitAction = rvc.exitAction {
+                        me.primaryStation = self.groupAnnotation.group
+                        self.dismissViewControllerAnimated(true) { _ in
+                            exitAction()
+                        }
+                        return
+                }
                 let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
                 Util.changeRootViewController(from: rootViewController, to: tab)
             }
@@ -391,10 +418,18 @@ final class GroupPopoverViewController: UIViewController {
         self.joinButton.layer.borderWidth = 1
         self.joinButton.layer.cornerRadius = 2
         
-        if let group = groupAnnotation.group {
-            self.nameLabel.text = group.name
-            self.introLabel.text = group.introduction
-            self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
+        guard let group = groupAnnotation.group else { return }
+        self.nameLabel.text = group.name
+        self.introLabel.text = group.introduction
+        self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
+        
+        guard let me = me else { return }
+        
+        if group.id == me.primaryStation?.id {
+            self.joinButton.hidden = true
+        } else {
+            self.joinButton.hidden = false
+            self.joinButton.setTitle("设置为当前现场", forState: .Normal)
         }
     }
 }

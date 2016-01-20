@@ -51,6 +51,18 @@ final class MyAccountViewController: MyAccountBaseController {
         }
     }
 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        guard let rvc = segue.destinationViewController as? RecommendViewController else {
+            super.prepareForSegue(segue, sender: sender)
+            return
+        }
+        
+        rvc.exitAction = {
+            rvc.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+    }
+    
     @IBAction func logoutTapped(sender: UIButton) {
         Util.alert(self, title: "退出账号", message: "真的要退出当前的账号吗？") { _ in
             
