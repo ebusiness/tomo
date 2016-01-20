@@ -62,8 +62,15 @@ extension NSDate {
             return "1个月前"
         }
         
+        let months = floor(days/30)
         
-        return self.toString()
+        if months < 12 {
+            return "\(Int(months))个月前"
+        }
+        
+        let years = floor(months/12)
+        
+        return "\(Int(years))年前"
     }
 }
 
