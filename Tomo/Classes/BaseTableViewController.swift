@@ -79,12 +79,6 @@ extension BaseTableViewController {
     
     func setBackButton() {
         
-        let backitem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        self.navigationItem.backBarButtonItem = backitem
-        
-        let backimage = UIImage(named: "back")!
-        navigationController?.navigationBar.backIndicatorImage = backimage
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = backimage
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         navigationController?.navigationBar.barStyle = .Black
