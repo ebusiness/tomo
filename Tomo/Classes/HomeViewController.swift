@@ -10,7 +10,10 @@ import UIKit
 
 final class HomeViewController: UITableViewController {
 
+    // Array holds all cell contents
     var contents = [AnyObject]()
+
+    // Array holds all cell height
     var rowHeights = [CGFloat]()
 
     var latestContent: AnyObject?
@@ -21,6 +24,8 @@ final class HomeViewController: UITableViewController {
     
     var recommendGroups: [GroupEntity]?
 
+    // Table footer view, with a loading activity indicator.
+    // If set in the storyboard, table scroll will bacome very slow. don't know why.
     private let footerView: UIView = {
 
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
@@ -39,27 +44,30 @@ final class HomeViewController: UITableViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+
+        // Refresh control, make it color theme blue, and wire it with loadNewContent method.
         if let refreshControl = self.refreshControl {
             refreshControl.tintColor = Palette.LightBlue.lightPrimaryColor
             refreshControl.addTarget(self, action: "loadNewContent", forControlEvents: UIControlEvents.ValueChanged)
         }
 
+        // Set table view's footer.
         self.tableView.tableFooterView = footerView
 
+        // Load recommend contents, with user location.
         LocationController.shareInstance.doActionWithLocation {
             self.getRecommendInfo($0)
         }
 
+        // Load main contents
         self.loadMoreContent()
     }
-    
-//    func becomeActive() {
-//        self.loadNewContent()
-//    }
+}
 
-    // MARK: - Navigation
-    
+// MARK: - Navigation
+
+extension HomeViewController {
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "postdetail" {
             if let post = sender as? PostEntity {
@@ -68,13 +76,13 @@ final class HomeViewController: UITableViewController {
             }
         }
     }
-    
+
     @IBAction func addedPost(segue: UIStoryboardSegue) {
         // exit addPostView
     }
 }
 
-// MARK: UITableView datasource
+// MARK: - UITableView datasource
 
 extension HomeViewController {
     
@@ -83,26 +91,40 @@ extension HomeViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+
+        // If the content is array of group, display as StationGroup recommendation.
         if let groups = contents[indexPath.item] as? [GroupEntity] {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("StationRecommendCell", forIndexPath: indexPath) as! RecommendStationTableCell
+
+            // Give the cell group list data, this will tirgger configDisplay
             cell.groups = groups
-            cell.delegate = self
-            cell.tableViewController = self
-            cell.setup()
+
+            // Set current navigation controller as the cell's delegate, 
+            // for the navigation when post author's photo been tapped, etc.
+            cell.delegate = self.navigationController
+
             return cell
-            
+
+        // If the content is a post, display as post summary.
         } else if let post = contents[indexPath.row] as? PostEntity {
             
             var cell: TextPostTableViewCell!
+
+            // If the post has one or more images, use ImagePostTableViewCell, otherwise use the TextPostTableViewCell.
             if post.images?.count > 0 {
                 cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostTableViewCell
             } else {
                 cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostTableViewCell
             }
+
+            // Give the cell post data, this will tirgger configDisplay
             cell.post = post
-            cell.delegate = self
+
+            // Set current navigation controller as the cell's delegate, 
+            // for the navigation when post author's photo been tapped, etc.
+            cell.delegate = self.navigationController
+
             return cell
             
         } else {
@@ -112,7 +134,7 @@ extension HomeViewController {
     }
 }
 
-// MARK: UITableView delegate
+// MARK: - UITableView delegate
 
 extension HomeViewController {
     
@@ -128,7 +150,7 @@ extension HomeViewController {
 
 }
 
-// MARK: UIScrollView delegate
+// MARK: - UIScrollView delegate
 
 extension HomeViewController {
     
@@ -161,7 +183,7 @@ extension HomeViewController {
     }
 }
 
-// MARK: Internal methods
+// MARK: - Internal methods
 
 extension HomeViewController {
 

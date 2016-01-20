@@ -75,7 +75,7 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
         if let group = groups?[indexPath.row] {
             cell.group = group
         }
-        cell.setupDisplay()
+//        cell.setupDisplay()
         return cell
     }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {

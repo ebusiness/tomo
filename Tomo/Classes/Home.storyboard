@@ -11,7 +11,7 @@
             <objects>
                 <tableViewController id="zbi-CG-oqX" customClass="HomeViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="c8c-ul-edR">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="1300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
@@ -208,10 +208,10 @@
                                                     </collectionViewFlowLayout>
                                                     <cells>
                                                         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SingleImageCell" id="SQr-lj-O2Z" customClass="SingleImageCollectionViewCell" customModule="tomo" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="-2" width="322" height="253"/>
+                                                            <rect key="frame" x="0.0" y="-1.5" width="321.5" height="252.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                                <rect key="frame" x="0.0" y="0.0" width="322" height="253"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="321.5" height="252.5"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash10" translatesAutoresizingMaskIntoConstraints="NO" id="zAE-5s-n6F">
@@ -426,7 +426,7 @@
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GDN-SR-AHk">
+                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GDN-SR-AHk">
                                             <rect key="frame" x="0.0" y="56" width="320" height="250"/>
                                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                             <constraints>
@@ -464,8 +464,16 @@
                                                                 <state key="normal" title="  加入  ">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </state>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                        <integer key="value" value="2"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                                        <integer key="value" value="1"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
                                                                 <connections>
-                                                                    <action selector="watchButtonTapped:" destination="oAc-S2-6uQ" eventType="touchUpInside" id="Vl7-FY-Lf7"/>
+                                                                    <action selector="actionButtonTapped:" destination="oAc-S2-6uQ" eventType="touchUpInside" id="37a-1c-MSd"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -486,10 +494,16 @@
                                                         <constraint firstAttribute="bottom" secondItem="0na-XL-MwN" secondAttribute="bottom" constant="8" id="kxY-DB-dza"/>
                                                         <constraint firstItem="JXp-p2-PU7" firstAttribute="leading" secondItem="oAc-S2-6uQ" secondAttribute="leading" constant="8" id="yXE-9N-wRf"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                     <connections>
+                                                        <outlet property="actionButton" destination="0na-XL-MwN" id="lPG-lo-EDR"/>
                                                         <outlet property="backgroundImageView" destination="Vvb-FN-l1D" id="IBC-RY-dwy"/>
                                                         <outlet property="nameLabel" destination="JXp-p2-PU7" id="mUo-wY-iCp"/>
-                                                        <outlet property="watchButton" destination="0na-XL-MwN" id="VIJ-jA-kTY"/>
                                                     </connections>
                                                 </collectionViewCell>
                                             </cells>
@@ -505,7 +519,7 @@
                                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <action selector="discoverMoreStation:" destination="XQC-Bc-r2n" eventType="touchUpInside" id="s9Q-Hx-LpB"/>
+                                                <segue destination="y9E-on-1q4" kind="modal" id="xIX-OF-5wb"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -543,18 +557,17 @@
                         </barButtonItem>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="1300"/>
+                    <size key="freeformSize" width="320" height="1200"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="ZSv-f3-pD1">
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                     <connections>
                         <segue destination="e0B-Bn-WF3" kind="push" identifier="postdetail" id="O8f-bA-5Ib"/>
-                        <segue destination="y9E-on-1q4" kind="modal" identifier="modalStationSelector" id="xgB-2R-EwN"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W1f-R8-yTz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="942" y="-258"/>
+            <point key="canvasLocation" x="953" y="-471"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Q8a-7R-v37">
@@ -814,7 +827,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x9I-ee-JZQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="qTh-eg-IWt" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="869" y="927"/>
+            <point key="canvasLocation" x="741" y="531"/>
         </scene>
         <!--Post View Controller-->
         <scene sceneID="5lg-JB-8UC">
@@ -1134,7 +1147,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D6N-O5-T7v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1292" y="927"/>
+            <point key="canvasLocation" x="1155" y="531"/>
         </scene>
         <!--Station Discover View Controller-->
         <scene sceneID="hJU-NG-BvM">
@@ -1171,7 +1184,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KRq-01-KpJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1855" y="834"/>
+            <point key="canvasLocation" x="1609" y="531"/>
         </scene>
     </scenes>
     <resources>

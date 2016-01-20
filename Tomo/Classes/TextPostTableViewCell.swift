@@ -34,20 +34,21 @@ class TextPostTableViewCell: UITableViewCell {
 
     @IBOutlet weak var commentDateLabel: UILabel!
 
-    weak var delegate: UIViewController?
+    weak var delegate: UINavigationController?
 
     var post: PostEntity! {
         didSet { self.configDisplay() }
     }
 
     override func awakeFromNib() {
+
         super.awakeFromNib()
 
-        // major avatar tap
+        // post author avatar tap
         let avatarTap = UITapGestureRecognizer(target: self, action: "avatarTapped")
         avatarImageView.addGestureRecognizer(avatarTap)
 
-        // minor avatar tap
+        // comment author avatar tap
         let commentAvatarTap = UITapGestureRecognizer(target: self, action: "commentAvatarTapped")
         commentAvatarImageView.addGestureRecognizer(commentAvatarTap)
 
@@ -109,14 +110,14 @@ class TextPostTableViewCell: UITableViewCell {
 
         guard let owner = post?.owner else { return }
 
-        let profileViewController = delegate?.navigationController?.childViewControllers.find { ($0 as? ProfileViewController)?.user.id == owner.id } as? ProfileViewController
+        let profileViewController = delegate?.childViewControllers.find { ($0 as? ProfileViewController)?.user.id == owner.id } as? ProfileViewController
 
         if let profileViewController = profileViewController {
-            delegate?.navigationController?.popToViewController(profileViewController, animated: true)
+            delegate?.popToViewController(profileViewController, animated: true)
         } else {
             let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
             vc.user = owner
-            delegate?.navigationController?.pushViewController(vc, animated: true)
+            delegate?.pushViewController(vc, animated: true)
         }
     }
 
@@ -126,14 +127,14 @@ class TextPostTableViewCell: UITableViewCell {
         let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = owner
         if owner.id == post?.owner.id {
-            let profileViewController = delegate?.navigationController?.childViewControllers.find { $0 is ProfileViewController } as? ProfileViewController
+            let profileViewController = delegate?.childViewControllers.find { $0 is ProfileViewController } as? ProfileViewController
 
             if let profileViewController = profileViewController {
-                delegate?.navigationController?.popToViewController(profileViewController, animated: true)
+                delegate?.popToViewController(profileViewController, animated: true)
                 return
             }
         }
-        delegate?.navigationController?.pushViewController(vc, animated: true)
+        delegate?.pushViewController(vc, animated: true)
     }
 
     func commentTapped() {
@@ -142,7 +143,7 @@ class TextPostTableViewCell: UITableViewCell {
         let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
         vc.post = post!
         vc.isCommentInitial = true
-        delegate?.navigationController?.pushViewController(vc, animated: true)
+        delegate?.pushViewController(vc, animated: true)
     }
 
     func configDisplay() {

@@ -57,7 +57,7 @@ extension MyStationsViewController: UICollectionViewDataSource, UICollectionView
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("identifier", forIndexPath: indexPath) as! StationCollectionViewCell
         cell.group = self.groups[indexPath.item]
-        cell.setupDisplay()
+//        cell.setupDisplay()
 
         return cell
     }
