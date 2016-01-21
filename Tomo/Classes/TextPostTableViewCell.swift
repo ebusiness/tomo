@@ -46,15 +46,15 @@ class TextPostTableViewCell: UITableViewCell {
 
         // post author avatar tap
         let avatarTap = UITapGestureRecognizer(target: self, action: "avatarTapped")
-        avatarImageView.addGestureRecognizer(avatarTap)
+        self.avatarImageView.addGestureRecognizer(avatarTap)
 
         // comment author avatar tap
         let commentAvatarTap = UITapGestureRecognizer(target: self, action: "commentAvatarTapped")
-        commentAvatarImageView.addGestureRecognizer(commentAvatarTap)
+        self.commentAvatarImageView.addGestureRecognizer(commentAvatarTap)
 
         // comment tap
         let commentTap = UITapGestureRecognizer(target: self, action: "commentTapped")
-        commentArea.addGestureRecognizer(commentTap)
+        self.commentArea.addGestureRecognizer(commentTap)
 
     }
 
@@ -68,6 +68,7 @@ class TextPostTableViewCell: UITableViewCell {
                 sender.userInteractionEnabled = true
                 return
             }
+
             if let like = self.post.like {
                 like.contains(me.id) ? self.post.like!.remove(me.id) : self.post.like!.append(me.id)
             } else {
@@ -77,7 +78,6 @@ class TextPostTableViewCell: UITableViewCell {
             self.configDisplay()
 
             sender.userInteractionEnabled = true
-
         }
     }
 
@@ -101,92 +101,98 @@ class TextPostTableViewCell: UITableViewCell {
             }
 
             self.configDisplay()
-            sender.userInteractionEnabled = true
 
+            sender.userInteractionEnabled = true
         }
     }
 
+    // When post author avatar was tappaed, move to post author's profile
     func avatarTapped() {
 
         guard let owner = post?.owner else { return }
 
-        let profileViewController = delegate?.childViewControllers.find { ($0 as? ProfileViewController)?.user.id == owner.id } as? ProfileViewController
+        // TODO: this is wired, but for prevent infinite loop, should fix
+        let profileViewController = self.delegate?.childViewControllers.find { ($0 as? ProfileViewController)?.user.id == owner.id } as? ProfileViewController
 
         if let profileViewController = profileViewController {
-            delegate?.popToViewController(profileViewController, animated: true)
+            self.delegate?.popToViewController(profileViewController, animated: true)
         } else {
             let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
             vc.user = owner
-            delegate?.pushViewController(vc, animated: true)
+            self.delegate?.pushViewController(vc, animated: true)
         }
     }
 
+    // When comment author avatar was tappaed, move to comment author's profile
     func commentAvatarTapped() {
+
         guard let owner = post?.comments?.last?.owner else { return }
 
         let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = owner
         if owner.id == post?.owner.id {
-            let profileViewController = delegate?.childViewControllers.find { $0 is ProfileViewController } as? ProfileViewController
+            let profileViewController = self.delegate?.childViewControllers.find { $0 is ProfileViewController } as? ProfileViewController
 
             if let profileViewController = profileViewController {
-                delegate?.popToViewController(profileViewController, animated: true)
+                self.delegate?.popToViewController(profileViewController, animated: true)
                 return
             }
         }
         delegate?.pushViewController(vc, animated: true)
     }
 
+    // When comment was tappaed, move to comment area of the post detail
     func commentTapped() {
+
         if nil == post?.comments?.last { return }
 
         let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
         vc.post = post!
         vc.isCommentInitial = true
-        delegate?.pushViewController(vc, animated: true)
+        self.delegate?.pushViewController(vc, animated: true)
     }
 
     func configDisplay() {
 
-        avatarImageView.sd_setImageWithURL(NSURL(string: post.owner.photo ?? ""), placeholderImage: TomoConst.Image.DefaultAvatar)
-        nickNameLabel.text = post.owner.nickName
-        postDateLabel.text = post.createDate.relativeTimeToString()
-        contentLabel.text = post.content
+        self.avatarImageView.sd_setImageWithURL(NSURL(string: post.owner.photo ?? ""), placeholderImage: TomoConst.Image.DefaultAvatar)
+        self.nickNameLabel.text = post.owner.nickName
+        self.postDateLabel.text = post.createDate.relativeTimeToString()
+        self.contentLabel.text = post.content
 
         var info = [String]()
 
         if let bookmarks = post.bookmark where bookmarks.contains(me.id) {
-            bookmarkButton.setImage(TomoConst.Image.FilledStar, forState: .Normal)
+            self.bookmarkButton.setImage(TomoConst.Image.FilledStar, forState: .Normal)
             info.push("\(bookmarks.count)人收藏")
         } else {
-            bookmarkButton.setImage(TomoConst.Image.EmptyStar, forState: .Normal)
+            self.bookmarkButton.setImage(TomoConst.Image.EmptyStar, forState: .Normal)
         }
 
         if let likes = post.like where likes.contains(me.id) {
-            likeButton.setImage(TomoConst.Image.FilledHeart, forState: .Normal)
+            self.likeButton.setImage(TomoConst.Image.FilledHeart, forState: .Normal)
             info.push("\(likes.count)人点赞")
         } else {
-            likeButton.setImage(TomoConst.Image.EmptyHeart, forState: .Normal)
+            self.likeButton.setImage(TomoConst.Image.EmptyHeart, forState: .Normal)
         }
 
         if let lastComment = post.comments?.last {
-            commentAreaHeight.constant = 64.0
-            commentAvatarImageView.sd_setImageWithURL(NSURL(string: lastComment.owner.photo ?? ""), placeholderImage: TomoConst.Image.DefaultAvatar)
-            commentContentLabel.text = lastComment.content
-            commentDateLabel.text = lastComment.createDate.relativeTimeToString()
+            self.commentAreaHeight.constant = 64.0
+            self.commentAvatarImageView.sd_setImageWithURL(NSURL(string: lastComment.owner.photo ?? ""), placeholderImage: TomoConst.Image.DefaultAvatar)
+            self.commentContentLabel.text = lastComment.content
+            self.commentDateLabel.text = lastComment.createDate.relativeTimeToString()
             info.push("\(post.comments!.count)个评论")
         } else {
-            commentAreaHeight.constant = CGFloat.almostZero
-            commentAvatarImageView.image = nil
-            commentContentLabel.text = nil
-            commentDateLabel.text = nil
+            self.commentAreaHeight.constant = CGFloat.almostZero
+            self.commentAvatarImageView.image = nil
+            self.commentContentLabel.text = nil
+            self.commentDateLabel.text = nil
         }
         
         if info.count > 0 {
-            infoLabel.text = info.joinWithSeparator("，")
+            self.infoLabel.text = info.joinWithSeparator("，")
         } else {
-            infoLabel.text = nil
+            self.infoLabel.text = nil
         }
-
     }
+    
 }

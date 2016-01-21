@@ -98,36 +98,8 @@ extension LocationController {
             self.locationManager.requestWhenInUseAuthorization()
             return false
 
-        case .Restricted:
+        case .Restricted, .Denied:
             return false
-
-        case .Denied:
-            self.showRequestAuthorizationAlert()
-            return false
-        }
-    }
-
-    private func showRequestAuthorizationAlert() {
-
-        // TODO: don't know why, have to call this on main queue, but it is on main queue already (from debug view) 
-        dispatch_async(dispatch_get_main_queue()) {
-
-            let title = "请启用定位服务"
-            let message = "为了提供更好的服务，現場Tomo希望使用您的位置信息"
-
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-
-            alert.addAction(UIAlertAction(title: "不允许", style: .Cancel) { _ in
-                self.doAction()
-            })
-
-            alert.addAction(UIAlertAction(title: "设定", style: .Default) { _ in
-                let url = NSURL(string: UIApplicationOpenSettingsURLString)!
-                UIApplication.sharedApplication().openURL(url)
-            })
-
-            let rootViewController = UIApplication.sharedApplication().delegate!.window!!.rootViewController
-            rootViewController?.presentViewController(alert, animated: true, completion: nil)
         }
     }
 
@@ -166,7 +138,10 @@ extension LocationController {
 
         self.action = action
 
-        guard self.determineStatus() else { return }
+        guard self.determineStatus() else {
+            self.doAction()
+            return
+        }
 
         self.timer = NSTimer.scheduledTimerWithTimeInterval(TomoConst.Timeout.Short, target: self, selector: Selector("stopLocationManager"), userInfo: nil, repeats: false)
 

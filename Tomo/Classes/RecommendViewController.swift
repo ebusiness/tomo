@@ -299,7 +299,7 @@ extension RecommendViewController: UISearchBarDelegate {
         self.searchBar.resignFirstResponder()
 
         UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
-            self.searchBarBottomConstraint.constant = -TomoConst.UI.TopBarHeight
+            self.searchBarBottomConstraint.constant = -TomoConst.UI.NavigationBarHeight
             self.view.layoutIfNeeded()
         })
     }

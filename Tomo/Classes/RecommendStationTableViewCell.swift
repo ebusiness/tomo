@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class RecommendStationTableCell: UITableViewCell {
+final class RecommendStationTableViewCell: UITableViewCell {
     
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -17,11 +17,17 @@ final class RecommendStationTableCell: UITableViewCell {
     var groups: [GroupEntity]! {
         didSet { collectionView.reloadData() }
     }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // don't interrupt the scrollToTop of the main table view
+        self.collectionView.scrollsToTop = false
+    }
 }
 
 // MARK: - UICollectionView datasource
 
-extension RecommendStationTableCell: UICollectionViewDataSource {
+extension RecommendStationTableViewCell: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return groups.count
@@ -40,7 +46,7 @@ extension RecommendStationTableCell: UICollectionViewDataSource {
 
 // MARK: - UICollectionView delegate
 
-extension RecommendStationTableCell:UICollectionViewDelegate {
+extension RecommendStationTableViewCell:UICollectionViewDelegate {
 
     // Move the group detail view, when colleciton view cell was tapped.
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -60,7 +66,7 @@ extension RecommendStationTableCell:UICollectionViewDelegate {
 
 // MARK: - UICollectionView FlowLayout
 
-extension RecommendStationTableCell: UICollectionViewDelegateFlowLayout {
+extension RecommendStationTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
 

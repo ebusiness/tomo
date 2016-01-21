@@ -8,28 +8,39 @@
 
 import UIKit
 
-final class ImagePostTableViewCell: TextPostTableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
+final class ImagePostTableViewCell: TextPostTableViewCell {
 
     @IBOutlet weak var imageCollectionView: UICollectionView!
+    
     @IBOutlet weak var pageControl: UIPageControl!
 
     override func awakeFromNib() {
+
         super.awakeFromNib()
+
+        // add white border to avatar, cause it overlap with post image
         self.avatarImageView.layer.borderWidth = 2
         self.avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
+
+        // do this so the scrollsToTop of main table view will work
         imageCollectionView.scrollsToTop = false
     }
 
     override func configDisplay() {
+
         super.configDisplay()
 
         pageControl.numberOfPages = post.images?.count ?? 0
         pageControl.currentPage = 0
-        //        pageControlWidthConstraint.constant = pageControl.sizeForNumberOfPages(pageControl.numberOfPages + 1).width
 
         self.imageCollectionView.reloadData()
     }
+}
 
+// MARK: - UICollectionView datasource
+
+extension ImagePostTableViewCell: UICollectionViewDataSource {
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return post.images?.count ?? 0
     }
@@ -47,8 +58,13 @@ final class ImagePostTableViewCell: TextPostTableViewCell, UICollectionViewDeleg
     }
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: UIScreen.mainScreen().bounds.width, height: 250.0)
+        return CGSize(width: TomoConst.UI.ScreenWidth, height: 250.0)
     }
+}
+
+// MARK: - UICollectionView delegate
+
+extension ImagePostTableViewCell: UICollectionViewDelegate {
 
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 
@@ -64,10 +80,9 @@ final class ImagePostTableViewCell: TextPostTableViewCell, UICollectionViewDeleg
         if scrollView != imageCollectionView { return }
         guard let count = post.images?.count where count > 1 else { return }
         let currentPage = Int(floor((scrollView.contentOffset.x + UIScreen.mainScreen().bounds.width / 2.0) / UIScreen.mainScreen().bounds.width))
-        
+
         pageControl.currentPage = currentPage
     }
-
 }
 
 final class SingleImageCollectionViewCell: UICollectionViewCell {

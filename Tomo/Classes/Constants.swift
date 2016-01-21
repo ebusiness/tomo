@@ -93,7 +93,8 @@ struct TomoConst {
         static let ScreenWidth = UIScreen.mainScreen().bounds.width
         static let ScreenHeight = UIScreen.mainScreen().bounds.height
         static let StatusBarHeight = CGFloat(20)
-        static let TopBarHeight = CGFloat(44)
+        static let NavigationBarHeight = CGFloat(44)
+        static let TopBarHeight = NavigationBarHeight + StatusBarHeight
     }
 
     struct Duration {

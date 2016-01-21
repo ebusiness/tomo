@@ -56,7 +56,7 @@ final class HomeViewController: UITableViewController {
 
         // Load recommend contents, with user location.
         LocationController.shareInstance.doActionWithLocation {
-            self.getRecommendInfo($0)
+            self.getRecommendContent($0)
         }
 
         // Load main contents
@@ -71,7 +71,7 @@ extension HomeViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "postdetail" {
             if let post = sender as? PostEntity {
-                let vc = segue.destinationViewController as! PostViewController
+                let vc = segue.destinationViewController as! PostDetailViewController
                 vc.post = post
             }
         }
@@ -95,7 +95,7 @@ extension HomeViewController {
         // If the content is array of group, display as StationGroup recommendation.
         if let groups = contents[indexPath.item] as? [GroupEntity] {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("StationRecommendCell", forIndexPath: indexPath) as! RecommendStationTableCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("StationRecommendCell", forIndexPath: indexPath) as! RecommendStationTableViewCell
 
             // Give the cell group list data, this will tirgger configDisplay
             cell.groups = groups
@@ -153,32 +153,16 @@ extension HomeViewController {
 // MARK: - UIScrollView delegate
 
 extension HomeViewController {
-    
+
+    // Fetch more contents when scroll down to bottom
     override func scrollViewDidScroll(scrollView: UIScrollView) {
 
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
-        
+
+        // trigger on the position of one screen height to bottom
         if (contentHeight - TomoConst.UI.ScreenHeight) < offsetY {
             loadMoreContent()
-        }
-    }
-}
-
-// MARK: - Actions
-
-extension HomeViewController {
-
-    func discoverMoreStation() {
-        performSegueWithIdentifier("modalStationSelector", sender: nil)
-    }
-
-    func synchronizeRecommendStations(newStations: [GroupEntity]) {
-        for index in 0..<contents.count {
-            if let _ = contents[index] as? [GroupEntity] {
-                contents[index] = newStations
-                break
-            }
         }
     }
 }
@@ -187,10 +171,10 @@ extension HomeViewController {
 
 extension HomeViewController {
 
-    private func getRecommendInfo(location: CLLocation?) {
+    // Fetch recommend content with location. use Tokyo as default if no location provided.
+    private func getRecommendContent(location: CLLocation?) {
 
         var parameters = Router.Group.FindParameters(category: .discover)
-        
         parameters.type = .station
 
         if let location = location {
@@ -204,10 +188,11 @@ extension HomeViewController {
             self.recommendGroups = GroupEntity.collection($0.result.value!)
         }
     }
-    
+
+    // Fetch more content as use scroll down to the bottom of table view.
     private func loadMoreContent() {
         
-        // skip if already in loading
+        // skip if already in loading or no more contents
         if self.isLoading || self.isExhausted {
             return
         }
@@ -222,6 +207,7 @@ extension HomeViewController {
         
         Router.Post.Find(parameters: parameters).response {
 
+            // Mark as exhausted when something wrong (probably 404)
             if $0.result.isFailure {
                 self.isLoading = false
                 self.isExhausted = true
@@ -232,33 +218,44 @@ extension HomeViewController {
             
             if let loadPosts: [AnyObject] = posts {
 
+                // total number of rows will be append to table view
+                var rowNumber = loadPosts.count
+
+                // append new contents
                 self.contents += loadPosts
 
+                // calculate the cell height for display these contents
                 self.rowHeights += loadPosts.map { post -> CGFloat in
                     return self.simulateLayout(post as! PostEntity)
                 }
 
-                self.appendRows(loadPosts.count)
-                
-                let visibleCells = self.tableView.visibleCells
-                let visibleIndexPath = self.tableView.indexPathForCell(visibleCells.get(0)!)
-                
+                // if the recommend contents arrived, insert them in the middle of new content
                 if let recommendStations: AnyObject = self.recommendGroups as? AnyObject {
 
-                    let row = visibleIndexPath!.row + 1
-                    self.contents.insert(recommendStations, atIndex: Int(row))
-                    self.rowHeights.insert(362, atIndex: Int(row))
-                    let stationsInsertIndexPath = NSIndexPath(forRow: row, inSection: 0)
-                    self.tableView.insertRowsAtIndexPaths([stationsInsertIndexPath], withRowAnimation: .Fade)
+                    var insertAt: Int
+
+                    if let lastVisibleCell = self.tableView.visibleCells.last {
+                        insertAt = self.tableView.indexPathForCell(lastVisibleCell)!.row + 2
+                    } else {
+                        insertAt = 3
+                    }
+
+                    self.contents.insert(recommendStations, atIndex: insertAt)
+                    self.rowHeights.insert(362, atIndex: insertAt)
+
                     self.recommendGroups = nil
+                    rowNumber++
                 }
 
+                // let table view display new contents
+                self.appendRows(rowNumber)
             }
 
             self.isLoading = false
         }
     }
-    
+
+    // Fetch new contents as user drag down the table view while it already on the top.
     func loadNewContent() {
 
         var parameters = Router.Post.FindParameters(category: .all)
@@ -269,21 +266,23 @@ extension HomeViewController {
         }
         
         Router.Post.Find(parameters: parameters).response {
+
+            // stop refresh control
+            self.refreshControl!.endRefreshing()
+
             if $0.result.isFailure {
-                self.refreshControl!.endRefreshing()
                 return
             }
-            
+
+            // prepend new contents
             if let loadPosts:[PostEntity] = PostEntity.collection($0.result.value!) {
                 self.contents = loadPosts + self.contents
                 self.prependRows(loadPosts.count)
             }
-            
-            self.refreshControl!.endRefreshing()
-
         }
     }
-    
+
+    // Append specific number of rows on table view
     private func appendRows(rows: Int) {
         
         let firstIndex = contents.count - rows
@@ -308,7 +307,8 @@ extension HomeViewController {
         tableView.endUpdates()
         
     }
-    
+
+    // Prepend specific number of rows on table view
     private func prependRows(rows: Int) {
         
         var indexPathes = [NSIndexPath]()
@@ -324,8 +324,9 @@ extension HomeViewController {
         tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
         tableView.endUpdates()
     }
-    
-    func simulateLayout(post: PostEntity) -> CGFloat {
+
+    // Calulate the cell height beforehand
+    private func simulateLayout(post: PostEntity) -> CGFloat {
 
         let cell: TextPostTableViewCell
 

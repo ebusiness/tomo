@@ -8,210 +8,289 @@
 
 import UIKit
 
-class StationDiscoverViewController: UIViewController {
-    
-    private var tlocation: CLLocation?
-    var location: CLLocation {
-        get {
-            return tlocation ?? CLLocation(latitude: 35.6833, longitude: 139.6833)
-        }
-        set {
-            tlocation = newValue.copy() as? CLLocation
-        }
-    }
-    
-    var loading = false
+final class StationDiscoverViewController: UIViewController {
+
+    @IBOutlet weak var collectionView: UICollectionView!
+
+    var isLoading = false
+    var isExhausted = false
+
     var page = 0
-    
-    let searchBar = UISearchBar()
+
+    // String hold the search text
     var searchText: String?
-    
-    @IBOutlet var collectionView: UICollectionView!
-    
-    let screenWidth = UIScreen.mainScreen().bounds.width
-    let screenHeight = UIScreen.mainScreen().bounds.height
-    
-    var groups: [GroupEntity]?
-    
+
+    // Array hold the search result
+    var groups = [GroupEntity]()
+
+    // Default loaction use Tokyo
+    var location = TomoConst.Geo.CLLocationTokyo
+
+    // Search bar, design it in stroyBoard looks ugly, have to make it by code
+    lazy var searchBar: UISearchBar = {
+        let bar = UISearchBar()
+        bar.delegate = self
+        bar.placeholder = "用车站名检索"
+        return bar
+    }()
+
+    // CollectionView's footer view, display the indicator and search result
+    var footerView: SearchResultReusableView!
+
     override func viewDidLoad() {
+
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-        navigationItem.titleView = searchBar
-        searchBar.delegate = self
-        
-        collectionView.registerNib(UINib(nibName: "StationCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "identifier")
-        
-        loadInitData()
-        navigationController?.navigationBar.barStyle = .Black
+
+        // attach the search bar on navigation bar
+        self.navigationItem.titleView = self.searchBar
+
+        // load initial data with location
+        LocationController.shareInstance.doActionWithLocation {
+            self.loadInitData($0)
+        }
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        searchBar.placeholder = "搜索车站名称"
-    }
+
 }
 
 // MARK: - Actions
+
 extension StationDiscoverViewController {
-    
+
     @IBAction func closeButtonPressed(sender: AnyObject) {
-        navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
+
 extension StationDiscoverViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return groups?.count ?? 0
+        return groups.count
     }
+
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("identifier", forIndexPath: indexPath) as! StationCollectionViewCell
-        if let group = groups?[indexPath.row] {
-            cell.group = group
-        }
-//        cell.setupDisplay()
+
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("StationCell", forIndexPath: indexPath) as! StationCollectionViewCell
+
+        cell.group = self.groups[indexPath.row]
+
         return cell
     }
+
+    // Make the CollectionView as two-column layout
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let width = (screenWidth - 2.0) / 2.0
+        let width = (TomoConst.UI.ScreenWidth - 2.0) / 2.0
         let height = width / 3.0 * 4.0
         return CGSizeMake(width, height)
     }
+
+    // When cell was tapped, move to group detail
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        guard let group = groups?[indexPath.row] else { return }
         
         let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
-        groupVC.group = group
+        groupVC.group = groups[indexPath.row]
+
         self.navigationController?.pushViewController(groupVC, animated: true)
-        
-//        AlamofireController.request(.PATCH, "/groups/\(group.id)/join", parameters: nil, encoding: .URL, success: { (result) -> () in
-//            gcd.async(.Default) {
-//                let vgroup = GroupEntity(result)
-//                me.addGroup(vgroup.id)
-//                self.groups?.remove(group)
-//                gcd.async(.Main) {
-//                    self.collectionView.deleteItemsAtIndexPaths([indexPath])
-//                }
-//            }
-//        })
     }
+
+    // Give CollectionView footer view, and hold a reference of it
+    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        self.footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Footer", forIndexPath: indexPath) as! SearchResultReusableView
+        return self.footerView
+    }
+
 }
 
-// MARK: - Network and data process
+// MARK: - Internal Methods
+
 extension StationDiscoverViewController {
-    private func loadInitData() {
-        loading = true
+
+    private func loadInitData(location: CLLocation?) {
+        
+        self.isLoading = true
+
         var parameters = Router.Group.FindParameters(category: .discover)
-        parameters.page = page
+        parameters.page = self.page
         parameters.type = .station
-        
-        let coordinate = location.coordinate
-        parameters.coordinate = [coordinate.longitude, coordinate.latitude]
-        
+
+        if let location = location {
+            parameters.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
+            self.location = location
+        } else {
+            parameters.coordinate = TomoConst.Geo.CoordinateTokyo
+        }
+
         Router.Group.Find(parameters: parameters).response {
+
             if $0.result.isFailure {
-                self.loading = false
+                self.isLoading = false
                 return
             }
-            self.groups = GroupEntity.collection($0.result.value!)
-            self.refresh()
-            self.loading = false
-            self.page = 1
+
+            if let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) {
+                self.groups.appendContentsOf(groups)
+                self.appendCells(groups.count)
+                self.page++
+            }
+
+            self.isLoading = false
         }
     }
     
     private func loadMoreData() {
-        if loading {
+
+        if self.isLoading || self.isExhausted || self.groups.count == 0 {
             return
         }
-        if groups == nil || groups?.count == 0 {
-            return
-        }
-        loading = true
+
+        self.isLoading = true
+        self.startActivityIndicator()
+
         var parameters = Router.Group.FindParameters(category: .discover)
-        parameters.page = page
+        parameters.page = self.page
         parameters.type = .station
-        
-        let coordinate = location.coordinate
-        parameters.coordinate = [coordinate.longitude, coordinate.latitude]
+        parameters.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
         
         if let searchText = searchText {
             parameters.name = searchText
         }
         
         Router.Group.Find(parameters: parameters).response {
+
             if $0.result.isFailure {
-                self.loading = false
+                self.isLoading = false
+                self.isExhausted = true
+                self.stopActivityIndicator("没有更多的结果了")
                 return
             }
             
             if let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) {
-                self.groups?.appendContentsOf(groups)
+                self.groups.appendContentsOf(groups)
                 self.appendCells(groups.count)
                 self.page++
             }
-            self.loading = false
+
+            self.isLoading = false
         }
     }
     
-    private func refresh() {
-        collectionView.reloadData()
-        if let count = groups?.count where count != 0 {
-            collectionView.backgroundView = nil
-        } else {
-            collectionView.backgroundView = UINib(nibName: "EmptyStationResult", bundle: nil).instantiateWithOwner(nil, options: nil).first as? UIView
+    private func startActivityIndicator() {
+        self.footerView.activityIndicator.startAnimating()
+        self.footerView.searchResultLabel.alpha = 0
+    }
+
+    private func stopActivityIndicator(withString: String) {
+        self.footerView.activityIndicator.stopAnimating()
+        self.footerView.searchResultLabel.text = withString
+        UIView.animateWithDuration(TomoConst.Duration.Short) {
+            self.footerView.searchResultLabel.alpha = 1.0
         }
     }
+
     private func appendCells(count: Int) {
-        guard let totalCount = groups?.count else { return }
-        let startIndex = totalCount - count
-        let endIndex = totalCount
+
+        let startIndex = self.groups.count - count
+        let endIndex = self.groups.count
+
         var indexPaths = [NSIndexPath]()
+
         for i in startIndex..<endIndex {
             let indexPath = NSIndexPath(forItem: i, inSection: 0)
             indexPaths.append(indexPath)
         }
+
         collectionView.insertItemsAtIndexPaths(indexPaths)
     }
 }
 
 extension StationDiscoverViewController: UISearchBarDelegate {
+
+    // Search by user input
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+
         guard let text = searchBar.text else { return }
+
+        // do nothing if the search word didn't change
+        guard self.searchText != text else { return }
+
+        // resign first responder so the keyboard disappear
+        searchBar.resignFirstResponder()
+
+        self.isLoading = true
+        self.startActivityIndicator()
+
+        // hold the search text
         self.searchText = text
-        self.page = 1
+
+        // reset page number
+        self.page = 0
+
+        // reset exhausted flag
+        self.isExhausted = false
+
+        // scroll to top for new result, check the zero contents case
+        if self.groups.count > 0 {
+            let firstItemIndex = NSIndexPath(forItem: 0, inSection: 0)
+            self.collectionView.scrollToItemAtIndexPath(firstItemIndex, atScrollPosition: .Top, animated: true)
+        }
+
+        // prepare for remove all current cell for new result
+        var removeIndex: [NSIndexPath] = []
+        for _ in self.groups {
+            removeIndex.append(NSIndexPath(forItem: removeIndex.count, inSection: 0))
+        }
+
+        // reset content
+        self.groups = [GroupEntity]()
+        self.collectionView.deleteItemsAtIndexPaths(removeIndex)
+
+        // prepare
         var parameters = Router.Group.FindParameters(category: .discover)
-        parameters.type = .station
-        
-        let coordinate = location.coordinate
-        parameters.coordinate = [coordinate.longitude, coordinate.latitude]
         parameters.name = text
-        
+        parameters.type = .station
+        parameters.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
+
+        // search
         Router.Group.Find(parameters: parameters).response {
-            self.groups = $0.result.isFailure ? nil : GroupEntity.collection($0.result.value!)
-            self.refresh()
+
+            if $0.result.isFailure {
+                self.isLoading = false
+                self.isExhausted = true
+                self.stopActivityIndicator("没有找到与“\(self.searchText!)”相关的结果")
+                return
+            }
+
+            if let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) {
+                self.groups = groups
+                self.appendCells(groups.count)
+                self.page++
+            }
+
+            self.isLoading = false
         }
     }
 }
 
 extension StationDiscoverViewController  {
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+
+    // Fetch more contents when scroll down to bottom
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+
         let contentHeight = scrollView.contentSize.height
-        let contentOffset = scrollView.contentOffset.y
-        let measuredOffset: CGFloat
-        if screenHeight > contentHeight + scrollView.contentInset.top {
-            measuredOffset = contentOffset + scrollView.contentInset.top
-        } else {
-            measuredOffset = contentOffset - (contentHeight - screenHeight)
-        }
-        if measuredOffset > 25 {
+        let offsetY = scrollView.contentOffset.y
+
+        // trigger on the position of one screen height to bottom
+        if (contentHeight - TomoConst.UI.ScreenHeight) < offsetY {
             loadMoreData()
         }
     }
+}
+
+final class SearchResultReusableView: UICollectionReusableView {
+
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
+    @IBOutlet weak var searchResultLabel: UILabel!
+
 }
