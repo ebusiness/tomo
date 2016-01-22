@@ -45,11 +45,8 @@ final class HomeViewController: UITableViewController {
         
         super.viewDidLoad()
 
-        // Refresh control, make it color theme blue, and wire it with loadNewContent method.
-        if let refreshControl = self.refreshControl {
-            refreshControl.tintColor = Palette.LightBlue.lightPrimaryColor
-            refreshControl.addTarget(self, action: "loadNewContent", forControlEvents: UIControlEvents.ValueChanged)
-        }
+        // Wire refresh control with loadNewContent method.
+        self.refreshControl?.addTarget(self, action: "loadNewContent", forControlEvents: UIControlEvents.ValueChanged)
 
         // Set table view's footer.
         self.tableView.tableFooterView = footerView
@@ -337,7 +334,7 @@ extension HomeViewController {
         }
 
         cell.post = post
-        cell.configDisplay()
+//        cell.configDisplay()
 
         let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
 

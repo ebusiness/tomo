@@ -57,9 +57,6 @@ extension ImagePostTableViewCell: UICollectionViewDataSource {
         return cell
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: TomoConst.UI.ScreenWidth, height: 250.0)
-    }
 }
 
 // MARK: - UICollectionView delegate
@@ -74,6 +71,10 @@ extension ImagePostTableViewCell: UICollectionViewDelegate {
             postVC.initialImageIndex = indexPath.row
         }
         delegate?.navigationController?.pushViewController(postVC, animated: true)
+    }
+
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSize(width: TomoConst.UI.ScreenWidth, height: 250.0)
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView) {

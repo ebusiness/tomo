@@ -56,6 +56,9 @@ class TextPostTableViewCell: UITableViewCell {
         let commentTap = UITapGestureRecognizer(target: self, action: "commentTapped")
         self.commentArea.addGestureRecognizer(commentTap)
 
+        // set this to help systemLayoutSizeFittingSize work correctly
+        self.contentLabel.preferredMaxLayoutWidth = TomoConst.UI.ScreenWidth - 32
+
     }
 
     @IBAction func likeButtonTapped(sender: UIButton) {
@@ -161,18 +164,18 @@ class TextPostTableViewCell: UITableViewCell {
 
         var info = [String]()
 
-        if let bookmarks = post.bookmark where bookmarks.contains(me.id) {
-            self.bookmarkButton.setImage(TomoConst.Image.FilledStar, forState: .Normal)
-            info.push("\(bookmarks.count)人收藏")
-        } else {
-            self.bookmarkButton.setImage(TomoConst.Image.EmptyStar, forState: .Normal)
-        }
-
         if let likes = post.like where likes.contains(me.id) {
             self.likeButton.setImage(TomoConst.Image.FilledHeart, forState: .Normal)
-            info.push("\(likes.count)人点赞")
+            info.push("\(likes.count)赞")
         } else {
             self.likeButton.setImage(TomoConst.Image.EmptyHeart, forState: .Normal)
+        }
+
+        if let bookmarks = post.bookmark where bookmarks.contains(me.id) {
+            self.bookmarkButton.setImage(TomoConst.Image.FilledStar, forState: .Normal)
+            info.push("\(bookmarks.count)收藏")
+        } else {
+            self.bookmarkButton.setImage(TomoConst.Image.EmptyStar, forState: .Normal)
         }
 
         if let lastComment = post.comments?.last {
@@ -180,7 +183,7 @@ class TextPostTableViewCell: UITableViewCell {
             self.commentAvatarImageView.sd_setImageWithURL(NSURL(string: lastComment.owner.photo ?? ""), placeholderImage: TomoConst.Image.DefaultAvatar)
             self.commentContentLabel.text = lastComment.content
             self.commentDateLabel.text = lastComment.createDate.relativeTimeToString()
-            info.push("\(post.comments!.count)个评论")
+            info.push("\(post.comments!.count)评论")
         } else {
             self.commentAreaHeight.constant = CGFloat.almostZero
             self.commentAvatarImageView.image = nil
@@ -189,7 +192,7 @@ class TextPostTableViewCell: UITableViewCell {
         }
         
         if info.count > 0 {
-            self.infoLabel.text = info.joinWithSeparator("，")
+            self.infoLabel.text = info.joinWithSeparator(" ")
         } else {
             self.infoLabel.text = nil
         }
