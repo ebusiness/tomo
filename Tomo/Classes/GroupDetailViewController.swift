@@ -24,6 +24,7 @@ final class GroupDetailViewController: BaseTableViewController {
     var isExhausted = false
     
     override func viewDidLoad() {
+
         super.viewDidLoad()
         self.setTitleView()
         self.updateUI()
@@ -91,6 +92,7 @@ final class GroupDetailViewController: BaseTableViewController {
     }()
     
     func loadMorePosts() {
+
         if isLoading || isExhausted {
             return
         }

@@ -10,8 +10,6 @@
 		17B993011AF353D000204E97 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B993001AF353D000204E97 /* amrFileCodec.m */; };
 		17B993081AF3540D00204E97 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17B993071AF3540D00204E97 /* libopencore-amrnb.a */; };
 		1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18B8331B844665003BD469 /* CreatePostViewController.swift */; };
-		1F19D95A1BA96B3E007C9919 /* GroupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F19D9591BA96B3E007C9919 /* GroupCollectionViewCell.xib */; };
-		1F19D95C1BA96B8E007C9919 /* GroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F19D95B1BA96B8E007C9919 /* GroupCollectionViewCell.swift */; };
 		1F1EBEB41C4F6C3300B3439F /* TextPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EBEB31C4F6C3300B3439F /* TextPostTableViewCell.swift */; };
 		1F1EBEB61C4F6C8A00B3439F /* ImagePostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EBEB51C4F6C8A00B3439F /* ImagePostTableViewCell.swift */; };
 		1F26B29A1BAA61D10063AC6B /* GroupDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */; };
@@ -30,9 +28,6 @@
 		1F9ACAFA1B69F99F00648A82 /* PostEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAF91B69F99F00648A82 /* PostEntity.swift */; };
 		1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */; };
 		1FA76AFE1BA27B1E004776B0 /* Group.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FA76AFD1BA27B1E004776B0 /* Group.storyboard */; };
-		1FA76B021BA2A01D004776B0 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA76B011BA2A01D004776B0 /* GroupListViewController.swift */; };
-		1FA76B041BA2AC03004776B0 /* GroupDiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA76B031BA2AC03004776B0 /* GroupDiscoverViewController.swift */; };
-		1FA76B091BA2C642004776B0 /* GroupCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA76B081BA2C642004776B0 /* GroupCreateViewController.swift */; };
 		1FA9C5091C5106C9004A683C /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA9C5081C5106C9004A683C /* PostDetailViewController.swift */; };
 		1FAA70F71BBB8DBE00BCE5AF /* AggregatableAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA70F61BBB8DBE00BCE5AF /* AggregatableAnnotationView.swift */; };
 		1FAA70F91BBB8EE600BCE5AF /* AggregatableAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA70F81BBB8EE600BCE5AF /* AggregatableAnnotation.swift */; };
@@ -49,8 +44,6 @@
 		1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */; };
 		1FF6930D1C1E95FC00777BD5 /* Landing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FF6930C1C1E95FC00777BD5 /* Landing.storyboard */; };
 		1FF693121C1EB88800777BD5 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF693111C1EB88800777BD5 /* LandingViewController.swift */; };
-		1FFD21FF1BABD57C00204080 /* GroupSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */; };
-		1FFD22011BABD77E00204080 /* GroupSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */; };
 		283771911BC37653001B06D3 /* ICYFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283771901BC37653001B06D3 /* ICYFlowLayout.swift */; };
 		283771981BC3A329001B06D3 /* ICYPostImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283771961BC3A329001B06D3 /* ICYPostImageCell.swift */; };
 		283771991BC3A329001B06D3 /* ICYPostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 283771971BC3A329001B06D3 /* ICYPostImageCell.xib */; };
@@ -140,8 +133,6 @@
 		D029F7321BCCB39E00CDE18B /* PushSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029F7311BCCB39E00CDE18B /* PushSettingViewController.swift */; };
 		D040E1651BDDC00D00417174 /* RecommendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040E1641BDDC00D00417174 /* RecommendViewController.swift */; };
 		D04447B31BBA9DF300AD7B0C /* GroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */; };
-		D05418401BC6592900C606F0 /* MyGroupCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D054183E1BC6592900C606F0 /* MyGroupCollectionViewCell.xib */; };
-		D05418431BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05418421BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift */; };
 		D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D057BAF11B670687007D14D2 /* RequestFriendCell.swift */; };
 		D06DC6321C240691009B19D1 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06DC6311C240691009B19D1 /* UserRouter.swift */; };
 		D06DC6341C2407A1009B19D1 /* GroupMessageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06DC6331C2407A1009B19D1 /* GroupMessageRouter.swift */; };
@@ -168,7 +159,6 @@
 		D0891C961B8AF5A600701CC7 /* SearchFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0891C951B8AF5A600701CC7 /* SearchFriendCell.swift */; };
 		D08BFB0B1B744C2D00771F70 /* JSQMessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08BFB0A1B744C2D00771F70 /* JSQMessageEntity.swift */; };
 		D0960AAC1BC376FB00A63733 /* UltravisualLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0960AAB1BC376FB00A63733 /* UltravisualLayout.swift */; };
-		D0960AAE1BC3CE2600A63733 /* MyGroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0960AAD1BC3CE2600A63733 /* MyGroupListViewController.swift */; };
 		D099B6181BDA3B63006C9D01 /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D099B6171BDA3B63006C9D01 /* LocationController.swift */; };
 		D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */; };
 		D0A0C02E1B5F594C00ABFA5F /* ProfileBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C02D1B5F594C00ABFA5F /* ProfileBaseController.swift */; };
@@ -213,8 +203,6 @@
 		17B993051AF353F600204E97 /* interf_enc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interf_enc.h; path = "opencore-amr/include/opencore-amrnb/interf_enc.h"; sourceTree = "<group>"; };
 		17B993071AF3540D00204E97 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libopencore-amrnb.a"; path = "opencore-amr/lib/libopencore-amrnb.a"; sourceTree = "<group>"; };
 		1F18B8331B844665003BD469 /* CreatePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreatePostViewController.swift; path = Classes/CreatePostViewController.swift; sourceTree = "<group>"; };
-		1F19D9591BA96B3E007C9919 /* GroupCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupCollectionViewCell.xib; path = Classes/GroupCollectionViewCell.xib; sourceTree = "<group>"; };
-		1F19D95B1BA96B8E007C9919 /* GroupCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCollectionViewCell.swift; path = Classes/GroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		1F1EBEB31C4F6C3300B3439F /* TextPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextPostTableViewCell.swift; path = Classes/TextPostTableViewCell.swift; sourceTree = "<group>"; };
 		1F1EBEB51C4F6C8A00B3439F /* ImagePostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagePostTableViewCell.swift; path = Classes/ImagePostTableViewCell.swift; sourceTree = "<group>"; };
 		1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDetailViewController.swift; path = Classes/GroupDetailViewController.swift; sourceTree = "<group>"; };
@@ -248,9 +236,6 @@
 		1F9ACAF91B69F99F00648A82 /* PostEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostEntity.swift; path = Classes/PostEntity.swift; sourceTree = "<group>"; };
 		1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserEntity.swift; path = Classes/UserEntity.swift; sourceTree = "<group>"; };
 		1FA76AFD1BA27B1E004776B0 /* Group.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Group.storyboard; path = Classes/Group.storyboard; sourceTree = "<group>"; };
-		1FA76B011BA2A01D004776B0 /* GroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupListViewController.swift; path = Classes/GroupListViewController.swift; sourceTree = "<group>"; };
-		1FA76B031BA2AC03004776B0 /* GroupDiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDiscoverViewController.swift; path = Classes/GroupDiscoverViewController.swift; sourceTree = "<group>"; };
-		1FA76B081BA2C642004776B0 /* GroupCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupCreateViewController.swift; path = Classes/GroupCreateViewController.swift; sourceTree = "<group>"; };
 		1FA9C5081C5106C9004A683C /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailViewController.swift; path = Classes/PostDetailViewController.swift; sourceTree = "<group>"; };
 		1FAA70F61BBB8DBE00BCE5AF /* AggregatableAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AggregatableAnnotationView.swift; path = Classes/AggregatableAnnotationView.swift; sourceTree = "<group>"; };
 		1FAA70F81BBB8EE600BCE5AF /* AggregatableAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AggregatableAnnotation.swift; path = Classes/AggregatableAnnotation.swift; sourceTree = "<group>"; };
@@ -267,8 +252,6 @@
 		1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Classes/HomeViewController.swift; sourceTree = "<group>"; };
 		1FF6930C1C1E95FC00777BD5 /* Landing.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Landing.storyboard; path = Classes/Landing.storyboard; sourceTree = "<group>"; };
 		1FF693111C1EB88800777BD5 /* LandingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LandingViewController.swift; path = Classes/LandingViewController.swift; sourceTree = "<group>"; };
-		1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupSectionHeaderView.xib; path = Classes/GroupSectionHeaderView.xib; sourceTree = "<group>"; };
-		1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupSectionHeaderView.swift; path = Classes/GroupSectionHeaderView.swift; sourceTree = "<group>"; };
 		283771901BC37653001B06D3 /* ICYFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYFlowLayout.swift; path = Classes/ICYFlowLayout.swift; sourceTree = "<group>"; };
 		283771961BC3A329001B06D3 /* ICYPostImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYPostImageCell.swift; path = Classes/ICYPostImageCell.swift; sourceTree = "<group>"; };
 		283771971BC3A329001B06D3 /* ICYPostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ICYPostImageCell.xib; path = Classes/ICYPostImageCell.xib; sourceTree = "<group>"; };
@@ -334,8 +317,6 @@
 		D0244C5C1C20130800EA87C1 /* GroupRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupRouter.swift; path = Classes/GroupRouter.swift; sourceTree = "<group>"; };
 		D029F7311BCCB39E00CDE18B /* PushSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PushSettingViewController.swift; path = Classes/PushSettingViewController.swift; sourceTree = "<group>"; };
 		D040E1641BDDC00D00417174 /* RecommendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendViewController.swift; path = Classes/RecommendViewController.swift; sourceTree = "<group>"; };
-		D054183E1BC6592900C606F0 /* MyGroupCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyGroupCollectionViewCell.xib; path = Classes/MyGroupCollectionViewCell.xib; sourceTree = "<group>"; };
-		D05418421BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyGroupCollectionViewCell.swift; path = Classes/MyGroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		D057BAF11B670687007D14D2 /* RequestFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestFriendCell.swift; path = Classes/RequestFriendCell.swift; sourceTree = "<group>"; };
 		D06DC6311C240691009B19D1 /* UserRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserRouter.swift; path = Classes/UserRouter.swift; sourceTree = "<group>"; };
 		D06DC6331C2407A1009B19D1 /* GroupMessageRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupMessageRouter.swift; path = Classes/GroupMessageRouter.swift; sourceTree = "<group>"; };
@@ -349,7 +330,6 @@
 		D0891C951B8AF5A600701CC7 /* SearchFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchFriendCell.swift; path = Classes/SearchFriendCell.swift; sourceTree = "<group>"; };
 		D08BFB0A1B744C2D00771F70 /* JSQMessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSQMessageEntity.swift; path = Classes/JSQMessageEntity.swift; sourceTree = "<group>"; };
 		D0960AAB1BC376FB00A63733 /* UltravisualLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UltravisualLayout.swift; sourceTree = "<group>"; };
-		D0960AAD1BC3CE2600A63733 /* MyGroupListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyGroupListViewController.swift; path = Classes/MyGroupListViewController.swift; sourceTree = "<group>"; };
 		D099B6171BDA3B63006C9D01 /* LocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationController.swift; path = Classes/LocationController.swift; sourceTree = "<group>"; };
 		D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Profile.storyboard; path = Classes/Profile.storyboard; sourceTree = "<group>"; };
 		D0A0C02D1B5F594C00ABFA5F /* ProfileBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileBaseController.swift; path = Classes/ProfileBaseController.swift; sourceTree = "<group>"; };
@@ -494,11 +474,7 @@
 		1FA76AFF1BA29D43004776B0 /* Group */ = {
 			isa = PBXGroup;
 			children = (
-				D054183C1BC6591200C606F0 /* MyGroup */,
 				1FC051091BAF9F9200886F67 /* Components */,
-				1FA76B011BA2A01D004776B0 /* GroupListViewController.swift */,
-				1FA76B031BA2AC03004776B0 /* GroupDiscoverViewController.swift */,
-				1FA76B081BA2C642004776B0 /* GroupCreateViewController.swift */,
 				1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */,
 				28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */,
 			);
@@ -552,10 +528,6 @@
 		1FC051091BAF9F9200886F67 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				1F19D95B1BA96B8E007C9919 /* GroupCollectionViewCell.swift */,
-				1F19D9591BA96B3E007C9919 /* GroupCollectionViewCell.xib */,
-				1FFD22001BABD77E00204080 /* GroupSectionHeaderView.swift */,
-				1FFD21FE1BABD57C00204080 /* GroupSectionHeaderView.xib */,
 				28CB45E61BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift */,
 			);
 			name = Components;
@@ -818,24 +790,6 @@
 			name = UserProfile;
 			sourceTree = "<group>";
 		};
-		D054183C1BC6591200C606F0 /* MyGroup */ = {
-			isa = PBXGroup;
-			children = (
-				D054183D1BC6592100C606F0 /* Components */,
-				D0960AAD1BC3CE2600A63733 /* MyGroupListViewController.swift */,
-			);
-			name = MyGroup;
-			sourceTree = "<group>";
-		};
-		D054183D1BC6592100C606F0 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				D05418421BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift */,
-				D054183E1BC6592900C606F0 /* MyGroupCollectionViewCell.xib */,
-			);
-			name = Components;
-			sourceTree = "<group>";
-		};
 		D07793831B704EA00056B7CB /* picker */ = {
 			isa = PBXGroup;
 			children = (
@@ -998,7 +952,6 @@
 				1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */,
 				2857784D1BC25DC600533E8E /* ICYPostCell.xib in Resources */,
 				283771991BC3A329001B06D3 /* ICYPostImageCell.xib in Resources */,
-				1FFD21FF1BABD57C00204080 /* GroupSectionHeaderView.xib in Resources */,
 				D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */,
 				D0DB07D71B9D1B5200C06C4E /* NotificationView.xib in Resources */,
 				29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */,
@@ -1007,7 +960,6 @@
 				296D8BC41AFC5A680058D400 /* Main.storyboard in Resources */,
 				29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */,
 				1FA76AFE1BA27B1E004776B0 /* Group.storyboard in Resources */,
-				D05418401BC6592900C606F0 /* MyGroupCollectionViewCell.xib in Resources */,
 				285778571BC29AEC00533E8E /* ICYTagCollectionViewCell.xib in Resources */,
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
 				296D8BC31AFC5A680058D400 /* LaunchScreen.xib in Resources */,
@@ -1015,7 +967,6 @@
 				D072323A1BE1C1C700122F52 /* Info.plist in Resources */,
 				1F902D771B7D9C2800F6DC2D /* EmptyFriends.xib in Resources */,
 				D0A104951BEB055100AEE356 /* statements.html in Resources */,
-				1F19D95A1BA96B3E007C9919 /* GroupCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1114,7 +1065,6 @@
 				D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
 				1FC268821BBABF20006F1FDA /* GroupAnnotationView.swift in Sources */,
-				1FFD22011BABD77E00204080 /* GroupSectionHeaderView.swift in Sources */,
 				D0F44FAF1B5E540F009E12AA /* FriendListSendRequestController.swift in Sources */,
 				D073E6F81B84C1BF00066F42 /* CameraController.swift in Sources */,
 				D00A81C31C22D1B20034D8D0 /* MessageRouter.swift in Sources */,
@@ -1122,7 +1072,6 @@
 				D0244C551C1FEBDC00EA87C1 /* SettingRouter.swift in Sources */,
 				D0A0C0321B5F5BF900ABFA5F /* ProfileViewController.swift in Sources */,
 				D0DB07DB1B9D266900C06C4E /* NotificationCell.swift in Sources */,
-				1F19D95C1BA96B8E007C9919 /* GroupCollectionViewCell.swift in Sources */,
 				D072323D1BE1C1C700122F52 /* Range.swift in Sources */,
 				293EB4251B132B06006BAF27 /* JSQVoiceMediaItem.m in Sources */,
 				D07232391BE1C1C700122F52 /* Float.swift in Sources */,
@@ -1141,7 +1090,6 @@
 				2837719E1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.swift in Sources */,
 				29539C791B13175D00545509 /* CommonMessageController.swift in Sources */,
 				2994AF911B019AA100656C39 /* GCD.swift in Sources */,
-				1FA76B021BA2A01D004776B0 /* GroupListViewController.swift in Sources */,
 				1FE7CEF51B8C9561006700FC /* SignUpViewController.swift in Sources */,
 				D0B6364E1B81A9C70012C4E8 /* URLSchemesController.swift in Sources */,
 				D0244C5B1C20034C00EA87C1 /* InvitationRouter.swift in Sources */,
@@ -1161,7 +1109,6 @@
 				1FF693121C1EB88800777BD5 /* LandingViewController.swift in Sources */,
 				D07793851B704F290056B7CB /* PickerTableViewController.swift in Sources */,
 				1F79C1B81B5E730E008800E1 /* SearchFriendViewController.swift in Sources */,
-				D0960AAE1BC3CE2600A63733 /* MyGroupListViewController.swift in Sources */,
 				D0A0C0301B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift in Sources */,
 				D0891C961B8AF5A600701CC7 /* SearchFriendCell.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
@@ -1194,7 +1141,6 @@
 				1F937FE81B58EE8B009722CE /* MyAccountEditViewController.swift in Sources */,
 				1F9ACAFC1B69FA1A00648A82 /* UserEntity.swift in Sources */,
 				D07402E61C23A4D6002E7581 /* ContactRouter.swift in Sources */,
-				1FA76B041BA2AC03004776B0 /* GroupDiscoverViewController.swift in Sources */,
 				D0244C5D1C20130800EA87C1 /* GroupRouter.swift in Sources */,
 				28CB45E11BB13FB200182924 /* GroupDescriptionViewController.swift in Sources */,
 				1FAA70F91BBB8EE600BCE5AF /* AggregatableAnnotation.swift in Sources */,
@@ -1211,7 +1157,6 @@
 				D0960AAC1BC376FB00A63733 /* UltravisualLayout.swift in Sources */,
 				1F1EBEB61C4F6C8A00B3439F /* ImagePostTableViewCell.swift in Sources */,
 				D072323E1BE1C1C700122F52 /* Sequence.swift in Sources */,
-				D05418431BC65A6A00C606F0 /* MyGroupCollectionViewCell.swift in Sources */,
 				295272D01AD51B2300FC7833 /* S3.swift in Sources */,
 				D0F44FAD1B5E534B009E12AA /* MyPostsViewController.swift in Sources */,
 				D07D8A1A1B99A3DF00D13096 /* NotificationListViewController.swift in Sources */,
@@ -1221,7 +1166,6 @@
 				D07232341BE1C1C700122F52 /* Bool.swift in Sources */,
 				2857784C1BC25DC600533E8E /* ICYPostCell.swift in Sources */,
 				1FEA3CFB1BB391780037F3C5 /* RecommendStationTableViewCell.swift in Sources */,
-				1FA76B091BA2C642004776B0 /* GroupCreateViewController.swift in Sources */,
 				D099B6181BDA3B63006C9D01 /* LocationController.swift in Sources */,
 				D0E523211C4CEEB600B6CF7B /* Account.swift in Sources */,
 				1F6AE7851B6F1A2300D7F488 /* PostAnnotation.swift in Sources */,
