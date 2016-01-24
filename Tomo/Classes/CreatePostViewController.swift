@@ -12,68 +12,68 @@ import MobileCoreServices
 
 final class CreatePostViewController: UIViewController {
 
-    let screenHeight = UIScreen.mainScreen().bounds.height
     let photoCollectionViewHeight = CGFloat(216)
-    let navigationBarHeight = CGFloat(64)
+
     let paperPadding = CGFloat(8)
     
     var group: GroupEntity?
     
     var photos: PHFetchResult?
+
     var newPhotos = [UIImage]()
-    
-    let locationManager = CLLocationManager()
-    var locationError: NSError?
-    var location: CLLocation?
-    var updatingLocation = false
-    
-    let geocoder = CLGeocoder()
-    var geocodeError: NSError?
-    var placemark: CLPlacemark?
-    var performGeocoding = false
-    
+
     var timer: NSTimer?
-    
-    @IBOutlet weak var navigationBar: UINavigationBar!
+
+    var location: CLLocation?
+
+    var placemark: CLPlacemark?
+
     @IBOutlet weak var postButton: UIBarButtonItem!
-    @IBOutlet weak var paperViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var paperView: UIView!
+
     @IBOutlet weak var postTextView: UITextView!
+
     @IBOutlet weak var collectionView: UICollectionView!
+
     @IBOutlet weak var locationLabel: UILabel!
+
     @IBOutlet weak var groupLabel: UILabel!
+
     @IBOutlet weak var numberBadge: UILabel!
-    
-    
+
     @IBOutlet weak var locationButton: UIButton!
-    @IBOutlet weak var locationButtonWidthConstraint: NSLayoutConstraint!
+
     @IBOutlet weak var clearLocationButton: UIButton!
-    
-    
+
+    @IBOutlet weak var collectionViewTopConstraint: NSLayoutConstraint!
+
+    @IBOutlet weak var paperViewBottomConstraint: NSLayoutConstraint!
+
+    @IBOutlet weak var locationButtonWidthConstraint: NSLayoutConstraint!
+
     override func viewDidLoad() {
+
         super.viewDidLoad()
-        
-        paperView.frame.size.width = UIScreen.mainScreen().bounds.size.width - 8 * 2
-        
+
         self.setupAppearance()
         
         self.registerForKeyboardNotifications()
-        
-        self.postTextView.becomeFirstResponder()
-        
-        self.markLocation("")
-        
-        locationButton.setImage(nil, forState: UIControlState.Normal)
-        locationButtonWidthConstraint.constant = 0.0
 
+        // config location label with the current setting of location service.
+        LocationController.shareInstance.doActionWithPlacemark { placemark, location in
+            self.placemark = placemark
+            self.location = location
+            self.updateLocationLabel()
+        }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    // If do this in viewDidLoad, there will be a wired animation  because
+    // the keyborad show up. so bring up the keyborad after view appeared.
+    override func viewDidAppear(animated: Bool) {
+        self.postTextView.becomeFirstResponder()
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
         if segue.identifier != "postCreated" { return }
         
         if let sender: AnyObject = sender {
@@ -94,13 +94,8 @@ final class CreatePostViewController: UIViewController {
             
         }
     }
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
-    }
-    
+
     deinit {
-        self.stopLocationManager()
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
@@ -112,58 +107,43 @@ extension CreatePostViewController {
     
     private func setupAppearance() {
 
-//        self.navigationBar.translucent = true
-//        self.navigationBar.tintColor = UIColor.whiteColor()
-//        self.navigationBar.barTintColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 0.7)
-
         if let group = self.group {
             self.groupLabel.text = "发布在：\(group.name)"
         } else {
             groupLabel.text = nil
         }
-        
-        self.numberBadge.layer.cornerRadius = self.numberBadge.frame.height / 2
-        self.numberBadge.layer.masksToBounds = true
-        self.numberBadge.hidden = true
-        
-        self.postButton.enabled = false
-        
-        self.locationLabel.hidden = true
-        
+
         self.collectionView.allowsMultipleSelection = true
-        
-        self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        self.locationManager.activityType = .Fitness
-        
     }
     
     private func registerForKeyboardNotifications() {
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShown:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHidden:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func keyboardWillShown(notification: NSNotification) {
+
         guard let info = notification.userInfo else { return }
         
         if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height {
+
+            // key the text view stay above the key board
+            self.paperViewBottomConstraint.constant = 8 + keyboardHeight
+            // hide photo collection view below the screen
+            self.collectionViewTopConstraint.constant = 0
             
-            let paperViewHeight = screenHeight - navigationBarHeight - paperPadding * 2 - keyboardHeight
-            self.paperViewHeight.constant = paperViewHeight
-            
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
+            UIView.animateWithDuration(0.3, animations: { _ in
                 self.view.layoutIfNeeded()
             })
         }
     }
     
-    func keyboardWillBeHidden(notification: NSNotification) {
+    func keyboardWillHidden(notification: NSNotification) {
+
+        // make the text view full screen height whit a gap
+        self.paperViewBottomConstraint.constant = 8
         
-        let paperViewHeight = screenHeight - navigationBarHeight - paperPadding * 2 - photoCollectionViewHeight
-        self.paperViewHeight.constant = paperViewHeight
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+        UIView.animateWithDuration(0.3, animations: { _ in
             self.view.layoutIfNeeded()
         })
     }
@@ -279,54 +259,7 @@ extension CreatePostViewController {
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
-    private func locationServiceAuthorized() -> Bool {
-        
-        let status = CLLocationManager.authorizationStatus()
-        
-        switch status {
-        case .AuthorizedAlways, .AuthorizedWhenInUse:
-            return true
-        case .NotDetermined:
-            self.locationManager.requestWhenInUseAuthorization()
-            return false
-        case .Restricted:
-            return false
-        case .Denied:
-            showLocationServiceDisabledAlert()
-            return false
-        }
-    }
-    
-    private func showLocationServiceDisabledAlert() {
-        
-        let alert = UIAlertController(title: "現場Tomo需要访问您的位置", message: "为了追加位置信息，请您允许現場Tomo访问您的位置", preferredStyle: .Alert)
-        
-        alert.addAction(UIAlertAction(title: "不允许", style: .Destructive, handler: nil))
-        alert.addAction(UIAlertAction(title: "好", style: .Default, handler: { _ in
-            let url = NSURL(string: UIApplicationOpenSettingsURLString)
-            UIApplication.sharedApplication().openURL(url!)
-        }))
-        
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-    
-    func didTimeOut() {
-        self.stopLocationManager()
-        self.updateLocationLabel()
-    }
-    
-    private func stopLocationManager() {
-        if !updatingLocation { return }
-        
-        if let timer = self.timer {
-            timer.invalidate()
-        }
-        
-        self.locationManager.stopUpdatingLocation()
-        self.updatingLocation = false
-    }
-    
+
     private func uploadMeida(completion: (imagelist: AnyObject)->()) {
         guard let selectedIndexes = collectionView.indexPathsForSelectedItems() else { return }
         
@@ -371,8 +304,7 @@ extension CreatePostViewController {
     }
     
     private func postContent(imageList: AnyObject?) {
-        
-//        println(imageList)
+
         var parameters = Router.Post.CreateParameters(content: self.postTextView.text!)
         
         if let imageList = imageList as? [String] {
@@ -463,8 +395,16 @@ extension CreatePostViewController {
     
     @IBAction func choosePhoto() {
         
+        self.paperViewBottomConstraint.constant = 8
+        self.collectionViewTopConstraint.constant = 216
+
+        UIView.animateWithDuration(0.3, animations: { _ in
+            self.view.layoutIfNeeded()
+        })
+
         if (photoServiceAuthorized() && self.photos?.count <= 0) {
-            
+
+
             let assetCollection = PHAssetCollection.fetchAssetCollectionsWithType(.SmartAlbum, subtype: .SmartAlbumUserLibrary, options: nil)
             
             if let assetCollection = assetCollection.firstObject as? PHAssetCollection {
@@ -503,43 +443,21 @@ extension CreatePostViewController {
     }
     
     @IBAction func markLocation(sender: AnyObject) {
-        
-        if CLLocationManager.locationServicesEnabled() && locationServiceAuthorized() {
-            
-            if self.updatingLocation {
-                self.stopLocationManager()
-                
-            } else {
-                
-                self.location = nil
-                self.locationError = nil
-                
-                self.placemark = nil
-                self.geocodeError = nil
-                
-                timer = NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: Selector("didTimeOut"), userInfo: nil, repeats: false)
-                
-                self.updatingLocation = true
-                self.locationManager.startUpdatingLocation()
-            }
+
+        // user ask for add location explicitly, notify user if the location is not enabled.
+        LocationController.shareInstance.doActionWithPlacemark(self) { placemark, location in
+            self.placemark = placemark
+            self.location = location
+            self.updateLocationLabel()
         }
     }
     
     @IBAction func clearLocationButtonPressed(sender: AnyObject) {
-        self.stopLocationManager()
         location = nil
         placemark = nil
         updateLocationLabel()
     }
     
-}
-
-// MARK: - UINavigationBar Delegate
-
-extension CreatePostViewController {
-    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
-        return .TopAttached
-    }
 }
 
 // MARK: - UITextView Delegate
@@ -702,83 +620,5 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigatio
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         
         self.dismissViewControllerAnimated(true, completion: nil)
-    }
-}
-
-// MARK: - CLLocationManager Delegate
-
-extension CreatePostViewController: CLLocationManagerDelegate {
-    
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        
-        // The location is currently unknown, but CoreLocation will keep trying
-        if error.code == CLError.LocationUnknown.rawValue {
-            return
-        }
-        
-        // or save the error and stop location manager
-        self.locationError = error
-        self.stopLocationManager()
-    }
-    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        let newLocation = locations.last!
-        
-        // the location object was determine too long age, ignore it
-        if newLocation.timestamp.timeIntervalSinceNow < -5 {
-            return
-        }
-        
-        // horizontalAccuracy less than 0 is invalid result, ignore it
-        if newLocation.horizontalAccuracy < 0 {
-            return
-        }
-        
-        var distance = CLLocationDistance(DBL_MAX)
-        if let location = self.location {
-            distance = newLocation.distanceFromLocation(location)
-        }
-        
-        // new location object more accurate than previous one
-        if self.location == nil || self.location!.horizontalAccuracy > newLocation.horizontalAccuracy {
-            
-            // accept the result
-            self.locationError = nil
-            self.location = newLocation
-            
-            // accuracy better than desiredAccuracy, stop locating
-            if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy {
-                self.stopLocationManager()
-            }
-            
-            // start reverse geocoding
-            if !self.performGeocoding {
-                
-                self.performGeocoding = true
-                
-                self.geocoder.reverseGeocodeLocation(newLocation, completionHandler: { (placemarks, error) -> Void in
-                    
-                    self.geocodeError = error
-                    
-                    self.placemark = placemarks?.last
-                    
-                    self.performGeocoding = false
-                    self.updateLocationLabel()
-                })
-            }
-            
-            // if the location didn't changed too much
-        } else if distance < 1.0 {
-            
-            let timeInterval = newLocation.timestamp.timeIntervalSinceDate(location!.timestamp)
-            
-            if timeInterval > 10 {
-                print("***** force done")
-                self.stopLocationManager()
-                self.updateLocationLabel()
-            }
-        }
-        
     }
 }

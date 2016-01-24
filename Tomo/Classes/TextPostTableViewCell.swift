@@ -149,9 +149,12 @@ class TextPostTableViewCell: UITableViewCell {
 
         if nil == post?.comments?.last { return }
 
-        let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
+        let vc = Util.createViewControllerWithIdentifier("PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
         vc.post = post!
-        vc.isCommentInitial = true
+
+        // TODO: this should be dynamic via user input,
+        vc.initialCommentIndex = 2
+        
         self.delegate?.pushViewController(vc, animated: true)
     }
 

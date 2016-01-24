@@ -23,15 +23,15 @@ final class ImagePostTableViewCell: TextPostTableViewCell {
         self.avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
 
         // do this so the scrollsToTop of main table view will work
-        imageCollectionView.scrollsToTop = false
+        self.imageCollectionView.scrollsToTop = false
     }
 
     override func configDisplay() {
 
         super.configDisplay()
 
-        pageControl.numberOfPages = post.images?.count ?? 0
-        pageControl.currentPage = 0
+        self.pageControl.numberOfPages = post.images?.count ?? 0
+        self.pageControl.currentPage = 0
 
         self.imageCollectionView.reloadData()
     }
@@ -65,12 +65,12 @@ extension ImagePostTableViewCell: UICollectionViewDelegate {
 
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 
-        let postVC = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
+        let postVC = Util.createViewControllerWithIdentifier("PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
         postVC.post = post
         if indexPath.row != 0 {
             postVC.initialImageIndex = indexPath.row
         }
-        delegate?.navigationController?.pushViewController(postVC, animated: true)
+        delegate?.pushViewController(postVC, animated: true)
     }
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -78,9 +78,10 @@ extension ImagePostTableViewCell: UICollectionViewDelegate {
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView) {
+
         if scrollView != imageCollectionView { return }
         guard let count = post.images?.count where count > 1 else { return }
-        let currentPage = Int(floor((scrollView.contentOffset.x + UIScreen.mainScreen().bounds.width / 2.0) / UIScreen.mainScreen().bounds.width))
+        let currentPage = Int(floor((scrollView.contentOffset.x + TomoConst.UI.ScreenWidth / 2.0) / TomoConst.UI.ScreenWidth))
 
         pageControl.currentPage = currentPage
     }

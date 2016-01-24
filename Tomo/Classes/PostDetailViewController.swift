@@ -10,6 +10,10 @@ import UIKit
 
 final class PostDetailViewController: UIViewController {
 
+    @IBOutlet weak var collectionView: UICollectionView!
+
+    @IBOutlet weak var pageControl: UIPageControl!
+
     @IBOutlet weak var tableView: UITableView!
 
     @IBOutlet weak var likeButton: UIButton!
@@ -26,6 +30,10 @@ final class PostDetailViewController: UIViewController {
 
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
 
+    @IBOutlet var tableViewTapRecognizer: UITapGestureRecognizer!
+
+    @IBOutlet weak var blurEffectView: UIVisualEffectView!
+
     var headerView: UIView!
     let headerHeight = TomoConst.UI.ScreenHeight * 0.618
     let headerViewSize = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.ScreenHeight * 0.618)
@@ -34,6 +42,10 @@ final class PostDetailViewController: UIViewController {
     var rowHeights = [CGFloat]()
 
     var post: PostEntity!
+
+    var initialImageIndex: Int?
+
+    var initialCommentIndex: Int?
 
     override func viewDidLoad() {
 
@@ -51,6 +63,18 @@ final class PostDetailViewController: UIViewController {
         self.registerForKeyboardNotifications()
     }
 
+    override func viewDidLayoutSubviews() {
+
+        if let initialImageIndex = self.initialImageIndex {
+            // TODO: here cause a warning, but it works for now
+            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: initialImageIndex, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: false)
+        }
+
+        if let initialCommentIndex = self.initialCommentIndex {
+            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: initialCommentIndex, inSection: 0), atScrollPosition: .Top, animated: false)
+        }
+    }
+
     override func viewWillDisappear(animated: Bool) {
         // restore the normal navigation bar before disappear
         self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
@@ -63,14 +87,20 @@ final class PostDetailViewController: UIViewController {
 extension PostDetailViewController {
 
     private func registerForKeyboardNotifications() {
-
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
     }
 
     private func configDisplay() {
 
-        if self.post.images?.count > 0 {
+        // don't interrupt the scroll to top function of main scroll view
+        self.collectionView.scrollsToTop = false
+        self.commentTextView.scrollsToTop = false
+
+        if let imageNumber = self.post.images?.count where imageNumber > 0 {
+
+            self.pageControl.numberOfPages = imageNumber
+            self.pageControl.currentPage = 0
 
             // set the header view's size according the screen size
             self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.headerViewSize)
@@ -84,6 +114,7 @@ extension PostDetailViewController {
             // set the header view's size as tall as the top bar
             self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.emptyHeaderViewSize)
         }
+
     }
 
     private func calculateRowHeight() {
@@ -146,7 +177,6 @@ extension PostDetailViewController {
     }
 
     func keyboardWillShow(notification: NSNotification) {
-//        isKeyboardShown = true
         guard
             let info = notification.userInfo,
             keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height,
@@ -160,7 +190,6 @@ extension PostDetailViewController {
     }
 
     func keyboardWillBeHidden(notification: NSNotification) {
-//        isKeyboardShown = false
         guard
             let info = notification.userInfo,
             duration = info[UIKeyboardAnimationDurationUserInfoKey] as? NSTimeInterval
@@ -268,43 +297,67 @@ extension PostDetailViewController {
     }
 
     @IBAction func commentButtonTapped(sender: UIButton) {
+        // keyboard will show up here, enable the tableview tap recongnizer,
+        // so the keyboard will be dismissed later when tap anywhere on screen
+        self.blurEffectView.hidden = false
+        self.tableViewTapRecognizer.enabled = true
         self.commentTextView.becomeFirstResponder()
     }
 
     @IBAction func viewTapped(sender: UITapGestureRecognizer) {
+        // keyboard is dismissed here, disable the tableview tap recongnizer,
+        // so the tap event won't block the table cell tap event.
+        self.blurEffectView.hidden = true
+        self.tableViewTapRecognizer.enabled = false
         self.commentTextView.resignFirstResponder()
     }
 
     @IBAction func sendButtonTapped(sender: UIButton) {
 
         self.sendButton.enabled = false
+
+        // keyboard is dismissed here, disable the tableview tap recongnizer,
+        // so the tap event won't block the table cell tap event.
+        self.blurEffectView.hidden = true
+        self.tableViewTapRecognizer.enabled = false
         self.commentTextView.resignFirstResponder()
 
         let commentContent = self.commentTextView.text.trimmed()
 
         Router.Post.Comment(id: self.post.id, content: commentContent).response {
+
             if $0.result.isFailure { return }
 
+            // clear the previous input
+            self.commentTextView.text = nil
+
+            // create comment entity
             let comment = CommentEntity()
             comment.owner = me
             comment.content = commentContent
             comment.createDate = NSDate()
 
+            // use the comment entity to calculate the height of the comment cell that will be insert
             let commentCell = self.tableView.dequeueReusableCellWithIdentifier("CommentCell") as! PostCommentCell
-
             commentCell.comment = comment
             let commentCellSize = commentCell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
 
+            // create a empty new comment array if the post has no comment
             if self.post.comments == nil {
                 self.post.comments = []
             }
 
+            // append the comment on the post
             self.post.comments?.append(comment)
+
+            // insert row height
             self.rowHeights.insert([commentCellSize.height], atIndex: 2)
+
+            // insert the comment cell into table view, and show it
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: 2, inSection: 0)], withRowAnimation: .Automatic)
+            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 2, inSection: 0), atScrollPosition: .Middle, animated: true)
         }
     }
-
 }
 
 // MARK: - UITableView datasource
@@ -354,14 +407,12 @@ extension PostDetailViewController: UITableViewDelegate {
         case 0:
             let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
             vc.user = post.owner
-
             self.navigationController?.pushViewController(vc, animated: true)
         case 1:
             return
         default:
             let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
             vc.user = post.comments?.reverse()[indexPath.row - 2].owner
-
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -380,15 +431,31 @@ extension PostDetailViewController: UICollectionViewDataSource {
         cell.imageURL = self.post.images?[indexPath.row]
         return cell
     }
-
 }
 
 // MARK: - UICollectionView delegate
 
 extension PostDetailViewController: UICollectionViewDelegate {
 
+    // when the image collection was tapped, display full size image
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        return
+
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! SingleImageCollectionViewCell
+        let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.ImageViewerNavigationBarShown)
+
+        gallery.galleryItems = self.post.images!.map { MHGalleryItem(URL: $0, galleryType: .Image) }
+        gallery.presentationIndex = indexPath.item
+        gallery.presentingFromImageView = cell.imageView
+
+        gallery.UICustomization.showOverView = false
+        gallery.UICustomization.useCustomBackButtonImageOnImageViewer = false
+        gallery.UICustomization.showMHShareViewInsteadOfActivityViewController = false
+
+        gallery.finishedCallback = { (currentIndex, image, transition, viewMode) -> Void in
+            gallery.dismissViewControllerAnimated(true, dismissImageView: cell.imageView, completion: nil)
+        }
+
+        presentMHGalleryController(gallery, animated: true, completion: nil)
     }
 
     // one image on one cell
@@ -406,34 +473,44 @@ extension PostDetailViewController {
     func scrollViewDidScroll(scrollView: UIScrollView) {
 
         // if the post has no image, do nothing
-        guard self.post.images?.count > 0 else { return }
+        guard let imageNumber = self.post.images?.count where imageNumber > 0 else { return }
 
-        let offsetY = scrollView.contentOffset.y
+        // in the case that the image collection view was scrolled, update page control
+        if scrollView == self.collectionView {
 
-        // begin fade in the navigation bar background at the point which is 
-        // twice height of topbar above the bottom of the table view header area.
-        // and let the fade in complete just when the bottom of navigation bar 
-        // overlap with the bottom of table header view.
-        if offsetY > self.headerHeight - TomoConst.UI.TopBarHeight * 2 {
+            guard imageNumber > 1 else { return }
 
-            let distance = self.headerHeight - offsetY - TomoConst.UI.TopBarHeight * 2
-            let image = Util.imageWithColor(0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
-            self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+            let currentPage = Int(floor((scrollView.contentOffset.x + TomoConst.UI.ScreenWidth / 2.0) / TomoConst.UI.ScreenWidth))
 
-        // if user scroll down so the table header view got shown, just keep the navigation bar transparent
+            self.pageControl.currentPage = currentPage
+
+        // in the case that the whole table view was scrolled, animate the navigation bar
         } else {
-            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+
+            let offsetY = scrollView.contentOffset.y
+
+            // begin fade in the navigation bar background at the point which is
+            // twice height of topbar above the bottom of the table view header area.
+            // and let the fade in complete just when the bottom of navigation bar
+            // overlap with the bottom of table header view.
+            if offsetY > self.headerHeight - TomoConst.UI.TopBarHeight * 2 {
+
+                let distance = self.headerHeight - offsetY - TomoConst.UI.TopBarHeight * 2
+                let image = Util.imageWithColor(0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
+                self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+
+                // if user scroll down so the table header view got shown, just keep the navigation bar transparent
+            } else {
+                self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            }
         }
+
     }
 }
 
 // MARK: - UITextView Delegate
 
 extension PostDetailViewController: UITextViewDelegate {
-
-    func textViewDidBeginEditing(textView: UITextView) {
-        textView.textColor = UIColor.blackColor()
-    }
 
     func textViewDidChange(textView: UITextView) {
 
