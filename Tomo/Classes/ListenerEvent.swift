@@ -76,11 +76,11 @@ extension ListenerEvent {
             
         case .FriendInvited:
             
-            self.receiveInvited(tabBarController, userInfo: userInfo)
+            self.receiveInvited(userInfo)
             
         case .FriendAccepted, .FriendRefused, .FriendBreak:
             
-            self.receiveFriendRelationship(tabBarController, userInfo: userInfo)
+            self.receiveFriendRelationship(userInfo)
             fallthrough
             
         case .GroupJoined:
@@ -192,32 +192,23 @@ extension ListenerEvent {
         me.newMessages.insert(message, atIndex: 0)
     }
     
-    private func receiveInvited(tabBarController: TabBarController, userInfo: [NSObject : AnyObject]){
+    private func receiveInvited(userInfo: [NSObject : AnyObject]){
         
         let invitation = NotificationEntity(userInfo)
         invitation.id = invitation.targetId
-        let hadInvited =  me.friendInvitations.find { $0.from.id == invitation.from.id } != nil
-        if hadInvited { return }
         
-        me.friendInvitations.insert(invitation, atIndex: 0)
-        
-        guard let friendListViewController = tabBarController.selectedViewController?.childViewControllers.last as? FriendListViewController else { return }
-        
-        gcd.sync(.Main, closure: { () -> () in
-            friendListViewController.tableView.beginUpdates()
-            friendListViewController.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation:  .Automatic)
-            friendListViewController.tableView.endUpdates()
-            friendListViewController.tableView.backgroundView = nil
-        })
+        if !me.friendInvitations.contains({ $0.from.id == invitation.from.id }) {
+            me.friendInvitations.insert(invitation, atIndex: 0)
+        }
     }
     
-    private func receiveFriendRelationship(tabBarController: TabBarController, userInfo: [NSObject : AnyObject]) {
+    private func receiveFriendRelationship(userInfo: [NSObject : AnyObject]) {
         
         let notification = NotificationEntity(userInfo)
         
         if self == .FriendAccepted {
             
-            self.receiveFriendAccepted(tabBarController, notification: notification)
+            me.addFriend(notification.from)
             
         } else if self == .FriendRefused {
             
@@ -225,7 +216,6 @@ extension ListenerEvent {
             
         } else if self == .FriendBreak {
             
-            me.removeFriend(notification.from.id)
         }
     }
     
@@ -233,29 +223,4 @@ extension ListenerEvent {
         
         me.notifications = me.notifications + 1
     }
-}
-
-// MARK: - receiveFriendRelationship
-
-extension ListenerEvent {
-    
-    private func receiveFriendAccepted(tabBarController: TabBarController, notification: NotificationEntity) {
-        
-        me.addFriend(notification.from.id)
-        
-        guard let friendListViewController = tabBarController.selectedViewController?.childViewControllers.last as? FriendListViewController else { return }
-        
-        let invitationIndex = me.friendInvitations.indexOf { $0.from.id == notification.from.id }
-        if let invitationIndex = invitationIndex {
-            
-            let indexPaths = [NSIndexPath(forRow: invitationIndex, inSection: 0)]
-            
-            gcd.sync(.Main) {
-                friendListViewController.tableView.beginUpdates()
-                friendListViewController.tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-                friendListViewController.tableView.endUpdates()
-            }
-        }
-    }
-
 }

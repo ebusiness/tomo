@@ -150,7 +150,7 @@ final class StationCollectionViewCell: UICollectionViewCell {
                 let group = GroupEntity($0.result.value!)
 
                 // remove it from my joined group list
-                me.groups?.remove(group.id)
+                me.removeGroup(group)
 
                 // mark as not joined
                 self.isJoined = false
@@ -174,7 +174,7 @@ final class StationCollectionViewCell: UICollectionViewCell {
                 let group = GroupEntity($0.result.value!)
 
                 // add the group to my joined group list
-                me.addGroup(group.id)
+                me.addGroup(group)
 
                 // mark as joined
                 self.isJoined = true

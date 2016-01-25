@@ -28,6 +28,7 @@ final class GroupChatViewController: CommonMessageController {
         
         // page title
         title = group.name
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "line_group"), style: .Plain, target: self, action: "groupDetail")
         
         //receive notification
         self.registerForNotifications()
@@ -38,10 +39,10 @@ final class GroupChatViewController: CommonMessageController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-//        guard let groups = me.groups where groups.contains(self.group.id) else {
-//            self.navigationController?.popViewControllerAnimated(true)
-//            return
-//        }
+        guard let groups = me.groups where groups.contains(self.group.id) else {
+            self.navigationController?.popViewControllerAnimated(true)
+            return
+        }
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -134,6 +135,12 @@ extension GroupChatViewController {
                 self.oldestMessage = messages.last
                 self.isLoading = false
         }
+    }
+    
+    @objc private func groupDetail(){
+        let vc = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+        vc.group = group
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

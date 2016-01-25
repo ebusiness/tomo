@@ -75,22 +75,6 @@ extension URLSchemesController{
 //            println( self.tabBarController.childViewControllers )
         }
     }
-    
-    private func refreshViewControllerIfNeeded(tabSelectedIndex: Int, key: AnyObject){
-        
-        if self.tabBarController.childViewControllers.count > tabSelectedIndex {
-            self.tabBarController.selectedIndex = tabSelectedIndex
-            let vc: AnyObject? = self.tabBarController.childViewControllers[tabSelectedIndex].childViewControllers.first
-            /// mark the cell
-            if let friendListViewController = vc as? FriendListViewController {
-                let index = friendListViewController.friends.indexOf { $0.id == key as! String }
-                if let index = index {
-                    let indexPath = NSIndexPath(forItem: index, inSection: 1)
-                    friendListViewController.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)//.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                }
-            }
-        }
-    }
 }
 
 // MARK -- OpenURL
@@ -107,8 +91,6 @@ extension URLSchemesController{
             vc.friend = UserEntity($0.result.value!)
             
             self.pushViewController(1, viewController: vc, animated: true)
-            
-            self.refreshViewControllerIfNeeded(1, key: vc.friend.id)
         }
     }
     

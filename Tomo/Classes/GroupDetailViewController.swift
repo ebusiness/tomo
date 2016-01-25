@@ -177,7 +177,7 @@ extension GroupDetailViewController {
                 sender.userInteractionEnabled = true
                 return
             } else {
-                me.addGroup(self.group.id)
+                me.addGroup(self.group)
                 self.updateUI()
             }
         }
@@ -194,6 +194,10 @@ extension GroupDetailViewController {
     }
 
     func toChat() {
+        if let groupChatViewController = self.navigationController?.childViewControllers.find({ ($0 as? GroupChatViewController)?.group.id == self.group.id }) {
+            self.navigationController?.popToViewController(groupChatViewController, animated: true)
+            return
+        }
         let groupChatViewController = GroupChatViewController()
         groupChatViewController.group = self.group
         groupChatViewController.hidesBottomBarWhenPushed = true

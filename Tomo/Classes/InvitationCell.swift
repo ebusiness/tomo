@@ -8,20 +8,12 @@
 
 import UIKit
 
-@objc protocol FriendInvitationCellDelegate {
-    
-    func friendInvitationAccept(cell: InvitationCell)
-    func friendInvitationDeclined(cell: InvitationCell)
-}
-
 class InvitationCell: UITableViewCell {
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     
     var friendInvitedNotification: NotificationEntity!
-    
-    weak var delegate: FriendInvitationCellDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -50,13 +42,24 @@ class InvitationCell: UITableViewCell {
     
     @IBAction func allow(sender: AnyObject) {
         
-        self.delegate?.friendInvitationAccept(self)
+        Router.Invitation.ModifyById(id: self.friendInvitedNotification.id, accepted: true).response {
+            if $0.result.isFailure { return }
+            me.addFriend(self.friendInvitedNotification.from)
+        }
 
     }
     
     @IBAction func declined(sender: UIButton) {
         
-        self.delegate?.friendInvitationDeclined(self)
+//        let vc = window?.rootViewController?.childViewControllers.first?.tabBarController?.selectedViewController?.childViewControllers.last
+        guard let vc = window?.rootViewController else { return }
+        
+        Util.alert(vc, title: "拒绝好友邀请", message: "拒绝 " + self.friendInvitedNotification.from.nickName + " 的好友邀请么") { _ in
+            Router.Invitation.ModifyById(id: self.friendInvitedNotification.id, accepted: false).response {
+                if $0.result.isFailure { return }
+                me.removeFriend(self.friendInvitedNotification.from)
+            }
+        }
 
     }
     

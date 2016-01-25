@@ -87,7 +87,7 @@ extension GroupDescriptionViewController {
                 return
             }
             
-            me.addGroup(self.group.id)
+            me.addGroup(self.group)
             self.detailedGroup?.addMember(me)
             
             self.memberCollectionView.frame.size.width = self.tableView.frame.size.width
@@ -121,7 +121,7 @@ extension GroupDescriptionViewController {
                     return
                 }
                 
-                me.groups?.remove(self.group.id)
+                me.removeGroup(self.group)
                 
                 var item = 0
                 let user = self.detailedGroup?.members?.find { $0.id == me.id }

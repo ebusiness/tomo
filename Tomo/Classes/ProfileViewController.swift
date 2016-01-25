@@ -116,7 +116,7 @@ extension ProfileViewController {
                 Util.alert(self, title: "删除好友", message: "确定删除该好友么?") { _ in
                     Router.Contact.Delete(id: self.user.id).response {
                         if $0.result.isFailure { return }
-                        me.removeFriend(self.user.id)
+                        me.removeFriend(self.user)
                         self.reloadButtons()
                     }
                 }
@@ -240,22 +240,13 @@ extension ProfileViewController {
         Router.Invitation.ModifyById(id: invitation.id, accepted: isApproved).response {
             if $0.result.isFailure { return }
             
-            me.friendInvitations = me.friendInvitations.filter{ $0.from.id != self.user.id }
             if isApproved {
                 Util.showSuccess(self.user.nickName + " 已成为您的好友")
-                me.addFriend(self.user.id)
+                me.addFriend(self.user)
             } else {
-                me.invitations?.remove(self.user.id)
                 Util.showSuccess("您拒绝了 " + self.user.nickName + " 的好友邀请")
+                me.removeFriend(self.user)
             }
-            
-            if let friendListViewController = (self.tabBarController?.childViewControllers.get(1) as? UINavigationController)?.childViewControllers.get(0) as? FriendListViewController {
-                if isApproved {
-                    friendListViewController.friends.insert(self.user, atIndex: 0)
-                }
-                friendListViewController.tableView.reloadData()
-            }
-            
             self.reloadButtons()
         }
     }

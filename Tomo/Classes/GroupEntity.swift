@@ -35,6 +35,12 @@ class GroupEntity: Entity {
     
     var createDate: NSDate!
     
+    var lastMessage: MessageEntity? {
+        didSet {
+            
+        }
+    }
+    
     override init() {
         super.init()
     }
@@ -83,6 +89,10 @@ class GroupEntity: Entity {
         }
         
         self.createDate = json["createDate"].stringValue.toDate(TomoConfig.Date.Format)
+        
+        if !( json["lastMessage"].object is NSNull ) {
+            self.lastMessage = MessageEntity(json["lastMessage"])
+        }
         
     }
 }

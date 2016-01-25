@@ -33,7 +33,11 @@ class UserEntity: Entity {
 
     var primaryStation: GroupEntity?
     
-    var lastMessage: MessageEntity?
+    var lastMessage: MessageEntity? {
+        didSet {
+            
+        }
+    }
     
     override init() {
         super.init()
