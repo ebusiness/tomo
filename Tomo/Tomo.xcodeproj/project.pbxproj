@@ -86,6 +86,7 @@
 		29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */; };
 		29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55B11AEDCE61006A1F41 /* BaseTableViewController.swift */; };
 		557565911C51250700EB6BBE /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E523201C4CEEB600B6CF7B /* Account.swift */; };
+		5595B6AE1C5677DF00A66128 /* GCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994AF901B019AA100656C39 /* GCD.swift */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		D000F17D1C2809DF00AD873C /* TomoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D000F17C1C2809DF00AD873C /* TomoTests.swift */; };
 		D000F1841C280C8000AD873C /* ContactRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07402E51C23A4D6002E7581 /* ContactRouter.swift */; };
@@ -1174,6 +1175,7 @@
 				D000F1961C281E3E00AD873C /* MessageEntity.swift in Sources */,
 				D000F19D1C281E9300AD873C /* Dictionary.swift in Sources */,
 				D000F1971C281E3E00AD873C /* NotificationEntity.swift in Sources */,
+				5595B6AE1C5677DF00A66128 /* GCD.swift in Sources */,
 				D000F18B1C280C8000AD873C /* SettingRouter.swift in Sources */,
 				D000F1881C280C8000AD873C /* MessageRouter.swift in Sources */,
 				D000F19E1C281E9300AD873C /* Double.swift in Sources */,

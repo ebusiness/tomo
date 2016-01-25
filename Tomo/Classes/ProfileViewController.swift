@@ -11,6 +11,12 @@ import SwiftyJSON
 
 final class ProfileViewController: UITableViewController {
 
+    @IBOutlet weak var coverImageView: UIImageView!
+
+    @IBOutlet weak var avatarImageView: UIImageView!
+
+    @IBOutlet weak var statusLabel: UILabel!
+
     @IBOutlet weak var genderLabel: UILabel!
 
     @IBOutlet weak var addressLabel: UILabel!
@@ -18,6 +24,14 @@ final class ProfileViewController: UITableViewController {
     @IBOutlet weak var fullNameLabel: UILabel!
 
     @IBOutlet weak var birthDayLabel: UILabel!
+
+    @IBOutlet weak var addFriendButton: UIButton!
+
+    @IBOutlet weak var messageButton: UIButton!
+
+    @IBOutlet weak var acceptButton: UIButton!
+
+    @IBOutlet weak var refuseButton: UIButton!
 
     var user: UserEntity!
 
@@ -45,7 +59,7 @@ final class ProfileViewController: UITableViewController {
 //            self.navigationItem.rightBarButtonItem = nil
 //        }
 
-        self.registerForNotifications()
+//        self.registerForNotifications()
     }
 
 }
@@ -55,12 +69,12 @@ final class ProfileViewController: UITableViewController {
 extension ProfileViewController {
     
     @IBAction func Approved(sender: UIButton) {
-        inviteAction(true)
+//        inviteAction(true)
     }
     
     @IBAction func Declined(sender: UIButton) {
         Util.alert(self, title: "拒绝好友邀请", message: "拒绝 " + self.user.nickName + " 的好友邀请么") { _ in
-            self.inviteAction(false)
+//            self.inviteAction(false)
         }
     }
 
@@ -110,7 +124,7 @@ extension ProfileViewController {
                     Router.Contact.Delete(id: self.user.id).response {
                         if $0.result.isFailure { return }
                         me.removeFriend(self.user)
-                        self.reloadButtons()
+//                        self.reloadButtons()
                     }
                 }
             }
@@ -135,8 +149,8 @@ extension ProfileViewController {
             }
             me.invitations?.append(self.user.id)
             Util.showSuccess("已发送交友请求")
-            self.reloadButtons()
-            
+//            self.reloadButtons()
+
             sender.userInteractionEnabled = true
         }
     }
@@ -155,8 +169,6 @@ extension ProfileViewController {
             
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        
-        
     }
 }
 
@@ -169,59 +181,18 @@ extension ProfileViewController {
         switch section {
 
         case 0:
-            if !self.isFriend && !self.isInvitedByMe && !self.isInvitingMe {
-                return 1
-            }
+            return 4
         case 1:
+            return 1
         case 2:
+            if self.isFriend {
+                return 1
+            } else {
+                return 0
+            }
         default:
-            return
+            return 0
         }
-        
-        if section == invitedSection {
-
-            // if has any friendInvitations or invitations it's will show receivedInvitationCell / sentInvitationCell in this section
-            let hasInvitation = self.getUserInvitation() != nil || me.invitations?.find { $0 == self.user.id } != nil
-            
-            if hasInvitation {
-                return 1
-            } else {
-                return 0
-            }
-        }
-        
-        if section == sendMessageSection {
-            if self.user.id == me.id { return 0 }
-            // if no friendInvitations or no invitations it's will show sendMessageCell / addFriendCell in this section
-            let hasInvitation = self.getUserInvitation() != nil || me.invitations?.find { $0 == self.user.id } != nil
-            
-            if hasInvitation {
-                return 0
-            } else {
-                return 1
-            }
-        }
-        
-        return super.tableView(self.tableView, numberOfRowsInSection: section)
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        if indexPath.section == invitedSection {
-            
-            let cell = self.getUserInvitation() == nil ? sentInvitationCell : receivedInvitationCell
-            
-            return cell
-        }
-        
-        if indexPath.section == sendMessageSection {
-            
-            let cell = (me.friends ?? []).contains(self.user.id) ? sendMessageCell : addFriendCell
-
-            return cell
-        }
-        
-        return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
     }
 }
 
@@ -229,81 +200,81 @@ extension ProfileViewController {
 
 extension ProfileViewController {
     
-    private func reloadButtons() {
-        self.tableView.beginUpdates()
-        self.tableView.reloadSections(NSIndexSet(index: invitedSection), withRowAnimation: .Automatic)
-        self.tableView.reloadSections(NSIndexSet(index: sendMessageSection), withRowAnimation: .Automatic)
-        self.tableView.endUpdates()
-    }
-    
-    private func getUserInvitation() -> NotificationEntity? {
-        return me.friendInvitations.find { $0.from.id == self.user.id }
-    }
-    
-    private func inviteAction(isApproved:Bool){
+//    private func reloadButtons() {
+//        self.tableView.beginUpdates()
+//        self.tableView.reloadSections(NSIndexSet(index: invitedSection), withRowAnimation: .Automatic)
+//        self.tableView.reloadSections(NSIndexSet(index: sendMessageSection), withRowAnimation: .Automatic)
+//        self.tableView.endUpdates()
+//    }
 
-        guard let invitation = self.getUserInvitation() else { return }
-        
-        Router.Invitation.ModifyById(id: invitation.id, accepted: isApproved).response {
-            if $0.result.isFailure { return }
-            
-            if isApproved {
-                Util.showSuccess(self.user.nickName + " 已成为您的好友")
-                me.addFriend(self.user)
-            } else {
-                Util.showSuccess("您拒绝了 " + self.user.nickName + " 的好友邀请")
-                me.removeFriend(self.user)
-            }
-            self.reloadButtons()
-        }
-    }
+//    private func getUserInvitation() -> NotificationEntity? {
+//        return me.friendInvitations.find { $0.from.id == self.user.id }
+//    }
+
+//    private func inviteAction(isApproved:Bool){
+//
+//        guard let invitation = self.getUserInvitation() else { return }
+//        
+//        Router.Invitation.ModifyById(id: invitation.id, accepted: isApproved).response {
+//            if $0.result.isFailure { return }
+//            
+//            if isApproved {
+//                Util.showSuccess(self.user.nickName + " 已成为您的好友")
+//                me.addFriend(self.user)
+//            } else {
+//                Util.showSuccess("您拒绝了 " + self.user.nickName + " 的好友邀请")
+//                me.removeFriend(self.user)
+//            }
+//            self.reloadButtons()
+//        }
+//    }
 }
 
 // MARK: - NSNotificationCenter
 
 extension ProfileViewController {
     
-    private func registerForNotifications() {
-        ListenerEvent.FriendBreak.addObserver(self, selector: Selector("receiveFriendBreak:"))
-        ListenerEvent.FriendInvited.addObserver(self, selector: Selector("receiveFriendInvited:"))
-        ListenerEvent.FriendAccepted.addObserver(self, selector: Selector("receiveFriendAccepted:"))
-        ListenerEvent.FriendRefused.addObserver(self, selector: Selector("receiveFriendRefused:"))
-    }
-    
-    private func receive(notification: NSNotification, done: ()->() ){
-        guard let userInfo = notification.userInfo else { return }
-        
-        let json = JSON(userInfo)
-        if self.user.id == json["from"]["id"].stringValue {
-            gcd.sync(.Main, closure: { () -> () in
-                done()
-            })
-        }
-    }
-    
-    func receiveFriendBreak(notification: NSNotification) {
-        self.receive(notification) {
-            self.reloadButtons()
-        }
-    }
-    
-    func receiveFriendInvited(notification: NSNotification) {
-        self.receive(notification) {
-            self.reloadButtons()
-        }
-    }
-    
-    func receiveFriendAccepted(notification: NSNotification) {
-        self.receive(notification) {
-            self.reloadButtons()
-        }
-    }
-    
-    func receiveFriendRefused(notification: NSNotification) {
-        self.receive(notification) {
-            self.reloadButtons()
-        }
-    }
+//    private func registerForNotifications() {
+//        ListenerEvent.FriendBreak.addObserver(self, selector: Selector("receiveFriendBreak:"))
+//        ListenerEvent.FriendInvited.addObserver(self, selector: Selector("receiveFriendInvited:"))
+//        ListenerEvent.FriendAccepted.addObserver(self, selector: Selector("receiveFriendAccepted:"))
+//        ListenerEvent.FriendRefused.addObserver(self, selector: Selector("receiveFriendRefused:"))
+//    }
+//    
+//    private func receive(notification: NSNotification, done: ()->() ){
+//        guard let userInfo = notification.userInfo else { return }
+//        
+//        let json = JSON(userInfo)
+//        if self.user.id == json["from"]["id"].stringValue {
+//            gcd.sync(.Main, closure: { () -> () in
+//                done()
+//            })
+//        }
+//    }
+//    
+//    func receiveFriendBreak(notification: NSNotification) {
+//        self.receive(notification) {
+//            self.reloadButtons()
+//        }
+//    }
+//    
+//    func receiveFriendInvited(notification: NSNotification) {
+//        self.receive(notification) {
+//            self.reloadButtons()
+//        }
+//    }
+//    
+//    func receiveFriendAccepted(notification: NSNotification) {
+//        self.receive(notification) {
+//            self.reloadButtons()
+//        }
+//    }
+//    
+//    func receiveFriendRefused(notification: NSNotification) {
+//        self.receive(notification) {
+//            self.reloadButtons()
+//        }
+//    }
 }
 
 // MARK: - Internal methods
@@ -327,20 +298,52 @@ extension ProfileViewController {
 
     private func configDisplay() {
 
+        self.navigationItem.title = self.user.nickName
+
+        if let cover = self.user.cover {
+            self.avatarImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: TomoConst.Image.DefaultCover)
+        }
+
+        if let photo = self.user.photo {
+            self.avatarImageView.layer.borderWidth = 2
+            self.avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
+            self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: TomoConst.Image.DefaultAvatar)
+        }
+
         if self.user.firstName != nil && self.user.lastName != nil  {
-            fullNameLabel.text = user.fullName()
+            self.fullNameLabel.text = user.fullName()
         }
 
         if let gender = self.user.gender {
-            genderLabel.text = gender
+            self.genderLabel.text = gender
         }
 
         if let birthDay = self.user.birthDay {
-            birthDayLabel.text = birthDay.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
+            self.birthDayLabel.text = birthDay.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
         }
 
         if let address = self.user.address {
-            addressLabel.text = address
+            self.addressLabel.text = address
+        }
+
+        self.statusLabel.text = self.user.bio
+
+        if !self.isFriend && !self.isInvitedByMe && !self.isInvitingMe {
+            self.addFriendButton.hidden = false
+        }
+
+        if self.isFriend {
+            self.messageButton.hidden = false
+        }
+
+        if self.isInvitingMe {
+            self.acceptButton.hidden = false
+            self.refuseButton.hidden = false
+            self.statusLabel.text = "\(self.user.nickName)邀请您成为好友"
+        }
+
+        if self.isInvitedByMe {
+            self.statusLabel.text = "好友邀请已发送，等待对方验证通过"
         }
     }
 }

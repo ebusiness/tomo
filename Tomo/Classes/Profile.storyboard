@@ -27,79 +27,74 @@
                                         <constraint firstAttribute="width" constant="100" id="Fsq-zg-aou"/>
                                         <constraint firstAttribute="height" constant="100" id="n98-NG-Oy3"/>
                                     </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="50"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="已发送好友邀请" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24O-6G-3bc">
-                                    <rect key="frame" x="124" y="266" width="98" height="17"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已发送好友邀请" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="24O-6G-3bc">
+                                    <rect key="frame" x="192" y="261" width="112" height="19.5"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIA-hR-pxd" userLabel="添加好友">
+                                    <rect key="frame" x="213" y="199" width="91" height="30"/>
+                                    <color key="backgroundColor" red="0.29803921570000003" green="0.68627450980000004" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <state key="normal" title="  添加为好友  ">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rXq-yW-pLZ" userLabel="发送消息">
+                                    <rect key="frame" x="228" y="199" width="76" height="30"/>
+                                    <color key="backgroundColor" red="0.29803921570000003" green="0.68627450980000004" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <state key="normal" title="  发送消息  ">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xkN-Dd-9ch" userLabel="接受按钮">
+                                    <rect key="frame" x="166" y="199" width="76" height="30"/>
+                                    <color key="backgroundColor" red="0.29803921568627451" green="0.68627450980392157" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                                    <state key="normal" title="  接受邀请  ">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RbV-of-iZP" userLabel="拒绝按钮">
+                                    <rect key="frame" x="258" y="199" width="46" height="30"/>
+                                    <color key="backgroundColor" red="0.95686274509803915" green="0.2627450980392157" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
+                                    <state key="normal" title="  拒绝  ">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstItem="RbV-of-iZP" firstAttribute="bottom" secondItem="txA-pj-rRu" secondAttribute="bottom" constant="-16" id="0bd-CG-cyY"/>
+                                <constraint firstAttribute="trailing" secondItem="24O-6G-3bc" secondAttribute="trailing" constant="16" id="0hx-aP-5IU"/>
+                                <constraint firstItem="24O-6G-3bc" firstAttribute="top" secondItem="txA-pj-rRu" secondAttribute="bottom" constant="16" id="2nC-ZA-LqH"/>
+                                <constraint firstItem="rXq-yW-pLZ" firstAttribute="bottom" secondItem="txA-pj-rRu" secondAttribute="bottom" constant="-16" id="6lK-Ej-GHn"/>
+                                <constraint firstItem="RbV-of-iZP" firstAttribute="leading" secondItem="xkN-Dd-9ch" secondAttribute="trailing" constant="16" id="Bjb-pS-qaj"/>
+                                <constraint firstItem="rXq-yW-pLZ" firstAttribute="trailing" secondItem="txA-pj-rRu" secondAttribute="trailing" constant="-16" id="D4N-Qf-n1l"/>
                                 <constraint firstItem="txA-pj-rRu" firstAttribute="leading" secondItem="j2F-kj-xgQ" secondAttribute="leading" id="DPz-8k-dRj"/>
                                 <constraint firstItem="OMo-8Z-k6d" firstAttribute="leading" secondItem="j2F-kj-xgQ" secondAttribute="leading" constant="16" id="KAB-cR-e9A"/>
                                 <constraint firstItem="txA-pj-rRu" firstAttribute="top" secondItem="j2F-kj-xgQ" secondAttribute="top" id="Lcv-Tx-tbg"/>
+                                <constraint firstItem="RbV-of-iZP" firstAttribute="trailing" secondItem="txA-pj-rRu" secondAttribute="trailing" constant="-16" id="MxN-ak-Tzq"/>
+                                <constraint firstItem="24O-6G-3bc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="OMo-8Z-k6d" secondAttribute="trailing" constant="16" id="NSs-86-IHY"/>
+                                <constraint firstItem="xkN-Dd-9ch" firstAttribute="bottom" secondItem="txA-pj-rRu" secondAttribute="bottom" constant="-16" id="QWA-ks-zhS"/>
                                 <constraint firstItem="OMo-8Z-k6d" firstAttribute="centerY" secondItem="txA-pj-rRu" secondAttribute="bottom" id="cxP-PN-vZr"/>
                                 <constraint firstAttribute="bottom" secondItem="txA-pj-rRu" secondAttribute="bottom" constant="58" id="dxb-AG-OMe"/>
+                                <constraint firstItem="oIA-hR-pxd" firstAttribute="bottom" secondItem="txA-pj-rRu" secondAttribute="bottom" constant="-16" id="la9-Ea-TSV"/>
+                                <constraint firstItem="oIA-hR-pxd" firstAttribute="trailing" secondItem="txA-pj-rRu" secondAttribute="trailing" constant="-16" id="nIl-RH-S6c"/>
                                 <constraint firstAttribute="trailing" secondItem="txA-pj-rRu" secondAttribute="trailing" id="rfa-Xq-azS"/>
                             </constraints>
                         </view>
                         <sections>
-                            <tableViewSection id="yvK-DU-VE5" userLabel="添加好友按钮">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="eGt-jr-JZ0">
-                                        <rect key="frame" x="0.0" y="303" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eGt-jr-JZ0" id="o9r-Jx-2Oe">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="添加好友" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gD-Do-2cs">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.29803921570000003" green="0.68627450980000004" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="FCY-Wi-1AY" userLabel="邀请操作按钮">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="pOv-Md-Ej0">
-                                        <rect key="frame" x="0.0" y="367" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pOv-Md-Ej0" id="pjg-VX-XaN">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RbV-of-iZP" userLabel="拒绝按钮">
-                                                    <rect key="frame" x="198" y="7" width="38" height="30"/>
-                                                    <state key="normal" title=" 拒绝 "/>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xkN-Dd-9ch" userLabel="接受按钮">
-                                                    <rect key="frame" x="89" y="7" width="38" height="30"/>
-                                                    <state key="normal" title=" 接受 "/>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="RbV-of-iZP" secondAttribute="trailing" priority="750" constant="80" id="BBg-TM-Kqg"/>
-                                                <constraint firstItem="xkN-Dd-9ch" firstAttribute="leading" secondItem="pjg-VX-XaN" secondAttribute="leading" priority="750" constant="85" id="SXE-BK-Ng7"/>
-                                                <constraint firstItem="RbV-of-iZP" firstAttribute="leading" secondItem="xkN-Dd-9ch" secondAttribute="trailing" constant="16" id="rP0-ww-8Ux"/>
-                                                <constraint firstItem="xkN-Dd-9ch" firstAttribute="centerY" secondItem="pjg-VX-XaN" secondAttribute="centerY" id="uTW-8p-BfX"/>
-                                                <constraint firstItem="RbV-of-iZP" firstAttribute="centerY" secondItem="pjg-VX-XaN" secondAttribute="centerY" id="vFa-xm-ZGs"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="基本信息" id="8pF-6E-Wyb" userLabel="基本信息">
+                            <tableViewSection id="8pF-6E-Wyb" userLabel="基本信息">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="Cai-vR-xLV" detailTextLabel="pY4-IG-I22" style="IBUITableViewCellStyleValue1" id="Uor-GS-1vr" userLabel="姓名">
-                                        <rect key="frame" x="0.0" y="453" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="303" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Uor-GS-1vr" id="LpB-vQ-61Q">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -123,7 +118,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="Jwz-na-PaN" detailTextLabel="VLB-C2-sSj" style="IBUITableViewCellStyleValue1" id="frO-2o-iC0" userLabel="性别">
-                                        <rect key="frame" x="0.0" y="497" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="347" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="frO-2o-iC0" id="5E2-mY-zVY">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -147,7 +142,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="B8s-6w-mpW" detailTextLabel="82x-ph-VAx" style="IBUITableViewCellStyleValue1" id="ro3-zJ-K8o" userLabel="生年月日">
-                                        <rect key="frame" x="0.0" y="541" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="391" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ro3-zJ-K8o" id="xNx-bP-Yfc">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -171,7 +166,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="veE-i4-JjG" detailTextLabel="6Gj-Jm-Z68" style="IBUITableViewCellStyleValue1" id="VI0-CZ-1An" userLabel="住址">
-                                        <rect key="frame" x="0.0" y="585" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="435" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VI0-CZ-1An" id="qyH-2r-EMe">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -199,7 +194,7 @@
                             <tableViewSection id="V7W-s2-FKH" userLabel="相关信息">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="K0K-7b-cJe" style="IBUITableViewCellStyleDefault" id="uci-Ij-g1i" userLabel="帖子一览">
-                                        <rect key="frame" x="0.0" y="649" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="499" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uci-Ij-g1i" id="TGF-RY-3v0">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="44"/>
@@ -223,19 +218,23 @@
                             <tableViewSection id="ccO-XO-zf5" userLabel="删除好友按钮">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="wgP-8Y-xHW">
-                                        <rect key="frame" x="0.0" y="713" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="563" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wgP-8Y-xHW" id="9kI-dU-2lM">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="删除好友" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSJ-QH-nmJ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="删除好友" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSJ-QH-nmJ">
+                                                    <rect key="frame" x="126" y="12" width="68" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="gSJ-QH-nmJ" firstAttribute="centerY" secondItem="9kI-dU-2lM" secondAttribute="centerY" id="TKP-id-XbR"/>
+                                                <constraint firstItem="gSJ-QH-nmJ" firstAttribute="centerX" secondItem="9kI-dU-2lM" secondAttribute="centerX" id="sct-SW-C5a"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.95686274510000002" green="0.26274509800000001" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
@@ -258,10 +257,17 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="1000"/>
                     <connections>
+                        <outlet property="acceptButton" destination="xkN-Dd-9ch" id="zZI-cs-K0B"/>
+                        <outlet property="addFriendButton" destination="oIA-hR-pxd" id="cJH-v3-zSr"/>
                         <outlet property="addressLabel" destination="6Gj-Jm-Z68" id="ZhM-67-gGm"/>
+                        <outlet property="avatarImageView" destination="OMo-8Z-k6d" id="mn5-AB-UJ2"/>
                         <outlet property="birthDayLabel" destination="82x-ph-VAx" id="VQw-p3-AAC"/>
+                        <outlet property="coverImageView" destination="txA-pj-rRu" id="tIu-en-nG8"/>
                         <outlet property="fullNameLabel" destination="pY4-IG-I22" id="gzf-bS-v2B"/>
                         <outlet property="genderLabel" destination="VLB-C2-sSj" id="6EO-z8-ITh"/>
+                        <outlet property="messageButton" destination="rXq-yW-pLZ" id="yRw-KJ-MGP"/>
+                        <outlet property="refuseButton" destination="RbV-of-iZP" id="aLh-Rw-HYu"/>
+                        <outlet property="statusLabel" destination="24O-6G-3bc" id="QdP-P1-0XL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bwx-Dy-Bpf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -563,12 +569,6 @@
                                                         <constraint firstAttribute="width" constant="70" id="Egj-e2-Imb"/>
                                                         <constraint firstAttribute="height" constant="70" id="uPR-7M-vm8"/>
                                                     </constraints>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                            <integer key="value" value="35"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用户昵称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZ8-u6-W4B">
                                                     <rect key="frame" x="-68" y="258" width="68" height="20.5"/>
