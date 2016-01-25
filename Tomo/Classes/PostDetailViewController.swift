@@ -34,7 +34,7 @@ final class PostDetailViewController: UIViewController {
 
     @IBOutlet weak var blurEffectView: UIVisualEffectView!
 
-    var headerView: UIView!
+//    var headerView: UIView!
     let headerHeight = TomoConst.UI.ScreenHeight * 0.618
     let headerViewSize = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.ScreenHeight * 0.618)
     let emptyHeaderViewSize = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.TopBarHeight)
@@ -79,6 +79,10 @@ final class PostDetailViewController: UIViewController {
         // restore the normal navigation bar before disappear
         self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
         self.navigationController?.navigationBar.shadowImage = nil
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        self.configNavigationBarByScrollPosition()
     }
 }
 
@@ -199,6 +203,26 @@ extension PostDetailViewController {
         UIView.animateWithDuration(duration, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
+    }
+
+    private func configNavigationBarByScrollPosition() {
+
+        let offsetY = self.tableView.contentOffset.y
+
+        // begin fade in the navigation bar background at the point which is
+        // twice height of topbar above the bottom of the table view header area.
+        // and let the fade in complete just when the bottom of navigation bar
+        // overlap with the bottom of table header view.
+        if offsetY > self.headerHeight - TomoConst.UI.TopBarHeight * 2 {
+
+            let distance = self.headerHeight - offsetY - TomoConst.UI.TopBarHeight * 2
+            let image = Util.imageWithColor(0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
+            self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+
+            // if user scroll down so the table header view got shown, just keep the navigation bar transparent
+        } else {
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        }
     }
 }
 
@@ -487,22 +511,7 @@ extension PostDetailViewController {
         // in the case that the whole table view was scrolled, animate the navigation bar
         } else {
 
-            let offsetY = scrollView.contentOffset.y
-
-            // begin fade in the navigation bar background at the point which is
-            // twice height of topbar above the bottom of the table view header area.
-            // and let the fade in complete just when the bottom of navigation bar
-            // overlap with the bottom of table header view.
-            if offsetY > self.headerHeight - TomoConst.UI.TopBarHeight * 2 {
-
-                let distance = self.headerHeight - offsetY - TomoConst.UI.TopBarHeight * 2
-                let image = Util.imageWithColor(0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
-                self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
-
-                // if user scroll down so the table header view got shown, just keep the navigation bar transparent
-            } else {
-                self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-            }
+            self.configNavigationBarByScrollPosition()
         }
 
     }

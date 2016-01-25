@@ -13,7 +13,7 @@ final class HomeViewController: UITableViewController {
     // Array holds all cell contents
     var contents = [AnyObject]()
 
-    // Array holds all cell height
+    // Array holds all cell heights
     var rowHeights = [CGFloat]()
 
     var latestContent: AnyObject?

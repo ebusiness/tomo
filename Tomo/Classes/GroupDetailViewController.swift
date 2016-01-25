@@ -8,161 +8,66 @@
 
 import UIKit
 
-final class GroupDetailViewController: BaseTableViewController {
-    
+final class GroupDetailViewController: UITableViewController {
+
     @IBOutlet weak var coverImageView: UIImageView!
+
     @IBOutlet weak var joinButton: UIButton!
-    @IBOutlet weak var groupNameLable: UILabel!
+
+    @IBOutlet weak var loadingLabel: UILabel!
     
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+
+    // The group entity
     var group: GroupEntity!
-    
-    var posts: [PostEntity]?
-    
-    let screenHeight = UIScreen.mainScreen().bounds.height
-    
+
+    // Array holds all post entities
+    var posts = [PostEntity]()
+
+    // Array holds all cell heights
+    var rowHeights = [CGFloat]()
+
+    var latestPost: PostEntity?
+    var oldestPost: PostEntity?
+
     var isLoading = false
     var isExhausted = false
+
+    let headerHeight = TomoConst.UI.ScreenHeight * 0.382
+    let headerViewSize = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.ScreenHeight * 0.382)
     
     override func viewDidLoad() {
 
         super.viewDidLoad()
-        self.setTitleView()
-        self.updateUI()
-        
-        self.joinButton.layer.borderColor = UIColor.whiteColor().CGColor
-        self.joinButton.layer.borderWidth = 2
-        
-        tableView.registerNib(UINib(nibName: "ICYPostCell", bundle: nil), forCellReuseIdentifier: "ICYPostCellIdentifier")
-        tableView.registerNib(UINib(nibName: "ICYPostImageCell", bundle: nil), forCellReuseIdentifier: "ICYPostImageCellIdentifier")
-        tableView.separatorStyle = .None
-        tableView.backgroundColor = UIColor.groupTableViewBackgroundColor()
-        //// /////////////
-        let resizeHeaderHeight:CGFloat = UIScreen.mainScreen().bounds.size.height * (0.618 - 0.1)
-        self.headerHeight = resizeHeaderHeight - 64
-        self.changeHeaderView(height: resizeHeaderHeight, done: nil)
-        //// /////////////
+
+        self.configDisplay()
+
+        self.loadMorePosts()
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        if posts == nil {
-            loadPosts()
-        }
-        self.updateUI()
-    }
-    
+
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        super.scrollViewDidScroll(scrollView)
-        self.moveTitleView(scrollView.contentOffset.y)
-        if scrollView == tableView {
-            let offsetY = scrollView.contentOffset.y
-            let contentHeight = scrollView.contentSize.height
-            
-            let loadTriggerHeight = CGFloat(40.0)
-            if (contentHeight - screenHeight - loadTriggerHeight) < offsetY {
-                loadMorePosts()
-            }
-        }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func loadPosts() {
-        Router.Group.FindPosts(id: self.group.id, before: nil).response {
-            if $0.result.isFailure { return }
-            
-            self.posts = PostEntity.collection($0.result.value!)
-            self.tableView.reloadData()
-        }
-    }
-    
-    let footerView: UIView = {
-        let screenWidth = UIScreen.mainScreen().bounds.width
-        let footerView = UIView(frame: CGRect(origin: CGPointZero, size: CGSize(width: screenWidth, height: 40.0)))
-        footerView.backgroundColor = Util.colorWithHexString("EFEFF4")
-        let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
-        footerView.addSubview(loadingIndicator)
-        loadingIndicator.sizeToFit()
-        loadingIndicator.startAnimating()
-        loadingIndicator.center = CGPoint(x: screenWidth / 2.0, y: 20.0)
-        return footerView
-    }()
-    
-    func loadMorePosts() {
 
-        if isLoading || isExhausted {
-            return
-        }
-        
-        isLoading = true
-        
-        tableView.tableFooterView = footerView
-        
-        let postRouter = Router.Group.FindPosts(id: self.group.id, before: posts?.last!.createDate.timeIntervalSince1970)
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
 
-        postRouter.response {
-            
-            self.tableView.tableFooterView = nil
-            self.isLoading = false
-            
-            if $0.result.isFailure {
-                self.isExhausted = true
-                return
-            }
-            if let newPosts: [PostEntity] = PostEntity.collection($0.result.value!) {
-                let startIndex = self.posts?.count ?? 0
-                let endIndex = startIndex + newPosts.count
-                self.posts?.appendContentsOf(newPosts)
-                var indexPaths: [NSIndexPath] = []
-                for index in startIndex..<endIndex {
-                    indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
-                }
-                self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Automatic)
-            }
+        // trigger on the position of one screen height to bottom
+        if (contentHeight - TomoConst.UI.ScreenHeight) < offsetY {
+            self.loadMorePosts()
         }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        var contentInset = tableView.contentInset
-        contentInset.bottom = 49.0
-        tableView.contentInset = contentInset
-        
-        var scrollIndicatorInsets = tableView.scrollIndicatorInsets
-        scrollIndicatorInsets.bottom = 49.0
-        tableView.scrollIndicatorInsets = scrollIndicatorInsets
+
+        self.configNavigationBarByScrollPosition()
     }
 
-}
-
-// MARK: - Internal Methods
-
-extension GroupDetailViewController {
-    
-    private func updateUI() {
-        
-//        self.title = group.name
-        self.groupNameLable.text = group.name
-        self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: DefaultGroupImage)
-        
-        guard let myGroups = me.groups else { return }
-        
-        if myGroups.contains(self.group.id) {
-            _ = navigationItem.rightBarButtonItems?.map {
-                $0.enabled = true
-            }
-            self.joinButton.hidden = true
-        } else {
-            _ = navigationItem.rightBarButtonItems?.map {
-                $0.enabled = false
-            }
-            joinButton.hidden = false
-        }
+    override func viewWillDisappear(animated: Bool) {
+        // restore the normal navigation bar before disappear
+        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = nil
     }
+
+    override func viewWillAppear(animated: Bool) {
+        self.configNavigationBarByScrollPosition()
+    }
+
 }
 
 // MARK: - Actions
@@ -170,6 +75,7 @@ extension GroupDetailViewController {
 extension GroupDetailViewController {
     
     @IBAction func joinGroup(sender: UIButton) {
+
         sender.userInteractionEnabled = false
         
         Router.Group.Join(id: self.group.id).response {
@@ -178,7 +84,7 @@ extension GroupDetailViewController {
                 return
             } else {
                 me.addGroup(self.group)
-                self.updateUI()
+                self.configDisplay()
             }
         }
     }
@@ -187,17 +93,13 @@ extension GroupDetailViewController {
         // exit addPostView
     }
     
-    func createPost() {
+    @IBAction func postButtonTapped(sender: UIBarButtonItem) {
         let postCreateViewController = Util.createViewControllerWithIdentifier("PostCreateView", storyboardName: "Home") as! CreatePostViewController
         postCreateViewController.group = self.group
         self.presentViewController(postCreateViewController, animated: true, completion: nil)
     }
 
-    func toChat() {
-        if let groupChatViewController = self.navigationController?.childViewControllers.find({ ($0 as? GroupChatViewController)?.group.id == self.group.id }) {
-            self.navigationController?.popToViewController(groupChatViewController, animated: true)
-            return
-        }
+    @IBAction func chatButtonTapped(sender: UIBarButtonItem) {
         let groupChatViewController = GroupChatViewController()
         groupChatViewController.group = self.group
         groupChatViewController.hidesBottomBarWhenPushed = true
@@ -220,96 +122,188 @@ extension GroupDetailViewController {
     }
 }
 
-// MARK: - TableView
+// MARK: - UITableView datasource
+
 extension GroupDetailViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let posts = posts {
-            return posts.count
-        } else {
-            return 0
-        }
+        return posts.count
     }
+
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: ICYPostCell!
-        
-        let post = posts![indexPath.row]
+
+        let post = self.posts[indexPath.row]
+
+        var cell: TextPostTableViewCell!
+
+        // If the post has one or more images, use ImagePostTableViewCell, otherwise use the TextPostTableViewCell.
         if post.images?.count > 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier", forIndexPath: indexPath) as! ICYPostImageCell
+            cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostTableViewCell
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier", forIndexPath: indexPath) as! ICYPostCell
+            cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostTableViewCell
         }
-        
+
+        // Give the cell post data, this will tirgger configDisplay
         cell.post = post
-        cell.delegate = self
-        
+
+        // Set current navigation controller as the cell's delegate,
+        // for the navigation when post author's photo been tapped, etc.
+        cell.delegate = self.navigationController
+
         return cell
     }
-    
-    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let post = posts![indexPath.row]
-        var textHeight = 0
-        
-        if post.content.length > 150 {
-            // one character take 18 points height,
-            // and 150 characters will take 7 rows
-            textHeight = 18 * 7
-        } else {
-            // one row have 24 characters
-            textHeight = post.content.length / 24 * 18
-        }
-        
-        if post.images?.count > 0 {
-            return CGFloat(472 + textHeight)
-        } else {
-            return CGFloat(108 + textHeight)
-        }
+}
+
+// MARK: - UITableView delegate
+
+extension GroupDetailViewController {
+
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return self.rowHeights[indexPath.item]
     }
-    
+
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let post = posts![indexPath.row]
         let storyBoard = UIStoryboard(name: "Home", bundle: nil)
-        let postDetailVC = storyBoard.instantiateViewControllerWithIdentifier("PostView") as! PostViewController
-        postDetailVC.post = post
+        let postDetailVC = storyBoard.instantiateViewControllerWithIdentifier("PostDetailViewController") as! PostDetailViewController
+        postDetailVC.post = self.posts[indexPath.row]
         navigationController?.pushViewController(postDetailVC, animated: true)
     }
 }
 
-// MARK: - FunnyNavigation
+// MARK: - Internal Methods
 
 extension GroupDetailViewController {
-    
-    private func setTitleView() {
-        
-        let postButton = UIBarButtonItem(image: UIImage(named: "create_new"), style: .Plain, target: self, action: "createPost")
-        let chatButton = UIBarButtonItem(image: UIImage(named: "speech_bubble"), style: .Plain, target: self, action: "toChat")
-        self.navigationItem.rightBarButtonItems = [postButton, chatButton]
-        
-        let titleView = UILabel(frame: CGRectZero)
-        titleView.text = self.group.name
-        titleView.font = UIFont.boldSystemFontOfSize(17)
-        titleView.textColor = UIColor.whiteColor()
-        titleView.sizeToFit()
-        titleView.textAlignment = .Center
-        titleView.hidden = true
-        
-        self.navigationItem.titleView = titleView
-//        self.navigationItem.titleView!.frame.origin.y = -64 // invalid
-    }
-    
-    private func moveTitleView(OffsetY: CGFloat) {
-        guard let titleView = self.navigationItem.titleView else { return }
-        
-        if titleView.hidden {
-            titleView.hidden = false
+
+    // Fetch more post as use scroll down to the bottom of table view.
+    private func loadMorePosts() {
+
+        // skip if already in loading or no more contents
+        if self.isLoading || self.isExhausted {
+            return
         }
-        var y = OffsetY - self.groupNameLable.frame.origin.y
-        if y > 12 {
-            y = 12
-        } else if y < -64 {
-            y = -64
+
+        self.isLoading = true
+
+        let postRouter = Router.Group.FindPosts(id: self.group.id, before: self.oldestPost?.createDate.timeIntervalSince1970)
+
+        postRouter.response {
+
+            // Mark as exhausted when something wrong (probably 404)
+            if $0.result.isFailure {
+                self.isLoading = false
+                self.isExhausted = true
+                self.loadingIndicator.stopAnimating()
+                self.loadingLabel.hidden = false
+                return
+            }
+
+            if let newPosts = PostEntity.collection($0.result.value!) as [PostEntity]? {
+
+                // append new posts
+                self.posts += newPosts
+
+                // calculate the cell height for display these contents
+                self.rowHeights += newPosts.map { self.simulateLayout($0) }
+
+                // let table view display new contents
+                self.appendRows(newPosts.count)
+            }
+            
+            self.isLoading = false
         }
-        titleView.frame.origin.y = y
     }
-    
+
+    private func configDisplay() {
+
+        // make the navigation bar transparent
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+
+        self.joinButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.joinButton.layer.borderWidth = 2
+
+        self.title = group.name
+        self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: DefaultGroupImage)
+
+        // set the header view's size according the screen size
+        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.headerViewSize)
+
+        guard let myGroups = me.groups else { return }
+
+        if myGroups.contains(self.group.id) {
+            _ = navigationItem.rightBarButtonItems?.map {
+                $0.enabled = true
+            }
+            self.joinButton.hidden = true
+        } else {
+            _ = navigationItem.rightBarButtonItems?.map {
+                $0.enabled = false
+            }
+            self.joinButton.hidden = false
+        }
+    }
+
+    // Append specific number of rows on table view
+    private func appendRows(rows: Int) {
+
+        let firstIndex = self.posts.count - rows
+        let lastIndex = self.posts.count
+
+        var indexPathes = [NSIndexPath]()
+
+        for index in firstIndex..<lastIndex {
+            indexPathes.push(NSIndexPath(forRow: index, inSection: 0))
+        }
+
+        // hold the oldest post for pull-up loading
+        oldestPost = self.posts.last
+
+        // hold the latest post for pull-down loading
+        if firstIndex == 0 {
+            latestPost = self.posts.first
+        }
+
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
+        tableView.endUpdates()
+
+    }
+
+    // Calulate the cell height beforehand
+    private func simulateLayout(post: PostEntity) -> CGFloat {
+
+        let cell: TextPostTableViewCell
+
+        if post.images?.count > 0 {
+            cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostTableViewCell
+        } else {
+            cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostTableViewCell
+        }
+
+        cell.post = post
+
+        let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        
+        return size.height
+    }
+
+    private func configNavigationBarByScrollPosition() {
+
+        let offsetY = self.tableView.contentOffset.y
+
+        // begin fade in the navigation bar background at the point which is
+        // twice height of topbar above the bottom of the table view header area.
+        // and let the fade in complete just when the bottom of navigation bar
+        // overlap with the bottom of table header view.
+        if offsetY > self.headerHeight - TomoConst.UI.TopBarHeight * 2 {
+
+            let distance = self.headerHeight - offsetY - TomoConst.UI.TopBarHeight * 2
+            let image = Util.imageWithColor(0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
+            self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+
+            // if user scroll down so the table header view got shown, just keep the navigation bar transparent
+        } else {
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        }
+    }
 }

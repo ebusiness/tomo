@@ -552,7 +552,7 @@
                     <navigationItem key="navigationItem" title="現場Tomo" id="APc-61-gDU">
                         <barButtonItem key="rightBarButtonItem" image="create_new" id="zfo-hl-voi">
                             <connections>
-                                <segue destination="3li-mP-MbR" kind="modal" id="Kcj-iH-0Om"/>
+                                <segue destination="Ik6-i5-RVe" kind="modal" id="NWl-bG-bUq"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -591,7 +591,7 @@
             </objects>
             <point key="canvasLocation" x="471" y="-258"/>
         </scene>
-        <!--新消息-->
+        <!--Create Post View Controller-->
         <scene sceneID="nGR-th-WdV">
             <objects>
                 <viewController storyboardIdentifier="PostCreateView" id="Ik6-i5-RVe" customClass="CreatePostViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -600,11 +600,37 @@
                         <viewControllerLayoutGuide type="bottom" id="Hkl-Kh-bcQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="JVO-vY-N6U">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="106-MJ-cLp">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <color key="barTintColor" red="0.0078431372550000003" green="0.53333333329999999" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="新消息" id="uWQ-Rk-LCD">
+                                        <barButtonItem key="leftBarButtonItem" image="delete_sign" id="ZQR-M4-fT6">
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <action selector="cancel:" destination="Ik6-i5-RVe" id="omn-I3-sNu"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="发布" id="bVQ-v5-gJC">
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <action selector="post:" destination="Ik6-i5-RVe" id="oLB-Gb-0CJ"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                                <connections>
+                                    <outlet property="delegate" destination="Ik6-i5-RVe" id="XQ0-9s-uiT"/>
+                                </connections>
+                            </navigationBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MKE-Yl-YVG">
-                                <rect key="frame" x="8" y="8" width="304" height="488"/>
+                                <rect key="frame" x="8" y="72" width="304" height="488"/>
                                 <subviews>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前位置" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="txH-zg-13Q">
                                         <rect key="frame" x="16" y="455" width="56" height="17"/>
@@ -721,7 +747,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FEo-jT-qdv">
-                                <rect key="frame" x="0.0" y="504" width="320" height="216"/>
+                                <rect key="frame" x="0.0" y="568" width="320" height="216"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BF6-H9-c01">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
@@ -777,28 +803,17 @@
                         <constraints>
                             <constraint firstItem="FEo-jT-qdv" firstAttribute="top" secondItem="MKE-Yl-YVG" secondAttribute="bottom" constant="8" id="69V-ll-Iyy"/>
                             <constraint firstItem="FEo-jT-qdv" firstAttribute="leading" secondItem="JVO-vY-N6U" secondAttribute="leading" id="H30-xN-5xC"/>
-                            <constraint firstItem="MKE-Yl-YVG" firstAttribute="top" secondItem="yPG-yK-fBG" secondAttribute="bottom" constant="8" id="Pfr-6l-wHw"/>
+                            <constraint firstItem="106-MJ-cLp" firstAttribute="leading" secondItem="JVO-vY-N6U" secondAttribute="leading" id="ICi-S5-93X"/>
                             <constraint firstItem="Hkl-Kh-bcQ" firstAttribute="top" secondItem="FEo-jT-qdv" secondAttribute="top" id="Pmd-Ss-Uxw"/>
                             <constraint firstAttribute="trailing" secondItem="MKE-Yl-YVG" secondAttribute="trailing" constant="8" id="STM-dX-wU2"/>
                             <constraint firstItem="MKE-Yl-YVG" firstAttribute="leading" secondItem="JVO-vY-N6U" secondAttribute="leading" constant="8" id="VcH-dc-8M1"/>
+                            <constraint firstAttribute="trailing" secondItem="106-MJ-cLp" secondAttribute="trailing" id="XsV-hY-DQX"/>
+                            <constraint firstItem="MKE-Yl-YVG" firstAttribute="top" secondItem="106-MJ-cLp" secondAttribute="bottom" constant="8" id="hhj-53-fPw"/>
+                            <constraint firstItem="106-MJ-cLp" firstAttribute="top" secondItem="yPG-yK-fBG" secondAttribute="bottom" id="lQp-SO-Zg3"/>
                             <constraint firstAttribute="trailing" secondItem="FEo-jT-qdv" secondAttribute="trailing" id="tn2-nM-Bx2"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="新消息" id="v6G-Bg-luh">
-                        <barButtonItem key="leftBarButtonItem" image="delete_sign" id="ZQR-M4-fT6">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="cancel:" destination="Ik6-i5-RVe" id="omn-I3-sNu"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="发布" id="bVQ-v5-gJC">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="post:" destination="Ik6-i5-RVe" id="oLB-Gb-0CJ"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <outlet property="clearLocationButton" destination="xLt-qP-nU1" id="2V8-lw-xR4"/>
                         <outlet property="collectionView" destination="BF6-H9-c01" id="ach-Pg-USf"/>
@@ -817,7 +832,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x9I-ee-JZQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="qTh-eg-IWt" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1956" y="-635"/>
+            <point key="canvasLocation" x="1491" y="-612"/>
         </scene>
         <!--Post View Controller-->
         <scene sceneID="5lg-JB-8UC">
@@ -1645,25 +1660,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KRq-01-KpJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1956" y="93"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="4Ag-Mf-kgu">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3li-mP-MbR" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="HOw-ae-QJZ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.0078431372550000003" green="0.53333333329999999" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Ik6-i5-RVe" kind="relationship" relationship="rootViewController" id="Cvo-Fb-4Nh"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="er5-5W-GDd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1491" y="-635"/>
         </scene>
     </scenes>
     <resources>

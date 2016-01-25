@@ -57,7 +57,6 @@
 		2869D71C1BB545FB00D1C479 /* StationDiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2869D71B1BB545FB00D1C479 /* StationDiscoverViewController.swift */; };
 		28C647B01BBE838200253647 /* EmptyStationResult.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C647AF1BBE838200253647 /* EmptyStationResult.xib */; };
 		28CB45E11BB13FB200182924 /* GroupDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */; };
-		28CB45E71BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB45E61BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift */; };
 		290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
 		290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290134DE1AC3991C00BBFE29 /* Images.xcassets */; };
 		290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144161ADF6D890048F3D8 /* MapViewController.swift */; };
@@ -266,7 +265,6 @@
 		2869D71B1BB545FB00D1C479 /* StationDiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationDiscoverViewController.swift; path = Classes/StationDiscoverViewController.swift; sourceTree = "<group>"; };
 		28C647AF1BBE838200253647 /* EmptyStationResult.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptyStationResult.xib; path = Classes/EmptyStationResult.xib; sourceTree = "<group>"; };
 		28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDescriptionViewController.swift; path = Classes/GroupDescriptionViewController.swift; sourceTree = "<group>"; };
-		28CB45E61BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDescriptionMemberAvatarCell.swift; path = Classes/GroupDescriptionMemberAvatarCell.swift; sourceTree = "<group>"; };
 		290134D21AC3991C00BBFE29 /* tomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		290134D61AC3991C00BBFE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		290134D71AC3991C00BBFE29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -476,7 +474,6 @@
 		1FA76AFF1BA29D43004776B0 /* Group */ = {
 			isa = PBXGroup;
 			children = (
-				1FC051091BAF9F9200886F67 /* Components */,
 				1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */,
 				28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */,
 			);
@@ -525,14 +522,6 @@
 				28C647AF1BBE838200253647 /* EmptyStationResult.xib */,
 			);
 			name = "Components-old";
-			sourceTree = "<group>";
-		};
-		1FC051091BAF9F9200886F67 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				28CB45E61BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift */,
-			);
-			name = Components;
 			sourceTree = "<group>";
 		};
 		1FC0510A1BAF9FDB00886F67 /* Components */ = {
@@ -1121,7 +1110,6 @@
 				1F937FE61B58C2E3009722CE /* MyAccountViewController.swift in Sources */,
 				29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */,
 				D07232381BE1C1C700122F52 /* ExSwift.swift in Sources */,
-				28CB45E71BB156C700182924 /* GroupDescriptionMemberAvatarCell.swift in Sources */,
 				2869D71C1BB545FB00D1C479 /* StationDiscoverViewController.swift in Sources */,
 				29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */,
 				1F79C1B41B5E10DC008800E1 /* FriendCell.swift in Sources */,

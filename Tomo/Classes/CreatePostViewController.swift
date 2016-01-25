@@ -95,6 +95,10 @@ final class CreatePostViewController: UIViewController {
         }
     }
 
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
@@ -458,6 +462,14 @@ extension CreatePostViewController {
         updateLocationLabel()
     }
     
+}
+
+// MARK: - UINavigationBar Delegate
+
+extension CreatePostViewController {
+    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+        return .TopAttached
+    }
 }
 
 // MARK: - UITextView Delegate
