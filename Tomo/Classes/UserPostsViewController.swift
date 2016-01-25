@@ -8,26 +8,25 @@
 
 import UIKit
 
-class UserPostsViewController: ProfileBaseController {
-    
-    let screenHeight = UIScreen.mainScreen().bounds.height
-    let loadTriggerHeight = CGFloat(88.0)
-    
+final class UserPostsViewController: UITableViewController {
+
+    // The user been displayed
+    var user:UserEntity!
+
+    // Array holds all post entity
     var posts = [PostEntity]()
+
+    // Array holds all cell heights
+    var rowHeights = [CGFloat]()
+
     var oldestContent: PostEntity?
+
     var isLoading = false
     var isExhausted = false
     
     override func viewDidLoad() {
+
         super.viewDidLoad()
-        
-        let postCellNib = UINib(nibName: "ICYPostCell", bundle: nil)
-        self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "ICYPostCellIdentifier")
-        
-        let postImageCellNib = UINib(nibName: "ICYPostImageCell", bundle: nil)
-        self.tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "ICYPostImageCellIdentifier")
-        
-        self.clearsSelectionOnViewWillAppear = false
         
         loadMoreContent()
     }
@@ -55,21 +54,25 @@ extension UserPostsViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+
+        let post = self.posts[indexPath.row]
         
-        let post = posts[indexPath.row]
-        post.owner = self.user
-        
-        var cell: ICYPostCell!
-        
+        var cell: TextPostTableViewCell!
+
+        // If the post has one or more images, use ImagePostTableViewCell, otherwise use the TextPostTableViewCell.
         if post.images?.count > 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier", forIndexPath: indexPath) as! ICYPostImageCell
+            cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostTableViewCell
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier", forIndexPath: indexPath) as! ICYPostCell
+            cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostTableViewCell
         }
-        
+
+        // Give the cell post data, this will tirgger configDisplay
         cell.post = post
-        cell.delegate = self
-        
+
+        // Set current navigation controller as the cell's delegate,
+        // for the navigation when post author's photo been tapped, etc.
+        cell.delegate = self.navigationController
+
         return cell
     }
 }
@@ -79,44 +82,30 @@ extension UserPostsViewController {
 extension UserPostsViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
+        let vc = Util.createViewControllerWithIdentifier("PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
         vc.post = posts[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
-        
     }
-    
-    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        if let content = posts.get(indexPath.row) {
-            
-            if content.images?.count > 0 {
-                return 334
-            } else {
-                return 131
-            }
-        }
-        
-        return UITableViewAutomaticDimension
+
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return self.rowHeights[indexPath.item]
     }
-    
 }
 
 // MARK: UIScrollView Delegate
 
 extension UserPostsViewController {
     
+    // Fetch more contents when scroll down to bottom
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        
-        super.scrollViewDidScroll(scrollView)
-        
+
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
-        
-        if (contentHeight - screenHeight - loadTriggerHeight) < offsetY {
+
+        // trigger on the position of one screen height to bottom
+        if (contentHeight - TomoConst.UI.ScreenHeight) < offsetY {
             loadMoreContent()
         }
-        
     }
 }
 
@@ -126,30 +115,41 @@ extension UserPostsViewController {
     
     private func loadMoreContent() {
         
-        // skip if already in loading
-        if isLoading || isExhausted {
+        // skip if already in loading or no more contents
+        if self.isLoading || self.isExhausted {
             return
         }
         
-        isLoading = true
+        self.isLoading = true
         
-        let finder = Router.User.Posts(id: self.user.id, before: oldestContent?.createDate.timeIntervalSince1970)
-        finder.response {
+        let request = Router.User.Posts(id: self.user.id, before: oldestContent?.createDate.timeIntervalSince1970)
+
+        request.response {
+
+            // Mark as exhausted when something wrong (probably 404)
             if $0.result.isFailure {
                 self.isLoading = false
                 self.isExhausted = true
                 return
             }
+
             if let loadPosts:[PostEntity] = PostEntity.collection($0.result.value!) {
+
+                // append new contents
                 self.posts += loadPosts
+
+                // calculate the cell height for display these contents
+                self.rowHeights += loadPosts.map { self.simulateLayout($0) }
+
+                // let table view display new contents
                 self.appendRows(loadPosts.count)
-            } else {
-                // the response is not post
             }
+
             self.isLoading = false
         }
     }
-    
+
+    // Append specific number of rows on table view
     private func appendRows(rows: Int) {
         
         let firstIndex = posts.count - rows
@@ -168,6 +168,24 @@ extension UserPostsViewController {
         tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: UITableViewRowAnimation.Middle)
         tableView.endUpdates()
         
+    }
+
+    // Calulate the cell height beforehand
+    private func simulateLayout(post: PostEntity) -> CGFloat {
+
+        let cell: TextPostTableViewCell
+
+        if post.images?.count > 0 {
+            cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostTableViewCell
+        } else {
+            cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostTableViewCell
+        }
+
+        cell.post = post
+
+        let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        
+        return size.height
     }
 }
 

@@ -9,51 +9,45 @@
 import UIKit
 import SwiftyJSON
 
-final class ProfileViewController: ProfileBaseController {
+final class ProfileViewController: UITableViewController {
 
     @IBOutlet weak var genderLabel: UILabel!
-    @IBOutlet weak var addressLabel: UILabel!
-    @IBOutlet weak var fullNameLabel: UILabel!
-    @IBOutlet weak var birthDayLabel: UILabel!
-    
-    @IBOutlet weak var receivedInvitationCell: UITableViewCell!
-    @IBOutlet weak var sentInvitationCell: UITableViewCell!
 
-    @IBOutlet weak var sendMessageCell: UITableViewCell!
-    @IBOutlet weak var addFriendCell: UITableViewCell!
+    @IBOutlet weak var addressLabel: UILabel!
+
+    @IBOutlet weak var fullNameLabel: UILabel!
+
+    @IBOutlet weak var birthDayLabel: UILabel!
+
+    var user: UserEntity!
+
+    var isFriend = false
+    var isInvitedByMe = false
+    var isInvitingMe = false
     
-    let invitedSection = 0
-    let sendMessageSection = 3
+//    @IBOutlet weak var receivedInvitationCell: UITableViewCell!
+//    @IBOutlet weak var sentInvitationCell: UITableViewCell!
+//    @IBOutlet weak var sendMessageCell: UITableViewCell!
+//    @IBOutlet weak var addFriendCell: UITableViewCell!
+
+//    let invitedSection = 0
+//    let sendMessageSection = 3
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
+
+        self.determineUserStatus()
+
+        self.configDisplay()
         
-        if self.user.id == me.id {
-            self.navigationItem.rightBarButtonItem = nil
-        }
+//        if self.user.id == me.id {
+//            self.navigationItem.rightBarButtonItem = nil
+//        }
+
         self.registerForNotifications()
     }
-    
-    override func updateUI() {
-        super.updateUI()
-        
-        if nil != user.firstName && nil != user.lastName {
-            fullNameLabel.text = user.fullName()
-        }
-        
-        if let gender = user.gender {
-            genderLabel.text = gender
-        }
-        
-        if let birthDay = user.birthDay {
-            birthDayLabel.text = birthDay.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
-        }
-        
-        if let address = user.address {
-            addressLabel.text = address
-        }
-    }
+
 }
 
 // MARK: - @IBAction
@@ -61,7 +55,6 @@ final class ProfileViewController: ProfileBaseController {
 extension ProfileViewController {
     
     @IBAction func Approved(sender: UIButton) {
-        
         inviteAction(true)
     }
     
@@ -172,8 +165,21 @@ extension ProfileViewController {
 extension ProfileViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+        switch section {
+
+        case 0:
+            if !self.isFriend && !self.isInvitedByMe && !self.isInvitingMe {
+                return 1
+            }
+        case 1:
+        case 2:
+        default:
+            return
+        }
         
         if section == invitedSection {
+
             // if has any friendInvitations or invitations it's will show receivedInvitationCell / sentInvitationCell in this section
             let hasInvitation = self.getUserInvitation() != nil || me.invitations?.find { $0 == self.user.id } != nil
             
@@ -211,7 +217,7 @@ extension ProfileViewController {
         if indexPath.section == sendMessageSection {
             
             let cell = (me.friends ?? []).contains(self.user.id) ? sendMessageCell : addFriendCell
-            
+
             return cell
         }
         
@@ -235,6 +241,7 @@ extension ProfileViewController {
     }
     
     private func inviteAction(isApproved:Bool){
+
         guard let invitation = self.getUserInvitation() else { return }
         
         Router.Invitation.ModifyById(id: invitation.id, accepted: isApproved).response {
@@ -295,6 +302,45 @@ extension ProfileViewController {
     func receiveFriendRefused(notification: NSNotification) {
         self.receive(notification) {
             self.reloadButtons()
+        }
+    }
+}
+
+// MARK: - Internal methods
+
+extension ProfileViewController {
+
+    private func determineUserStatus() {
+
+        if let myFriends = me.friends {
+            self.isFriend = myFriends.contains(self.user.id)
+        }
+
+        if let myInvitations = me.invitations {
+            self.isInvitedByMe = myInvitations.contains(self.user.id)
+        }
+
+        if let _ = me.friendInvitations.find({ $0.from.id == self.user.id }) {
+            self.isInvitingMe = true
+        }
+    }
+
+    private func configDisplay() {
+
+        if self.user.firstName != nil && self.user.lastName != nil  {
+            fullNameLabel.text = user.fullName()
+        }
+
+        if let gender = self.user.gender {
+            genderLabel.text = gender
+        }
+
+        if let birthDay = self.user.birthDay {
+            birthDayLabel.text = birthDay.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
+        }
+
+        if let address = self.user.address {
+            addressLabel.text = address
         }
     }
 }
