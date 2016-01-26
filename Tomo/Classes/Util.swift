@@ -221,6 +221,29 @@ extension Util {
         }
 
     }
+    /**
+     find the different of dictionary
+     
+     - parameter leftValue: left dictionary
+     - parameter rightValue: right dictionary
+     
+     - returns: (added, removed)
+     */
+    class func diff(leftValue: [NSObject]?, rightValue: [NSObject]?) -> ([NSObject], [NSObject]) {
+        let addedItems = objectChanged(leftValue, newValue: rightValue)
+        let removedItems = objectChanged(rightValue, newValue: leftValue)
+        
+        return (addedItems, removedItems)
+    }
+    
+    class func objectChanged(oldValue: [NSObject]?, newValue: [NSObject]?) -> [NSObject] {
+        
+        guard let newValue = newValue else { return [] }
+        
+        return newValue.filter({ value in
+            !(oldValue ?? []).contains({$0 == value})
+        })
+    }
 
 }
 extension UIApplication {

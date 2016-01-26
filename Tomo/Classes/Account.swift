@@ -9,31 +9,36 @@
 import SwiftyJSON
 class Account: UserEntity {
     
-    private var friendsClosures = Array<([Int: UserEntity], [Int: UserEntity]) -> ()>()
-    private var groupsClosures = Array<([Int: GroupEntity], [Int: GroupEntity]) -> ()>()
+    private var friendsClosures = Array<([UserEntity], [UserEntity]) -> ()>()
+    private var groupsClosures = Array<([GroupEntity], [GroupEntity]) -> ()>()
+    private var friendInvitationsClosures = Array<([NotificationEntity], [NotificationEntity]) -> ()>()
     
     private var cacheData = [String: NSObject]() // mongodb->ObjectId : userEntity/GroupEntity
     
-    private var friendInvitationsClosures = Array<([Int: NotificationEntity], [Int: NotificationEntity]) -> ()>()
     
     var telNo: String?
     
     var friends: [String]? {
         didSet{
             gcd.async(.Default){
-                let (addValues, removeValues) = self.diff(oldValue, newValue: self.friends)
-                var addedFriends = [Int: UserEntity]()
-                addValues.forEach({ (index, uid) -> () in
-                    guard let uid = uid as? String else { return }
+                let (addValues, removeValues) = Util.diff(oldValue, rightValue: self.friends)
+                var addedFriends = [UserEntity]()
+                addValues.forEach({
+                    guard let uid = $0 as? String else { return }
                     guard let user = self.cacheData[uid] as? UserEntity else { return }
-                    addedFriends[index] = user
+                    addedFriends.append(user)
                 })
                 
-                var removedFriends = [Int: UserEntity]()
-                removeValues.forEach({ (index, uid) -> () in
-                    guard let uid = uid as? String else { return }
-                    guard let user = self.cacheData[uid] as? UserEntity else { return }
-                    removedFriends[index] = user
+                var removedFriends = [UserEntity]()
+                removeValues.forEach({
+                    guard let uid = $0 as? String else { return }
+                    if let user = self.cacheData[uid] as? UserEntity {
+                        removedFriends.append(user)
+                    } else {
+                        let user = UserEntity()
+                        user.id = uid
+                        removedFriends.append(user)
+                    }
                 })
                 self.friendsClosures.forEach {
                     $0(addedFriends, removedFriends)
@@ -46,19 +51,24 @@ class Account: UserEntity {
     var groups: [String]? {
         didSet{
             gcd.async(.Default){
-                let (addValues, removeValues) = self.diff(oldValue, newValue: self.groups)
-                var addedGroups = [Int: GroupEntity]()
-                addValues.forEach({ (index, gid) -> () in
-                    guard let gid = gid as? String else { return }
+                let (addValues, removeValues) = Util.diff(oldValue, rightValue: self.groups)
+                var addedGroups = [GroupEntity]()
+                addValues.forEach({
+                    guard let gid = $0 as? String else { return }
                     guard let group = self.cacheData[gid] as? GroupEntity else { return }
-                    addedGroups[index] = group
+                    addedGroups.append(group)
                 })
                 
-                var removedGroups = [Int: GroupEntity]()
-                removeValues.forEach({ (index, gid) -> () in
-                    guard let gid = gid as? String else { return }
-                    guard let group = self.cacheData[gid] as? GroupEntity else { return }
-                    removedGroups[index] = group
+                var removedGroups = [GroupEntity]()
+                removeValues.forEach({
+                    guard let gid = $0 as? String else { return }
+                    if let group = self.cacheData[gid] as? GroupEntity {
+                        removedGroups.append(group)
+                    } else {
+                        let group = GroupEntity()
+                        group.id = gid
+                        removedGroups.append(group)
+                    }
                 })
                 self.groupsClosures.forEach {
                     $0(addedGroups, removedGroups)
@@ -75,9 +85,9 @@ class Account: UserEntity {
     var friendInvitations: [NotificationEntity]! {
         didSet{
             gcd.async(.Default){
-                let (addValues, removeValues) = self.diff(oldValue, newValue: self.friendInvitations)
-                guard let add = addValues as? [Int: NotificationEntity] else { return }
-                guard let remove = removeValues as? [Int: NotificationEntity] else { return }
+                let (addValues, removeValues) = Util.diff(oldValue, rightValue: self.friendInvitations)
+                guard let add = addValues as? [NotificationEntity] else { return }
+                guard let remove = removeValues as? [NotificationEntity] else { return }
                 self.friendInvitationsClosures.forEach {
                     $0(add, remove)
                 }
@@ -226,37 +236,16 @@ extension Account {
 }
 
 extension Account {
-    func addFriendsObserver(closure : ([Int: UserEntity], [Int: UserEntity]) -> ()) {
+    func addFriendsObserver(closure : ([UserEntity], [UserEntity]) -> ()) {
         friendsClosures.append(closure)
     }
     
-    func addGroupsObserver(closure : ([Int: GroupEntity], [Int: GroupEntity]) -> ()) {
+    func addGroupsObserver(closure : ([GroupEntity], [GroupEntity]) -> ()) {
         groupsClosures.append(closure)
     }
     
-    func addFriendInvitationsObserver(closure : ([Int: NotificationEntity], [Int: NotificationEntity]) -> ()) {
+    func addFriendInvitationsObserver(closure : ([NotificationEntity], [NotificationEntity]) -> ()) {
         friendInvitationsClosures.append(closure)
-    }
-    
-    private func diff(oldValue: [NSObject]?, newValue: [NSObject]?) -> ([Int: NSObject], [Int: NSObject]) {
-        let addedItems = self.objectChanged(oldValue, newValue: newValue)
-        let removedItems = self.objectChanged(newValue, newValue: oldValue)
-        
-        return (addedItems, removedItems)
-    }
-    
-    private func objectChanged(oldValue: [NSObject]?, newValue: [NSObject]?) -> [Int: NSObject] {
-        var items = [Int: NSObject]()
-        guard let newValue = newValue else { return items }
-        
-        let values = newValue.filter({ value in
-            !(oldValue ?? []).contains({$0 == value})
-        })
-        
-        values.forEach {
-            items[newValue.indexOf($0)!] = $0
-        }
-        return items
     }
 
 }
