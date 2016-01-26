@@ -72,29 +72,6 @@ final class CreatePostViewController: UIViewController {
         self.postTextView.becomeFirstResponder()
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
-        if segue.identifier != "postCreated" { return }
-        
-        if let sender: AnyObject = sender {
-            
-            guard let post = sender as? PostEntity else { return }
-            
-            post.owner = me
-            
-            if let homeViewController = segue.destinationViewController as? HomeViewController {
-                
-                homeViewController.contents.insert(post, atIndex: 0)
-                homeViewController.latestContent = post
-                homeViewController.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Middle)
-                
-            } else if let _ = segue.destinationViewController as? GroupDetailViewController {
-                
-            }
-            
-        }
-    }
-
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
@@ -351,8 +328,6 @@ extension CreatePostViewController {
             default:
                 break
             }
-            
-            Util.showHUD()
         }
     }
     
@@ -387,8 +362,6 @@ extension CreatePostViewController {
     }
 
     @IBAction func post(sender: AnyObject) {
-        
-        Util.showHUD()
         
         if (collectionView.indexPathsForSelectedItems() ?? []).count > 0 {
             self.uploadMeida(postContent)
@@ -630,7 +603,6 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigatio
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

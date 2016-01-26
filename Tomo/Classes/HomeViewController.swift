@@ -75,7 +75,7 @@ extension HomeViewController {
     }
 
     @IBAction func addedPost(segue: UIStoryboardSegue) {
-        // exit addPostView
+        self.loadNewContent()
     }
 }
 
@@ -222,9 +222,7 @@ extension HomeViewController {
                 self.contents += loadPosts
 
                 // calculate the cell height for display these contents
-                self.rowHeights += loadPosts.map { post -> CGFloat in
-                    return self.simulateLayout(post as! PostEntity)
-                }
+                self.rowHeights += loadPosts.map { self.simulateLayout($0 as! PostEntity) }
 
                 // if the recommend contents arrived, insert them in the middle of new content
                 if let recommendStations: AnyObject = self.recommendGroups as? AnyObject {
@@ -274,6 +272,7 @@ extension HomeViewController {
             // prepend new contents
             if let loadPosts:[PostEntity] = PostEntity.collection($0.result.value!) {
                 self.contents = loadPosts + self.contents
+                self.rowHeights = loadPosts.map { self.simulateLayout($0) } + self.rowHeights
                 self.prependRows(loadPosts.count)
             }
         }
