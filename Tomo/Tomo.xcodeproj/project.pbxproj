@@ -161,8 +161,6 @@
 		D0960AAC1BC376FB00A63733 /* UltravisualLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0960AAB1BC376FB00A63733 /* UltravisualLayout.swift */; };
 		D099B6181BDA3B63006C9D01 /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D099B6171BDA3B63006C9D01 /* LocationController.swift */; };
 		D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */; };
-		D0A0C02E1B5F594C00ABFA5F /* ProfileBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C02D1B5F594C00ABFA5F /* ProfileBaseController.swift */; };
-		D0A0C0301B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */; };
 		D0A0C0321B5F5BF900ABFA5F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C0311B5F5BF900ABFA5F /* ProfileViewController.swift */; };
 		D0A0C0341B5F5D0500ABFA5F /* UserPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A0C0331B5F5D0500ABFA5F /* UserPostsViewController.swift */; };
 		D0A104911BEAF1C700AEE356 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A104901BEAF1C700AEE356 /* AgreementViewController.swift */; };
@@ -332,8 +330,6 @@
 		D0960AAB1BC376FB00A63733 /* UltravisualLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UltravisualLayout.swift; sourceTree = "<group>"; };
 		D099B6171BDA3B63006C9D01 /* LocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationController.swift; path = Classes/LocationController.swift; sourceTree = "<group>"; };
 		D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Profile.storyboard; path = Classes/Profile.storyboard; sourceTree = "<group>"; };
-		D0A0C02D1B5F594C00ABFA5F /* ProfileBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileBaseController.swift; path = Classes/ProfileBaseController.swift; sourceTree = "<group>"; };
-		D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileHeaderViewController.swift; path = Classes/ProfileHeaderViewController.swift; sourceTree = "<group>"; };
 		D0A0C0311B5F5BF900ABFA5F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = Classes/ProfileViewController.swift; sourceTree = "<group>"; };
 		D0A0C0331B5F5D0500ABFA5F /* UserPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserPostsViewController.swift; path = Classes/UserPostsViewController.swift; sourceTree = "<group>"; };
 		D0A104901BEAF1C700AEE356 /* AgreementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AgreementViewController.swift; path = Classes/AgreementViewController.swift; sourceTree = "<group>"; };
@@ -428,8 +424,8 @@
 		1F985DF41B60B748008D5369 /* User */ = {
 			isa = PBXGroup;
 			children = (
-				D012F5931BBBC48D00D5293D /* UserProfile */,
 				D0A0C0331B5F5D0500ABFA5F /* UserPostsViewController.swift */,
+				D0A0C0311B5F5BF900ABFA5F /* ProfileViewController.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -773,16 +769,6 @@
 			name = Components;
 			sourceTree = "<group>";
 		};
-		D012F5931BBBC48D00D5293D /* UserProfile */ = {
-			isa = PBXGroup;
-			children = (
-				D0A0C0311B5F5BF900ABFA5F /* ProfileViewController.swift */,
-				D0A0C02F1B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift */,
-				D0A0C02D1B5F594C00ABFA5F /* ProfileBaseController.swift */,
-			);
-			name = UserProfile;
-			sourceTree = "<group>";
-		};
 		D07793831B704EA00056B7CB /* picker */ = {
 			isa = PBXGroup;
 			children = (
@@ -1068,7 +1054,6 @@
 				D072323D1BE1C1C700122F52 /* Range.swift in Sources */,
 				293EB4251B132B06006BAF27 /* JSQVoiceMediaItem.m in Sources */,
 				D07232391BE1C1C700122F52 /* Float.swift in Sources */,
-				D0A0C02E1B5F594C00ABFA5F /* ProfileBaseController.swift in Sources */,
 				283771981BC3A329001B06D3 /* ICYPostImageCell.swift in Sources */,
 				1FCA1E651B7221F7000F2936 /* NotificationEntity.swift in Sources */,
 				D0FDC3541C1EA09F0045826B /* Alamofire-SwiftyJSON.swift in Sources */,
@@ -1102,7 +1087,6 @@
 				1FF693121C1EB88800777BD5 /* LandingViewController.swift in Sources */,
 				D07793851B704F290056B7CB /* PickerTableViewController.swift in Sources */,
 				1F79C1B81B5E730E008800E1 /* SearchFriendViewController.swift in Sources */,
-				D0A0C0301B5F5B1E00ABFA5F /* ProfileHeaderViewController.swift in Sources */,
 				D0891C961B8AF5A600701CC7 /* SearchFriendCell.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
 				D012F5971BBBC4DD00D5293D /* MyStationsViewController.swift in Sources */,

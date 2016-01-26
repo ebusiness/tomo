@@ -17,6 +17,8 @@ final class ProfileViewController: UITableViewController {
 
     @IBOutlet weak var statusLabel: UILabel!
 
+    @IBOutlet weak var bioLabel: UILabel!
+
     @IBOutlet weak var genderLabel: UILabel!
 
     @IBOutlet weak var addressLabel: UILabel!
@@ -33,48 +35,92 @@ final class ProfileViewController: UITableViewController {
 
     @IBOutlet weak var refuseButton: UIButton!
 
+    // Displayed User Entity
     var user: UserEntity!
 
-    var isFriend = false
-    var isInvitedByMe = false
-    var isInvitingMe = false
-    
-//    @IBOutlet weak var receivedInvitationCell: UITableViewCell!
-//    @IBOutlet weak var sentInvitationCell: UITableViewCell!
-//    @IBOutlet weak var sendMessageCell: UITableViewCell!
-//    @IBOutlet weak var addFriendCell: UITableViewCell!
+    // The relationship of me and displayed user
+    var relation = Relation.Stranger
 
-//    let invitedSection = 0
-//    let sendMessageSection = 3
+    let headerViewSize = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.ScreenHeight * 0.382 + 58)
+
+    enum Relation {
+
+        case Stranger
+
+        case Friend
+
+        case InvitedByMe
+
+        case InvitedingMe
+
+        case Blocking
+
+        func message(user: UserEntity) -> String {
+            switch self {
+            case .InvitedByMe:
+                return "好友邀请已发送，等待对方接受"
+            case .Blocking:
+                return "您已屏蔽此用户"
+            default:
+                return ""
+            }
+        }
+    }
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
 
-        self.determineUserStatus()
+        self.configUserStatus()
 
+        // config display here or there will be a jump after the user info reload below
         self.configDisplay()
-        
-//        if self.user.id == me.id {
-//            self.navigationItem.rightBarButtonItem = nil
-//        }
 
-//        self.registerForNotifications()
+        // load fully populated user entity
+        Router.User.FindById(id: self.user.id).response {
+
+            if $0.result.isFailure { return }
+
+            self.user = UserEntity($0.result.value!)
+
+            // config display with fully populate user entity
+            self.configUserInfo()
+        }
+
+        // listening for the event of friend
+        self.registerNotifications()
     }
 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let vc = segue.destinationViewController as? UserPostsViewController {
+            vc.user = self.user
+        }
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        // restore the normal navigation bar before disappear
+        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = nil
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        // make the navigation bar transparent
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+    }
 }
 
 // MARK: - @IBAction
 
 extension ProfileViewController {
     
-    @IBAction func Approved(sender: UIButton) {
-//        inviteAction(true)
+    @IBAction func acceptInvitation(sender: UIButton) {
+        self.invitationAccept(true)
     }
     
-    @IBAction func Declined(sender: UIButton) {
+    @IBAction func refuseInvitation(sender: UIButton) {
         Util.alert(self, title: "拒绝好友邀请", message: "拒绝 " + self.user.nickName + " 的好友邀请么") { _ in
-//            self.inviteAction(false)
+            self.invitationAccept(false)
         }
     }
 
@@ -124,7 +170,7 @@ extension ProfileViewController {
                     Router.Contact.Delete(id: self.user.id).response {
                         if $0.result.isFailure { return }
                         me.removeFriend(self.user)
-//                        self.reloadButtons()
+                        self.configUserStatus()
                     }
                 }
             }
@@ -139,6 +185,7 @@ extension ProfileViewController {
         sender.userInteractionEnabled = false
         
         Router.Invitation.SendTo(id: self.user.id).response {
+
             if $0.result.isFailure {
                 sender.userInteractionEnabled = true
                 return
@@ -147,16 +194,17 @@ extension ProfileViewController {
             if me.invitations == nil {
                 me.invitations = []
             }
-            me.invitations?.append(self.user.id)
-            Util.showSuccess("已发送交友请求")
-//            self.reloadButtons()
 
-            sender.userInteractionEnabled = true
+            me.invitations?.append(self.user.id)
+
+            self.configUserStatus()
         }
     }
     
     @IBAction func sendMessage(sender: UIButton) {
-        
+
+        // TODO: infinite loop here
+
         let messageViewController = self.navigationController?.childViewControllers.find { ($0 as? MessageViewController)?.friend.id == self.user.id } as? MessageViewController
         
         if let messageViewController = messageViewController {
@@ -172,146 +220,128 @@ extension ProfileViewController {
     }
 }
 
-// MARK: - TableView DataSource & Delegate
-
-extension ProfileViewController {
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        switch section {
-
-        case 0:
-            return 4
-        case 1:
-            return 1
-        case 2:
-            if self.isFriend {
-                return 1
-            } else {
-                return 0
-            }
-        default:
-            return 0
-        }
-    }
-}
-
-// MARK: - private
-
-extension ProfileViewController {
-    
-//    private func reloadButtons() {
-//        self.tableView.beginUpdates()
-//        self.tableView.reloadSections(NSIndexSet(index: invitedSection), withRowAnimation: .Automatic)
-//        self.tableView.reloadSections(NSIndexSet(index: sendMessageSection), withRowAnimation: .Automatic)
-//        self.tableView.endUpdates()
-//    }
-
-//    private func getUserInvitation() -> NotificationEntity? {
-//        return me.friendInvitations.find { $0.from.id == self.user.id }
-//    }
-
-//    private func inviteAction(isApproved:Bool){
-//
-//        guard let invitation = self.getUserInvitation() else { return }
-//        
-//        Router.Invitation.ModifyById(id: invitation.id, accepted: isApproved).response {
-//            if $0.result.isFailure { return }
-//            
-//            if isApproved {
-//                Util.showSuccess(self.user.nickName + " 已成为您的好友")
-//                me.addFriend(self.user)
-//            } else {
-//                Util.showSuccess("您拒绝了 " + self.user.nickName + " 的好友邀请")
-//                me.removeFriend(self.user)
-//            }
-//            self.reloadButtons()
-//        }
-//    }
-}
-
 // MARK: - NSNotificationCenter
 
 extension ProfileViewController {
     
-//    private func registerForNotifications() {
-//        ListenerEvent.FriendBreak.addObserver(self, selector: Selector("receiveFriendBreak:"))
-//        ListenerEvent.FriendInvited.addObserver(self, selector: Selector("receiveFriendInvited:"))
-//        ListenerEvent.FriendAccepted.addObserver(self, selector: Selector("receiveFriendAccepted:"))
-//        ListenerEvent.FriendRefused.addObserver(self, selector: Selector("receiveFriendRefused:"))
-//    }
-//    
-//    private func receive(notification: NSNotification, done: ()->() ){
-//        guard let userInfo = notification.userInfo else { return }
-//        
-//        let json = JSON(userInfo)
-//        if self.user.id == json["from"]["id"].stringValue {
-//            gcd.sync(.Main, closure: { () -> () in
-//                done()
-//            })
-//        }
-//    }
-//    
-//    func receiveFriendBreak(notification: NSNotification) {
-//        self.receive(notification) {
-//            self.reloadButtons()
-//        }
-//    }
-//    
-//    func receiveFriendInvited(notification: NSNotification) {
-//        self.receive(notification) {
-//            self.reloadButtons()
-//        }
-//    }
-//    
-//    func receiveFriendAccepted(notification: NSNotification) {
-//        self.receive(notification) {
-//            self.reloadButtons()
-//        }
-//    }
-//    
-//    func receiveFriendRefused(notification: NSNotification) {
-//        self.receive(notification) {
-//            self.reloadButtons()
-//        }
-//    }
+    private func registerNotifications() {
+        ListenerEvent.FriendBreak.addObserver(self, selector: Selector("receive:"))
+        ListenerEvent.FriendInvited.addObserver(self, selector: Selector("receive:"))
+        ListenerEvent.FriendAccepted.addObserver(self, selector: Selector("receive:"))
+        ListenerEvent.FriendRefused.addObserver(self, selector: Selector("receive:"))
+    }
+    
+    func receive(notification: NSNotification){
+        guard let userInfo = notification.userInfo else { return }
+        
+        let json = JSON(userInfo)
+        if self.user.id == json["from"]["id"].stringValue {
+            gcd.sync(.Main, closure: { () -> () in
+                self.configUserStatus()
+            })
+        }
+    }
 }
 
 // MARK: - Internal methods
 
 extension ProfileViewController {
 
-    private func determineUserStatus() {
+    private func configUserStatus() {
 
-        if let myFriends = me.friends {
-            self.isFriend = myFriends.contains(self.user.id)
+        self.relation = .Stranger
+
+        if let myFriends = me.friends where myFriends.contains(self.user.id) {
+            self.relation = .Friend
         }
 
-        if let myInvitations = me.invitations {
-            self.isInvitedByMe = myInvitations.contains(self.user.id)
+        if let myInvitations = me.invitations where myInvitations.contains(self.user.id) {
+            self.relation = .InvitedByMe
         }
 
         if let _ = me.friendInvitations.find({ $0.from.id == self.user.id }) {
-            self.isInvitingMe = true
+            self.relation = .InvitedingMe
+        }
+
+        self.statusLabel.text = self.relation.message(self.user)
+
+        switch self.relation {
+
+        case .Stranger:
+            self.addFriendButton.hidden = false
+            self.messageButton.hidden = true
+            self.acceptButton.hidden = true
+            self.refuseButton.hidden = true
+
+        case .Friend:
+            self.addFriendButton.hidden = true
+            self.messageButton.hidden = false
+            self.acceptButton.hidden = true
+            self.refuseButton.hidden = true
+
+        case .InvitedByMe:
+            self.addFriendButton.hidden = true
+            self.messageButton.hidden = true
+            self.acceptButton.hidden = true
+            self.refuseButton.hidden = true
+
+        case .InvitedingMe:
+            self.addFriendButton.hidden = true
+            self.messageButton.hidden = true
+            self.acceptButton.hidden = false
+            self.refuseButton.hidden = false
+
+        case .Blocking:
+            self.addFriendButton.hidden = true
+            self.messageButton.hidden = true
+            self.acceptButton.hidden = true
+            self.refuseButton.hidden = true
         }
     }
 
     private func configDisplay() {
 
+        // set the header view's size according the screen size
+        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.headerViewSize)
+
+        // set title with user nickname
         self.navigationItem.title = self.user.nickName
 
+        // give the buttons white border
+        self.avatarImageView.layer.borderWidth = 2
+        self.avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
+
+        self.addFriendButton.layer.borderWidth = 2
+        self.addFriendButton.layer.borderColor = UIColor.whiteColor().CGColor
+
+        self.messageButton.layer.borderWidth = 2
+        self.messageButton.layer.borderColor = UIColor.whiteColor().CGColor
+
+        self.acceptButton.layer.borderWidth = 2
+        self.acceptButton.layer.borderColor = UIColor.whiteColor().CGColor
+
+        self.refuseButton.layer.borderWidth = 2
+        self.refuseButton.layer.borderColor = UIColor.whiteColor().CGColor
+
+        self.configUserInfo()
+    }
+
+    private func configUserInfo() {
+
         if let cover = self.user.cover {
-            self.avatarImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: TomoConst.Image.DefaultCover)
+            self.coverImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: TomoConst.Image.DefaultCover)
         }
 
         if let photo = self.user.photo {
-            self.avatarImageView.layer.borderWidth = 2
-            self.avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
             self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: TomoConst.Image.DefaultAvatar)
         }
 
         if self.user.firstName != nil && self.user.lastName != nil  {
             self.fullNameLabel.text = user.fullName()
+        }
+
+        if let bio = self.user.bio {
+            self.bioLabel.text = bio
         }
 
         if let gender = self.user.gender {
@@ -325,25 +355,27 @@ extension ProfileViewController {
         if let address = self.user.address {
             self.addressLabel.text = address
         }
+    }
 
-        self.statusLabel.text = self.user.bio
+    private func invitationAccept(accept: Bool){
 
-        if !self.isFriend && !self.isInvitedByMe && !self.isInvitingMe {
-            self.addFriendButton.hidden = false
-        }
+        let invitation = me.friendInvitations.find { $0.from.id == self.user.id }
 
-        if self.isFriend {
-            self.messageButton.hidden = false
-        }
+        if let invitation = invitation {
 
-        if self.isInvitingMe {
-            self.acceptButton.hidden = false
-            self.refuseButton.hidden = false
-            self.statusLabel.text = "\(self.user.nickName)邀请您成为好友"
-        }
+            Router.Invitation.ModifyById(id: invitation.id, accepted: accept).response {
 
-        if self.isInvitedByMe {
-            self.statusLabel.text = "好友邀请已发送，等待对方验证通过"
+                if $0.result.isFailure { return }
+
+                if accept {
+                    me.addFriend(self.user)
+                } else {
+                    me.removeFriend(self.user)
+                }
+
+                self.configUserStatus()
+            }
         }
     }
+
 }

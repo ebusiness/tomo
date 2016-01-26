@@ -10,8 +10,18 @@ import UIKit
 
 final class UserPostsViewController: UITableViewController {
 
+    @IBOutlet weak var coverImageView: UIImageView!
+
+    @IBOutlet weak var avatarImageView: UIImageView!
+
+    @IBOutlet weak var bioLabel: UILabel!
+
+    @IBOutlet weak var loadingLabel: UILabel!
+
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+
     // The user been displayed
-    var user:UserEntity!
+    var user: UserEntity!
 
     // Array holds all post entity
     var posts = [PostEntity]()
@@ -23,26 +33,29 @@ final class UserPostsViewController: UITableViewController {
 
     var isLoading = false
     var isExhausted = false
+
+    let headerHeight = TomoConst.UI.ScreenHeight * 0.382 - 58
+    let headerViewSize = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.ScreenHeight * 0.382 + 58)
     
     override func viewDidLoad() {
 
         super.viewDidLoad()
+
+        self.configDisplay()
         
-        loadMoreContent()
+        self.loadMoreContent()
     }
-    
-    // MARK: - Navigation
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        super.prepareForSegue(segue, sender: sender)
-        if let vc = segue.destinationViewController as? ProfileHeaderViewController {
-            
-            vc.photoImageViewTapped = { (sender)->() in
-                
-                self.navigationController?.popViewControllerAnimated(true)
-            }
-        }
+
+    override func viewWillDisappear(animated: Bool) {
+        // restore the normal navigation bar before disappear
+        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = nil
     }
+
+    override func viewWillAppear(animated: Bool) {
+        self.configNavigationBarByScrollPosition()
+    }
+
 }
 
 // MARK: UITableView DataSource
@@ -106,12 +119,42 @@ extension UserPostsViewController {
         if (contentHeight - TomoConst.UI.ScreenHeight) < offsetY {
             loadMoreContent()
         }
+
+        self.configNavigationBarByScrollPosition()
     }
 }
 
 // MARK: Private methods
 
 extension UserPostsViewController {
+
+    private func configDisplay() {
+
+        // make the navigation bar transparent
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+
+        // set the header view's size according the screen size
+        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.headerViewSize)
+
+        // give the avatar white border
+        self.avatarImageView.layer.borderWidth = 2
+        self.avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
+
+        self.title = self.user.nickName
+
+        if let cover = self.user.cover {
+            self.coverImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: TomoConst.Image.DefaultCover)
+        }
+
+        if let photo = self.user.photo {
+            self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: TomoConst.Image.DefaultAvatar)
+        }
+
+        if let bio = self.user.bio {
+            self.bioLabel.text = bio
+        }
+    }
     
     private func loadMoreContent() {
         
@@ -130,6 +173,8 @@ extension UserPostsViewController {
             if $0.result.isFailure {
                 self.isLoading = false
                 self.isExhausted = true
+                self.loadingIndicator.stopAnimating()
+                self.loadingLabel.hidden = false
                 return
             }
 
@@ -186,6 +231,26 @@ extension UserPostsViewController {
         let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
         
         return size.height
+    }
+
+    private func configNavigationBarByScrollPosition() {
+
+        let offsetY = self.tableView.contentOffset.y
+
+        // begin fade in the navigation bar background at the point which is
+        // twice height of topbar above the bottom of the table view header area.
+        // and let the fade in complete just when the bottom of navigation bar
+        // overlap with the bottom of table header view.
+        if offsetY > self.headerHeight - TomoConst.UI.TopBarHeight * 2 {
+
+            let distance = self.headerHeight - offsetY - TomoConst.UI.TopBarHeight * 2
+            let image = Util.imageWithColor(0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
+            self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+
+            // if user scroll down so the table header view got shown, just keep the navigation bar transparent
+        } else {
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        }
     }
 }
 
