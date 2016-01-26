@@ -117,24 +117,35 @@ extension ContactListViewController {
         print("numberOfSections:\(self.tableView.numberOfSections)")
         print("invitationSection:\(self.invitationSection)")
         print("contactSection:\(self.contactSection)")
+        print("oldValues Count:\(oldValues.count)")
+        print("newValues Count:\(newValues.count)")
         
         let (added, removed) = Util.diff(oldValues, rightValue: newValues)
         guard added.count > 0 || removed.count > 0 else { return }
         
-        var insertSectionIndexs = [Int]()
-        var deleteSectionIndexs = [Int]()
-        var reloadSectionIndexs = [Int]()
+        print("added Count:\(added.count)")
+        print("removed Count:\(removed.count)")
+        
+        var removeIndexPaths = self.indexPathsOfChanged(removed, values: oldValues)
+        var addIndexPaths = self.indexPathsOfChanged(added, values: newValues)
+        
+        print("##invitationContacts Count:\(invitationContacts.count)")
+        print("##MessageContacts Count:\(MessageContacts.count)")
         
         gcd.sync(.Main){
+            
+            self.updateBadgeNumber()
+            
+            guard self.tabBarController?.selectedViewController?.childViewControllers.last is ContactListViewController else {
+                self.tableView.reloadData()
+                return
+            }
+            
             self.tableView.beginUpdates()
             // /////////////////////////////
             if self.tableView.numberOfSections == 0 {
-                print("#insertSections:\(self.invitationSection)")
-//                insertSectionIndexs.append(self.invitationSection)
                 self.tableView.insertSections(NSIndexSet(index: self.invitationSection), withRowAnimation: .Middle)
                 if self.contactSection != self.invitationSection {
-                    print("#insertSections:\(self.contactSection)")
-//                    insertSectionIndexs.append(self.contactSection)
                     self.tableView.insertSections(NSIndexSet(index: self.contactSection), withRowAnimation: .Middle)
                 }
             }
@@ -144,9 +155,21 @@ extension ContactListViewController {
                 if self.invitationContacts.count == 0 && self.MessageContacts.count == 0 {
                     self.tableView.deleteSections(NSIndexSet(index: self.invitationSection), withRowAnimation: .Middle)
                 } else {
-                    self.tableView.reloadSections(NSIndexSet(index: self.invitationSection), withRowAnimation: .Middle)
+                    if removeIndexPaths.count > 0 {
+                        self.tableView.deleteRowsAtIndexPaths(removeIndexPaths, withRowAnimation: .Middle)
+                    }
+                    
                     if self.contactSection != self.invitationSection {
-                        self.tableView.insertSections(NSIndexSet(index: self.contactSection), withRowAnimation: .Middle)
+                        if oldValues.first is NotificationEntity {
+                            self.tableView.insertSections(NSIndexSet(index: self.contactSection), withRowAnimation: .Middle)
+                            addIndexPaths = addIndexPaths.filter({$0.section != self.contactSection })
+                        } else {
+                            self.tableView.insertSections(NSIndexSet(index: self.invitationSection), withRowAnimation: .Middle)
+                            addIndexPaths = addIndexPaths.filter({$0.section != self.invitationSection })
+                        }
+                    }
+                    if addIndexPaths.count > 0 {
+                        self.tableView.insertRowsAtIndexPaths(addIndexPaths, withRowAnimation: .Middle)
                     }
                 }
             }
@@ -158,86 +181,54 @@ extension ContactListViewController {
                     self.tableView.deleteSections(NSIndexSet(index: self.invitationSection), withRowAnimation: .Middle)
                 }
                 if self.invitationContacts.count > 0 && self.MessageContacts.count > 0 {
-                    self.tableView.reloadSections(NSIndexSet(index: self.contactSection), withRowAnimation: .Middle)
-                    self.tableView.reloadSections(NSIndexSet(index: self.invitationSection), withRowAnimation: .Middle)
+                    print("removeIndexPaths :\(removeIndexPaths)")
+                    print("addIndexPaths :\(addIndexPaths)")
+                    if removeIndexPaths.count > 0 {
+                        self.tableView.deleteRowsAtIndexPaths(removeIndexPaths, withRowAnimation: .Middle)
+                    }
+                    if addIndexPaths.count > 0 {
+                        self.tableView.insertRowsAtIndexPaths(addIndexPaths, withRowAnimation: .Middle)
+                    }
                 } else {
                     if self.invitationContacts.count > 0 {
                         self.tableView.deleteSections(NSIndexSet(index: 1), withRowAnimation: .Middle)
-                        self.tableView.reloadSections(NSIndexSet(index: self.invitationSection), withRowAnimation: .Middle)
+                        removeIndexPaths = removeIndexPaths.filter({ $0.section != 1 })
+                        if removeIndexPaths.count > 0 {
+                            self.tableView.deleteRowsAtIndexPaths(removeIndexPaths, withRowAnimation: .Middle)
+                        }
+                        if addIndexPaths.count > 0 {
+                            self.tableView.insertRowsAtIndexPaths(addIndexPaths, withRowAnimation: .Middle)
+                        }
                     }
                     
                     if self.MessageContacts.count > 0 {
                         self.tableView.deleteSections(NSIndexSet(index: self.invitationSection), withRowAnimation: .Middle)
-                        self.tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Middle)
+                        removeIndexPaths = removeIndexPaths.filter({ $0.section != self.invitationSection })
+                        if removeIndexPaths.count > 0 {
+                            self.tableView.deleteRowsAtIndexPaths(removeIndexPaths, withRowAnimation: .Middle)
+                        }
+                        if addIndexPaths.count > 0 {
+                            self.tableView.insertRowsAtIndexPaths(addIndexPaths, withRowAnimation: .Middle)
+                        }
                     }
                 }
             }
             self.tableView.endUpdates()
         }
-        return
-        
-        
-        
-        
-        
-        
-        
-        // /////////////////////////////////////////////////
-        let removeIndexPaths = self.indexPathsOfChanged(removed, values: oldValues)
-        let addIndexPaths = self.indexPathsOfChanged(added, values: newValues)
-        // /////////////////////////////////////////////////
-        
-        
-        
-        
-        
-        if self.tableView.numberOfSections == 1 && self.contactSection != self.invitationSection {
-            gcd.sync(.Main){
-                self.tableView.insertSections(NSIndexSet(index: self.contactSection), withRowAnimation: .Middle)
-            }
-            return
-        }
-        
-        
-        let needDeleteInvitationSection = self.tableView.numberOfSections == 2 && self.invitationContacts.count == 0 
-        
-//        let removeIndexPaths: [NSIndexPath] = needDeleteInvitationSection ? [] : self.indexPathsOfChanged(removed, values: oldValues)
-//        let addIndexPaths = self.indexPathsOfChanged(added, values: newValues)
-        
-        
-        gcd.sync(.Main){
-            self.updateBadgeNumber()
-            
-            guard self.tabBarController?.selectedViewController?.childViewControllers.last is ContactListViewController else {
-                self.tableView.reloadData()
-                return
-            }
-            print(needDeleteInvitationSection)
-            print(removeIndexPaths)
-            print(addIndexPaths)
-            print(self.contactSection)
-//            self.tableView.reloadData()
-            self.tableView.beginUpdates()
-            if needDeleteInvitationSection {
-                self.tableView.deleteSections(NSIndexSet(index: self.invitationSection), withRowAnimation: .Automatic)
-            } else {
-                if removeIndexPaths.count > 0 {
-                    self.tableView.deleteRowsAtIndexPaths(removeIndexPaths, withRowAnimation: .Automatic)
-                }
-            }
-            if addIndexPaths.count > 0 {
-                self.tableView.insertRowsAtIndexPaths(addIndexPaths, withRowAnimation: .Automatic)
-            }
-            self.tableView.endUpdates()
-            
-        }
     }
     
     func indexPathsOfChanged(itemsChanged: [NSObject], values: [NSObject]) -> [NSIndexPath] {
+        let invitationContacts = values.filter({$0 is NotificationEntity}) as! [NotificationEntity]
+        let MessageContacts = values.filter({!($0 is NotificationEntity)})
+        let contactSection = invitationContacts.count == 0 ? 0 : MessageContacts.count == 0 ? 0 : 1
+        
         var indexPaths = [NSIndexPath]()
-        itemsChanged.forEach({
-            guard let index = values.indexOf($0) else { return }
-            let section = $0 is NotificationEntity ? self.invitationSection : self.contactSection
+        itemsChanged.forEach({ item in
+            let isInvitation = item is NotificationEntity
+            
+            guard let index = isInvitation ? invitationContacts.indexOf({(item as? NotificationEntity) == $0 }) : MessageContacts.indexOf(item) else { return }
+            
+            let section = isInvitation ? self.invitationSection : contactSection
             
             indexPaths.append(NSIndexPath(forItem: index, inSection: section))
         })
@@ -251,7 +242,7 @@ extension ContactListViewController {
     }
 }
 
-// MARK: - Private Methodes 
+// MARK: - Private Methodes
 
 extension ContactListViewController {
     
@@ -284,7 +275,7 @@ extension ContactListViewController {
     
     private func updateBadgeNumber() {
         let messageCount = me.friendInvitations.count + me.newMessages.count
-
+        
         self.parentViewController?.tabBarItem.badgeValue = messageCount > 0 ? String(messageCount) : nil
         
         self.showEmptyViewIfNeeded()
@@ -307,18 +298,15 @@ extension ContactListViewController {
         var num = 0
         if self.invitationContacts.count > 0 { num++ }
         if self.MessageContacts.count > 0 { num++ }
-        print("numberOfSectionsInTableView:\(num)")
         return num
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if section == self.invitationSection && self.invitationContacts.count > 0 {
-            print("invitationContacts:\(self.invitationContacts.count)")
             return self.invitationContacts.count
         }
         
-        print("MessageContacts:\(self.MessageContacts.count)")
         return self.MessageContacts.count
     }
     
@@ -364,7 +352,7 @@ extension ContactListViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 88
     }
-
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
