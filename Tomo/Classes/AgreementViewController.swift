@@ -8,22 +8,35 @@
 
 import UIKit
 
-final class AgreementViewController: BaseViewController {
+final class AgreementViewController: UIViewController {
 
     @IBOutlet weak var webView: UIWebView!
     
     override func viewDidLoad() {
+
         super.viewDidLoad()
-        self.alwaysShowNavigationBar = true
-        webView.scrollView.bounces = false
-        
-        guard let htmlPath = NSBundle.mainBundle().pathForResource("statements", ofType: "html") else { return }
-        let url = NSURL.fileURLWithPath(htmlPath)
-        let request = NSURLRequest(URL: url)
-        webView.loadRequest(request)
+
+        if let htmlPath = NSBundle.mainBundle().pathForResource("statements", ofType: "html") {
+            let url = NSURL.fileURLWithPath(htmlPath)
+            let request = NSURLRequest(URL: url)
+            self.webView.loadRequest(request)
+        }
     }
+
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+
     @IBAction func close(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+
+// MARK: - UINavigationBar Delegate
+
+extension AgreementViewController: UINavigationBarDelegate {
+    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+        return .TopAttached
     }
 }
 
