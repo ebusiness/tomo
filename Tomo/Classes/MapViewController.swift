@@ -14,7 +14,7 @@ enum InterfaceMode: Int {
     case FriendsMap
 }
 
-final class MapViewController: BaseViewController {
+final class MapViewController: UIViewController {
 
     var mode = InterfaceMode.FriendsMap
 

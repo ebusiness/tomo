@@ -10,7 +10,7 @@ import UIKit
 import SwiftyJSON
 import WechatKit
 
-final class RegViewController: BaseViewController {
+final class RegViewController: UIViewController {
     
     @IBOutlet weak var testSegment: UISegmentedControl!
     @IBOutlet weak var loginButton: UIButton!

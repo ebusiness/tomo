@@ -27,7 +27,7 @@ class CommonMessageController: JSQMessagesViewController {
     private var icon_keyboard_normal:UIImage!
     private var icon_keyboard_highlighted:UIImage!
     
-    private let navigationBarImage = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
+    private let navigationBarImage = Util.imageWithColor(0x2196F3, alpha: 1)
     static let BubbleFactory = JSQMessagesBubbleImageFactory()
     
     var recordTap: UILongPressGestureRecognizer! {

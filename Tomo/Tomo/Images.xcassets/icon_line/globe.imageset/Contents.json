@@ -6,13 +6,13 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "globe@2x.png"
+      "filename" : "globe_asia.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "globe@3x.png"
+      "filename" : "globe_asia-1.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

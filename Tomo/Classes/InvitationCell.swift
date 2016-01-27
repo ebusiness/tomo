@@ -18,7 +18,7 @@ class InvitationCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        avatarImageView.layer.borderColor = avatarBorderColor
+        avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
         
     }
 

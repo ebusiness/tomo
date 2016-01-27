@@ -12,8 +12,8 @@ struct TomoConfig {
     struct Api {
 
         static let Protocol = "https"
-        static let Domain = "api.dev.genbatomo.com"
-//        static let Domain = "192.168.11.108"
+//        static let Domain = "api.dev.genbatomo.com"
+        static let Domain = "192.168.11.95"
 
         static var UrlString: String {
             return "\(self.Protocol)://\(self.Domain)"
@@ -134,11 +134,7 @@ struct TomoConst {
 
 let MaxWidth: CGFloat = 500
 
-let NavigationBarColorHex:UInt = 0x2196F3
-let avatarBorderColor = UIColor.whiteColor().CGColor
-
 let DefaultAvatarImage = UIImage(named: "avatar")!
-let DefaultCoverImage = UIImage(named: "user_cover_default")!
 let DefaultGroupImage = UIImage(named: "group_cover_default")!
 
 #if !TEST

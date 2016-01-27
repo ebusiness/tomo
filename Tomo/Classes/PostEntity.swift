@@ -74,5 +74,5 @@ class PostEntity: Entity {
         
     }
     
-    var contentHeight: CGFloat?
+//    var contentHeight: CGFloat?
 }

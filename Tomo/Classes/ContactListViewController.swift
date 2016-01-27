@@ -11,8 +11,6 @@ import SwiftyJSON
 
 final class ContactListViewController: UITableViewController {
     
-    @IBOutlet weak var addFriendButton: UIButton!
-    
     private let invitationSection = 0
     private var contactSection = 0
     
@@ -37,14 +35,13 @@ final class ContactListViewController: UITableViewController {
                 self.refreshTableView(oldValue, newValues: items)
             }
         }
+
     }
     
     override func viewDidLoad() {
+
         super.viewDidLoad()
-        
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        navigationController?.navigationBar.barStyle = .Black
-        Util.changeImageColorForButton(addFriendButton,color: UIColor.whiteColor())
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("becomeActive"), name: UIApplicationDidBecomeActiveNotification, object: nil)
         
         self.registerClosureForAccount()
@@ -56,13 +53,8 @@ final class ContactListViewController: UITableViewController {
         self.getContacts()
     }
     
-    override func viewWillAppear(animated: Bool) {
-//        self.automaticallyAdjustsScrollViewInsets = false
-        let image = Util.imageWithColor(NavigationBarColorHex, alpha: 1)
-        self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
-    }
-    
     @objc private func becomeActive() {
+
         // recalculate badge number
         self.updateBadgeNumber()
         
@@ -73,6 +65,111 @@ final class ContactListViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
+}
+
+// MARK: - UITableView DataSource
+
+extension ContactListViewController {
+
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        var num = 0
+        if self.invitationContacts.count > 0 { num++ }
+        if self.messageContacts.count > 0 { num++ }
+        return num
+    }
+
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+        if section == self.invitationSection && self.invitationContacts.count > 0 {
+            return self.invitationContacts.count
+        }
+
+        return self.messageContacts.count
+    }
+
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+
+        if indexPath.section == self.invitationSection && self.invitationContacts.count > 0 {
+
+            let cell = tableView.dequeueReusableCellWithIdentifier("InvitationCell", forIndexPath: indexPath) as! InvitationCell
+            cell.friendInvitedNotification = self.invitationContacts.get(indexPath.row)
+
+            cell.setupDisplay()
+
+            return cell
+
+        }
+
+        if let group = self.messageContacts[indexPath.row] as? GroupEntity {
+
+            let cell = tableView.dequeueReusableCellWithIdentifier("MyGroupCell", forIndexPath: indexPath) as! MyGroupCell
+
+            cell.group = group
+
+            cell.setupDisplay()
+
+            return cell
+        }
+
+        let cell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! FriendCell
+
+        cell.user = self.messageContacts[indexPath.row] as! UserEntity
+
+        cell.setupDisplay()
+
+        return cell
+    }
+
+}
+
+// MARK: - UITableView Delegate
+
+extension ContactListViewController {
+
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 88
+    }
+
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+
+        if indexPath.section == self.invitationSection && self.invitationContacts.count > 0 {
+
+            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+            vc.user = self.invitationContacts.get(indexPath.item)!.from
+            self.navigationController?.pushViewController(vc, animated: true)
+            return
+        }
+
+        if let group = self.messageContacts[indexPath.row] as? GroupEntity {
+            let vc = GroupChatViewController()
+            vc.hidesBottomBarWhenPushed = true
+            vc.group = group
+            navigationController?.pushViewController(vc, animated: true)
+            return
+        }
+        let vc = MessageViewController()
+        vc.hidesBottomBarWhenPushed = true
+        vc.friend = self.messageContacts[indexPath.row] as! UserEntity
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+
+        if self.invitationContacts.count == 0 { return nil }
+
+        if section == self.invitationSection  {
+            return "未处理的好友请求"
+        } else {
+            return "最近的消息"
+        }
+    }
+
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if self.invitationContacts.count == 0 { return 10 }
+        return 38
+    }
 }
 
 // MARK: - Delegation
@@ -277,13 +374,13 @@ extension ContactListViewController {
             }
             guard let value = $0.result.value else { return }
             
-            let friends: [UserEntity] = UserEntity.collection(value["friends"])!
-            let groups: [GroupEntity] = GroupEntity.collection(value["groups"])!
-            
+            let friends: [UserEntity] = UserEntity.collection(value)!
+//            let groups: [GroupEntity] = GroupEntity.collection(value["groups"])!
+
             var items: [NSObject] = me.friendInvitations
             items.insert(friends, atIndex: 0)
-            items.insert(groups, atIndex: 0)
-            
+//            items.insert(groups, atIndex: 0)
+
             self.contacts = self.contactsSort(items, added: [])
         }
     }
@@ -312,110 +409,6 @@ extension ContactListViewController {
         } else {
             self.tableView.backgroundView = nil
         }
-    }
-}
-
-// MARK: - UITableView DataSource
-
-extension ContactListViewController {
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        var num = 0
-        if self.invitationContacts.count > 0 { num++ }
-        if self.messageContacts.count > 0 { num++ }
-        return num
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if section == self.invitationSection && self.invitationContacts.count > 0 {
-            return self.invitationContacts.count
-        }
-        
-        return self.messageContacts.count
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        if indexPath.section == self.invitationSection && self.invitationContacts.count > 0 {
-            
-            let cell = tableView.dequeueReusableCellWithIdentifier("InvitationCell", forIndexPath: indexPath) as! InvitationCell
-            cell.friendInvitedNotification = self.invitationContacts.get(indexPath.row)
-            
-            cell.setupDisplay()
-            
-            return cell
-            
-        }
-        
-        if let group = self.messageContacts[indexPath.row] as? GroupEntity {
-            
-            let cell = tableView.dequeueReusableCellWithIdentifier("MyGroupCell", forIndexPath: indexPath) as! MyGroupCell
-            
-            cell.group = group
-            
-            cell.setupDisplay()
-            
-            return cell
-        }
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! FriendCell
-        
-        cell.user = self.messageContacts[indexPath.row] as! UserEntity
-        
-        cell.setupDisplay()
-        
-        return cell
-    }
-    
-}
-
-// MARK: - UITableView Delegate
-
-extension ContactListViewController {
-    
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 88
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
-        if indexPath.section == self.invitationSection && self.invitationContacts.count > 0 {
-            
-            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
-            vc.user = self.invitationContacts.get(indexPath.item)!.from
-            self.navigationController?.pushViewController(vc, animated: true)
-            return
-        }
-        
-        if let group = self.messageContacts[indexPath.row] as? GroupEntity {
-            let vc = GroupChatViewController()
-            vc.hidesBottomBarWhenPushed = true
-            vc.group = group
-            navigationController?.pushViewController(vc, animated: true)
-            return
-        }
-        let vc = MessageViewController()
-        vc.hidesBottomBarWhenPushed = true
-        vc.friend = self.messageContacts[indexPath.row] as! UserEntity
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if self.invitationContacts.count == 0 { return nil }
-
-        if section == self.invitationSection  {
-            return "未处理的好友请求"
-        } else {
-            return "最近的消息"
-        }
-    }
-    
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if self.invitationContacts.count == 0 { return 10 }
-        return 38
     }
 }
 

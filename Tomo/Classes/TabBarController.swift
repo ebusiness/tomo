@@ -14,11 +14,13 @@ enum TabItem: Int {
 
     case Contacts
 
-    case Map
+    case Chat
+
+    case Group
 
     case Setting
 
-    static let items = [Home, Contacts, Map, Setting]
+    static let items = [Home, Contacts, Chat, Group, Setting]
     
     var storyBoard: String {
         switch self {
@@ -26,8 +28,10 @@ enum TabItem: Int {
             return "Home"
         case .Contacts:
             return "Contacts"
-        case .Map:
-            return "Map"
+        case .Chat:
+            return "Chat"
+        case .Group:
+            return "Group"
         case .Setting:
             return "Setting"
         }
@@ -36,11 +40,13 @@ enum TabItem: Int {
     var image: UIImage {
         switch self {
         case .Home:
-            return UIImage(named: "home_line")!
+            return UIImage(named: "home")!
         case .Contacts:
+            return UIImage(named: "address_book")!
+        case .Chat:
             return UIImage(named: "speech_bubble")!
-        case .Map:
-            return UIImage(named: "globe")!
+        case .Group:
+            return UIImage(named: "group")!
         case .Setting:
             return UIImage(named: "user_male_circle")!
         }
@@ -51,9 +57,11 @@ enum TabItem: Int {
         case .Home:
             return "动态"
         case .Contacts:
+            return "通讯录"
+        case .Chat:
             return "聊天"
-        case .Map:
-            return "地图"
+        case .Group:
+            return "群组"
         case .Setting:
             return "我"
         }

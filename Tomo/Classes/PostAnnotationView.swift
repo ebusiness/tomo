@@ -30,7 +30,7 @@ class PostAnnotationView: AggregatableAnnotationView {
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 1).CGColor
+        imageView.layer.borderColor = Palette.LightBlue.darkPrimaryColor.CGColor
         imageView.layer.cornerRadius = imageView.frame.width / 2
         addSubview(imageView)
         

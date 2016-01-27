@@ -17,8 +17,8 @@ extension Router {
             case let Delete(id):
                 return "/friends/\(id)"
             case All:
-//                return "/friends"
-                return "/contacts"
+                return "/friends"
+//                return "/contacts"
             }
         }
         var method: RouteMethod {

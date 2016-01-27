@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="nYi-Gf-ooO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -541,7 +541,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="139" y="1312"/>
+            <point key="canvasLocation" x="671" y="1312"/>
         </scene>
         <!--Group Description View Controller-->
         <scene sceneID="rOz-dQ-YMf">
@@ -679,15 +679,130 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sfw-Di-FXw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="643" y="1312"/>
+            <point key="canvasLocation" x="1175" y="1312"/>
+        </scene>
+        <!--现场一览-->
+        <scene sceneID="aCp-Jx-zvH">
+            <objects>
+                <collectionViewController id="lHJ-06-T7m" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="mrt-aU-6b4">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="1" id="WVV-aG-Gb0">
+                            <size key="itemSize" width="162" height="204"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="50" height="50"/>
+                            <inset key="sectionInset" minX="0.0" minY="2" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StationCell" id="c3A-R7-jgJ" customClass="StationCollectionViewCell" customModule="tomo" customModuleProvider="target">
+                                <rect key="frame" x="79" y="66" width="162" height="204"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="162" height="204"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group_cover_default" translatesAutoresizingMaskIntoConstraints="NO" id="iWA-eN-pmL">
+                                            <rect key="frame" x="0.0" y="0.0" width="162" height="204"/>
+                                        </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text_protection_down" translatesAutoresizingMaskIntoConstraints="NO" id="EbX-hf-Qvu">
+                                            <rect key="frame" x="0.0" y="0.0" width="162" height="204"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="车站名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5qb-G1-k8g">
+                                            <rect key="frame" x="8" y="171" width="68" height="21"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H4F-YN-EVv">
+                                            <rect key="frame" x="108" y="166" width="46" height="30"/>
+                                            <color key="backgroundColor" red="0.29803921570000003" green="0.68627450980000004" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal" title="  加入  ">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="2"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                    <integer key="value" value="1"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="actionButtonTapped:" destination="c3A-R7-jgJ" eventType="touchUpInside" id="PYy-vK-r1C"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="H4F-YN-EVv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5qb-G1-k8g" secondAttribute="trailing" constant="8" id="Ces-tY-FD8"/>
+                                    <constraint firstItem="iWA-eN-pmL" firstAttribute="leading" secondItem="c3A-R7-jgJ" secondAttribute="leading" id="RyN-Rl-rzb"/>
+                                    <constraint firstItem="EbX-hf-Qvu" firstAttribute="top" secondItem="c3A-R7-jgJ" secondAttribute="top" id="VvJ-WM-jDo"/>
+                                    <constraint firstAttribute="bottom" secondItem="H4F-YN-EVv" secondAttribute="bottom" constant="8" id="XB3-HC-eE5"/>
+                                    <constraint firstAttribute="trailing" secondItem="H4F-YN-EVv" secondAttribute="trailing" constant="8" id="ZHR-ag-ySZ"/>
+                                    <constraint firstItem="5qb-G1-k8g" firstAttribute="leading" secondItem="c3A-R7-jgJ" secondAttribute="leading" constant="8" id="Zug-c4-MeY"/>
+                                    <constraint firstItem="iWA-eN-pmL" firstAttribute="top" secondItem="c3A-R7-jgJ" secondAttribute="top" id="Zx2-Ht-IyJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="EbX-hf-Qvu" secondAttribute="trailing" id="bk5-xx-Pne"/>
+                                    <constraint firstAttribute="bottom" secondItem="iWA-eN-pmL" secondAttribute="bottom" id="dZZ-J4-dvq"/>
+                                    <constraint firstItem="5qb-G1-k8g" firstAttribute="centerY" secondItem="H4F-YN-EVv" secondAttribute="centerY" id="eQK-6b-cbt"/>
+                                    <constraint firstItem="EbX-hf-Qvu" firstAttribute="leading" secondItem="c3A-R7-jgJ" secondAttribute="leading" id="eQr-Fo-Afx"/>
+                                    <constraint firstAttribute="bottom" secondItem="EbX-hf-Qvu" secondAttribute="bottom" id="nsd-c2-ANf"/>
+                                    <constraint firstAttribute="trailing" secondItem="iWA-eN-pmL" secondAttribute="trailing" id="ueR-WZ-XBi"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="actionButton" destination="H4F-YN-EVv" id="PXZ-yg-pBy"/>
+                                    <outlet property="backgroundImageView" destination="iWA-eN-pmL" id="Tfr-kD-a0V"/>
+                                    <outlet property="nameLabel" destination="5qb-G1-k8g" id="YJD-FT-C2X"/>
+                                    <segue destination="UlV-bz-zwx" kind="push" id="JSV-OY-zj8"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="JOV-Mo-GCv">
+                            <rect key="frame" x="0.0" y="270" width="320" height="50"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <subviews>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Ry1-8l-fGg">
+                                    <rect key="frame" x="150" y="15" width="20" height="20"/>
+                                </activityIndicatorView>
+                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="搜索结果信息" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWX-Fq-5KZ">
+                                    <rect key="frame" x="109" y="15" width="102" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="Ry1-8l-fGg" firstAttribute="centerY" secondItem="JOV-Mo-GCv" secondAttribute="centerY" id="MBa-pO-nTe"/>
+                                <constraint firstItem="VWX-Fq-5KZ" firstAttribute="centerX" secondItem="JOV-Mo-GCv" secondAttribute="centerX" id="bKU-Ap-XGf"/>
+                                <constraint firstItem="Ry1-8l-fGg" firstAttribute="centerX" secondItem="JOV-Mo-GCv" secondAttribute="centerX" id="kDc-bI-UCx"/>
+                                <constraint firstItem="VWX-Fq-5KZ" firstAttribute="centerY" secondItem="JOV-Mo-GCv" secondAttribute="centerY" id="xHj-fF-IEk"/>
+                            </constraints>
+                        </collectionReusableView>
+                        <connections>
+                            <outlet property="dataSource" destination="lHJ-06-T7m" id="GiB-Q1-HL6"/>
+                            <outlet property="delegate" destination="lHJ-06-T7m" id="n0a-xk-CjO"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="现场一览" id="nzy-Sg-POg"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2fv-Db-cvB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="167" y="1312"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="64q-06-Fyx">
+        <scene sceneID="OpY-hJ-K4V">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nYi-Gf-ooO" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MQa-Yi-9rd" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="jXb-SD-nYO">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="MYe-bz-wal">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -695,12 +810,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="UlV-bz-zwx" kind="relationship" relationship="rootViewController" id="uSE-Be-bXv"/>
+                        <segue destination="lHJ-06-T7m" kind="relationship" relationship="rootViewController" id="yN1-YN-Jea"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vNZ-hG-tko" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9EC-fL-JNU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-375" y="1312"/>
+            <point key="canvasLocation" x="-365" y="1312"/>
         </scene>
     </scenes>
     <resources>
@@ -711,5 +826,6 @@
         <image name="speech_bubble" width="25" height="25"/>
         <image name="splash10" width="1000" height="666"/>
         <image name="star" width="25" height="25"/>
+        <image name="text_protection_down" width="320" height="160"/>
     </resources>
 </document>

@@ -111,8 +111,10 @@ class TextPostTableViewCell: UITableViewCell {
 
     // When post author avatar was tappaed, move to post author's profile
     func avatarTapped() {
-
-        guard let owner = post?.owner else { return }
+        
+        // No need to see myself on profile view
+        guard me.id != post.owner.id else { return }
+        guard let owner = post.owner else { return }
 
         // TODO: this is wired, but for prevent infinite loop, should fix
         let profileViewController = self.delegate?.childViewControllers.find { ($0 as? ProfileViewController)?.user.id == owner.id } as? ProfileViewController
@@ -129,11 +131,13 @@ class TextPostTableViewCell: UITableViewCell {
     // When comment author avatar was tappaed, move to comment author's profile
     func commentAvatarTapped() {
 
-        guard let owner = post?.comments?.last?.owner else { return }
+        // No need to see myself on profile view
+        guard me.id != post.comments?.last?.owner.id else { return }
+        guard let owner = post.comments?.last?.owner else { return }
 
         let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = owner
-        if owner.id == post?.owner.id {
+        if owner.id == post.owner.id {
             let profileViewController = self.delegate?.childViewControllers.find { $0 is ProfileViewController } as? ProfileViewController
 
             if let profileViewController = profileViewController {
@@ -147,7 +151,7 @@ class TextPostTableViewCell: UITableViewCell {
     // When comment was tappaed, move to comment area of the post detail
     func commentTapped() {
 
-        if nil == post?.comments?.last { return }
+        if nil == post.comments?.last { return }
 
         let vc = Util.createViewControllerWithIdentifier("PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
         vc.post = post!

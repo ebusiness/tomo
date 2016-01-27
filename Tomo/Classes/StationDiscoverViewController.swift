@@ -209,7 +209,7 @@ extension StationDiscoverViewController: UISearchBarDelegate {
     // Search by user input
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
 
-        guard let text = searchBar.text else { return }
+        guard let text = searchBar.text where text.trimmed().length > 0 else { return }
 
         // do nothing if the search word didn't change
         guard self.searchText != text else { return }
@@ -218,6 +218,7 @@ extension StationDiscoverViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
 
         self.isLoading = true
+
         self.startActivityIndicator()
 
         // hold the search text

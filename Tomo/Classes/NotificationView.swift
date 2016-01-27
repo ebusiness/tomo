@@ -35,7 +35,7 @@ class NotificationView: UIView {
         gcd.async(.Default) {
             self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width / 2
             self.avatarImageView.layer.masksToBounds = true
-            self.backgroundView.backgroundColor = Util.UIColorFromRGB(NavigationBarColorHex, alpha: 1)
+            self.backgroundView.backgroundColor = Palette.LightBlue.darkPrimaryColor
         }
     }
 
