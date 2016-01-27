@@ -16,20 +16,20 @@ final class ContactListViewController: UITableViewController {
     private let invitationSection = 0
     private var contactSection = 0
     
+    private var isTableReloading = false
+    
     private var invitationContacts = [NotificationEntity]()
     private var messageContacts = [NSObject]()
     
     private var contacts = [NSObject]() {
         didSet {
             gcd.async(.Default){
-                var items = self.contacts
-                
-                items.sortInPlace({
-                    guard let msg1 = ($0 as? UserEntity)?.lastMessage ?? ($0 as? GroupEntity)?.lastMessage else { return false }
-                    guard let msg2 = ($1 as? UserEntity)?.lastMessage ?? ($1 as? GroupEntity)?.lastMessage else { return true }
-                    
-                    return msg1.createDate.timeIntervalSinceNow > msg2.createDate.timeIntervalSinceNow
-                })
+                while self.isTableReloading {
+                    print("waiting")
+                }
+                let items = self.contacts
+                if oldValue == items { return }
+                self.isTableReloading = true
                 
                 self.invitationContacts = items.filter({$0 is NotificationEntity}) as! [NotificationEntity]
                 self.messageContacts = items.filter({!($0 is NotificationEntity)})
@@ -94,10 +94,8 @@ extension ContactListViewController {
             items.append($0)
         })
         
-        self.contacts = items
+        self.contacts = self.contactsSort(items, added: added)
     }
-    
-    
     
     func registerClosureForAccount() {
         
@@ -125,12 +123,15 @@ extension ContactListViewController {
             gcd.sync(.Main){
                 self.tableView.reloadData()
             }
+            self.isTableReloading = false
             return
         }
         
-        
         let (added, removed) = Util.diff(oldValues, rightValue: newValues)
-        guard added.count > 0 || removed.count > 0 else { return }
+        guard added.count > 0 || removed.count > 0 else {
+            self.isTableReloading = false
+            return
+        }
         
         var removeIndexPaths = [NSIndexPath]()
         var addIndexPaths = [NSIndexPath]()
@@ -165,6 +166,7 @@ extension ContactListViewController {
                 self.tableView.reloadSections(NSIndexSet(index: self.invitationSection), withRowAnimation: .Middle)
             }
             self.tableView.endUpdates()
+            self.isTableReloading = false
         }
     }
     
@@ -251,7 +253,10 @@ extension ContactListViewController {
         })
         return indexPaths
     }
-    
+}
+
+extension ContactListViewController {
+
     func refreshFriendCell(user: UserEntity){
         guard let index = self.messageContacts.indexOf({ ($0 as? UserEntity)?.id == user.id }) else { return }
         user.lastMessage = (self.messageContacts[index] as? UserEntity)?.lastMessage
@@ -279,8 +284,18 @@ extension ContactListViewController {
             items.insert(friends, atIndex: 0)
             items.insert(groups, atIndex: 0)
             
-            self.contacts = items
+            self.contacts = self.contactsSort(items, added: [])
         }
+    }
+    
+    private func contactsSort(items: [NSObject], added: [NSObject]) -> [NSObject] {
+        return items.sort({
+            if added.contains($0) { return true }
+            guard let msg1 = ($0 as? UserEntity)?.lastMessage ?? ($0 as? GroupEntity)?.lastMessage else { return false }
+            guard let msg2 = ($1 as? UserEntity)?.lastMessage ?? ($1 as? GroupEntity)?.lastMessage else { return true }
+            
+            return msg1.createDate.timeIntervalSinceNow > msg2.createDate.timeIntervalSinceNow
+        })
     }
     
     private func updateBadgeNumber() {
@@ -466,7 +481,7 @@ extension ContactListViewController {
     
     private func refreshMessageForListener(item: NSObject){
         guard let id = (item as? UserEntity)?.id ?? (item as? GroupEntity)?.id else { return }
-        var items = self.contacts.filter({ ($0 as? UserEntity)?.id ?? ($0 as? GroupEntity)?.id == id})
+        var items = self.contacts.filter({ ($0 as? UserEntity)?.id ?? ($0 as? GroupEntity)?.id != id})
         
         items.insert(item, atIndex: 0)
         
