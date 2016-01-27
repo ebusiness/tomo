@@ -437,32 +437,15 @@ extension ContactListViewController {
         
         guard let targetId = json["targetId"].string else { return }
         
-        guard let groups = self.contacts.filter({ $0 is GroupEntity }) as? [GroupEntity] else { return }
-        guard let group = groups.find({$0.id == targetId}) else { return }
-        
-        
-        let message = MessageEntity(json)
-        message.from = UserEntity(json["from"])
-        message.group = group
-        group.lastMessage = message
-        
-        self.refreshMessageForListener(group)
+        self.refreshMessageForListener(json) { ($0 as? GroupEntity)?.id == targetId }
     }
     
     func receiveMessage(notification: NSNotification) {
         guard let userInfo = notification.userInfo else { return }
         
-        guard let friends = self.contacts.filter({ $0 is UserEntity }) as? [UserEntity] else { return }
-        
         let json = JSON(userInfo)
-        guard let user = friends.find({$0.id == json["from"]["id"].stringValue}) else { return }
         
-        let message = MessageEntity(json)
-        message.to = me
-        message.from = user
-        user.lastMessage = message
-        
-        self.refreshMessageForListener(user)
+        self.refreshMessageForListener(json) { ($0 as? UserEntity)?.id == json["from"]["id"].stringValue }
     }
     
     func receiveFriendAccepted(notification: NSNotification) {
@@ -479,12 +462,34 @@ extension ContactListViewController {
         me.removeFriend(from)
     }
     
-    private func refreshMessageForListener(item: NSObject){
-        guard let id = (item as? UserEntity)?.id ?? (item as? GroupEntity)?.id else { return }
-        var items = self.contacts.filter({ ($0 as? UserEntity)?.id ?? ($0 as? GroupEntity)?.id != id})
+    private func refreshMessageForListener(json: JSON, indexPredicate: (NSObject) -> Bool) {
+        while self.isTableReloading {
+            print("waiting")
+        }
+        guard let index = self.messageContacts.indexOf(indexPredicate) else { return }
+        guard self.messageContacts.count > index else { return }
+        self.isTableReloading = true
         
-        items.insert(item, atIndex: 0)
+        let item = self.messageContacts.removeAtIndex(index)
         
-        self.contacts = items
+        let message = MessageEntity(json)
+        
+        if let user = item as? UserEntity {
+            user.lastMessage = message
+            self.messageContacts.insert(user, atIndex: 0)
+        } else if let group = item as? GroupEntity {
+            group.lastMessage = message
+            self.messageContacts.insert(group, atIndex: 0)
+        }
+        
+        gcd.sync(.Main){
+            let current = NSIndexPath(forRow: index, inSection: self.contactSection)
+            if index == 0 {
+                self.tableView.reloadRowsAtIndexPaths([current], withRowAnimation: .Automatic)
+            } else {
+                self.tableView.moveRowAtIndexPath(NSIndexPath(forRow: index, inSection: self.contactSection), toIndexPath: NSIndexPath(forRow: 0 , inSection: self.contactSection))
+            }
+            self.isTableReloading = false
+        }
     }
 }
