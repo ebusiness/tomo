@@ -27,6 +27,8 @@ class GroupDescriptionViewController: UICollectionViewController {
         self.configDisplay()
 
         self.loadGroupDescription()
+        
+        self.registerClosureForAccount()
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -131,7 +133,6 @@ extension GroupDescriptionViewController {
         if kind == UICollectionElementKindSectionHeader {
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! GroupDescriptionHeaderCell
             headerView.group = self.group
-            headerView.delegate = self
             return headerView
         } else {
             self.footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Footer", forIndexPath: indexPath) as! GroupDescriptionFooterCell
@@ -163,6 +164,43 @@ extension GroupDescriptionViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension GroupDescriptionViewController {
+    
+    private func registerClosureForAccount() {
+        
+        me.addGroupsObserver { (added, removed) -> () in
+            let indexOfMeInGroup = self.members.indexOf({$0.id == me.id })
+            if added.count > 0 {
+                self.refreshForJoinGroupIfNeeded(indexOfMeInGroup)
+            }
+            if removed.count > 0 {
+                self.refreshForLeaveGroupIfNeeded(indexOfMeInGroup)
+            }
+        }
+    }
+    
+    private func refreshForJoinGroupIfNeeded(indexOfMeInGroup: Int?) {
+        guard nil == indexOfMeInGroup else { return }
+        
+        self.members.insert(me, atIndex: 0)
+        
+        gcd.sync(.Main){
+            self.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+        }
+    }
+    
+    private func refreshForLeaveGroupIfNeeded(indexOfMeInGroup: Int?) {
+        guard let index = indexOfMeInGroup else { return }
+        
+        self.members.removeAtIndex(index)
+        
+        gcd.sync(.Main){
+            self.collectionView!.deleteItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
+        }
+    }
+}
+
+
 // MARK: - UICollectionView Header Cell
 
 final class GroupDescriptionHeaderCell: UICollectionReusableView {
@@ -171,24 +209,10 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
 
     @IBOutlet weak var actionButton: UIButton!
 
-    weak var delegate: GroupDescriptionViewController!
-
     var group: GroupEntity! {
         didSet {
             self.coverImageView.sd_setImageWithURL(NSURL(string: self.group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
-
-            if let myGroups = me.groups where myGroups.contains(self.group.id) {
-
-                self.actionButton.setTitle(" 退出群组 ", forState: .Normal)
-                self.actionButton.backgroundColor = Palette.Red.primaryColor
-                self.actionButton.sizeToFit()
-
-            } else  {
-
-                self.actionButton.setTitle(" 加入群组 ", forState: .Normal)
-                self.actionButton.backgroundColor = Palette.Green.primaryColor
-                self.actionButton.sizeToFit()
-            }
+            self.didSetGroup()
         }
     }
 
@@ -207,6 +231,22 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
             self.joinGroup()
         }
     }
+    
+    private func didSetGroup(){
+        
+        if let myGroups = me.groups where myGroups.contains(self.group.id) {
+            
+            self.actionButton.setTitle(" 退出群组 ", forState: .Normal)
+            self.actionButton.backgroundColor = Palette.Red.primaryColor
+            self.actionButton.sizeToFit()
+            
+        } else  {
+            
+            self.actionButton.setTitle(" 加入群组 ", forState: .Normal)
+            self.actionButton.backgroundColor = Palette.Green.primaryColor
+            self.actionButton.sizeToFit()
+        }
+    }
 
     private func joinGroup() {
 
@@ -218,18 +258,10 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
             }
 
             me.addGroup(self.group)
-            self.delegate.members.insert(me, atIndex: 0)
-
-            self.delegate.collectionView!.performBatchUpdates({ _ in
-                self.delegate.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
-            }, completion: nil)
-
             UIView.animateWithDuration(TomoConst.Duration.Short) {
-                self.actionButton.titleLabel?.text = " 退出群组 "
-                self.actionButton.backgroundColor = Palette.Red.primaryColor
-                self.actionButton.sizeToFit()
+                self.didSetGroup()
             }
-
+            
             self.actionButton.userInteractionEnabled = true
         }
     }
@@ -250,27 +282,16 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
                     return
                 }
 
-                let meInGroup = self.delegate.members.find { $0.id == me.id }
-                let indexOfMeInGroup = self.delegate.members.indexOf(meInGroup!)
-
                 me.removeGroup(self.group)
-                self.delegate.members.remove(meInGroup!)
-
-                self.delegate.collectionView!.performBatchUpdates({ _ in
-                    self.delegate.collectionView!.deleteItemsAtIndexPaths([NSIndexPath(forItem: indexOfMeInGroup!, inSection: 0)])
-                    }, completion: nil)
-
                 UIView.animateWithDuration(TomoConst.Duration.Short) {
-                    self.actionButton.titleLabel?.text = " 加入群组 "
-                    self.actionButton.backgroundColor = Palette.Green.primaryColor
-                    self.actionButton.sizeToFit()
+                    self.didSetGroup()
                 }
                 
                 self.actionButton.userInteractionEnabled = true
             }
         }))
 
-        self.delegate.presentViewController(alert, animated: true, completion: nil)
+        window!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
     }
 }
 

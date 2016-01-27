@@ -43,6 +43,8 @@ final class GroupDetailViewController: UITableViewController {
         self.configDisplay()
 
         self.loadMorePosts()
+        
+        self.registerClosureForAccount()
     }
 
     override func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -84,7 +86,6 @@ extension GroupDetailViewController {
                 return
             } else {
                 me.addGroup(self.group)
-                self.configDisplay()
             }
         }
     }
@@ -202,6 +203,23 @@ extension GroupDetailViewController {
                 $0.enabled = false
             }
             self.joinButton.hidden = false
+        }
+    }
+    
+    private func registerClosureForAccount() {
+        
+        me.addGroupsObserver { _ in
+            if self.tabBarController?.selectedViewController?.childViewControllers.last is GroupDetailViewController {
+                gcd.sync(.Main){
+                    UIView.animateWithDuration(TomoConst.Duration.Short) {
+                        self.configDisplay()
+                    }
+                }
+            } else {
+                gcd.sync(.Main){
+                    self.configDisplay()
+                }
+            }
         }
     }
     
