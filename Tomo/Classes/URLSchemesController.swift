@@ -121,7 +121,7 @@ extension URLSchemesController{
         Router.Post.FindById(id: id).response {
             if $0.result.isFailure { return }
             
-            let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
+            let vc = Util.createViewControllerWithIdentifier("PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
             vc.post = PostEntity($0.result.value!)
             
             self.pushViewController(0, viewController: vc, animated: true)

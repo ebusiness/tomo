@@ -103,15 +103,15 @@ extension PostDetailViewController {
 
         if let imageNumber = self.post.images?.count where imageNumber > 0 {
 
-            self.pageControl.numberOfPages = imageNumber
-            self.pageControl.currentPage = 0
+            if imageNumber > 1 {
+                self.pageControl.numberOfPages = imageNumber
+                self.pageControl.currentPage = 0
+            } else {
+                self.pageControl.hidden = true
+            }
 
             // set the header view's size according the screen size
             self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.headerViewSize)
-
-            // make the navigation bar transparent
-            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-            self.navigationController?.navigationBar.shadowImage = UIImage()
 
         } else {
 
@@ -208,14 +208,19 @@ extension PostDetailViewController {
     private func configNavigationBarByScrollPosition() {
 
         let offsetY = self.tableView.contentOffset.y
+        var headerHeight = TomoConst.UI.TopBarHeight
+
+        if let imageNumber = self.post.images?.count where imageNumber > 0 {
+            headerHeight = self.headerHeight
+        }
 
         // begin fade in the navigation bar background at the point which is
         // twice height of topbar above the bottom of the table view header area.
         // and let the fade in complete just when the bottom of navigation bar
         // overlap with the bottom of table header view.
-        if offsetY > self.headerHeight - TomoConst.UI.TopBarHeight * 2 {
+        if offsetY > headerHeight - TomoConst.UI.TopBarHeight * 2 {
 
-            let distance = self.headerHeight - offsetY - TomoConst.UI.TopBarHeight * 2
+            let distance = headerHeight - offsetY - TomoConst.UI.TopBarHeight * 2
             let image = Util.imageWithColor(0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
             self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
 

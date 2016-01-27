@@ -89,8 +89,9 @@ extension GroupDetailViewController {
         }
     }
     
-    @IBAction func addedPost(segue: UIStoryboardSegue) {
-        // exit addPostView
+    @IBAction func didCreatePost(segue: UIStoryboardSegue) {
+        self.loadNewPost()
+        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: true)
     }
     
     @IBAction func postButtonTapped(sender: UIBarButtonItem) {
@@ -174,6 +175,36 @@ extension GroupDetailViewController {
 
 extension GroupDetailViewController {
 
+    private func configDisplay() {
+
+        // make the navigation bar transparent
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+
+        self.joinButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.joinButton.layer.borderWidth = 2
+
+        self.title = group.name
+        self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: DefaultGroupImage)
+
+        // set the header view's size according the screen size
+        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.headerViewSize)
+
+        guard let myGroups = me.groups else { return }
+
+        if myGroups.contains(self.group.id) {
+            _ = navigationItem.rightBarButtonItems?.map {
+                $0.enabled = true
+            }
+            self.joinButton.hidden = true
+        } else {
+            _ = navigationItem.rightBarButtonItems?.map {
+                $0.enabled = false
+            }
+            self.joinButton.hidden = false
+        }
+    }
+    
     // Fetch more post as use scroll down to the bottom of table view.
     private func loadMorePosts() {
 
@@ -213,33 +244,28 @@ extension GroupDetailViewController {
         }
     }
 
-    private func configDisplay() {
+    // Fetch new posts
+    func loadNewPost() {
 
-        // make the navigation bar transparent
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
+        var parameters = Router.Post.FindParameters(category: .all)
 
-        self.joinButton.layer.borderColor = UIColor.whiteColor().CGColor
-        self.joinButton.layer.borderWidth = 2
+        if let latestPost = self.latestPost {
+            // TODO - This is a dirty solution
+            parameters.after = latestPost.createDate.timeIntervalSince1970 + 1
+        }
 
-        self.title = group.name
-        self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: DefaultGroupImage)
+        Router.Post.Find(parameters: parameters).response {
 
-        // set the header view's size according the screen size
-        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.headerViewSize)
-
-        guard let myGroups = me.groups else { return }
-
-        if myGroups.contains(self.group.id) {
-            _ = navigationItem.rightBarButtonItems?.map {
-                $0.enabled = true
+            if $0.result.isFailure {
+                return
             }
-            self.joinButton.hidden = true
-        } else {
-            _ = navigationItem.rightBarButtonItems?.map {
-                $0.enabled = false
+
+            // prepend new contents
+            if let loadPosts:[PostEntity] = PostEntity.collection($0.result.value!) {
+                self.posts = loadPosts + self.posts
+                self.rowHeights = loadPosts.map { self.simulateLayout($0) } + self.rowHeights
+                self.prependRows(loadPosts.count)
             }
-            self.joinButton.hidden = false
         }
     }
 
@@ -256,17 +282,33 @@ extension GroupDetailViewController {
         }
 
         // hold the oldest post for pull-up loading
-        oldestPost = self.posts.last
+        self.oldestPost = self.posts.last
 
         // hold the latest post for pull-down loading
         if firstIndex == 0 {
-            latestPost = self.posts.first
+            self.latestPost = self.posts.first
         }
 
         tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
         tableView.endUpdates()
+    }
 
+    // Prepend specific number of rows on table view
+    private func prependRows(rows: Int) {
+
+        var indexPathes = [NSIndexPath]()
+
+        for index in 0..<rows {
+            indexPathes.push(NSIndexPath(forRow: index, inSection: 0))
+        }
+
+        // hold the latest content for pull-up loading
+        self.latestPost = self.posts.first
+
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
+        tableView.endUpdates()
     }
 
     // Calulate the cell height beforehand

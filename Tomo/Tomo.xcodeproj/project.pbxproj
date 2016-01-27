@@ -44,23 +44,11 @@
 		1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */; };
 		1FF6930D1C1E95FC00777BD5 /* Landing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FF6930C1C1E95FC00777BD5 /* Landing.storyboard */; };
 		1FF693121C1EB88800777BD5 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF693111C1EB88800777BD5 /* LandingViewController.swift */; };
-		283771911BC37653001B06D3 /* ICYFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283771901BC37653001B06D3 /* ICYFlowLayout.swift */; };
-		283771981BC3A329001B06D3 /* ICYPostImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283771961BC3A329001B06D3 /* ICYPostImageCell.swift */; };
-		283771991BC3A329001B06D3 /* ICYPostImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 283771971BC3A329001B06D3 /* ICYPostImageCell.xib */; };
-		2837719E1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2837719C1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.swift */; };
-		2837719F1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2837719D1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.xib */; };
-		2857784C1BC25DC600533E8E /* ICYPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2857784A1BC25DC600533E8E /* ICYPostCell.swift */; };
-		2857784D1BC25DC600533E8E /* ICYPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2857784B1BC25DC600533E8E /* ICYPostCell.xib */; };
-		285778511BC272E000533E8E /* ICYTagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285778501BC272E000533E8E /* ICYTagButton.swift */; };
-		285778561BC29AEC00533E8E /* ICYTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285778541BC29AEC00533E8E /* ICYTagCollectionViewCell.swift */; };
-		285778571BC29AEC00533E8E /* ICYTagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 285778551BC29AEC00533E8E /* ICYTagCollectionViewCell.xib */; };
 		2869D71C1BB545FB00D1C479 /* StationDiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2869D71B1BB545FB00D1C479 /* StationDiscoverViewController.swift */; };
-		28C647B01BBE838200253647 /* EmptyStationResult.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C647AF1BBE838200253647 /* EmptyStationResult.xib */; };
 		28CB45E11BB13FB200182924 /* GroupDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */; };
 		290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290134D71AC3991C00BBFE29 /* AppDelegate.swift */; };
 		290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 290134DE1AC3991C00BBFE29 /* Images.xcassets */; };
 		290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290144161ADF6D890048F3D8 /* MapViewController.swift */; };
-		291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ADF941AD229B3009D8BE3 /* CommentCell.swift */; };
 		293EB4251B132B06006BAF27 /* JSQVoiceMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */; };
 		295272D01AD51B2300FC7833 /* S3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295272CF1AD51B2300FC7833 /* S3.swift */; };
 		29539C781B13175D00545509 /* VoiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29539C761B13175D00545509 /* VoiceController.swift */; };
@@ -124,7 +112,6 @@
 		D000F1A51C281E9300AD873C /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E521B60C19F008D5369 /* Sequence.swift */; };
 		D000F1A61C281E9300AD873C /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E531B60C19F008D5369 /* String.swift */; };
 		D00A81C31C22D1B20034D8D0 /* MessageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A81C21C22D1B20034D8D0 /* MessageRouter.swift */; };
-		D012F5971BBBC4DD00D5293D /* MyStationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */; };
 		D0244C531C1FC65100EA87C1 /* SignupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C521C1FC65100EA87C1 /* SignupRouter.swift */; };
 		D0244C551C1FEBDC00EA87C1 /* SettingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C541C1FEBDC00EA87C1 /* SettingRouter.swift */; };
 		D0244C591C1FF26D00EA87C1 /* PostRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C581C1FF26D00EA87C1 /* PostRouter.swift */; };
@@ -133,7 +120,6 @@
 		D029F7321BCCB39E00CDE18B /* PushSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029F7311BCCB39E00CDE18B /* PushSettingViewController.swift */; };
 		D040E1651BDDC00D00417174 /* RecommendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D040E1641BDDC00D00417174 /* RecommendViewController.swift */; };
 		D04447B31BBA9DF300AD7B0C /* GroupChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */; };
-		D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D057BAF11B670687007D14D2 /* RequestFriendCell.swift */; };
 		D06DC6321C240691009B19D1 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06DC6311C240691009B19D1 /* UserRouter.swift */; };
 		D06DC6341C2407A1009B19D1 /* GroupMessageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06DC6331C2407A1009B19D1 /* GroupMessageRouter.swift */; };
 		D07232331BE1C1C700122F52 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E451B60C19F008D5369 /* Array.swift */; };
@@ -167,12 +153,8 @@
 		D0A104951BEB055100AEE356 /* statements.html in Resources */ = {isa = PBXBuildFile; fileRef = D0A104941BEB055100AEE356 /* statements.html */; };
 		D0B40BBF1B78AF0400685D67 /* ExNSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B40BBE1B78AF0400685D67 /* ExNSDate.swift */; };
 		D0B6364E1B81A9C70012C4E8 /* URLSchemesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */; };
-		D0B6EB121B5E7D09005A7E45 /* MyAccountHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */; };
-		D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */; };
-		D0BA8DE71B55375A00271F2B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BA8DE61B55375A00271F2B /* PostViewController.swift */; };
 		D0DB07D71B9D1B5200C06C4E /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0DB07D61B9D1B5200C06C4E /* NotificationView.xib */; };
 		D0DB07D91B9D224900C06C4E /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB07D81B9D224900C06C4E /* NotificationView.swift */; };
-		D0DB07DB1B9D266900C06C4E /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB07DA1B9D266900C06C4E /* NotificationCell.swift */; };
 		D0DB07E01B9D3E1400C06C4E /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB07DF1B9D3E1400C06C4E /* RemoteNotification.swift */; };
 		D0DB07E51B9D65BE00C06C4E /* ListenerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB07E41B9D65BE00C06C4E /* ListenerEvent.swift */; };
 		D0E523211C4CEEB600B6CF7B /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E523201C4CEEB600B6CF7B /* Account.swift */; };
@@ -251,18 +233,7 @@
 		1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Classes/HomeViewController.swift; sourceTree = "<group>"; };
 		1FF6930C1C1E95FC00777BD5 /* Landing.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Landing.storyboard; path = Classes/Landing.storyboard; sourceTree = "<group>"; };
 		1FF693111C1EB88800777BD5 /* LandingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LandingViewController.swift; path = Classes/LandingViewController.swift; sourceTree = "<group>"; };
-		283771901BC37653001B06D3 /* ICYFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYFlowLayout.swift; path = Classes/ICYFlowLayout.swift; sourceTree = "<group>"; };
-		283771961BC3A329001B06D3 /* ICYPostImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYPostImageCell.swift; path = Classes/ICYPostImageCell.swift; sourceTree = "<group>"; };
-		283771971BC3A329001B06D3 /* ICYPostImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ICYPostImageCell.xib; path = Classes/ICYPostImageCell.xib; sourceTree = "<group>"; };
-		2837719C1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYCollectionViewSingleImageCell.swift; path = Classes/ICYCollectionViewSingleImageCell.swift; sourceTree = "<group>"; };
-		2837719D1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ICYCollectionViewSingleImageCell.xib; path = Classes/ICYCollectionViewSingleImageCell.xib; sourceTree = "<group>"; };
-		2857784A1BC25DC600533E8E /* ICYPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYPostCell.swift; path = Classes/ICYPostCell.swift; sourceTree = "<group>"; };
-		2857784B1BC25DC600533E8E /* ICYPostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ICYPostCell.xib; path = Classes/ICYPostCell.xib; sourceTree = "<group>"; };
-		285778501BC272E000533E8E /* ICYTagButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYTagButton.swift; path = Classes/ICYTagButton.swift; sourceTree = "<group>"; };
-		285778541BC29AEC00533E8E /* ICYTagCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICYTagCollectionViewCell.swift; path = Classes/ICYTagCollectionViewCell.swift; sourceTree = "<group>"; };
-		285778551BC29AEC00533E8E /* ICYTagCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ICYTagCollectionViewCell.xib; path = Classes/ICYTagCollectionViewCell.xib; sourceTree = "<group>"; };
 		2869D71B1BB545FB00D1C479 /* StationDiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationDiscoverViewController.swift; path = Classes/StationDiscoverViewController.swift; sourceTree = "<group>"; };
-		28C647AF1BBE838200253647 /* EmptyStationResult.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EmptyStationResult.xib; path = Classes/EmptyStationResult.xib; sourceTree = "<group>"; };
 		28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDescriptionViewController.swift; path = Classes/GroupDescriptionViewController.swift; sourceTree = "<group>"; };
 		290134D21AC3991C00BBFE29 /* tomo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		290134D61AC3991C00BBFE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -271,7 +242,6 @@
 		290134FA1AC3A3D200BBFE29 /* Tomo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tomo-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		2901351C1AC3A90C00BBFE29 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Classes/Constants.swift; sourceTree = "<group>"; };
 		290144161ADF6D890048F3D8 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = Classes/MapViewController.swift; sourceTree = "<group>"; };
-		291ADF941AD229B3009D8BE3 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentCell.swift; path = Classes/CommentCell.swift; sourceTree = "<group>"; };
 		293EB4231B132B06006BAF27 /* JSQVoiceMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQVoiceMediaItem.h; sourceTree = "<group>"; };
 		293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQVoiceMediaItem.m; sourceTree = "<group>"; };
 		295272CF1AD51B2300FC7833 /* S3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3.swift; path = ../../../S3.swift; sourceTree = "<group>"; };
@@ -307,7 +277,6 @@
 		D000F17E1C2809DF00AD873C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D000F1921C281D7500AD873C /* TomoTests-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "TomoTests-Header.h"; path = "TomoTests/TomoTests-Header.h"; sourceTree = SOURCE_ROOT; };
 		D00A81C21C22D1B20034D8D0 /* MessageRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageRouter.swift; path = Classes/MessageRouter.swift; sourceTree = "<group>"; };
-		D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyStationsViewController.swift; path = Classes/MyStationsViewController.swift; sourceTree = "<group>"; };
 		D0244C521C1FC65100EA87C1 /* SignupRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignupRouter.swift; path = Classes/SignupRouter.swift; sourceTree = "<group>"; };
 		D0244C541C1FEBDC00EA87C1 /* SettingRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingRouter.swift; path = Classes/SettingRouter.swift; sourceTree = "<group>"; };
 		D0244C581C1FF26D00EA87C1 /* PostRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostRouter.swift; path = Classes/PostRouter.swift; sourceTree = "<group>"; };
@@ -315,7 +284,6 @@
 		D0244C5C1C20130800EA87C1 /* GroupRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupRouter.swift; path = Classes/GroupRouter.swift; sourceTree = "<group>"; };
 		D029F7311BCCB39E00CDE18B /* PushSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PushSettingViewController.swift; path = Classes/PushSettingViewController.swift; sourceTree = "<group>"; };
 		D040E1641BDDC00D00417174 /* RecommendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendViewController.swift; path = Classes/RecommendViewController.swift; sourceTree = "<group>"; };
-		D057BAF11B670687007D14D2 /* RequestFriendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestFriendCell.swift; path = Classes/RequestFriendCell.swift; sourceTree = "<group>"; };
 		D06DC6311C240691009B19D1 /* UserRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserRouter.swift; path = Classes/UserRouter.swift; sourceTree = "<group>"; };
 		D06DC6331C2407A1009B19D1 /* GroupMessageRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupMessageRouter.swift; path = Classes/GroupMessageRouter.swift; sourceTree = "<group>"; };
 		D073E6F71B84C1BF00066F42 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraController.swift; path = Classes/CameraController.swift; sourceTree = "<group>"; };
@@ -336,12 +304,8 @@
 		D0A104941BEB055100AEE356 /* statements.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = statements.html; path = Resources/statements.html; sourceTree = SOURCE_ROOT; };
 		D0B40BBE1B78AF0400685D67 /* ExNSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExNSDate.swift; path = Classes/ExNSDate.swift; sourceTree = SOURCE_ROOT; };
 		D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLSchemesController.swift; path = Classes/URLSchemesController.swift; sourceTree = "<group>"; };
-		D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountHeaderViewController.swift; path = Classes/MyAccountHeaderViewController.swift; sourceTree = "<group>"; };
-		D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyAccountBaseController.swift; path = Classes/MyAccountBaseController.swift; sourceTree = "<group>"; };
-		D0BA8DE61B55375A00271F2B /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostViewController.swift; path = Classes/PostViewController.swift; sourceTree = "<group>"; };
 		D0DB07D61B9D1B5200C06C4E /* NotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NotificationView.xib; path = Classes/NotificationView.xib; sourceTree = "<group>"; };
 		D0DB07D81B9D224900C06C4E /* NotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationView.swift; path = Classes/NotificationView.swift; sourceTree = "<group>"; };
-		D0DB07DA1B9D266900C06C4E /* NotificationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationCell.swift; path = Classes/NotificationCell.swift; sourceTree = "<group>"; };
 		D0DB07DF1B9D3E1400C06C4E /* RemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteNotification.swift; path = Classes/RemoteNotification.swift; sourceTree = "<group>"; };
 		D0DB07E41B9D65BE00C06C4E /* ListenerEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListenerEvent.swift; path = Classes/ListenerEvent.swift; sourceTree = "<group>"; };
 		D0E523201C4CEEB600B6CF7B /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Account.swift; path = Classes/Account.swift; sourceTree = "<group>"; };
@@ -501,24 +465,6 @@
 				296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */,
 			);
 			name = Chat;
-			sourceTree = "<group>";
-		};
-		1FC051081BAF9F3B00886F67 /* Components-old */ = {
-			isa = PBXGroup;
-			children = (
-				285778541BC29AEC00533E8E /* ICYTagCollectionViewCell.swift */,
-				285778551BC29AEC00533E8E /* ICYTagCollectionViewCell.xib */,
-				2857784A1BC25DC600533E8E /* ICYPostCell.swift */,
-				285778501BC272E000533E8E /* ICYTagButton.swift */,
-				283771901BC37653001B06D3 /* ICYFlowLayout.swift */,
-				2857784B1BC25DC600533E8E /* ICYPostCell.xib */,
-				283771961BC3A329001B06D3 /* ICYPostImageCell.swift */,
-				283771971BC3A329001B06D3 /* ICYPostImageCell.xib */,
-				2837719C1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.swift */,
-				2837719D1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.xib */,
-				28C647AF1BBE838200253647 /* EmptyStationResult.xib */,
-			);
-			name = "Components-old";
 			sourceTree = "<group>";
 		};
 		1FC0510A1BAF9FDB00886F67 /* Components */ = {
@@ -683,12 +629,9 @@
 			isa = PBXGroup;
 			children = (
 				1F1EBEB21C4F6BAD00B3439F /* Components */,
-				1FC051081BAF9F3B00886F67 /* Components-old */,
-				291ADF941AD229B3009D8BE3 /* CommentCell.swift */,
 				1F18B8331B844665003BD469 /* CreatePostViewController.swift */,
 				1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */,
 				2869D71B1BB545FB00D1C479 /* StationDiscoverViewController.swift */,
-				D0BA8DE61B55375A00271F2B /* PostViewController.swift */,
 				1FA9C5081C5106C9004A683C /* PostDetailViewController.swift */,
 			);
 			name = Home;
@@ -697,12 +640,13 @@
 		29CA44911AD4DEEA009EB177 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				D012F5901BBBC2D800D5293D /* MyAccount */,
-				D012F5911BBBC31100D5293D /* Invitation */,
-				D0DB07DC1B9D26E200C06C4E /* Notification */,
+				D07793831B704EA00056B7CB /* picker */,
+				1F937FE71B58EE8B009722CE /* MyAccountEditViewController.swift */,
+				1F937FE51B58C2E3009722CE /* MyAccountViewController.swift */,
 				D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */,
+				D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */,
+				D07D8A191B99A3DF00D13096 /* NotificationListViewController.swift */,
 				D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */,
-				D012F5961BBBC4DD00D5293D /* MyStationsViewController.swift */,
 				D029F7311BCCB39E00CDE18B /* PushSettingViewController.swift */,
 				D0A104901BEAF1C700AEE356 /* AgreementViewController.swift */,
 			);
@@ -739,27 +683,6 @@
 			path = TomoTests;
 			sourceTree = "<group>";
 		};
-		D012F5901BBBC2D800D5293D /* MyAccount */ = {
-			isa = PBXGroup;
-			children = (
-				D07793831B704EA00056B7CB /* picker */,
-				1F937FE71B58EE8B009722CE /* MyAccountEditViewController.swift */,
-				1F937FE51B58C2E3009722CE /* MyAccountViewController.swift */,
-				D0B6EB111B5E7D09005A7E45 /* MyAccountHeaderViewController.swift */,
-				D0B6EB141B5E8033005A7E45 /* MyAccountBaseController.swift */,
-			);
-			name = MyAccount;
-			sourceTree = "<group>";
-		};
-		D012F5911BBBC31100D5293D /* Invitation */ = {
-			isa = PBXGroup;
-			children = (
-				D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */,
-				D057BAF11B670687007D14D2 /* RequestFriendCell.swift */,
-			);
-			name = Invitation;
-			sourceTree = "<group>";
-		};
 		D012F5921BBBC40A00D5293D /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -776,15 +699,6 @@
 				D07793861B704F410056B7CB /* DatePickerViewController.swift */,
 			);
 			name = picker;
-			sourceTree = "<group>";
-		};
-		D0DB07DC1B9D26E200C06C4E /* Notification */ = {
-			isa = PBXGroup;
-			children = (
-				D07D8A191B99A3DF00D13096 /* NotificationListViewController.swift */,
-				D0DB07DA1B9D266900C06C4E /* NotificationCell.swift */,
-			);
-			name = Notification;
 			sourceTree = "<group>";
 		};
 		D0DB07E31B9D655600C06C4E /* Listener */ = {
@@ -926,20 +840,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28C647B01BBE838200253647 /* EmptyStationResult.xib in Resources */,
 				29CA441A1AD4CA48009EB177 /* Contacts.storyboard in Resources */,
 				1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */,
-				2857784D1BC25DC600533E8E /* ICYPostCell.xib in Resources */,
-				283771991BC3A329001B06D3 /* ICYPostImageCell.xib in Resources */,
 				D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */,
 				D0DB07D71B9D1B5200C06C4E /* NotificationView.xib in Resources */,
 				29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */,
-				2837719F1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.xib in Resources */,
 				1FF6930D1C1E95FC00777BD5 /* Landing.storyboard in Resources */,
 				296D8BC41AFC5A680058D400 /* Main.storyboard in Resources */,
 				29CA441C1AD4CAAA009EB177 /* Map.storyboard in Resources */,
 				1FA76AFE1BA27B1E004776B0 /* Group.storyboard in Resources */,
-				285778571BC29AEC00533E8E /* ICYTagCollectionViewCell.xib in Resources */,
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
 				296D8BC31AFC5A680058D400 /* LaunchScreen.xib in Resources */,
 				29CA44931AD4EEBC009EB177 /* Tab.storyboard in Resources */,
@@ -1035,13 +944,11 @@
 				D040E1651BDDC00D00417174 /* RecommendViewController.swift in Sources */,
 				1F36D6E81C3E2E4C007769F0 /* UserAnnotationView.swift in Sources */,
 				D0A104911BEAF1C700AEE356 /* AgreementViewController.swift in Sources */,
-				283771911BC37653001B06D3 /* ICYFlowLayout.swift in Sources */,
 				1FAA70FC1BBBF97B00BCE5AF /* StationAnnotation.swift in Sources */,
 				1FC268801BBABED8006F1FDA /* GroupAnnotation.swift in Sources */,
 				D0A0C0341B5F5D0500ABFA5F /* UserPostsViewController.swift in Sources */,
 				D08BFB0B1B744C2D00771F70 /* JSQMessageEntity.swift in Sources */,
 				1FCA1E671B722260000F2936 /* MessageEntity.swift in Sources */,
-				D057BAF21B670687007D14D2 /* RequestFriendCell.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
 				1FC268821BBABF20006F1FDA /* GroupAnnotationView.swift in Sources */,
 				D0F44FAF1B5E540F009E12AA /* FriendListSendRequestController.swift in Sources */,
@@ -1050,11 +957,9 @@
 				D07232351BE1C1C700122F52 /* Character.swift in Sources */,
 				D0244C551C1FEBDC00EA87C1 /* SettingRouter.swift in Sources */,
 				D0A0C0321B5F5BF900ABFA5F /* ProfileViewController.swift in Sources */,
-				D0DB07DB1B9D266900C06C4E /* NotificationCell.swift in Sources */,
 				D072323D1BE1C1C700122F52 /* Range.swift in Sources */,
 				293EB4251B132B06006BAF27 /* JSQVoiceMediaItem.m in Sources */,
 				D07232391BE1C1C700122F52 /* Float.swift in Sources */,
-				283771981BC3A329001B06D3 /* ICYPostImageCell.swift in Sources */,
 				1FCA1E651B7221F7000F2936 /* NotificationEntity.swift in Sources */,
 				D0FDC3541C1EA09F0045826B /* Alamofire-SwiftyJSON.swift in Sources */,
 				D029F7321BCCB39E00CDE18B /* PushSettingViewController.swift in Sources */,
@@ -1065,7 +970,6 @@
 				290144171ADF6D890048F3D8 /* MapViewController.swift in Sources */,
 				D072323C1BE1C1C700122F52 /* NSArray.swift in Sources */,
 				29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */,
-				2837719E1BC3AEA4001B06D3 /* ICYCollectionViewSingleImageCell.swift in Sources */,
 				29539C791B13175D00545509 /* CommonMessageController.swift in Sources */,
 				2994AF911B019AA100656C39 /* GCD.swift in Sources */,
 				1FE7CEF51B8C9561006700FC /* SignUpViewController.swift in Sources */,
@@ -1076,12 +980,10 @@
 				296D8BAB1AFC59F10058D400 /* BaseViewController.swift in Sources */,
 				1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */,
 				D07402E41C239DA6002E7581 /* ReportRouter.swift in Sources */,
-				D0B6EB151B5E8033005A7E45 /* MyAccountBaseController.swift in Sources */,
 				1F9A32371BA6AD8B001C43CE /* GroupEntity.swift in Sources */,
 				D07E48541B9EB35B00BF04B2 /* Entity.swift in Sources */,
 				1FCA1E631B71D0C8000F2936 /* CommentEntity.swift in Sources */,
 				1FAA70FE1BBBF99100BCE5AF /* StationAnnotationView.swift in Sources */,
-				291ADF951AD229B3009D8BE3 /* CommentCell.swift in Sources */,
 				290134D81AC3991C00BBFE29 /* AppDelegate.swift in Sources */,
 				29C1DA7A1AD36659009A02CC /* S3Controller.swift in Sources */,
 				1FF693121C1EB88800777BD5 /* LandingViewController.swift in Sources */,
@@ -1089,7 +991,6 @@
 				1F79C1B81B5E730E008800E1 /* SearchFriendViewController.swift in Sources */,
 				D0891C961B8AF5A600701CC7 /* SearchFriendCell.swift in Sources */,
 				299389481AD3B33800043D91 /* AmazonS3RequestManager.swift in Sources */,
-				D012F5971BBBC4DD00D5293D /* MyStationsViewController.swift in Sources */,
 				D0DB07E51B9D65BE00C06C4E /* ListenerEvent.swift in Sources */,
 				29EA55B21AEDCE61006A1F41 /* BaseTableViewController.swift in Sources */,
 				1F937FE61B58C2E3009722CE /* MyAccountViewController.swift in Sources */,
@@ -1122,15 +1023,11 @@
 				28CB45E11BB13FB200182924 /* GroupDescriptionViewController.swift in Sources */,
 				1FAA70F91BBB8EE600BCE5AF /* AggregatableAnnotation.swift in Sources */,
 				1FEE80EA1B4E59CF0061B913 /* HomeViewController.swift in Sources */,
-				285778561BC29AEC00533E8E /* ICYTagCollectionViewCell.swift in Sources */,
 				D07793871B704F410056B7CB /* DatePickerViewController.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
 				D07232331BE1C1C700122F52 /* Array.swift in Sources */,
 				D0F44FAB1B5E4790009E12AA /* BookmarkedPostsViewController.swift in Sources */,
-				D0B6EB121B5E7D09005A7E45 /* MyAccountHeaderViewController.swift in Sources */,
-				D0BA8DE71B55375A00271F2B /* PostViewController.swift in Sources */,
 				1F26B29A1BAA61D10063AC6B /* GroupDetailViewController.swift in Sources */,
-				285778511BC272E000533E8E /* ICYTagButton.swift in Sources */,
 				D0960AAC1BC376FB00A63733 /* UltravisualLayout.swift in Sources */,
 				1F1EBEB61C4F6C8A00B3439F /* ImagePostTableViewCell.swift in Sources */,
 				D072323E1BE1C1C700122F52 /* Sequence.swift in Sources */,
@@ -1141,7 +1038,6 @@
 				296D8BAC1AFC59F10058D400 /* TabBarController.swift in Sources */,
 				D04447B31BBA9DF300AD7B0C /* GroupChatViewController.swift in Sources */,
 				D07232341BE1C1C700122F52 /* Bool.swift in Sources */,
-				2857784C1BC25DC600533E8E /* ICYPostCell.swift in Sources */,
 				1FEA3CFB1BB391780037F3C5 /* RecommendStationTableViewCell.swift in Sources */,
 				D099B6181BDA3B63006C9D01 /* LocationController.swift in Sources */,
 				D0E523211C4CEEB600B6CF7B /* Account.swift in Sources */,

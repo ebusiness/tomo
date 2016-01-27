@@ -9,32 +9,50 @@
 import UIKit
 import SwiftyJSON
 
-final class MyPostsViewController: MyAccountBaseController {
+final class MyPostsViewController: UITableViewController {
+
+    @IBOutlet weak var coverImageView: UIImageView!
+
+    @IBOutlet weak var avatarImageView: UIImageView!
+
+    @IBOutlet weak var nickNameLabel: UILabel!
+
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    let screenHeight = UIScreen.mainScreen().bounds.height
-    let loadTriggerHeight = CGFloat(88.0)
+    @IBOutlet weak var loadingLabel: UILabel!
     
-    var posts = [AnyObject]()
-    var oldestContent: AnyObject?
+    // Array holds all cell contents
+    var posts = [PostEntity]()
+
+    // Array holds all cell heights
+    var rowHeights = [CGFloat]()
+
+    var oldestContent: PostEntity?
+
     var isLoading = false
     var isExhausted = false
-    
+
+    let headerHeight = TomoConst.UI.ScreenHeight * 0.382 - 58
+    let headerViewSize = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.ScreenHeight * 0.382 + 58)
+
     override func viewDidLoad() {
+
         super.viewDidLoad()
-        
-        let postCellNib = UINib(nibName: "ICYPostCell", bundle: nil)
-        self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "ICYPostCellIdentifier")
-        
-        let postImageCellNib = UINib(nibName: "ICYPostImageCell", bundle: nil)
-        self.tableView.registerNib(postImageCellNib, forCellReuseIdentifier: "ICYPostImageCellIdentifier")
-        
-        self.clearsSelectionOnViewWillAppear = false
-        
-        self.registerForNotifications()
-        
-        loadMoreContent()
+
+        self.configDisplay()
+
+        self.loadMoreContent()
     }
-    
+
+    override func viewWillDisappear(animated: Bool) {
+        // restore the normal navigation bar before disappear
+        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = nil
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        self.configNavigationBarByScrollPosition()
+    }
 }
 
 // MARK: UITableView DataSource
@@ -42,24 +60,28 @@ final class MyPostsViewController: MyAccountBaseController {
 extension MyPostsViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
+        return self.posts.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let post = posts[indexPath.row] as! PostEntity
-        post.owner = me
-        
-        var cell: ICYPostCell!
-        
+        let post = self.posts[indexPath.row]
+
+        var cell: TextPostTableViewCell!
+
+        // If the post has one or more images, use ImagePostTableViewCell, otherwise use the TextPostTableViewCell.
         if post.images?.count > 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("ICYPostImageCellIdentifier", forIndexPath: indexPath) as! ICYPostImageCell
+            cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostTableViewCell
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("ICYPostCellIdentifier", forIndexPath: indexPath) as! ICYPostCell
+            cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostTableViewCell
         }
-        
+
+        // Give the cell post data, this will tirgger configDisplay
         cell.post = post
-        cell.delegate = self
+
+        // Set current navigation controller as the cell's delegate,
+        // for the navigation when post author's photo been tapped, etc.
+        cell.delegate = self.navigationController
         
         return cell
     }
@@ -70,87 +92,110 @@ extension MyPostsViewController {
 extension MyPostsViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
-        let vc = Util.createViewControllerWithIdentifier("PostView", storyboardName: "Home") as! PostViewController
-        vc.post = posts[indexPath.row] as! PostEntity
+
+        let vc = Util.createViewControllerWithIdentifier("PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
+        vc.post = self.posts[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
-        
     }
     
-    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        guard let content = posts.get(indexPath.row) as? PostEntity else { return UITableViewAutomaticDimension }
-        
-        if content.images?.count > 0 {
-            return 334
-        } else {
-            return 131
-        }
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return self.rowHeights[indexPath.item]
     }
-    
 }
 
 // MARK: UIScrollView Delegate
 
 extension MyPostsViewController {
     
+    // Fetch more contents when scroll down to bottom
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        
-        super.scrollViewDidScroll(scrollView)
-        
+
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
-        
-        if (contentHeight - screenHeight - loadTriggerHeight) < offsetY {
-            loadMoreContent()
+
+        // trigger on the position of one screen height to bottom
+        if (contentHeight - TomoConst.UI.ScreenHeight) < offsetY {
+            self.loadMoreContent()
         }
 
+        self.configNavigationBarByScrollPosition()
     }
 }
 
 // MARK: Private methods
 
 extension MyPostsViewController {
+
+    private func configDisplay() {
+
+        // make the navigation bar transparent
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+
+        self.avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.avatarImageView.layer.borderWidth = 2
+
+        // set the header view's size according the screen size
+        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.headerViewSize)
+
+        if let cover = me.cover {
+            self.coverImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: TomoConst.Image.DefaultCover)
+        }
+
+        if let avatar = me.photo {
+            self.avatarImageView.sd_setImageWithURL(NSURL(string: avatar), placeholderImage: TomoConst.Image.DefaultCover)
+        }
+
+        self.nickNameLabel.text = me.nickName
+    }
     
     private func loadMoreContent() {
         
-        // skip if already in loading
-        if isLoading || isExhausted {
+        // skip if already in loading or no more contents
+        if self.isLoading || self.isExhausted {
             return
         }
-        
-        isLoading = true
+
+        self.isLoading = true
         
         var parameters = Router.Post.FindParameters(category: .mine)
         
-        if let oldestContent = oldestContent as? PostEntity {
+        if let oldestContent = self.oldestContent {
             parameters.before = oldestContent.createDate.timeIntervalSince1970
         }
         
         Router.Post.Find(parameters: parameters).response {
+
+            // Mark as exhausted when something wrong (probably 404)
             if $0.result.isFailure {
                 self.isLoading = false
                 self.isExhausted = true
+                self.loadingIndicator.stopAnimating()
+                self.loadingLabel.hidden = false
                 return
             }
             
             let posts:[PostEntity]? = PostEntity.collection($0.result.value!)
             
-            if let loadPosts:[AnyObject] = posts {
+            if let loadPosts:[PostEntity] = posts {
+
+                // append new contents
                 self.posts += loadPosts
+
+                // calculate the cell height for display these contents
+                self.rowHeights += loadPosts.map { self.simulateLayout($0) }
+
                 self.appendRows(loadPosts.count)
-            } else {
-                // the response is not post
             }
+
             self.isLoading = false
         }
     }
     
     private func appendRows(rows: Int) {
         
-        let firstIndex = posts.count - rows
-        let lastIndex = posts.count
+        let firstIndex = self.posts.count - rows
+        let lastIndex = self.posts.count
         
         var indexPathes = [NSIndexPath]()
         
@@ -159,63 +204,49 @@ extension MyPostsViewController {
         }
         
         // hold the oldest content for pull-up loading
-        oldestContent = posts.last
+        oldestContent = self.posts.last
         
         tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: UITableViewRowAnimation.Middle)
         tableView.endUpdates()
-        
-    }
-}
 
-// MARK: - NSNotificationCenter
+    }
 
-extension MyPostsViewController {
-    
-    private func registerForNotifications() {
-        ListenerEvent.PostLiked.addObserver(self, selector: Selector("receivePostLiked:"))
-        ListenerEvent.PostCommented.addObserver(self, selector: Selector("receivePostCommented:"))
-        ListenerEvent.PostBookmarked.addObserver(self, selector: Selector("receivePostBookmarked:"))
+    // Calulate the cell height beforehand
+    private func simulateLayout(post: PostEntity) -> CGFloat {
+
+        let cell: TextPostTableViewCell
+
+        if post.images?.count > 0 {
+            cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostTableViewCell
+        } else {
+            cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostTableViewCell
+        }
+
+        cell.post = post
+
+        let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+
+        return size.height
     }
-    
-    private func receivePost(notification: NSNotification,done: (cell: ICYPostCell,user: UserEntity)->() ){
-        guard let userInfo = notification.userInfo else { return }
-        let json = JSON(userInfo)
-        let postid = json["targetId"].stringValue
-        let user = UserEntity(json["from"])
-        
-        let cell: AnyObject? = self.tableView.visibleCells.find { ($0 as! ICYPostCell).post?.id == postid }
-        if let cell = cell as? ICYPostCell {
-            gcd.sync(.Main) {
-                done(cell: cell, user: user)
-            }
+
+    private func configNavigationBarByScrollPosition() {
+
+        let offsetY = self.tableView.contentOffset.y
+
+        // begin fade in the navigation bar background at the point which is
+        // twice height of topbar above the bottom of the table view header area.
+        // and let the fade in complete just when the bottom of navigation bar
+        // overlap with the bottom of table header view.
+        if offsetY > self.headerHeight - TomoConst.UI.TopBarHeight * 2 {
+
+            let distance = self.headerHeight - offsetY - TomoConst.UI.TopBarHeight * 2
+            let image = Util.imageWithColor(0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
+            self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+
+            // if user scroll down so the table header view got shown, just keep the navigation bar transparent
+        } else {
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         }
     }
-    
-    func receivePostLiked(notification: NSNotification) {
-        self.receivePost(notification) { (cell, user) -> () in
-            guard let post = cell.post else { return }
-            post.like = post.like ?? []
-            post.like!.append(user.id)
-            
-            cell.likeButton.bounce({ () -> Void in
-                cell.post = post
-            })            
-        }
-    }
-    
-    func receivePostCommented(notification: NSNotification) {
-        self.receivePost(notification) { (cell, _) -> () in
-            
-            cell.shake(nil)
-        }
-    }
-    
-    func receivePostBookmarked(notification: NSNotification) {
-        self.receivePost(notification) { (cell, _) -> () in
-            
-            cell.collectionButton.tada(nil)
-        }
-    }
-    
 }

@@ -74,8 +74,9 @@ extension HomeViewController {
         }
     }
 
-    @IBAction func addedPost(segue: UIStoryboardSegue) {
+    @IBAction func didCreatePost(segue: UIStoryboardSegue) {
         self.loadNewContent()
+        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: true)
     }
 }
 
@@ -159,7 +160,7 @@ extension HomeViewController {
 
         // trigger on the position of one screen height to bottom
         if (contentHeight - TomoConst.UI.ScreenHeight) < offsetY {
-            loadMoreContent()
+            self.loadMoreContent()
         }
     }
 }
@@ -291,17 +292,16 @@ extension HomeViewController {
         }
         
         // hold the oldest content for pull-up loading
-        oldestContent = contents.last
+        self.oldestContent = self.contents.last
         
         // hold the latest content for pull-down loading
         if firstIndex == 0 {
-            latestContent = contents.first
+            self.latestContent = self.contents.first
         }
         
         tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
         tableView.endUpdates()
-        
     }
 
     // Prepend specific number of rows on table view
@@ -314,7 +314,7 @@ extension HomeViewController {
         }
         
         // hold the latest content for pull-up loading
-        latestContent = contents.first
+        self.latestContent = self.contents.first
         
         tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
@@ -333,7 +333,6 @@ extension HomeViewController {
         }
 
         cell.post = post
-//        cell.configDisplay()
 
         let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
 

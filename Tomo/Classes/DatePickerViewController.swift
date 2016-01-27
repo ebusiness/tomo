@@ -8,15 +8,18 @@
 
 import UIKit
 
-class DatePickerViewController: BaseViewController {
+final class DatePickerViewController: UIViewController {
     
     var date:NSDate?
+
     @IBOutlet weak var datePicker: UIDatePicker!
+
     var didSelected: ((selected:NSDate) -> Void)!
     
     override func viewDidLoad() {
+
         super.viewDidLoad()
-        self.alwaysShowNavigationBar = true
+
         if let date = self.date {
             self.datePicker.setDate(date, animated: true)
         }

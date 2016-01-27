@@ -90,11 +90,14 @@ struct TomoConst {
     }
 
     struct UI {
+
         static let ScreenWidth = UIScreen.mainScreen().bounds.width
         static let ScreenHeight = UIScreen.mainScreen().bounds.height
         static let StatusBarHeight = CGFloat(20)
         static let NavigationBarHeight = CGFloat(44)
         static let TopBarHeight = NavigationBarHeight + StatusBarHeight
+
+        static let PlaceHolderColor = Util.UIColorFromRGB(0xCCCCCC, alpha: 1.0)
     }
 
     struct Duration {

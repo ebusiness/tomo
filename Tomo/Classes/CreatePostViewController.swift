@@ -324,7 +324,7 @@ extension CreatePostViewController {
         Router.Post.Create(parameters: parameters).response {
             switch $0.result {
             case .Success(let value):
-                self.performSegueWithIdentifier("postCreated", sender: PostEntity(value))
+                self.performSegueWithIdentifier("CreatePost", sender: PostEntity(value))
             default:
                 break
             }

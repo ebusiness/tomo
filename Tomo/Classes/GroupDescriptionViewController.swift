@@ -179,13 +179,13 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
 
             if let myGroups = me.groups where myGroups.contains(self.group.id) {
 
-                self.actionButton.titleLabel?.text = " 退出群组 "
+                self.actionButton.setTitle(" 退出群组 ", forState: .Normal)
                 self.actionButton.backgroundColor = Palette.Red.primaryColor
                 self.actionButton.sizeToFit()
 
             } else  {
 
-                self.actionButton.titleLabel?.text = " 加入群组 "
+                self.actionButton.setTitle(" 加入群组 ", forState: .Normal)
                 self.actionButton.backgroundColor = Palette.Green.primaryColor
                 self.actionButton.sizeToFit()
             }
@@ -236,8 +236,13 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
 
     private func leaveGroup() {
 
-        Util.alert(self.delegate!, title: "退出群组", message: "确定退出该群组么?") { _ in
+        let alert = UIAlertController(title: "退出群组", message: "确定退出\(self.group.name)么?", preferredStyle: .Alert)
 
+        alert.addAction(UIAlertAction(title: "取消", style: .Destructive, handler: { _ in
+            self.actionButton.userInteractionEnabled = true
+        }))
+
+        alert.addAction(UIAlertAction(title: "确定", style: .Default, handler: { _ in
             Router.Group.Leave(id: self.group.id).response {
 
                 if $0.result.isFailure {
@@ -253,19 +258,20 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
 
                 self.delegate.collectionView!.performBatchUpdates({ _ in
                     self.delegate.collectionView!.deleteItemsAtIndexPaths([NSIndexPath(forItem: indexOfMeInGroup!, inSection: 0)])
-                }, completion: nil)
+                    }, completion: nil)
 
                 UIView.animateWithDuration(TomoConst.Duration.Short) {
                     self.actionButton.titleLabel?.text = " 加入群组 "
                     self.actionButton.backgroundColor = Palette.Green.primaryColor
                     self.actionButton.sizeToFit()
                 }
-
+                
                 self.actionButton.userInteractionEnabled = true
             }
-        }
-    }
+        }))
 
+        self.delegate.presentViewController(alert, animated: true, completion: nil)
+    }
 }
 
 // MARK: - UICollectionView Content Cell

@@ -117,7 +117,7 @@ extension UserPostsViewController {
 
         // trigger on the position of one screen height to bottom
         if (contentHeight - TomoConst.UI.ScreenHeight) < offsetY {
-            loadMoreContent()
+            self.loadMoreContent()
         }
 
         self.configNavigationBarByScrollPosition()

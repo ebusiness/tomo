@@ -8,19 +8,16 @@
 
 import UIKit
 
-class PickerTableViewController: BaseTableViewController {
+final class PickerTableViewController: UITableViewController {
     
-    var pickerData:[String]!
+    var pickerData = ["男","女"]
     var selected:String?
     var didSelected: ((selected:String) -> Void)!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.alwaysShowNavigationBar = true
-    }
+
 }
 
-// MARK: - UITableViewDataSource
+// MARK: - UITableView DataSource
+
 extension PickerTableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -40,7 +37,9 @@ extension PickerTableViewController {
         return cell
     }
 }
-// MARK: - UITableViewDelegate
+
+// MARK: - UITableView Delegate
+
 extension PickerTableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -51,7 +50,5 @@ extension PickerTableViewController {
         
         self.didSelected(selected: self.pickerData[indexPath.row])
         self.navigationController?.popViewControllerAnimated(true)
-        
     }
-    
 }

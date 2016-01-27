@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-class PushSettingViewController: MyAccountBaseController {
+final class PushSettingViewController: UITableViewController {
     
     @IBOutlet weak var pushSwitch: UISwitch!
     
@@ -44,7 +44,7 @@ class PushSettingViewController: MyAccountBaseController {
                 self.tableView.reloadSections(NSIndexSet(index: postSection), withRowAnimation: .Automatic)
                 self.tableView.reloadSections(NSIndexSet(index: groupSection), withRowAnimation: .Automatic)
                 self.tableView.endUpdates()
-                self.scrollViewDidScroll(self.tableView)
+//                self.scrollViewDidScroll(self.tableView)
                 if Defaults["deviceToken"].string == nil && allowNotification {
                     Util.setupPush()
                 }
@@ -145,8 +145,8 @@ extension PushSettingViewController {
 
 extension PushSettingViewController {
     
-    override func becomeActive() {
-        super.becomeActive()
+    func becomeActive() {
+
         let settings = UIApplication.sharedApplication().currentUserNotificationSettings()!
         allowNotification = settings.types != UIUserNotificationType.None
         

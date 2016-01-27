@@ -105,11 +105,11 @@ final class SingleImageCollectionViewCell: UICollectionViewCell {
                     }
                     let size = image.size
                     let ratio = size.width / size.height
-                    if size.height < (self.imageView.bounds.height / ICYCollectionViewSingleImageCell.minCenterScale)
-                        && size.width < (self.imageView.bounds.width / ICYCollectionViewSingleImageCell.minCenterScale) {
+                    if size.height < (self.imageView.bounds.height / SingleImageCollectionViewCell.minCenterScale)
+                        && size.width < (self.imageView.bounds.width / SingleImageCollectionViewCell.minCenterScale) {
                             self.imageView.contentMode = .Center
-                    } else if ratio > ICYCollectionViewSingleImageCell.maxAspectFitScale
-                        || ratio < ICYCollectionViewSingleImageCell.minAspectFitScale {
+                    } else if ratio > SingleImageCollectionViewCell.maxAspectFitScale
+                        || ratio < SingleImageCollectionViewCell.minAspectFitScale {
                             self.imageView.contentMode = .ScaleAspectFit
                     }else {
                         self.imageView.contentMode = .ScaleAspectFill
