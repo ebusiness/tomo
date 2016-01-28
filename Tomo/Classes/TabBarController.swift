@@ -112,7 +112,8 @@ extension TabBarController {
         }
 
         self.tabBar.barTintColor = UIColor.whiteColor()
-        
+        self.automaticallyAdjustsScrollViewInsets = true
+
         self.viewControllers = viewControllers
         
     }
