@@ -79,7 +79,7 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
     }
 
     // Make the CollectionView as two-column layout
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(collectionView: UICollectionView, layout : UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let width = (TomoConst.UI.ScreenWidth - 2.0) / 2.0
         let height = width / 3.0 * 4.0
         return CGSizeMake(width, height)
@@ -180,7 +180,7 @@ extension StationDiscoverViewController {
         self.footerView.searchResultLabel.alpha = 0
     }
 
-    private func stopActivityIndicator(withString: String) {
+    private func stopActivityIndicator(withString: String?) {
         self.footerView.activityIndicator.stopAnimating()
         self.footerView.searchResultLabel.text = withString
         UIView.animateWithDuration(TomoConst.Duration.Short) {
@@ -200,7 +200,7 @@ extension StationDiscoverViewController {
             indexPaths.append(indexPath)
         }
 
-        collectionView.insertItemsAtIndexPaths(indexPaths)
+        self.collectionView.insertItemsAtIndexPaths(indexPaths)
     }
 }
 

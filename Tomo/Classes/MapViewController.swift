@@ -88,6 +88,11 @@ extension MapViewController {
     @IBAction func mapViewTapped(sender: AnyObject) {
         self.hideTableView()
     }
+
+    @IBAction func closeButtonTapped(sender: UIButton) {
+        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+
 }
 
 // MARK: MapView Delegate

@@ -411,8 +411,8 @@
 		1FA76AFF1BA29D43004776B0 /* Group */ = {
 			isa = PBXGroup;
 			children = (
-				1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */,
 				28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */,
+				1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */,
 				1FF9B9621C5A3BD0008BB6ED /* GroupViewController.swift */,
 			);
 			name = Group;

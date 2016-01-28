@@ -8,87 +8,142 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
+private let reuseIdentifier = "StationCell"
 
 class GroupViewController: UICollectionViewController {
 
+    var isLoading = false
+    var isExhausted = false
+
+    var page = 0
+
+    // Array hold the search result
+    var groups = [GroupEntity]()
+
+    // CollectionView's footer view, display the indicator and search result
+    var footerView: SearchResultReusableView!
+
     override func viewDidLoad() {
+
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
+        self.loadData()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
-    // MARK: UICollectionViewDataSource
-
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        if segue.identifier == "ShowGroupDetail" {
+            let groupDetailViewController = segue.destinationViewController as! GroupDetailViewController
+            groupDetailViewController.group = sender as! GroupEntity
+        }
     }
 
+
+    
+}
+
+// MARK: UICollectionViewDaztaSource
+
+extension GroupViewController {
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+        return self.groups.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
     
-        // Configure the cell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("StationCell", forIndexPath: indexPath) as! StationCollectionViewCell
+
+        cell.group = self.groups[indexPath.row]
     
         return cell
     }
 
-    // MARK: UICollectionViewDelegate
+}
 
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
+// MARK: UICollectionViewDelegate
 
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
+extension GroupViewController {
 
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
+    // Make the CollectionView as two-column layout
+    func collectionView(collectionView: UICollectionView, layout : UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let width = (TomoConst.UI.ScreenWidth - 2.0) / 2.0
+        let height = width / 3.0 * 4.0
+        return CGSizeMake(width, height)
     }
 
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return false
+    // When cell was tapped, move to group detail
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+
+        self.performSegueWithIdentifier("ShowGroupDetail", sender: self.groups[indexPath.row])
+//        let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+//        groupVC.group = self.groups[indexPath.row]
+//
+//        self.navigationController?.pushViewController(groupVC, animated: true)
     }
 
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
+    // Give CollectionView footer view, and hold a reference of it
+    override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        self.footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Footer", forIndexPath: indexPath) as! SearchResultReusableView
+        return self.footerView
     }
-    */
+}
 
+// MARK: - Internal Methods
+
+extension GroupViewController {
+
+    private func loadData() {
+
+        if self.isLoading || self.isExhausted {
+            return
+        }
+
+        self.isLoading = true
+
+        var parameters = Router.Group.FindParameters(category: .mine)
+        parameters.page = self.page
+        parameters.type = .station
+
+        Router.Group.Find(parameters: parameters).response {
+
+            if $0.result.isFailure {
+                self.isLoading = false
+                self.isExhausted = true
+                self.stopActivityIndicator()
+                return
+            }
+
+            if let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) {
+                self.groups.appendContentsOf(groups)
+                self.appendCells(groups.count)
+                self.page++
+            }
+
+            self.isLoading = false
+        }
+    }
+
+    private func stopActivityIndicator(withString: String? = nil) {
+        self.footerView.activityIndicator.stopAnimating()
+        self.footerView.searchResultLabel.text = withString
+        UIView.animateWithDuration(TomoConst.Duration.Short) {
+            self.footerView.searchResultLabel.alpha = 1.0
+        }
+    }
+
+    private func appendCells(count: Int) {
+
+        let startIndex = self.groups.count - count
+        let endIndex = self.groups.count
+
+        var indexPaths = [NSIndexPath]()
+
+        for i in startIndex..<endIndex {
+            let indexPath = NSIndexPath(forItem: i, inSection: 0)
+            indexPaths.append(indexPath)
+        }
+        
+        self.collectionView!.insertItemsAtIndexPaths(indexPaths)
+    }
 }

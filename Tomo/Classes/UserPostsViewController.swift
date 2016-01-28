@@ -130,10 +130,6 @@ extension UserPostsViewController {
 
     private func configDisplay() {
 
-        // make the navigation bar transparent
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-
         // set the header view's size according the screen size
         self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.headerViewSize)
 

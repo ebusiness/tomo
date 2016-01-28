@@ -74,6 +74,7 @@ extension HomeViewController {
         }
     }
 
+    // unwind segue implimentation
     @IBAction func didCreatePost(segue: UIStoryboardSegue) {
         self.loadNewContent()
         self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: true)

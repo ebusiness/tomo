@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="y7y-Sv-zvR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="y7y-Sv-zvR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -351,7 +351,7 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="账号信息" id="2pT-iK-RWo">
-                        <barButtonItem key="rightBarButtonItem" title="编辑" id="kJ9-3i-zHT">
+                        <barButtonItem key="rightBarButtonItem" image="edit_user" id="kJ9-3i-zHT">
                             <connections>
                                 <segue destination="aXi-4j-mPv" kind="push" id="ful-aI-D8w"/>
                             </connections>
@@ -1021,7 +1021,7 @@
         <!--我的投稿-->
         <scene sceneID="bgS-MN-1Vk">
             <objects>
-                <tableViewController automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="brH-29-FIA" customClass="MyPostsViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="brH-29-FIA" customClass="MyPostsViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Hfi-aa-3ev">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1518,7 +1518,7 @@
         <!--我的收藏-->
         <scene sceneID="pIL-r6-R69">
             <objects>
-                <tableViewController automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="UMK-D6-kCx" customClass="BookmarkedPostsViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="UMK-D6-kCx" customClass="BookmarkedPostsViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="644-Z3-w8n">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2548,6 +2548,7 @@
         <image name="add_user" width="25" height="25"/>
         <image name="avatar" width="80" height="80"/>
         <image name="delete_sign" width="25" height="25"/>
+        <image name="edit_user" width="25" height="25"/>
         <image name="hearts" width="25" height="25"/>
         <image name="splash10" width="1000" height="666"/>
         <image name="star" width="25" height="25"/>

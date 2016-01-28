@@ -127,10 +127,6 @@ extension BookmarkedPostsViewController {
 
     private func configDisplay() {
 
-        // make the navigation bar transparent
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-
         self.avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
         self.avatarImageView.layer.borderWidth = 2
 

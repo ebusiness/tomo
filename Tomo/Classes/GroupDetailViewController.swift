@@ -178,14 +178,10 @@ extension GroupDetailViewController {
 
     private func configDisplay() {
 
-        // make the navigation bar transparent
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-
         self.joinButton.layer.borderColor = UIColor.whiteColor().CGColor
         self.joinButton.layer.borderWidth = 2
 
-        self.title = group.name
+        self.title = self.group.name
         self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: DefaultGroupImage)
 
         // set the header view's size according the screen size

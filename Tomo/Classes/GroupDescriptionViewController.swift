@@ -54,10 +54,6 @@ extension GroupDescriptionViewController {
     private func configDisplay() {
 
         self.navigationItem.title = group.name
-
-        // make the navigation bar transparent
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 
     private func loadGroupDescription() {
