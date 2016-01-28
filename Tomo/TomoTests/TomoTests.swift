@@ -32,11 +32,11 @@ class TomoTests: XCTestCase {
         }
     }
     
-    func testLogin() {
-        Router.Session().response { _ in
-            
-            XCTAssert(true, "Pass")
-        }
-    }
-    
+//    func testLogin() {
+//        Router.Session().response { _ in
+//            
+//            XCTAssert(true, "Pass")
+//        }
+//    }
+
 }

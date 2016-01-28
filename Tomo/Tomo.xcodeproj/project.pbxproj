@@ -73,31 +73,9 @@
 		29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
 		29DCEFE91B14519300A7C7AF /* TomoVideoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */; };
 		29EA55B01AEDC1F3006A1F41 /* SocketController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */; };
-		557565911C51250700EB6BBE /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E523201C4CEEB600B6CF7B /* Account.swift */; };
 		5595B6AE1C5677DF00A66128 /* GCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994AF901B019AA100656C39 /* GCD.swift */; };
 		996D5072459D7CA2FD18E518 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 543AF25BC3C38F0E432DD118 /* libPods.a */; };
 		D000F17D1C2809DF00AD873C /* TomoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D000F17C1C2809DF00AD873C /* TomoTests.swift */; };
-		D000F1841C280C8000AD873C /* ContactRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07402E51C23A4D6002E7581 /* ContactRouter.swift */; };
-		D000F1851C280C8000AD873C /* GroupMessageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06DC6331C2407A1009B19D1 /* GroupMessageRouter.swift */; };
-		D000F1861C280C8000AD873C /* GroupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C5C1C20130800EA87C1 /* GroupRouter.swift */; };
-		D000F1871C280C8000AD873C /* InvitationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C5A1C20034C00EA87C1 /* InvitationRouter.swift */; };
-		D000F1881C280C8000AD873C /* MessageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A81C21C22D1B20034D8D0 /* MessageRouter.swift */; };
-		D000F1891C280C8000AD873C /* PostRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C581C1FF26D00EA87C1 /* PostRouter.swift */; };
-		D000F18A1C280C8000AD873C /* ReportRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07402E31C239DA6002E7581 /* ReportRouter.swift */; };
-		D000F18B1C280C8000AD873C /* SettingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C541C1FEBDC00EA87C1 /* SettingRouter.swift */; };
-		D000F18C1C280C8000AD873C /* SigninRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FDC3561C1EA30D0045826B /* SigninRouter.swift */; };
-		D000F18D1C280C8000AD873C /* SignupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C521C1FC65100EA87C1 /* SignupRouter.swift */; };
-		D000F18E1C280C8000AD873C /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06DC6311C240691009B19D1 /* UserRouter.swift */; };
-		D000F18F1C280C8000AD873C /* APIRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FDC3511C1EA0670045826B /* APIRoute.swift */; };
-		D000F1901C280C8000AD873C /* Alamofire-SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FDC3531C1EA09F0045826B /* Alamofire-SwiftyJSON.swift */; };
-		D000F1911C280CEC00AD873C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901351C1AC3A90C00BBFE29 /* Constants.swift */; };
-		D000F1931C281E3E00AD873C /* CommentEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */; };
-		D000F1941C281E3E00AD873C /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07E48531B9EB35B00BF04B2 /* Entity.swift */; };
-		D000F1951C281E3E00AD873C /* GroupEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9A32361BA6AD8B001C43CE /* GroupEntity.swift */; };
-		D000F1961C281E3E00AD873C /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E661B722260000F2936 /* MessageEntity.swift */; };
-		D000F1971C281E3E00AD873C /* NotificationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */; };
-		D000F1981C281E3E00AD873C /* PostEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAF91B69F99F00648A82 /* PostEntity.swift */; };
-		D000F1991C281E3E00AD873C /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */; };
 		D000F19A1C281E9300AD873C /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E451B60C19F008D5369 /* Array.swift */; };
 		D000F19B1C281E9300AD873C /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E461B60C19F008D5369 /* Bool.swift */; };
 		D000F19C1C281E9300AD873C /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F985E471B60C19F008D5369 /* Character.swift */; };
@@ -1045,42 +1023,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D000F1901C280C8000AD873C /* Alamofire-SwiftyJSON.swift in Sources */,
-				D000F18C1C280C8000AD873C /* SigninRouter.swift in Sources */,
 				D000F19F1C281E9300AD873C /* ExSwift.swift in Sources */,
-				D000F1961C281E3E00AD873C /* MessageEntity.swift in Sources */,
 				D000F19D1C281E9300AD873C /* Dictionary.swift in Sources */,
-				D000F1971C281E3E00AD873C /* NotificationEntity.swift in Sources */,
 				5595B6AE1C5677DF00A66128 /* GCD.swift in Sources */,
-				D000F18B1C280C8000AD873C /* SettingRouter.swift in Sources */,
-				D000F1881C280C8000AD873C /* MessageRouter.swift in Sources */,
 				D000F19E1C281E9300AD873C /* Double.swift in Sources */,
 				D000F19A1C281E9300AD873C /* Array.swift in Sources */,
-				D000F18F1C280C8000AD873C /* APIRoute.swift in Sources */,
 				D000F1A31C281E9300AD873C /* NSArray.swift in Sources */,
-				D000F1911C280CEC00AD873C /* Constants.swift in Sources */,
-				D000F1851C280C8000AD873C /* GroupMessageRouter.swift in Sources */,
 				D000F1A61C281E9300AD873C /* String.swift in Sources */,
-				D000F1941C281E3E00AD873C /* Entity.swift in Sources */,
-				D000F1981C281E3E00AD873C /* PostEntity.swift in Sources */,
-				D000F1991C281E3E00AD873C /* UserEntity.swift in Sources */,
 				D000F1A51C281E9300AD873C /* Sequence.swift in Sources */,
-				D000F18A1C280C8000AD873C /* ReportRouter.swift in Sources */,
-				557565911C51250700EB6BBE /* Account.swift in Sources */,
 				D000F17D1C2809DF00AD873C /* TomoTests.swift in Sources */,
 				D000F1A41C281E9300AD873C /* Range.swift in Sources */,
-				D000F1951C281E3E00AD873C /* GroupEntity.swift in Sources */,
-				D000F1891C280C8000AD873C /* PostRouter.swift in Sources */,
 				D000F19B1C281E9300AD873C /* Bool.swift in Sources */,
-				D000F18E1C280C8000AD873C /* UserRouter.swift in Sources */,
-				D000F1861C280C8000AD873C /* GroupRouter.swift in Sources */,
 				D000F1A01C281E9300AD873C /* Float.swift in Sources */,
-				D000F1841C280C8000AD873C /* ContactRouter.swift in Sources */,
-				D000F1871C280C8000AD873C /* InvitationRouter.swift in Sources */,
 				D000F19C1C281E9300AD873C /* Character.swift in Sources */,
 				D000F1A21C281E9300AD873C /* Int.swift in Sources */,
-				D000F1931C281E3E00AD873C /* CommentEntity.swift in Sources */,
-				D000F18D1C280C8000AD873C /* SignupRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
