@@ -89,6 +89,8 @@ final class ProfileViewController: UITableViewController {
 
         // listening for the event of friend
         self.registerNotifications()
+        
+        self.registerClosureForAccount()
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -246,6 +248,15 @@ extension ProfileViewController {
 // MARK: - Internal methods
 
 extension ProfileViewController {
+    
+    private func registerClosureForAccount() {
+        
+        me.addFriendsObserver { _ in
+            gcd.sync(.Main){
+                self.configUserStatus()
+            }
+        }
+    }
 
     private func configUserStatus() {
 
@@ -373,7 +384,7 @@ extension ProfileViewController {
                     me.removeFriend(self.user)
                 }
 
-                self.configUserStatus()
+//                self.configUserStatus()
             }
         }
     }

@@ -141,7 +141,7 @@ class Account: UserEntity {
 }
 // MARK: - Friend
 extension Account {
-    func addFriend(user: UserEntity) -> Bool{
+    func addFriend(user: UserEntity) {
         self.cacheData[user.id] = user
         
         self.invitations?.remove(user.id)
@@ -150,12 +150,9 @@ extension Account {
         
         var friends = self.friends ?? []
         
-        if friends.contains(user.id) {
-            return false
-        } else {
+        if !friends.contains(user.id) {
             friends.append(user.id)
             self.friends = friends
-            return true
         }
     }
     
