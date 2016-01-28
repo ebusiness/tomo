@@ -52,7 +52,7 @@ extension GroupViewController {
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("StationCell", forIndexPath: indexPath) as! StationCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("StationCell", forIndexPath: indexPath) as! MyGroupCollectionViewCell
 
         cell.group = self.groups[indexPath.row]
     
@@ -74,12 +74,7 @@ extension GroupViewController {
 
     // When cell was tapped, move to group detail
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-
         self.performSegueWithIdentifier("ShowGroupDetail", sender: self.groups[indexPath.row])
-//        let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
-//        groupVC.group = self.groups[indexPath.row]
-//
-//        self.navigationController?.pushViewController(groupVC, animated: true)
     }
 
     // Give CollectionView footer view, and hold a reference of it
@@ -145,5 +140,27 @@ extension GroupViewController {
         }
         
         self.collectionView!.insertItemsAtIndexPaths(indexPaths)
+    }
+}
+
+final class MyGroupCollectionViewCell: UICollectionViewCell {
+
+    @IBOutlet weak var nameLabel: UILabel!
+
+    @IBOutlet weak var backgroundImageView: UIImageView!
+
+    private var isJoined = false
+
+    // The group data will be displayed
+    var group: GroupEntity! {
+        didSet { self.configDisplay() }
+    }
+
+    private func configDisplay() {
+
+        self.nameLabel.text = self.group.name
+
+        self.backgroundImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
+
     }
 }

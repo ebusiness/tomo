@@ -570,6 +570,7 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="現場Tomo" id="APc-61-gDU">
+                        <barButtonItem key="backBarButtonItem" title=" " id="fjK-LS-TSs"/>
                         <barButtonItem key="leftBarButtonItem" image="globe" id="r73-tY-mUD">
                             <connections>
                                 <segue destination="VLW-eD-ymt" kind="modal" id="qaw-sz-uK6"/>
@@ -601,7 +602,7 @@
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="heq-W9-Del">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" backIndicatorImage="back" backIndicatorTransitionMaskImage="back" id="heq-W9-Del">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1204,6 +1205,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qIm-Sl-m8j">
+                        <barButtonItem key="backBarButtonItem" title=" " id="jbM-JW-oLC"/>
                         <barButtonItem key="rightBarButtonItem" image="more" id="l0A-ud-w1W">
                             <connections>
                                 <action selector="moreButtonTapped:" destination="5Mf-Eg-Tki" id="buI-o4-eEN"/>
@@ -1241,7 +1243,7 @@
             <objects>
                 <navigationController storyboardIdentifier="GroupDiscover" id="y9E-on-1q4" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="iby-Fq-jBB">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" backIndicatorImage="back" backIndicatorTransitionMaskImage="back" id="iby-Fq-jBB">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1371,6 +1373,7 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="车站检索" id="8xx-WC-nHb">
+                        <barButtonItem key="backBarButtonItem" title=" " id="uBJ-13-mAP"/>
                         <barButtonItem key="leftBarButtonItem" image="delete_sign" id="SbS-wK-GnS">
                             <connections>
                                 <action selector="closeButtonPressed:" destination="DxK-bf-5Xn" id="WLt-Lc-mZr"/>
@@ -1573,6 +1576,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="ePr-E2-H36">
                         <nil key="title"/>
+                        <barButtonItem key="backBarButtonItem" title=" " id="eSp-L3-Hqs"/>
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -1597,9 +1601,11 @@
             <objects>
                 <navigationController storyboardIdentifier="MapShow" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="currentContext" id="VLW-eD-ymt" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7fU-PS-Pic">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" backIndicatorImage="back" backIndicatorTransitionMaskImage="back" id="7fU-PS-Pic">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.0078431372550000003" green="0.53333333329999999" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1613,6 +1619,7 @@
     </scenes>
     <resources>
         <image name="avatar" width="80" height="80"/>
+        <image name="back" width="25" height="25"/>
         <image name="cancel" width="32" height="32"/>
         <image name="close_window" width="24" height="24"/>
         <image name="create_new" width="25" height="25"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="y7y-Sv-zvR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="y7y-Sv-zvR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -278,6 +278,7 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="2pT-iK-RWo">
+                        <barButtonItem key="backBarButtonItem" title=" " id="tc4-oV-DEA"/>
                         <barButtonItem key="rightBarButtonItem" image="more" id="jAf-wG-gOZ">
                             <connections>
                                 <action selector="moreBtnTapped:" destination="3I6-mu-eq3" id="rqG-gV-0cJ"/>
@@ -312,7 +313,7 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" barStyle="black" id="a0c-6m-M88">
+                    <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" barStyle="black" backIndicatorImage="back" backIndicatorTransitionMaskImage="back" id="a0c-6m-M88">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -635,10 +636,10 @@
                                                     </collectionViewFlowLayout>
                                                     <cells>
                                                         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SingleImageCell" id="BfK-Of-BC5" customClass="SingleImageCollectionViewCell" customModule="tomo" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="-2" width="322" height="253"/>
+                                                            <rect key="frame" x="0.0" y="-1.5" width="321.5" height="252.5"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                                <rect key="frame" x="0.0" y="0.0" width="322" height="253"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="321.5" height="252.5"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash10" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-zh-WBf">
@@ -797,7 +798,9 @@
                         <sections/>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" id="0Nd-Ts-Fs6"/>
+                    <navigationItem key="navigationItem" id="0Nd-Ts-Fs6">
+                        <barButtonItem key="backBarButtonItem" title=" " id="PtN-gI-hbS"/>
+                    </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
@@ -815,6 +818,7 @@
     </scenes>
     <resources>
         <image name="avatar" width="80" height="80"/>
+        <image name="back" width="25" height="25"/>
         <image name="hearts" width="25" height="25"/>
         <image name="more" width="25" height="25"/>
         <image name="splash10" width="1000" height="666"/>

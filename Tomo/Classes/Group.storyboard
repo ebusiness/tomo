@@ -510,6 +510,7 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="现场详细" id="QjI-nM-k4U">
+                        <barButtonItem key="backBarButtonItem" title=" " id="lza-iS-xCq"/>
                         <rightBarButtonItems>
                             <barButtonItem image="create_new" id="TCF-6H-pjz">
                                 <connections>
@@ -696,7 +697,7 @@
                             <inset key="sectionInset" minX="0.0" minY="2" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StationCell" id="c3A-R7-jgJ" customClass="StationCollectionViewCell" customModule="tomo" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StationCell" id="c3A-R7-jgJ" customClass="MyGroupCollectionViewCell" customModule="tomo" customModuleProvider="target">
                                 <rect key="frame" x="79" y="66" width="162" height="204"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -774,6 +775,7 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="现场一览" id="nzy-Sg-POg">
+                        <barButtonItem key="backBarButtonItem" title=" " id="tOj-ol-qDA"/>
                         <barButtonItem key="leftBarButtonItem" image="globe" id="zoC-EZ-t2c">
                             <connections>
                                 <segue destination="yQ9-UN-BeQ" kind="modal" id="Ixx-x6-N3y"/>
@@ -815,7 +817,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MQa-Yi-9rd" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="MYe-bz-wal">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" backIndicatorImage="back" backIndicatorTransitionMaskImage="back" id="MYe-bz-wal">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -833,6 +835,7 @@
     </scenes>
     <resources>
         <image name="avatar" width="80" height="80"/>
+        <image name="back" width="25" height="25"/>
         <image name="create_new" width="25" height="25"/>
         <image name="globe" width="25" height="25"/>
         <image name="group_cover_default" width="414" height="160"/>

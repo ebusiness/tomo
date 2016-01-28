@@ -351,6 +351,7 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="账号信息" id="2pT-iK-RWo">
+                        <barButtonItem key="backBarButtonItem" title=" " id="Ltd-US-o8i"/>
                         <barButtonItem key="rightBarButtonItem" image="edit_user" id="kJ9-3i-zHT">
                             <connections>
                                 <segue destination="aXi-4j-mPv" kind="push" id="ful-aI-D8w"/>
@@ -772,6 +773,7 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="个人信息编辑" id="dW1-TE-8zb">
+                        <barButtonItem key="backBarButtonItem" title=" " id="yrR-uI-TRy"/>
                         <barButtonItem key="rightBarButtonItem" title="保存" id="cU7-IR-sgZ">
                             <connections>
                                 <segue destination="idb-ax-xyq" kind="unwind" identifier="UpdateFinished" unwindAction="profileDidFinishEdit:" id="78W-r4-BMI"/>
@@ -898,7 +900,7 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="a0c-6m-M88">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" backIndicatorImage="back" backIndicatorTransitionMaskImage="back" id="a0c-6m-M88">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1001,6 +1003,7 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="已发送的邀请" id="gjs-cY-vxX">
+                        <barButtonItem key="backBarButtonItem" title=" " id="u7l-rQ-paz"/>
                         <barButtonItem key="rightBarButtonItem" image="add_user" id="r9y-WQ-s1z">
                             <connections>
                                 <action selector="searchFriend:" destination="FZe-jy-2oB" id="Lrq-qP-ZMG"/>
@@ -1500,7 +1503,9 @@
                         <sections/>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" title="我的投稿" id="0Nd-Ts-Fs6"/>
+                    <navigationItem key="navigationItem" title="我的投稿" id="0Nd-Ts-Fs6">
+                        <barButtonItem key="backBarButtonItem" title=" " id="j9t-73-KX3"/>
+                    </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
@@ -2000,7 +2005,9 @@
                         <sections/>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" title="我的收藏" id="pKa-iG-Fbl"/>
+                    <navigationItem key="navigationItem" title="我的收藏" id="pKa-iG-Fbl">
+                        <barButtonItem key="backBarButtonItem" title=" " id="dTS-AH-n1O"/>
+                    </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
@@ -2108,7 +2115,9 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="通知" id="8KA-ZE-GV9"/>
+                    <navigationItem key="navigationItem" title="通知" id="8KA-ZE-GV9">
+                        <barButtonItem key="backBarButtonItem" title=" " id="dHk-k2-Svg"/>
+                    </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="568"/>
                     <connections>
@@ -2519,7 +2528,9 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" title="通知设定" id="fgs-oQ-uO1" userLabel="设定"/>
+                    <navigationItem key="navigationItem" title="通知设定" id="fgs-oQ-uO1" userLabel="设定">
+                        <barButtonItem key="backBarButtonItem" title=" " id="dTR-zL-uhx"/>
+                    </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="950"/>
                     <connections>
@@ -2547,6 +2558,7 @@
     <resources>
         <image name="add_user" width="25" height="25"/>
         <image name="avatar" width="80" height="80"/>
+        <image name="back" width="25" height="25"/>
         <image name="delete_sign" width="25" height="25"/>
         <image name="edit_user" width="25" height="25"/>
         <image name="hearts" width="25" height="25"/>
