@@ -21,21 +21,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         self.window!.backgroundColor = UIColor.whiteColor()
 
-        var rootViewControllerName = "Main"
-        var viewIdentifier: String?
+        var rootViewController: UIViewController!
 
         Router.Session().response {
 
             if $0.result.isSuccess {
                 me = Account($0.result.value!)
                 if me.primaryStation != nil {
-                    rootViewControllerName = "Tab"
+                    rootViewController = TabBarController()
                 } else {
-                    viewIdentifier = "RecommendView"
+                    rootViewController = Util.createViewControllerWithIdentifier("RecommendView", storyboardName: "Main")
                 }
+            } else {
+                rootViewController = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
             }
 
-            let rootViewController = Util.createViewControllerWithIdentifier(viewIdentifier, storyboardName: rootViewControllerName)
             Util.changeRootViewController(from: (self.window?.rootViewController)!, to: rootViewController)
         }
 

@@ -397,7 +397,6 @@ final class GroupPopoverViewController: UIViewController {
 
                 guard $0.result.isSuccess else { return }
                 
-                
                 if let rvc = self.presentationController?.delegate as? RecommendViewController
                     ,exitAction = rvc.exitAction {
                         me.primaryStation = self.groupAnnotation.group
@@ -406,8 +405,8 @@ final class GroupPopoverViewController: UIViewController {
                         }
                         return
                 }
-                let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
-                Util.changeRootViewController(from: rootViewController, to: tab)
+
+                Util.changeRootViewController(from: rootViewController, to: TabBarController())
             }
         }
     }

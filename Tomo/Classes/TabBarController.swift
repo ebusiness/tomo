@@ -71,13 +71,10 @@ enum TabItem: Int {
 
 final class TabBarController: UITabBarController {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        setupViewControllers()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupViewControllers()
         
         SocketController.connect()
         
@@ -87,6 +84,7 @@ final class TabBarController: UITabBarController {
         Util.setupPush()
         
     }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         URLSchemesController.sharedInstance.runTask()

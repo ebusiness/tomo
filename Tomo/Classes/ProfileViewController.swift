@@ -199,6 +199,8 @@ extension ProfileViewController {
 
             me.invitations?.append(self.user.id)
 
+            sender.userInteractionEnabled = true
+
             self.configUserStatus()
         }
     }
