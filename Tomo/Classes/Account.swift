@@ -165,6 +165,51 @@ extension Account {
         self.newMessages = self.newMessages.filter { $0.from.id != user.id }
         self.friends?.remove(user.id)
     }
+
+    // Refuse the make friend invitation
+    func refuseInvitation(invitation: NotificationEntity) {
+
+        // the invitation must exist
+        guard let index = self.friendInvitations.indexOf(invitation) else { return }
+
+        // remove invitation from account model
+        self.friendInvitations.remove(invitation)
+
+        // tell every observer the changes: which invitation was deleted.
+        NSNotificationCenter.defaultCenter().postNotificationName("didRefuseInvitation", object: self, userInfo: ["indexOfRemovedInvitation": index])
+    }
+
+    // Accept the make friend invitation
+    func acceptInvitation(invitation: NotificationEntity) {
+
+        // the invitation must exist
+        guard let index = self.friendInvitations.indexOf(invitation) else { return }
+
+        let friends = self.friends ?? []
+
+        // my friends list must not contain the invitation sender
+        guard !friends.contains(invitation.from.id) else { return }
+
+        // remove invitation from account model
+        self.friendInvitations.remove(invitation)
+        // add new friend to accout model
+        self.friends?.append(invitation.from.id)
+
+        // tell every observer the changes: which invitation was deleted, and who is the new friend
+        NSNotificationCenter.defaultCenter().postNotificationName("didAcceptInvitation", object: self, userInfo: ["indexOfRemovedInvitation": index, "userEntityOfNewFriend": invitation.from])
+    }
+
+    // Delete friend
+    func deleteFriend(user: UserEntity) {
+
+        // TODO: my friends list is a list of id string, this may not right!
+
+        // remove this user from my friends list
+        self.friends?.remove(user.id)
+
+        // tell every observer the changes: which friend was deleted.
+        NSNotificationCenter.defaultCenter().postNotificationName("didDeleteFriend", object: self, userInfo: ["idOfDeletedFriend": user.id])
+    }
 }
 // MARK: - group
 extension Account {

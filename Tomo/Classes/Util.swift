@@ -77,32 +77,6 @@ class Util: NSObject {
     class func dismissHUD() {
         SVProgressHUD.dismiss()
     }
-        
-    class func showLocalNotificationGotSocketEvent(event: ListenerEvent, data: AnyObject) {
-        if UIApplication.sharedApplication().applicationState == .Background {
-            let notification = UILocalNotification()
-            notification.soundName = UILocalNotificationDefaultSoundName
-            notification.applicationIconBadgeNumber = 1
-            
-            switch event {
-                
-            case .Message:
-                fallthrough
-                // TODO: - todo
-//                if let message = JSON(data)[0] {
-//                    notification.alertBody = message.from!.nickName! + " : " + message.content!
-//                }
-                
-            case .Announcement:
-                notification.alertBody = "現場TOMOからのお知らせ"
-                
-            default:
-                NSLog("todo")
-            }
-            
-            UIApplication.sharedApplication().presentLocalNotificationNow(notification)
-        }
-    }
 
 }
 extension Util {

@@ -10,11 +10,16 @@ import UIKit
 
 class NotificationView: UIView {
     
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var messageLabelView: UILabel!
-    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var backgroundView: UIView!
-    
+
+    @IBOutlet weak var avatarImageView: UIImageView!
+
+    @IBOutlet weak var messageLabelView: UILabel!
+
+    @IBOutlet weak var closeButton: UIButton!
+
+    weak var delegate: TabBarController!
+
     var notification: NotificationEntity! {
         didSet {
             if let photo = self.notification.from.photo {
@@ -22,20 +27,6 @@ class NotificationView: UIView {
             }
             
             self.messageLabelView.text = self.notification.message
-            gcd.async(.Default, delay: 5) {
-                self.closeTapped()
-            }
-
-        }
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        Util.changeImageColorForButton(self.closeButton, color: UIColor.whiteColor())
-        gcd.async(.Default) {
-            self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width / 2
-            self.avatarImageView.layer.masksToBounds = true
-            self.backgroundView.backgroundColor = Palette.LightBlue.darkPrimaryColor
         }
     }
 
@@ -59,10 +50,7 @@ class NotificationView: UIView {
             
             switch event {
             case .Announcement:
-                
-//                println("系统通知")
                 return
-                
             case .GroupMessage: // GroupMessage
                 
                 let id = "/\(self.notification.targetId)"
@@ -85,8 +73,6 @@ class NotificationView: UIView {
             default:
                 break
             }
-            
-        
         }
     }
     

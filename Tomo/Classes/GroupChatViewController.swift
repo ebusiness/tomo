@@ -125,7 +125,7 @@ extension GroupChatViewController {
                     if me.newMessages != newMessages {
                         me.newMessages = newMessages
                         if let tabBarController = self.navigationController?.tabBarController as? TabBarController {
-                            tabBarController.updateBadgeNumber()
+//                            tabBarController.updateBadgeNumber()
                         }
                     }
                 } else {

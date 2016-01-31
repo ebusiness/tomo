@@ -38,6 +38,10 @@ final class RegViewController: UIViewController {
         return true
     }
 
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
 }
 
 // MARK: - Internal Methods 

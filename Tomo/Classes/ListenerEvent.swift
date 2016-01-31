@@ -9,39 +9,50 @@
 private var observers = [String:AnyObject]()
 
 enum ListenerEvent: String {
+
     case Announcement   = "new-announcement"
     
     case Message        = "message-new"
+
     case GroupMessage   = "message-group"
     
     case FriendAccepted = "friend-accepted"
+
     case FriendRefused  = "friend-refused"
+
     case FriendInvited  = "friend-invited"
+
     case FriendBreak    = "friend-break"
     
     case PostNew        = "post-new"
+
     case PostLiked      = "post-liked"
+
     case PostCommented  = "post-commented"
+
     case PostBookmarked = "post-bookmarked"
     
     case GroupJoined    = "group-joined"
+
     case GroupLeft      = "group-left"
     
     case Any = "any"
-    
+
+    func relayToNoticationCenter(userInfo: [NSObject : AnyObject]) {
+        NSNotificationCenter.defaultCenter().postNotificationName(self.rawValue, object: nil, userInfo: userInfo)
+    }
+
     func getNotificationName() -> String {
         return "tomoNotification-" + self.rawValue
     }
-    
-    func receive(userInfo: [NSObject : AnyObject]){
-        
-        if let tabBarController = UIApplication.sharedApplication().keyWindow?.rootViewController as? TabBarController {
-            self.resolve(tabBarController, userInfo: userInfo)
-        }
-//        Util.showLocalNotificationGotSocketEvent(self, data: data)
-    }
-    
-    
+//    
+//    func receive(userInfo: [NSObject : AnyObject]){
+//        
+//        if let tabBarController = UIApplication.sharedApplication().keyWindow?.rootViewController as? TabBarController {
+//            self.resolve(tabBarController, userInfo: userInfo)
+//        }
+//    }
+
     func addObserver(observer: AnyObject, selector aSelector: Selector) {
         NSNotificationCenter.defaultCenter().addObserver(observer, selector: aSelector, name: self.getNotificationName(), object: nil)
     }
@@ -68,7 +79,6 @@ extension ListenerEvent {
             break
             
         case .GroupMessage:
-//            fallthrough /// - TODO
             break
         case .Message:
             
@@ -122,8 +132,8 @@ extension ListenerEvent {
         }
         
         gcd.sync(.Main) {
-            tabBarController.updateBadgeNumber()
-            
+//            tabBarController.updateBadgeNumber()
+
             let notificationView = self.getNotificationView()
             notificationView.notification = notification
             let topConstraint: AnyObject? = notificationView.superview!.constraints.find { $0.firstAttribute == .Top && $0.firstItem is NotificationView }
@@ -132,7 +142,9 @@ extension ListenerEvent {
                 topConstraint.constant = 0
                 
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    notificationView.superview?.layoutIfNeeded()
+                    if let superview = notificationView.superview {
+                        superview.layoutIfNeeded()
+                    }
                 })
             }
         }

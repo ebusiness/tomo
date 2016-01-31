@@ -171,7 +171,8 @@ extension ProfileViewController {
                 Util.alert(self, title: "删除好友", message: "确定删除该好友么?") { _ in
                     Router.Contact.Delete(id: self.user.id).response {
                         if $0.result.isFailure { return }
-                        me.removeFriend(self.user)
+//                        me.removeFriend(self.user)
+                        me.deleteFriend(self.user)
                         self.configUserStatus()
                     }
                 }

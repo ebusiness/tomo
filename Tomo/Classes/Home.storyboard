@@ -10,7 +10,7 @@
         <!--現場Tomo-->
         <scene sceneID="fIl-ZA-ShE">
             <objects>
-                <tableViewController id="zbi-CG-oqX" customClass="HomeViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController definesPresentationContext="YES" id="zbi-CG-oqX" customClass="HomeViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="c8c-ul-edR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -598,7 +598,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Q8a-7R-v37">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" id="Jcg-er-U91" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Jcg-er-U91" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
@@ -1599,7 +1599,7 @@
         <!--Navigation Controller-->
         <scene sceneID="XXA-Nc-DAl">
             <objects>
-                <navigationController storyboardIdentifier="MapShow" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="currentContext" id="VLW-eD-ymt" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MapShow" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="overCurrentContext" id="VLW-eD-ymt" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" backIndicatorImage="back" backIndicatorTransitionMaskImage="back" id="7fU-PS-Pic">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

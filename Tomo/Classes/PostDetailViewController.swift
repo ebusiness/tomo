@@ -84,6 +84,10 @@ final class PostDetailViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         self.configNavigationBarByScrollPosition()
     }
+
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
 }
 
 // MARK: - Internal methods

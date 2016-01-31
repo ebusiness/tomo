@@ -25,7 +25,8 @@ class RemoteNotification {
                 let type = JSON(userInfo)["type"].stringValue
                 
                 if let event = ListenerEvent(rawValue: type) {
-                    event.receive(userInfo)
+//                    event.receive(userInfo)
+                    event.relayToNoticationCenter(userInfo)
                 }
             } else {
                 self.taskUserInfo = userInfo

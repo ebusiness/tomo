@@ -23,6 +23,88 @@ final class ContactsViewController: UITableViewController {
         super.viewDidLoad()
 
         self.loadContacts()
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRefuseInvitation:", name: "didRefuseInvitation", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didAcceptInvitation:", name: "didAcceptInvitation", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didDeleteFriend:", name: "didDeleteFriend", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveFriendInvitation:", name: ListenerEvent.FriendInvited.rawValue, object: nil)
+    }
+
+    // This method is called for sync this view controller and accout model after refuse invitation
+    func didRefuseInvitation(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let index = userInfo["indexOfRemovedInvitation"] as? Int else { return }
+
+        // update tableview, if the number of my invitation is zero, remove the whole section of 0
+        // otherwise, remove the corresponding row in section 0, note the invitation data is referring
+        // the accout model directly, so the data is removed just in accout model, no need to do that here
+        self.tableView.beginUpdates()
+        if me.friendInvitations.count > 0 {
+            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)], withRowAnimation: .Automatic)
+        } else {
+            self.tableView.deleteSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+        }
+        self.tableView.endUpdates()
+    }
+
+    // This method is called for sync this view controller and accout model after accept invitation
+    func didAcceptInvitation(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let index = userInfo["indexOfRemovedInvitation"] as? Int else { return }
+        guard let friend = userInfo["userEntityOfNewFriend"] as? UserEntity else { return }
+
+        // note the invitation data is referring the account model, but friends data is not.
+        // so the account model already removed the accepted invitation, but the friends data
+        // still need to be sync with account model manualy
+        self.friends.insert(friend, atIndex: 0)
+
+        self.tableView.beginUpdates()
+        // insert the friend data
+        // if the number of my invitation is zero, remove the whole section of 0
+        // otherwise, remove the corresponding row in section 0
+        if me.friendInvitations.count > 0 {
+            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)], withRowAnimation: .Automatic)
+            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 1)], withRowAnimation: .Automatic)
+        } else {
+            self.tableView.deleteSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)], withRowAnimation: .Automatic)
+        }
+        self.tableView.endUpdates()
+    }
+
+    // This method is called for sync this view controller and accout model after delete friend
+    func didDeleteFriend(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let id = userInfo["idOfDeletedFriend"] as? String else { return }
+        guard let index = self.friends.indexOf({ $0.id == id }) else { return }
+
+        // sync friends data with account model manualy
+        self.friends.removeAtIndex(index)
+
+        // update tableview, if the number of my invitation is zero, insert into section 1
+        // otherwise, remove the corresponding row in section 0
+        self.tableView.beginUpdates()
+        if me.friendInvitations.count > 0 {
+            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 1)], withRowAnimation: .Automatic)
+        } else {
+            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)], withRowAnimation: .Automatic)
+        }
+        self.tableView.endUpdates()
+    }
+
+    func didReceiveFriendInvitation(notification: NSNotification) {
+        let invitation = NotificationEntity(notification.userInfo!)
+        self.openToggleNotificationBar()
+    }
+
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
 
@@ -251,7 +333,7 @@ final class FriendInvitationTableViewCell: UITableViewCell {
 
         Router.Invitation.ModifyById(id: self.invitation.id, accepted: true).response {
             if $0.result.isFailure { return }
-            me.addFriend(self.invitation.from)
+            me.acceptInvitation(self.invitation)
         }
     }
 
@@ -260,7 +342,7 @@ final class FriendInvitationTableViewCell: UITableViewCell {
         Util.alert(delegate, title: "拒绝好友邀请", message: "拒绝 " + self.invitation.from.nickName + " 的好友邀请么") { _ in
             Router.Invitation.ModifyById(id: self.invitation.id, accepted: false).response {
                 if $0.result.isFailure { return }
-                me.removeFriend(self.invitation.from)
+                me.refuseInvitation(self.invitation)
             }
         }
     }

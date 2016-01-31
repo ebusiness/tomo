@@ -65,6 +65,7 @@ struct TomoConfig {
 struct TomoConst {
 
     struct Timeout {
+        static let Mini = 5.0
         static let Short = 10.0
         static let Medium = 20.0
         static let Long = 30.0
