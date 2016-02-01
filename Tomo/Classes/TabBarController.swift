@@ -12,8 +12,6 @@ enum TabItem: Int {
 
     case Home
 
-    case Contacts
-
     case Chat
 
     case Group
@@ -34,17 +32,6 @@ enum TabItem: Int {
             barButtonImage = UIImage(named: "home")!
             barButtonBadge = nil
             barButtonTitle = "动态"
-
-        case .Contacts:
-            storyBoardName = "Contacts"
-            barButtonImage = UIImage(named: "address_book")!
-            barButtonTitle = "通讯录"
-
-            if me.friendInvitations.count > 0 {
-                barButtonBadge = String(me.friendInvitations.count)
-            } else {
-                barButtonBadge = nil
-            }
 
         case .Chat:
             storyBoardName = "Chat"
@@ -94,7 +81,6 @@ final class TabBarController: UITabBarController {
 
         self.viewControllers = [
             TabItem.Home.viewController,
-            TabItem.Contacts.viewController,
             TabItem.Chat.viewController,
             TabItem.Group.viewController,
             TabItem.Setting.viewController
@@ -170,20 +156,34 @@ extension TabBarController {
     }
 
     private func registerForNotification() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveFriendInvitation:", name: ListenerEvent.FriendInvited.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendInvited.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendAccepted.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendRefused.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendBreak.rawValue, object: nil)
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostNew.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostLiked.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostCommented.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostBookmarked.rawValue, object: nil)
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.GroupJoined.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.GroupLeft.rawValue, object: nil)
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.Message.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.GroupMessage.rawValue, object: nil)
     }
 
     private func openToggleNotificationBar() {
-        gcd.sync(.Main) {
-            self.topConstraint.constant = 0
-            UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
-                self.view.layoutIfNeeded()
+
+        self.topConstraint.constant = 0
+        UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
+            self.view.layoutIfNeeded()
             }, completion: { finished in
                 gcd.async(.Default, delay: TomoConst.Timeout.Mini) {
                     self.closeNotificationBar()
                 }
-            })
-        }
+        })
     }
 
     func closeNotificationBar() {
@@ -200,8 +200,11 @@ extension TabBarController {
 
 extension TabBarController {
 
-    func didReceiveFriendInvitation(notification: NSNotification) {
-        self.notificationBar.notification = NotificationEntity(notification.userInfo!)
-        self.openToggleNotificationBar()
+    func didReceiveNotification(notification: NSNotification) {
+
+        gcd.sync(.Main) {
+            self.notificationBar.notification = NotificationEntity(notification.userInfo!)
+            self.openToggleNotificationBar()
+        }
     }
 }

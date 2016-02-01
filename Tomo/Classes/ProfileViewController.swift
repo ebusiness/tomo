@@ -58,7 +58,7 @@ final class ProfileViewController: UITableViewController {
         func message(user: UserEntity) -> String {
             switch self {
             case .InvitedByMe:
-                return "好友邀请已发送，等待对方接受"
+                return "好友邀请已发送，请等待对方接受"
             case .Blocking:
                 return "您已屏蔽此用户"
             default:
@@ -87,10 +87,7 @@ final class ProfileViewController: UITableViewController {
             self.configUserInfo()
         }
 
-        // listening for the event of friend
-        self.registerNotifications()
-        
-        self.registerClosureForAccount()
+        self.configEventObserver()
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -109,6 +106,10 @@ final class ProfileViewController: UITableViewController {
         // make the navigation bar transparent
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
+    }
+
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
 
@@ -171,7 +172,6 @@ extension ProfileViewController {
                 Util.alert(self, title: "删除好友", message: "确定删除该好友么?") { _ in
                     Router.Contact.Delete(id: self.user.id).response {
                         if $0.result.isFailure { return }
-//                        me.removeFriend(self.user)
                         me.deleteFriend(self.user)
                         self.configUserStatus()
                     }
@@ -225,43 +225,11 @@ extension ProfileViewController {
     }
 }
 
-// MARK: - NSNotificationCenter
-
-extension ProfileViewController {
-    
-    private func registerNotifications() {
-        ListenerEvent.FriendBreak.addObserver(self, selector: Selector("receive:"))
-        ListenerEvent.FriendInvited.addObserver(self, selector: Selector("receive:"))
-        ListenerEvent.FriendAccepted.addObserver(self, selector: Selector("receive:"))
-        ListenerEvent.FriendRefused.addObserver(self, selector: Selector("receive:"))
-    }
-    
-    func receive(notification: NSNotification){
-        guard let userInfo = notification.userInfo else { return }
-        
-        let json = JSON(userInfo)
-        if self.user.id == json["from"]["id"].stringValue {
-            gcd.sync(.Main, closure: { () -> () in
-                self.configUserStatus()
-            })
-        }
-    }
-}
-
 // MARK: - Internal methods
 
 extension ProfileViewController {
-    
-    private func registerClosureForAccount() {
-        
-        me.addFriendsObserver { _ in
-            gcd.sync(.Main){
-                self.configUserStatus()
-            }
-        }
-    }
 
-    private func configUserStatus() {
+    func configUserStatus() {
 
         self.relation = .Stranger
 
@@ -382,14 +350,35 @@ extension ProfileViewController {
                 if $0.result.isFailure { return }
 
                 if accept {
-                    me.addFriend(self.user)
+                    me.acceptInvitation(invitation)
                 } else {
-                    me.removeFriend(self.user)
+                    me.refuseInvitation(invitation)
                 }
-
-//                self.configUserStatus()
             }
         }
     }
 
+}
+
+// MARK: - NSNotificationCenter
+
+extension ProfileViewController {
+
+    private func configEventObserver() {
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "configUserStatus", name: "didAcceptInvitation", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "configUserStatus", name: "didRefuseInvitation", object: me)
+
+        // notification from background thread
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reviseUserStatus", name: "didReceiveFriendInvitation", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reviseUserStatus", name: "didMyFriendInvitationAccepted", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reviseUserStatus", name: "didMyFriendInvitationRefused", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reviseUserStatus", name: "didFriendBreak", object: me)
+    }
+
+    func reviseUserStatus() {
+        gcd.sync(.Main) {
+            self.configUserStatus()
+        }
+    }
 }

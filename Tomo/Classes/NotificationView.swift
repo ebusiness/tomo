@@ -25,7 +25,7 @@ class NotificationView: UIView {
             if let photo = self.notification.from.photo {
                 self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
             }
-            
+
             self.messageLabelView.text = self.notification.message
         }
     }

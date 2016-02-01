@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		17B993011AF353D000204E97 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B993001AF353D000204E97 /* amrFileCodec.m */; };
 		17B993081AF3540D00204E97 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17B993071AF3540D00204E97 /* libopencore-amrnb.a */; };
+		1F07C34F1C5F7C8200CD9212 /* LatestMessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F07C34E1C5F7C8200CD9212 /* LatestMessagesViewController.swift */; };
 		1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18B8331B844665003BD469 /* CreatePostViewController.swift */; };
 		1F1EBEB41C4F6C3300B3439F /* TextPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EBEB31C4F6C3300B3439F /* TextPostTableViewCell.swift */; };
 		1F1EBEB61C4F6C8A00B3439F /* ImagePostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EBEB51C4F6C8A00B3439F /* ImagePostTableViewCell.swift */; };
@@ -33,6 +34,7 @@
 		1FAA70F91BBB8EE600BCE5AF /* AggregatableAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA70F81BBB8EE600BCE5AF /* AggregatableAnnotation.swift */; };
 		1FAA70FC1BBBF97B00BCE5AF /* StationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA70FB1BBBF97B00BCE5AF /* StationAnnotation.swift */; };
 		1FAA70FE1BBBF99100BCE5AF /* StationAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA70FD1BBBF99100BCE5AF /* StationAnnotationView.swift */; };
+		1FAE41841C5EFDF90050CEED /* ContactsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAE41831C5EFDF90050CEED /* ContactsNavigationController.swift */; };
 		1FC268801BBABED8006F1FDA /* GroupAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC2687F1BBABED8006F1FDA /* GroupAnnotation.swift */; };
 		1FC268821BBABF20006F1FDA /* GroupAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC268811BBABF20006F1FDA /* GroupAnnotationView.swift */; };
 		1FCA1E631B71D0C8000F2936 /* CommentEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */; };
@@ -67,7 +69,6 @@
 		29BE7E121AC54224008110B4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
 		29C1DA7A1AD36659009A02CC /* S3Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA781AD36659009A02CC /* S3Controller.swift */; };
 		29C1DA7C1AD368EC009A02CC /* SwiftyUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */; };
-		29CA441A1AD4CA48009EB177 /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA44191AD4CA48009EB177 /* Contacts.storyboard */; };
 		29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA441D1AD4CAF0009EB177 /* Setting.storyboard */; };
 		29D398DB1ACB9C9100FB7E40 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
 		29DCEFE91B14519300A7C7AF /* TomoVideoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */; };
@@ -159,6 +160,7 @@
 		17B993041AF353F600204E97 /* interf_dec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interf_dec.h; path = "opencore-amr/include/opencore-amrnb/interf_dec.h"; sourceTree = "<group>"; };
 		17B993051AF353F600204E97 /* interf_enc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interf_enc.h; path = "opencore-amr/include/opencore-amrnb/interf_enc.h"; sourceTree = "<group>"; };
 		17B993071AF3540D00204E97 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libopencore-amrnb.a"; path = "opencore-amr/lib/libopencore-amrnb.a"; sourceTree = "<group>"; };
+		1F07C34E1C5F7C8200CD9212 /* LatestMessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LatestMessagesViewController.swift; path = Classes/LatestMessagesViewController.swift; sourceTree = "<group>"; };
 		1F18B8331B844665003BD469 /* CreatePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreatePostViewController.swift; path = Classes/CreatePostViewController.swift; sourceTree = "<group>"; };
 		1F1EBEB31C4F6C3300B3439F /* TextPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextPostTableViewCell.swift; path = Classes/TextPostTableViewCell.swift; sourceTree = "<group>"; };
 		1F1EBEB51C4F6C8A00B3439F /* ImagePostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagePostTableViewCell.swift; path = Classes/ImagePostTableViewCell.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 		1FAA70F81BBB8EE600BCE5AF /* AggregatableAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AggregatableAnnotation.swift; path = Classes/AggregatableAnnotation.swift; sourceTree = "<group>"; };
 		1FAA70FB1BBBF97B00BCE5AF /* StationAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationAnnotation.swift; path = Classes/StationAnnotation.swift; sourceTree = "<group>"; };
 		1FAA70FD1BBBF99100BCE5AF /* StationAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StationAnnotationView.swift; path = Classes/StationAnnotationView.swift; sourceTree = "<group>"; };
+		1FAE41831C5EFDF90050CEED /* ContactsNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsNavigationController.swift; path = Classes/ContactsNavigationController.swift; sourceTree = "<group>"; };
 		1FC2687F1BBABED8006F1FDA /* GroupAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupAnnotation.swift; path = Classes/GroupAnnotation.swift; sourceTree = "<group>"; };
 		1FC268811BBABF20006F1FDA /* GroupAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupAnnotationView.swift; path = Classes/GroupAnnotationView.swift; sourceTree = "<group>"; };
 		1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentEntity.swift; path = Classes/CommentEntity.swift; sourceTree = "<group>"; };
@@ -240,7 +243,6 @@
 		29BE7E111AC54224008110B4 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = ../Classes/Util.swift; sourceTree = "<group>"; };
 		29C1DA781AD36659009A02CC /* S3Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3Controller.swift; path = Classes/S3Controller.swift; sourceTree = "<group>"; };
 		29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyUserDefaults.swift; sourceTree = "<group>"; };
-		29CA44191AD4CA48009EB177 /* Contacts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Contacts.storyboard; path = Classes/Contacts.storyboard; sourceTree = "<group>"; };
 		29CA441D1AD4CAF0009EB177 /* Setting.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Setting.storyboard; path = Classes/Setting.storyboard; sourceTree = "<group>"; };
 		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
 		29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TomoVideoMediaItem.swift; sourceTree = "<group>"; };
@@ -434,25 +436,29 @@
 		1FB61D881BB0FEF000E6A05C /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				1FC0510A1BAF9FDB00886F67 /* Components */,
+				1FC0510A1BAF9FDB00886F67 /* OldComponents */,
 				29539C761B13175D00545509 /* VoiceController.swift */,
 				29539C771B13175D00545509 /* CommonMessageController.swift */,
 				296D8BB01AFC5A250058D400 /* MessageViewController.swift */,
 				296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */,
-				1F79C1B11B5E0E22008800E1 /* ContactListViewController.swift */,
+				1F07C34E1C5F7C8200CD9212 /* LatestMessagesViewController.swift */,
+				1FF9B9601C59FC29008BB6ED /* ContactsViewController.swift */,
+				1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */,
+				1FAE41831C5EFDF90050CEED /* ContactsNavigationController.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
 		};
-		1FC0510A1BAF9FDB00886F67 /* Components */ = {
+		1FC0510A1BAF9FDB00886F67 /* OldComponents */ = {
 			isa = PBXGroup;
 			children = (
+				1F79C1B11B5E0E22008800E1 /* ContactListViewController.swift */,
 				D0E798161C508CA4009AD9D4 /* MyGroupCell.swift */,
 				1F79C1B31B5E10DC008800E1 /* FriendCell.swift */,
 				1F79C1B51B5E55D5008800E1 /* InvitationCell.swift */,
 				1F902D761B7D9C2800F6DC2D /* EmptyFriends.xib */,
 			);
-			name = Components;
+			name = OldComponents;
 			sourceTree = "<group>";
 		};
 		290134C91AC3991C00BBFE29 = {
@@ -509,15 +515,6 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
-		294185141AD777E700C6E913 /* Contacts */ = {
-			isa = PBXGroup;
-			children = (
-				1FF9B9601C59FC29008BB6ED /* ContactsViewController.swift */,
-				1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */,
-			);
-			name = Contacts;
-			sourceTree = "<group>";
-		};
 		296040441ACE669900D2A338 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
@@ -561,7 +558,6 @@
 			isa = PBXGroup;
 			children = (
 				1FF9B95E1C59EB5C008BB6ED /* Chat.storyboard */,
-				29CA44191AD4CA48009EB177 /* Contacts.storyboard */,
 				1FA76AFD1BA27B1E004776B0 /* Group.storyboard */,
 				1FEE80E71B4E552A0061B913 /* Home.storyboard */,
 				1FF6930C1C1E95FC00777BD5 /* Landing.storyboard */,
@@ -588,7 +584,6 @@
 			children = (
 				29EA55B31AEDD27D006A1F41 /* Base */,
 				1FB61D881BB0FEF000E6A05C /* Chat */,
-				294185141AD777E700C6E913 /* Contacts */,
 				1FA76AFF1BA29D43004776B0 /* Group */,
 				299389571AD3D13700043D91 /* Home */,
 				299389541AD3C77300043D91 /* Login */,
@@ -812,7 +807,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29CA441A1AD4CA48009EB177 /* Contacts.storyboard in Resources */,
 				1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */,
 				D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */,
 				D0DB07D71B9D1B5200C06C4E /* NotificationView.xib in Resources */,
@@ -917,6 +911,7 @@
 				D0A104911BEAF1C700AEE356 /* AgreementViewController.swift in Sources */,
 				1FAA70FC1BBBF97B00BCE5AF /* StationAnnotation.swift in Sources */,
 				1FC268801BBABED8006F1FDA /* GroupAnnotation.swift in Sources */,
+				1FAE41841C5EFDF90050CEED /* ContactsNavigationController.swift in Sources */,
 				D0A0C0341B5F5D0500ABFA5F /* UserPostsViewController.swift in Sources */,
 				1FF9B9631C5A3BD0008BB6ED /* GroupViewController.swift in Sources */,
 				D08BFB0B1B744C2D00771F70 /* JSQMessageEntity.swift in Sources */,
@@ -947,6 +942,7 @@
 				1FE7CEF51B8C9561006700FC /* SignUpViewController.swift in Sources */,
 				D0B6364E1B81A9C70012C4E8 /* URLSchemesController.swift in Sources */,
 				D0244C5B1C20034C00EA87C1 /* InvitationRouter.swift in Sources */,
+				1F07C34F1C5F7C8200CD9212 /* LatestMessagesViewController.swift in Sources */,
 				1F36D6E61C3E2DD8007769F0 /* UserAnnotation.swift in Sources */,
 				D0244C531C1FC65100EA87C1 /* SignupRouter.swift in Sources */,
 				1F18B8341B844665003BD469 /* CreatePostViewController.swift in Sources */,
