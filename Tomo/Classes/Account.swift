@@ -300,7 +300,7 @@ extension Account {
         // remove the user from my inviting list
         self.friends?.remove(notification.from.id)
 
-        NSNotificationCenter.defaultCenter().postNotificationName("didFriendBreak", object: self, userInfo: ["userEntityOfBrokenFriend": notification.from])
+        NSNotificationCenter.defaultCenter().postNotificationName("didFriendBreak", object: self, userInfo: ["userIdOfBrokenFriend": notification.from.id])
     }
 }
 

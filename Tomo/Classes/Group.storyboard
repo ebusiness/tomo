@@ -776,11 +776,6 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="现场一览" id="nzy-Sg-POg">
                         <barButtonItem key="backBarButtonItem" title=" " id="tOj-ol-qDA"/>
-                        <barButtonItem key="leftBarButtonItem" image="globe" id="zoC-EZ-t2c">
-                            <connections>
-                                <segue destination="yQ9-UN-BeQ" kind="modal" id="Ixx-x6-N3y"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="更多" id="ZGU-nH-15m">
                             <connections>
                                 <segue destination="vtA-lG-RqW" kind="modal" id="js4-wn-VvC"/>
@@ -795,21 +790,13 @@
             </objects>
             <point key="canvasLocation" x="167" y="1312"/>
         </scene>
-        <!--MapShow-->
-        <scene sceneID="1Ru-Ge-Bl3">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Home" referencedIdentifier="MapShow" id="yQ9-UN-BeQ" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0s4-FP-M4B" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="16.5" y="1773"/>
-        </scene>
         <!--GroupDiscover-->
         <scene sceneID="fVS-gB-yrP">
             <objects>
                 <viewControllerPlaceholder storyboardName="Home" referencedIdentifier="GroupDiscover" id="vtA-lG-RqW" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mdv-UG-CmP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="305" y="1773"/>
+            <point key="canvasLocation" x="167" y="1760"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OpY-hJ-K4V">
@@ -837,7 +824,6 @@
         <image name="avatar" width="80" height="80"/>
         <image name="back" width="25" height="25"/>
         <image name="create_new" width="25" height="25"/>
-        <image name="globe" width="25" height="25"/>
         <image name="group_cover_default" width="414" height="160"/>
         <image name="hearts" width="25" height="25"/>
         <image name="speech_bubble" width="25" height="25"/>

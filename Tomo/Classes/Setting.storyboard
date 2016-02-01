@@ -893,10 +893,10 @@
             </objects>
             <point key="canvasLocation" x="1492" y="22"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Setting Navigation Controller-->
         <scene sceneID="XF2-5w-jYB">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="y7y-Sv-zvR" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="y7y-Sv-zvR" customClass="SettingNavigationController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>

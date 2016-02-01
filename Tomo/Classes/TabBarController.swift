@@ -16,6 +16,8 @@ enum TabItem: Int {
 
     case Group
 
+    case Map
+
     case Setting
 
     var viewController: UIViewController {
@@ -38,8 +40,8 @@ enum TabItem: Int {
             barButtonImage = UIImage(named: "speech_bubble")!
             barButtonTitle = "聊天"
 
-            if me.newMessages.count > 0 {
-                barButtonBadge = String(me.newMessages.count)
+            if me.newMessages.count + me.friendInvitations.count > 0 {
+                barButtonBadge = String(me.newMessages.count + me.friendInvitations.count)
             } else {
                 barButtonBadge = nil
             }
@@ -50,10 +52,16 @@ enum TabItem: Int {
             barButtonBadge = nil
             barButtonTitle = "群组"
 
+        case .Map:
+            storyBoardName = "Map"
+            barButtonImage = UIImage(named: "globe")!
+            barButtonBadge = nil
+            barButtonTitle = "地图"
+
         case .Setting:
             storyBoardName = "Setting"
             barButtonImage = UIImage(named: "user_male_circle")!
-            barButtonTitle = "群组"
+            barButtonTitle = "我"
 
             if me.notifications > 0 {
                 barButtonBadge = String(me.notifications)
@@ -83,6 +91,7 @@ final class TabBarController: UITabBarController {
             TabItem.Home.viewController,
             TabItem.Chat.viewController,
             TabItem.Group.viewController,
+            TabItem.Map.viewController,
             TabItem.Setting.viewController
         ]
 

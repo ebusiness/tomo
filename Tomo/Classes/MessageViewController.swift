@@ -30,9 +30,6 @@ final class MessageViewController: CommonMessageController {
         
         self.delegate = self
         
-        // custom navigationBar
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "user_male_circle"), style: .Plain, target: self, action: "setting")
-        
         //receive message realtime
         ListenerEvent.Message.addObserver(self, selector: Selector("receiveMessage:"))
         
@@ -43,6 +40,7 @@ final class MessageViewController: CommonMessageController {
     }
     
     override func viewWillAppear(animated: Bool) {
+
         super.viewWillAppear(animated)
         
         guard let friend = me.friends where friend.contains(self.friend.id) else {
@@ -89,6 +87,7 @@ extension MessageViewController {
         let finder = Router.Message.FindByUserId(id: friend.id, before: oldestMessage?.createDate.timeIntervalSince1970)
         
         finder.response {
+
             if $0.result.isFailure {
                 self.isLoading = false
                 self.isExhausted = true
@@ -113,14 +112,12 @@ extension MessageViewController {
             }
             
             if self.oldestMessage == nil {
+                
                 self.collectionView!.reloadData()
                 self.scrollToBottomAnimated(false)
                 let newMessages = me.newMessages.filter { $0.from.id != self.friend.id }
                 if me.newMessages != newMessages {
                     me.newMessages = newMessages
-                    if let tabBarController = self.navigationController?.tabBarController as? TabBarController {
-//                        tabBarController.updateBadgeNumber()
-                    }
                 }
             } else {
                 self.prependRows(messages.count)

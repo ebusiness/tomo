@@ -40,8 +40,8 @@ class ContactsNavigationController: UINavigationController {
 
     private func calculateBadge() -> String?{
 
-        if me.friendInvitations.count > 0 {
-            return String(me.friendInvitations.count)
+        if me.newMessages.count + me.friendInvitations.count > 0 {
+            return String(me.newMessages.count + me.friendInvitations.count)
         } else {
             return nil
         }

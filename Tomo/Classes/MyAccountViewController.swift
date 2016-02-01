@@ -53,7 +53,7 @@ final class MyAccountViewController: UITableViewController {
 
         self.configDisplay()
 
-        //        self.registerForNotifications()
+        self.configEventObserver()
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -199,29 +199,27 @@ extension MyAccountViewController {
     }
 }
 
-// MARK: NSNotificationCenter
+// MARK: Event Observer
 
 extension MyAccountViewController {
     
-    private func registerForNotifications() {
-        ListenerEvent.Any.addObserver(self, selector: Selector("receiveAny:"))
+    private func configEventObserver() {
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendAccepted.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendRefused.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendBreak.rawValue, object: nil)
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostNew.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostLiked.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostCommented.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostBookmarked.rawValue, object: nil)
     }
     
-    func receiveAny(notification: NSNotification) {
-        guard let userInfo = notification.userInfo else { return }
+    func didReceiveNotification(notification: NSNotification) {
         
-        let remoteNotification = NotificationEntity(userInfo)
-        
-        if let type = ListenerEvent(rawValue: remoteNotification.type) {
-            if type == .FriendInvited || type == .Message { //receive it by friendlistviewcontroller
-                return
-            }
-        }
-        if me.notifications > 0 {
-            gcd.sync(.Main) {
-                self.badgeView.text = String(me.notifications)
-                self.notificationCell.accessoryView = self.badgeView
-            }
+        gcd.sync(.Main) {
+            self.badgeView.text = String(me.notifications + 1)
+            self.notificationCell.accessoryView = self.badgeView
         }
     }
 }

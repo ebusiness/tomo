@@ -360,7 +360,7 @@ extension ProfileViewController {
 
 }
 
-// MARK: - NSNotificationCenter
+// MARK: - Event Observer
 
 extension ProfileViewController {
 
