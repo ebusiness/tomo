@@ -141,6 +141,8 @@ class Account: UserEntity {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFriendInvitationAccepted:", name: ListenerEvent.FriendAccepted.rawValue, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFriendInvitationRefused:", name: ListenerEvent.FriendRefused.rawValue, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFriendBroke:", name: ListenerEvent.FriendBreak.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.Message.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.GroupMessage.rawValue, object: nil)
     }
 
     deinit {
@@ -219,6 +221,10 @@ extension Account {
 
         // tell every observer the changes: which friend was deleted.
         NSNotificationCenter.defaultCenter().postNotificationName("didDeleteFriend", object: self, userInfo: ["idOfDeletedFriend": user.id])
+    }
+
+    func sendMessage(message: MessageEntity) {
+        NSNotificationCenter.defaultCenter().postNotificationName("didSendMessage", object: self, userInfo: ["messageEntityOfNewMessage": message])
     }
 }
 
@@ -301,6 +307,20 @@ extension Account {
         self.friends?.remove(notification.from.id)
 
         NSNotificationCenter.defaultCenter().postNotificationName("didFriendBreak", object: self, userInfo: ["userIdOfBrokenFriend": notification.from.id])
+    }
+
+    func didReceiveMessage(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+
+        // create message
+        let message = MessageEntity(userInfo)
+
+        // put the message in my new message list
+        self.newMessages.push(message)
+
+        NSNotificationCenter.defaultCenter().postNotificationName("didReceiveMessage", object: self, userInfo: ["messageEntityOfNewMessage": message])
     }
 }
 

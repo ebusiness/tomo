@@ -26,13 +26,15 @@ final class MessageViewController: CommonMessageController {
     var isExhausted = false
     
     override func viewDidLoad() {
+
         super.viewDidLoad()
         
         self.delegate = self
         
         //receive message realtime
-        ListenerEvent.Message.addObserver(self, selector: Selector("receiveMessage:"))
-        
+//        ListenerEvent.Message.addObserver(self, selector: Selector("receiveMessage:"))
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.Message.rawValue, object: nil)
+
         // page title
         title = friend.nickName
         
@@ -53,6 +55,10 @@ final class MessageViewController: CommonMessageController {
         super.viewDidDisappear(animated)
         // open all message when leave
         Router.Message.FindByUserId(id: friend.id, before: nil).request
+    }
+
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
 
@@ -149,7 +155,6 @@ extension MessageViewController: CommonMessageDelegate {
         let indexPath = NSIndexPath(forRow: self.messages.count - 1, inSection: 0)
         self.collectionView!.insertItemsAtIndexPaths([indexPath])
         return indexPath
-        
     }
     
     func sendMessage(type: MessageType, text: String, done: ( ()->() )? = nil ) {
@@ -158,6 +163,9 @@ extension MessageViewController: CommonMessageDelegate {
             if $0.result.isFailure {
                 done?()
             } else {
+
+                me.sendMessage(MessageEntity($0.result.value!))
+
                 JSQSystemSoundPlayer.jsq_playMessageSentSound()
                 self.finishSendingMessageAnimated(true)
                 done?()
@@ -171,11 +179,15 @@ extension MessageViewController: CommonMessageDelegate {
 
 extension MessageViewController {
     
-    func receiveMessage(notification: NSNotification) {
+    func didReceiveMessage(notification: NSNotification) {
+
+        // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
+
         let json = JSON(userInfo)
         
         guard friend.id == json["from"]["id"].stringValue else { return }
+
         let message = JSQMessageEntity(json)
         message.to = me
         message.from = friend
@@ -183,7 +195,6 @@ extension MessageViewController {
         self.messages.append(message)
         
         gcd.sync(.Main, closure: { () -> () in
-            
             JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
             self.finishReceivingMessageAnimated(true)
         })

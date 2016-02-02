@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="STV-7w-Ham">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="STV-7w-Ham">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -164,17 +164,6 @@
                                     <outlet property="delegate" destination="GpU-Ki-F38" id="fMF-px-4H7"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yUg-5s-lg7">
-                                <rect key="frame" x="16" y="16" width="30" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="8Mj-zR-gaw"/>
-                                    <constraint firstAttribute="height" constant="30" id="bBo-NU-dNM"/>
-                                </constraints>
-                                <state key="normal" image="close_window"/>
-                                <connections>
-                                    <action selector="closeButtonTapped:" destination="GpU-Ki-F38" eventType="touchUpInside" id="tXT-hd-26q"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -182,16 +171,15 @@
                             <constraint firstItem="4C9-hB-iIJ" firstAttribute="top" secondItem="xbW-ex-cxP" secondAttribute="top" id="1x9-Ty-FlK"/>
                             <constraint firstItem="Ghm-te-dO7" firstAttribute="top" secondItem="4C9-hB-iIJ" secondAttribute="bottom" id="4Pz-gP-N2n"/>
                             <constraint firstItem="Ghm-te-dO7" firstAttribute="top" secondItem="lbg-oK-gSG" secondAttribute="top" id="5aV-yr-Xbn"/>
-                            <constraint firstItem="yUg-5s-lg7" firstAttribute="top" secondItem="F26-tj-I6u" secondAttribute="bottom" constant="16" id="6x6-9g-OLB"/>
                             <constraint firstAttribute="centerX" secondItem="OYO-gx-7sa" secondAttribute="centerX" id="B0u-4x-IwG"/>
                             <constraint firstItem="4C9-hB-iIJ" firstAttribute="leading" secondItem="xbW-ex-cxP" secondAttribute="leading" id="BBw-Bp-I9r"/>
-                            <constraint firstItem="yUg-5s-lg7" firstAttribute="leading" secondItem="xbW-ex-cxP" secondAttribute="leading" constant="16" id="HKZ-aR-ab6"/>
                             <constraint firstAttribute="trailing" secondItem="lbg-oK-gSG" secondAttribute="trailing" id="Hvd-fs-wes"/>
                             <constraint firstItem="lbg-oK-gSG" firstAttribute="leading" secondItem="xbW-ex-cxP" secondAttribute="leading" id="YYY-m8-erV"/>
                             <constraint firstItem="OYO-gx-7sa" firstAttribute="top" secondItem="4C9-hB-iIJ" secondAttribute="top" constant="16" id="jKJ-fF-3AH"/>
                             <constraint firstAttribute="trailing" secondItem="4C9-hB-iIJ" secondAttribute="trailing" id="qNu-xS-TdA"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="bNn-X3-gUN">
                         <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title=" " id="Qw1-6T-9SM"/>
@@ -239,7 +227,6 @@
     <resources>
         <image name="avatar" width="80" height="80"/>
         <image name="back" width="25" height="25"/>
-        <image name="close_window" width="24" height="24"/>
         <image name="group_cover_default" width="414" height="160"/>
     </resources>
 </document>

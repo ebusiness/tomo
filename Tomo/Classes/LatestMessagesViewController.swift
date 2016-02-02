@@ -22,7 +22,7 @@ final class LatestMessagesViewController: UITableViewController {
 
         super.viewDidLoad()
 
-        self.loadContacts()
+        self.loadLatestMessage()
 
         self.configEventObserver()
     }
@@ -163,18 +163,19 @@ extension LatestMessagesViewController {
             return
         }
 
-//        if let group = self.messageContacts[indexPath.row] as? GroupEntity {
-//            let vc = GroupChatViewController()
-//            vc.hidesBottomBarWhenPushed = true
-//            vc.group = group
-//            navigationController?.pushViewController(vc, animated: true)
-//            return
-//        }
+        let message = self.messages[indexPath.row]
 
-        let vc = MessageViewController()
-        vc.hidesBottomBarWhenPushed = true
-        vc.friend = self.messages[indexPath.row].from
-        self.navigationController?.pushViewController(vc, animated: true)
+        if let group = message.group {
+            let vc = GroupChatViewController()
+            vc.group = group
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            let vc = MessageViewController()
+            vc.friend = (message.from.id == me.id ? message.to : message.from)
+            vc.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }
 
@@ -182,7 +183,7 @@ extension LatestMessagesViewController {
 
 extension LatestMessagesViewController {
 
-    private func loadContacts() {
+    private func loadLatestMessage() {
 
         // skip if already in loading
         if self.isLoading {
@@ -200,13 +201,11 @@ extension LatestMessagesViewController {
                 return
             }
 
-            print("^-^^^^^^^^^^^^^^^^")
-            print($0.result.value!)
-            print("^-^^^^^^^^^^^^^^^^")
-
             if let messages: [MessageEntity] = MessageEntity.collection($0.result.value!) {
 
-                self.messages += messages.reverse()
+                self.messages += messages.sort {
+                    $0.createDate.compare($1.createDate) == NSComparisonResult.OrderedDescending
+                }
 
                 // let table view display new contents
                 self.appendRows(messages.count, inSection: me.friendInvitations.count > 0 ? 1 : 0)
@@ -245,6 +244,7 @@ extension LatestMessagesViewController {
         // notification from background thread
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveFriendInvitation", name: "didReceiveFriendInvitation", object: me)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFriendBreak:", name: "didFriendBreak", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessage:", name: "didReceiveMessage", object: me)
     }
 
     // This method is called for sync this view controller and accout model after refuse invitation
@@ -293,6 +293,10 @@ extension LatestMessagesViewController {
 
         // see if the deleted user is exist in chat message list
         let indexInMessageList = self.messages.indexOf {
+
+            // skip group message
+            guard $0.group == nil else { return false }
+
             let friendId = ($0.from.id == me.id ? $0.to.id : $0.from.id)
             return friendId == id
         }
@@ -343,6 +347,10 @@ extension LatestMessagesViewController {
 
         // see if the deleted user is exist in chat message list
         let indexInMessageList = self.messages.indexOf {
+
+            // skip group message
+            guard $0.group == nil else { return false }
+
             let friendId = ($0.from.id == me.id ? $0.to.id : $0.from.id)
             return friendId == brokenUserId
         }
@@ -369,6 +377,93 @@ extension LatestMessagesViewController {
             self.tableView.endUpdates()
         }
     }
+
+
+    func didReceiveMessage(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let message = userInfo["messageEntityOfNewMessage"] as? MessageEntity else { return }
+        // create message
+//        let message = MessageEntity(userInfo)
+
+        let indexInMessageList: Int?
+
+        // if the message is a group message
+        if let group = message.group {
+
+            // see if the group is exists in my message list
+            indexInMessageList = self.messages.indexOf {
+                $0.group?.id ==  group.id
+            }
+
+            // if the message is a normal message
+        } else {
+
+            // see if the message sender is in my messages list
+            indexInMessageList = self.messages.indexOf {
+                
+                // skip group message
+                guard $0.group == nil else { return false }
+
+                let user = ($0.from.id == me.id ? $0.to : $0.from)
+                return user.id == message.from.id
+            }
+        }
+
+        // if the group/sender in my message list, update the message list
+        if let index = indexInMessageList {
+
+            self.messages[index].content = message.content
+            self.messages[index].createDate = message.createDate
+//            self.messages[index].from = message.from
+
+            // this method is called from background thread (because it fired from notification center)
+            // must switch to main thread for UI updating
+            gcd.sync(.Main) {
+
+                if me.friendInvitations.count == 0 {
+                    self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Automatic)
+                } else {
+                    self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: .Automatic)
+                }
+
+                self.messages.insert(self.messages.removeAtIndex(index), atIndex: 0)
+
+                // update tableview, if the number of my invitation is zero, reload the row in section 0
+                // otherwise, reload the corresponding row in section 1
+                self.tableView.beginUpdates()
+                if me.friendInvitations.count == 0 {
+                    self.tableView.moveRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), toIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+                } else {
+                    self.tableView.moveRowAtIndexPath(NSIndexPath(forRow: index, inSection: 1), toIndexPath: NSIndexPath(forRow: 0, inSection: 1))
+                }
+                self.tableView.endUpdates()
+
+            }
+
+            // or insert into my message list at top
+        } else {
+
+            self.messages.insert(message, atIndex: 0)
+
+            // this method is called from background thread (because it fired from notification center)
+            // must switch to main thread for UI updating
+            gcd.sync(.Main) {
+
+                // update tableview, if the number of my invitation is zero, insert the row in section 0
+                // otherwise, insert the corresponding row in section 1
+                self.tableView.beginUpdates()
+                if me.friendInvitations.count == 0 {
+                    self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+                } else {
+                    self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation: .Automatic)
+                }
+                self.tableView.endUpdates()
+            }
+        }
+
+    }
 }
 
 // MARK: - MessageTableViewCell
@@ -389,10 +484,12 @@ final class MessageTableViewCell: UITableViewCell {
 
         let user: UserEntity
 
-        if self.message.to.id == me.id {
-            user = self.message.from
-        } else {
+        // TODO: when the message come from socket, it don't have "to".
+        // but it's ok, cuase it must sent "to me". so I can't use 'to' to check user
+        if self.message.from.id == me.id {
             user = self.message.to
+        } else {
+            user = self.message.from
         }
 
         if let photo = user.photo {
@@ -406,6 +503,10 @@ final class MessageTableViewCell: UITableViewCell {
         self.dateLabel.text = self.message.createDate.relativeTimeToString()
 
         let count = me.newMessages.reduce(0, combine: { (count, message) -> Int in
+
+            // skip group message
+            guard message.group == nil else { return count }
+
             if message.from.id == user.id {
                 return count + 1
             } else {
@@ -460,9 +561,38 @@ final class GroupMessageTableViewCell: UITableViewCell {
 
         self.nameLabel.text = group.name
 
-        self.contentLabel.text = self.message.content
+        self.contentLabel.text = self.getMediaString()
 
         self.dateLabel.text = self.message.createDate.relativeTimeToString()
+
+        let count = me.newMessages.reduce(0, combine: { (count, message) -> Int in
+            if message.group?.id == group.id {
+                return count + 1
+            } else {
+                return count
+            }
+        })
+
+        if count > 0 {
+            countLabel.hidden = false
+            countLabel.text = String(count)
+        } else {
+            countLabel.hidden = true
+        }
+    }
+
+    private func getMediaString()-> String {
+        let msg = self.message.from.id == me.id ? "您发送了" : "发给您"
+        switch self.message.type {
+        case .photo:
+            return "\(msg)一张图片"
+        case .voice:
+            return "\(msg)一段语音"
+        case .video:
+            return "\(msg)一段视频"
+        case .text:
+            return self.message.content
+        }
     }
 }
 

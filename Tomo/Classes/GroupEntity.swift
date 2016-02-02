@@ -62,7 +62,7 @@ class GroupEntity: Entity {
         
         self.name = json["name"].stringValue
         
-        self.cover = json["cover_ref"].stringValue
+        self.cover = json["cover_ref"].string ?? json["cover"].string
         
         self.introduction = json["introduction"].stringValue
         

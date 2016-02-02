@@ -179,11 +179,11 @@ extension TabBarController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.GroupJoined.rawValue, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.GroupLeft.rawValue, object: nil)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.Message.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.GroupMessage.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.Message.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.GroupMessage.rawValue, object: nil)
     }
 
-    private func openToggleNotificationBar() {
+    private func openNotificationBar() {
 
         self.view.bringSubviewToFront(self.notificationBar)
         self.topConstraint.constant = 0
@@ -214,7 +214,22 @@ extension TabBarController {
 
         gcd.sync(.Main) {
             self.notificationBar.notification = NotificationEntity(notification.userInfo!)
-            self.openToggleNotificationBar()
+            self.openNotificationBar()
+        }
+    }
+
+    func didReceiveMessage(notification: NSNotification) {
+
+        gcd.sync(.Main) {
+            self.notificationBar.notification = NotificationEntity(notification.userInfo!)
+
+            let topViewController = self.selectedViewController?.childViewControllers.last
+
+            if topViewController is MessageViewController || topViewController is GroupChatViewController {
+                return
+            }
+
+            self.openNotificationBar()
         }
     }
 }

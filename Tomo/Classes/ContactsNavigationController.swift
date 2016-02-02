@@ -20,6 +20,7 @@ class ContactsNavigationController: UINavigationController {
 
         // this event is emit from notificaton center, must switch to main thread to make visual effect (update badge)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadgeOnMainThread", name: "didReceiveFriendInvitation", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadgeOnMainThread", name: "didReceiveMessage", object: me)
     }
 
     deinit {
