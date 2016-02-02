@@ -74,7 +74,7 @@ extension ImagePostTableViewCell: UICollectionViewDelegate {
     }
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: TomoConst.UI.ScreenWidth, height: 250.0)
+        return CGSize(width: TomoConst.UI.ScreenWidth, height: 300.0)
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView) {

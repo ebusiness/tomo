@@ -44,7 +44,7 @@ final class GroupDetailViewController: UITableViewController {
 
         self.loadMorePosts()
         
-        self.registerClosureForAccount()
+        self.configEventObserver()
     }
 
     override func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -70,6 +70,9 @@ final class GroupDetailViewController: UITableViewController {
         self.configNavigationBarByScrollPosition()
     }
 
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
 }
 
 // MARK: - Actions
@@ -85,7 +88,7 @@ extension GroupDetailViewController {
                 sender.userInteractionEnabled = true
                 return
             } else {
-                me.addGroup(self.group)
+                me.joinGroup(self.group)
             }
         }
     }
@@ -115,8 +118,8 @@ extension GroupDetailViewController {
 extension GroupDetailViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
         if segue.identifier == "pushGroupDescription" {
             let destination = segue.destinationViewController as! GroupDescriptionViewController
             destination.group = group
@@ -172,6 +175,38 @@ extension GroupDetailViewController {
     }
 }
 
+// MARK: - Event Observer
+
+extension GroupDetailViewController {
+
+    private func configEventObserver() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didJoinGroup:", name: "didJoinGroup", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didLeaveGroup:", name: "didLeaveGroup", object: me)
+    }
+
+    func didJoinGroup(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let group = userInfo["groupEntityOfNewGroup"] as? GroupEntity else { return }
+        guard group.id == self.group.id else { return }
+
+        // reconfig display
+        self.configDisplay()
+    }
+
+    func didLeaveGroup(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let groupId = userInfo["idOfDeletedGroup"] as? String else { return }
+        guard groupId == self.group.id else { return }
+
+        // reconfig display
+        self.configDisplay()
+    }
+}
+
 // MARK: - Internal Methods
 
 extension GroupDetailViewController {
@@ -199,23 +234,6 @@ extension GroupDetailViewController {
                 $0.enabled = false
             }
             self.joinButton.hidden = false
-        }
-    }
-    
-    private func registerClosureForAccount() {
-        
-        me.addGroupsObserver { _ in
-            if self.tabBarController?.selectedViewController?.childViewControllers.last is GroupDetailViewController {
-                gcd.sync(.Main){
-                    UIView.animateWithDuration(TomoConst.Duration.Short) {
-                        self.configDisplay()
-                    }
-                }
-            } else {
-                gcd.sync(.Main){
-                    self.configDisplay()
-                }
-            }
         }
     }
     

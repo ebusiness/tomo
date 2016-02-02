@@ -10,7 +10,7 @@ import UIKit
 
 private let reuseIdentifier = "StationCell"
 
-class GroupViewController: UICollectionViewController {
+final class GroupViewController: UICollectionViewController {
 
     var isLoading = false
     var isExhausted = false
@@ -28,6 +28,8 @@ class GroupViewController: UICollectionViewController {
         super.viewDidLoad()
 
         self.loadData()
+
+        self.configEventObserver()
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -38,8 +40,9 @@ class GroupViewController: UICollectionViewController {
         }
     }
 
-
-    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
 }
 
 // MARK: UICollectionViewDaztaSource
@@ -140,6 +143,47 @@ extension GroupViewController {
         }
         
         self.collectionView!.insertItemsAtIndexPaths(indexPaths)
+    }
+}
+
+// MARK: - Event Observer
+
+extension GroupViewController {
+
+    private func configEventObserver() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didJoinGroup:", name: "didJoinGroup", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didLeaveGroup:", name: "didLeaveGroup", object: me)
+    }
+
+    func didJoinGroup(notification: NSNotification) {
+        
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let group = userInfo["groupEntityOfNewGroup"] as? GroupEntity else { return }
+
+        // add the new group into collection view data model
+        self.groups.insert(group, atIndex: 0)
+
+        // update collection view, insert the corresponding row in section 0 row 0
+        self.collectionView?.performBatchUpdates({
+            self.collectionView?.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+        }, completion: nil)
+    }
+
+    func didLeaveGroup(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let groupId = userInfo["idOfDeletedGroup"] as? String else { return }
+        guard let index = self.groups.indexOf({ $0.id == groupId }) else { return }
+
+        // add the new group into collection view data model
+        self.groups.removeAtIndex(index)
+
+        // update collection view, remove the corresponding row from section 0
+        self.collectionView?.performBatchUpdates({
+            self.collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
+        }, completion: nil)
     }
 }
 

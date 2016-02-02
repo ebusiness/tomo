@@ -240,6 +240,7 @@ extension LatestMessagesViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRefuseInvitation:", name: "didRefuseInvitation", object: me)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didAcceptInvitation:", name: "didAcceptInvitation", object: me)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didDeleteFriend:", name: "didDeleteFriend", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didLeaveGroup:", name: "didLeaveGroup", object: me)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSendMessage:", name: "didSendMessage", object: me)
 
         // notification from background thread
@@ -306,6 +307,39 @@ extension LatestMessagesViewController {
         guard let index = indexInMessageList else { return }
 
         // sync friends data with account model manually
+        // remove the chat history from messages list
+        self.messages.removeAtIndex(index)
+
+        // update tableview, if the number of my invitation is zero, insert into section 1
+        // otherwise, remove the corresponding row in section 0
+        self.tableView.beginUpdates()
+        if me.friendInvitations.count > 0 {
+            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 1)], withRowAnimation: .Automatic)
+        } else {
+            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)], withRowAnimation: .Automatic)
+        }
+        self.tableView.endUpdates()
+    }
+
+    func didLeaveGroup(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let groupId = userInfo["idOfDeletedGroup"] as? String else { return }
+
+        // see if the deleted group is exist in chat message list
+        let indexInMessageList = self.messages.indexOf {
+
+            // skip normal message
+            guard let group = $0.group else { return false }
+
+            return group.id == groupId
+        }
+
+        // do nothing if not found
+        guard let index = indexInMessageList else { return }
+
+        // sync group data with account model manually
         // remove the chat history from messages list
         self.messages.removeAtIndex(index)
 

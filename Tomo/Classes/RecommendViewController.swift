@@ -49,11 +49,11 @@ final class RecommendViewController: UIViewController {
                 }
             }
 
-            self.recommendGroupCollectionView.performBatchUpdates({ _ in
+            self.recommendGroupCollectionView.performBatchUpdates({
                 self.recommendGroupCollectionView.deleteItemsAtIndexPaths(removeIndex)
                 self.recommendGroupCollectionView.insertItemsAtIndexPaths(insertIndex)
-                }) { _ in
-                    self.recommendGroupCollectionView.scrollToItemAtIndexPath(firstItemIndex, atScrollPosition: .Left, animated: true)
+            }) { _ in
+                self.recommendGroupCollectionView.scrollToItemAtIndexPath(firstItemIndex, atScrollPosition: .Left, animated: true)
             }
         }
     }

@@ -92,6 +92,15 @@ final class StationCollectionViewCell: UICollectionViewCell {
         didSet { self.configDisplay() }
     }
 
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.configEventObserver()
+    }
+
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
     override func awakeFromNib() {
 
         super.awakeFromNib()
@@ -150,7 +159,7 @@ final class StationCollectionViewCell: UICollectionViewCell {
                 let group = GroupEntity($0.result.value!)
 
                 // remove it from my joined group list
-                me.removeGroup(group)
+                me.leaveGroup(group)
 
                 // mark as not joined
                 self.isJoined = false
@@ -174,7 +183,7 @@ final class StationCollectionViewCell: UICollectionViewCell {
                 let group = GroupEntity($0.result.value!)
 
                 // add the group to my joined group list
-                me.addGroup(group)
+                me.joinGroup(group)
 
                 // mark as joined
                 self.isJoined = true
@@ -187,5 +196,32 @@ final class StationCollectionViewCell: UICollectionViewCell {
             }
         }
         
+    }
+
+    private func configEventObserver() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didJoinGroup:", name: "didJoinGroup", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didLeaveGroup:", name: "didLeaveGroup", object: me)
+    }
+
+    func didJoinGroup(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let group = userInfo["groupEntityOfNewGroup"] as? GroupEntity else { return }
+        guard group.id == self.group.id else { return }
+
+        // reconfig display
+        self.configDisplay()
+    }
+
+    func didLeaveGroup(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let groupId = userInfo["idOfDeletedGroup"] as? String else { return }
+        guard groupId == self.group.id else { return }
+
+        // reconfig display
+        self.configDisplay()
     }
 }

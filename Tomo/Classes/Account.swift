@@ -9,91 +9,17 @@
 import SwiftyJSON
 class Account: UserEntity {
     
-    private var friendsClosures = Array<([UserEntity], [UserEntity]) -> ()>()
-    private var groupsClosures = Array<([GroupEntity], [GroupEntity]) -> ()>()
-    private var friendInvitationsClosures = Array<([NotificationEntity], [NotificationEntity]) -> ()>()
-    
-    private var cacheData = [String: NSObject]() // mongodb->ObjectId : userEntity/GroupEntity
-    
-    
     var telNo: String?
     
-    var friends: [String]? {
-        didSet{
-            gcd.async(.Default){
-                let (addValues, removeValues) = Util.diff(oldValue, rightValue: self.friends)
-                var addedFriends = [UserEntity]()
-                addValues.forEach({
-                    guard let uid = $0 as? String else { return }
-                    guard let user = self.cacheData[uid] as? UserEntity else { return }
-                    addedFriends.append(user)
-                })
-                
-                var removedFriends = [UserEntity]()
-                removeValues.forEach({
-                    guard let uid = $0 as? String else { return }
-                    if let user = self.cacheData[uid] as? UserEntity {
-                        removedFriends.append(user)
-                    } else {
-                        let user = UserEntity()
-                        user.id = uid
-                        removedFriends.append(user)
-                    }
-                })
-                self.friendsClosures.forEach {
-                    $0(addedFriends, removedFriends)
-                }
-                self.cacheData = self.cacheData.filter({ !($0.1 is UserEntity) })
-            }
-        }
-    }
+    var friends: [String]?
     
-    var groups: [String]? {
-        didSet{
-            gcd.async(.Default){
-                let (addValues, removeValues) = Util.diff(oldValue, rightValue: self.groups)
-                var addedGroups = [GroupEntity]()
-                addValues.forEach({
-                    guard let gid = $0 as? String else { return }
-                    guard let group = self.cacheData[gid] as? GroupEntity else { return }
-                    addedGroups.append(group)
-                })
-                
-                var removedGroups = [GroupEntity]()
-                removeValues.forEach({
-                    guard let gid = $0 as? String else { return }
-                    if let group = self.cacheData[gid] as? GroupEntity {
-                        removedGroups.append(group)
-                    } else {
-                        let group = GroupEntity()
-                        group.id = gid
-                        removedGroups.append(group)
-                    }
-                })
-                self.groupsClosures.forEach {
-                    $0(addedGroups, removedGroups)
-                }
-                self.cacheData = self.cacheData.filter({ !($0.1 is GroupEntity) })
-            }
-        }
-    }
+    var groups: [String]?
     
     var invitations: [String]?
     
     var blockUsers: [String]?
     
-    var friendInvitations: [NotificationEntity]! {
-        didSet{
-            gcd.async(.Default){
-                let (addValues, removeValues) = Util.diff(oldValue, rightValue: self.friendInvitations)
-                guard let add = addValues as? [NotificationEntity] else { return }
-                guard let remove = removeValues as? [NotificationEntity] else { return }
-                self.friendInvitationsClosures.forEach {
-                    $0(add, remove)
-                }
-            }
-        }
-    }
+    var friendInvitations: [NotificationEntity]!
     
     var newMessages: [MessageEntity]!
     
@@ -153,30 +79,6 @@ class Account: UserEntity {
 // MARK: - Friend
 
 extension Account {
-    func addFriend(user: UserEntity) {
-        self.cacheData[user.id] = user
-        
-        self.invitations?.remove(user.id)
-        let friendInvitations = self.friendInvitations.filter { $0.from.id != user.id }
-        self.friendInvitations = friendInvitations
-        
-        var friends = self.friends ?? []
-        
-        if !friends.contains(user.id) {
-            friends.append(user.id)
-            self.friends = friends
-        }
-    }
-    
-    func removeFriend(user: UserEntity){
-        self.cacheData[user.id] = user
-        
-        self.invitations?.remove(user.id)
-        let friendInvitations = self.friendInvitations.filter { $0.from.id != user.id }
-        self.friendInvitations = friendInvitations
-        self.newMessages = self.newMessages.filter { $0.from.id != user.id }
-        self.friends?.remove(user.id)
-    }
 
     // Accept the make friend invitation
     func acceptInvitation(invitation: NotificationEntity) {
@@ -216,11 +118,48 @@ extension Account {
 
         // TODO: my friends list is a list of id string, this may not right!
 
+        let friends = self.friends ?? []
+
+        // my friends list must contain the user that will be deleted
+        guard friends.contains(user.id) else { return }
+
         // remove this user from my friends list
         self.friends?.remove(user.id)
 
         // tell every observer the changes: which friend was deleted.
         NSNotificationCenter.defaultCenter().postNotificationName("didDeleteFriend", object: self, userInfo: ["idOfDeletedFriend": user.id])
+    }
+
+    func joinGroup(group: GroupEntity) {
+
+        // TODO: my groups list is a list of id string, this may not right!
+
+        let groups = self.groups ?? []
+
+        // my groups list must not contain the group will be joined
+        guard !groups.contains(group.id) else { return }
+
+        // add the group into my group list
+        self.groups?.append(group.id)
+
+        // tell every observer the changes: which group was joined
+        NSNotificationCenter.defaultCenter().postNotificationName("didJoinGroup", object: self, userInfo: ["groupEntityOfNewGroup": group])
+    }
+
+    func leaveGroup(group: GroupEntity) {
+
+        // TODO: my groups list is a list of id string, this may not right!
+
+        let groups = self.groups ?? []
+
+        // my groups list must contain the group will be left
+        guard groups.contains(group.id) else { return }
+
+        // remove the group from my groups list
+        self.groups?.remove(group.id)
+
+        // tell every observer the changes: which group was left
+        NSNotificationCenter.defaultCenter().postNotificationName("didLeaveGroup", object: self, userInfo: ["idOfDeletedGroup": group.id])
     }
 
     func sendMessage(message: MessageEntity) {
@@ -324,31 +263,6 @@ extension Account {
     }
 }
 
-// MARK: - group
-extension Account {
-    func addGroup(group: GroupEntity) {
-        var groups = self.groups ?? []
-        
-        if groups.contains(group.id) { return }
-        
-        self.cacheData[group.id] = group
-        groups.append(group.id)
-        
-        self.groups = groups
-    }
-    
-    func removeGroup(group: GroupEntity) {
-        var groups = self.groups ?? []
-        
-        if !groups.contains(group.id) { return }
-        
-        self.cacheData[group.id] = group
-        groups.remove(group.id)
-        
-        self.groups = groups
-    }
-}
-
 extension Account {
     class PushSetting: Entity  {
         var announcement: Bool = true
@@ -388,19 +302,4 @@ extension Account {
             self.groupLeft = json["groupLeft"].boolValue
         }
     }
-}
-
-extension Account {
-    func addFriendsObserver(closure : ([UserEntity], [UserEntity]) -> ()) {
-        friendsClosures.append(closure)
-    }
-    
-    func addGroupsObserver(closure : ([GroupEntity], [GroupEntity]) -> ()) {
-        groupsClosures.append(closure)
-    }
-    
-    func addFriendInvitationsObserver(closure : ([NotificationEntity], [NotificationEntity]) -> ()) {
-        friendInvitationsClosures.append(closure)
-    }
-
 }

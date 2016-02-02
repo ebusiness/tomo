@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class GroupDescriptionViewController: UICollectionViewController {
+final class GroupDescriptionViewController: UICollectionViewController {
 
     var group: GroupEntity!
 
@@ -28,7 +28,7 @@ class GroupDescriptionViewController: UICollectionViewController {
 
         self.loadGroupDescription()
         
-        self.registerClosureForAccount()
+        self.configEventObserver()
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -45,6 +45,9 @@ class GroupDescriptionViewController: UICollectionViewController {
         self.configNavigationBarByScrollPosition()
     }
 
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
 }
 
 // MARK: - Internal methods
@@ -161,37 +164,36 @@ extension GroupDescriptionViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - Event Observer
+
 extension GroupDescriptionViewController {
     
-    private func registerClosureForAccount() {
-        
-        me.addGroupsObserver { (added, removed) -> () in
-            let indexOfMeInGroup = self.members.indexOf({$0.id == me.id })
-            if added.count > 0 {
-                self.refreshForJoinGroupIfNeeded(indexOfMeInGroup)
-            }
-            if removed.count > 0 {
-                self.refreshForLeaveGroupIfNeeded(indexOfMeInGroup)
-            }
-        }
+    private func configEventObserver() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didJoinGroup:", name: "didJoinGroup", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didLeaveGroup:", name: "didLeaveGroup", object: me)
     }
-    
-    private func refreshForJoinGroupIfNeeded(indexOfMeInGroup: Int?) {
-        guard nil == indexOfMeInGroup else { return }
-        
+
+    func didJoinGroup(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let group = userInfo["groupEntityOfNewGroup"] as? GroupEntity else { return }
+        guard group.id == self.group.id else { return }
+
         self.members.insert(me, atIndex: 0)
-        
-        gcd.sync(.Main){
-            self.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
-        }
+
+        self.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
     }
-    
-    private func refreshForLeaveGroupIfNeeded(indexOfMeInGroup: Int?) {
-        guard let index = indexOfMeInGroup else { return }
-        
-        self.members.removeAtIndex(index)
-        
-        gcd.sync(.Main){
+
+    func didLeaveGroup(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let groupId = userInfo["idOfDeletedGroup"] as? String else { return }
+        guard groupId == self.group.id else { return }
+
+        if let index = self.members.indexOf({ $0.id == me.id }) {
+            self.members.removeAtIndex(index)
             self.collectionView!.deleteItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
         }
     }
@@ -254,7 +256,7 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
                 return
             }
 
-            me.addGroup(self.group)
+            me.joinGroup(self.group)
             UIView.animateWithDuration(TomoConst.Duration.Short) {
                 self.didSetGroup()
             }
@@ -279,7 +281,7 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
                     return
                 }
 
-                me.removeGroup(self.group)
+                me.leaveGroup(self.group)
                 UIView.animateWithDuration(TomoConst.Duration.Short) {
                     self.didSetGroup()
                 }
