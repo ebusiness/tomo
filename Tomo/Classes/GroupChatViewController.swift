@@ -124,9 +124,6 @@ extension GroupChatViewController {
                     let newMessages = me.newMessages.filter { $0.group?.id != self.group.id }
                     if me.newMessages != newMessages {
                         me.newMessages = newMessages
-                        if let tabBarController = self.navigationController?.tabBarController as? TabBarController {
-//                            tabBarController.updateBadgeNumber()
-                        }
                     }
                 } else {
                     self.prependRows(messages.count)
@@ -172,6 +169,7 @@ extension GroupChatViewController: CommonMessageDelegate {
         
         Router.GroupMessage.SendByGroupId(id: self.group.id, type: type, content: text).response {
             if $0.result.isSuccess {
+                me.sendMessage(MessageEntity($0.result.value!))
                 JSQSystemSoundPlayer.jsq_playMessageSentSound()
                 self.finishSendingMessageAnimated(true)
             }
@@ -187,16 +185,16 @@ extension GroupChatViewController: CommonMessageDelegate {
 extension GroupChatViewController {
     
     private func registerForNotifications() {
-        ListenerEvent.GroupMessage.addObserver(self, selector: Selector("receiveMessage:"))
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.GroupMessage.rawValue, object: nil)
     }
     
-    func receiveMessage(notification: NSNotification) {
+    func didReceiveMessage(notification: NSNotification) {
         
         guard let userInfo = notification.userInfo else { return }
         
         let json = JSON(userInfo)
         
-        guard json["targetId"].stringValue == self.group.id else { return }
+        guard json["group"]["id"].stringValue == self.group.id else { return }
         
         let message = JSQMessageEntity(json)
 //        message.group = self.group

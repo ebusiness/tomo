@@ -240,6 +240,7 @@ extension LatestMessagesViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRefuseInvitation:", name: "didRefuseInvitation", object: me)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didAcceptInvitation:", name: "didAcceptInvitation", object: me)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didDeleteFriend:", name: "didDeleteFriend", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSendMessage:", name: "didSendMessage", object: me)
 
         // notification from background thread
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveFriendInvitation", name: "didReceiveFriendInvitation", object: me)
@@ -319,6 +320,78 @@ extension LatestMessagesViewController {
         self.tableView.endUpdates()
     }
 
+    // This method is called for sync this view controller and accout model after sent message
+    func didSendMessage(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let message = userInfo["messageEntityOfNewMessage"] as? MessageEntity else { return }
+
+        let indexInMessageList: Int?
+
+        // if the message is a group message
+        if let group = message.group {
+
+            // see if the group is exists in my message list
+            indexInMessageList = self.messages.indexOf {
+                $0.group?.id ==  group.id
+            }
+
+            // if the message is a normal message
+        } else {
+
+            // see if the message receiver is in my messages list
+            indexInMessageList = self.messages.indexOf {
+
+                // skip group message
+                guard $0.group == nil else { return false }
+
+                let user = ($0.from.id == me.id ? $0.to : $0.from)
+                return user.id == message.to.id
+            }
+        }
+
+        // if the group/sender in my message list, update the message list
+        if let index = indexInMessageList {
+
+            self.messages[index].content = message.content
+            self.messages[index].createDate = message.createDate
+
+            if me.friendInvitations.count == 0 {
+                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Automatic)
+            } else {
+                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: .Automatic)
+            }
+
+            self.messages.insert(self.messages.removeAtIndex(index), atIndex: 0)
+
+            // update tableview, if the number of my invitation is zero, reload the row in section 0
+            // otherwise, reload the corresponding row in section 1
+            self.tableView.beginUpdates()
+            if me.friendInvitations.count == 0 {
+                self.tableView.moveRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), toIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+            } else {
+                self.tableView.moveRowAtIndexPath(NSIndexPath(forRow: index, inSection: 1), toIndexPath: NSIndexPath(forRow: 0, inSection: 1))
+            }
+            self.tableView.endUpdates()
+
+            // or insert into my message list at top
+        } else {
+
+            self.messages.insert(message, atIndex: 0)
+
+            // update tableview, if the number of my invitation is zero, insert the row in section 0
+            // otherwise, insert the corresponding row in section 1
+            self.tableView.beginUpdates()
+            if me.friendInvitations.count == 0 {
+                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+            } else {
+                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation: .Automatic)
+            }
+            self.tableView.endUpdates()
+        }
+    }
+
     // This method is called for sync this view controller and accout model after receive friend invitation
     func didReceiveFriendInvitation() {
 
@@ -384,8 +457,6 @@ extension LatestMessagesViewController {
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
         guard let message = userInfo["messageEntityOfNewMessage"] as? MessageEntity else { return }
-        // create message
-//        let message = MessageEntity(userInfo)
 
         let indexInMessageList: Int?
 
@@ -416,7 +487,6 @@ extension LatestMessagesViewController {
 
             self.messages[index].content = message.content
             self.messages[index].createDate = message.createDate
-//            self.messages[index].from = message.from
 
             // this method is called from background thread (because it fired from notification center)
             // must switch to main thread for UI updating
