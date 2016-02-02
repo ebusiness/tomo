@@ -181,6 +181,10 @@ extension MessageViewController {
     
     func didReceiveMessage(notification: NSNotification) {
 
+        print("=================")
+        print("runrunrun")
+        print("=================")
+
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
 

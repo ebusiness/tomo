@@ -180,7 +180,7 @@ extension TabBarController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.GroupLeft.rawValue, object: nil)
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.Message.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.GroupMessage.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveGroupMessage:", name: ListenerEvent.GroupMessage.rawValue, object: nil)
     }
 
     private func openNotificationBar() {
@@ -223,9 +223,24 @@ extension TabBarController {
         gcd.sync(.Main) {
             self.notificationBar.notification = NotificationEntity(notification.userInfo!)
 
+            // if received normal message in chat view controller, don't show notification bar
             let topViewController = self.selectedViewController?.childViewControllers.last
+            if topViewController is MessageViewController {
+                return
+            }
 
-            if topViewController is MessageViewController || topViewController is GroupChatViewController {
+            self.openNotificationBar()
+        }
+    }
+
+    func didReceiveGroupMessage(notification: NSNotification) {
+
+        gcd.sync(.Main) {
+            self.notificationBar.notification = NotificationEntity(notification.userInfo!)
+
+            // if received group message in group chat view controller, don't show notification bar
+            let topViewController = self.selectedViewController?.childViewControllers.last
+            if topViewController is GroupChatViewController {
                 return
             }
 

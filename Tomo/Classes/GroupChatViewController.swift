@@ -50,6 +50,10 @@ final class GroupChatViewController: CommonMessageController {
         // open all message when leave
         Router.GroupMessage.FindByGroupId(id: self.group.id, before: nil).request
     }
+
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
 }
 
 // MARK: - Private Methods

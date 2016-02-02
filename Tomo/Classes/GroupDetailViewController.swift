@@ -360,6 +360,7 @@ extension GroupDetailViewController {
             // if user scroll down so the table header view got shown, just keep the navigation bar transparent
         } else {
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            self.navigationController?.navigationBar.shadowImage = UIImage()
         }
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="MQa-Yi-9rd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="MQa-Yi-9rd">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -776,7 +776,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" title="现场一览" id="nzy-Sg-POg">
                         <barButtonItem key="backBarButtonItem" title=" " id="tOj-ol-qDA"/>
-                        <barButtonItem key="rightBarButtonItem" title="更多" id="ZGU-nH-15m">
+                        <barButtonItem key="rightBarButtonItem" image="plus_math" id="ZGU-nH-15m">
                             <connections>
                                 <segue destination="vtA-lG-RqW" kind="modal" id="js4-wn-VvC"/>
                             </connections>
@@ -826,6 +826,7 @@
         <image name="create_new" width="25" height="25"/>
         <image name="group_cover_default" width="414" height="160"/>
         <image name="hearts" width="25" height="25"/>
+        <image name="plus_math" width="25" height="25"/>
         <image name="speech_bubble" width="25" height="25"/>
         <image name="splash10" width="1000" height="666"/>
         <image name="star" width="25" height="25"/>

@@ -468,7 +468,6 @@
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
-				1F9ACAF61B69F96100648A82 /* Entity */,
 				D0FDC3501C1EA04C0045826B /* Router */,
 				299389531AD3C71500043D91 /* storyboard */,
 				299389561AD3C7CA00043D91 /* ViewController */,
@@ -568,6 +567,7 @@
 				296D8BBD1AFC5A680058D400 /* Main.storyboard */,
 				D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */,
 				29CA441D1AD4CAF0009EB177 /* Setting.storyboard */,
+				1F9ACAF61B69F96100648A82 /* Entity */,
 				559DCAD41C5FB373003FA73C /* Map.storyboard */,
 			);
 			name = storyboard;
