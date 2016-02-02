@@ -185,6 +185,7 @@ extension TabBarController {
 
     private func openToggleNotificationBar() {
 
+        self.view.bringSubviewToFront(self.notificationBar)
         self.topConstraint.constant = 0
         UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
             self.view.layoutIfNeeded()
