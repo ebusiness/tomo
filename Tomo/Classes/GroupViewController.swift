@@ -45,7 +45,7 @@ final class GroupViewController: UICollectionViewController {
     }
 }
 
-// MARK: UICollectionViewDaztaSource
+// MARK: UICollectionViewDataSource
 
 extension GroupViewController {
 
@@ -82,8 +82,49 @@ extension GroupViewController {
 
     // Give CollectionView footer view, and hold a reference of it
     override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+
         self.footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Footer", forIndexPath: indexPath) as! SearchResultReusableView
+
+        if self.isExhausted && self.groups.count == 0 {
+            self.footerView.showEmptyResultView()
+
+        } else if self.isExhausted && self.groups.count > 0 {
+            self.footerView.showSearchResultView()
+
+        } else {
+            self.footerView.showActivityIndicator()
+        }
+
         return self.footerView
+    }
+}
+
+extension GroupViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+
+        // the footerView is about 200 point height initially, for the convinence of design empty data view on stroyboard
+        // if need to show the empty result view, make it full screen
+        // if need to show the loading indicator, make it shorter -- 64 point height
+        if self.isExhausted && self.groups.count == 0 {
+            return TomoConst.UI.ViewSizeMiddleFullScreen
+        } else {
+            return TomoConst.UI.ViewSizeTopBarHeight
+        }
+    }
+}
+
+extension GroupViewController  {
+
+    // Fetch more contents when scroll down to bottom
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+
+        let contentHeight = scrollView.contentSize.height
+        let offsetY = scrollView.contentOffset.y
+
+        // trigger on the position of one screen height to bottom
+        if (contentHeight - TomoConst.UI.ScreenHeight) < offsetY {
+            loadData()
+        }
     }
 }
 
@@ -108,7 +149,19 @@ extension GroupViewController {
             if $0.result.isFailure {
                 self.isLoading = false
                 self.isExhausted = true
-                self.stopActivityIndicator()
+
+                // if the data is exhausted and we still have zero data
+                if self.groups.count == 0 {
+
+                    // TODO: this is shit, cause when the first time table footer get shown, 
+                    // the UICollectionViewDelegateFlowLayout won't be asked, so I have to get the
+                    // footer view size right here, may be I should use other stratigy
+                    self.footerView.frame = TomoConst.UI.ViewFrameMiddleFullScreen
+
+                    // show empty result view
+                    self.footerView.showEmptyResultView()
+                }
+
                 return
             }
 
@@ -118,19 +171,11 @@ extension GroupViewController {
                 self.page++
 
                 if groups.count < TomoConst.PageSize.Medium {
-                    self.stopActivityIndicator()
+                    self.footerView.showSearchResultView()
                 }
             }
 
             self.isLoading = false
-        }
-    }
-
-    private func stopActivityIndicator(withString: String? = nil) {
-        self.footerView.activityIndicator.stopAnimating()
-        self.footerView.searchResultLabel.text = withString
-        UIView.animateWithDuration(TomoConst.Duration.Short) {
-            self.footerView.searchResultLabel.alpha = 1.0
         }
     }
 
@@ -145,7 +190,7 @@ extension GroupViewController {
             let indexPath = NSIndexPath(forItem: i, inSection: 0)
             indexPaths.append(indexPath)
         }
-        
+
         self.collectionView!.insertItemsAtIndexPaths(indexPaths)
     }
 }
@@ -171,7 +216,11 @@ extension GroupViewController {
         // update collection view, insert the corresponding row in section 0 row 0
         self.collectionView?.performBatchUpdates({
             self.collectionView?.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
-        }, completion: nil)
+        }) { _ in
+            // reload the section to get right section footer
+            // TODO: This may cuase screen fliker
+            self.collectionView?.reloadSections(NSIndexSet(index: 0))
+        }
     }
 
     func didLeaveGroup(notification: NSNotification) {
@@ -187,7 +236,11 @@ extension GroupViewController {
         // update collection view, remove the corresponding row from section 0
         self.collectionView?.performBatchUpdates({
             self.collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
-        }, completion: nil)
+        }) { _ in
+            // reload the section to get right section footer
+            // TODO: This may cuase screen fliker
+            self.collectionView?.reloadSections(NSIndexSet(index: 0))
+        }
     }
 }
 

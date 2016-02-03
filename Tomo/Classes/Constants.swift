@@ -12,8 +12,8 @@ struct TomoConfig {
     struct Api {
 
         static let Protocol = "https"
-        static let Domain = "api.dev.genbatomo.com"
-//        static let Domain = "192.168.11.105"
+//        static let Domain = "api.dev.genbatomo.com"
+        static let Domain = "192.168.1.23"
 
         static var UrlString: String {
             return "\(self.Protocol)://\(self.Domain)"
@@ -97,8 +97,14 @@ struct TomoConst {
         static let StatusBarHeight = CGFloat(20)
         static let NavigationBarHeight = CGFloat(44)
         static let TopBarHeight = NavigationBarHeight + StatusBarHeight
+        static let BottomBarHeight = CGFloat(44)
 
         static let PlaceHolderColor = Util.UIColorFromRGB(0xCCCCCC, alpha: 1.0)
+
+        static let ViewSizeMiddleFullScreen = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.ScreenHeight - TomoConst.UI.TopBarHeight - TomoConst.UI.BottomBarHeight)
+        static let ViewSizeTopBarHeight = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.TopBarHeight)
+
+        static let ViewFrameMiddleFullScreen = CGRect(origin: CGPointZero, size: ViewSizeMiddleFullScreen)
     }
 
     struct Duration {

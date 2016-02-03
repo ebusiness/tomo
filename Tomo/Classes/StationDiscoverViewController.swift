@@ -294,4 +294,28 @@ final class SearchResultReusableView: UICollectionReusableView {
 
     @IBOutlet weak var searchResultLabel: UILabel!
 
+    @IBOutlet weak var emptyResultView: UIView!
+
+    func showActivityIndicator() {
+        self.activityIndicator.startAnimating()
+        UIView.animateWithDuration(TomoConst.Duration.Short) { _ in
+            self.emptyResultView.alpha = 0
+        }
+    }
+
+    func showSearchResultView() {
+        self.activityIndicator.stopAnimating()
+        UIView.animateWithDuration(TomoConst.Duration.Short) {
+            self.emptyResultView.alpha = 0.0
+            self.searchResultLabel.alpha = 1.0
+        }
+    }
+
+    func showEmptyResultView() {
+        self.activityIndicator.stopAnimating()
+        UIView.animateWithDuration(TomoConst.Duration.Short) { _ in
+            self.emptyResultView.alpha = 1.0
+            self.searchResultLabel.alpha = 0.0
+        }
+    }
 }

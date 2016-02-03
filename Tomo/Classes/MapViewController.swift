@@ -333,7 +333,10 @@ extension MapViewController {
 
         func findGroups(parameters: Router.Group.FindParameters) {
             Router.Group.Find(parameters: parameters).response {
-                if $0.result.isFailure { return }
+                if $0.result.isFailure {
+                    self.segmentedControl.enabled = true
+                    return
+                }
 
                 guard let groups:[GroupEntity] = GroupEntity.collection($0.result.value!) else { return }
 
@@ -356,7 +359,10 @@ extension MapViewController {
 
         func findFriends() {
             Router.User.Map.response {
-                if $0.result.isFailure { return }
+                if $0.result.isFailure {
+                    self.segmentedControl.enabled = true
+                    return
+                }
 
                 guard let users:[UserEntity] = UserEntity.collection($0.result.value!) else { return }
 

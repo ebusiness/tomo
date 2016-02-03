@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="MQa-Yi-9rd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="MQa-Yi-9rd">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -15,7 +15,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="7P9-qp-IRL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="XFX-mo-v5G">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="245"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -82,7 +82,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstItem="ATL-BJ-P5t" firstAttribute="centerY" secondItem="Mzf-DR-FQl" secondAttribute="centerY" id="mXt-TU-hiw"/>
                                 <constraint firstItem="QDL-vS-TXJ" firstAttribute="centerY" secondItem="Mzf-DR-FQl" secondAttribute="centerY" id="oTr-4O-rzw"/>
@@ -339,7 +339,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="321.5" height="300"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                                <rect key="frame" x="0.0" y="0.0" width="322" height="300"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="321.5" height="300"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash10" translatesAutoresizingMaskIntoConstraints="NO" id="taM-Cw-SWR">
@@ -682,7 +682,7 @@
             </objects>
             <point key="canvasLocation" x="1175" y="1312"/>
         </scene>
-        <!--现场一览-->
+        <!--我的现场-->
         <scene sceneID="aCp-Jx-zvH">
             <objects>
                 <collectionViewController id="lHJ-06-T7m" customClass="GroupViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
@@ -693,7 +693,7 @@
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="1" id="WVV-aG-Gb0">
                             <size key="itemSize" width="162" height="204"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="50" height="50"/>
+                            <size key="footerReferenceSize" width="50" height="200"/>
                             <inset key="sectionInset" minX="0.0" minY="2" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
@@ -745,27 +745,57 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Footer" id="JOV-Mo-GCv" customClass="SearchResultReusableView" customModule="tomo" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="270" width="320" height="50"/>
+                            <rect key="frame" x="0.0" y="270" width="320" height="200"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Ry1-8l-fGg">
-                                    <rect key="frame" x="150" y="15" width="20" height="20"/>
+                                    <rect key="frame" x="150" y="90" width="20" height="20"/>
                                 </activityIndicatorView>
-                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="搜索结果信息" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWX-Fq-5KZ">
-                                    <rect key="frame" x="109" y="15" width="102" height="21"/>
+                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已加载全部群组" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWX-Fq-5KZ">
+                                    <rect key="frame" x="100.5" y="90" width="119" height="20.5"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mPh-6k-Zjc">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="collaboration" translatesAutoresizingMaskIntoConstraints="NO" id="gBU-Ng-fnL">
+                                            <rect key="frame" x="112" y="4" width="96" height="96"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="96" id="MPb-EY-05n"/>
+                                                <constraint firstAttribute="height" constant="96" id="rLH-8N-QfD"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您还没有加入任何群组或车站" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="trq-sW-lBf">
+                                            <rect key="frame" x="49" y="108" width="221" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="gBU-Ng-fnL" firstAttribute="centerX" secondItem="mPh-6k-Zjc" secondAttribute="centerX" id="HbE-4j-as7"/>
+                                        <constraint firstItem="trq-sW-lBf" firstAttribute="centerX" secondItem="mPh-6k-Zjc" secondAttribute="centerX" id="Kru-Xi-tKD"/>
+                                        <constraint firstItem="gBU-Ng-fnL" firstAttribute="bottom" secondItem="mPh-6k-Zjc" secondAttribute="centerY" id="Qrk-gi-jef"/>
+                                        <constraint firstItem="trq-sW-lBf" firstAttribute="top" secondItem="gBU-Ng-fnL" secondAttribute="bottom" constant="8" id="UxQ-AC-Ykp"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="Ry1-8l-fGg" firstAttribute="centerY" secondItem="JOV-Mo-GCv" secondAttribute="centerY" id="MBa-pO-nTe"/>
+                                <constraint firstItem="mPh-6k-Zjc" firstAttribute="top" secondItem="JOV-Mo-GCv" secondAttribute="top" id="Tis-G2-y3Y"/>
+                                <constraint firstAttribute="bottom" secondItem="mPh-6k-Zjc" secondAttribute="bottom" id="WQi-sB-Wuu"/>
                                 <constraint firstItem="VWX-Fq-5KZ" firstAttribute="centerX" secondItem="JOV-Mo-GCv" secondAttribute="centerX" id="bKU-Ap-XGf"/>
+                                <constraint firstAttribute="trailing" secondItem="mPh-6k-Zjc" secondAttribute="trailing" id="e1p-T3-t8Y"/>
+                                <constraint firstItem="mPh-6k-Zjc" firstAttribute="leading" secondItem="JOV-Mo-GCv" secondAttribute="leading" id="fQJ-aM-edp"/>
                                 <constraint firstItem="Ry1-8l-fGg" firstAttribute="centerX" secondItem="JOV-Mo-GCv" secondAttribute="centerX" id="kDc-bI-UCx"/>
                                 <constraint firstItem="VWX-Fq-5KZ" firstAttribute="centerY" secondItem="JOV-Mo-GCv" secondAttribute="centerY" id="xHj-fF-IEk"/>
                             </constraints>
                             <connections>
                                 <outlet property="activityIndicator" destination="Ry1-8l-fGg" id="oj3-Sd-iXH"/>
+                                <outlet property="emptyResultView" destination="mPh-6k-Zjc" id="6Ad-YE-wG6"/>
                                 <outlet property="searchResultLabel" destination="VWX-Fq-5KZ" id="xhn-NC-2iK"/>
                             </connections>
                         </collectionReusableView>
@@ -774,7 +804,7 @@
                             <outlet property="delegate" destination="lHJ-06-T7m" id="n0a-xk-CjO"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="现场一览" id="nzy-Sg-POg">
+                    <navigationItem key="navigationItem" title="我的现场" id="nzy-Sg-POg">
                         <barButtonItem key="backBarButtonItem" title=" " id="tOj-ol-qDA"/>
                         <barButtonItem key="rightBarButtonItem" image="plus_math" id="ZGU-nH-15m">
                             <connections>
@@ -823,6 +853,7 @@
     <resources>
         <image name="avatar" width="80" height="80"/>
         <image name="back" width="25" height="25"/>
+        <image name="collaboration" width="32" height="32"/>
         <image name="create_new" width="25" height="25"/>
         <image name="group_cover_default" width="414" height="160"/>
         <image name="hearts" width="25" height="25"/>

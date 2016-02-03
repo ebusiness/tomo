@@ -22,19 +22,40 @@
                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="2kv-WH-okA">
                                     <rect key="frame" x="150" y="22" width="20" height="20"/>
                                 </activityIndicatorView>
-                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="没有消息记录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6BB-I4-GNS">
-                                    <rect key="frame" x="109" y="22" width="102" height="21"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWz-rb-Flg">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="read_message" translatesAutoresizingMaskIntoConstraints="NO" id="f5f-GM-PLD">
+                                            <rect key="frame" x="112" y="-64" width="96" height="96"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="96" id="Qgf-t3-VpA"/>
+                                                <constraint firstAttribute="width" constant="96" id="nAt-PK-G45"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您还没有收到任何消息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tzl-2C-eSK">
+                                            <rect key="frame" x="75" y="40" width="170" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="f5f-GM-PLD" firstAttribute="centerX" secondItem="kWz-rb-Flg" secondAttribute="centerX" id="Bne-tj-hvz"/>
+                                        <constraint firstItem="f5f-GM-PLD" firstAttribute="bottom" secondItem="kWz-rb-Flg" secondAttribute="centerY" id="Ofe-3s-mpp"/>
+                                        <constraint firstItem="Tzl-2C-eSK" firstAttribute="top" secondItem="f5f-GM-PLD" secondAttribute="bottom" constant="8" id="R42-6p-X2Q"/>
+                                        <constraint firstItem="Tzl-2C-eSK" firstAttribute="centerX" secondItem="kWz-rb-Flg" secondAttribute="centerX" id="tNI-nG-8bV"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstAttribute="trailing" secondItem="kWz-rb-Flg" secondAttribute="trailing" id="68o-Sw-CIW"/>
                                 <constraint firstItem="2kv-WH-okA" firstAttribute="centerX" secondItem="DaG-cb-9aH" secondAttribute="centerX" id="FOR-Wo-C4c"/>
-                                <constraint firstItem="6BB-I4-GNS" firstAttribute="centerY" secondItem="DaG-cb-9aH" secondAttribute="centerY" id="YQF-BD-rql"/>
+                                <constraint firstItem="kWz-rb-Flg" firstAttribute="leading" secondItem="DaG-cb-9aH" secondAttribute="leading" id="gEx-do-V5b"/>
                                 <constraint firstItem="2kv-WH-okA" firstAttribute="centerY" secondItem="DaG-cb-9aH" secondAttribute="centerY" id="jn4-lL-yO7"/>
-                                <constraint firstItem="6BB-I4-GNS" firstAttribute="centerX" secondItem="DaG-cb-9aH" secondAttribute="centerX" id="oBX-yC-zzT"/>
+                                <constraint firstAttribute="bottom" secondItem="kWz-rb-Flg" secondAttribute="bottom" id="rfI-6v-En6"/>
+                                <constraint firstItem="kWz-rb-Flg" firstAttribute="top" secondItem="DaG-cb-9aH" secondAttribute="top" id="ugG-N5-0VV"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -303,7 +324,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="infoLabel" destination="6BB-I4-GNS" id="PqR-z1-W3C"/>
+                        <outlet property="emptyResultView" destination="kWz-rb-Flg" id="FDh-2W-YQe"/>
                         <outlet property="loadingIndicator" destination="2kv-WH-okA" id="rYj-XM-sxc"/>
                         <segue destination="Jcn-dd-kJ4" kind="push" id="DQQ-9t-dCR"/>
                     </connections>
@@ -582,6 +603,7 @@
         <image name="delete_sign" width="25" height="25"/>
         <image name="group_cover_default" width="414" height="160"/>
         <image name="plus_math" width="25" height="25"/>
+        <image name="read_message" width="32" height="32"/>
         <image name="user_male_circle" width="25" height="25"/>
     </resources>
 </document>

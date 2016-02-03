@@ -12,8 +12,8 @@ final class LatestMessagesViewController: UITableViewController {
 
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
 
-    @IBOutlet weak var infoLabel: UILabel!
-
+    @IBOutlet weak var emptyResultView: UIView!
+    
     var messages = [MessageEntity]()
 
     var isLoading = false
@@ -198,6 +198,15 @@ extension LatestMessagesViewController {
 
             if $0.result.isFailure {
                 self.isLoading = false
+
+                if me.friendInvitations.count == 0 {
+
+                    self.tableView.tableFooterView?.frame = TomoConst.UI.ViewFrameMiddleFullScreen
+                    UIView.animateWithDuration(TomoConst.Duration.Short) {
+                        self.emptyResultView.alpha = 1.0
+                    }
+                }
+
                 return
             }
 
@@ -489,7 +498,7 @@ extension LatestMessagesViewController {
     }
     
     // This method is called for sync this view controller and accout model after my friend invitation was accepted
-    @objc private func didMyFriendInvitationAccepted(notification: NSNotification) {
+    func didMyFriendInvitationAccepted(notification: NSNotification) {
         
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
