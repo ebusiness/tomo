@@ -88,7 +88,7 @@ extension Router.Group {
 //            if let page = page {
 //                parameters["page"] = page
 //            }
-            parameters["page"] = page
+            parameters["page"] = page ?? 0
             parameters["type"] = type?.rawValue
             parameters["name"] = name
             if let after = after {
