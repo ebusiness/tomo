@@ -244,6 +244,7 @@ extension LatestMessagesViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSendMessage:", name: "didSendMessage", object: me)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishGroupChat:", name: "didFinishGroupChat", object: me)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishChat:", name: "didFinishChat", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didMyFriendInvitationAccepted:", name: "didMyFriendInvitationAccepted", object: me)
 
         // notification from background thread
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveFriendInvitation", name: "didReceiveFriendInvitation", object: me)
@@ -485,6 +486,30 @@ extension LatestMessagesViewController {
             }
         }
     }
+    
+    // This method is called for sync this view controller and accout model after my friend invitation was accepted
+    @objc private func didMyFriendInvitationAccepted(notification: NSNotification) {
+        
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let index = userInfo["indexOfRemovedInvitation"] as? Int else { return }
+        
+        // this method is called from background thread (because it fired from notification center)
+        // must switch to main thread for UI updating
+        gcd.sync(.Main) {
+            self.tableView.beginUpdates()
+            // if the number of my invitation is zero, remove the whole section of 0
+            // otherwise, remove the corresponding row in section 0
+            if me.friendInvitations.count > 0 {
+                self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)], withRowAnimation: .Automatic)
+            } else {
+                self.tableView.deleteSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+                // refresh the title of section 1
+                self.tableView.headerViewForSection(1)?.textLabel?.text = self.tableView(self.tableView, titleForHeaderInSection: 1)
+            }
+            self.tableView.endUpdates()
+        }
+    }
 
     // This method is called for sync this view controller and accout model after receive friend invitation
     func didReceiveFriendInvitation() {
@@ -506,7 +531,7 @@ extension LatestMessagesViewController {
             self.tableView.endUpdates()
         }
     }
-
+    
     // This method is called for sync this view controller and accout model after someone dump me
     func didFriendBreak(notification: NSNotification) {
 

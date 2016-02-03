@@ -244,15 +244,24 @@ extension Account {
 
         // my friends list must not contain the notification sender
         guard !friends.contains(notification.from.id) else { return }
+        
+        var postUserInfo = ["idOfRemovedMyInvitation": notification.from.id, "userEntityOfNewFriend": notification.from]
 
         // remove the user from my inviting list
         self.invitations?.remove(notification.from.id)
+        
+        // remove the user from the list of invited me
+        if let index = self.friendInvitations.indexOf({ $0.from.id == notification.from.id }) {
+            self.friendInvitations.removeAtIndex(index)
+            postUserInfo["indexOfRemovedInvitation"] = index
+        }
+        
         // asdd the user to my friends list
         self.friends?.insert(notification.from.id, atIndex: 0)
 
         self.notifications = self.notifications + 1
 
-        NSNotificationCenter.defaultCenter().postNotificationName("didMyFriendInvitationAccepted", object: self, userInfo: ["idOfRemovedMyInvitation": notification.from.id, "userEntityOfNewFriend": notification.from])
+        NSNotificationCenter.defaultCenter().postNotificationName("didMyFriendInvitationAccepted", object: self, userInfo: postUserInfo)
     }
 
     func didFriendInvitationRefused(notification: NSNotification) {

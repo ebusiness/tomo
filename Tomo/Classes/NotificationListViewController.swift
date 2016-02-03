@@ -145,14 +145,14 @@ extension NotificationListViewController {
 
     private func configEventObserver() {
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didMyFriendInvitationAccepted", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didMyFriendInvitationRefused", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didFriendBreak", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: "didMyFriendInvitationAccepted", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: "didMyFriendInvitationRefused", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: "didFriendBreak", object: me)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didReceivePost", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didPostLiked", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didPostCommented", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didPostBookmarked", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: "didReceivePost", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: "didPostLiked", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: "didPostCommented", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: "didPostBookmarked", object: me)
     }
     
     func didReceiveNotification(notification: NSNotification) {
