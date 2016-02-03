@@ -116,6 +116,10 @@ extension GroupViewController {
                 self.groups.appendContentsOf(groups)
                 self.appendCells(groups.count)
                 self.page++
+
+                if groups.count < TomoConst.PageSize.Medium {
+                    self.stopActivityIndicator()
+                }
             }
 
             self.isLoading = false

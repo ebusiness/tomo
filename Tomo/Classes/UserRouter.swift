@@ -10,10 +10,11 @@
 extension Router {
     
     enum User: APIRoute {
-        case FindByNickName(nickName: String)
+        case FindByNickName(nickName: String?)
         case FindById(id: String)
         case Posts(id: String, before: NSTimeInterval?)
         case Block(id: String)
+        case Map
         
         var path: String {
             switch self {
@@ -21,6 +22,7 @@ extension Router {
             case let FindById(id): return "/users/\(id)"
             case let Posts(id, _): return "/users/\(id)/posts"
             case Block: return "/blocks"
+            case Map: return "/map/users"
             }
         }
         
@@ -34,6 +36,7 @@ extension Router {
         var parameters: [String : AnyObject]? {
             switch self {
             case let FindByNickName(nickName):
+                guard let nickName = nickName else { return nil }
                 return ["nickName": nickName]
             case let Posts(_, before):
                 guard let before = before else { return nil }

@@ -31,7 +31,6 @@ class StationAnnotationView: AggregatableAnnotationView {
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = Palette.Pink.primaryColor.CGColor
         imageView.layer.cornerRadius = imageView.frame.width / 2
         addSubview(imageView)
 
@@ -39,9 +38,7 @@ class StationAnnotationView: AggregatableAnnotationView {
         numberLabel.textColor = UIColor.whiteColor()
         numberLabel.textAlignment = NSTextAlignment.Center
         numberLabel.font = UIFont.systemFontOfSize(10)
-        numberLabel.backgroundColor = Palette.Pink.primaryColor
 
-        numberBadge.backgroundColor = Palette.Pink.primaryColor
         numberBadge.frame = CGRect(x: 45, y: 0, width: 120, height: 20)
         numberBadge.layer.cornerRadius = numberBadge.frame.height / 2
     }
@@ -69,6 +66,16 @@ class StationAnnotationView: AggregatableAnnotationView {
             }
 
             imageView.sd_setImageWithURL(NSURL(string:  annotation.group.cover), placeholderImage: DefaultGroupImage)
+
+            if let groups = me.groups where groups.contains({ $0 == annotation.group.id }) {
+                imageView.layer.borderColor = Palette.Pink.primaryColor.CGColor
+                numberLabel.backgroundColor = Palette.Pink.primaryColor
+                numberBadge.backgroundColor = Palette.Pink.primaryColor
+            } else {
+                imageView.layer.borderColor = Palette.Green.primaryColor.CGColor
+                numberLabel.backgroundColor = Palette.Green.primaryColor
+                numberBadge.backgroundColor = Palette.Green.primaryColor
+            }
         }
     }
     

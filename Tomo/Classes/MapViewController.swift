@@ -32,6 +32,7 @@ final class MapViewController: UIViewController {
     var annotationsForTable: [AggregatableAnnotation]?
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewTopConstrian: NSLayoutConstraint!
     @IBOutlet weak var tableViewHeightConstranit: NSLayoutConstraint!
@@ -69,6 +70,8 @@ extension MapViewController {
         self.hideTableView()
 
         let segmentControl = sender as! UISegmentedControl
+
+        segmentControl.enabled = false
 
         switch segmentControl.selectedSegmentIndex {
         case 0:
@@ -346,11 +349,13 @@ extension MapViewController {
                 self.adjustRegion(self.allAnnotationMapView.annotations)
                 self.updateVisibleAnnotations()
                 self.lastLoadDate = NSDate()
+
+                self.segmentedControl.enabled = true
             }
         }
 
         func findFriends() {
-            Router.User.FindByNickName(nickName: "or").response {
+            Router.User.Map.response {
                 if $0.result.isFailure { return }
 
                 guard let users:[UserEntity] = UserEntity.collection($0.result.value!) else { return }
@@ -369,6 +374,8 @@ extension MapViewController {
                 self.adjustRegion(self.allAnnotationMapView.annotations)
                 self.updateVisibleAnnotations()
                 self.lastLoadDate = NSDate()
+
+                self.segmentedControl.enabled = true
             }
         }
 
@@ -568,7 +575,32 @@ extension MapViewController {
                 return false
             }
         }
-        
+
+//        // if there is an annotation stard for a friend, choose it show
+//        if let groupAnnotations = sortedAnnotations as? [StationAnnotation] {
+//
+//            if let groups = me.groups {
+//
+//                let temp = groupAnnotations.find {
+//                    return groups.contains($0.station.id)
+//                }
+//                
+//                if let groupAnnotation = temp {
+//                    return groupAnnotation
+//                }
+//            }
+//        }
+//
+//        // if there is an annotation stard for a friend, choose it show
+//        if let userAnnotations = sortedAnnotations as? [UserAnnotation] {
+//
+//            if let friends = me.friends {
+//                if let friendAnnotation = userAnnotations.find({ friends.contains($0.user.id) }) {
+//                    return friendAnnotation
+//                }
+//            }
+//        }
+
         return sortedAnnotations.first
     }
 

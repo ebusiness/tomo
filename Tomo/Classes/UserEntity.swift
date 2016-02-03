@@ -89,7 +89,7 @@ extension UserEntity {
     func fullName() -> String {
         let fName = firstName ?? ""
         let lName = lastName ?? ""
-        return "\(fName) \(lName)"
+        return "\(lName) \(fName) "
     }
 }
 // MARK: - station

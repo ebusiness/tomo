@@ -233,19 +233,19 @@ extension CommonMessageController {
             "从相册选择":{ (_) -> Void in
                 CameraController.sharedInstance.open(self, sourceType: .SavedPhotosAlbum, completion: self.pressAccessoryBlock)
             },
-            "语音输入":{ (_) -> Void in
-                if self.btn_voice == nil {
-                    self.setVoiceButton()
-                }
-                if self.btn_voice?.tag == 0{
-                    self.btn_voice?.tag = 1
-                    self.changeAccessoryButtonImage(1)
-                    self.inputToolbar!.contentView!.addSubview(self.btn_voice!)
-                    self.textView_text = self.inputToolbar!.contentView!.textView!.text
-                    self.inputToolbar!.contentView!.textView!.text = ""
-                    self.inputToolbar!.contentView!.textView!.resignFirstResponder()
-                }
-            }
+//            "语音输入":{ (_) -> Void in
+//                if self.btn_voice == nil {
+//                    self.setVoiceButton()
+//                }
+//                if self.btn_voice?.tag == 0{
+//                    self.btn_voice?.tag = 1
+//                    self.changeAccessoryButtonImage(1)
+//                    self.inputToolbar!.contentView!.addSubview(self.btn_voice!)
+//                    self.textView_text = self.inputToolbar!.contentView!.textView!.text
+//                    self.inputToolbar!.contentView!.textView!.text = ""
+//                    self.inputToolbar!.contentView!.textView!.resignFirstResponder()
+//                }
+//            }
             ])
     }
     

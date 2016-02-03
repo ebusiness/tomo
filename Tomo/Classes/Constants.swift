@@ -107,30 +107,11 @@ struct TomoConst {
         static let Long = 0.9
     }
 
-//    struct StroyBoard {
-//
-//        struct Home {
-//
-//            let name = "Home"
-//
-//            enum Scene: String {
-//                case PostList
-//                case PostDetail
-//                case PostCreate
-//            }
-//        }
-//
-//        struct Contacts {
-//
-//        }
-//
-//        struct Map {
-//
-//        }
-//
-//        struct
-//    }
-
+    struct PageSize {
+        static let Short = 10
+        static let Medium = 20
+        static let Long = 40
+    }
 }
 
 let MaxWidth: CGFloat = 500
@@ -156,7 +137,6 @@ class Constants: NSObject {
     class func groupCoverPath(groupId id: String) -> String {
         return "/groups/\(id)/cover.png"
     }
-
 }
 
 enum Palette: Int {

@@ -395,6 +395,7 @@ extension LatestMessagesViewController {
         // if the group/sender in my message list, update the message list
         if let index = indexInMessageList {
 
+            self.messages[index].type = message.type
             self.messages[index].content = message.content
             self.messages[index].createDate = message.createDate
 
@@ -605,6 +606,7 @@ extension LatestMessagesViewController {
         // if the group/sender in my message list, update the message list
         if let index = indexInMessageList {
 
+            self.messages[index].type = message.type
             self.messages[index].content = message.content
             self.messages[index].createDate = message.createDate
 

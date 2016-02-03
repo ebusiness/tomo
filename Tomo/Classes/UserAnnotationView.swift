@@ -31,7 +31,6 @@ class UserAnnotationView: AggregatableAnnotationView {
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = Palette.LightBlue.darkPrimaryColor.CGColor
         imageView.layer.cornerRadius = imageView.frame.width / 2
         addSubview(imageView)
 
@@ -39,9 +38,7 @@ class UserAnnotationView: AggregatableAnnotationView {
         numberLabel.textColor = UIColor.whiteColor()
         numberLabel.textAlignment = NSTextAlignment.Center
         numberLabel.font = UIFont.systemFontOfSize(10)
-        numberLabel.backgroundColor = Palette.Blue.primaryColor
 
-        numberBadge.backgroundColor = Palette.Blue.primaryColor
         numberBadge.frame = CGRect(x: 45, y: 0, width: 120, height: 20)
         numberBadge.layer.cornerRadius = numberBadge.frame.height / 2
     }
@@ -69,6 +66,16 @@ class UserAnnotationView: AggregatableAnnotationView {
             }
 
             imageView.sd_setImageWithURL(NSURL(string:  annotation.user.photo!), placeholderImage: DefaultAvatarImage)
+
+            if let friends = me.friends where friends.contains({ $0 == annotation.user.id }) {
+                imageView.layer.borderColor = Palette.Pink.primaryColor.CGColor
+                numberLabel.backgroundColor = Palette.Pink.primaryColor
+                numberBadge.backgroundColor = Palette.Pink.primaryColor
+            } else {
+                imageView.layer.borderColor = Palette.LightBlue.primaryColor.CGColor
+                numberLabel.backgroundColor = Palette.LightBlue.primaryColor
+                numberBadge.backgroundColor = Palette.LightBlue.primaryColor
+            }
         }
     }
 
