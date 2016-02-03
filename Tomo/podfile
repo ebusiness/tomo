@@ -9,5 +9,4 @@ target "Tomo" do
     pod 'UIActivityIndicator-for-SDWebImage'
     pod 'FCFileManager'
     pod 'MHVideoPhotoGallery'
-    pod 'DCAnimationKit'
 end

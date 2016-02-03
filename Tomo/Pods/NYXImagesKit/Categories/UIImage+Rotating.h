@@ -24,6 +24,5 @@
 -(UIImage*)verticalFlip;
 
 -(UIImage*)horizontalFlip;
-- (UIImage *)normalizedImage;
 
 @end

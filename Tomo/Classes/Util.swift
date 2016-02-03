@@ -47,27 +47,9 @@ class Util: NSObject {
         application.registerUserNotificationSettings( settings )
         application.registerForRemoteNotifications()
     }
-
-    // MARK: - SVProgress
-    
-    class func showTodo() {
-//        SVProgressHUD.showInfoWithStatus("TODO", maskType: .Clear)
-    }
-    
-    class func showError(error: NSError) {
-        SVProgressHUD.showErrorWithStatus(error.localizedDescription, maskType: .Clear)
-    }
     
     class func showInfo(title: String, maskType: SVProgressHUDMaskType = .Clear) {
         SVProgressHUD.showInfoWithStatus(title, maskType: maskType)
-    }
-    
-    class func showSuccess(title: String, maskType: SVProgressHUDMaskType = .None) {
-        SVProgressHUD.showSuccessWithStatus(title)
-    }
-    
-    class func showMessage(title: String, maskType: SVProgressHUDMaskType = .Clear) {
-        SVProgressHUD.showWithStatus(title, maskType: maskType)
     }
     
     class func showHUD(maskType: SVProgressHUDMaskType = .Clear) {
@@ -195,29 +177,6 @@ extension Util {
         }
 
     }
-    /**
-     find the different of dictionary
-     
-     - parameter leftValue: left dictionary
-     - parameter rightValue: right dictionary
-     
-     - returns: (added, removed)
-     */
-    class func diff(leftValue: [NSObject]?, rightValue: [NSObject]?) -> ([NSObject], [NSObject]) {
-        let addedItems = objectChanged(leftValue, newValue: rightValue)
-        let removedItems = objectChanged(rightValue, newValue: leftValue)
-        
-        return (addedItems, removedItems)
-    }
-    
-    class func objectChanged(oldValue: [NSObject]?, newValue: [NSObject]?) -> [NSObject] {
-        
-        guard let newValue = newValue else { return [] }
-        
-        return newValue.filter({ value in
-            !(oldValue ?? []).contains({$0 == value})
-        })
-    }
 
 }
 extension UIApplication {
@@ -277,5 +236,22 @@ extension UIImageView {
 extension CGFloat {
     static var almostZero: CGFloat {
         return 0.00001
+    }
+}
+
+extension UIImage {
+    /**
+     normalizedImage
+     
+     - returns: UIImage
+     */
+    func normalizedImage() -> UIImage {
+        if self.imageOrientation == .Up { return self }
+        
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        self.drawInRect(CGRectMake(0, 0, self.size.width, self.size.height))
+        let normalizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return normalizedImage
     }
 }
