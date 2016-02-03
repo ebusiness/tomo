@@ -55,6 +55,9 @@ final class MessageViewController: CommonMessageController {
         super.viewDidDisappear(animated)
         // open all message when leave
         Router.Message.FindByUserId(id: friend.id, before: nil).request
+
+        // tell accout model we finished talk
+        me.finishChat(self.friend)
     }
 
     deinit {
@@ -121,10 +124,10 @@ extension MessageViewController {
                 
                 self.collectionView!.reloadData()
                 self.scrollToBottomAnimated(false)
-                let newMessages = me.newMessages.filter { $0.from.id != self.friend.id }
-                if me.newMessages != newMessages {
-                    me.newMessages = newMessages
-                }
+//                let newMessages = me.newMessages.filter { $0.from.id != self.friend.id }
+//                if me.newMessages != newMessages {
+//                    me.newMessages = newMessages
+//                }
             } else {
                 self.prependRows(messages.count)
             }
@@ -180,10 +183,6 @@ extension MessageViewController: CommonMessageDelegate {
 extension MessageViewController {
     
     func didReceiveMessage(notification: NSNotification) {
-
-        print("=================")
-        print("runrunrun")
-        print("=================")
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }

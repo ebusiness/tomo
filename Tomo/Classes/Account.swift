@@ -165,6 +165,36 @@ extension Account {
     func sendMessage(message: MessageEntity) {
         NSNotificationCenter.defaultCenter().postNotificationName("didSendMessage", object: self, userInfo: ["messageEntityOfNewMessage": message])
     }
+
+    func finishChat(user: UserEntity) {
+
+        // remove all the message from this user in new messages list, cause we finished talk
+        me.newMessages = me.newMessages.filter {
+
+            // skip group message
+            guard $0.group == nil else { return true }
+
+            let from = ($0.from.id == me.id ? $0.to : $0.from)
+            return from.id != user.id
+        }
+
+        // tell every observer the changes: which user talked with
+        NSNotificationCenter.defaultCenter().postNotificationName("didFinishChat", object: self, userInfo: ["idOfTalkedFriend": user.id])
+    }
+
+    func finishGroupChat(group: GroupEntity) {
+
+        // remove all the message from this group in new messages list, cause we finished talk
+        me.newMessages = me.newMessages.filter {
+
+            // skip normal message
+            guard $0.group != nil else { return true }
+            return $0.group!.id != group.id
+        }
+
+        // tell every observer the changes: which user talked with
+        NSNotificationCenter.defaultCenter().postNotificationName("didFinishGroupChat", object: self, userInfo: ["idOfTalkedGroup": group.id])
+    }
 }
 
 // MARK: - Remote Notification

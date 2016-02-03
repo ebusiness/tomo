@@ -49,6 +49,9 @@ final class GroupChatViewController: CommonMessageController {
         super.viewDidDisappear(animated)
         // open all message when leave
         Router.GroupMessage.FindByGroupId(id: self.group.id, before: nil).request
+
+        // tell account model I finished talk
+        me.finishGroupChat(self.group)
     }
 
     deinit {
@@ -125,10 +128,10 @@ extension GroupChatViewController {
                     self.collectionView!.reloadData()
                     self.scrollToBottomAnimated(false)
                     
-                    let newMessages = me.newMessages.filter { $0.group?.id != self.group.id }
-                    if me.newMessages != newMessages {
-                        me.newMessages = newMessages
-                    }
+//                    let newMessages = me.newMessages.filter { $0.group?.id != self.group.id }
+//                    if me.newMessages != newMessages {
+//                        me.newMessages = newMessages
+//                    }
                 } else {
                     self.prependRows(messages.count)
                 }

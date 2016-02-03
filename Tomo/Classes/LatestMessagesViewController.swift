@@ -242,6 +242,8 @@ extension LatestMessagesViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didDeleteFriend:", name: "didDeleteFriend", object: me)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didLeaveGroup:", name: "didLeaveGroup", object: me)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSendMessage:", name: "didSendMessage", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishGroupChat:", name: "didFinishGroupChat", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishChat:", name: "didFinishChat", object: me)
 
         // notification from background thread
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveFriendInvitation", name: "didReceiveFriendInvitation", object: me)
@@ -391,6 +393,7 @@ extension LatestMessagesViewController {
             self.messages[index].content = message.content
             self.messages[index].createDate = message.createDate
 
+            // TODO: gonna blow up if I put this in the update block below, don't know why
             if me.friendInvitations.count == 0 {
                 self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Automatic)
             } else {
@@ -423,6 +426,59 @@ extension LatestMessagesViewController {
                 self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation: .Automatic)
             }
             self.tableView.endUpdates()
+        }
+    }
+
+    // This method is called for sync this view controller and accout model after finish chat in some group
+    func didFinishGroupChat(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let groupId = userInfo["idOfTalkedGroup"] as? String else { return }
+
+        // see if the deleted group is exist in chat message list
+        let indexInMessageList = self.messages.indexOf {
+
+            // skip normal message
+            guard let group = $0.group else { return false }
+
+            return group.id == groupId
+        }
+
+        if let index = indexInMessageList {
+
+            if me.friendInvitations.count == 0 {
+                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Automatic)
+            } else {
+                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: .Automatic)
+            }
+        }
+    }
+
+    // This method is called for sync this view controller and accout model after finish chat with someone
+    func didFinishChat(notification: NSNotification) {
+
+        // ensure the data needed
+        guard let userInfo = notification.userInfo else { return }
+        guard let userId = userInfo["idOfTalkedFriend"] as? String else { return }
+
+        // see if the deleted user is exist in chat message list
+        let indexInMessageList = self.messages.indexOf {
+
+            // skip group message
+            guard $0.group == nil else { return false }
+
+            let friendId = ($0.from.id == me.id ? $0.to.id : $0.from.id)
+            return friendId == userId
+        }
+
+        if let index = indexInMessageList {
+
+            if me.friendInvitations.count == 0 {
+                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Automatic)
+            } else {
+                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: .Automatic)
+            }
         }
     }
 
@@ -485,7 +541,6 @@ extension LatestMessagesViewController {
         }
     }
 
-
     func didReceiveMessage(notification: NSNotification) {
 
         // ensure the data needed
@@ -526,6 +581,7 @@ extension LatestMessagesViewController {
             // must switch to main thread for UI updating
             gcd.sync(.Main) {
 
+                // TODO: gonna blow up if I put this in the update block below, don't know why
                 if me.friendInvitations.count == 0 {
                     self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Automatic)
                 } else {

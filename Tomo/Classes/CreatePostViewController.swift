@@ -328,6 +328,8 @@ extension CreatePostViewController {
             default:
                 break
             }
+
+            self.postButton.enabled = true
         }
     }
     
@@ -362,6 +364,8 @@ extension CreatePostViewController {
     }
 
     @IBAction func post(sender: AnyObject) {
+
+        self.postButton.enabled = false
         
         if (collectionView.indexPathsForSelectedItems() ?? []).count > 0 {
             self.uploadMeida(postContent)
@@ -527,7 +531,6 @@ extension CreatePostViewController: UICollectionViewDataSource {
         
         return cell
     }
-    
 }
 
 // MARK: - UICollectionView Delegate
