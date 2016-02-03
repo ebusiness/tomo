@@ -28,6 +28,15 @@ final class NotificationListViewController: UITableViewController {
         
         self.configEventObserver()
     }
+
+    override func viewWillDisappear(animated: Bool) {
+        // let account model marks all notification checked
+        me.checkAllNotification()
+    }
+
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
 }
 
 // MARK: UIScrollView Delegate
@@ -103,10 +112,6 @@ extension NotificationListViewController {
                 return
             }
             
-            me.notifications = 0
-
-            self.navigationController?.tabBarItem.badgeValue = nil
-            
             if let loadNotifications:[NotificationEntity] = NotificationEntity.collection($0.result.value!) {
                 self.notifications += loadNotifications
                 self.appendRows(loadNotifications.count)
@@ -140,14 +145,14 @@ extension NotificationListViewController {
 
     private func configEventObserver() {
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendAccepted.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendRefused.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendBreak.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didMyFriendInvitationAccepted", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didMyFriendInvitationRefused", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didFriendBreak", object: me)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostNew.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostLiked.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostCommented.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostBookmarked.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didReceivePost", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didPostLiked", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didPostCommented", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didPostBookmarked", object: me)
     }
     
     func didReceiveNotification(notification: NSNotification) {

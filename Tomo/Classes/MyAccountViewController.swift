@@ -63,14 +63,6 @@ final class MyAccountViewController: UITableViewController {
     }
 
     override func viewWillAppear(animated: Bool) {
-
-        if me.notifications > 0 {
-            badgeView.text = String(me.notifications)
-            notificationCell.accessoryView = badgeView
-        } else {
-            notificationCell.accessoryView = self.notificationCellAccessoryView
-        }
-
         self.configNavigationBarByScrollPosition()
     }
 
@@ -82,6 +74,10 @@ final class MyAccountViewController: UITableViewController {
                 rvc.dismissViewControllerAnimated(true, completion: nil)
             }
         }
+    }
+
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
 
@@ -176,6 +172,13 @@ extension MyAccountViewController {
         if let stationName = me.primaryStation?.name {
             self.primaryStation.text = stationName
         }
+
+        if me.notifications > 0 {
+            self.badgeView.text = String(me.notifications)
+            self.notificationCell.accessoryView = self.badgeView
+        } else {
+            self.notificationCell.accessoryView = self.notificationCellAccessoryView
+        }
     }
 
     private func configNavigationBarByScrollPosition() {
@@ -206,21 +209,38 @@ extension MyAccountViewController {
     
     private func configEventObserver() {
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendAccepted.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendRefused.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendBreak.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didMyFriendInvitationAccepted", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didMyFriendInvitationRefused", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didFriendBreak", object: me)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostNew.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostLiked.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostCommented.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostBookmarked.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didReceivePost", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didPostLiked", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didPostCommented", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didPostBookmarked", object: me)
+
+        // this event is not come from background thread
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadge:", name: "didCheckAllNotification", object: me)
     }
     
-    func didReceiveNotification(notification: NSNotification) {
+    func updateBadgeInMainTheard(notification: NSNotification) {
         
         gcd.sync(.Main) {
-            self.badgeView.text = String(me.notifications + 1)
+            if me.notifications > 0 {
+                self.badgeView.text = String(me.notifications)
+                self.notificationCell.accessoryView = self.badgeView
+            } else {
+                self.notificationCell.accessoryView = self.notificationCellAccessoryView
+            }
+        }
+    }
+
+    func updateBadge(notification: NSNotification) {
+
+        if me.notifications > 0 {
+            self.badgeView.text = String(me.notifications)
             self.notificationCell.accessoryView = self.badgeView
+        } else {
+            self.notificationCell.accessoryView = self.notificationCellAccessoryView
         }
     }
 }

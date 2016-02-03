@@ -14,23 +14,39 @@ class SettingNavigationController: UINavigationController {
 
         super.init(coder: aDecoder)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: ListenerEvent.FriendAccepted.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: ListenerEvent.FriendRefused.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: ListenerEvent.FriendBreak.rawValue, object: nil)
+        // attach event observer when init, so they start to work as TabController initiated. do this in viewDidLoad will be too late.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadgeInMainThread", name: "didMyFriendInvitationAccepted", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadgeInMainThread", name: "didMyFriendInvitationRefused", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadgeInMainThread", name: "didFriendBreak", object: me)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: ListenerEvent.PostNew.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: ListenerEvent.PostLiked.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: ListenerEvent.PostCommented.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: ListenerEvent.PostBookmarked.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadgeInMainThread", name: "didReceivePost", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadgeInMainThread", name: "didPostLiked", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadgeInMainThread", name: "didPostCommented", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadgeInMainThread", name: "didPostBookmarked", object: me)
+
+        // this event is not come from background thread
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didCheckAllNotification", object: me)
     }
 
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
-    func updateTabBarItemBadge() {
+    func updateTabBarItemBadgeInMainThread() {
         gcd.sync(.Main) {
-            self.tabBarItem.badgeValue = String(me.notifications + 1)
+            if me.notifications > 0 {
+                self.tabBarItem.badgeValue = String(me.notifications)
+            } else {
+                self.tabBarItem.badgeValue = nil
+            }
+        }
+    }
+
+    func updateTabBarItemBadge() {
+        if me.notifications > 0 {
+            self.tabBarItem.badgeValue = String(me.notifications)
+        } else {
+            self.tabBarItem.badgeValue = nil
         }
     }
 }

@@ -67,8 +67,14 @@ class Account: UserEntity {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFriendInvitationAccepted:", name: ListenerEvent.FriendAccepted.rawValue, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFriendInvitationRefused:", name: ListenerEvent.FriendRefused.rawValue, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFriendBroke:", name: ListenerEvent.FriendBreak.rawValue, object: nil)
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.Message.rawValue, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.GroupMessage.rawValue, object: nil)
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceivePost:", name: ListenerEvent.PostNew.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didPostLiked:", name: ListenerEvent.PostLiked.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didPostCommented:", name: ListenerEvent.PostCommented.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didPostBookmarked:", name: ListenerEvent.PostBookmarked.rawValue, object: nil)
     }
 
     deinit {
@@ -195,6 +201,13 @@ extension Account {
         // tell every observer the changes: which user talked with
         NSNotificationCenter.defaultCenter().postNotificationName("didFinishGroupChat", object: self, userInfo: ["idOfTalkedGroup": group.id])
     }
+
+    func checkAllNotification() {
+        me.notifications = 0
+
+        // tell every observer the changes: all notification checked
+        NSNotificationCenter.defaultCenter().postNotificationName("didCheckAllNotification", object: self, userInfo: nil)
+    }
 }
 
 // MARK: - Remote Notification
@@ -237,6 +250,8 @@ extension Account {
         // asdd the user to my friends list
         self.friends?.insert(notification.from.id, atIndex: 0)
 
+        self.notifications = self.notifications + 1
+
         NSNotificationCenter.defaultCenter().postNotificationName("didMyFriendInvitationAccepted", object: self, userInfo: ["idOfRemovedMyInvitation": notification.from.id, "userEntityOfNewFriend": notification.from])
     }
 
@@ -255,6 +270,8 @@ extension Account {
 
         // remove the user from my inviting list
         self.invitations?.remove(notification.from.id)
+
+        self.notifications = self.notifications + 1
 
         NSNotificationCenter.defaultCenter().postNotificationName("didMyFriendInvitationRefused", object: self, userInfo: ["idOfRemovedMyInvitation": notification.from.id])
     }
@@ -275,6 +292,8 @@ extension Account {
         // remove the user from my inviting list
         self.friends?.remove(notification.from.id)
 
+        self.notifications = self.notifications + 1
+
         NSNotificationCenter.defaultCenter().postNotificationName("didFriendBreak", object: self, userInfo: ["userIdOfBrokenFriend": notification.from.id])
     }
 
@@ -290,6 +309,42 @@ extension Account {
         self.newMessages.push(message)
 
         NSNotificationCenter.defaultCenter().postNotificationName("didReceiveMessage", object: self, userInfo: ["messageEntityOfNewMessage": message])
+    }
+
+    func didReceivePost(notification: NSNotification) {
+
+        self.notifications = self.notifications + 1
+
+        // TODO: I haven't do anything about this event yet!
+        // just relay it and tell setting screen update it's badge
+        NSNotificationCenter.defaultCenter().postNotificationName("didReceivePost", object: self, userInfo: nil)
+    }
+
+    func didPostLiked(notification: NSNotification) {
+
+        self.notifications = self.notifications + 1
+
+        // TODO: I haven't do anything about this event yet!
+        // just relay it and tell setting screen update it's badge
+        NSNotificationCenter.defaultCenter().postNotificationName("didPostLiked", object: self, userInfo: nil)
+    }
+
+    func didPostCommented(notification: NSNotification) {
+
+        self.notifications = self.notifications + 1
+
+        // TODO: I haven't do anything about this event yet!
+        // just relay it and tell setting screen update it's badge
+        NSNotificationCenter.defaultCenter().postNotificationName("didPostCommented", object: self, userInfo: nil)
+    }
+
+    func didPostBookmarked(notification: NSNotification) {
+
+        self.notifications = self.notifications + 1
+
+        // TODO: I haven't do anything about this event yet!
+        // just relay it and tell setting screen update it's badge
+        NSNotificationCenter.defaultCenter().postNotificationName("didPostBookmarked", object: self, userInfo: nil)
     }
 }
 
