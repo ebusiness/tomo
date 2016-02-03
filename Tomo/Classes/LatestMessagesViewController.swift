@@ -266,6 +266,8 @@ extension LatestMessagesViewController {
             self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)], withRowAnimation: .Automatic)
         } else {
             self.tableView.deleteSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+            // refresh the title of section 1
+            self.tableView.headerViewForSection(1)?.textLabel?.text = self.tableView(self.tableView, titleForHeaderInSection: 1)
         }
         self.tableView.endUpdates()
     }
@@ -284,6 +286,8 @@ extension LatestMessagesViewController {
             self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)], withRowAnimation: .Automatic)
         } else {
             self.tableView.deleteSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+            // refresh the title of section 1
+            self.tableView.headerViewForSection(1)?.textLabel?.text = self.tableView(self.tableView, titleForHeaderInSection: 1)
         }
         self.tableView.endUpdates()
     }
@@ -493,6 +497,8 @@ extension LatestMessagesViewController {
             // otherwise, insert the corresponding row in section 0 row0
             self.tableView.beginUpdates()
             if me.friendInvitations.count == 1 {
+                // refresh the title of section 0(message section)
+                self.tableView.headerViewForSection(0)?.textLabel?.text = self.tableView(self.tableView, titleForHeaderInSection: 1)
                 self.tableView.insertSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
             } else {
                 self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
