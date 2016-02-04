@@ -762,7 +762,7 @@ final class MessageTableViewCell: UITableViewCell {
     }
 
     private func getMediaString()-> String {
-        let msg = self.message.from.id == me.id ? "您发送了" : "发给您"
+        let msg = self.message.from.id == me.id ? "您发送了" : "给您发送了"
         switch self.message.type {
         case .photo:
             return "\(msg)一张图片"
@@ -821,7 +821,7 @@ final class GroupMessageTableViewCell: UITableViewCell {
     }
 
     private func getMediaString()-> String {
-        let msg = self.message.from.id == me.id ? "您发送了" : "发给您"
+        let msg = self.message.from.id == me.id ? "您发送了" : "给您发送了"
         switch self.message.type {
         case .photo:
             return "\(msg)一张图片"

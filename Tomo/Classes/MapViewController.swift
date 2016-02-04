@@ -331,8 +331,8 @@ extension MapViewController {
 
     private func loadContents() {
 
-        func findGroups(parameters: Router.Group.FindParameters) {
-            Router.Group.Find(parameters: parameters).response {
+        func findGroups(parameters: Router.Group.MapParameters) {
+            Router.Group.Map(parameters: parameters).response {
                 if $0.result.isFailure {
                     self.segmentedControl.enabled = true
                     return
@@ -388,11 +388,8 @@ extension MapViewController {
         self.allAnnotationMapView.removeAnnotations(self.allAnnotationMapView.annotations)
         self.mapView.removeAnnotations(self.mapView.annotations)
 
-        let lastTimeStamp = Defaults["mapLastTimeStamp"].date ?? NSDate()
-
-        var parameters = Router.Group.FindParameters(category: .all)
+        var parameters = Router.Group.MapParameters(category: .all)
         parameters.type = .station
-        parameters.after = lastTimeStamp.timeIntervalSince1970
 
         switch self.mode {
         case .HotStation:

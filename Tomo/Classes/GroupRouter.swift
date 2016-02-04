@@ -19,6 +19,8 @@ extension Router {
         
         case Join(id: String)
         case Leave(id: String)
+
+        case Map(parameters: MapParameters)
         
         var path: String {
             switch self {
@@ -30,6 +32,8 @@ extension Router {
                 return "/groups/\(id)/leave"
             case let FindPosts(id, _):
                 return "/groups/\(id)/posts"
+            case Map:
+                return "/map/groups"
             default:
                 return "/groups"
             }
@@ -56,6 +60,8 @@ extension Router {
                 if let before = before {
                     return ["before": String(before)]
                 }
+            case let Map(parameters):
+                return parameters.getParameters()
             default:
                 return nil
             }
@@ -100,7 +106,32 @@ extension Router.Group {
             return parameters
         }
     }
-    
+
+    struct MapParameters {
+
+        var category: Category
+        var type: Type?
+        var name: String?
+        var coordinate: [Double]?
+        var hasMembers: Bool?
+
+        init(category: Category) {
+            self.category = category
+        }
+
+        func getParameters() -> [String: AnyObject] {
+            var parameters = [String: AnyObject]()
+
+            parameters["category"] = category.rawValue
+            parameters["type"] = type?.rawValue
+            parameters["name"] = name
+            parameters["coordinate"] = coordinate
+            parameters["hasMembers"] = hasMembers
+
+            return parameters
+        }
+    }
+
     struct CreateParameters {
         var name: String
         var introduction: String?, address: String?, cover: String?, members: [String]?
