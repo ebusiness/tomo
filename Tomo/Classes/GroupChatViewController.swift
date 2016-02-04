@@ -176,7 +176,11 @@ extension GroupChatViewController: CommonMessageDelegate {
         
         Router.GroupMessage.SendByGroupId(id: self.group.id, type: type, content: text).response {
             if $0.result.isSuccess {
-                me.sendMessage(MessageEntity($0.result.value!))
+
+                let newMessage = MessageEntity($0.result.value!)
+                newMessage.group = self.group
+                me.sendMessage(newMessage)
+                
                 JSQSystemSoundPlayer.jsq_playMessageSentSound()
                 self.finishSendingMessageAnimated(true)
             }

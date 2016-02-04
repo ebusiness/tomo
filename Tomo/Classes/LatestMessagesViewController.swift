@@ -200,11 +200,7 @@ extension LatestMessagesViewController {
                 self.isLoading = false
 
                 if me.friendInvitations.count == 0 {
-
-                    self.tableView.tableFooterView?.frame = TomoConst.UI.ViewFrameMiddleFullScreen
-                    UIView.animateWithDuration(TomoConst.Duration.Short) {
-                        self.emptyResultView.alpha = 1.0
-                    }
+                    self.showEmptyResultView()
                 }
 
                 return
@@ -237,6 +233,20 @@ extension LatestMessagesViewController {
         tableView.beginUpdates()
         tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
         tableView.endUpdates()
+    }
+
+    private func showEmptyResultView() {
+        self.tableView.tableFooterView?.frame = TomoConst.UI.ViewFrameMiddleFullScreen
+        UIView.animateWithDuration(TomoConst.Duration.Short) {
+            self.emptyResultView.alpha = 1.0
+        }
+    }
+
+    private func hideEmptyResultView() {
+        self.tableView.tableFooterView?.frame = TomoConst.UI.ViewFrameTopBarHeight
+        UIView.animateWithDuration(TomoConst.Duration.Short) {
+            self.emptyResultView.alpha = 0.0
+        }
     }
 }
 
@@ -280,6 +290,10 @@ extension LatestMessagesViewController {
             self.tableView.headerViewForSection(1)?.textLabel?.text = self.tableView(self.tableView, titleForHeaderInSection: 1)
         }
         self.tableView.endUpdates()
+
+        if me.friendInvitations.count == 0 && self.messages.count == 0 {
+            self.showEmptyResultView()
+        }
     }
 
     // This method is called for sync this view controller and accout model after accept invitation
@@ -300,6 +314,10 @@ extension LatestMessagesViewController {
             self.tableView.headerViewForSection(1)?.textLabel?.text = self.tableView(self.tableView, titleForHeaderInSection: 1)
         }
         self.tableView.endUpdates()
+
+        if me.friendInvitations.count == 0 && self.messages.count == 0 {
+            self.showEmptyResultView()
+        }
     }
 
     // This method is called for sync this view controller and accout model after delete friend
@@ -335,6 +353,10 @@ extension LatestMessagesViewController {
             self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)], withRowAnimation: .Automatic)
         }
         self.tableView.endUpdates()
+
+        if me.friendInvitations.count == 0 && self.messages.count == 0 {
+            self.showEmptyResultView()
+        }
     }
 
     func didLeaveGroup(notification: NSNotification) {
@@ -368,6 +390,10 @@ extension LatestMessagesViewController {
             self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)], withRowAnimation: .Automatic)
         }
         self.tableView.endUpdates()
+
+        if me.friendInvitations.count == 0 && self.messages.count == 0 {
+            self.showEmptyResultView()
+        }
     }
 
     // This method is called for sync this view controller and accout model after sent message
@@ -442,6 +468,8 @@ extension LatestMessagesViewController {
             }
             self.tableView.endUpdates()
         }
+
+        self.hideEmptyResultView()
     }
 
     // This method is called for sync this view controller and accout model after finish chat in some group
@@ -539,6 +567,8 @@ extension LatestMessagesViewController {
                 self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
             }
             self.tableView.endUpdates()
+
+            self.hideEmptyResultView()
         }
     }
     
@@ -579,6 +609,10 @@ extension LatestMessagesViewController {
                 self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: .Automatic)
             }
             self.tableView.endUpdates()
+
+            if me.friendInvitations.count == 0 && self.messages.count == 0 {
+                self.showEmptyResultView()
+            }
         }
     }
 
@@ -642,6 +676,7 @@ extension LatestMessagesViewController {
                 }
                 self.tableView.endUpdates()
 
+                self.hideEmptyResultView()
             }
 
             // or insert into my message list at top
@@ -662,6 +697,8 @@ extension LatestMessagesViewController {
                     self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation: .Automatic)
                 }
                 self.tableView.endUpdates()
+
+                self.hideEmptyResultView()
             }
         }
 

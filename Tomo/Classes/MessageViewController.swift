@@ -167,7 +167,9 @@ extension MessageViewController: CommonMessageDelegate {
                 done?()
             } else {
 
-                me.sendMessage(MessageEntity($0.result.value!))
+                let newMessage = MessageEntity($0.result.value!)
+                newMessage.to = self.friend
+                me.sendMessage(newMessage)
 
                 JSQSystemSoundPlayer.jsq_playMessageSentSound()
                 self.finishSendingMessageAnimated(true)
