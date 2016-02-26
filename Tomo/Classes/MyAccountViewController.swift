@@ -123,7 +123,7 @@ extension MyAccountViewController {
     }
 
     @IBAction func profileDidFinishEdit(segue: UIStoryboardSegue) {
-        self.configDisplay()
+//        self.configDisplay()
     }
 }
 
@@ -218,8 +218,9 @@ extension MyAccountViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didPostCommented", object: me)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didPostBookmarked", object: me)
 
-        // this event is not come from background thread
+        // these events is not come from background thread
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadge:", name: "didCheckAllNotification", object: me)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateProfile:", name: "didEditProfile", object: nil)
     }
     
     func updateBadgeInMainTheard(notification: NSNotification) {
@@ -242,6 +243,10 @@ extension MyAccountViewController {
         } else {
             self.notificationCell.accessoryView = self.notificationCellAccessoryView
         }
+    }
+
+    func updateProfile(notification: NSNotification) {
+        self.configDisplay()
     }
 }
 

@@ -376,7 +376,12 @@ extension MyAccountEditViewController {
 
         Router.Setting.UpdateUserInfo(parameters: parameters).response {
             if $0.result.isFailure { return }
+
+            // TODO: this is wrong! 'me' was completly replaced by new object!
+            // and everyObserver listening on the replaced 'me' will fail !!!!
             me = Account($0.result.value!)
+
+            me.editProfile()
             self.configDisplay()
         }
     }

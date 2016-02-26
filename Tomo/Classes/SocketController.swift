@@ -24,7 +24,6 @@ final class SocketController {
             guard let socketEvent = ListenerEvent(rawValue: $0.event) else {return}
 
             gcd.async(.High) { () -> () in
-//                socketEvent.receive(result)
                 socketEvent.relayToNoticationCenter(result)
             }
         }

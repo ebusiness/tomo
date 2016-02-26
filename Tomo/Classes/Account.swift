@@ -208,6 +208,11 @@ extension Account {
         // tell every observer the changes: all notification checked
         NSNotificationCenter.defaultCenter().postNotificationName("didCheckAllNotification", object: self, userInfo: nil)
     }
+
+    func editProfile() {
+        // tell every observer the changes: my profile changed
+        NSNotificationCenter.defaultCenter().postNotificationName("didEditProfile", object: self, userInfo: nil)
+    }
 }
 
 // MARK: - Remote Notification
