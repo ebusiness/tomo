@@ -1,6 +1,6 @@
 PODS:
   - FCFileManager (1.0.17)
-  - JSQMessagesViewController (7.2.0):
+  - JSQMessagesViewController (7.3.4):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
   - Masonry (0.6.3)
@@ -28,7 +28,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   FCFileManager: 8bfc931ce2a6223676147e9baf0e8a65c691eca6
-  JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5
+  JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
   MHVideoPhotoGallery: aa36cdd9b75c6d5a19b48005cddb9b730c2e27e8
@@ -40,4 +40,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 147483fe8e9ee680176df71f4e700aa464100e56
 
-COCOAPODS: 1.0.0.beta.2
+COCOAPODS: 1.1.1
