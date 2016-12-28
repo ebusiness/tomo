@@ -172,8 +172,3 @@ S3.swift
 
 #Carthage
 Tomo/Carthage/*
-!Tomo/Carthage/Build
-Tomo/Carthage/Build/*
-!Tomo/Carthage/Build/iOS
-Tomo/Carthage/Build/iOS/*
-!Tomo/Carthage/Build/iOS/*.framework
