@@ -480,21 +480,21 @@ extension PostDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         let cell = collectionView.cellForItem(at: indexPath) as! SingleImageCollectionViewCell
-        let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.imageViewerNavigationBarShown)
-
-        gallery?.galleryItems = self.post.images!.map { MHGalleryItem(url: $0, galleryType: .image) }
-        gallery?.presentationIndex = indexPath.item
-        gallery?.presentingFromImageView = cell.imageView
-
-        gallery?.uiCustomization.showOverView = false
-        gallery?.uiCustomization.useCustomBackButtonImageOnImageViewer = false
-        gallery?.uiCustomization.showMHShareViewInsteadOfActivityViewController = false
-
-        gallery?.finishedCallback = { (currentIndex, image, transition, viewMode) -> Void in
-            gallery?.dismiss(animated: true, dismiss: cell.imageView, completion: nil)
-        }
-
-        present(gallery, animated: true, completion: nil)
+//        let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.imageViewerNavigationBarShown)
+//
+//        gallery?.galleryItems = self.post.images!.map { MHGalleryItem(url: $0, galleryType: .image) }
+//        gallery?.presentationIndex = indexPath.item
+//        gallery?.presentingFromImageView = cell.imageView
+//
+//        gallery?.uiCustomization.showOverView = false
+//        gallery?.uiCustomization.useCustomBackButtonImageOnImageViewer = false
+//        gallery?.uiCustomization.showMHShareViewInsteadOfActivityViewController = false
+//
+//        gallery?.finishedCallback = { (currentIndex, image, transition, viewMode) -> Void in
+//            gallery?.dismiss(animated: true, dismiss: cell.imageView, completion: nil)
+//        }
+//
+//        present(gallery, animated: true, completion: nil)
     }
 
     // one image on one cell

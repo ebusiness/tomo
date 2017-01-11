@@ -159,18 +159,24 @@ extension CommonMessageController {
         get {
             return { (image,videoPath) ->() in
                 let fileName = NSUUID().uuidString + (videoPath == nil ? ".png" : ".mp4" )
-                let localURL = FCFileManager.urlForItem(atPath: fileName)
+                
+                let localURL = Util.getDocumentsURL(forFile: fileName)
+                
                 var remotePath: String!
                 var messaeType: MessageType!
                 
                 if let path = videoPath {
-                    FCFileManager.copyItem(atPath: path, toPath: localURL?.path)
+                    
+                    if !FileManager.default.fileExists(atPath: localURL.path) {
+                        try? FileManager.default.copyItem(atPath: path, toPath: localURL.path)
+                    }
+                    
                     messaeType = .video
                     
                 } else {
                     
                     let image = image!.scale(toFit: CGSize(width: MaxWidth, height: MaxWidth))
-                    image?.save(to: localURL!)
+                    image?.save(to: localURL)
                     
                     messaeType = .photo
                 }
@@ -188,7 +194,7 @@ extension CommonMessageController {
                 cell.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[progressView(==1)]-0-|", options: [], metrics: nil, views: ["progressView" : progressView]))
                 cell.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[progressView(==messageBubbleContainerView)]-0-[avatarContainerView]", options: [], metrics: nil, views: ["messageBubbleContainerView" : cell.messageBubbleContainerView!, "progressView" : progressView,"avatarContainerView":cell.avatarContainerView!]))
                 
-                S3Controller.uploadFile(localPath: localURL!.path, remotePath: remotePath, done: { (error) -> Void in
+                S3Controller.uploadFile(localPath: localURL.path, remotePath: remotePath, done: { (error) -> Void in
                     self.delegate.sendMessage(type: messaeType, text: fileName){ ()->() in
                         progressView.removeFromSuperview()
                     }
@@ -428,21 +434,26 @@ extension CommonMessageController {
                 })
             } else {
                 
-                showGalleryView(indexPath: indexPath, message: message)
+//                showGalleryView(indexPath: indexPath, message: message)
             }
         case .voice:
-            if FCFileManager.existsItem(atPath: content) {
-                VoiceController.instance.playOrStop(path: FCFileManager.urlForItem(atPath: content).path)
+            var fileURL = Util.getDocumentsURL(forFile: content)
+            
+            if FileManager.default.fileExists(atPath: fileURL.path) {
+                VoiceController.instance.playOrStop(path: fileURL.path)
             } else {
                 Util.showHUD()
-//                Alamofire.SessionManager.default.download(.GET, message.type.fullPath(content)) { (tempUrl, res) -> (NSURL) in
-//                    return FCFileManager.urlForItemAtPath(content)
-//                    }.response { (_, _, _, error) -> Void in
-//                        Util.dismissHUD()
-//                        if error == nil {
-//                            VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(content).path!)
-//                        }
-//                }
+                
+                let destination: DownloadRequest.DownloadFileDestination = { _, _ in
+                    return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+                }
+                
+                Alamofire.SessionManager.default.download(message.type.fullPath(name: content), to: destination).response { res in
+                    Util.dismissHUD()
+                    if res.error == nil {
+                        VoiceController.instance.playOrStop(path: fileURL.absoluteString)
+                    }
+                }
             }
         default:
             break
@@ -471,65 +482,6 @@ extension CommonMessageController {
         let views = ["badgeView" : badgeView]
         cell.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[badgeView(==\(width))]-\(avatarHeight-width)-|", options: [], metrics: nil, views: views))
         cell.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[badgeView(==\(width))]-\(avatarHeight+voiceBackgroundImageWidth)-|", options: [], metrics: nil, views:views))
-    }
-    
-    func showGalleryView(indexPath: IndexPath, message: JSQMessageEntity) {
-        
-        guard let
-            cell = collectionView!.cellForItem(at: indexPath) as? JSQMessagesCollectionViewCell,
-            let imageView = cell.mediaView as? UIImageView
-            else { return }
-        
-        var items = [MHGalleryItem]()
-        var index = 0
-        
-        for item in self.messages {
-            
-            guard let
-                mediaItem = item.media() as? JSQMediaItem, item.type == .photo || item.type == .video
-                else { continue }
-            
-            var galleryItem: MHGalleryItem!
-            if let brokenImage = item.brokenImage {
-                galleryItem = MHGalleryItem(image: brokenImage)
-                items.append(galleryItem)
-                continue
-            }
-            if self.messages[indexPath.item] == item {
-                index = items.count
-            }
-            if mediaItem is JSQPhotoMediaItem {
-                galleryItem = MHGalleryItem(image: ( mediaItem as! JSQPhotoMediaItem).image)
-            } else if mediaItem is TomoVideoMediaItem {
-                let videoPath = message.type.fullPath(name: message.content)
-                galleryItem = MHGalleryItem(url: videoPath, galleryType: .video)
-                galleryItem.image = SDImageCache.shared().imageFromDiskCache(forKey: videoPath)
-            }
-            items.append(galleryItem)
-        }
-        
-        let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.imageViewerNavigationBarShown)
-        gallery?.galleryItems = items
-        gallery?.presentationIndex = index
-        gallery?.presentingFromImageView = imageView
-        
-        gallery?.uiCustomization.useCustomBackButtonImageOnImageViewer = false
-        gallery?.uiCustomization.showOverView = false
-        gallery?.uiCustomization.showMHShareViewInsteadOfActivityViewController = false
-        
-        gallery?.finishedCallback = { [weak self] (currentIndex, image, transition, viewMode) -> Void in
-            let cell = self!.collectionView!.cellForItem(at: indexPath as IndexPath) as!JSQMessagesCollectionViewCell
-            let imageView = cell.mediaView as! UIImageView
-            gcd.async(.main, closure: { () -> () in
-                gallery?.dismiss(animated: true, dismiss: imageView, completion: { [weak self] () -> Void in
-                    self!.automaticallyScrollsToMostRecentMessage = true
-                    self!.collectionView!.reloadItems(at: [indexPath])
-                    })
-            })
-        }
-        
-        self.automaticallyScrollsToMostRecentMessage = false
-        present(gallery, animated: true, completion: nil)
     }
     
     func prependRows(rows: Int) {

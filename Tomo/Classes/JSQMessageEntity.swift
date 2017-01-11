@@ -48,17 +48,17 @@ class JSQMessageEntity: MessageEntity, JSQMessageData {
         
         var item: JSQMediaItem!
         
-        let fileUrl = FCFileManager.urlForItem(atPath: self.content)
+        var fileURL = Util.getDocumentsURL(forFile: self.content)
         
         switch self.type {
         case .video:
             
-            item = TomoVideoMediaItem(fileURL: fileUrl, isReadyToPlay: true)
+            item = TomoVideoMediaItem(fileURL: fileURL, isReadyToPlay: true)
             
         case .photo:
             
-            if FCFileManager.existsItem(atPath: self.content) {
-                item = JSQPhotoMediaItem(image: UIImage(contentsOfFile: fileUrl!.path))
+            if FileManager.default.fileExists(atPath: fileURL.path) {
+                item = JSQPhotoMediaItem(image: UIImage(contentsOfFile: fileURL.path))
             } else {
                 item = JSQPhotoMediaItem(image: self.brokenImage)
             }
@@ -67,8 +67,10 @@ class JSQMessageEntity: MessageEntity, JSQMessageData {
             
             let imageName = self.from.id == me.id ? "SenderVoiceNodePlaying" : "ReceiverVoiceNodePlaying"
             let image = UIImage(named: imageName)
-            if FCFileManager.existsItem(atPath: self.content) {
-                item = JSQVoiceMediaItem(voice: NSData(contentsOfFile: (fileUrl?.path)!) as Data!, image: image)
+            
+            
+            if FileManager.default.fileExists(atPath: fileURL.path) {
+                item = JSQVoiceMediaItem(voice: NSData(contentsOfFile: (fileURL.path)) as Data!, image: image)
             } else {
                 item = JSQVoiceMediaItem(voice: nil, image: image)
             }
@@ -87,35 +89,32 @@ class JSQMessageEntity: MessageEntity, JSQMessageData {
             self.isTaskRunning = true
         }
         
+        
+        var fileURL = Util.getDocumentsURL(forFile: self.content)
+            
         guard
-            self.type == .photo && !FCFileManager.existsItem(atPath: self.content)
+            self.type == .photo && !FileManager.default.fileExists(atPath: fileURL.path)
             else {
                 return
         }
         
         let url = self.type.fullPath(name: self.content)
         
-//        Alamofire.SessionManager.default.download(.get, method: url) { (tempUrl, res) -> (NSURL) in
-//            if res.statusCode == 200 {
-//                return FCFileManager.urlForItemAtPath(self.content)
-//            } else {
-//                return tempUrl
-//            }
-//            }.response { (_, _, _, error) -> Void in
-//                self.isTaskRunning = false
-//                
-//                if error != nil {
-//                    self.taskTryCount--
-//                    if self.taskTryCount > 0 { //auto reload
-//                        self.download(completion)
-//                    } else {
-//                        self.brokenImage = self.broken
-//                        completion()
-//                    }
-//                } else {
-//                    completion() // reload collectionView
-//                }
-//        }
+        Alamofire.SessionManager.default.download(url).response { res in
+            self.isTaskRunning = false
+            
+            if res.error != nil {
+                self.taskTryCount -= 1
+                if self.taskTryCount > 0 { //auto reload
+                    self.download(completion)
+                } else {
+                    self.brokenImage = self.broken
+                    completion()
+                }
+            } else {
+                completion() // reload collectionView
+            }
+        }
     }
     
     func reload(completion: @escaping ()->() ){

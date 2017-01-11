@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 //Util
 class Util: NSObject {
@@ -179,6 +180,16 @@ extension Util {
     }
 
 }
+
+extension Util {
+    class func getDocumentsURL(forFile filename: String) -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        var documentsDirectory = paths[0]
+        documentsDirectory.appendPathComponent(filename)
+        return documentsDirectory
+    }
+}
+
 extension UIApplication {
     
     class func appVersion() -> String {

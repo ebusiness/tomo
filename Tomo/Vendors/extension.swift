@@ -12,24 +12,25 @@ import MobileCoreServices
 extension UIImage {
     // MARK: - URL style
     @discardableResult
-    public func save(to url: URL) -> Bool
-    {
-        guard let ret = self.cgImage?.save(to: url) else
-        {
+    public func save(to url: URL) -> Bool {
+        guard let data = UIImagePNGRepresentation(self) else {
             return false
         }
-        return ret
+        do {
+            try data.write(to: url)
+            return true
+        } catch {
+            return false
+        }
+        
     }
     // MARK: - Paths style
     @discardableResult
-    public func save(toPath path: String) -> Bool
-    {
-        guard let ret = self.cgImage?.save(toPath: path) else
-        {
-            return false
-        }
-        return ret
+    public func save(toPath path: String) -> Bool {
+        let url = URL(fileURLWithPath: path)
+        return self.save(to: url)
     }
+    
     func scale(toFit newSize: CGSize) -> UIImage? {
         var fitSize = self.size
         if (self.size.width > self.size.height)
@@ -143,39 +144,6 @@ public extension CGImage
     {
         let alphaInfo = self.alphaInfo
         return (alphaInfo == .first || alphaInfo == .last || alphaInfo == .premultipliedFirst || alphaInfo == .premultipliedLast)
-    }
-    // MARK: - URL style
-    public func save(to url: URL) -> Bool
-    {
-        return self.saveTo(url: url, backgroundFillColor: nil)
-    }
-    // MARK: - Paths style
-    public func save(toPath path: String) -> Bool
-    {
-        let url = URL(fileURLWithPath: path)
-        return self.saveTo(url: url, backgroundFillColor: nil)
-    }
-    // MARK: - Private
-    private func saveTo(url: URL, backgroundFillColor: UIColor?) -> Bool
-    {
-        guard let dest = CGImageDestinationCreateWithURL(url as CFURL, kUTTypeJPEG, 1, nil) else
-        {
-            return false
-        }
-        
-        // Set the options, 1 -> lossless
-        var options = [String : Any]()
-        options[kCGImageDestinationLossyCompressionQuality as String] = 1.0
-        if let bgColor = backgroundFillColor
-        {
-            options[kCGImageDestinationBackgroundColor as String] = bgColor
-        }
-        
-        // Add the image
-        CGImageDestinationAddImage(dest, self, options as CFDictionary?)
-        
-        // Write it to the destination
-        return CGImageDestinationFinalize(dest)
     }
 }
 
