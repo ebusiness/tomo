@@ -209,6 +209,7 @@ extension HomeViewController {
             if $0.result.isFailure {
                 self.isLoading = false
                 self.isExhausted = true
+                self.tableView.tableFooterView = nil
                 return
             }
             
@@ -226,7 +227,7 @@ extension HomeViewController {
                 self.rowHeights += loadPosts.map { self.simulateLayout(post: $0 as! PostEntity) }
 
                 // if the recommend contents arrived, insert them in the middle of new content
-                if let recommendStations: Any = self.recommendGroups as? Any {
+                if let recommendStations = self.recommendGroups {
 
                     var insertAt: Int
 

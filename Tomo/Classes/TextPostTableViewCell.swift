@@ -45,15 +45,15 @@ class TextPostTableViewCell: UITableViewCell {
         super.awakeFromNib()
 
         // post author avatar tap
-        let avatarTap = UITapGestureRecognizer(target: self, action: "avatarTapped")
+        let avatarTap = UITapGestureRecognizer(target: self, action: #selector(TextPostTableViewCell.avatarTapped))
         self.avatarImageView.addGestureRecognizer(avatarTap)
 
         // comment author avatar tap
-        let commentAvatarTap = UITapGestureRecognizer(target: self, action: "commentAvatarTapped")
+        let commentAvatarTap = UITapGestureRecognizer(target: self, action: #selector(TextPostTableViewCell.commentAvatarTapped))
         self.commentAvatarImageView.addGestureRecognizer(commentAvatarTap)
 
         // comment tap
-        let commentTap = UITapGestureRecognizer(target: self, action: "commentTapped")
+        let commentTap = UITapGestureRecognizer(target: self, action: #selector(TextPostTableViewCell.commentTapped))
         self.commentArea.addGestureRecognizer(commentTap)
 
         // set this to help systemLayoutSizeFittingSize work correctly
