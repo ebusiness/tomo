@@ -20,7 +20,7 @@ final class ImagePostTableViewCell: TextPostTableViewCell {
 
         // add white border to avatar, cause it overlap with post image
         self.avatarImageView.layer.borderWidth = 2
-        self.avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.avatarImageView.layer.borderColor = UIColor.white.cgColor
 
         // do this so the scrollsToTop of main table view will work
         self.imageCollectionView.scrollsToTop = false
@@ -41,15 +41,15 @@ final class ImagePostTableViewCell: TextPostTableViewCell {
 
 extension ImagePostTableViewCell: UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return post.images?.count ?? 0
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SingleImageCell", forIndexPath: indexPath) as! SingleImageCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SingleImageCell", for: indexPath) as! SingleImageCollectionViewCell
 
-        if let imageURL = post.images?.get(indexPath.row) {
+        if let imageURL = post.images?[indexPath.row] {
             cell.imageURL = imageURL
         } else {
             cell.imageURL = nil
@@ -63,9 +63,9 @@ extension ImagePostTableViewCell: UICollectionViewDataSource {
 
 extension ImagePostTableViewCell: UICollectionViewDelegate {
 
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        let postVC = Util.createViewControllerWithIdentifier("PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
+        let postVC = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
         postVC.post = post
         if indexPath.row != 0 {
             postVC.initialImageIndex = indexPath.row
@@ -73,14 +73,14 @@ extension ImagePostTableViewCell: UICollectionViewDelegate {
         delegate?.pushViewController(postVC, animated: true)
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         return CGSize(width: TomoConst.UI.ScreenWidth, height: 300.0)
     }
 
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
         if scrollView != imageCollectionView { return }
-        guard let count = post.images?.count where count > 1 else { return }
+        guard let count = post.images?.count, count > 1 else { return }
         let currentPage = Int(floor((scrollView.contentOffset.x + TomoConst.UI.ScreenWidth / 2.0) / TomoConst.UI.ScreenWidth))
 
         pageControl.currentPage = currentPage
@@ -97,27 +97,27 @@ final class SingleImageCollectionViewCell: UICollectionViewCell {
         didSet {
             let placeholderImage = UIImage(named: "placeholder")
             if let url = imageURL {
-                imageView.contentMode = .ScaleAspectFill
-                imageView.sd_setImageWithURL(NSURL(string: url), placeholderImage: placeholderImage, completed: { (image, _, _, _) -> Void in
+                imageView.contentMode = .scaleAspectFill
+                imageView.sd_setImage(with: URL(string: url), completed: { (image, _, _, _) in
                     if image == nil {
-                        self.imageView.contentMode = .ScaleAspectFill
+                        self.imageView.contentMode = .scaleAspectFill
                         return
                     }
-                    let size = image.size
-                    let ratio = size.width / size.height
-                    if size.height < (self.imageView.bounds.height / SingleImageCollectionViewCell.minCenterScale)
-                        && size.width < (self.imageView.bounds.width / SingleImageCollectionViewCell.minCenterScale) {
-                            self.imageView.contentMode = .Center
+                    let size = image?.size
+                    let ratio = (size?.width)! / (size?.height)!
+                    if (size?.height)! < (self.imageView.bounds.height / SingleImageCollectionViewCell.minCenterScale)
+                        && (size?.width)! < (self.imageView.bounds.width / SingleImageCollectionViewCell.minCenterScale) {
+                            self.imageView.contentMode = .center
                     } else if ratio > SingleImageCollectionViewCell.maxAspectFitScale
                         || ratio < SingleImageCollectionViewCell.minAspectFitScale {
-                            self.imageView.contentMode = .ScaleAspectFit
+                            self.imageView.contentMode = .scaleAspectFit
                     }else {
-                        self.imageView.contentMode = .ScaleAspectFill
+                        self.imageView.contentMode = .scaleAspectFill
                         //                        self.imageView.faceAwareFill()
                     }
                 })
             } else {
-                imageView.contentMode = .ScaleAspectFill
+                imageView.contentMode = .scaleAspectFill
                 imageView.image = placeholderImage
             }
         }

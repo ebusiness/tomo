@@ -39,10 +39,10 @@ final class PushSettingViewController: UITableViewController {
         didSet {
             if oldValue != allowNotification {
                 self.tableView.beginUpdates()
-                self.tableView.reloadSections(NSIndexSet(index: messageSection), withRowAnimation: .Automatic)
-                self.tableView.reloadSections(NSIndexSet(index: friendSection), withRowAnimation: .Automatic)
-                self.tableView.reloadSections(NSIndexSet(index: postSection), withRowAnimation: .Automatic)
-                self.tableView.reloadSections(NSIndexSet(index: groupSection), withRowAnimation: .Automatic)
+                self.tableView.reloadSections([messageSection], with: .automatic)
+                self.tableView.reloadSections([friendSection], with: .automatic)
+                self.tableView.reloadSections([postSection], with: .automatic)
+                self.tableView.reloadSections([groupSection], with: .automatic)
                 self.tableView.endUpdates()
 //                self.scrollViewDidScroll(self.tableView)
                 if Defaults["deviceToken"].string == nil && allowNotification {
@@ -55,19 +55,19 @@ final class PushSettingViewController: UITableViewController {
     var pushSettingProperty: Account.PushSetting! {
         didSet {
             if oldValue != pushSettingProperty {
-                switchAnnouncement.on = pushSettingProperty.announcement
-                switchMessage.on = pushSettingProperty.message
-                switchGroupMessage.on = pushSettingProperty.groupMessage
-                switchFriendInvited.on = pushSettingProperty.friendInvited
-                switchFriendAccepted.on = pushSettingProperty.friendAccepted
-                switchFriendRefused.on = pushSettingProperty.friendRefused
-                switchFriendBreak.on = pushSettingProperty.friendBreak
-                switchPostNew.on = pushSettingProperty.postNew
-                switchPostCommented.on = pushSettingProperty.postCommented
-                switchPostLiked.on = pushSettingProperty.postLiked
-                switchPostBookmarked.on = pushSettingProperty.postBookmarked
-                switchGroupJoined.on = pushSettingProperty.groupJoined
-                switchGroupLeft.on = pushSettingProperty.groupLeft
+                switchAnnouncement.isOn = pushSettingProperty.announcement
+                switchMessage.isOn = pushSettingProperty.message
+                switchGroupMessage.isOn = pushSettingProperty.groupMessage
+                switchFriendInvited.isOn = pushSettingProperty.friendInvited
+                switchFriendAccepted.isOn = pushSettingProperty.friendAccepted
+                switchFriendRefused.isOn = pushSettingProperty.friendRefused
+                switchFriendBreak.isOn = pushSettingProperty.friendBreak
+                switchPostNew.isOn = pushSettingProperty.postNew
+                switchPostCommented.isOn = pushSettingProperty.postCommented
+                switchPostLiked.isOn = pushSettingProperty.postLiked
+                switchPostBookmarked.isOn = pushSettingProperty.postBookmarked
+                switchGroupJoined.isOn = pushSettingProperty.groupJoined
+                switchGroupLeft.isOn = pushSettingProperty.groupLeft
             }
         }
     }
@@ -78,24 +78,24 @@ final class PushSettingViewController: UITableViewController {
         self.becomeActive()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
         let pushSetting = Account.PushSetting()
         
-        pushSetting.announcement = switchAnnouncement.on
-        pushSetting.message = switchMessage.on
-        pushSetting.groupMessage = switchGroupMessage.on
-        pushSetting.friendInvited = switchFriendInvited.on
-        pushSetting.friendAccepted = switchFriendAccepted.on
-        pushSetting.friendRefused = switchFriendRefused.on
-        pushSetting.friendBreak = switchFriendBreak.on
-        pushSetting.postNew = switchPostNew.on
-        pushSetting.postCommented = switchPostCommented.on
-        pushSetting.postLiked = switchPostLiked.on
-        pushSetting.postBookmarked = switchPostBookmarked.on
-        pushSetting.groupJoined = switchGroupJoined.on
-        pushSetting.groupLeft = switchGroupLeft.on
+        pushSetting.announcement = switchAnnouncement.isOn
+        pushSetting.message = switchMessage.isOn
+        pushSetting.groupMessage = switchGroupMessage.isOn
+        pushSetting.friendInvited = switchFriendInvited.isOn
+        pushSetting.friendAccepted = switchFriendAccepted.isOn
+        pushSetting.friendRefused = switchFriendRefused.isOn
+        pushSetting.friendBreak = switchFriendBreak.isOn
+        pushSetting.postNew = switchPostNew.isOn
+        pushSetting.postCommented = switchPostCommented.isOn
+        pushSetting.postLiked = switchPostLiked.isOn
+        pushSetting.postBookmarked = switchPostBookmarked.isOn
+        pushSetting.groupJoined = switchGroupJoined.isOn
+        pushSetting.groupLeft = switchGroupLeft.isOn
         
         var parameters = Router.Setting.MeParameter()
         
@@ -105,7 +105,7 @@ final class PushSettingViewController: UITableViewController {
         
         if !allowNotification {
             parameters.removeDevice = "1"
-            Defaults.remove("deviceToken")
+            Defaults.remove(key: "deviceToken")
         }
         
         guard parameters.getParameters() != nil else { return }
@@ -117,15 +117,15 @@ final class PushSettingViewController: UITableViewController {
         
     }
     
-    @IBAction func openSystemSettings(sender: UISwitch) {
-        let url = NSURL(string: UIApplicationOpenSettingsURLString)
-        UIApplication.sharedApplication().openURL(url!)
+    @IBAction func openSystemSettings(_ sender: UISwitch) {
+        let url = URL(string: UIApplicationOpenSettingsURLString)
+        UIApplication.shared.openURL(url!)
     }
     
 }
 
 extension PushSettingViewController {
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section != pushSettingSection && !allowNotification {
             return 0
         }
@@ -133,7 +133,7 @@ extension PushSettingViewController {
         return super.tableView(self.tableView, numberOfRowsInSection: section)
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section != pushSettingSection && !allowNotification {
             return nil
         }
@@ -147,8 +147,8 @@ extension PushSettingViewController {
     
     func becomeActive() {
 
-        let settings = UIApplication.sharedApplication().currentUserNotificationSettings()!
-        allowNotification = settings.types != UIUserNotificationType.None
+        let settings = UIApplication.shared.currentUserNotificationSettings!
+        allowNotification = settings.types != .none
         
         pushSwitch.setOn(allowNotification, animated: false)
     }

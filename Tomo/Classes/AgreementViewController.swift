@@ -16,19 +16,19 @@ final class AgreementViewController: UIViewController {
 
         super.viewDidLoad()
 
-        if let htmlPath = NSBundle.mainBundle().pathForResource("statements", ofType: "html") {
-            let url = NSURL.fileURLWithPath(htmlPath)
-            let request = NSURLRequest(URL: url)
+        if let htmlPath = Bundle.main.path(forResource: "statements", ofType: "html") {
+            let url = NSURL.fileURL(withPath: htmlPath)
+            let request = URLRequest(url: url)
             self.webView.loadRequest(request)
         }
     }
 
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
-    @IBAction func close(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func close(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -36,7 +36,7 @@ final class AgreementViewController: UIViewController {
 
 extension AgreementViewController: UINavigationBarDelegate {
     func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
-        return .TopAttached
+        return .topAttached
     }
 }
 

@@ -16,10 +16,6 @@ class AggregatableAnnotationView: MKAnnotationView {
         super.init(coder: aDecoder)
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
     override init(annotation: MKAnnotation!, reuseIdentifier: String!) {
         
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
@@ -27,19 +23,19 @@ class AggregatableAnnotationView: MKAnnotationView {
         self.canShowCallout = false
         
         numberBadge = UILabel()
-        numberBadge.textColor = UIColor.whiteColor()
-        numberBadge.textAlignment = NSTextAlignment.Center
-        numberBadge.font = UIFont.systemFontOfSize(10)
+        numberBadge.textColor = UIColor.white
+        numberBadge.textAlignment = NSTextAlignment.center
+        numberBadge.font = UIFont.systemFont(ofSize: 10)
         numberBadge.clipsToBounds = true
         numberBadge.layer.borderWidth = 1
-        numberBadge.layer.borderColor = UIColor.whiteColor().CGColor
-        numberBadge.backgroundColor = UIColor.redColor()
+        numberBadge.layer.borderColor = UIColor.white.cgColor
+        numberBadge.backgroundColor = UIColor.red
     }
     
     func setupDisplay() {
         guard
             let annotation = self.annotation as? AggregatableAnnotation,
-            containedAnnotations = annotation.containedAnnotations
+            let containedAnnotations = annotation.containedAnnotations
             else { return }
         
         let count = containedAnnotations.count
@@ -67,8 +63,8 @@ class AggregatableAnnotationView: MKAnnotationView {
             exRate = 1
         }
         
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.transform = CGAffineTransformMakeScale(exRate, exRate)
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
+            self.transform = CGAffineTransform(scaleX: exRate, y: exRate)
         })
     }
     

@@ -17,7 +17,7 @@ extension Router {
         
         var path: String {
             switch self {
-            case let ModifyById(id, _):
+            case let .ModifyById(id, _):
                 return "/invitations/\(id)"
             default:
                 return "/invitations"
@@ -25,17 +25,17 @@ extension Router {
         }
         var method: RouteMethod {
             switch self {
-            case Find: return .GET
-            case ModifyById: return .PATCH
-            case SendTo: return .POST
+            case .Find: return .GET
+            case .ModifyById: return .PATCH
+            case .SendTo: return .POST
             }
         }
         
-        var parameters: [String : AnyObject]? {
+        var parameters: [String : Any]? {
             switch self {
-            case Find: return nil
-            case let ModifyById(_, accepted): return ["result": accepted ? "accept" : "refuse"]
-            case let SendTo(id): return ["id": id]
+            case .Find: return nil
+            case let .ModifyById(_, accepted): return ["result": accepted ? "accept" : "refuse"]
+            case let .SendTo(id): return ["id": id]
             }
         }
     }

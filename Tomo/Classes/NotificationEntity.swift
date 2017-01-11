@@ -21,7 +21,7 @@ class NotificationEntity: Entity {
     
     var targetId: String!
     
-    var createDate: NSDate!
+    var createDate: Date!
     
     override init() {
         super.init()
@@ -38,9 +38,9 @@ class NotificationEntity: Entity {
         self.type = json["type"].stringValue
         
         if let createDate = json["createDate"].string {
-            self.createDate = createDate.toDate(TomoConfig.Date.Format)
+            self.createDate = createDate.toDate(format: TomoConfig.Date.Format)
         } else {
-            self.createDate = NSDate()
+            self.createDate = Date()
         }
         
         self.message = json["aps"]["alert"].stringValue

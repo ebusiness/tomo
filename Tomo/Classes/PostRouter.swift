@@ -22,32 +22,32 @@ extension Router {
         
         var path: String {
             switch self {
-            case let FindById(id): return "/posts/\(id)"
-            case Find: return "/posts"
-            case Create: return "/posts"
-            case let Delete(id): return "/posts/\(id)"
-            case let Comment(id, _): return "/posts/\(id)/comments"
-            case let Bookmark(id): return "/posts/\(id)/bookmark"
-            case let Like(id): return "/posts/\(id)/like"
+            case let .FindById(id): return "/posts/\(id)"
+            case .Find: return "/posts"
+            case .Create: return "/posts"
+            case let .Delete(id): return "/posts/\(id)"
+            case let .Comment(id, _): return "/posts/\(id)/comments"
+            case let .Bookmark(id): return "/posts/\(id)/bookmark"
+            case let .Like(id): return "/posts/\(id)/like"
             }
         }
         
         var method: RouteMethod {
             switch self {
-            case Create: return .POST
-            case Delete: return .DELETE
-            case Comment: return .POST
-            case Bookmark: return .PATCH
-            case Like: return .PATCH
+            case .Create: return .POST
+            case .Delete: return .DELETE
+            case .Comment: return .POST
+            case .Bookmark: return .PATCH
+            case .Like: return .PATCH
             default: return .GET
             }
         }
         
-        var parameters: [String : AnyObject]? {
+        var parameters: [String : Any]? {
             switch self {
-            case let Find(parameters): return parameters.getParameters()
-            case let Create(parameters): return parameters.getParameters()
-            case let Comment(_, content): return ["content": content]
+            case let .Find(parameters): return parameters.getParameters()
+            case let .Create(parameters): return parameters.getParameters()
+            case let .Comment(_, content): return ["content": content]
             default: return nil
             }
         }
@@ -62,15 +62,15 @@ extension Router.Post {
     
     struct FindParameters {
         var category: Category
-        var before: NSTimeInterval?
-        var after: NSTimeInterval?
+        var before: TimeInterval?
+        var after: TimeInterval?
         init(category: Category) {
             
             self.category = category
         }
         
-        func getParameters() -> [String: AnyObject] {
-            var parameters = [String: AnyObject]()
+        func getParameters() -> [String: Any] {
+            var parameters = [String: Any]()
             
             parameters["category"] = category.rawValue
             if let before = before {
@@ -92,8 +92,8 @@ extension Router.Post {
             self.content = content
         }
         
-        func getParameters() -> [String: AnyObject] {
-            var parameters = [String: AnyObject]()
+        func getParameters() -> [String: Any] {
+            var parameters = [String: Any]()
             
             parameters["content"] = content
             parameters["images"] = images

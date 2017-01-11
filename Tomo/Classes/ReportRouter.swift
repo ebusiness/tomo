@@ -15,8 +15,8 @@ extension Router {
         
         var path: String {
             switch self {
-            case let Post(id): return "/reports/posts/\(id)"
-            case let User(id): return "/reports/users/\(id)"
+            case let .Post(id): return "/reports/posts/\(id)"
+            case let .User(id): return "/reports/users/\(id)"
             }
         }
         var method: RouteMethod {

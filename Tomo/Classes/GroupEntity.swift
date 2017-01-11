@@ -33,7 +33,7 @@ class GroupEntity: Entity {
     
     var posts: [PostEntity]?
     
-    var createDate: NSDate!
+    var createDate: Date!
     
     var lastMessage: MessageEntity? {
         didSet {
@@ -88,7 +88,7 @@ class GroupEntity: Entity {
             }
         }
         
-        self.createDate = json["createDate"].stringValue.toDate(TomoConfig.Date.Format)
+        self.createDate = json["createDate"].stringValue.toDate(format: TomoConfig.Date.Format)
         
         if !( json["lastMessage"].object is NSNull ) {
             self.lastMessage = MessageEntity(json["lastMessage"])

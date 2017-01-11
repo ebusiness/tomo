@@ -16,10 +16,6 @@ class GroupAnnotationView: AggregatableAnnotationView {
         super.init(coder: aDecoder)
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
     override init(annotation: MKAnnotation!, reuseIdentifier: String!) {
         
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
@@ -27,10 +23,10 @@ class GroupAnnotationView: AggregatableAnnotationView {
         frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         
         imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = Palette.Red.primaryColor.CGColor
+        imageView.layer.borderColor = Palette.Red.primaryColor.cgColor
         imageView.layer.cornerRadius = 5
         addSubview(imageView)
         
@@ -43,7 +39,7 @@ class GroupAnnotationView: AggregatableAnnotationView {
         super.setupDisplay()
         
         let annotation = self.annotation as! GroupAnnotation
-        imageView.sd_setImageWithURL(NSURL(string: annotation.group.cover!), placeholderImage: DefaultGroupImage)
+        imageView.sd_setImage(with: URL(string: annotation.group.cover!), placeholderImage: DefaultGroupImage)
     }
 
 }

@@ -29,13 +29,13 @@ final class RecommendStationTableViewCell: UITableViewCell {
 
 extension RecommendStationTableViewCell: UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return groups.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("StationCell", forIndexPath: indexPath) as! StationCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as! StationCollectionViewCell
 
         // Give the cell group data, this will trigger configDisplay.
         cell.group = groups[indexPath.item]
@@ -49,12 +49,12 @@ extension RecommendStationTableViewCell: UICollectionViewDataSource {
 extension RecommendStationTableViewCell:UICollectionViewDelegate {
 
     // Move the group detail view, when colleciton view cell was tapped.
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+        collectionView.deselectItem(at: indexPath, animated: true)
 
         // Create group detail view controller.
-        let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+        let groupVC = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
 
         // Give group detail view controller group data.
         groupVC.group = self.groups[indexPath.item]
@@ -68,12 +68,12 @@ extension RecommendStationTableViewCell:UICollectionViewDelegate {
 
 extension RecommendStationTableViewCell: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         // Size of the group cell, if the cell height changed,
         // the outer collection view and table view cell's height
         // also need to change accordingly
-        return CGSizeMake(250/4*3, 250)
+        return CGSize(width: 250/4*3, height: 250)
     }
 }
 
@@ -98,7 +98,7 @@ final class StationCollectionViewCell: UICollectionViewCell {
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func awakeFromNib() {
@@ -106,18 +106,18 @@ final class StationCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
 
         // Give the action button a white border
-        self.actionButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.actionButton.layer.borderColor = UIColor.white.cgColor
     }
 
     private func configDisplay() {
 
         self.nameLabel.text = self.group.name
 
-        self.backgroundImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
+        self.backgroundImageView.sd_setImage(with: URL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
 
         // If my group list has this group's id, then I had joined this group
         // so make the join button to leave button.
-        if let myGroups = me.groups where myGroups.contains(self.group.id) {
+        if let myGroups = me.groups, myGroups.contains(self.group.id) {
 
             self.isJoined = true
             self.makeLeaveButton()
@@ -133,19 +133,19 @@ final class StationCollectionViewCell: UICollectionViewCell {
     // Make the action button as join button
     private func makeJoinButton() {
         self.actionButton.backgroundColor = Palette.Green.primaryColor
-        self.actionButton.setTitle("  加入  ", forState: .Normal)
+        self.actionButton.setTitle("  加入  ", for: .normal)
         self.actionButton.sizeToFit()
     }
 
     // Make the action button as leave button
     private func makeLeaveButton() {
         self.actionButton.backgroundColor = Palette.Red.primaryColor
-        self.actionButton.setTitle("  退出  ", forState: .Normal)
+        self.actionButton.setTitle("  退出  ", for: .normal)
         self.actionButton.sizeToFit()
     }
 
     // Toggle the group join status when the action button tapped
-    @IBAction func actionButtonTapped(sender: AnyObject) {
+    @IBAction func actionButtonTapped(_ sender: Any) {
 
         if self.isJoined {
 
@@ -159,13 +159,13 @@ final class StationCollectionViewCell: UICollectionViewCell {
                 let group = GroupEntity($0.result.value!)
 
                 // remove it from my joined group list
-                me.leaveGroup(group)
+                me.leaveGroup(group: group)
 
                 // mark as not joined
                 self.isJoined = false
 
                 // animate to the join button
-                UIView.animateWithDuration(0.3, animations: {
+                UIView.animate(withDuration: 0.3, animations: {
                     self.makeJoinButton()
                     self.setNeedsLayout()
                 })
@@ -183,13 +183,13 @@ final class StationCollectionViewCell: UICollectionViewCell {
                 let group = GroupEntity($0.result.value!)
 
                 // add the group to my joined group list
-                me.joinGroup(group)
+                me.joinGroup(group: group)
 
                 // mark as joined
                 self.isJoined = true
 
                 // animate to the leave button
-                UIView.animateWithDuration(0.3, animations: {
+                UIView.animate(withDuration: 0.3, animations: {
                     self.makeLeaveButton()
                     self.setNeedsLayout()
                 })
@@ -199,8 +199,8 @@ final class StationCollectionViewCell: UICollectionViewCell {
     }
 
     private func configEventObserver() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didJoinGroup:", name: "didJoinGroup", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didLeaveGroup:", name: "didLeaveGroup", object: me)
+        NotificationCenter.default.addObserver(self, selector: "didJoinGroup:", name: NSNotification.Name(rawValue: "didJoinGroup"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didLeaveGroup:", name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
     }
 
     func didJoinGroup(notification: NSNotification) {

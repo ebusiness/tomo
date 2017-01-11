@@ -34,28 +34,28 @@ final class RegViewController: UIViewController {
 
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden: Bool {
         return true
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
-
+    
 }
 
 // MARK: - Internal Methods 
 
 extension RegViewController {
     
-    private func setupAppearance() {
+    fileprivate func setupAppearance() {
         
         func customizeTextField(textField: UITextField) {
             
             // draw a white bottom border
             let border = CALayer()
             let width = CGFloat(1.0)
-            border.borderColor = UIColor.whiteColor().CGColor
+            border.borderColor = UIColor.white.cgColor
             border.frame = CGRect(x: 0, y: textField.frame.size.height - width, width: textField.frame.size.width, height: textField.frame.size.height)
             border.borderWidth = width
             textField.layer.addSublayer(border)
@@ -63,69 +63,69 @@ extension RegViewController {
             
             // make placeholder text white
             let attributeString = NSAttributedString(string: textField.placeholder!, attributes: [
-                NSForegroundColorAttributeName: UIColor.whiteColor()
+                NSForegroundColorAttributeName: UIColor.white
                 ])
             textField.attributedPlaceholder = attributeString
         }
         
         // show test login buttons on debug schema
-        testSegment.hidden = true
+        testSegment.isHidden = true
         #if DEBUG
-            testSegment.hidden = false
+            testSegment.isHidden = false
         #endif
 
         // hide all controls on startup
-        inputArea.hidden = false
+        inputArea.isHidden = false
 
         if (WechatManager.sharedInstance.isInstalled()) {
             // customize wechat login button
-            loginButton.layer.borderColor = UIColor.whiteColor().CGColor
+            loginButton.layer.borderColor = UIColor.white.cgColor
             loginButton.layer.borderWidth = 1
             loginButton.layer.cornerRadius = 2
         } else {
             registerBottomSpace.constant = 16
-            loginButton.hidden = true
+            loginButton.isHidden = true
         }
 
         // customize email input field
-        customizeTextField(emailTextField)
-        customizeTextField(passwordTextField)
+        customizeTextField(textField: emailTextField)
+        customizeTextField(textField: passwordTextField)
         
     }
     
-    private func registerForKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShown:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
+    fileprivate func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShown(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    func keyboardWillShown(notification: NSNotification) {
+    func keyboardWillShown(_ notification: NSNotification) {
         
         guard let info = notification.userInfo else { return }
         
-        if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height {
+        if let keyboardHeight = (info[UIKeyboardFrameEndUserInfoKey] as? AnyObject)?.cgRectValue.size.height {
             
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
+            UIView.animate(withDuration: 0.3, animations: { () -> Void in
                 self.inputAreaBottomSpace.constant = keyboardHeight
                 self.view.layoutIfNeeded()
             })
         }
     }
     
-    func keyboardWillBeHidden(notification: NSNotification) {
+    func keyboardWillBeHidden(_ notification: NSNotification) {
         
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
             self.inputAreaBottomSpace.constant = 0
             self.view.layoutIfNeeded()
         })
     }
     
-    private func changeRootToTab(){
+    fileprivate func changeRootToTab(){
         Util.dismissHUD()
         if me.primaryStation != nil {
 //            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
             Util.changeRootViewController(from: self, to: TabBarController())
         } else {
-            let main = Util.createViewControllerWithIdentifier("RecommendView", storyboardName: "Main")
+            let main = Util.createViewControllerWithIdentifier(id: "RecommendView", storyboardName: "Main")
             Util.changeRootViewController(from: self, to: main)
         }
     }
@@ -135,16 +135,43 @@ extension RegViewController {
 
 extension RegViewController {
     
-    @IBAction func login_wechat(sender: AnyObject) {
+    @IBAction func login_wechat(_ sender: Any) {
         
-        WechatManager.sharedInstance.checkAuth()
+        WechatManager.sharedInstance.checkAuth { result in
+            switch result {
+            case .failure(let errCode)://登录失败
+                self.failure(errCode: Int(errCode))
+            case .success(let value):
+                Router.Signin.WeChat(openid: WechatManager.openid, access_token: WechatManager.accessToken).response {
+                    switch $0.result {
+                    case .success(let value):
+                        self.success(res: value);
+                    case .failure:
+                        WechatManager.sharedInstance.getUserInfo { userinfoResult in
+                            
+                            guard let parameters = userinfoResult.value else { return }
+                            
+                            let wechat = Router.Signup.WeChat(openid: WechatManager.openid, nickname: parameters["nickname"] as? String ?? "", gender: parameters["sex"] as? String, headimgurl: parameters["headimgurl"] as? String)
+                            
+                            wechat.response {
+                                if $0.result.isFailure {
+                                    self.failure(errCode: 400)
+                                } else {
+                                    self.success(res: $0.result.value!.dictionaryObject!)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
-    @IBAction func accountLogin(sender: AnyObject) {
+    @IBAction func accountLogin(_ sender: Any) {
         
         Router.Signin.Email(email: emailTextField.text!, password: passwordTextField.text!).response {
             switch $0.result {
-            case .Success(let value):
+            case .success(let value):
                 
                 Defaults["email"] = self.emailTextField.text
                 Defaults["password"] = self.passwordTextField.text
@@ -152,15 +179,15 @@ extension RegViewController {
                 me = Account(value)
                 self.changeRootToTab()
                 
-            case .Failure:
+            case .failure:
                 
-                Util.alert(self, title: "登录失败", message: "您输入的账号或密码不正确", cancel: "重试")
+                Util.alert(parentvc: self, title: "登录失败", message: "您输入的账号或密码不正确", cancel: "重试")
             }
         }
         
     }
     
-    @IBAction func releaseResponder(sender: AnyObject) {
+    @IBAction func releaseResponder(_ sender: Any) {
         self.view.endEditing(true)
     }
     
@@ -176,17 +203,17 @@ extension RegViewController: UITextFieldDelegate {
         var password = (self.passwordTextField.text ?? "") as NSString
         
         if textField == self.emailTextField {
-            email = email.stringByReplacingCharactersInRange(range, withString: string).trimmed()
+            email = email.replacingCharacters(in: range, with: string).trimmed() as NSString
         }
         
         if textField == self.passwordTextField {
-            password = password.stringByReplacingCharactersInRange(range, withString: string).trimmed()
+            password = password.replacingCharacters(in: range, with: string).trimmed() as NSString
         }
         
         if email.length > 0 && password.length > 0 {
-            self.signInButton.enabled = true
+            self.signInButton.isEnabled = true
         } else {
-            self.signInButton.enabled = false
+            self.signInButton.isEnabled = false
         }
         
         return true
@@ -197,9 +224,9 @@ extension RegViewController: UITextFieldDelegate {
 
 extension RegViewController {
     
-    @IBAction func testLogin(sender: UISegmentedControl) {
+    @IBAction func testLogin(_ sender: UISegmentedControl) {
         
-        sender.userInteractionEnabled = false
+        sender.isUserInteractionEnabled = false
         var id: String!
         
         switch testSegment.selectedSegmentIndex
@@ -223,7 +250,7 @@ extension RegViewController {
         }
         
         Router.Signin.Test(id: id).response {
-            sender.userInteractionEnabled = true
+            sender.isUserInteractionEnabled = true
             if $0.result.isFailure { return }
             me = Account($0.result.value!)
             self.changeRootToTab()
@@ -234,63 +261,55 @@ extension RegViewController {
 // MARK: - WechatManager
 extension RegViewController {
     
-    private func setupWechatManager() {
+    fileprivate func setupWechatManager() {
         
         WechatManager.appid = "wx4079dacf73fef72d"
         WechatManager.appSecret = "d4ec5214ea3ac56752ff75692fb88f48"
-        WechatManager.openid = Defaults["openid"].string
-        WechatManager.access_token = Defaults["access_token"].string
-        WechatManager.refresh_token = Defaults["refresh_token"].string
-        
-        WechatManager.sharedInstance.authDelegate = self
     }
 }
 
 // MARK: - WechatManagerDelegate
-extension RegViewController: WechatManagerAuthDelegate {
+extension RegViewController {
     
-    func checkIfNeeded(completion: ((res: AnyObject?, errCode: Int?) -> ())) -> Bool {
-        
-        Router.Signin.WeChat(openid: WechatManager.openid, access_token: WechatManager.access_token).response {
-            switch $0.result {
-            case .Success(let value):
-                
-                completion(res: value.dictionaryObject, errCode: nil)
-                
-            case .Failure:
-                
-                let errCode = $0.response?.statusCode ?? $0.result.error?.code
-                completion(res: nil,errCode: errCode )
-            }
-        }
-        return true
-    }
+//    func checkIfNeeded(completion: ((_ res: Any?, _ errCode: Int?) -> ())) -> Bool {
+//        
+//        Router.Signin.WeChat(openid: WechatManager.openid, access_token: WechatManager.accessToken).response {
+//            switch $0.result {
+//            case .Success(let value):
+//                
+//                completion(res: value.dictionaryObject, errCode: nil)
+//                
+//            case .Failure:
+//                
+//                let errCode = $0.response?.statusCode ?? $0.result.error?.code
+//                completion(res: nil,errCode: errCode )
+//            }
+//        }
+//        return true
+//    }
+//    
+//    func signupIfNeeded(var parameters: [String : Any], completion: ((_ res: Any) -> ())) {
+//        
+//        let wechat = Router.Signup.WeChat(openid: WechatManager.openid, nickname: parameters["nickname"] as? String ?? "", gender: parameters["sex"] as? String, headimgurl: parameters["headimgurl"] as? String)
+//        
+//        wechat.response {
+//            
+//            if $0.result.isFailure {
+//                self.failure(400)
+//            } else {
+//                completion(res: $0.result.value!.dictionaryObject!)
+//            }
+//        }
+//    }
     
-    func signupIfNeeded(var parameters: [String : AnyObject], completion: ((res: AnyObject) -> ())) {
-        
-        let wechat = Router.Signup.WeChat(openid: WechatManager.openid, nickname: parameters["nickname"] as? String ?? "", gender: parameters["sex"] as? String, headimgurl: parameters["headimgurl"] as? String)
-        
-        wechat.response {
-            
-            if $0.result.isFailure {
-                self.failure(400)
-            } else {
-                completion(res: $0.result.value!.dictionaryObject!)
-            }
-        }
-    }
-    
-    func success(res: AnyObject) {
-        Defaults["openid"] = WechatManager.openid
-        Defaults["access_token"] = WechatManager.access_token
-        Defaults["refresh_token"] = WechatManager.refresh_token
+    func success(res: Any) {
         me = Account(res)
         self.changeRootToTab()
     }
     
-    func failure(errCode: Int) {
-        self.inputArea.hidden = false
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+    fileprivate func failure(errCode: Int) {
+        self.inputArea.isHidden = false
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
             self.inputArea.alpha = 1
         })
     }

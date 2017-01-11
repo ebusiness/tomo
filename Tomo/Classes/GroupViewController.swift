@@ -32,16 +32,16 @@ final class GroupViewController: UICollectionViewController {
         self.configEventObserver()
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if segue.identifier == "ShowGroupDetail" {
-            let groupDetailViewController = segue.destinationViewController as! GroupDetailViewController
+            let groupDetailViewController = segue.destination as! GroupDetailViewController
             groupDetailViewController.group = sender as! GroupEntity
         }
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -49,13 +49,13 @@ final class GroupViewController: UICollectionViewController {
 
 extension GroupViewController {
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.groups.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("StationCell", forIndexPath: indexPath) as! MyGroupCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as! MyGroupCollectionViewCell
 
         cell.group = self.groups[indexPath.row]
     
@@ -72,18 +72,18 @@ extension GroupViewController {
     func collectionView(collectionView: UICollectionView, layout : UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let width = (TomoConst.UI.ScreenWidth - 2.0) / 2.0
         let height = width / 3.0 * 4.0
-        return CGSizeMake(width, height)
+        return CGSize(width: width, height: height)
     }
 
     // When cell was tapped, move to group detail
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("ShowGroupDetail", sender: self.groups[indexPath.row])
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "ShowGroupDetail", sender: self.groups[indexPath.row])
     }
 
     // Give CollectionView footer view, and hold a reference of it
-    override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
-        self.footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Footer", forIndexPath: indexPath) as! SearchResultReusableView
+        self.footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath) as! SearchResultReusableView
 
         if self.isExhausted && self.groups.count == 0 {
             self.footerView.showEmptyResultView()
@@ -116,7 +116,7 @@ extension GroupViewController: UICollectionViewDelegateFlowLayout {
 extension GroupViewController  {
 
     // Fetch more contents when scroll down to bottom
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
         let contentHeight = scrollView.contentSize.height
         let offsetY = scrollView.contentOffset.y
@@ -132,7 +132,7 @@ extension GroupViewController  {
 
 extension GroupViewController {
 
-    private func loadData() {
+    fileprivate func loadData() {
 
         if self.isLoading || self.isExhausted {
             return
@@ -165,10 +165,10 @@ extension GroupViewController {
                 return
             }
 
-            if let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) {
-                self.groups.appendContentsOf(groups)
-                self.appendCells(groups.count)
-                self.page++
+            if let groups: [GroupEntity] = GroupEntity.collection(json: $0.result.value!) {
+                self.groups.append(contentsOf: groups)
+                self.appendCells(count: groups.count)
+                self.page += 1
 
                 if groups.count < TomoConst.PageSize.Medium {
                     self.footerView.showSearchResultView()
@@ -179,19 +179,19 @@ extension GroupViewController {
         }
     }
 
-    private func appendCells(count: Int) {
+    fileprivate func appendCells(count: Int) {
 
         let startIndex = self.groups.count - count
         let endIndex = self.groups.count
 
-        var indexPaths = [NSIndexPath]()
+        var indexPaths = [IndexPath]()
 
         for i in startIndex..<endIndex {
-            let indexPath = NSIndexPath(forItem: i, inSection: 0)
+            let indexPath = IndexPath(item: i, section: 0)
             indexPaths.append(indexPath)
         }
 
-        self.collectionView!.insertItemsAtIndexPaths(indexPaths)
+        self.collectionView!.insertItems(at: indexPaths)
     }
 }
 
@@ -199,9 +199,9 @@ extension GroupViewController {
 
 extension GroupViewController {
 
-    private func configEventObserver() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didJoinGroup:", name: "didJoinGroup", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didLeaveGroup:", name: "didLeaveGroup", object: me)
+    fileprivate func configEventObserver() {
+        NotificationCenter.default.addObserver(self, selector: "didJoinGroup:", name: NSNotification.Name(rawValue: "didJoinGroup"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didLeaveGroup:", name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
     }
 
     func didJoinGroup(notification: NSNotification) {
@@ -215,11 +215,11 @@ extension GroupViewController {
 
         // update collection view, insert the corresponding row in section 0 row 0
         self.collectionView?.performBatchUpdates({
-            self.collectionView?.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+            self.collectionView?.insertItems(at: [IndexPath(item: 0, section: 0)])
         }) { _ in
             // reload the section to get right section footer
             // TODO: This may cuase screen fliker
-            self.collectionView?.reloadSections(NSIndexSet(index: 0))
+            self.collectionView?.reloadSections(NSIndexSet(index: 0) as IndexSet)
         }
     }
 
@@ -228,18 +228,18 @@ extension GroupViewController {
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
         guard let groupId = userInfo["idOfDeletedGroup"] as? String else { return }
-        guard let index = self.groups.indexOf({ $0.id == groupId }) else { return }
+        guard let index = self.groups.index(where: { $0.id == groupId }) else { return }
 
         // add the new group into collection view data model
-        self.groups.removeAtIndex(index)
+        self.groups.remove(at: index)
 
         // update collection view, remove the corresponding row from section 0
         self.collectionView?.performBatchUpdates({
-            self.collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
+            self.collectionView?.deleteItems(at: [IndexPath(item: index, section: 0)])
         }) { _ in
             // reload the section to get right section footer
             // TODO: This may cuase screen fliker
-            self.collectionView?.reloadSections(NSIndexSet(index: 0))
+            self.collectionView?.reloadSections(NSIndexSet(index: 0) as IndexSet)
         }
     }
 }

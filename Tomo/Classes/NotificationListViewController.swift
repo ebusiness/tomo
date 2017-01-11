@@ -15,10 +15,10 @@ final class NotificationListViewController: UITableViewController {
 
     @IBOutlet weak var loadingLabel: UILabel!
 
-    private var notifications = [NotificationEntity]()
+    fileprivate var notifications = [NotificationEntity]()
 
-    private var isLoading = false
-    private var isExhausted = false
+    fileprivate var isLoading = false
+    fileprivate var isExhausted = false
     
     override func viewDidLoad() {
 
@@ -29,13 +29,13 @@ final class NotificationListViewController: UITableViewController {
         self.configEventObserver()
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         // let account model marks all notification checked
         me.checkAllNotification()
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -44,7 +44,7 @@ final class NotificationListViewController: UITableViewController {
 extension NotificationListViewController {
 
     // Fetch more contents when scroll down to bottom
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
@@ -60,17 +60,17 @@ extension NotificationListViewController {
 
 extension NotificationListViewController {
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.notifications.count
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 88
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! NotificationCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NotificationCell
         cell.notification = self.notifications[indexPath.row]
         return cell
     }
@@ -79,10 +79,10 @@ extension NotificationListViewController {
 // MARK: - UITableView Delegate
 
 extension NotificationListViewController {
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! NotificationCell
-        cell.didSelect(self)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let cell = tableView.cellForRow(at: indexPath) as! NotificationCell
+        cell.didSelect(vc: self)
     }
 }
 
@@ -90,7 +90,7 @@ extension NotificationListViewController {
 
 extension NotificationListViewController {
     
-    private func loadMoreContent() {
+    fileprivate func loadMoreContent() {
         
         // skip if already in loading or no more contents
         if self.isLoading || self.isExhausted {
@@ -108,33 +108,33 @@ extension NotificationListViewController {
                 self.isLoading = false
                 self.isExhausted = true
                 self.loadingIndicator.stopAnimating()
-                self.loadingLabel.hidden = false
+                self.loadingLabel.isHidden = false
                 return
             }
             
-            if let loadNotifications:[NotificationEntity] = NotificationEntity.collection($0.result.value!) {
+            if let loadNotifications:[NotificationEntity] = NotificationEntity.collection(json: $0.result.value!) {
                 self.notifications += loadNotifications
-                self.appendRows(loadNotifications.count)
+                self.appendRows(rows: loadNotifications.count)
             }
 
             self.isLoading = false
         }
     }
     
-    private func appendRows(rows: Int) {
+    fileprivate func appendRows(rows: Int) {
 
         let notificationsCount = self.notifications.count
         let firstIndex = notificationsCount - rows
         let lastIndex = notificationsCount
         
-        var indexPathes = [NSIndexPath]()
+        var indexPathes = [IndexPath]()
         
         for index in firstIndex..<lastIndex {
-            indexPathes.push(NSIndexPath(forRow: index, inSection: 0))
+            indexPathes.append(IndexPath(row: index, section: 0))
         }
         
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
+        tableView.insertRows(at: indexPathes, with: .fade)
         tableView.endUpdates()
     }
 }
@@ -143,27 +143,27 @@ extension NotificationListViewController {
 
 extension NotificationListViewController {
 
-    private func configEventObserver() {
+    fileprivate func configEventObserver() {
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: "didMyFriendInvitationAccepted", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: "didMyFriendInvitationRefused", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: "didFriendBreak", object: me)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: NSNotification.Name(rawValue: "didMyFriendInvitationRefused"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: "didReceivePost", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: "didPostLiked", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: "didPostCommented", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: "didPostBookmarked", object: me)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: NSNotification.Name(rawValue: "didReceivePost"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: NSNotification.Name(rawValue: "didPostLiked"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: NSNotification.Name(rawValue: "didPostCommented"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: NSNotification.Name(rawValue: "didPostBookmarked"), object: me)
     }
     
-    func didReceiveNotification(notification: NSNotification) {
+    func didReceiveNotification(notification: Notification) {
         guard let userInfo = notification.userInfo else { return}
         let remoteNotification = NotificationEntity(userInfo)
         
-        self.notifications.insert(remoteNotification, atIndex: 0)
+        self.notifications.insert(remoteNotification, at: 0)
 
-        gcd.sync(.Main) {
+        gcd.sync(.main) {
             self.tableView.beginUpdates()
-            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Fade)
+            self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
             self.tableView.endUpdates()
         }
     }
@@ -185,7 +185,7 @@ final class NotificationCell: UITableViewCell {
         didSet{
 
             if let photo = self.notification.from.photo {
-                self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
+                self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: DefaultAvatarImage)
             }
 
             self.nickNameLabelView.text = self.notification.from.nickName
@@ -207,16 +207,16 @@ extension NotificationCell {
             //                print("接受了您的好友请求")
             //                print("拒绝了您的好友邀请")
             //                print("解除了与您的好友关系")
-            self.presentProfileView(vc)
+            self.presentProfileView(vc: vc)
         case .PostNew, .PostLiked, .PostCommented, .PostBookmarked: // Post
             //                print("发表了新的帖子")
             //                print("赞了您的帖子")
             //                print("评论了您的帖子")
             //                print("收藏了您的帖子")
-            self.presentPostView(vc)
+            self.presentPostView(vc: vc)
         case .GroupJoined: // Group
             //                print("加入了您的群组")
-            self.presentGroupView(vc)
+            self.presentGroupView(vc: vc)
         default:
             break
         }
@@ -225,7 +225,7 @@ extension NotificationCell {
 
 extension NotificationCell {
 
-    private func getNotificationContent() ->String {
+    fileprivate func getNotificationContent() ->String {
         guard let type = ListenerEvent(rawValue: self.notification.type) else { return "未知处理" }
         var message = self.notification.type
         switch type {
@@ -252,34 +252,34 @@ extension NotificationCell {
         default:
             message = "未知处理"
         }
-        return message
+        return message!
     }
 
-    private func presentProfileView(vc: UIViewController) {
-        let profileVC = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+    fileprivate func presentProfileView(vc: UIViewController) {
+        let profileVC = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
         profileVC.user = self.notification.from
         vc.navigationController?.pushViewController(profileVC, animated: true)
     }
 
-    private func presentPostView(vc: UIViewController) {
+    fileprivate func presentPostView(vc: UIViewController) {
         Router.Post.FindById(id: self.notification.targetId).response {
             if $0.result.isFailure { return }
 
-            let postVC = Util.createViewControllerWithIdentifier("PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
+            let postVC = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
             postVC.post = PostEntity($0.result.value!)
             if postVC.post.id == self.notification.targetId {
                 vc.navigationController?.pushViewController(postVC, animated: true)
             } else {
-                Util.showInfo("帖子已被删除")
+                Util.showInfo(title: "帖子已被删除")
             }
         }
     }
 
-    private func presentGroupView(vc: UIViewController) {
+    fileprivate func presentGroupView(vc: UIViewController) {
         Router.Group.FindById(id: self.notification.targetId).response {
             if $0.result.isFailure { return }
 
-            let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+            let groupVC = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
             groupVC.group = GroupEntity($0.result.value!)
             vc.navigationController?.pushViewController(groupVC, animated: true)
         }

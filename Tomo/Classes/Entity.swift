@@ -15,7 +15,7 @@ public protocol CollectionSerializable {
 
 extension CollectionSerializable {
     
-    init(_ respunse: AnyObject) {
+    init(_ respunse: Any) {
         self.init(JSON(respunse))
     }
     
@@ -27,8 +27,8 @@ extension CollectionSerializable {
         return nil
     }
     
-    static func collection<T: CollectionSerializable>(respunse: AnyObject) -> [T]? {
-        return collection(JSON(respunse))
+    static func collection<T: CollectionSerializable>(respunse: Any) -> [T]? {
+        return collection(json: JSON(respunse))
     }
 }
 

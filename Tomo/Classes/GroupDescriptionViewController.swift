@@ -31,22 +31,22 @@ final class GroupDescriptionViewController: UICollectionViewController {
         self.configEventObserver()
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         // restore the normal navigation bar before disappear
-        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         self.navigationController?.navigationBar.shadowImage = nil
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.configNavigationBarByScrollPosition()
     }
 
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.configNavigationBarByScrollPosition()
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -54,12 +54,12 @@ final class GroupDescriptionViewController: UICollectionViewController {
 
 extension GroupDescriptionViewController {
 
-    private func configDisplay() {
+    fileprivate func configDisplay() {
 
         self.navigationItem.title = group.name
     }
 
-    private func loadGroupDescription() {
+    fileprivate func loadGroupDescription() {
         
         Router.Group.FindById(id: group.id).response {
 
@@ -69,14 +69,14 @@ extension GroupDescriptionViewController {
 
                 self.members += members
 
-                var insertIndex: [NSIndexPath] = []
+                var insertIndex: [IndexPath] = []
 
                 for _ in self.members {
-                    insertIndex.append(NSIndexPath(forItem: insertIndex.count, inSection: 0))
+                    insertIndex.append(IndexPath(item: insertIndex.count, section: 0))
                 }
 
                 self.collectionView!.performBatchUpdates({ _ in
-                    self.collectionView!.insertItemsAtIndexPaths(insertIndex)
+                    self.collectionView!.insertItems(at: insertIndex)
                 }, completion: nil)
 
                 self.footerView.loadingIndicator.stopAnimating()
@@ -84,7 +84,7 @@ extension GroupDescriptionViewController {
         }
     }
 
-    private func configNavigationBarByScrollPosition() {
+    fileprivate func configNavigationBarByScrollPosition() {
 
         let offsetY = self.collectionView!.contentOffset.y
 
@@ -95,12 +95,12 @@ extension GroupDescriptionViewController {
         if offsetY > self.headerHeight - TomoConst.UI.TopBarHeight * 2 {
 
             let distance = self.headerHeight - offsetY - TomoConst.UI.TopBarHeight * 2
-            let image = Util.imageWithColor(0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
-            self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+            let image = Util.imageWithColor(rgbValue: 0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
+            self.navigationController?.navigationBar.setBackgroundImage(image, for: .default)
 
             // if user scroll down so the table header view got shown, just keep the navigation bar transparent
         } else {
-            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
         }
     }
@@ -110,32 +110,32 @@ extension GroupDescriptionViewController {
 
 extension GroupDescriptionViewController {
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.members.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MemberCell", forIndexPath: indexPath) as! GroupDescriptionMemberAvatarCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemberCell", for: indexPath) as! GroupDescriptionMemberAvatarCell
 
         cell.avatarImageView.layer.cornerRadius = (TomoConst.UI.ScreenWidth - 50) / 4 / 2
         cell.avatarImageView.layer.masksToBounds = true
 
-        cell.avatarImageView.sd_setImageWithURL(NSURL(string: self.members[indexPath.row].photo ?? ""), placeholderImage: UIImage(named: "avatar"))
+        cell.avatarImageView.sd_setImage(with: URL(string: self.members[indexPath.row].photo ?? ""), placeholderImage: UIImage(named: "avatar"))
         cell.nickNameLabel.text = self.members[indexPath.row].nickName
 
 
         return cell;
     }
 
-    override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
         if kind == UICollectionElementKindSectionHeader {
-            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! GroupDescriptionHeaderCell
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as! GroupDescriptionHeaderCell
             headerView.group = self.group
             return headerView
         } else {
-            self.footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Footer", forIndexPath: indexPath) as! GroupDescriptionFooterCell
+            self.footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath) as! GroupDescriptionFooterCell
             return self.footerView
         }
     }
@@ -146,8 +146,8 @@ extension GroupDescriptionViewController {
 
 extension GroupDescriptionViewController {
 
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = self.members[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -155,11 +155,11 @@ extension GroupDescriptionViewController {
 
 extension GroupDescriptionViewController: UICollectionViewDelegateFlowLayout {
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (TomoConst.UI.ScreenWidth - 50) / 4, height: (TomoConst.UI.ScreenWidth - 50) / 4 + 30)
     }
-
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return self.headerViewSize
     }
 }
@@ -168,9 +168,9 @@ extension GroupDescriptionViewController: UICollectionViewDelegateFlowLayout {
 
 extension GroupDescriptionViewController {
     
-    private func configEventObserver() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didJoinGroup:", name: "didJoinGroup", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didLeaveGroup:", name: "didLeaveGroup", object: me)
+    fileprivate func configEventObserver() {
+        NotificationCenter.default.addObserver(self, selector: "didJoinGroup:", name: NSNotification.Name(rawValue: "didJoinGroup"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didLeaveGroup:", name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
     }
 
     func didJoinGroup(notification: NSNotification) {
@@ -180,9 +180,9 @@ extension GroupDescriptionViewController {
         guard let group = userInfo["groupEntityOfNewGroup"] as? GroupEntity else { return }
         guard group.id == self.group.id else { return }
 
-        self.members.insert(me, atIndex: 0)
+        self.members.insert(me, at: 0)
 
-        self.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+        self.collectionView!.insertItems(at: [IndexPath(item: 0, section: 0)])
     }
 
     func didLeaveGroup(notification: NSNotification) {
@@ -192,9 +192,9 @@ extension GroupDescriptionViewController {
         guard let groupId = userInfo["idOfDeletedGroup"] as? String else { return }
         guard groupId == self.group.id else { return }
 
-        if let index = self.members.indexOf({ $0.id == me.id }) {
-            self.members.removeAtIndex(index)
-            self.collectionView!.deleteItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
+        if let index = self.members.index(where: { $0.id == me.id }) {
+            self.members.remove(at: index)
+            self.collectionView!.deleteItems(at: [IndexPath(item: index, section: 0)])
         }
     }
 }
@@ -210,21 +210,21 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
 
     var group: GroupEntity! {
         didSet {
-            self.coverImageView.sd_setImageWithURL(NSURL(string: self.group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
+            self.coverImageView.sd_setImage(with: URL(string: self.group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
             self.didSetGroup()
         }
     }
 
     override func awakeFromNib() {
-        self.actionButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.actionButton.layer.borderColor = UIColor.white.cgColor
         self.actionButton.layer.borderWidth = 2
     }
 
-    @IBAction func actionButtonTapped(sender: UIButton) {
+    @IBAction func actionButtonTapped(_ sender: UIButton) {
 
-        sender.userInteractionEnabled = false
+        sender.isUserInteractionEnabled = false
 
-        if let myGroups = me.groups where myGroups.contains(self.group.id) {
+        if let myGroups = me.groups, myGroups.contains(self.group.id) {
             self.leaveGroup()
         } else {
             self.joinGroup()
@@ -233,15 +233,15 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
     
     private func didSetGroup(){
         
-        if let myGroups = me.groups where myGroups.contains(self.group.id) {
+        if let myGroups = me.groups, myGroups.contains(self.group.id) {
             
-            self.actionButton.setTitle(" 退出群组 ", forState: .Normal)
+            self.actionButton.setTitle(" 退出群组 ", for: .normal)
             self.actionButton.backgroundColor = Palette.Red.primaryColor
             self.actionButton.sizeToFit()
             
         } else  {
             
-            self.actionButton.setTitle(" 加入群组 ", forState: .Normal)
+            self.actionButton.setTitle(" 加入群组 ", for: .normal)
             self.actionButton.backgroundColor = Palette.Green.primaryColor
             self.actionButton.sizeToFit()
         }
@@ -252,45 +252,45 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
         Router.Group.Join(id: self.group.id).response {
 
             if $0.result.isFailure {
-                self.actionButton.userInteractionEnabled = true
+                self.actionButton.isUserInteractionEnabled = true
                 return
             }
 
-            me.joinGroup(self.group)
-            UIView.animateWithDuration(TomoConst.Duration.Short) {
+            me.joinGroup(group: self.group)
+            UIView.animate(withDuration: TomoConst.Duration.Short) {
                 self.didSetGroup()
             }
             
-            self.actionButton.userInteractionEnabled = true
+            self.actionButton.isUserInteractionEnabled = true
         }
     }
 
     private func leaveGroup() {
 
-        let alert = UIAlertController(title: "退出群组", message: "确定退出\(self.group.name)么?", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "退出群组", message: "确定退出\(self.group.name)么?", preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "取消", style: .Destructive, handler: { _ in
-            self.actionButton.userInteractionEnabled = true
+        alert.addAction(UIAlertAction(title: "取消", style: .destructive, handler: { _ in
+            self.actionButton.isUserInteractionEnabled = true
         }))
 
-        alert.addAction(UIAlertAction(title: "确定", style: .Default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { _ in
             Router.Group.Leave(id: self.group.id).response {
 
                 if $0.result.isFailure {
-                    self.actionButton.userInteractionEnabled = true
+                    self.actionButton.isUserInteractionEnabled = true
                     return
                 }
 
-                me.leaveGroup(self.group)
-                UIView.animateWithDuration(TomoConst.Duration.Short) {
+                me.leaveGroup(group: self.group)
+                UIView.animate(withDuration: TomoConst.Duration.Short) {
                     self.didSetGroup()
                 }
                 
-                self.actionButton.userInteractionEnabled = true
+                self.actionButton.isUserInteractionEnabled = true
             }
         }))
 
-        window!.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+        window!.rootViewController!.present(alert, animated: true, completion: nil)
     }
 }
 

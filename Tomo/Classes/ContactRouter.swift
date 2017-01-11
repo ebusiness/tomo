@@ -14,16 +14,16 @@ extension Router {
         
         var path: String {
             switch self {
-            case let Delete(id):
+            case let .Delete(id):
                 return "/friends/\(id)"
-            case All:
+            case .All:
                 return "/friends"
 //                return "/contacts"
             }
         }
         var method: RouteMethod {
             switch self {
-            case Delete:
+            case .Delete:
                 return .DELETE
             default:
                 return .GET

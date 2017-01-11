@@ -17,7 +17,7 @@ class CommentEntity: Entity {
     
     var content: String!
     
-    var createDate: NSDate!
+    var createDate: Date!
     
     override init() {
         super.init()
@@ -32,7 +32,7 @@ class CommentEntity: Entity {
         self.id = json["_id"].string ?? json["id"].stringValue
         self.owner = UserEntity(json["owner"])
         self.content = json["content"].stringValue
-        self.createDate = json["createDate"].stringValue.toDate(TomoConfig.Date.Format)
+        self.createDate = json["createDate"].stringValue.toDate(format: TomoConfig.Date.Format)
         
     }
 }

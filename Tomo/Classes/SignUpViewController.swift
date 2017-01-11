@@ -47,12 +47,12 @@ class SignUpViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden: Bool {
         return true
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
 }
@@ -61,14 +61,14 @@ class SignUpViewController: UIViewController {
 
 extension SignUpViewController {
     
-    private func setupAppearance() {
+    fileprivate func setupAppearance() {
         
         func customizeTextField(textField: UITextField) {
             
             // draw a white bottom border
             let border = CALayer()
             let width = CGFloat(1.0)
-            border.borderColor = UIColor.whiteColor().CGColor
+            border.borderColor = UIColor.white.cgColor
             border.frame = CGRect(x: 0, y: textField.frame.size.height - width, width: textField.frame.size.width, height: textField.frame.size.height)
             border.borderWidth = width
             textField.layer.addSublayer(border)
@@ -76,42 +76,42 @@ extension SignUpViewController {
             
             // make placeholder text white
             let attributeString = NSAttributedString(string: textField.placeholder!, attributes: [
-                NSForegroundColorAttributeName: UIColor.whiteColor()
-                ])
+                NSForegroundColorAttributeName: UIColor.white
+            ])
             textField.attributedPlaceholder = attributeString
         }
 
-        inputAreaHeight.constant = UIScreen.mainScreen().bounds.height
+        inputAreaHeight.constant = UIScreen.main.bounds.height
 
         // customize wechat login button
-        signUpButton.layer.borderColor = UIColor.whiteColor().CGColor
+        signUpButton.layer.borderColor = UIColor.white.cgColor
         signUpButton.layer.borderWidth = 1
         signUpButton.layer.cornerRadius = 2
         
         // customize email input field
-        customizeTextField(nickNameTextField)
-        customizeTextField(emailTextField)
-        customizeTextField(passwordTextField)
-        customizeTextField(repassTextField)
+        customizeTextField(textField: nickNameTextField)
+        customizeTextField(textField: emailTextField)
+        customizeTextField(textField: passwordTextField)
+        customizeTextField(textField: repassTextField)
     }
 
-    private func registerForKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShown:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
+    fileprivate func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: "keyboardWillShown:", name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "keyboardWillBeHidden:", name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
     func keyboardWillShown(notification: NSNotification) {
         guard let info = notification.userInfo else { return }
-        guard let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height else { return }
+        guard let keyboardHeight = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height else { return }
         
         var duration = 0.3
         
-        if let keyboardDuration = info[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue {
+        if let keyboardDuration = info[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
             duration = keyboardDuration
         }
         
         self.scrollViewBottomConstraint.constant = keyboardHeight
-        UIView.animateWithDuration(duration, animations: { () -> Void in
+        UIView.animate(withDuration: duration, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
     }
@@ -123,23 +123,23 @@ extension SignUpViewController {
         
         var duration = 0.3
         
-        if let keyboardDuration = info[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue {
+        if let keyboardDuration = info[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
             duration = keyboardDuration
         }
         
-        UIView.animateWithDuration(duration, animations: { () -> Void in
+        UIView.animate(withDuration: duration, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
     }
 
-    private func showHintLabel(label: UILabel) {
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+    fileprivate func showHintLabel(label: UILabel) {
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
             label.alpha = 1.0
         })
     }
     
-    private func hideHintLabel(label: UILabel) {
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+    fileprivate func hideHintLabel(label: UILabel) {
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
             label.alpha = 0.0
         })
     }
@@ -149,38 +149,38 @@ extension SignUpViewController {
 
 extension SignUpViewController {
     
-    @IBAction func releaseResponder(sender: AnyObject) {
+    @IBAction func releaseResponder(_ sender: Any) {
         self.view.endEditing(true)
     }
     
-    @IBAction func cancel(sender: AnyObject) {
+    @IBAction func cancel(_ sender: Any) {
         self.view.endEditing(true)
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func signUp(sender: AnyObject) {
+    @IBAction func signUp(_ sender: Any) {
         
         Router.Signup.Email(email: emailTextField.text!, password: passwordTextField.text!, nickName: nickNameTextField.text!).response {
             
             let buttonTitle = "好"
             var title = "注册失败"
             var message = "您输入的邮件地址已经被使用，请更换其他的邮件地址"
-            var handler: ((UIAlertAction!) -> Void)?
+            var handler: ((UIAlertAction?) -> Void)?
             
             if $0.result.isSuccess {
                 title = "感谢您注册現場Tomo"
                 message = "认证邮件已发送至您的邮箱，请查收。激活您的帐号后即可开始使用現場Tomo"
                 handler = { _ in
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
-            Util.alert(self, title: title, message: message, cancel: buttonTitle, cancelHandler: handler)
+            Util.alert(parentvc: self, title: title, message: message, cancel: buttonTitle, cancelHandler: handler)
         }
         
     }
-    @IBAction func agreement(sender: UIButton) {
-        let agreementView = Util.createViewControllerWithIdentifier("AgreementView", storyboardName: "Setting")
-        self.presentViewController(agreementView, animated: true, completion: nil)
+    @IBAction func agreement(_ sender: UIButton) {
+        let agreementView = Util.createViewControllerWithIdentifier(id: "AgreementView", storyboardName: "Setting")
+        self.present(agreementView, animated: true, completion: nil)
     }
 }
 
@@ -188,33 +188,33 @@ extension SignUpViewController {
 
 extension SignUpViewController: UITextFieldDelegate {
 
-    @IBAction func textFieldTouchedUp(sender: UITextField) {
+    @IBAction func textFieldTouchedUp(_ sender: UITextField) {
         self.scrollView.scrollRectToVisible(sender.frame, animated: true)
     }
 
-    @IBAction func textFieldDidChange(sender: UITextField) {
+    @IBAction func textFieldDidChange(_ sender: UITextField) {
         
         if sender == self.nickNameTextField {
             
             let nickName = self.nickNameTextField.text!.trimmed()
             
-            if nickName.length == 0 || nickName.length > 10 {
+            if nickName.characters.count == 0 || nickName.characters.count > 10 {
                 nickNameValid = false
-                showHintLabel(nickNameHintLabel)
+                showHintLabel(label: nickNameHintLabel)
             } else {
                 nickNameValid = true
-                hideHintLabel(nickNameHintLabel)
+                hideHintLabel(label: nickNameHintLabel)
             }
         }
         
         if sender == self.emailTextField {
             
-            if !self.emailTextField.text!.isEmail() {
+            if !self.emailTextField.text!.isEmail {
                 emailValid = false
-                showHintLabel(emailHintLabel)
+                showHintLabel(label: emailHintLabel)
             } else {
                 emailValid = true
-                hideHintLabel(emailHintLabel)
+                hideHintLabel(label: emailHintLabel)
             }
         }
         
@@ -226,18 +226,18 @@ extension SignUpViewController: UITextFieldDelegate {
             
             if !password.isValidPassword() {
                 passwordValid = false
-                showHintLabel(passwordHintLabel)
+                showHintLabel(label: passwordHintLabel)
             } else {
                 passwordValid = true
-                hideHintLabel(passwordHintLabel)
+                hideHintLabel(label: passwordHintLabel)
             }
             
             if repass != password {
                 repassValid = false
-                showHintLabel(repassHintLabel)
+                showHintLabel(label: repassHintLabel)
             } else {
                 repassValid = true
-                hideHintLabel(repassHintLabel)
+                hideHintLabel(label: repassHintLabel)
             }
         }
         
@@ -249,21 +249,21 @@ extension SignUpViewController: UITextFieldDelegate {
             
             if repass != password {
                 repassValid = false
-                showHintLabel(repassHintLabel)
+                showHintLabel(label: repassHintLabel)
             } else {
                 repassValid = true
-                hideHintLabel(repassHintLabel)
+                hideHintLabel(label: repassHintLabel)
             }
         }
         
         if nickNameValid && emailValid && passwordValid && repassValid {
-            self.signUpButton.enabled = true
+            self.signUpButton.isEnabled = true
         } else {
-            self.signUpButton.enabled = false
+            self.signUpButton.isEnabled = false
         }
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         let nextTag = textField.tag + 1
         

@@ -47,7 +47,7 @@ final class GroupDetailViewController: UITableViewController {
         self.configEventObserver()
     }
 
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
@@ -60,18 +60,18 @@ final class GroupDetailViewController: UITableViewController {
         self.configNavigationBarByScrollPosition()
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         // restore the normal navigation bar before disappear
-        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         self.navigationController?.navigationBar.shadowImage = nil
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.configNavigationBarByScrollPosition()
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -79,32 +79,32 @@ final class GroupDetailViewController: UITableViewController {
 
 extension GroupDetailViewController {
     
-    @IBAction func joinGroup(sender: UIButton) {
+    @IBAction func joinGroup(_ sender: UIButton) {
 
-        sender.userInteractionEnabled = false
+        sender.isUserInteractionEnabled = false
         
         Router.Group.Join(id: self.group.id).response {
             if $0.result.isFailure {
-                sender.userInteractionEnabled = true
+                sender.isUserInteractionEnabled = true
                 return
             } else {
-                me.joinGroup(self.group)
+                me.joinGroup(group: self.group)
             }
         }
     }
     
-    @IBAction func didCreatePost(segue: UIStoryboardSegue) {
+    @IBAction func didCreatePost(_ segue: UIStoryboardSegue) {
         self.loadNewPost()
-        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: true)
+        self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
     
-    @IBAction func postButtonTapped(sender: UIBarButtonItem) {
-        let postCreateViewController = Util.createViewControllerWithIdentifier("PostCreateView", storyboardName: "Home") as! CreatePostViewController
+    @IBAction func postButtonTapped(_ sender: UIBarButtonItem) {
+        let postCreateViewController = Util.createViewControllerWithIdentifier(id: "PostCreateView", storyboardName: "Home") as! CreatePostViewController
         postCreateViewController.group = self.group
-        self.presentViewController(postCreateViewController, animated: true, completion: nil)
+        self.present(postCreateViewController, animated: true, completion: nil)
     }
 
-    @IBAction func chatButtonTapped(sender: UIBarButtonItem) {
+    @IBAction func chatButtonTapped(_ sender: UIBarButtonItem) {
         let groupChatViewController = GroupChatViewController()
         groupChatViewController.group = self.group
         groupChatViewController.hidesBottomBarWhenPushed = true
@@ -117,11 +117,11 @@ extension GroupDetailViewController {
 
 extension GroupDetailViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "pushGroupDescription" {
-            let destination = segue.destinationViewController as! GroupDescriptionViewController
+            let destination = segue.destination as! GroupDescriptionViewController
             destination.group = group
         }
     }
@@ -131,21 +131,21 @@ extension GroupDetailViewController {
 
 extension GroupDetailViewController {
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let post = self.posts[indexPath.row]
 
         var cell: TextPostTableViewCell!
 
         // If the post has one or more images, use ImagePostTableViewCell, otherwise use the TextPostTableViewCell.
-        if post.images?.count > 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostTableViewCell
+        if (post.images?.count)! > 0 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as! ImagePostTableViewCell
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as! TextPostTableViewCell
         }
 
         // Give the cell post data, this will tirgger configDisplay
@@ -163,13 +163,13 @@ extension GroupDetailViewController {
 
 extension GroupDetailViewController {
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.rowHeights[indexPath.item]
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyBoard = UIStoryboard(name: "Home", bundle: nil)
-        let postDetailVC = storyBoard.instantiateViewControllerWithIdentifier("PostDetailViewController") as! PostDetailViewController
+        let postDetailVC = storyBoard.instantiateViewController(withIdentifier: "PostDetailViewController") as! PostDetailViewController
         postDetailVC.post = self.posts[indexPath.row]
         navigationController?.pushViewController(postDetailVC, animated: true)
     }
@@ -179,9 +179,9 @@ extension GroupDetailViewController {
 
 extension GroupDetailViewController {
 
-    private func configEventObserver() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didJoinGroup:", name: "didJoinGroup", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didLeaveGroup:", name: "didLeaveGroup", object: me)
+    fileprivate func configEventObserver() {
+        NotificationCenter.default.addObserver(self, selector: "didJoinGroup:", name: NSNotification.Name(rawValue: "didJoinGroup"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didLeaveGroup:", name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
     }
 
     func didJoinGroup(notification: NSNotification) {
@@ -211,34 +211,34 @@ extension GroupDetailViewController {
 
 extension GroupDetailViewController {
 
-    private func configDisplay() {
+    fileprivate func configDisplay() {
 
-        self.joinButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.joinButton.layer.borderColor = UIColor.white.cgColor
         self.joinButton.layer.borderWidth = 2
 
         self.title = self.group.name
-        self.coverImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: DefaultGroupImage)
+        self.coverImageView.sd_setImage(with: URL(string: group.cover), placeholderImage: DefaultGroupImage)
 
         // set the header view's size according the screen size
-        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.headerViewSize)
+        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPoint.zero, size: self.headerViewSize)
 
         guard let myGroups = me.groups else { return }
 
         if myGroups.contains(self.group.id) {
             _ = navigationItem.rightBarButtonItems?.map {
-                $0.enabled = true
+                $0.isEnabled = true
             }
-            self.joinButton.hidden = true
+            self.joinButton.isHidden = true
         } else {
             _ = navigationItem.rightBarButtonItems?.map {
-                $0.enabled = false
+                $0.isEnabled = false
             }
-            self.joinButton.hidden = false
+            self.joinButton.isHidden = false
         }
     }
     
     // Fetch more post as use scroll down to the bottom of table view.
-    private func loadMorePosts() {
+    fileprivate func loadMorePosts() {
 
         // skip if already in loading or no more contents
         if self.isLoading || self.isExhausted {
@@ -256,20 +256,20 @@ extension GroupDetailViewController {
                 self.isLoading = false
                 self.isExhausted = true
                 self.loadingIndicator.stopAnimating()
-                self.loadingLabel.hidden = false
+                self.loadingLabel.isHidden = false
                 return
             }
 
-            if let newPosts = PostEntity.collection($0.result.value!) as [PostEntity]? {
+            if let newPosts = PostEntity.collection(json: $0.result.value!) as [PostEntity]? {
 
                 // append new posts
                 self.posts += newPosts
 
                 // calculate the cell height for display these contents
-                self.rowHeights += newPosts.map { self.simulateLayout($0) }
+                self.rowHeights += newPosts.map { self.simulateLayout(post: $0) }
 
                 // let table view display new contents
-                self.appendRows(newPosts.count)
+                self.appendRows(rows: newPosts.count)
             }
             
             self.isLoading = false
@@ -293,24 +293,24 @@ extension GroupDetailViewController {
             }
 
             // prepend new contents
-            if let loadPosts:[PostEntity] = PostEntity.collection($0.result.value!) {
+            if let loadPosts:[PostEntity] = PostEntity.collection(json: $0.result.value!) {
                 self.posts = loadPosts + self.posts
-                self.rowHeights = loadPosts.map { self.simulateLayout($0) } + self.rowHeights
-                self.prependRows(loadPosts.count)
+                self.rowHeights = loadPosts.map { self.simulateLayout(post: $0) } + self.rowHeights
+                self.prependRows(rows: loadPosts.count)
             }
         }
     }
 
     // Append specific number of rows on table view
-    private func appendRows(rows: Int) {
+    fileprivate func appendRows(rows: Int) {
 
         let firstIndex = self.posts.count - rows
         let lastIndex = self.posts.count
 
-        var indexPathes = [NSIndexPath]()
+        var indexPathes = [IndexPath]()
 
         for index in firstIndex..<lastIndex {
-            indexPathes.push(NSIndexPath(forRow: index, inSection: 0))
+            indexPathes.append(IndexPath(row: index, section: 0))
         }
 
         // hold the oldest post for pull-up loading
@@ -322,46 +322,46 @@ extension GroupDetailViewController {
         }
 
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
+        tableView.insertRows(at: indexPathes, with: .fade)
         tableView.endUpdates()
     }
 
     // Prepend specific number of rows on table view
-    private func prependRows(rows: Int) {
+    fileprivate func prependRows(rows: Int) {
 
-        var indexPathes = [NSIndexPath]()
+        var indexPathes = [IndexPath]()
 
         for index in 0..<rows {
-            indexPathes.push(NSIndexPath(forRow: index, inSection: 0))
+            indexPathes.append(IndexPath(row: index, section: 0))
         }
 
         // hold the latest content for pull-up loading
         self.latestPost = self.posts.first
 
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
+        tableView.insertRows(at: indexPathes, with: .fade)
         tableView.endUpdates()
     }
 
     // Calulate the cell height beforehand
-    private func simulateLayout(post: PostEntity) -> CGFloat {
+    fileprivate func simulateLayout(post: PostEntity) -> CGFloat {
 
         let cell: TextPostTableViewCell
 
-        if post.images?.count > 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostTableViewCell
+        if (post.images?.count)! > 0 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as! ImagePostTableViewCell
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as! TextPostTableViewCell
         }
 
         cell.post = post
 
-        let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        let size = cell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
         
         return size.height
     }
 
-    private func configNavigationBarByScrollPosition() {
+    fileprivate func configNavigationBarByScrollPosition() {
 
         let offsetY = self.tableView.contentOffset.y
 
@@ -372,12 +372,12 @@ extension GroupDetailViewController {
         if offsetY > self.headerHeight - TomoConst.UI.TopBarHeight * 2 {
 
             let distance = self.headerHeight - offsetY - TomoConst.UI.TopBarHeight * 2
-            let image = Util.imageWithColor(0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
-            self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+            let image = Util.imageWithColor(rgbValue: 0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
+            self.navigationController?.navigationBar.setBackgroundImage(image, for: .default)
 
             // if user scroll down so the table header view got shown, just keep the navigation bar transparent
         } else {
-            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
         }
     }

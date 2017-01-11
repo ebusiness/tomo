@@ -28,7 +28,7 @@ final class GroupChatViewController: CommonMessageController {
         
         // page title
         title = group.name
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "line_group"), style: .Plain, target: self, action: "groupDetail")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "line_group"), style: .plain, target: self, action: "groupDetail")
         
         //receive notification
         self.registerForNotifications()
@@ -36,26 +36,26 @@ final class GroupChatViewController: CommonMessageController {
         self.loadMessages()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        guard let groups = me.groups where groups.contains(self.group.id) else {
-            self.navigationController?.popViewControllerAnimated(true)
+        guard let groups = me.groups, groups.contains(self.group.id) else {
+            self.navigationController?.popViewController(animated: true)
             return
         }
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         // open all message when leave
         Router.GroupMessage.FindByGroupId(id: self.group.id, before: nil).request
 
         // tell account model I finished talk
-        me.finishGroupChat(self.group)
+        me.finishGroupChat(group: self.group)
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -63,7 +63,7 @@ final class GroupChatViewController: CommonMessageController {
 
 extension GroupChatViewController {
     
-    private func loadAvatarForUser(user: UserEntity){
+    fileprivate func loadAvatarForUser(user: UserEntity){
 
         if user.id == me.id {
             return
@@ -77,21 +77,20 @@ extension GroupChatViewController {
 
             guard let image = image else { return }
             
-            self.avatars[user.id] = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+            self.avatars[user.id] = JSQMessagesAvatarImageFactory.avatarImage(with: image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
             
-            self.collectionView!.visibleCells().forEach { cell in
-                if let indexPath = self.collectionView!.indexPathForCell(cell )
-                    where self.messages[indexPath.item].senderId() == user.id {
+            self.collectionView!.visibleCells.forEach { cell in
+                if let indexPath = self.collectionView!.indexPath(for: cell ), self.messages[indexPath.item].senderId() == user.id {
                         
-                        self.collectionView!.reloadItemsAtIndexPaths([indexPath])
+                        self.collectionView!.reloadItems(at: [indexPath])
                 }
             }
         }
         
-        SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: photo), options: .RetryFailed, progress: nil, completed: sdBlock)
+        SDWebImageManager.shared().downloadImage(with: URL(string: photo), options: .retryFailed, progress: nil, completed: sdBlock)
     }
     
-    private func loadMessages() {
+    fileprivate func loadMessages() {
         
         if isLoading || isExhausted {
             return
@@ -107,7 +106,7 @@ extension GroupChatViewController {
                     self.isExhausted = true
                     return
                 }
-                guard let messages:[JSQMessageEntity] = JSQMessageEntity.collection($0.result.value!) else {
+                guard let messages:[JSQMessageEntity] = JSQMessageEntity.collection(json: $0.result.value!) else {
                     return
                 }
                 
@@ -117,23 +116,23 @@ extension GroupChatViewController {
                     if $0.from.id == me.id {
                         $0.from = me
                     }
-                    self.messages.insert($0, atIndex: 0)
+                    self.messages.insert($0, at: 0)
                     
                     if nil == self.avatars[$0.from.id] {
-                        self.loadAvatarForUser($0.from)
+                        self.loadAvatarForUser(user: $0.from)
                     }
                 }
                 
                 if self.oldestMessage == nil {
                     self.collectionView!.reloadData()
-                    self.scrollToBottomAnimated(false)
+                    self.scrollToBottom(animated: false)
                     
 //                    let newMessages = me.newMessages.filter { $0.group?.id != self.group.id }
 //                    if me.newMessages != newMessages {
 //                        me.newMessages = newMessages
 //                    }
                 } else {
-                    self.prependRows(messages.count)
+                    self.prependRows(rows: messages.count)
                 }
                 
                 self.oldestMessage = messages.last
@@ -142,7 +141,7 @@ extension GroupChatViewController {
     }
     
     @objc private func groupDetail(){
-        let vc = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+        let vc = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
         vc.group = group
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -153,7 +152,7 @@ extension GroupChatViewController {
 
 extension GroupChatViewController: CommonMessageDelegate {
     
-    func createMessage(type: MessageType, text: String) -> NSIndexPath {
+    func createMessage(type: MessageType, text: String) -> IndexPath {
         
         let newMessage = JSQMessageEntity()
         newMessage.id = ""
@@ -161,13 +160,13 @@ extension GroupChatViewController: CommonMessageDelegate {
         newMessage.type = type
         newMessage.group = self.group
         newMessage.content = text
-        newMessage.createDate = NSDate()
+        newMessage.createDate = Date()
         
 //        friend.lastMessage = newMessage.message
         self.messages.append(newMessage)
         
-        let indexPath = NSIndexPath(forRow: self.messages.count - 1, inSection: 0)
-        self.collectionView!.insertItemsAtIndexPaths([indexPath])
+        let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
+        self.collectionView!.insertItems(at: [indexPath])
         return indexPath
         
     }
@@ -179,10 +178,10 @@ extension GroupChatViewController: CommonMessageDelegate {
 
                 let newMessage = MessageEntity($0.result.value!)
                 newMessage.group = self.group
-                me.sendMessage(newMessage)
+                me.sendMessage(message: newMessage)
                 
                 JSQSystemSoundPlayer.jsq_playMessageSentSound()
-                self.finishSendingMessageAnimated(true)
+                self.finishSendingMessage(animated: true)
             }
             done?()
         }
@@ -195,8 +194,8 @@ extension GroupChatViewController: CommonMessageDelegate {
 
 extension GroupChatViewController {
     
-    private func registerForNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.GroupMessage.rawValue, object: nil)
+    fileprivate func registerForNotifications() {
+        NotificationCenter.default.addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.GroupMessage.notificationName, object: nil)
     }
     
     func didReceiveMessage(notification: NSNotification) {
@@ -211,15 +210,15 @@ extension GroupChatViewController {
 //        message.group = self.group
         
         if nil == self.avatars[message.from.id] {
-            self.loadAvatarForUser(message.from)
+            self.loadAvatarForUser(user: message.from)
         }
         
         self.messages.append(message)
         
-        gcd.sync(.Main) { _ in
+        gcd.sync(.main) { _ in
             
             JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
-            self.finishReceivingMessageAnimated(true)
+            self.finishReceivingMessage(animated: true)
         }
     }
 }
@@ -228,7 +227,7 @@ extension GroupChatViewController {
 
 extension GroupChatViewController {
     
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y < -176 {
             self.loadMessages()
         }
@@ -239,7 +238,7 @@ extension GroupChatViewController {
 
 extension GroupChatViewController {
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
         
         let message = messages[indexPath.item]
 

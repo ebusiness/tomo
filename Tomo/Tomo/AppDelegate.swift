@@ -17,9 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        self.window!.backgroundColor = UIColor.whiteColor()
+        self.window!.backgroundColor = UIColor.white
 
         var rootViewController: UIViewController!
 
@@ -36,19 +36,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if me.primaryStation != nil {
                     rootViewController = TabBarController()
                 } else {
-                    rootViewController = Util.createViewControllerWithIdentifier("RecommendView", storyboardName: "Main")
+                    rootViewController = Util.createViewControllerWithIdentifier(id: "RecommendView", storyboardName: "Main")
                 }
 
             // I'm not log in yet, take me to the sign-in view
             } else {
-                rootViewController = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
+                rootViewController = Util.createViewControllerWithIdentifier(id: nil, storyboardName: "Main")
             }
 
             Util.changeRootViewController(from: (self.window?.rootViewController)!, to: rootViewController)
         }
 
         // the application was start up from notification
-        if let launchOpts = launchOptions, userInfo = launchOpts[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject : AnyObject] {
+        if let launchOpts = launchOptions, let userInfo = launchOpts[UIApplicationLaunchOptionsKey.remoteNotification] as? [NSObject : AnyObject] {
             self.application(application, didReceiveRemoteNotification: userInfo)
         }
 
@@ -60,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
 
         Defaults["mapLastTimeStamp"] = NSDate()
 
@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             // update the application icon badge before entering background
             application.applicationIconBadgeNumber = rootvc.viewControllers!.reduce(0) { (count, vc ) -> Int in
-                if let badgeValue = vc.tabBarItem.badgeValue, badge = Int(badgeValue) {
+                if let badgeValue = vc.tabBarItem.badgeValue, let badge = Int(badgeValue) {
                     return count + badge
                 }
                 return count
@@ -78,23 +78,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     }
     
-    func application( application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData ) {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Router.Setting.UpdateDevice(deviceToken: deviceToken).request
     }
 
-    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print(error)
     }
 
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
         RemoteNotification.sharedInstance.receiveRemoteNotification(userInfo)
     }
     
-    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
-        return self.application(application, openURL: url, sourceApplication: nil, annotation: [])
+    func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
+        return self.application(application, open: url, sourceApplication: nil, annotation: [])
     }
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         return URLSchemesController.sharedInstance.handleOpenURL(url)
     }
 }

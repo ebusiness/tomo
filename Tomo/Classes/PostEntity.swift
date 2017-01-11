@@ -29,7 +29,7 @@ class PostEntity: Entity {
     
     var coordinate: [Double]?
     
-    var createDate: NSDate!
+    var createDate: Date!
     
     override init() {
         super.init()
@@ -70,7 +70,7 @@ class PostEntity: Entity {
         
         self.coordinate = json["coordinate"].arrayObject as? [Double]
         
-        self.createDate = json["createDate"].stringValue.toDate(TomoConfig.Date.Format)
+        self.createDate = json["createDate"].stringValue.toDate(format: TomoConfig.Date.Format)
         
     }
     

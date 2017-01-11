@@ -27,7 +27,7 @@ class UserEntity: Entity {
     
     var lastName: String?
     
-    var birthDay: NSDate?
+    var birthDay: Date?
     
     var address: String?
 
@@ -69,7 +69,7 @@ class UserEntity: Entity {
         self.lastName = json["lastName"].string
         
         if let birthDay = json["birthDay"].string {
-            self.birthDay = birthDay.toDate(TomoConfig.Date.Format)
+            self.birthDay = birthDay.toDate(format: TomoConfig.Date.Format)
         }
         
         self.address = json["address"].string

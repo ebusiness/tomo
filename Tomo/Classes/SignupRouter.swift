@@ -13,8 +13,8 @@ extension Router {
 
         var path: String {
             switch self {
-            case Email: return "/signup"
-            case WeChat: return "/signup-wechat"
+            case .Email: return "/signup"
+            case .WeChat: return "/signup-wechat"
             }
         }
 
@@ -22,12 +22,12 @@ extension Router {
             return .POST
         }
 
-        var parameters: [String: AnyObject]? {
+        var parameters: [String: Any]? {
 
             switch self {
-            case let Email(email, password, nickName):
+            case let .Email(email, password, nickName):
                 return ["email": email, "password": password, "nickName": nickName]
-            case let WeChat(openid, nickname, gender, headimgurl):
+            case let .WeChat(openid, nickname, gender, headimgurl):
                 var parameters = ["openid": openid, "nickname": nickname]
 
                 if let gender = gender {

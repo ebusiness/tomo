@@ -12,7 +12,7 @@ final class PickerTableViewController: UITableViewController {
     
     var pickerData = ["男","女"]
     var selected:String?
-    var didSelected: ((selected:String) -> Void)!
+    var didSelected: ((_ selected:String) -> Void)!
 
 }
 
@@ -20,18 +20,18 @@ final class PickerTableViewController: UITableViewController {
 
 extension PickerTableViewController {
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.pickerData.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let label = self.pickerData[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) 
         
-        cell.accessoryType = .None
+        cell.accessoryType = .none
         if self.selected == label {
-            cell.accessoryType = .Checkmark
+            cell.accessoryType = .checkmark
         }
         cell.textLabel?.text = label
         return cell
@@ -42,13 +42,13 @@ extension PickerTableViewController {
 
 extension PickerTableViewController {
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         self.selected = self.pickerData[indexPath.row]
         self.tableView.reloadData()
         
-        self.didSelected(selected: self.pickerData[indexPath.row])
-        self.navigationController?.popViewControllerAnimated(true)
+        self.didSelected(self.pickerData[indexPath.row])
+        self.navigationController?.popViewController(animated: true)
     }
 }

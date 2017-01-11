@@ -10,40 +10,40 @@
 extension Router {
     
     enum Setting: APIRoute {
-        case UpdateDevice(deviceToken: NSData)
+        case UpdateDevice(deviceToken: Data)
         case UpdateUserInfo(parameters: MeParameter)
-        case FindNotification(before: NSTimeInterval?)
+        case FindNotification(before: TimeInterval?)
         
         var path: String {
             switch self{
-            case UpdateDevice: return "/device"
-            case UpdateUserInfo: return "/me"
-            case FindNotification: return "/notifications"
+            case .UpdateDevice: return "/device"
+            case .UpdateUserInfo: return "/me"
+            case .FindNotification: return "/notifications"
             }
         }
         
         var method: RouteMethod {
             switch self{
-            case UpdateDevice: return .POST
-            case UpdateUserInfo: return .PATCH
-            case FindNotification: return .GET
+            case .UpdateDevice: return .POST
+            case .UpdateUserInfo: return .PATCH
+            case .FindNotification: return .GET
             }
         }
         
-        var parameters: [String: AnyObject]? {
+        var parameters: [String: Any]? {
             switch self{
-            case let UpdateDevice(deviceToken):
-                let token = String(deviceToken.description.characters.filter {!"<> ".characters.contains($0)})
-                let device = UIDevice.currentDevice()
+            case let .UpdateDevice(deviceToken):
+                let token = deviceToken.map { String(format: "%.2hhx", $0) }.joined()
+                let device = UIDevice.current
                 return [
                     "token": token,
                     "os": device.systemName,
                     "model": device.model,
                     "version": device.systemVersion,
                 ]
-            case let UpdateUserInfo(parameters):
+            case let .UpdateUserInfo(parameters):
                 return parameters.getParameters()
-            case let FindNotification(before):
+            case let .FindNotification(before):
                 guard let before = before else { return nil }
                 return ["before": String(before)]
             }
@@ -64,16 +64,16 @@ extension Router.Setting {
         gender: String?,
         photo: String?,
         cover: String?,
-        birthDay: NSDate?,
+        birthDay: Date?,
         primaryStation: String?
         
         var removeDevice: String?, pushSetting: Account.PushSetting?
         
         init(){}
         
-        func getParameters() -> [String: AnyObject]? {
+        func getParameters() -> [String: Any]? {
             
-            var parameters = [String: AnyObject]()
+            var parameters = [String: Any]()
             
             if let nickName = nickName {
                 parameters["nickName"] = nickName

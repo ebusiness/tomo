@@ -34,19 +34,19 @@ final class FriendListSendRequestController: UITableViewController {
 
 extension FriendListSendRequestController {
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.invitedUsers.count
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 88
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let user = self.invitedUsers[indexPath.row]
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! RequestFriendCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! RequestFriendCell
         cell.user = user
         
         return cell
@@ -57,11 +57,11 @@ extension FriendListSendRequestController {
 
 extension FriendListSendRequestController {
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = self.invitedUsers[indexPath.row]
         
         self.navigationController?.pushViewController(vc, animated: true)
@@ -73,7 +73,7 @@ extension FriendListSendRequestController {
 extension FriendListSendRequestController {
 
     // Fetch more contents when scroll down to bottom
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
@@ -89,9 +89,9 @@ extension FriendListSendRequestController {
 
 extension FriendListSendRequestController {
 
-    @IBAction func searchFriend(sender: AnyObject) {
-        let vc = Util.createViewControllerWithIdentifier("SearchFriend", storyboardName: "Contacts")
-        self.presentViewController(vc, animated: true, completion: nil)
+    @IBAction func searchFriend(_ sender: Any) {
+        let vc = Util.createViewControllerWithIdentifier(id: "SearchFriend", storyboardName: "Contacts")
+        self.present(vc, animated: true, completion: nil)
     }
 }
 
@@ -99,7 +99,7 @@ extension FriendListSendRequestController {
 
 extension FriendListSendRequestController {
 
-    private func loadMoreContent() {
+    fileprivate func loadMoreContent() {
 
         // skip if already in loading or no more contents
         if self.isLoading || self.isExhausted {
@@ -115,17 +115,17 @@ extension FriendListSendRequestController {
                 self.isLoading = false
                 self.isExhausted = true
                 self.loadingIndicator.stopAnimating()
-                self.loadingLabel.hidden = false
+                self.loadingLabel.isHidden = false
                 return
             }
 
-            if let result:[UserEntity] = UserEntity.collection($0.result.value!) {
+            if let result:[UserEntity] = UserEntity.collection(json: $0.result.value!) {
 
                 // append new contents
                 self.invitedUsers += result
 
                 // let table view display new contents
-                self.appendRows(result.count)
+                self.appendRows(rows: result.count)
             }
 
             self.isLoading = false
@@ -138,17 +138,17 @@ extension FriendListSendRequestController {
         let firstIndex = self.invitedUsers.count - rows
         let lastIndex = self.invitedUsers.count
 
-        var indexPathes = [NSIndexPath]()
+        var indexPathes = [IndexPath]()
 
         for index in firstIndex..<lastIndex {
-            indexPathes.append(NSIndexPath(forRow: index, inSection: 0))
+            indexPathes.append(IndexPath(row: index, section: 0))
         }
 
         // hold the oldest content for pull-up loading
         oldestContent = self.invitedUsers.last
 
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: UITableViewRowAnimation.Middle)
+        tableView.insertRows(at: indexPathes, with: .middle)
         tableView.endUpdates()
 
     }
@@ -169,7 +169,7 @@ final class RequestFriendCell: UITableViewCell {
         didSet {
 
             if let photo = user.photo {
-                self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
+                self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: DefaultAvatarImage)
             }
 
             self.userNameLabel.text = user.nickName

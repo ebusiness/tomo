@@ -104,7 +104,7 @@ final class TabBarController: UITabBarController {
         Util.setupPush()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         URLSchemesController.sharedInstance.runTask()
         RemoteNotification.sharedInstance.runTask()
@@ -112,7 +112,7 @@ final class TabBarController: UITabBarController {
 
     deinit {
         SocketController.disconnect()
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -120,42 +120,42 @@ final class TabBarController: UITabBarController {
 
 extension TabBarController {
 
-    private func initiateNotificationBar() {
+    fileprivate func initiateNotificationBar() {
 
-        self.notificationBar = NSBundle.mainBundle().loadNibNamed("NotificationView", owner: nil, options: nil)[0] as! NotificationView
+        self.notificationBar = Bundle.main.loadNibNamed("NotificationView", owner: nil, options: nil)?[0] as! NotificationView
         self.notificationBar.delegate = self
 
         self.view.addSubview(self.notificationBar)
 
         let leadingConstraint = NSLayoutConstraint(item: self.notificationBar,
-            attribute: .Leading,
-            relatedBy: .Equal,
+            attribute: .leading,
+            relatedBy: .equal,
             toItem: self.view,
-            attribute: .Leading,
+            attribute: .leading,
             multiplier: 1,
             constant: 0)
 
         let trailingConstraint = NSLayoutConstraint(item: self.notificationBar,
-            attribute: .Trailing,
-            relatedBy: .Equal,
+            attribute: .trailing,
+            relatedBy: .equal,
             toItem: self.view,
-            attribute: .Trailing,
+            attribute: .trailing,
             multiplier: 1,
             constant: 0)
 
         self.topConstraint = NSLayoutConstraint(item: self.notificationBar,
-            attribute: .Top,
-            relatedBy: .Equal,
+            attribute: .top,
+            relatedBy: .equal,
             toItem: self.view,
-            attribute: .Top,
+            attribute: .top,
             multiplier: 1,
             constant: -64)
 
         let heightContraint = NSLayoutConstraint(item: self.notificationBar,
-            attribute: .Height,
-            relatedBy: .Equal,
+            attribute: .height,
+            relatedBy: .equal,
             toItem: nil,
-            attribute: .NotAnAttribute,
+            attribute: .notAnAttribute,
             multiplier: 1,
             constant: 64)
 
@@ -164,42 +164,42 @@ extension TabBarController {
         self.notificationBar.addConstraint(heightContraint)
     }
 
-    private func registerForNotification() {
+    fileprivate func registerForNotification() {
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendInvited.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendAccepted.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendRefused.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendBreak.rawValue, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendInvited.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendAccepted.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendRefused.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendBreak.notificationName, object: nil)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostNew.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostLiked.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostCommented.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostBookmarked.rawValue, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostNew.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostLiked.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostCommented.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostBookmarked.notificationName, object: nil)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.GroupJoined.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.GroupLeft.rawValue, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.GroupJoined.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.GroupLeft.notificationName, object: nil)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.Message.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveGroupMessage:", name: ListenerEvent.GroupMessage.rawValue, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.Message.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveGroupMessage:", name: ListenerEvent.GroupMessage.notificationName, object: nil)
     }
 
-    private func openNotificationBar() {
+    fileprivate func openNotificationBar() {
 
-        self.view.bringSubviewToFront(self.notificationBar)
+        self.view.bringSubview(toFront: self.notificationBar)
         self.topConstraint.constant = 0
-        UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
+        UIView.animate(withDuration: TomoConst.Duration.Short, animations: {
             self.view.layoutIfNeeded()
             }, completion: { finished in
-                gcd.async(.Default, delay: TomoConst.Timeout.Mini) {
+                gcd.async(.default, delay: TomoConst.Timeout.Mini) {
                     self.closeNotificationBar()
                 }
         })
     }
 
     func closeNotificationBar() {
-        gcd.sync(.Main) {
+        gcd.sync(.main) {
             self.topConstraint.constant = -64
-            UIView.animateWithDuration(TomoConst.Duration.Short){
+            UIView.animate(withDuration: TomoConst.Duration.Short){
                 self.view.layoutIfNeeded()
             }
         }
@@ -212,7 +212,7 @@ extension TabBarController {
 
     func didReceiveNotification(notification: NSNotification) {
 
-        gcd.sync(.Main) {
+        gcd.sync(.main) {
             self.notificationBar.notification = NotificationEntity(notification.userInfo!)
             self.openNotificationBar()
         }
@@ -220,14 +220,14 @@ extension TabBarController {
 
     func didReceiveMessage(notification: NSNotification) {
 
-        gcd.sync(.Main) {
+        gcd.sync(.main) {
             self.notificationBar.notification = NotificationEntity(notification.userInfo!)
 
             // if received normal message in chat view controller, don't show notification bar
             let topViewController = self.selectedViewController?.childViewControllers.last
-            if topViewController is MessageViewController {
-                return
-            }
+//            if topViewController is MessageViewController {
+//                return
+//            }
 
             self.openNotificationBar()
         }
@@ -235,14 +235,14 @@ extension TabBarController {
 
     func didReceiveGroupMessage(notification: NSNotification) {
 
-        gcd.sync(.Main) {
+        gcd.sync(.main) {
             self.notificationBar.notification = NotificationEntity(notification.userInfo!)
 
             // if received group message in group chat view controller, don't show notification bar
             let topViewController = self.selectedViewController?.childViewControllers.last
-            if topViewController is GroupChatViewController {
-                return
-            }
+//            if topViewController is GroupChatViewController {
+//                return
+//            }
 
             self.openNotificationBar()
         }

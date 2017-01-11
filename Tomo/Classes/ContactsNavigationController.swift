@@ -15,18 +15,18 @@ class ContactsNavigationController: UINavigationController {
         super.init(coder: aDecoder)
 
         // attach event observer when init, so they start to work as TabController initiated. do this in viewDidLoad will be too late.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didRefuseInvitation", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didAcceptInvitation", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didFinishGroupChat", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadge", name: "didFinishChat", object: me)
+        NotificationCenter.default.addObserver(self, selector: "updateTabBarItemBadge", name: NSNotification.Name(rawValue: "didRefuseInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "updateTabBarItemBadge", name: NSNotification.Name(rawValue: "didAcceptInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "updateTabBarItemBadge", name: NSNotification.Name(rawValue: "didFinishGroupChat"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "updateTabBarItemBadge", name: NSNotification.Name(rawValue: "didFinishChat"), object: me)
 
         // this event is emit from notificaton center, must switch to main thread to make visual effect (update badge)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadgeOnMainThread", name: "didReceiveFriendInvitation", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTabBarItemBadgeOnMainThread", name: "didReceiveMessage", object: me)
+        NotificationCenter.default.addObserver(self, selector: "updateTabBarItemBadgeOnMainThread", name: NSNotification.Name(rawValue: "didReceiveFriendInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "updateTabBarItemBadgeOnMainThread", name: NSNotification.Name(rawValue: "didReceiveMessage"), object: me)
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     func updateTabBarItemBadge() {
@@ -36,7 +36,7 @@ class ContactsNavigationController: UINavigationController {
 
     func updateTabBarItemBadgeOnMainThread() {
 
-        gcd.sync(.Main) {
+        gcd.sync(.main) {
             self.tabBarItem.badgeValue = self.calculateBadge()
         }
     }

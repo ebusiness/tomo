@@ -11,7 +11,7 @@ import Alamofire
 *  delegate
 */
 public protocol CommonMessageDelegate {
-    func createMessage(type: MessageType, text: String) -> NSIndexPath
+    func createMessage(type: MessageType, text: String) -> IndexPath
     func sendMessage(type: MessageType, text: String, done: ( ()->() )?)
 }
 
@@ -19,15 +19,15 @@ public protocol CommonMessageDelegate {
 
 class CommonMessageController: JSQMessagesViewController {
     
-    private var textView_text :String = ""
-    private var btn_voice :UIButton?
+    fileprivate var textView_text :String = ""
+    fileprivate var btn_voice :UIButton?
     
-    private var icon_speaker_normal:UIImage!
-    private var icon_speaker_highlighted:UIImage!
-    private var icon_keyboard_normal:UIImage!
-    private var icon_keyboard_highlighted:UIImage!
+    fileprivate var icon_speaker_normal:UIImage!
+    fileprivate var icon_speaker_highlighted:UIImage!
+    fileprivate var icon_keyboard_normal:UIImage!
+    fileprivate var icon_keyboard_highlighted:UIImage!
     
-    private let navigationBarImage = Util.imageWithColor(0x0288D1, alpha: 1)
+    private let navigationBarImage = Util.imageWithColor(rgbValue: 0x0288D1, alpha: 1)
     static let BubbleFactory = JSQMessagesBubbleImageFactory()
     
     var recordTap: UILongPressGestureRecognizer! {
@@ -38,10 +38,10 @@ class CommonMessageController: JSQMessagesViewController {
     
     var messages = [JSQMessageEntity]()
     
-    let outgoingBubbleImageData = BubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleLightGrayColor())
-    let incomingBubbleImageData = BubbleFactory.incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleGreenColor())
+    let outgoingBubbleImageData = BubbleFactory?.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
+    let incomingBubbleImageData = BubbleFactory?.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleGreen())
     
-    let defaultAvatar = JSQMessagesAvatarImageFactory.avatarImageWithImage(DefaultAvatarImage, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+    let defaultAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: DefaultAvatarImage, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
     
     let avatarSize = CGSize(width: 50, height: 50)
     var avatarMe: JSQMessagesAvatarImage!
@@ -72,37 +72,30 @@ class CommonMessageController: JSQMessagesViewController {
         // TODO: adjust
         setAccessoryButtonImageView()
         
-        navigationController?.navigationBar.setBackgroundImage(navigationBarImage, forBarMetrics: .Default)
+        navigationController?.navigationBar.setBackgroundImage(navigationBarImage, for: .default)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        navigationController?.navigationBar.setBackgroundImage(navigationBarImage, forBarMetrics: .Default)
+        navigationController?.navigationBar.setBackgroundImage(navigationBarImage, for: .default)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         VoiceController.instance.stopPlayer()
     }
     
     // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    
-    override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
-        button.enabled = false
+    override func didPressSend(_ button: UIButton!, withMessageText text:   String!, senderId: String!, senderDisplayName: String!, date: Date!) {
+        button.isEnabled = false
         
-        self.delegate.createMessage(.text,text: text)
-        self.delegate.sendMessage(.text, text: text, done: nil)
+        self.delegate.createMessage(type: .text,text: text)
+        self.delegate.sendMessage(type: .text, text: text, done: nil)
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -110,20 +103,20 @@ class CommonMessageController: JSQMessagesViewController {
 
 extension CommonMessageController {
     
-    private func setNavigationBar() {
+    fileprivate func setNavigationBar() {
 
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        navigationController?.navigationBar.tintColor = UIColor.white
         
-        navigationController?.navigationBar.barStyle = .Black
+        navigationController?.navigationBar.barStyle = .black
         
     }
     
-    private func loadAvatars() {
+    fileprivate func loadAvatars() {
         
-        SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: me.photo!), options: .RetryFailed, progress: nil) {
+        SDWebImageManager.shared().downloadImage(with: URL(string: me.photo!), options: .retryFailed, progress: nil) {
             (image, error, _, _, _) -> Void in
             if let image = image {
-                self.avatarMe = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+                self.avatarMe = JSQMessagesAvatarImageFactory.avatarImage(with: image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
             } else {
                 self.avatarMe = self.defaultAvatar
             }
@@ -133,26 +126,26 @@ extension CommonMessageController {
     /**
     AccessoryButtonImageView
     */
-    private func setAccessoryButtonImageView() {
+    fileprivate func setAccessoryButtonImageView() {
 //        let icon_speaker = UIImage(named: "icon_speaker")!
         let icon_keyboard = UIImage(named: "icon_keyboard")!
         
-        self.icon_speaker_normal = UIImage.jsq_defaultAccessoryImage().jsq_imageMaskedWithColor(UIColor.lightGrayColor())
-        self.icon_speaker_highlighted = UIImage.jsq_defaultAccessoryImage().jsq_imageMaskedWithColor(UIColor.darkGrayColor())
+        self.icon_speaker_normal = UIImage.jsq_defaultAccessory().jsq_imageMasked(with: UIColor.lightGray)
+        self.icon_speaker_highlighted = UIImage.jsq_defaultAccessory().jsq_imageMasked(with: UIColor.darkGray)
         
-        self.icon_keyboard_normal = icon_keyboard.jsq_imageMaskedWithColor(UIColor.lightGrayColor())
-        self.icon_keyboard_highlighted = icon_keyboard.jsq_imageMaskedWithColor(UIColor.darkGrayColor())
+        self.icon_keyboard_normal = icon_keyboard.jsq_imageMasked(with: UIColor.lightGray)
+        self.icon_keyboard_highlighted = icon_keyboard.jsq_imageMasked(with: UIColor.darkGray)
         self.inputToolbar!.contentView!.leftBarButtonItemWidth = 32
-        self.changeAccessoryButtonImage(0)
+        self.changeAccessoryButtonImage(tag: 0)
     }
     
-    private func changeAccessoryButtonImage(tag: Int) {
+    fileprivate func changeAccessoryButtonImage(tag: Int) {
         if tag == 0{
-            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_speaker_normal, forState: UIControlState.Normal)
-            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_speaker_highlighted, forState: UIControlState.Highlighted)
+            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_speaker_normal, for: .normal)
+            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_speaker_highlighted, for: .highlighted)
         }else{
-            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_keyboard_normal, forState: UIControlState.Normal)
-            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_keyboard_highlighted, forState: UIControlState.Highlighted)
+            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_keyboard_normal, for: .normal)
+            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_keyboard_highlighted, for: .highlighted)
         }
     }
 }
@@ -165,45 +158,53 @@ extension CommonMessageController {
     var pressAccessoryBlock: CameraController.CameraBlock! {
         get {
             return { (image,videoPath) ->() in
-                let fileName = NSUUID().UUIDString + (videoPath == nil ? ".png" : ".mp4" )
-                let localURL = FCFileManager.urlForItemAtPath(fileName)
+                let fileName = NSUUID().uuidString + (videoPath == nil ? ".png" : ".mp4" )
+                let localURL = FCFileManager.urlForItem(atPath: fileName)
                 var remotePath: String!
                 var messaeType: MessageType!
                 
                 if let path = videoPath {
-                    FCFileManager.copyItemAtPath(path, toPath: localURL.path)
+                    FCFileManager.copyItem(atPath: path, toPath: localURL?.path)
                     messaeType = .video
                     
                 } else {
                     
-                    let image = image!.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
-                    image.saveToURL(localURL)
+                    let image = image!.scale(toFit: CGSize(width: MaxWidth, height: MaxWidth))
+                    image?.save(to: localURL!)
                     
                     messaeType = .photo
                 }
                 
                 remotePath = messaeType.remotePath(fileName)
-                let indexPath = self.delegate.createMessage(messaeType, text: fileName)
+                let indexPath = self.delegate.createMessage(type: messaeType, text: fileName)
                 
-                let progressView = UIProgressView(frame: CGRectZero)
-                progressView.tintColor = UIColor.greenColor()
+                let progressView = UIProgressView(frame: CGRect.zero)
+                progressView.tintColor = UIColor.green
                 
-                let cell = self.collectionView!.cellForItemAtIndexPath(indexPath) as! JSQMessagesCollectionViewCell
+                let cell = self.collectionView!.cellForItem(at: indexPath) as! JSQMessagesCollectionViewCell
                 cell.addSubview(progressView)
                 
                 progressView.translatesAutoresizingMaskIntoConstraints = false
-                cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[progressView(==1)]-0-|", options: [], metrics: nil, views: ["progressView" : progressView]))
-                cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[progressView(==messageBubbleContainerView)]-0-[avatarContainerView]", options: [], metrics: nil, views: ["messageBubbleContainerView" : cell.messageBubbleContainerView!, "progressView" : progressView,"avatarContainerView":cell.avatarContainerView!]))
+                cell.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[progressView(==1)]-0-|", options: [], metrics: nil, views: ["progressView" : progressView]))
+                cell.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[progressView(==messageBubbleContainerView)]-0-[avatarContainerView]", options: [], metrics: nil, views: ["messageBubbleContainerView" : cell.messageBubbleContainerView!, "progressView" : progressView,"avatarContainerView":cell.avatarContainerView!]))
                 
-                S3Controller.uploadFile(localURL.path!, remotePath: remotePath, done: { (error) -> Void in
-                    self.delegate.sendMessage(messaeType, text: fileName){ ()->() in
+                S3Controller.uploadFile(localPath: localURL!.path, remotePath: remotePath, done: { (error) -> Void in
+                    self.delegate.sendMessage(type: messaeType, text: fileName){ ()->() in
                         progressView.removeFromSuperview()
                     }
-                }).progress { _, sendBytes, totalBytes in
-                    gcd.sync(.Main, closure: { () -> () in
-                        progressView.progress = Float(sendBytes)/Float(totalBytes)
-                    })
-                }
+                })
+//                    .uploadProgress { progress in // main queue by default
+//                    gcd.sync(.Main, closure: { () -> () in
+//                        progressView.progress = progress.fractionCompleted
+//                    })
+//                }
+                
+                
+//                    .progress { _, sendBytes, totalBytes in
+//                    gcd.sync(.Main, closure: { () -> () in
+//                        progressView.progress = Float(sendBytes)/Float(totalBytes)
+//                    })
+//                }
             }
         }
     }
@@ -213,11 +214,11 @@ extension CommonMessageController {
     
     - parameter sender: jsqAccessoryButton
     */
-    override func didPressAccessoryButton(sender: UIButton!) {
+    override func didPressAccessoryButton(_ sender: UIButton!) {
         //録音モード
         if btn_voice?.tag == 1 {
             btn_voice?.tag = 0
-            self.changeAccessoryButtonImage(0)
+            self.changeAccessoryButtonImage(tag: 0)
             self.inputToolbar!.contentView!.textView!.text = textView_text
             textView_text = ""
             btn_voice?.removeFromSuperview()
@@ -226,12 +227,12 @@ extension CommonMessageController {
             return
         }
         
-        Util.alertActionSheet(self, optionalDict: [
+        Util.alertActionSheet(parentvc: self, optionalDict: [
             "拍摄/视频":{ (_) -> Void in
-                CameraController.sharedInstance.open(self, sourceType: .Camera, withVideo: true, completion: self.pressAccessoryBlock)
+                CameraController.sharedInstance.open(vc: self, sourceType: .camera, withVideo: true, completion: self.pressAccessoryBlock)
             },
             "从相册选择":{ (_) -> Void in
-                CameraController.sharedInstance.open(self, sourceType: .SavedPhotosAlbum, completion: self.pressAccessoryBlock)
+                CameraController.sharedInstance.open(vc: self, sourceType: .savedPhotosAlbum, completion: self.pressAccessoryBlock)
             },
 //            "语音输入":{ (_) -> Void in
 //                if self.btn_voice == nil {
@@ -265,7 +266,7 @@ extension CommonMessageController {
         
         let rect = btn_voice?.bounds
         let label = UILabel(frame: rect!)
-        label.textAlignment = NSTextAlignment.Center
+        label.textAlignment = .center
         label.text = "按住说话"
         btn_voice?.addSubview(label)
         
@@ -288,20 +289,20 @@ extension CommonMessageController {
     - parameter longPressedRecognizer: longPressedRecognizer
     */
     func record(longPressedRecognizer: UILongPressGestureRecognizer) {
-        if longPressedRecognizer.state == UIGestureRecognizerState.Began {
+        if longPressedRecognizer.state == UIGestureRecognizerState.began {
             btn_voice?.backgroundColor = Util.UIColorFromRGB(0x0EAA00, alpha: 1)
             VoiceController.instance.start()
             NSLog("hold Down");
             
         }//长按结束
-        else if longPressedRecognizer.state == UIGestureRecognizerState.Ended || longPressedRecognizer.state == UIGestureRecognizerState.Cancelled{
+        else if longPressedRecognizer.state == UIGestureRecognizerState.ended || longPressedRecognizer.state == UIGestureRecognizerState.cancelled {
             
             btn_voice?.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
             if let (url, fileName) = VoiceController.instance.stop() {
-                self.delegate.createMessage(.voice, text: fileName)
-                self.delegate.sendMessage(.voice, text: fileName, done: nil)
+                self.delegate.createMessage(type: .voice, text: fileName)
+                self.delegate.sendMessage(type: .voice, text: fileName, done: nil)
                 
-                S3Controller.uploadFile(url, remotePath: MessageType.voice.remotePath(fileName), done: { error in
+                S3Controller.uploadFile(localPath: url, remotePath: MessageType.voice.remotePath(fileName), done: { error in
                     print("done")
                     print(error)
                 })
@@ -315,18 +316,16 @@ extension CommonMessageController {
 // MARK: - JSQMessagesCollectionView DataSource
 
 extension CommonMessageController {
-    
-    override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
-        
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
         let item = messages[indexPath.item]
         item.download { () -> () in
-            self.collectionView!.reloadItemsAtIndexPaths([indexPath])
+            self.collectionView!.reloadItems(at: [indexPath])
         }
         
         return messages[indexPath.item]
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
         
         let message = messages[indexPath.item]
         
@@ -337,15 +336,15 @@ extension CommonMessageController {
         return outgoingBubbleImageData
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, attributedTextForCellTopLabelAt indexPath: IndexPath!) -> NSAttributedString! {
         
         let jsqMessage = messages[indexPath.item]
-        if indexPath.item < 1 { return JSQMessagesTimestampFormatter.sharedFormatter().attributedTimestampForDate(jsqMessage.date()) }
+        if indexPath.item < 1 { return JSQMessagesTimestampFormatter.shared().attributedTimestamp(for: jsqMessage.date()) }
         
         let diff = jsqMessage.date().timeIntervalSince1970 - messages[indexPath.item - 1].date().timeIntervalSince1970
         
         if diff > 90 {
-            return JSQMessagesTimestampFormatter.sharedFormatter().attributedTimestampForDate(jsqMessage.date())
+            return JSQMessagesTimestampFormatter.shared().attributedTimestamp(for: jsqMessage.date())
         }
         
         return nil
@@ -357,27 +356,27 @@ extension CommonMessageController {
 
 extension CommonMessageController {
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAt indexPath: IndexPath!) -> CGFloat {
         
-        if nil != self.collectionView(collectionView, attributedTextForCellTopLabelAtIndexPath: indexPath) {
+        if nil != self.collectionView(collectionView, attributedTextForCellTopLabelAt: indexPath) {
             return 40
         }
         return 0
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAt indexPath: IndexPath!) -> CGFloat {
         return 20
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellBottomLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellBottomLabelAt indexPath: IndexPath!) -> CGFloat {
         return 0
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapAvatarImageView avatarImageView: UIImageView!, atIndexPath indexPath: NSIndexPath!) {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapAvatarImageView avatarImageView: UIImageView!, at indexPath: IndexPath!) {
         
         let message = messages[indexPath.item]
         
-        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = message.from
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -387,30 +386,30 @@ extension CommonMessageController {
 
 extension CommonMessageController {
     
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return messages.count
     }
     
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath) as! JSQMessagesCollectionViewCell
+        let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
         
         let message = messages[indexPath.item]
         
         if !message.isMediaMessage() {
             if message.senderId() == me.id {
-                cell.textView!.textColor = UIColor.blackColor()
+                cell.textView!.textColor = UIColor.black
             } else {
-                cell.textView!.textColor = UIColor.whiteColor()
+                cell.textView!.textColor = UIColor.white
             }
         }
         
-        self.addBadgeViewIfNeeded(cell, message: message)
+        self.addBadgeViewIfNeeded(cell: cell, message: message)
         
         return cell
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAtIndexPath indexPath: NSIndexPath!) {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAt indexPath: IndexPath!) {
         
         let message = messages[indexPath.item]
         
@@ -424,26 +423,26 @@ extension CommonMessageController {
                 //                let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! JSQMessagesCollectionViewCell
                 //                cell.mediaView = UIImageView(image: broken)
                 
-                message.reload({ () -> () in
-                    self.collectionView!.reloadItemsAtIndexPaths([indexPath])
+                message.reload(completion: { () -> () in
+                    self.collectionView!.reloadItems(at: [indexPath])
                 })
             } else {
                 
-                showGalleryView(indexPath, message: message)
+                showGalleryView(indexPath: indexPath, message: message)
             }
         case .voice:
-            if FCFileManager.existsItemAtPath(content) {
-                VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(content).path!)
+            if FCFileManager.existsItem(atPath: content) {
+                VoiceController.instance.playOrStop(path: FCFileManager.urlForItem(atPath: content).path)
             } else {
                 Util.showHUD()
-                Manager.sharedInstance.download(.GET, message.type.fullPath(content)) { (tempUrl, res) -> (NSURL) in
-                    return FCFileManager.urlForItemAtPath(content)
-                    }.response { (_, _, _, error) -> Void in
-                        Util.dismissHUD()
-                        if error == nil {
-                            VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(content).path!)
-                        }
-                }
+//                Alamofire.SessionManager.default.download(.GET, message.type.fullPath(content)) { (tempUrl, res) -> (NSURL) in
+//                    return FCFileManager.urlForItemAtPath(content)
+//                    }.response { (_, _, _, error) -> Void in
+//                        Util.dismissHUD()
+//                        if error == nil {
+//                            VoiceController.instance.playOrStop(path: FCFileManager.urlForItemAtPath(content).path!)
+//                        }
+//                }
             }
         default:
             break
@@ -462,23 +461,23 @@ extension CommonMessageController {
         let avatarHeight: CGFloat = 50
         let voiceBackgroundImageWidth: CGFloat = 100
         
-        let badgeView = UIView(frame: CGRectZero)
-        badgeView.backgroundColor = UIColor.redColor()
+        let badgeView = UIView(frame: CGRect.zero)
+        badgeView.backgroundColor = UIColor.red
         badgeView.layer.cornerRadius = width / 2
         badgeView.layer.masksToBounds = true
         
         cell.addSubview(badgeView)
         badgeView.translatesAutoresizingMaskIntoConstraints = false
         let views = ["badgeView" : badgeView]
-        cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[badgeView(==\(width))]-\(avatarHeight-width)-|", options: [], metrics: nil, views: views))
-        cell.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[badgeView(==\(width))]-\(avatarHeight+voiceBackgroundImageWidth)-|", options: [], metrics: nil, views:views))
+        cell.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[badgeView(==\(width))]-\(avatarHeight-width)-|", options: [], metrics: nil, views: views))
+        cell.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[badgeView(==\(width))]-\(avatarHeight+voiceBackgroundImageWidth)-|", options: [], metrics: nil, views:views))
     }
     
-    func showGalleryView(indexPath: NSIndexPath, message: JSQMessageEntity) {
+    func showGalleryView(indexPath: IndexPath, message: JSQMessageEntity) {
         
         guard let
-            cell = collectionView!.cellForItemAtIndexPath(indexPath) as? JSQMessagesCollectionViewCell,
-            imageView = cell.mediaView as? UIImageView
+            cell = collectionView!.cellForItem(at: indexPath) as? JSQMessagesCollectionViewCell,
+            let imageView = cell.mediaView as? UIImageView
             else { return }
         
         var items = [MHGalleryItem]()
@@ -487,8 +486,7 @@ extension CommonMessageController {
         for item in self.messages {
             
             guard let
-                mediaItem = item.media() as? JSQMediaItem
-                where item.type == .photo || item.type == .video
+                mediaItem = item.media() as? JSQMediaItem, item.type == .photo || item.type == .video
                 else { continue }
             
             var galleryItem: MHGalleryItem!
@@ -503,45 +501,45 @@ extension CommonMessageController {
             if mediaItem is JSQPhotoMediaItem {
                 galleryItem = MHGalleryItem(image: ( mediaItem as! JSQPhotoMediaItem).image)
             } else if mediaItem is TomoVideoMediaItem {
-                let videoPath = message.type.fullPath(message.content)
-                galleryItem = MHGalleryItem(URL: videoPath, galleryType: .Video)
-                galleryItem.image = SDImageCache.sharedImageCache().imageFromDiskCacheForKey(videoPath)
+                let videoPath = message.type.fullPath(name: message.content)
+                galleryItem = MHGalleryItem(url: videoPath, galleryType: .video)
+                galleryItem.image = SDImageCache.shared().imageFromDiskCache(forKey: videoPath)
             }
             items.append(galleryItem)
         }
         
-        let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.ImageViewerNavigationBarShown)
-        gallery.galleryItems = items
-        gallery.presentationIndex = index
-        gallery.presentingFromImageView = imageView
+        let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.imageViewerNavigationBarShown)
+        gallery?.galleryItems = items
+        gallery?.presentationIndex = index
+        gallery?.presentingFromImageView = imageView
         
-        gallery.UICustomization.useCustomBackButtonImageOnImageViewer = false
-        gallery.UICustomization.showOverView = false
-        gallery.UICustomization.showMHShareViewInsteadOfActivityViewController = false
+        gallery?.uiCustomization.useCustomBackButtonImageOnImageViewer = false
+        gallery?.uiCustomization.showOverView = false
+        gallery?.uiCustomization.showMHShareViewInsteadOfActivityViewController = false
         
-        gallery.finishedCallback = { [weak self] (currentIndex, image, transition, viewMode) -> Void in
-            let cell = self!.collectionView!.cellForItemAtIndexPath(indexPath) as!JSQMessagesCollectionViewCell
+        gallery?.finishedCallback = { [weak self] (currentIndex, image, transition, viewMode) -> Void in
+            let cell = self!.collectionView!.cellForItem(at: indexPath as IndexPath) as!JSQMessagesCollectionViewCell
             let imageView = cell.mediaView as! UIImageView
-            gcd.async(.Main, closure: { () -> () in
-                gallery.dismissViewControllerAnimated(true, dismissImageView: imageView, completion: { [weak self] () -> Void in
+            gcd.async(.main, closure: { () -> () in
+                gallery?.dismiss(animated: true, dismiss: imageView, completion: { [weak self] () -> Void in
                     self!.automaticallyScrollsToMostRecentMessage = true
-                    self!.collectionView!.reloadItemsAtIndexPaths([indexPath])
+                    self!.collectionView!.reloadItems(at: [indexPath])
                     })
             })
         }
         
         self.automaticallyScrollsToMostRecentMessage = false
-        presentMHGalleryController(gallery, animated: true, completion: nil)
+        present(gallery, animated: true, completion: nil)
     }
     
     func prependRows(rows: Int) {
         
-        var indexPathes = [NSIndexPath]()
+        var indexPathes = [IndexPath]()
         
         for index in 0..<rows {
-            indexPathes.append(NSIndexPath(forRow: index, inSection: 0))
+            indexPathes.append(IndexPath(row: index, section: 0))
         }
         
-        collectionView!.insertItemsAtIndexPaths(indexPathes)
+        collectionView!.insertItems(at: indexPathes)
     }
 }

@@ -16,14 +16,14 @@ final class SocketController {
 
     private init() {
 
-        self.socket = SocketIOClient(socketURL: TomoConfig.Api.UrlString)
+        self.socket = SocketIOClient(socketURL: TomoConfig.Api.Url)
         self.socket.onAny {
 
-            guard let items = $0.items where items.count > 0 else {return}
-            guard let result = items[0] as? [NSObject : AnyObject] else {return}
+            guard let items = $0.items, items.count > 0 else {return}
+            guard let result = items[0] as? [NSObject : Any] else {return}
             guard let socketEvent = ListenerEvent(rawValue: $0.event) else {return}
 
-            gcd.async(.High) { () -> () in
+            gcd.async(.high) { () -> () in
                 socketEvent.relayToNoticationCenter(result)
             }
         }
@@ -34,6 +34,6 @@ final class SocketController {
     }
 
     class func disconnect() {
-        self.sharedInstance.socket.close()
+        self.sharedInstance.socket.disconnect()
     }
 }

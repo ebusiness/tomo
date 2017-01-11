@@ -9,6 +9,7 @@
 import Alamofire
 
 class JSQMessageEntity: MessageEntity, JSQMessageData {
+
     
 //    var message: MessageEntity!
     var brokenImage: UIImage?
@@ -25,7 +26,7 @@ class JSQMessageEntity: MessageEntity, JSQMessageData {
         return self.from.nickName
     }
     
-    func date() -> NSDate! {
+    public func date() -> Date! {
         return self.createDate
     }
     
@@ -43,11 +44,11 @@ class JSQMessageEntity: MessageEntity, JSQMessageData {
     
     func media() -> JSQMessageMediaData! {
         if !isMediaMessage() { return nil }
-        if self.content.length < 1 { return nil }
+        if self.content.characters.count < 1 { return nil }
         
         var item: JSQMediaItem!
         
-        let fileUrl = FCFileManager.urlForItemAtPath(self.content)
+        let fileUrl = FCFileManager.urlForItem(atPath: self.content)
         
         switch self.type {
         case .video:
@@ -56,8 +57,8 @@ class JSQMessageEntity: MessageEntity, JSQMessageData {
             
         case .photo:
             
-            if FCFileManager.existsItemAtPath(self.content) {
-                item = JSQPhotoMediaItem(image: UIImage(contentsOfFile: fileUrl.path!))
+            if FCFileManager.existsItem(atPath: self.content) {
+                item = JSQPhotoMediaItem(image: UIImage(contentsOfFile: fileUrl!.path))
             } else {
                 item = JSQPhotoMediaItem(image: self.brokenImage)
             }
@@ -66,8 +67,8 @@ class JSQMessageEntity: MessageEntity, JSQMessageData {
             
             let imageName = self.from.id == me.id ? "SenderVoiceNodePlaying" : "ReceiverVoiceNodePlaying"
             let image = UIImage(named: imageName)
-            if FCFileManager.existsItemAtPath(self.content) {
-                item = JSQVoiceMediaItem(voice: NSData(contentsOfFile: fileUrl.path!), image: image)
+            if FCFileManager.existsItem(atPath: self.content) {
+                item = JSQVoiceMediaItem(voice: NSData(contentsOfFile: (fileUrl?.path)!) as Data!, image: image)
             } else {
                 item = JSQVoiceMediaItem(voice: nil, image: image)
             }
@@ -79,7 +80,7 @@ class JSQMessageEntity: MessageEntity, JSQMessageData {
         return item
     }
     
-    func download(completion: ()->() ){
+    func download(_ completion: @escaping ()->() ){
         if self.isTaskRunning || self.brokenImage != nil {
             return
         } else {
@@ -87,37 +88,37 @@ class JSQMessageEntity: MessageEntity, JSQMessageData {
         }
         
         guard
-            self.type == .photo && !FCFileManager.existsItemAtPath(self.content)
+            self.type == .photo && !FCFileManager.existsItem(atPath: self.content)
             else {
                 return
         }
         
-        let url = self.type.fullPath(self.content)
+        let url = self.type.fullPath(name: self.content)
         
-        Manager.sharedInstance.download(.GET, url) { (tempUrl, res) -> (NSURL) in
-            if res.statusCode == 200 {
-                return FCFileManager.urlForItemAtPath(self.content)
-            } else {
-                return tempUrl
-            }
-            }.response { (_, _, _, error) -> Void in
-                self.isTaskRunning = false
-                
-                if error != nil {
-                    self.taskTryCount--
-                    if self.taskTryCount > 0 { //auto reload
-                        self.download(completion)
-                    } else {
-                        self.brokenImage = self.broken
-                        completion()
-                    }
-                } else {
-                    completion() // reload collectionView
-                }
-        }
+//        Alamofire.SessionManager.default.download(.get, method: url) { (tempUrl, res) -> (NSURL) in
+//            if res.statusCode == 200 {
+//                return FCFileManager.urlForItemAtPath(self.content)
+//            } else {
+//                return tempUrl
+//            }
+//            }.response { (_, _, _, error) -> Void in
+//                self.isTaskRunning = false
+//                
+//                if error != nil {
+//                    self.taskTryCount--
+//                    if self.taskTryCount > 0 { //auto reload
+//                        self.download(completion)
+//                    } else {
+//                        self.brokenImage = self.broken
+//                        completion()
+//                    }
+//                } else {
+//                    completion() // reload collectionView
+//                }
+//        }
     }
     
-    func reload(completion: ()->() ){
+    func reload(completion: @escaping ()->() ){
         if self.taskTryCount < -2 {
             return
         }

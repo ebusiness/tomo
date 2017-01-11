@@ -23,7 +23,7 @@ class NotificationView: UIView {
     var notification: NotificationEntity! {
         didSet {
             if let photo = self.notification.from.photo {
-                self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
+                self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: DefaultAvatarImage)
             }
 
             self.messageLabelView.text = self.notification.message
@@ -31,20 +31,21 @@ class NotificationView: UIView {
     }
 
     @IBAction func closeTapped() {
-        gcd.async(.Default) {
-            let topConstraint: AnyObject? = self.superview!.constraints.find { $0.firstAttribute == .Top && $0.firstItem is NotificationView }
-            if let topConstraint = topConstraint as? NSLayoutConstraint {
-                gcd.sync(.Main) {
-                    topConstraint.constant = -64
-                    UIView.animateWithDuration(0.2, animations: { () -> Void in
+        gcd.async(.default) {
+            self.superview!.constraints.forEach({ (constraint) in
+                if !(constraint.firstAttribute == .top && constraint.firstItem is NotificationView) { return }
+                gcd.sync(.main) {
+                    constraint.constant = -64
+                    UIView.animate(withDuration: 0.2, animations: { () -> Void in
                         self.superview?.layoutIfNeeded()
                     })
                 }
-            }
+                
+            })
         }
     }
     
-    @IBAction func bodyTapped(sender: UITapGestureRecognizer) {
+    @IBAction func bodyTapped(_ sender: UITapGestureRecognizer) {
         
         if let event = ListenerEvent(rawValue: self.notification.type) {
             
@@ -52,10 +53,7 @@ class NotificationView: UIView {
             case .Announcement:
                 return
             case .GroupMessage: // GroupMessage
-                
-                let id = "/\(self.notification.targetId)"
-                let host = self.notification.type
-                URLSchemesController.sharedInstance.handleOpenURL(NSURL(scheme: "tomo", host: host, path: id)!)
+                URLSchemesController.sharedInstance.handleOpenURL(URL(string: "tomo://\(self.notification.type)/\(self.notification.targetId)")!)
                 
             case .Message: // Message
                 fallthrough
@@ -65,10 +63,7 @@ class NotificationView: UIView {
                 self.avatarTapped(sender)
                 
             case .PostNew, .PostLiked, .PostCommented, .PostBookmarked: // Post
-                
-                let id = "/\(self.notification.targetId)"
-                let host = self.notification.type
-                URLSchemesController.sharedInstance.handleOpenURL(NSURL(scheme: "tomo", host: host, path: id)!)
+                URLSchemesController.sharedInstance.handleOpenURL(URL(string: "tomo://\(self.notification.type)/\(self.notification.targetId)")!)
                 
             default:
                 break
@@ -76,11 +71,8 @@ class NotificationView: UIView {
         }
     }
     
-    @IBAction func avatarTapped(sender: UITapGestureRecognizer) {
-        
-        let id = "/\(self.notification.from.id)"
-        let host = self.notification.type
-        URLSchemesController.sharedInstance.handleOpenURL(NSURL(scheme: "tomo", host: host, path: id)!)
+    @IBAction func avatarTapped(_ sender: UITapGestureRecognizer) {
+        URLSchemesController.sharedInstance.handleOpenURL(URL(string: "tomo://\(self.notification.type)/\(self.notification.targetId)")!)
     
     }
     

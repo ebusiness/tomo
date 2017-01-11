@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 &#24373;&#24535;&#33775;. All rights reserved.
 //
 
-private var observers = [String:AnyObject]()
+private var observers = [String:Any]()
 
 enum ListenerEvent: String {
 
@@ -36,27 +36,26 @@ enum ListenerEvent: String {
 
     case GroupLeft      = "group-left"
     
-    case Any = "any"
-
-    func relayToNoticationCenter(userInfo: [NSObject : AnyObject]) {
-        NSNotificationCenter.defaultCenter().postNotificationName(self.rawValue, object: nil, userInfo: userInfo)
+    case any = "any"
+    
+    var notificationName: NSNotification.Name {
+        return NSNotification.Name(rawValue: "tomoNotification-" + self.rawValue)
     }
 
-    func getNotificationName() -> String {
-        return "tomoNotification-" + self.rawValue
+    func relayToNoticationCenter(_ userInfo: [AnyHashable : Any]) {
+        NotificationCenter.default.post(name: self.notificationName, object: nil, userInfo: userInfo)
     }
 
-    func addObserver(observer: AnyObject, selector aSelector: Selector) {
-        NSNotificationCenter.defaultCenter().addObserver(observer, selector: aSelector, name: self.getNotificationName(), object: nil)
+    func addObserver(observer: Any, selector aSelector: Selector) {
+        NotificationCenter.default.addObserver(observer, selector: aSelector, name: self.notificationName, object: nil)
     }
     
-    func addObserver(observer: UIViewController, usingBlock block: (NSNotification!) -> Void){
+    func addObserver(observer: UIViewController, usingBlock block: @escaping (NSNotification!) -> Void){
         
-        if let observer: AnyObject = observers[observer.description] {
-            NSNotificationCenter.defaultCenter().removeObserver(observer)
+        if let observer: Any = observers[observer.description] {
+            NotificationCenter.default.removeObserver(observer)
         }
-        
-        observers[observer.description] = NSNotificationCenter.defaultCenter().addObserverForName(self.getNotificationName(), object: nil, queue: nil, usingBlock: block )
+//        observers[observer.description] = NotificationCenter.default.addObserver(name: self.notificationName, object: nil, queue: nil, usingBlock: block )
         
     }
 }

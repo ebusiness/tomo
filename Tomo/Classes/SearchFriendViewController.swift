@@ -40,9 +40,9 @@ final class SearchFriendViewController: UITableViewController {
         self.navigationItem.titleView = self.searchBar
     }
 
-    @IBAction func closeButtonTapped(sender: UIBarButtonItem) {
+    @IBAction func closeButtonTapped(_ sender: UIBarButtonItem) {
         self.view.endEditing(true)
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -51,13 +51,13 @@ final class SearchFriendViewController: UITableViewController {
 
 extension SearchFriendViewController {
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.users.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCellWithIdentifier("SearchFriendCell", forIndexPath: indexPath) as! SearchFriendCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchFriendCell", for: indexPath) as! SearchFriendCell
         cell.user = self.users[indexPath.row]
         return cell
     }
@@ -67,15 +67,15 @@ extension SearchFriendViewController {
 
 extension SearchFriendViewController {
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 88
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
 
-        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = self.users[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -85,9 +85,9 @@ extension SearchFriendViewController {
 
 extension SearchFriendViewController: UISearchBarDelegate {
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        guard let text = self.searchBar.text where text.trimmed().length > 0 else { return }
+        guard let text = self.searchBar.text, text.trimmed().characters.count > 0 else { return }
 
         // do nothing if the search word didn't change
         guard self.searchText != text else { return }
@@ -110,20 +110,20 @@ extension SearchFriendViewController: UISearchBarDelegate {
 
         // scroll to top for new result, check the zero contents case
         if self.users.count > 0 {
-            let firstItemIndex = NSIndexPath(forItem: 0, inSection: 0)
-            self.tableView.scrollToRowAtIndexPath(firstItemIndex, atScrollPosition: .Top, animated: true)
+            let firstItemIndex = IndexPath(item: 0, section: 0)
+            self.tableView.scrollToRow(at: firstItemIndex, at: .top, animated: true)
         }
 
         // prepare for remove all current cell for new result
-        var removeIndex: [NSIndexPath] = []
+        var removeIndex: [IndexPath] = []
         for _ in self.users {
-            removeIndex.append(NSIndexPath(forItem: removeIndex.count, inSection: 0))
+            removeIndex.append(IndexPath(item: removeIndex.count, section: 0))
         }
 
         // reset content
         self.users = [UserEntity]()
         self.tableView.beginUpdates()
-        self.tableView.deleteRowsAtIndexPaths(removeIndex, withRowAnimation: .Automatic)
+        self.tableView.deleteRows(at: removeIndex, with: .automatic)
         self.tableView.endUpdates()
 
         Router.User.FindByNickName(nickName: text).response {
@@ -131,14 +131,14 @@ extension SearchFriendViewController: UISearchBarDelegate {
             if $0.result.isFailure {
                 self.isLoading = false
                 self.isExhausted = true
-                self.stopActivityIndicator("没有找到与“\(self.searchText!)”相关的结果")
+                self.stopActivityIndicator(withString: "没有找到与“\(self.searchText!)”相关的结果")
                 return
             }
 
-            if let users: [UserEntity] = UserEntity.collection($0.result.value!) {
+            if let users: [UserEntity] = UserEntity.collection(json: $0.result.value!) {
                 self.users = users
-                self.appendCells(users.count)
-                self.page++
+                self.appendCells(count: users.count)
+                self.page+=1
             }
 
             self.isLoading = false
@@ -150,33 +150,33 @@ extension SearchFriendViewController: UISearchBarDelegate {
 
 extension SearchFriendViewController {
 
-    private func startActivityIndicator() {
+    fileprivate func startActivityIndicator() {
         self.activityIndicator.startAnimating()
         self.searchResultLabel.alpha = 0
     }
 
-    private func stopActivityIndicator(withString: String) {
+    fileprivate func stopActivityIndicator(withString: String) {
         self.activityIndicator.stopAnimating()
         self.searchResultLabel.text = withString
-        UIView.animateWithDuration(TomoConst.Duration.Short) {
+        UIView.animate(withDuration: TomoConst.Duration.Short) {
             self.searchResultLabel.alpha = 1.0
         }
     }
 
-    private func appendCells(count: Int) {
+    fileprivate func appendCells(count: Int) {
 
         let startIndex = self.users.count - count
         let endIndex = self.users.count
 
-        var indexPaths = [NSIndexPath]()
+        var indexPaths = [IndexPath]()
 
         for i in startIndex..<endIndex {
-            let indexPath = NSIndexPath(forItem: i, inSection: 0)
+            let indexPath = IndexPath(item: i, section: 0)
             indexPaths.append(indexPath)
         }
 
         self.tableView.beginUpdates()
-        self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        self.tableView.insertRows(at: indexPaths, with: .automatic)
         self.tableView.endUpdates()
     }
 }
@@ -193,7 +193,7 @@ class SearchFriendCell: UITableViewCell {
         didSet {
 
             if let photo = user.photo {
-                self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
+                self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: DefaultAvatarImage)
             }
 
             self.userNameLabel.text = user.nickName

@@ -17,10 +17,6 @@ class UserAnnotationView: AggregatableAnnotationView {
         super.init(coder: aDecoder)
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-
     override init(annotation: MKAnnotation!, reuseIdentifier: String!) {
 
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
@@ -28,16 +24,16 @@ class UserAnnotationView: AggregatableAnnotationView {
         frame = CGRect(x: 0, y: 0, width: 60, height: 60)
 
         imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-        imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        imageView.contentMode = UIViewContentMode.scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 1
         imageView.layer.cornerRadius = imageView.frame.width / 2
         addSubview(imageView)
 
         numberLabel = UILabel(frame: CGRect(x: 0, y: 45, width: 60, height: 15))
-        numberLabel.textColor = UIColor.whiteColor()
-        numberLabel.textAlignment = NSTextAlignment.Center
-        numberLabel.font = UIFont.systemFontOfSize(10)
+        numberLabel.textColor = UIColor.white
+        numberLabel.textAlignment = NSTextAlignment.center
+        numberLabel.font = UIFont.systemFont(ofSize: 10)
 
         numberBadge.frame = CGRect(x: 45, y: 0, width: 120, height: 20)
         numberBadge.layer.cornerRadius = numberBadge.frame.height / 2
@@ -64,15 +60,15 @@ class UserAnnotationView: AggregatableAnnotationView {
                 numberBadge.layer.cornerRadius = numberBadge.frame.height / 2
                 addSubview(numberBadge)
             }
+            
+            imageView.sd_setImage(with: URL(string:  annotation.user.photo!), placeholderImage: DefaultAvatarImage, options: .retryFailed)
 
-            imageView.sd_setImageWithURL(NSURL(string:  annotation.user.photo!), placeholderImage: DefaultAvatarImage)
-
-            if let friends = me.friends where friends.contains({ $0 == annotation.user.id }) {
-                imageView.layer.borderColor = Palette.Pink.primaryColor.CGColor
+            if let friends = me.friends, friends.contains(where: { $0 == annotation.user.id }) {
+                imageView.layer.borderColor = Palette.Pink.primaryColor.cgColor
                 numberLabel.backgroundColor = Palette.Pink.primaryColor
                 numberBadge.backgroundColor = Palette.Pink.primaryColor
             } else {
-                imageView.layer.borderColor = Palette.LightBlue.primaryColor.CGColor
+                imageView.layer.borderColor = Palette.LightBlue.primaryColor.cgColor
                 numberLabel.backgroundColor = Palette.LightBlue.primaryColor
                 numberBadge.backgroundColor = Palette.LightBlue.primaryColor
             }

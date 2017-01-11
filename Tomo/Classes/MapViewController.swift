@@ -25,9 +25,9 @@ final class MapViewController: UIViewController {
 
     var allAnnotationMapView: MKMapView!
 
-    var contents = [AnyObject]()
+    var contents = [Any]()
 
-    var lastLoadDate: NSDate?
+    var lastLoadDate: Date?
 
     var annotationsForTable: [AggregatableAnnotation]?
 
@@ -40,22 +40,22 @@ final class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.allAnnotationMapView = MKMapView(frame: CGRectZero)
+        self.allAnnotationMapView = MKMapView(frame: CGRect.zero)
 
         self.loadContents()
 
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
     }
 
-    override func viewDidAppear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = true
+    override func viewDidAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
     }
 
-    override func viewWillDisappear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = false
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden: Bool {
         return true
     }
 
@@ -65,13 +65,13 @@ final class MapViewController: UIViewController {
 
 extension MapViewController {
 
-    @IBAction func changeMode(sender: AnyObject) {
+    @IBAction func changeMode(_ sender: Any) {
 
         self.hideTableView()
 
         let segmentControl = sender as! UISegmentedControl
 
-        segmentControl.enabled = false
+        segmentControl.isEnabled = false
 
         switch segmentControl.selectedSegmentIndex {
         case 0:
@@ -88,7 +88,7 @@ extension MapViewController {
         }
     }
 
-    @IBAction func mapViewTapped(sender: AnyObject) {
+    @IBAction func mapViewTapped(_ sender: Any) {
         self.hideTableView()
     }
 }
@@ -97,7 +97,7 @@ extension MapViewController {
 
 extension MapViewController: MKMapViewDelegate {
 
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 
         if mapView != self.mapView {
             return nil
@@ -105,7 +105,7 @@ extension MapViewController: MKMapViewDelegate {
 
         if let annotation = annotation as? PostAnnotation {
 
-            var annotationView = self.mapView.dequeueReusableAnnotationViewWithIdentifier(PostAnnotationViewIdentifier)
+            var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: PostAnnotationViewIdentifier)
 
             if annotationView == nil {
                 annotationView = PostAnnotationView(annotation: annotation, reuseIdentifier: PostAnnotationViewIdentifier)
@@ -120,7 +120,7 @@ extension MapViewController: MKMapViewDelegate {
 
             if annotation.group.type == "station" {
 
-                var annotationView = self.mapView.dequeueReusableAnnotationViewWithIdentifier(StationAnnotationViewIdentifier)
+                var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: StationAnnotationViewIdentifier)
 
                 if annotationView == nil {
                     annotationView = StationAnnotationView(annotation: annotation, reuseIdentifier: StationAnnotationViewIdentifier)
@@ -133,7 +133,7 @@ extension MapViewController: MKMapViewDelegate {
 
             } else {
 
-                var annotationView = self.mapView.dequeueReusableAnnotationViewWithIdentifier(GroupAnnotationViewIdentifier)
+                var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: GroupAnnotationViewIdentifier)
 
                 if annotationView == nil {
                     annotationView = GroupAnnotationView(annotation: annotation, reuseIdentifier: GroupAnnotationViewIdentifier)
@@ -147,7 +147,7 @@ extension MapViewController: MKMapViewDelegate {
 
         } else if let annotation = annotation as? UserAnnotation {
 
-            var annotationView = self.mapView.dequeueReusableAnnotationViewWithIdentifier(UserAnnotationViewIdentifier)
+            var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: UserAnnotationViewIdentifier)
 
             if annotationView == nil {
                 annotationView = UserAnnotationView(annotation: annotation, reuseIdentifier: UserAnnotationViewIdentifier)
@@ -164,11 +164,11 @@ extension MapViewController: MKMapViewDelegate {
         }
     }
 
-    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         self.updateVisibleAnnotations()
     }
 
-    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
+    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
 
         for view in views {
 
@@ -187,7 +187,7 @@ extension MapViewController: MKMapViewDelegate {
 
                     annotation.coordinate = containerCoordinate
 
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    UIView.animate(withDuration: 0.3, animations: { () -> Void in
                         annotation.coordinate = actualCoordinate
                     })
                 }
@@ -199,7 +199,7 @@ extension MapViewController: MKMapViewDelegate {
         }
     }
 
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 
         mapView.deselectAnnotation(view.annotation, animated: true)
 
@@ -209,7 +209,7 @@ extension MapViewController: MKMapViewDelegate {
 
             if groupAnnotation.containedAnnotations?.count == 0 {
 
-                let pvc = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+                let pvc = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
                 pvc.group = groupAnnotation.group
 
                 self.navigationController?.pushViewController(pvc, animated: true)
@@ -217,17 +217,17 @@ extension MapViewController: MKMapViewDelegate {
             } else {
 
                 self.annotationsForTable = groupAnnotation.containedAnnotations
-                self.annotationsForTable?.push(groupAnnotation)
+                self.annotationsForTable?.append(groupAnnotation)
 
                 self.tableView.reloadData()
 
-                if self.tableView.contentSize.height > UIScreen.mainScreen().bounds.height * 2/5 {
-                    self.tableViewHeightConstranit.constant = UIScreen.mainScreen().bounds.height * 2/5
+                if self.tableView.contentSize.height > UIScreen.main.bounds.height * 2/5 {
+                    self.tableViewHeightConstranit.constant = UIScreen.main.bounds.height * 2/5
                 } else {
                     self.tableViewHeightConstranit.constant = self.tableView.contentSize.height
                 }
 
-                UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
+                UIView.animate(withDuration: TomoConst.Duration.Short, animations: {
                     self.tableViewTopConstrian.constant = self.tableViewHeightConstranit.constant
                     self.view.layoutIfNeeded()
                 })
@@ -239,7 +239,7 @@ extension MapViewController: MKMapViewDelegate {
 
             if userAnnotation.containedAnnotations?.count == 0 {
 
-                let pvc = Util.createViewControllerWithIdentifier("UserPostsView", storyboardName: "Profile") as! UserPostsViewController
+                let pvc = Util.createViewControllerWithIdentifier(id: "UserPostsView", storyboardName: "Profile") as! UserPostsViewController
                 pvc.user = userAnnotation.user
 
                 self.navigationController?.pushViewController(pvc, animated: true)
@@ -247,17 +247,17 @@ extension MapViewController: MKMapViewDelegate {
             } else {
 
                 self.annotationsForTable = userAnnotation.containedAnnotations
-                self.annotationsForTable?.push(userAnnotation)
+                self.annotationsForTable?.append(userAnnotation)
 
                 self.tableView.reloadData()
 
-                if self.tableView.contentSize.height > UIScreen.mainScreen().bounds.height * 2/5 {
-                    self.tableViewHeightConstranit.constant = UIScreen.mainScreen().bounds.height * 2/5
+                if self.tableView.contentSize.height > UIScreen.main.bounds.height * 2/5 {
+                    self.tableViewHeightConstranit.constant = UIScreen.main.bounds.height * 2/5
                 } else {
                     self.tableViewHeightConstranit.constant = self.tableView.contentSize.height
                 }
 
-                UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
+                UIView.animate(withDuration: TomoConst.Duration.Short, animations: {
                     self.tableViewTopConstrian.constant = self.tableViewHeightConstranit.constant
                     self.view.layoutIfNeeded()
                 })
@@ -269,23 +269,23 @@ extension MapViewController: MKMapViewDelegate {
 
 extension MapViewController: UITableViewDataSource {
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.annotationsForTable?.count ?? 0
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
 
         if let userAnnotation = self.annotationsForTable![indexPath.item] as? UserAnnotation {
 
-            let cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! UserCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
             cell.user = userAnnotation.user
             cell.setupDisplay()
             return cell
 
         } else if let groupAnnotation = self.annotationsForTable![indexPath.item] as? GroupAnnotation {
 
-            let cell = tableView.dequeueReusableCellWithIdentifier("GroupCell", forIndexPath: indexPath) as! GroupCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell", for: indexPath) as! GroupCell
             cell.group = groupAnnotation.group
             cell.setupDisplay()
             return cell
@@ -300,18 +300,18 @@ extension MapViewController: UITableViewDataSource {
 
 extension MapViewController: UITableViewDelegate {
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
 
         if let userAnnotation = self.annotationsForTable![indexPath.item] as? UserAnnotation {
-            let pvc = Util.createViewControllerWithIdentifier("UserPostsView", storyboardName: "Profile") as! UserPostsViewController
+            let pvc = Util.createViewControllerWithIdentifier(id: "UserPostsView", storyboardName: "Profile") as! UserPostsViewController
             pvc.user = userAnnotation.user
             self.navigationController?.pushViewController(pvc, animated: true)
         }
 
         if let groupAnnotation = self.annotationsForTable![indexPath.item] as? GroupAnnotation {
-            let pvc = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+            let pvc = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
             pvc.group = groupAnnotation.group
             self.navigationController?.pushViewController(pvc, animated: true)
         }
@@ -322,66 +322,66 @@ extension MapViewController: UITableViewDelegate {
 
 extension MapViewController {
 
-    private func hideTableView() {
-        UIView.animateWithDuration(TomoConst.Duration.Short, animations: {
+    fileprivate func hideTableView() {
+        UIView.animate(withDuration: TomoConst.Duration.Short, animations: {
             self.tableViewTopConstrian.constant = 0
             self.view.layoutIfNeeded()
         })
     }
 
-    private func loadContents() {
+    fileprivate func loadContents() {
 
         func findGroups(parameters: Router.Group.MapParameters) {
             Router.Group.Map(parameters: parameters).response {
                 if $0.result.isFailure {
-                    self.segmentedControl.enabled = true
+                    self.segmentedControl.isEnabled = true
                     return
                 }
 
-                guard let groups:[GroupEntity] = GroupEntity.collection($0.result.value!) else { return }
+                guard let groups:[GroupEntity] = GroupEntity.collection(json: $0.result.value!) else { return }
 
                 let annotations = groups.map { group -> GroupAnnotation in
                     let annotation = GroupAnnotation()
                     annotation.group = group
-                    if let lon = group.coordinate?.get(0), lat = group.coordinate?.get(1) {
+                    if let lon = group.coordinate?[0], let lat = group.coordinate?[1] {
                         annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
                     }
                     return annotation
                 }
                 self.allAnnotationMapView.addAnnotations(annotations)
-                self.adjustRegion(self.allAnnotationMapView.annotations)
+                self.adjustRegion(annotations: self.allAnnotationMapView.annotations)
                 self.updateVisibleAnnotations()
-                self.lastLoadDate = NSDate()
+                self.lastLoadDate = Date()
 
-                self.segmentedControl.enabled = true
+                self.segmentedControl.isEnabled = true
             }
         }
 
         func findFriends() {
             Router.User.Map.response {
                 if $0.result.isFailure {
-                    self.segmentedControl.enabled = true
+                    self.segmentedControl.isEnabled = true
                     return
                 }
 
-                guard let users:[UserEntity] = UserEntity.collection($0.result.value!) else { return }
+                guard let users:[UserEntity] = UserEntity.collection(json: $0.result.value!) else { return }
 
                 let annotations = users.map { user -> UserAnnotation in
                     let annotation = UserAnnotation()
                     annotation.user = user
                     if let station = user.primaryStation {
-                        if let lon = station.coordinate?.get(0), lat = station.coordinate?.get(1) {
+                        if let lon = station.coordinate?[0], let lat = station.coordinate?[1] {
                             annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
                         }
                     }
                     return annotation
                 }
                 self.allAnnotationMapView.addAnnotations(annotations)
-                self.adjustRegion(self.allAnnotationMapView.annotations)
+                self.adjustRegion(annotations: self.allAnnotationMapView.annotations)
                 self.updateVisibleAnnotations()
-                self.lastLoadDate = NSDate()
+                self.lastLoadDate = Date()
 
-                self.segmentedControl.enabled = true
+                self.segmentedControl.isEnabled = true
             }
         }
 
@@ -394,17 +394,17 @@ extension MapViewController {
         switch self.mode {
         case .HotStation:
             parameters.hasMembers = true
-            findGroups(parameters)
+            findGroups(parameters: parameters)
         case .MyStation:
             parameters.category = .mine
-            findGroups(parameters)
+            findGroups(parameters: parameters)
         case .FriendsMap:
             findFriends()
         }
 
     }
 
-    private func getCurrentBox() -> [Double] {
+    fileprivate func getCurrentBox() -> [Double] {
 
         let visibleRect = mapView.visibleMapRect
 
@@ -421,7 +421,7 @@ extension MapViewController {
         return [leftBottom.latitude, leftBottom.longitude, rightTop.latitude, rightTop.longitude]
     }
 
-    private func updateVisibleAnnotations() {
+    fileprivate func updateVisibleAnnotations() {
 
         // This value to controls the number of off screen annotations are displayed.
         // A bigger number means more annotations, less chance of seeing annotation views pop in but decreased performance.
@@ -438,8 +438,8 @@ extension MapViewController {
         let adjustedVisibleMapRect = MKMapRectInset(visibleMapRect, -marginFactor * visibleMapRect.size.width, -marginFactor * visibleMapRect.size.height)
 
         // determine how wide each bucket will be, as a MKMapRect square
-        let leftCoordinate = mapView.convertPoint(CGPointZero, toCoordinateFromView: mapView)
-        let rightCoordinate = mapView.convertPoint(CGPointMake(CGFloat(bucketSize), CGFloat(0.0)), toCoordinateFromView: mapView)
+        let leftCoordinate = mapView.convert(CGPoint.zero, toCoordinateFrom: mapView)
+        let rightCoordinate = mapView.convert(CGPoint(x: CGFloat(bucketSize), y: CGFloat(0.0)), toCoordinateFrom: mapView)
 
         // determine how wide each bucket will be, as a MKMapRect square
         let gridSize = MKMapPointForCoordinate(rightCoordinate).x - MKMapPointForCoordinate(leftCoordinate).x
@@ -458,12 +458,12 @@ extension MapViewController {
             gridMapRect.origin.x = startX
             while (MKMapRectGetMinX(gridMapRect) <= endX) {
 
-                let allAnnotationsInBucket = allAnnotationMapView.annotationsInMapRect(gridMapRect)
-                let visibleAnnotationsInBucket = mapView.annotationsInMapRect(gridMapRect)
+                let allAnnotationsInBucket = allAnnotationMapView.annotations(in: gridMapRect)
+                let visibleAnnotationsInBucket = mapView.annotations(in: gridMapRect)
 
                 var allAnnotations = Array(allAnnotationsInBucket) as! [AggregatableAnnotation]
 
-                if let annotationForGrid = annotationInGrid(gridMapRect, usingAnnotations: allAnnotations) as? AggregatableAnnotation {
+                if let annotationForGrid = annotationInGrid(gridMapRect: gridMapRect, usingAnnotations: allAnnotations) as? AggregatableAnnotation {
 
                     allAnnotations.remove(annotationForGrid)
 
@@ -472,7 +472,7 @@ extension MapViewController {
 
                     mapView.addAnnotation(annotationForGrid)
 
-                    if let view = mapView.viewForAnnotation(annotationForGrid) as? AggregatableAnnotationView {
+                    if let view = mapView.view(for: annotationForGrid) as? AggregatableAnnotationView {
                         view.setupDisplay()
                     }
 
@@ -487,7 +487,7 @@ extension MapViewController {
 
                             let actualCoordinate = annotation.coordinate
 
-                            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                            UIView.animate(withDuration: 0.3, animations: { () -> Void in
                                 annotation.coordinate = annotation.clusterAnnotation!.coordinate
                                 }, completion: { [unowned self, annotation, actualCoordinate](finished) -> Void in
                                     annotation.coordinate = actualCoordinate
@@ -505,11 +505,11 @@ extension MapViewController {
         }
     }
 
-    private func adjustRegion(annotations: [AnyObject]) {
+    fileprivate func adjustRegion(annotations: [Any]) {
 
         if annotations.count > 0 {
 
-            let horizontalSortedAnnotations = annotations.sort { (obj1, obj2) -> Bool in
+            let horizontalSortedAnnotations = annotations.sorted { (obj1, obj2) -> Bool in
 
                 let mapPoint1 = MKMapPointForCoordinate((obj1 as! MKAnnotation).coordinate)
                 let mapPoint2 = MKMapPointForCoordinate((obj2 as! MKAnnotation).coordinate)
@@ -521,7 +521,7 @@ extension MapViewController {
                 }
             }
 
-            let verticalSortedAnnotations = annotations.sort { (obj1, obj2) -> Bool in
+            let verticalSortedAnnotations = annotations.sorted { (obj1, obj2) -> Bool in
 
                 let mapPoint1 = MKMapPointForCoordinate((obj1 as! MKAnnotation).coordinate)
                 let mapPoint2 = MKMapPointForCoordinate((obj2 as! MKAnnotation).coordinate)
@@ -550,10 +550,10 @@ extension MapViewController {
         }
     }
 
-    private func annotationInGrid(gridMapRect: MKMapRect, usingAnnotations annotations: Array<NSObject>) -> NSObject? {
+    fileprivate func annotationInGrid(gridMapRect: MKMapRect, usingAnnotations annotations: Array<NSObject>) -> NSObject? {
 
         // first, see if one of the annotations we were already showing is in this mapRect
-        let visibleAnnotationsInBucket = mapView.annotationsInMapRect(gridMapRect)
+        let visibleAnnotationsInBucket = mapView.annotations(in: gridMapRect)
 
         for annotation in annotations {
             if visibleAnnotationsInBucket.contains(annotation) {
@@ -564,7 +564,7 @@ extension MapViewController {
         // otherwise, sort the annotations based on their distance from the center of the grid square,
         // then choose the one closest to the center to show
         let centerMapPoint = MKMapPoint(x: MKMapRectGetMidX(gridMapRect), y: MKMapRectGetMidY(gridMapRect))
-        let sortedAnnotations = annotations.sort { (obj1, obj2) -> Bool in
+        let sortedAnnotations = annotations.sorted { (obj1, obj2) -> Bool in
 
             let mapPoint1 = MKMapPointForCoordinate((obj1 as! MKAnnotation).coordinate)
             let mapPoint2 = MKMapPointForCoordinate((obj2 as! MKAnnotation).coordinate)
@@ -621,7 +621,7 @@ class UserCell: UITableViewCell {
     func setupDisplay() {
 
         if let photo = user.photo {
-            avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
+            avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: DefaultAvatarImage)
         }
 
         userNameLabel.text = user.nickName
@@ -643,7 +643,7 @@ class GroupCell: UITableViewCell {
     func setupDisplay() {
 
         if let cover = group.cover {
-            coverImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: DefaultGroupImage)
+            coverImageView.sd_setImage(with: URL(string: cover), placeholderImage: DefaultGroupImage)
         }
 
         nameLabel.text = group.name

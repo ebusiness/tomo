@@ -11,81 +11,130 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-extension Manager {
-    public static let instance: Manager = {
+extension Alamofire.SessionManager {
+    
+    open static let `default`: SessionManager = {
+        
         
         let serverTrustPolicies: [String: ServerTrustPolicy] = [
-            TomoConfig.Api.Domain: .DisableEvaluation
+            TomoConfig.Api.Domain: .disableEvaluation
         ]
+    
+        let configuration = URLSessionConfiguration.default
+        configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
         
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.HTTPAdditionalHeaders = Alamofire.Manager.defaultHTTPHeaders
         
-        return Alamofire.Manager(
+        
+        let manager = SessionManager(
             configuration: configuration,
             serverTrustPolicyManager: ServerTrustPolicyManager(policies: serverTrustPolicies)
         )
+        
+        manager.delegate.sessionDidReceiveChallenge = { session, challenge in
+            var disposition: URLSession.AuthChallengeDisposition = .performDefaultHandling
+            var credential: URLCredential?
+            
+            if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+                disposition = URLSession.AuthChallengeDisposition.useCredential
+                credential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+            } else {
+                if challenge.previousFailureCount > 0 {
+                    disposition = .cancelAuthenticationChallenge
+                } else {
+                    credential = manager.session.configuration.urlCredentialStorage?.defaultCredential(for: challenge.protectionSpace)
+                    if credential != nil {
+                        disposition = .useCredential
+                    }
+                }
+            }
+            return (disposition, credential)
+        }
+        
+        
+        return manager
     }()
 }
 
-// MARK: - Request for Swift JSON
+/// A set of HTTP response status code that do not contain response data.
+private let emptyDataStatusCodes: Set<Int> = [204, 205]
 
-extension Request {
-     /**
-     Adds a handler to be called once the request has finished.
-     
-     - parameter queue:             The queue on which the completion handler is dispatched.
-     - parameter options:           The JSON serialization reading options. `.AllowFragments` by default.
-     - parameter completionHandler: A closure to be executed once the request has finished.
-     
-     - returns: The request.
-     */
-    public func responseSwiftyJSON(
-        queue: dispatch_queue_t? = nil,
-        options: NSJSONReadingOptions = .AllowFragments,
-        completionHandler: Response<JSON, NSError> -> Void)
-        -> Self
-    {
-        return response(
-            queue: queue,
-            responseSerializer: Request.SwiftyJSONResponseSerializer(options: options),
-            completionHandler: completionHandler
-        )
+// MARK: - Request for SwiftyJSON
+extension DataRequest {
+    /// Creates a response serializer that
+    /// returns a SwiftyJSON object result type constructed from the response data using
+    /// `JSONSerialization` with the specified reading options.
+    ///
+    /// - parameter options: The JSON serialization reading options. Defaults to `.allowFragments`.
+    ///
+    /// - returns: A JSON object response serializer.
+    public static func serializeResponseSwiftyJSON(
+        options: JSONSerialization.ReadingOptions = .allowFragments)
+        -> DataResponseSerializer<JSON> {
+            return DataResponseSerializer { _, response, data, error in
+                return Request.serializeResponseSwiftyJSON(options: options,
+                                                           response: response,
+                                                           data: data,
+                                                           error: error)
+            }
     }
     
-    /**
-     Creates a response serializer that returns a SwiftyJSON object constructed from the response data using
-     `NSJSONSerialization` with the specified reading options.
-     
-     - parameter options: The SwiftyJSON serialization reading options. `.AllowFragments` by default.
-     
-     - returns: A SwiftyJSON object response serializer.
-     */
-    public static func SwiftyJSONResponseSerializer(
-        options options: NSJSONReadingOptions = .AllowFragments)
-        -> ResponseSerializer<JSON, NSError>
-    {
-        return ResponseSerializer { _, response, data, error in
-            guard error == nil else { return .Failure(error!) }
+    /// Adds a handler to be called once the request has finished.
+    ///
+    /// - parameter options:
+    ///     The JSON serialization reading options. Defaults to `.allowFragments`.
+    /// - parameter completionHandler: A closure to be executed once the request has finished.
+    ///
+    /// - returns: The request.
+    @discardableResult
+    public func responseSwiftyJSON(
+        queue: DispatchQueue? = nil,
+        options: JSONSerialization.ReadingOptions = .allowFragments,
+        completionHandler: @escaping (DataResponse<JSON>) -> Void)
+        -> Self {
+            return response(
+                queue: queue,
+                responseSerializer: DataRequest.serializeResponseSwiftyJSON(options: options),
+                completionHandler: completionHandler
+            )
+    }
+}
+
+// MARK: - JSON
+extension Request {
+    /// Returns a JSON object contained in a result type constructed
+    /// from the response data using `JSONSerialization`
+    /// with the specified reading options.
+    ///
+    /// - parameter options:  The JSON serialization reading options. Defaults to `.allowFragments`.
+    /// - parameter response: The response from the server.
+    /// - parameter data:     The data returned from the server.
+    /// - parameter error:    The error already encountered if it exists.
+    ///
+    /// - returns: The result data type.
+    public static func serializeResponseSwiftyJSON(
+        options: JSONSerialization.ReadingOptions,
+        response: HTTPURLResponse?,
+        data: Data?,
+        error: Error?)
+        -> Result<JSON> {
+            guard error == nil else { return .failure(error!) }
             
-            if let response = response where response.statusCode == 204 { return .Success(JSON.null) }
+            if let response = response, emptyDataStatusCodes.contains(response.statusCode) {
+                return .success(JSON.null)
+            }
             
-            guard let validData = data where validData.length > 0 else {
-                let failureReason = "JSON could not be serialized. Input data was nil or zero length."
-                let error = Error.errorWithCode(.JSONSerializationFailed, failureReason: failureReason)
-                return .Failure(error)
+            guard let validData = data, !validData.isEmpty else {
+                return .failure(AFError.responseSerializationFailed(reason: .inputDataNilOrZeroLength))
             }
             
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(validData, options: options)
+                let json = try JSONSerialization.jsonObject(with: validData, options: options)
                 
-                return .Success(JSON(json))
+                return .success(JSON(json))
             } catch {
-                return .Failure(error as NSError)
+                return .failure(AFError.responseSerializationFailed(
+                    reason: .jsonSerializationFailed(error: error)))
             }
-        }
     }
-    
 }
-
 

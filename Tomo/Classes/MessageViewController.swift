@@ -33,7 +33,7 @@ final class MessageViewController: CommonMessageController {
         
         //receive message realtime
 //        ListenerEvent.Message.addObserver(self, selector: Selector("receiveMessage:"))
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.Message.rawValue, object: nil)
+        NotificationCenter.default.addObserver(self, selector: Selector("didReceiveMessage:"), name: NSNotification.Name(rawValue: ListenerEvent.Message.rawValue), object: nil)
 
         // page title
         title = friend.nickName
@@ -41,27 +41,27 @@ final class MessageViewController: CommonMessageController {
         loadMessages()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
 
         super.viewWillAppear(animated)
         
-        guard let friend = me.friends where friend.contains(self.friend.id) else {
-            self.navigationController?.popViewControllerAnimated(true)
+        guard let friend = me.friends, friend.contains(self.friend.id) else {
+            let _ = self.navigationController?.popViewController(animated: true)
             return
         }
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         // open all message when leave
-        Router.Message.FindByUserId(id: friend.id, before: nil).request
+        let _ = Router.Message.FindByUserId(id: friend.id, before: nil).request
 
         // tell accout model we finished talk
-        me.finishChat(self.friend)
+        me.finishChat(user: self.friend)
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -69,23 +69,23 @@ final class MessageViewController: CommonMessageController {
 
 extension MessageViewController {
     
-    private func loadAvatars() {
-        SDWebImageManager.sharedManager().downloadImageWithURL(NSURL(string: friend.photo!), options: .RetryFailed, progress: nil) {
+    fileprivate func loadAvatars() {
+        SDWebImageManager.shared().downloadImage(with: NSURL(string: friend.photo!) as URL!, options: .retryFailed, progress: nil) {
             (image, error, _, _, _) -> Void in
             if let image = image {
-                self.avatarFriend = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+                self.avatarFriend = JSQMessagesAvatarImageFactory.avatarImage(with: image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
             } else {
                 self.avatarFriend = self.defaultAvatar
             }
             
             if self.messages.count > 0 {
-                let indexPaths = self.collectionView!.indexPathsForVisibleItems()
-                self.collectionView!.reloadItemsAtIndexPaths(indexPaths)
+                let indexPaths = self.collectionView!.indexPathsForVisibleItems
+                self.collectionView!.reloadItems(at: indexPaths)
             }
         }
     }
     
-    private func loadMessages() {
+    fileprivate func loadMessages() {
         
         if isLoading || isExhausted {
             return
@@ -103,7 +103,7 @@ extension MessageViewController {
                 return
             }
             
-            guard let messages: [JSQMessageEntity] = JSQMessageEntity.collection($0.result.value!) else {
+            guard let messages:  [JSQMessageEntity] = JSQMessageEntity.collection(json: $0.result.value!) else {
                 self.isLoading = false
                 return
             }
@@ -117,19 +117,19 @@ extension MessageViewController {
                     message.from = me
                     message.to = self.friend
                 }
-                self.messages.insert(message, atIndex: 0)
+                self.messages.insert(message, at: 0)
             }
             
             if self.oldestMessage == nil {
                 
                 self.collectionView!.reloadData()
-                self.scrollToBottomAnimated(false)
+                self.scrollToBottom(animated: false)
 //                let newMessages = me.newMessages.filter { $0.from.id != self.friend.id }
 //                if me.newMessages != newMessages {
 //                    me.newMessages = newMessages
 //                }
             } else {
-                self.prependRows(messages.count)
+                self.prependRows(rows: messages.count)
             }
             
             self.oldestMessage = messages.last
@@ -143,20 +143,20 @@ extension MessageViewController {
 
 extension MessageViewController: CommonMessageDelegate {
     
-    func createMessage(type: MessageType, text: String) -> NSIndexPath {
+    public func createMessage(type: MessageType, text: String) -> IndexPath {
         let newMessage = JSQMessageEntity()
         newMessage.id = ""
         newMessage.to = friend
         newMessage.from = me
         newMessage.type = type
         newMessage.content = text
-        newMessage.createDate = NSDate()
+        newMessage.createDate = Date()
         
         friend.lastMessage = newMessage
         self.messages.append(newMessage)
         
-        let indexPath = NSIndexPath(forRow: self.messages.count - 1, inSection: 0)
-        self.collectionView!.insertItemsAtIndexPaths([indexPath])
+        let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
+        self.collectionView!.insertItems(at: [indexPath])
         return indexPath
     }
     
@@ -169,10 +169,10 @@ extension MessageViewController: CommonMessageDelegate {
 
                 let newMessage = MessageEntity($0.result.value!)
                 newMessage.to = self.friend
-                me.sendMessage(newMessage)
+                me.sendMessage(message: newMessage)
 
                 JSQSystemSoundPlayer.jsq_playMessageSentSound()
-                self.finishSendingMessageAnimated(true)
+                self.finishSendingMessage(animated: true)
                 done?()
             }
         }
@@ -199,15 +199,15 @@ extension MessageViewController {
         
         self.messages.append(message)
         
-        gcd.sync(.Main, closure: { () -> () in
+        gcd.sync(.main, closure: { () -> () in
             JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
-            self.finishReceivingMessageAnimated(true)
+            self.finishReceivingMessage(animated: true)
         })
     }
     
     func setting(){
         //push setting or prifile?
-        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = friend
         
         self.navigationController?.pushViewController(vc, animated: true)
@@ -219,7 +219,7 @@ extension MessageViewController {
 
 extension MessageViewController {
     
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y < -176 {
             self.loadMessages()
         }
@@ -230,7 +230,7 @@ extension MessageViewController {
 
 extension MessageViewController {
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
         
         let message = messages[indexPath.item]
         
@@ -247,11 +247,11 @@ extension MessageViewController {
 
 extension MessageViewController {
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapAvatarImageView avatarImageView: UIImageView!, atIndexPath indexPath: NSIndexPath!) {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapAvatarImageView avatarImageView: UIImageView!, at indexPath: IndexPath!) {
         
         let message = messages[indexPath.item]
         
-        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = message.senderId() == me.id ? me : friend
         
         self.navigationController?.pushViewController(vc, animated: true)

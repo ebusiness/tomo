@@ -21,9 +21,9 @@ final class HomeViewController: BaseTableViewController {
     let screenHeight = UIScreen.mainScreen().bounds.height
     let loadTriggerHeight = CGFloat(88.0)
     
-    var contents = [AnyObject]()
-    var latestContent: AnyObject?
-    var oldestContent: AnyObject?
+    var contents = [Any]()
+    var latestContent: Any?
+    var oldestContent: Any?
     
     var isLoading = false
     var isExhausted = false
@@ -56,7 +56,7 @@ final class HomeViewController: BaseTableViewController {
     }
     // MARK: - Navigation
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "postdetail" {
             if let post = sender as? PostEntity {
                 let vc = segue.destinationViewController as! PostViewController
@@ -217,7 +217,7 @@ extension HomeViewController: CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [Any]!) {
         
         let newLocation = locations.last as! CLLocation
         
@@ -369,7 +369,7 @@ extension HomeViewController {
     
     private func getRecommendInfo() {
         
-        var params = Dictionary<String, AnyObject>()
+        var params = Dictionary<String, Any>()
         params["category"] = "discover"
         
         if let location = self.location {
@@ -404,7 +404,7 @@ extension HomeViewController {
             
             let posts: [PostEntity]? = PostEntity.collection(postData)
             
-            if let loadPosts: [AnyObject] = posts {
+            if let loadPosts: [Any] = posts {
                 self.contents += loadPosts
                 self.appendRows(loadPosts.count)
             }
@@ -414,7 +414,7 @@ extension HomeViewController {
             
             var insertIndexPath = NSIndexPath(forRow: visibleIndexPath!.row + 1, inSection: 0)
             
-            if let stations: AnyObject = self.recommendStations as? AnyObject {
+            if let stations: Any = self.recommendStations as? Any {
                 self.contents.insert(stations, atIndex: Int(insertIndexPath.row))
                 self.tableView.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Fade)
                 self.recommendStations = nil
@@ -422,7 +422,7 @@ extension HomeViewController {
             
             insertIndexPath = NSIndexPath(forRow: visibleIndexPath!.row + 4, inSection: 0)
             
-            if let groups: AnyObject = self.recommendGroups as? AnyObject {
+            if let groups: Any = self.recommendGroups as? Any {
                 self.contents.insert(groups, atIndex: Int(insertIndexPath.row))
                 self.tableView.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Fade)
                 self.recommendGroups = nil

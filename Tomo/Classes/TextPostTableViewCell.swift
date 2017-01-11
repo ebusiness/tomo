@@ -61,14 +61,14 @@ class TextPostTableViewCell: UITableViewCell {
 
     }
 
-    @IBAction func likeButtonTapped(sender: UIButton) {
+    @IBAction func likeButtonTapped(_ sender: UIButton) {
 
-        sender.userInteractionEnabled = false
+        sender.isUserInteractionEnabled = false
 
         Router.Post.Like(id: post.id).response {
 
             if $0.result.isFailure {
-                sender.userInteractionEnabled = true
+                sender.isUserInteractionEnabled = true
                 return
             }
 
@@ -80,18 +80,18 @@ class TextPostTableViewCell: UITableViewCell {
 
             self.configDisplay()
 
-            sender.userInteractionEnabled = true
+            sender.isUserInteractionEnabled = true
         }
     }
 
-    @IBAction func bookmarkButtonTapped(sender: UIButton) {
+    @IBAction func bookmarkButtonTapped(_ sender: UIButton) {
 
-        sender.userInteractionEnabled = false
+        sender.isUserInteractionEnabled = false
 
         Router.Post.Bookmark(id: post.id).response {
 
             if $0.result.isFailure {
-                sender.userInteractionEnabled = true
+                sender.isUserInteractionEnabled = true
                 return
             }
 
@@ -105,7 +105,7 @@ class TextPostTableViewCell: UITableViewCell {
 
             self.configDisplay()
 
-            sender.userInteractionEnabled = true
+            sender.isUserInteractionEnabled = true
         }
     }
 
@@ -117,12 +117,12 @@ class TextPostTableViewCell: UITableViewCell {
         guard let owner = post.owner else { return }
 
         // TODO: this is wired, but for prevent infinite loop, should fix
-        let profileViewController = self.delegate?.childViewControllers.find { ($0 as? ProfileViewController)?.user.id == owner.id } as? ProfileViewController
+        let profileViewController = self.delegate?.childViewControllers.first(where: { ($0 as? ProfileViewController)?.user.id == owner.id}) as? ProfileViewController
 
         if let profileViewController = profileViewController {
             self.delegate?.popToViewController(profileViewController, animated: true)
         } else {
-            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+            let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
             vc.user = owner
             self.delegate?.pushViewController(vc, animated: true)
         }
@@ -135,10 +135,10 @@ class TextPostTableViewCell: UITableViewCell {
         guard me.id != post.comments?.last?.owner.id else { return }
         guard let owner = post.comments?.last?.owner else { return }
 
-        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
         vc.user = owner
         if owner.id == post.owner.id {
-            let profileViewController = self.delegate?.childViewControllers.find { $0 is ProfileViewController } as? ProfileViewController
+            let profileViewController = self.delegate?.childViewControllers.first(where: { $0 is ProfileViewController }) as? ProfileViewController
 
             if let profileViewController = profileViewController {
                 self.delegate?.popToViewController(profileViewController, animated: true)
@@ -153,7 +153,7 @@ class TextPostTableViewCell: UITableViewCell {
 
         if nil == post.comments?.last { return }
 
-        let vc = Util.createViewControllerWithIdentifier("PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
+        let vc = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
         vc.post = post!
 
         // TODO: this should be dynamic via user input,
@@ -164,33 +164,33 @@ class TextPostTableViewCell: UITableViewCell {
 
     func configDisplay() {
 
-        self.avatarImageView.sd_setImageWithURL(NSURL(string: post.owner.photo ?? ""), placeholderImage: TomoConst.Image.DefaultAvatar)
+        self.avatarImageView.sd_setImage(with: URL(string: post.owner.photo ?? ""), placeholderImage: TomoConst.Image.DefaultAvatar)
         self.nickNameLabel.text = post.owner.nickName
         self.postDateLabel.text = post.createDate.relativeTimeToString()
         self.contentLabel.text = post.content
 
         var info = [String]()
 
-        if let likes = post.like where likes.contains(me.id) {
-            self.likeButton.setImage(TomoConst.Image.FilledHeart, forState: .Normal)
-            info.push("\(likes.count)赞")
+        if let likes = post.like, likes.contains(me.id) {
+            self.likeButton.setImage(TomoConst.Image.FilledHeart, for: .normal)
+            info.append("\(likes.count)赞")
         } else {
-            self.likeButton.setImage(TomoConst.Image.EmptyHeart, forState: .Normal)
+            self.likeButton.setImage(TomoConst.Image.EmptyHeart, for: .normal)
         }
 
-        if let bookmarks = post.bookmark where bookmarks.contains(me.id) {
-            self.bookmarkButton.setImage(TomoConst.Image.FilledStar, forState: .Normal)
-            info.push("\(bookmarks.count)收藏")
+        if let bookmarks = post.bookmark, bookmarks.contains(me.id) {
+            self.bookmarkButton.setImage(TomoConst.Image.FilledStar, for: .normal)
+            info.append("\(bookmarks.count)收藏")
         } else {
-            self.bookmarkButton.setImage(TomoConst.Image.EmptyStar, forState: .Normal)
+            self.bookmarkButton.setImage(TomoConst.Image.EmptyStar, for: .normal)
         }
 
         if let lastComment = post.comments?.last {
             self.commentAreaHeight.constant = 64.0
-            self.commentAvatarImageView.sd_setImageWithURL(NSURL(string: lastComment.owner.photo ?? ""), placeholderImage: TomoConst.Image.DefaultAvatar)
+            self.commentAvatarImageView.sd_setImage(with: URL(string: lastComment.owner.photo ?? ""), placeholderImage: TomoConst.Image.DefaultAvatar)
             self.commentContentLabel.text = lastComment.content
             self.commentDateLabel.text = lastComment.createDate.relativeTimeToString()
-            info.push("\(post.comments!.count)评论")
+            info.append("\(post.comments!.count)评论")
         } else {
             self.commentAreaHeight.constant = CGFloat.almostZero
             self.commentAvatarImageView.image = nil
@@ -199,7 +199,7 @@ class TextPostTableViewCell: UITableViewCell {
         }
         
         if info.count > 0 {
-            self.infoLabel.text = info.joinWithSeparator(" ")
+            self.infoLabel.text = info.joined(separator: " ")
         } else {
             self.infoLabel.text = nil
         }

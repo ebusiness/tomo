@@ -13,7 +13,7 @@ extension Router {
         
         case FindById(id: String)
         case Find(parameters: FindParameters)
-        case FindPosts(id: String, before: NSTimeInterval?)
+        case FindPosts(id: String, before: TimeInterval?)
         
         case Create(parameters: CreateParameters)
         
@@ -24,15 +24,15 @@ extension Router {
         
         var path: String {
             switch self {
-            case let FindById(id):
+            case let .FindById(id):
                 return "/groups/\(id)"
-            case let Join(id):
+            case let .Join(id):
                 return "/groups/\(id)/join"
-            case let Leave(id):
+            case let .Leave(id):
                 return "/groups/\(id)/leave"
-            case let FindPosts(id, _):
+            case let .FindPosts(id, _):
                 return "/groups/\(id)/posts"
-            case Map:
+            case .Map:
                 return "/map/groups"
             default:
                 return "/groups"
@@ -40,27 +40,27 @@ extension Router {
         }
         var method: RouteMethod {
             switch self {
-            case Create:
+            case .Create:
                 return .POST
-            case Join:
+            case .Join:
                 return .PATCH
-            case Leave:
+            case .Leave:
                 return .PATCH
             default:
                 return .GET
             }
         }
-        var parameters: [String: AnyObject]? {
+        var parameters: [String: Any]? {
             switch self {
-            case let Find(parameters):
+            case let .Find(parameters):
                 return parameters.getParameters()
-            case let Create(parameters):
+            case let .Create(parameters):
                 return parameters.getParameters()
-            case let FindPosts(_, before):
+            case let .FindPosts(_, before):
                 if let before = before {
                     return ["before": String(before)]
                 }
-            case let Map(parameters):
+            case let .Map(parameters):
                 return parameters.getParameters()
             default:
                 return nil
@@ -75,20 +75,20 @@ extension Router.Group {
         case mine, discover, all
     }
     
-    enum Type: String  {
+    enum `Type`: String  {
         case station
     }
     
     struct FindParameters {
         var category: Category , page: Int?
-        var type: Type?, name: String?, after: NSTimeInterval?, coordinate: [Double]?, hasMembers: Bool?
+        var type: Type?, name: String?, after: TimeInterval?, coordinate: [Double]?, hasMembers: Bool?
         
         init(category: Category) {
             self.category = category
         }
         
-        func getParameters() -> [String: AnyObject] {
-            var parameters = [String: AnyObject]()
+        func getParameters() -> [String: Any] {
+            var parameters = [String: Any]()
             
             parameters["category"] = category.rawValue
 //            if let page = page {
@@ -119,8 +119,8 @@ extension Router.Group {
             self.category = category
         }
 
-        func getParameters() -> [String: AnyObject] {
-            var parameters = [String: AnyObject]()
+        func getParameters() -> [String: Any] {
+            var parameters = [String: Any]()
 
             parameters["category"] = category.rawValue
             parameters["type"] = type?.rawValue
@@ -140,8 +140,8 @@ extension Router.Group {
             self.name = name
         }
         
-        func getParameters() -> [String: AnyObject] {
-            var parameters = [String: AnyObject]()
+        func getParameters() -> [String: Any] {
+            var parameters = [String: Any]()
             
             parameters["name"] = name
             parameters["introduction"] = introduction

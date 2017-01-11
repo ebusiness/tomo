@@ -90,26 +90,26 @@ final class ProfileViewController: UITableViewController {
         self.configEventObserver()
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let vc = segue.destinationViewController as? UserPostsViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? UserPostsViewController {
             vc.user = self.user
         }
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         // restore the normal navigation bar before disappear
-        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         self.navigationController?.navigationBar.shadowImage = nil
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         // make the navigation bar transparent
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -117,24 +117,24 @@ final class ProfileViewController: UITableViewController {
 
 extension ProfileViewController {
     
-    @IBAction func acceptInvitation(sender: UIButton) {
-        self.invitationAccept(true)
+    @IBAction func acceptInvitation(_ sender: UIButton) {
+        self.invitationAccept(accept: true)
     }
     
-    @IBAction func refuseInvitation(sender: UIButton) {
-        Util.alert(self, title: "拒绝好友邀请", message: "拒绝 " + self.user.nickName + " 的好友邀请么") { _ in
-            self.invitationAccept(false)
+    @IBAction func refuseInvitation(_ sender: UIButton) {
+        Util.alert(parentvc: self, title: "拒绝好友邀请", message: "拒绝 " + self.user.nickName + " 的好友邀请么") { _ in
+            self.invitationAccept(accept: false)
         }
     }
 
-    @IBAction func moreBtnTapped(sender: AnyObject) {
+    @IBAction func moreBtnTapped(_ sender: Any) {
         
-        var optionalList = Dictionary<String,((UIAlertAction!) -> Void)!>()
+        var optionalList = Dictionary<String,((UIAlertAction?) -> Void)!>()
 
         if self.user.id != me.id {
             optionalList["举报此用户"] = { (_) -> Void in
                 
-                Util.alert(self, title: "举报用户", message: "您确定要举报此用户吗？") { _ in
+                Util.alert(parentvc: self, title: "举报用户", message: "您确定要举报此用户吗？") { _ in
                     Router.Report.User(id: self.user.id).request
                 }
             }
@@ -142,7 +142,7 @@ extension ProfileViewController {
         
         if self.user.id != me.id {
             
-            if let blockUsers = me.blockUsers where blockUsers.contains(self.user.id) {
+            if let blockUsers = me.blockUsers, blockUsers.contains(self.user.id) {
                 
                 optionalList["取消屏蔽"] = { (_) -> Void in
                     Router.User.Block(id: self.user.id).response {
@@ -155,7 +155,7 @@ extension ProfileViewController {
                 
                 optionalList["屏蔽此用户"] = { (_) -> Void in
                     
-                    Util.alert(self, title: "屏蔽用户", message: "您确定要屏蔽此用户吗？") { _ in
+                    Util.alert(parentvc: self, title: "屏蔽用户", message: "您确定要屏蔽此用户吗？") { _ in
                         Router.User.Block(id: self.user.id).response {
                             if $0.result.isFailure { return }
                             me.blockUsers?.append(self.user.id)
@@ -166,31 +166,31 @@ extension ProfileViewController {
             
         }
         
-        if let friends = me.friends where friends.contains(self.user.id) {
+        if let friends = me.friends, friends.contains(self.user.id) {
             optionalList["删除好友"] = { (_) -> Void in
                 
-                Util.alert(self, title: "删除好友", message: "确定删除该好友么?") { _ in
+                Util.alert(parentvc: self, title: "删除好友", message: "确定删除该好友么?") { _ in
                     Router.Contact.Delete(id: self.user.id).response {
                         if $0.result.isFailure { return }
-                        me.deleteFriend(self.user)
+                        me.deleteFriend(user: self.user)
                         self.configUserStatus()
                     }
                 }
             }
         }
         
-        Util.alertActionSheet(self, optionalDict: optionalList)
+        Util.alertActionSheet(parentvc: self, optionalDict: optionalList)
         
     }
     
-    @IBAction func addFriend(sender: UIButton) {
+    @IBAction func addFriend(_ sender: UIButton) {
         
-        sender.userInteractionEnabled = false
+        sender.isUserInteractionEnabled = false
         
         Router.Invitation.SendTo(id: self.user.id).response {
 
             if $0.result.isFailure {
-                sender.userInteractionEnabled = true
+                sender.isUserInteractionEnabled = true
                 return
             }
             
@@ -200,17 +200,17 @@ extension ProfileViewController {
 
             me.invitations?.append(self.user.id)
 
-            sender.userInteractionEnabled = true
+            sender.isUserInteractionEnabled = true
 
             self.configUserStatus()
         }
     }
     
-    @IBAction func sendMessage(sender: UIButton) {
+    @IBAction func sendMessage(_ sender: UIButton) {
 
         // TODO: infinite loop here
 
-        let messageViewController = self.navigationController?.childViewControllers.find { ($0 as? MessageViewController)?.friend.id == self.user.id } as? MessageViewController
+        let messageViewController = self.navigationController?.childViewControllers.first(where: { ($0 as? MessageViewController)?.friend.id == self.user.id }) as? MessageViewController
         
         if let messageViewController = messageViewController {
             self.navigationController?.popToViewController(messageViewController, animated: true)
@@ -233,89 +233,89 @@ extension ProfileViewController {
 
         self.relation = .Stranger
 
-        if let myFriends = me.friends where myFriends.contains(self.user.id) {
+        if let myFriends = me.friends, myFriends.contains(self.user.id) {
             self.relation = .Friend
         }
 
-        if let myInvitations = me.invitations where myInvitations.contains(self.user.id) {
+        if let myInvitations = me.invitations, myInvitations.contains(self.user.id) {
             self.relation = .InvitedByMe
         }
 
-        if let _ = me.friendInvitations.find({ $0.from.id == self.user.id }) {
+        if let _ = me.friendInvitations.first(where: { $0.from.id == self.user.id }) {
             self.relation = .InvitedingMe
         }
 
-        self.statusLabel.text = self.relation.message(self.user)
+        self.statusLabel.text = self.relation.message(user: self.user)
 
         switch self.relation {
 
         case .Stranger:
-            self.addFriendButton.hidden = false
-            self.messageButton.hidden = true
-            self.acceptButton.hidden = true
-            self.refuseButton.hidden = true
+            self.addFriendButton.isHidden = false
+            self.messageButton.isHidden = true
+            self.acceptButton.isHidden = true
+            self.refuseButton.isHidden = true
 
         case .Friend:
-            self.addFriendButton.hidden = true
-            self.messageButton.hidden = false
-            self.acceptButton.hidden = true
-            self.refuseButton.hidden = true
+            self.addFriendButton.isHidden = true
+            self.messageButton.isHidden = false
+            self.acceptButton.isHidden = true
+            self.refuseButton.isHidden = true
 
         case .InvitedByMe:
-            self.addFriendButton.hidden = true
-            self.messageButton.hidden = true
-            self.acceptButton.hidden = true
-            self.refuseButton.hidden = true
+            self.addFriendButton.isHidden = true
+            self.messageButton.isHidden = true
+            self.acceptButton.isHidden = true
+            self.refuseButton.isHidden = true
 
         case .InvitedingMe:
-            self.addFriendButton.hidden = true
-            self.messageButton.hidden = true
-            self.acceptButton.hidden = false
-            self.refuseButton.hidden = false
+            self.addFriendButton.isHidden = true
+            self.messageButton.isHidden = true
+            self.acceptButton.isHidden = false
+            self.refuseButton.isHidden = false
 
         case .Blocking:
-            self.addFriendButton.hidden = true
-            self.messageButton.hidden = true
-            self.acceptButton.hidden = true
-            self.refuseButton.hidden = true
+            self.addFriendButton.isHidden = true
+            self.messageButton.isHidden = true
+            self.acceptButton.isHidden = true
+            self.refuseButton.isHidden = true
         }
     }
 
-    private func configDisplay() {
+    fileprivate func configDisplay() {
 
         // set the header view's size according the screen size
-        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.headerViewSize)
+        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPoint.zero, size: self.headerViewSize)
 
         // set title with user nickname
         self.navigationItem.title = self.user.nickName
 
         // give the buttons white border
         self.avatarImageView.layer.borderWidth = 2
-        self.avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.avatarImageView.layer.borderColor = UIColor.white.cgColor
 
         self.addFriendButton.layer.borderWidth = 2
-        self.addFriendButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.addFriendButton.layer.borderColor = UIColor.white.cgColor
 
         self.messageButton.layer.borderWidth = 2
-        self.messageButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.messageButton.layer.borderColor = UIColor.white.cgColor
 
         self.acceptButton.layer.borderWidth = 2
-        self.acceptButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.acceptButton.layer.borderColor = UIColor.white.cgColor
 
         self.refuseButton.layer.borderWidth = 2
-        self.refuseButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.refuseButton.layer.borderColor = UIColor.white.cgColor
 
         self.configUserInfo()
     }
 
-    private func configUserInfo() {
+    fileprivate func configUserInfo() {
 
         if let cover = self.user.cover {
-            self.coverImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: TomoConst.Image.DefaultCover)
+            self.coverImageView.sd_setImage(with: URL(string: cover), placeholderImage: TomoConst.Image.DefaultCover)
         }
 
         if let photo = self.user.photo {
-            self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: TomoConst.Image.DefaultAvatar)
+            self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: TomoConst.Image.DefaultAvatar)
         }
 
         if self.user.firstName != nil && self.user.lastName != nil  {
@@ -331,7 +331,7 @@ extension ProfileViewController {
         }
 
         if let birthDay = self.user.birthDay {
-            self.birthDayLabel.text = birthDay.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
+            self.birthDayLabel.text = birthDay.toString(dateStyle: .medium, timeStyle: .none)
         }
 
         if let address = self.user.address {
@@ -339,9 +339,9 @@ extension ProfileViewController {
         }
     }
 
-    private func invitationAccept(accept: Bool){
+    fileprivate func invitationAccept(accept: Bool){
 
-        let invitation = me.friendInvitations.find { $0.from.id == self.user.id }
+        let invitation = me.friendInvitations.first(where: { $0.from.id == self.user.id })
 
         if let invitation = invitation {
 
@@ -350,9 +350,9 @@ extension ProfileViewController {
                 if $0.result.isFailure { return }
 
                 if accept {
-                    me.acceptInvitation(invitation)
+                    me.acceptInvitation(invitation: invitation)
                 } else {
-                    me.refuseInvitation(invitation)
+                    me.refuseInvitation(invitation: invitation)
                 }
             }
         }
@@ -364,20 +364,20 @@ extension ProfileViewController {
 
 extension ProfileViewController {
 
-    private func configEventObserver() {
+    fileprivate func configEventObserver() {
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "configUserStatus", name: "didAcceptInvitation", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "configUserStatus", name: "didRefuseInvitation", object: me)
+        NotificationCenter.default.addObserver(self, selector: "configUserStatus", name: NSNotification.Name(rawValue: "didAcceptInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "configUserStatus", name: NSNotification.Name(rawValue: "didRefuseInvitation"), object: me)
 
         // notification from background thread
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reviseUserStatus", name: "didReceiveFriendInvitation", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reviseUserStatus", name: "didMyFriendInvitationAccepted", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reviseUserStatus", name: "didMyFriendInvitationRefused", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reviseUserStatus", name: "didFriendBreak", object: me)
+        NotificationCenter.default.addObserver(self, selector: "reviseUserStatus", name: NSNotification.Name(rawValue: "didReceiveFriendInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "reviseUserStatus", name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "reviseUserStatus", name: NSNotification.Name(rawValue: "didMyFriendInvitationRefused"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "reviseUserStatus", name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
     }
 
     func reviseUserStatus() {
-        gcd.sync(.Main) {
+        gcd.sync(.main) {
             self.configUserStatus()
         }
     }

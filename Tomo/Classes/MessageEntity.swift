@@ -23,7 +23,7 @@ class MessageEntity: Entity {
     
     var content: String!
     
-    var createDate: NSDate!
+    var createDate: Date!
     
     override init() {
         super.init()
@@ -46,7 +46,7 @@ class MessageEntity: Entity {
             self.group = GroupEntity(json["group"])
         }
         self.content = json["content"].string ?? json["aps"]["alert"].stringValue
-        self.createDate = json["createDate"].stringValue.toDate(TomoConfig.Date.Format)
+        self.createDate = json["createDate"].stringValue.toDate(format: TomoConfig.Date.Format)
         
     }
 }
@@ -54,7 +54,7 @@ class MessageEntity: Entity {
 public enum MessageType: String {
     case voice, photo, video, text
     
-    func remotePath(name: String) -> String {
+    func remotePath(_ name: String) -> String {
         switch self {
         case .photo:
             return "/messages/images/\(name)"

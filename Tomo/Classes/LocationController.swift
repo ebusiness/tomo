@@ -11,25 +11,25 @@ import CoreLocation
 
 final class LocationController: NSObject {
 
-    typealias ActionWithLocation = (location: CLLocation?) -> ()
+    typealias ActionWithLocation = (_ location: CLLocation?) -> ()
 
-    typealias ActionWithPlacemark = (placemark: CLPlacemark?, location: CLLocation?) -> ()
+    typealias ActionWithPlacemark = (_ placemark: CLPlacemark?, _ location: CLLocation?) -> ()
 
     static let shareInstance = LocationController()
 
-    private let locationManager = CLLocationManager()
-
-    private let geocoder = CLGeocoder()
-
-    private var location: CLLocation?
-
     private var placemark: CLPlacemark?
+    
+    fileprivate let locationManager = CLLocationManager()
 
-    private var error: NSError?
+    fileprivate let geocoder = CLGeocoder()
 
-    private var actionWithLocation: ActionWithLocation?
+    fileprivate var location: CLLocation?
 
-    private var timer: NSTimer?
+    fileprivate var error: Error?
+
+    fileprivate var actionWithLocation: ActionWithLocation?
+
+    fileprivate var timer: Timer?
 
     private override init () {
 
@@ -37,7 +37,7 @@ final class LocationController: NSObject {
 
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        locationManager.activityType = .Fitness
+        locationManager.activityType = .fitness
     }
     
 }
@@ -47,13 +47,13 @@ final class LocationController: NSObject {
 extension LocationController: CLLocationManagerDelegate {
     
     //location authorization status changed
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 
         guard self.actionWithLocation != nil else { return }
         
         switch status {
 
-        case .AuthorizedWhenInUse, .AuthorizedAlways:
+        case .authorizedWhenInUse, .authorizedAlways:
             self.locationManager.startUpdatingLocation()
 
         default:
@@ -62,7 +62,7 @@ extension LocationController: CLLocationManagerDelegate {
         }
     }
 
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
         let newLocation = locations.last!
         let accuracy = newLocation.horizontalAccuracy
@@ -80,7 +80,7 @@ extension LocationController: CLLocationManagerDelegate {
         self.stopLocationManager()
     }
 
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         // or save the error and stop location manager
         // TODO: do something with error
         self.error = error
@@ -93,7 +93,7 @@ extension LocationController: CLLocationManagerDelegate {
 
 extension LocationController {
 
-    private func determineStatus(authRequestOnController: UIViewController?) -> Bool {
+    fileprivate func determineStatus(_ authRequestOnController: UIViewController?) -> Bool {
 
         guard CLLocationManager.locationServicesEnabled() else {
             self.locationManager.startUpdatingLocation()
@@ -102,16 +102,16 @@ extension LocationController {
 
         switch CLLocationManager.authorizationStatus() {
 
-        case .AuthorizedAlways, .AuthorizedWhenInUse :
+        case .authorizedAlways, .authorizedWhenInUse :
             return true
 
-        case .NotDetermined:
+        case .notDetermined:
             self.locationManager.requestWhenInUseAuthorization()
             return false
 
-        case .Restricted, .Denied:
+        case .restricted, .denied:
             if let controller = authRequestOnController {
-                self.showRequestAuthorizationAlert(controller)
+                self.showRequestAuthorizationAlert(presentingController: controller)
             }
             return false
         }
@@ -119,15 +119,15 @@ extension LocationController {
 
     private func showRequestAuthorizationAlert(presentingController: UIViewController) {
 
-        let alert = UIAlertController(title: "現場Tomo需要访问您的位置", message: "为了追加位置信息，请您允许現場Tomo访问您的位置", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "現場Tomo需要访问您的位置", message: "为了追加位置信息，请您允许現場Tomo访问您的位置", preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "不允许", style: .Destructive, handler: nil))
-        alert.addAction(UIAlertAction(title: "设置", style: .Default, handler: { _ in
-            let url = NSURL(string: UIApplicationOpenSettingsURLString)
-            UIApplication.sharedApplication().openURL(url!)
+        alert.addAction(UIAlertAction(title: "不允许", style: .destructive, handler: nil))
+        alert.addAction(UIAlertAction(title: "设置", style: .default, handler: { _ in
+            let url = URL(string: UIApplicationOpenSettingsURLString)
+            UIApplication.shared.openURL(url!)
         }))
 
-        presentingController.presentViewController(alert, animated: true, completion: nil)
+        presentingController.present(alert, animated: true, completion: nil)
     }
 
     func stopLocationManager() {
@@ -143,14 +143,14 @@ extension LocationController {
         self.location = nil
     }
 
-    private func doAction() {
+    fileprivate func doAction() {
 
         guard let action = self.actionWithLocation else { return }
 
         if let location = self.location {
-            action(location: location)
+            action(location)
         } else {
-            action(location: nil)
+            action(nil)
         }
 
         self.actionWithLocation = nil
@@ -162,7 +162,7 @@ extension LocationController {
 extension LocationController {
 
     // The idea is hold a function, then perform locating, invoke the function with location
-    func doActionWithLocation(authRequestOnController: UIViewController? = nil, action: ActionWithLocation) {
+    func doActionWithLocation(authRequestOnController: UIViewController? = nil, action: @escaping ActionWithLocation) {
 
         self.actionWithLocation = action
 
@@ -182,23 +182,23 @@ extension LocationController {
             return
         }
 
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(TomoConst.Timeout.Short, target: self, selector: Selector("stopLocationManager"), userInfo: nil, repeats: false)
+        self.timer = Timer.scheduledTimer(timeInterval: TomoConst.Timeout.Short, target: self, selector: #selector(LocationController.stopLocationManager), userInfo: nil, repeats: false)
 
         self.locationManager.startUpdatingLocation()
     }
 
-    func doActionWithPlacemark(authRequestOnController: UIViewController? = nil, action: ActionWithPlacemark) {
+    func doActionWithPlacemark(authRequestOnController: UIViewController? = nil, action: @escaping ActionWithPlacemark) {
 
-        self.doActionWithLocation(authRequestOnController) { location in
+        self.doActionWithLocation(authRequestOnController: authRequestOnController) { location in
 
             guard let location = location else {
-                action(placemark: nil, location: nil)
+                action(nil, nil)
                 return
             }
 
             self.geocoder.reverseGeocodeLocation(location) { placemarks, error in
                 self.error = error
-                action(placemark: placemarks?.last, location: location)
+                action(placemarks?.last, location)
             }
         }
     }

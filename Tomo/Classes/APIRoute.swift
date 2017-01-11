@@ -37,16 +37,16 @@ protocol APIRoute: URLRequestConvertible {
     /// Encoding
     var encoding: Alamofire.ParameterEncoding { get }
     /// Parameters
-    var parameters: [String : AnyObject]? { get }
+    var parameters: [String : Any]? { get }
 }
 
 // MARK: - URLRequestConvertible
 extension APIRoute {
     
-    var URLRequest: NSMutableURLRequest {
-        let requestUrl = TomoConfig.Api.Url.URLByAppendingPathComponent(self.path)
-        let mutableURLRequest = NSMutableURLRequest(URL: requestUrl)
-        mutableURLRequest.HTTPMethod = self.method.rawValue
+    public func asURLRequest() throws -> URLRequest {
+        let requestUrl = TomoConfig.Api.Url.appendingPathComponent(self.path)
+        var mutableURLRequest = URLRequest(url: requestUrl)
+        mutableURLRequest.httpMethod = self.method.rawValue
         mutableURLRequest.timeoutInterval = 30
         #if DEBUG
             print("URL: \(requestUrl)")
@@ -54,25 +54,26 @@ extension APIRoute {
             print("Parameters: \(parameters)")
         #endif
         guard let parameters = self.parameters else { return mutableURLRequest }
-        return encoding.encode(mutableURLRequest, parameters: parameters).0
+        return try! encoding.encode(mutableURLRequest, with: parameters)
     }
 }
 
 // MARK: - Default
 extension APIRoute {
-    var method: RouteMethod { return .GET }
-    var encoding: Alamofire.ParameterEncoding { return .URL }
-    var parameters: [String : AnyObject]? { return nil }
+    public var method: RouteMethod { return .GET }
+    public var encoding: Alamofire.ParameterEncoding { return Alamofire.URLEncoding.default }
+    public var parameters: [String : Any]? { return nil }
 }
 
 // MARK: - extension
 extension APIRoute {
     
-    var request: Request {
-        return Manager.instance.request(self).validate()
+    var request: DataRequest {
+        return Alamofire.SessionManager.default.request(self).validate()
     }
     
-    func response(queue: dispatch_queue_t? = nil, completionHandler: Response<JSON, NSError> -> Void) -> Request {
-        return request.responseSwiftyJSON(queue, completionHandler: completionHandler)
+    @discardableResult
+    func response(completionHandler: @escaping (DataResponse<JSON>) -> Void) -> Request {
+        return request.responseSwiftyJSON(completionHandler: completionHandler)
     }
 }

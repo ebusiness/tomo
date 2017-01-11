@@ -31,13 +31,13 @@ final class MyAccountViewController: UITableViewController {
     var notificationCellAccessoryView: UIView?
 
     let badgeView: UILabel! = {
-        let label = UILabel(frame: CGRectMake(0, 0, 20, 20))
-        label.backgroundColor = UIColor.redColor()
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        label.backgroundColor = UIColor.red
         label.layer.cornerRadius = 10
         label.layer.masksToBounds = true
-        label.textColor = UIColor.whiteColor()
-        label.font = UIFont.systemFontOfSize(12)
-        label.textAlignment = .Center
+        label.textColor = UIColor.white
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textAlignment = .center
         
         return label
     }()
@@ -56,28 +56,28 @@ final class MyAccountViewController: UITableViewController {
         self.configEventObserver()
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         // restore the normal navigation bar before disappear
-        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         self.navigationController?.navigationBar.shadowImage = nil
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.configNavigationBarByScrollPosition()
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        if let rvc = segue.destinationViewController as? RecommendViewController {
+        if let rvc = segue.destination as? RecommendViewController {
             rvc.exitAction = {
                 self.configDisplay()
-                rvc.dismissViewControllerAnimated(true, completion: nil)
+                rvc.dismiss(animated: true, completion: nil)
             }
         }
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -85,8 +85,8 @@ final class MyAccountViewController: UITableViewController {
 
 extension MyAccountViewController {
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -95,7 +95,7 @@ extension MyAccountViewController {
 extension MyAccountViewController {
 
     // Fetch more contents when scroll down to bottom
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.configNavigationBarByScrollPosition()
     }
 }
@@ -104,25 +104,26 @@ extension MyAccountViewController {
 
 extension MyAccountViewController {
 
-    @IBAction func logoutTapped(sender: UIButton) {
+    @IBAction func logoutTapped(_ sender: UIButton) {
 
-        Util.alert(self, title: "退出账号", message: "真的要退出当前的账号吗？") { _ in
+        Util.alert(parentvc: self, title: "退出账号", message: "真的要退出当前的账号吗？") { _ in
 
             Router.Signout().response { _ in
-                Defaults.remove("openid")
-                Defaults.remove("deviceToken")
+                
+                Defaults.remove(key: "openid")
+                Defaults.remove(key: "deviceToken")
 
-                Defaults.remove("email")
-                Defaults.remove("password")
+                Defaults.remove(key: "email")
+                Defaults.remove(key: "password")
 
                 me = Account()
-                let main = Util.createViewControllerWithIdentifier(nil, storyboardName: "Main")
+                let main = Util.createViewControllerWithIdentifier(id: nil, storyboardName: "Main")
                 Util.changeRootViewController(from: self, to: main)
             }
         }
     }
 
-    @IBAction func profileDidFinishEdit(segue: UIStoryboardSegue) {
+    @IBAction func profileDidFinishEdit(_ segue: UIStoryboardSegue) {
 //        self.configDisplay()
     }
 }
@@ -131,22 +132,22 @@ extension MyAccountViewController {
 
 extension MyAccountViewController {
     
-    private func configDisplay() {
+    fileprivate func configDisplay() {
 
-        self.avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.avatarImageView.layer.borderColor = UIColor.white.cgColor
         self.avatarImageView.layer.borderWidth = 2
 
         // set the header view's size according the screen size
-        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.headerViewSize)
+        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPoint.zero, size: self.headerViewSize)
 
         self.navigationItem.title = me.nickName
 
         if let cover = me.cover {
-            self.coverImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: TomoConst.Image.DefaultCover)
+            self.coverImageView.sd_setImage(with: URL(string: cover), placeholderImage: TomoConst.Image.DefaultCover)
         }
 
         if let avatar = me.photo {
-            self.avatarImageView.sd_setImageWithURL(NSURL(string: avatar), placeholderImage: TomoConst.Image.DefaultAvatar)
+            self.avatarImageView.sd_setImage(with: URL(string: avatar), placeholderImage: TomoConst.Image.DefaultAvatar)
         }
 
         if let bio = me.bio {
@@ -162,7 +163,7 @@ extension MyAccountViewController {
         }
         
         if let birthDay = me.birthDay {
-            self.birthDayLabel.text = birthDay.toString(dateStyle: .MediumStyle, timeStyle: .NoStyle)
+            self.birthDayLabel.text = birthDay.toString(dateStyle: .medium, timeStyle: .none)
         }
         
         if let address = me.address {
@@ -181,7 +182,7 @@ extension MyAccountViewController {
         }
     }
 
-    private func configNavigationBarByScrollPosition() {
+    fileprivate func configNavigationBarByScrollPosition() {
 
         let offsetY = self.tableView.contentOffset.y
 
@@ -192,12 +193,12 @@ extension MyAccountViewController {
         if offsetY > self.headerHeight - TomoConst.UI.TopBarHeight * 2 {
 
             let distance = self.headerHeight - offsetY - TomoConst.UI.TopBarHeight * 2
-            let image = Util.imageWithColor(0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
-            self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+            let image = Util.imageWithColor(rgbValue: 0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
+            self.navigationController?.navigationBar.setBackgroundImage(image, for: .default)
 
             // if user scroll down so the table header view got shown, just keep the navigation bar transparent
         } else {
-            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
         }
     }
@@ -207,25 +208,25 @@ extension MyAccountViewController {
 
 extension MyAccountViewController {
     
-    private func configEventObserver() {
+    fileprivate func configEventObserver() {
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didMyFriendInvitationAccepted", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didMyFriendInvitationRefused", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didFriendBreak", object: me)
+        NotificationCenter.default.addObserver(self, selector: "updateBadgeInMainTheard:", name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "updateBadgeInMainTheard:", name: NSNotification.Name(rawValue: "didMyFriendInvitationRefused"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "updateBadgeInMainTheard:", name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didReceivePost", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didPostLiked", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didPostCommented", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadgeInMainTheard:", name: "didPostBookmarked", object: me)
+        NotificationCenter.default.addObserver(self, selector: "updateBadgeInMainTheard:", name: NSNotification.Name(rawValue: "didReceivePost"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "updateBadgeInMainTheard:", name: NSNotification.Name(rawValue: "didPostLiked"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "updateBadgeInMainTheard:", name: NSNotification.Name(rawValue: "didPostCommented"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "updateBadgeInMainTheard:", name: NSNotification.Name(rawValue: "didPostBookmarked"), object: me)
 
         // these events is not come from background thread
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBadge:", name: "didCheckAllNotification", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateProfile:", name: "didEditProfile", object: nil)
+        NotificationCenter.default.addObserver(self, selector: "updateBadge:", name: NSNotification.Name(rawValue: "didCheckAllNotification"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "updateProfile:", name: NSNotification.Name(rawValue: "didEditProfile"), object: nil)
     }
     
     func updateBadgeInMainTheard(notification: NSNotification) {
         
-        gcd.sync(.Main) {
+        gcd.sync(.main) {
             if me.notifications > 0 {
                 self.badgeView.text = String(me.notifications)
                 self.notificationCell.accessoryView = self.badgeView

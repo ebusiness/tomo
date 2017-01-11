@@ -11,13 +11,14 @@ import Alamofire
 
 class S3Controller: NSObject {
 
-    class func uploadFile(localPath: String, remotePath: String, done: (NSError?) -> Void) -> Request {
+    @discardableResult
+    class func uploadFile(localPath: String, remotePath: String, done: @escaping (Error?) -> Void) -> UploadRequest {
         let amazonS3Manager = AmazonS3RequestManager(bucket: TomoConfig.AWS.S3.Bucket,
             region: .APNortheast1,
             accessKey: AmazonS3AccessKey,
             secret: AmazonS3Secret)
         
-        return amazonS3Manager.putObject(NSURL(fileURLWithPath: localPath), destinationPath: remotePath, done: {(error) in
+        return amazonS3Manager.putObject(fileURL: URL(fileURLWithPath: localPath), destinationPath: remotePath, done: {(error) in
             done(error)
         })
     }
@@ -34,7 +35,7 @@ class S3Controller: NSObject {
 //        getPreSignedURLRequest.contentType = fileContentTypeStr
 //        
 //        
-//        AWSS3PreSignedURLBuilder.defaultS3PreSignedURLBuilder().getPreSignedURL(getPreSignedURLRequest) .continueWithBlock { (task:BFTask!) -> (AnyObject!) in
+//        AWSS3PreSignedURLBuilder.defaultS3PreSignedURLBuilder().getPreSignedURL(getPreSignedURLRequest) .continueWithBlock { (task:BFTask!) -> (Any!) in
 //            
 //            if (task.error != nil) {
 //                NSLog("Error: %@", task.error)

@@ -43,13 +43,13 @@ final class BookmarkedPostsViewController: UITableViewController {
         self.loadMoreContent()
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         // restore the normal navigation bar before disappear
-        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         self.navigationController?.navigationBar.shadowImage = nil
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.configNavigationBarByScrollPosition()
     }
 }
@@ -58,21 +58,21 @@ final class BookmarkedPostsViewController: UITableViewController {
 
 extension BookmarkedPostsViewController {
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.bookmarks.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let post = self.bookmarks[indexPath.row]
 
         var cell: TextPostTableViewCell!
 
         // If the post has one or more images, use ImagePostTableViewCell, otherwise use the TextPostTableViewCell.
-        if post.images?.count > 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostTableViewCell
+        if (post.images?.count)! > 0 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as! ImagePostTableViewCell
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as! TextPostTableViewCell
         }
 
         // Give the cell post data, this will tirgger configDisplay
@@ -90,14 +90,14 @@ extension BookmarkedPostsViewController {
 
 extension BookmarkedPostsViewController {
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let vc = Util.createViewControllerWithIdentifier("PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
+        let vc = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
         vc.post = self.bookmarks[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.rowHeights[indexPath.item]
     }
 }
@@ -107,7 +107,7 @@ extension BookmarkedPostsViewController {
 extension BookmarkedPostsViewController {
 
     // Fetch more contents when scroll down to bottom
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
@@ -125,26 +125,26 @@ extension BookmarkedPostsViewController {
 
 extension BookmarkedPostsViewController {
 
-    private func configDisplay() {
+    fileprivate func configDisplay() {
 
-        self.avatarImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.avatarImageView.layer.borderColor = UIColor.white.cgColor
         self.avatarImageView.layer.borderWidth = 2
 
         // set the header view's size according the screen size
-        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.headerViewSize)
+        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPoint.zero, size: self.headerViewSize)
 
         if let cover = me.cover {
-            self.coverImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: TomoConst.Image.DefaultCover)
+            self.coverImageView.sd_setImage(with: URL(string: cover), placeholderImage: TomoConst.Image.DefaultCover)
         }
 
         if let avatar = me.photo {
-            self.avatarImageView.sd_setImageWithURL(NSURL(string: avatar), placeholderImage: TomoConst.Image.DefaultCover)
+            self.avatarImageView.sd_setImage(with: URL(string: avatar), placeholderImage: TomoConst.Image.DefaultCover)
         }
 
         self.nickNameLabel.text = me.nickName
     }
     
-    private func loadMoreContent() {
+    fileprivate func loadMoreContent() {
         
         // skip if already in loading or no more contents
         if self.isLoading || self.isExhausted {
@@ -166,11 +166,11 @@ extension BookmarkedPostsViewController {
                 self.isLoading = false
                 self.isExhausted = true
                 self.loadingIndicator.stopAnimating()
-                self.loadingLabel.hidden = false
+                self.loadingLabel.isHidden = false
                 return
             }
             
-            let posts:[PostEntity]? = PostEntity.collection($0.result.value!)
+            let posts:[PostEntity]? = PostEntity.collection(json: $0.result.value!)
             
             if let loadPosts:[PostEntity] = posts {
 
@@ -178,9 +178,9 @@ extension BookmarkedPostsViewController {
                 self.bookmarks += loadPosts
 
                 // calculate the cell height for display these contents
-                self.rowHeights += loadPosts.map { self.simulateLayout($0) }
+                self.rowHeights += loadPosts.map { self.simulateLayout(post: $0) }
 
-                self.appendRows(loadPosts.count)
+                self.appendRows(rows: loadPosts.count)
             }
         }
 
@@ -192,17 +192,17 @@ extension BookmarkedPostsViewController {
         let firstIndex = self.bookmarks.count - rows
         let lastIndex = self.bookmarks.count
         
-        var indexPathes = [NSIndexPath]()
+        var indexPathes = [IndexPath]()
         
         for index in firstIndex..<lastIndex {
-            indexPathes.push(NSIndexPath(forRow: index, inSection: 0))
+            indexPathes.append(IndexPath(row: index, section: 0))
         }
         
         // hold the oldest content for pull-up loading
         oldestContent = self.bookmarks.last
         
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: UITableViewRowAnimation.Middle)
+        tableView.insertRows(at: indexPathes, with: .middle)
         tableView.endUpdates()
         
     }
@@ -212,20 +212,20 @@ extension BookmarkedPostsViewController {
 
         let cell: TextPostTableViewCell
 
-        if post.images?.count > 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostTableViewCell
+        if (post.images?.count)! > 0 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as! ImagePostTableViewCell
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as! TextPostTableViewCell
         }
 
         cell.post = post
 
-        let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        let size = cell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
 
         return size.height
     }
 
-    private func configNavigationBarByScrollPosition() {
+    fileprivate func configNavigationBarByScrollPosition() {
 
         let offsetY = self.tableView.contentOffset.y
 
@@ -236,12 +236,12 @@ extension BookmarkedPostsViewController {
         if offsetY > self.headerHeight - TomoConst.UI.TopBarHeight * 2 {
 
             let distance = self.headerHeight - offsetY - TomoConst.UI.TopBarHeight * 2
-            let image = Util.imageWithColor(0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
-            self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+            let image = Util.imageWithColor(rgbValue: 0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
+            self.navigationController?.navigationBar.setBackgroundImage(image, for: .default)
 
             // if user scroll down so the table header view got shown, just keep the navigation bar transparent
         } else {
-            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
         }
     }

@@ -11,13 +11,13 @@ import UIKit
 final class HomeViewController: UITableViewController {
 
     // Array holds all cell contents
-    var contents = [AnyObject]()
+    var contents = [Any]()
 
     // Array holds all cell heights
     var rowHeights = [CGFloat]()
 
-    var latestContent: AnyObject?
-    var oldestContent: AnyObject?
+    var latestContent: Any?
+    var oldestContent: Any?
     
     var isLoading = false
     var isExhausted = false
@@ -28,11 +28,11 @@ final class HomeViewController: UITableViewController {
     // If set in the storyboard, table scroll will bacome very slow. don't know why.
     private let footerView: UIView = {
 
-        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         let footerSize = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.TopBarHeight)
-        let footerView = UIView(frame: CGRect(origin: CGPointZero, size: footerSize))
+        let footerView = UIView(frame: CGRect(origin: CGPoint.zero, size: footerSize))
 
-        footerView.backgroundColor = UIColor.groupTableViewBackgroundColor()
+        footerView.backgroundColor = UIColor.groupTableViewBackground
         footerView.addSubview(indicator)
 
         indicator.center = footerView.center
@@ -46,14 +46,14 @@ final class HomeViewController: UITableViewController {
         super.viewDidLoad()
 
         // Wire refresh control with loadNewContent method.
-        self.refreshControl?.addTarget(self, action: "loadNewContent", forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(HomeViewController.loadNewContent), for: UIControlEvents.valueChanged)
 
         // Set table view's footer.
         self.tableView.tableFooterView = footerView
 
         // Load recommend contents, with user location.
         LocationController.shareInstance.doActionWithLocation {
-            self.getRecommendContent($0)
+            self.getRecommendContent(location: $0)
         }
 
         // Load main contents
@@ -65,19 +65,19 @@ final class HomeViewController: UITableViewController {
 
 extension HomeViewController {
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "postdetail" {
             if let post = sender as? PostEntity {
-                let vc = segue.destinationViewController as! PostDetailViewController
+                let vc = segue.destination as! PostDetailViewController
                 vc.post = post
             }
         }
     }
 
     // unwind segue implimentation
-    @IBAction func didCreatePost(segue: UIStoryboardSegue) {
+    @IBAction func didCreatePost(_ segue: UIStoryboardSegue) {
         self.loadNewContent()
-        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: true)
+        self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
 }
 
@@ -85,16 +85,16 @@ extension HomeViewController {
 
 extension HomeViewController {
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contents.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         // If the content is array of group, display as StationGroup recommendation.
         if let groups = contents[indexPath.item] as? [GroupEntity] {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("StationRecommendCell", forIndexPath: indexPath) as! RecommendStationTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "StationRecommendCell", for: indexPath) as! RecommendStationTableViewCell
 
             // Give the cell group list data, this will tirgger configDisplay
             cell.groups = groups
@@ -111,10 +111,10 @@ extension HomeViewController {
             var cell: TextPostTableViewCell!
 
             // If the post has one or more images, use ImagePostTableViewCell, otherwise use the TextPostTableViewCell.
-            if post.images?.count > 0 {
-                cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostTableViewCell
+            if (post.images?.count)! > 0 {
+                cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as! ImagePostTableViewCell
             } else {
-                cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostTableViewCell
+                cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as! TextPostTableViewCell
             }
 
             // Give the cell post data, this will tirgger configDisplay
@@ -136,14 +136,13 @@ extension HomeViewController {
 // MARK: - UITableView delegate
 
 extension HomeViewController {
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let post = contents[indexPath.row] as? PostEntity {
-            self.performSegueWithIdentifier("postdetail", sender: post)
+            self.performSegue(withIdentifier: "postdetail", sender: post)
         }
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath)  -> CGFloat {
         return self.rowHeights[indexPath.item]
     }
 
@@ -154,7 +153,7 @@ extension HomeViewController {
 extension HomeViewController {
 
     // Fetch more contents when scroll down to bottom
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
@@ -171,7 +170,7 @@ extension HomeViewController {
 extension HomeViewController {
 
     // Fetch recommend content with location. use Tokyo as default if no location provided.
-    private func getRecommendContent(location: CLLocation?) {
+    fileprivate func getRecommendContent(location: CLLocation?) {
 
         var parameters = Router.Group.FindParameters(category: .discover)
         parameters.type = .station
@@ -184,12 +183,12 @@ extension HomeViewController {
  
         Router.Group.Find(parameters: parameters).response {
             if $0.result.isFailure { return }
-            self.recommendGroups = GroupEntity.collection($0.result.value!)
+            self.recommendGroups = GroupEntity.collection(json: $0.result.value!)
         }
     }
 
     // Fetch more content as use scroll down to the bottom of table view.
-    private func loadMoreContent() {
+    fileprivate func loadMoreContent() {
         
         // skip if already in loading or no more contents
         if self.isLoading || self.isExhausted {
@@ -213,9 +212,9 @@ extension HomeViewController {
                 return
             }
             
-            let posts: [PostEntity]? = PostEntity.collection($0.result.value!)
+            let posts: [PostEntity]? = PostEntity.collection(json: $0.result.value!)
             
-            if let loadPosts: [AnyObject] = posts {
+            if let loadPosts: [Any] = posts {
 
                 // total number of rows will be append to table view
                 var rowNumber = loadPosts.count
@@ -224,28 +223,28 @@ extension HomeViewController {
                 self.contents += loadPosts
 
                 // calculate the cell height for display these contents
-                self.rowHeights += loadPosts.map { self.simulateLayout($0 as! PostEntity) }
+                self.rowHeights += loadPosts.map { self.simulateLayout(post: $0 as! PostEntity) }
 
                 // if the recommend contents arrived, insert them in the middle of new content
-                if let recommendStations: AnyObject = self.recommendGroups as? AnyObject {
+                if let recommendStations: Any = self.recommendGroups as? Any {
 
                     var insertAt: Int
 
                     if let lastVisibleCell = self.tableView.visibleCells.last {
-                        insertAt = self.tableView.indexPathForCell(lastVisibleCell)!.row + 2
+                        insertAt = self.tableView.indexPath(for: lastVisibleCell)!.row + 2
                     } else {
                         insertAt = 3
                     }
 
-                    self.contents.insert(recommendStations, atIndex: insertAt)
-                    self.rowHeights.insert(362, atIndex: insertAt)
+                    self.contents.insert(recommendStations, at: insertAt)
+                    self.rowHeights.insert(362, at: insertAt)
 
                     self.recommendGroups = nil
-                    rowNumber++
+                    rowNumber+=1
                 }
 
                 // let table view display new contents
-                self.appendRows(rowNumber)
+                self.appendRows(rows: rowNumber)
             }
 
             self.isLoading = false
@@ -272,10 +271,10 @@ extension HomeViewController {
             }
 
             // prepend new contents
-            if let loadPosts:[PostEntity] = PostEntity.collection($0.result.value!) {
+            if let loadPosts:[PostEntity] = PostEntity.collection(json: $0.result.value!) {
                 self.contents = loadPosts + self.contents
-                self.rowHeights = loadPosts.map { self.simulateLayout($0) } + self.rowHeights
-                self.prependRows(loadPosts.count)
+                self.rowHeights = loadPosts.map { self.simulateLayout(post: $0) } + self.rowHeights
+                self.prependRows(rows: loadPosts.count)
             }
         }
     }
@@ -286,10 +285,10 @@ extension HomeViewController {
         let firstIndex = contents.count - rows
         let lastIndex = contents.count
         
-        var indexPathes = [NSIndexPath]()
+        var indexPathes = [IndexPath]()
         
         for index in firstIndex..<lastIndex {
-            indexPathes.push(NSIndexPath(forRow: index, inSection: 0))
+            indexPathes.append(IndexPath(row: index, section: 0))
         }
         
         // hold the oldest content for pull-up loading
@@ -301,24 +300,24 @@ extension HomeViewController {
         }
         
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
+        tableView.insertRows(at: indexPathes, with: .fade)
         tableView.endUpdates()
     }
 
     // Prepend specific number of rows on table view
     private func prependRows(rows: Int) {
         
-        var indexPathes = [NSIndexPath]()
+        var indexPathes = [IndexPath]()
         
         for index in 0..<rows {
-            indexPathes.push(NSIndexPath(forRow: index, inSection: 0))
+            indexPathes.append(IndexPath(row: index, section: 0))
         }
         
         // hold the latest content for pull-up loading
         self.latestContent = self.contents.first
         
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
+        tableView.insertRows(at: indexPathes, with: .fade)
         tableView.endUpdates()
     }
 
@@ -327,15 +326,15 @@ extension HomeViewController {
 
         let cell: TextPostTableViewCell
 
-        if post.images?.count > 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("ImagePostCell") as! ImagePostTableViewCell
+        if (post.images?.count)! > 0 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as! ImagePostTableViewCell
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("TextPostCell") as! TextPostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as! TextPostTableViewCell
         }
 
         cell.post = post
 
-        let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        let size = cell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
 
         return size.height
     }

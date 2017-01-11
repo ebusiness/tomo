@@ -28,7 +28,7 @@ final class LatestMessagesViewController: UITableViewController {
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -36,8 +36,7 @@ final class LatestMessagesViewController: UITableViewController {
 
 extension LatestMessagesViewController {
 
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections (in tableView: UITableView) -> Int {
         if me.friendInvitations.count > 0 {
             return 2
         } else {
@@ -45,7 +44,7 @@ extension LatestMessagesViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         if me.friendInvitations.count > 0 {
 
@@ -62,10 +61,10 @@ extension LatestMessagesViewController {
     }
 
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         func makeInvitationCell() -> UITableViewCell {
-            let cell = tableView.dequeueReusableCellWithIdentifier("InvitationCell", forIndexPath: indexPath) as! FriendInvitationTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "InvitationCell", for: indexPath) as! FriendInvitationTableViewCell
             cell.invitation = me.friendInvitations[indexPath.item]
             cell.delegate = self
             return cell
@@ -77,13 +76,13 @@ extension LatestMessagesViewController {
 
             if message.group != nil {
 
-                let cell = tableView.dequeueReusableCellWithIdentifier("GroupMessageCell", forIndexPath: indexPath) as! GroupMessageTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "GroupMessageCell", for: indexPath) as! GroupMessageTableViewCell
                 cell.message = message
                 return cell
 
             } else {
 
-                let cell = tableView.dequeueReusableCellWithIdentifier("MessageCell", forIndexPath: indexPath) as! MessageTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as! MessageTableViewCell
                 cell.message = message
                 return cell
             }
@@ -103,7 +102,7 @@ extension LatestMessagesViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 
         if me.friendInvitations.count > 0 {
 
@@ -124,7 +123,7 @@ extension LatestMessagesViewController {
 
 extension LatestMessagesViewController {
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
         if me.friendInvitations.count > 0 {
 
@@ -143,7 +142,7 @@ extension LatestMessagesViewController {
     // Do this for eliminate the gap between the friend list sction and navigation bar.
     // that gap will appear when no invitaion and the friend list is the first section.
     // TODO: Just DONT know the meaning of these values...
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 
         if me.friendInvitations.count == 0 {
             return 10
@@ -151,13 +150,13 @@ extension LatestMessagesViewController {
         return 38
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
 
         if me.friendInvitations.count > 0 && indexPath.section == 0 {
 
-            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+            let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
             vc.user = me.friendInvitations[indexPath.item].from
             self.navigationController?.pushViewController(vc, animated: true)
             return
@@ -183,7 +182,7 @@ extension LatestMessagesViewController {
 
 extension LatestMessagesViewController {
 
-    private func loadLatestMessage() {
+    fileprivate func loadLatestMessage() {
 
         // skip if already in loading
         if self.isLoading {
@@ -206,45 +205,45 @@ extension LatestMessagesViewController {
                 return
             }
 
-            if let messages: [MessageEntity] = MessageEntity.collection($0.result.value!) {
+            if let messages: [MessageEntity] = MessageEntity.collection(json: $0.result.value!) {
 
-                self.messages += messages.sort {
-                    $0.createDate.compare($1.createDate) == NSComparisonResult.OrderedDescending
+                self.messages += messages.sorted {
+                    $0.createDate.compare($1.createDate) == ComparisonResult.orderedDescending
                 }
 
                 // let table view display new contents
-                self.appendRows(messages.count, inSection: me.friendInvitations.count > 0 ? 1 : 0)
+                self.appendRows(rows: messages.count, inSection: me.friendInvitations.count > 0 ? 1 : 0)
             }
         }
     }
 
     // Append specific number of rows on table view
-    private func appendRows(rows: Int, inSection section: Int) {
+    fileprivate func appendRows(rows: Int, inSection section: Int) {
 
         let firstIndex = self.messages.count - rows
         let lastIndex = self.messages.count
 
-        var indexPathes = [NSIndexPath]()
+        var indexPathes = [IndexPath]()
 
         for index in firstIndex..<lastIndex {
-            indexPathes.push(NSIndexPath(forRow: index, inSection: section))
+            indexPathes.append(IndexPath(row: index, section: section))
         }
 
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
+        tableView.insertRows(at: indexPathes, with: .fade)
         tableView.endUpdates()
     }
 
-    private func showEmptyResultView() {
+    fileprivate func showEmptyResultView() {
         self.tableView.tableFooterView?.frame = TomoConst.UI.ViewFrameMiddleFullScreen
-        UIView.animateWithDuration(TomoConst.Duration.Short) {
+        UIView.animate(withDuration: TomoConst.Duration.Short) {
             self.emptyResultView.alpha = 1.0
         }
     }
 
-    private func hideEmptyResultView() {
+    fileprivate func hideEmptyResultView() {
         self.tableView.tableFooterView?.frame = TomoConst.UI.ViewFrameTopBarHeight
-        UIView.animateWithDuration(TomoConst.Duration.Short) {
+        UIView.animate(withDuration: TomoConst.Duration.Short) {
             self.emptyResultView.alpha = 0.0
         }
     }
@@ -254,25 +253,25 @@ extension LatestMessagesViewController {
 
 extension LatestMessagesViewController {
 
-    private func configEventObserver() {
+    fileprivate func configEventObserver() {
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didRefuseInvitation:", name: "didRefuseInvitation", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didAcceptInvitation:", name: "didAcceptInvitation", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didDeleteFriend:", name: "didDeleteFriend", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didLeaveGroup:", name: "didLeaveGroup", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSendMessage:", name: "didSendMessage", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishGroupChat:", name: "didFinishGroupChat", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFinishChat:", name: "didFinishChat", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didMyFriendInvitationAccepted:", name: "didMyFriendInvitationAccepted", object: me)
+        NotificationCenter.default.addObserver(self, selector: "didRefuseInvitation:", name: NSNotification.Name(rawValue: "didRefuseInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didAcceptInvitation:", name: NSNotification.Name(rawValue: "didAcceptInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didDeleteFriend:", name: NSNotification.Name(rawValue: "didDeleteFriend"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didLeaveGroup:", name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didSendMessage:", name: NSNotification.Name(rawValue: "didSendMessage"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didFinishGroupChat:", name: NSNotification.Name(rawValue: "didFinishGroupChat"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didFinishChat:", name: NSNotification.Name(rawValue: "didFinishChat"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didMyFriendInvitationAccepted:", name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
 
         // notification from background thread
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveFriendInvitation", name: "didReceiveFriendInvitation", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFriendBreak:", name: "didFriendBreak", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didReceiveMessage:", name: "didReceiveMessage", object: me)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveFriendInvitation", name: NSNotification.Name(rawValue: "didReceiveFriendInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didFriendBreak:", name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didReceiveMessage:", name: NSNotification.Name(rawValue: "didReceiveMessage"), object: me)
     }
 
     // This method is called for sync this view controller and accout model after refuse invitation
-    func didRefuseInvitation(notification: NSNotification) {
+    func didRefuseInvitation(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -283,11 +282,11 @@ extension LatestMessagesViewController {
         // the accout model directly, so the data is removed just in accout model, no need to do that here
         self.tableView.beginUpdates()
         if me.friendInvitations.count > 0 {
-            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)], withRowAnimation: .Automatic)
+            self.tableView.deleteRows(at: [IndexPath(item: index, section: 0)], with: .automatic)
         } else {
-            self.tableView.deleteSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+            self.tableView.deleteSections([0], with: .automatic)
             // refresh the title of section 1
-            self.tableView.headerViewForSection(1)?.textLabel?.text = self.tableView(self.tableView, titleForHeaderInSection: 1)
+            self.tableView.headerView(forSection: 1)?.textLabel?.text = self.tableView(self.tableView, titleForHeaderInSection: 1)
         }
         self.tableView.endUpdates()
 
@@ -297,7 +296,7 @@ extension LatestMessagesViewController {
     }
 
     // This method is called for sync this view controller and accout model after accept invitation
-    func didAcceptInvitation(notification: NSNotification) {
+    func didAcceptInvitation(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -307,11 +306,11 @@ extension LatestMessagesViewController {
         // if the number of my invitation is zero, remove the whole section of 0
         // otherwise, remove the corresponding row in section 0
         if me.friendInvitations.count > 0 {
-            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)], withRowAnimation: .Automatic)
+            self.tableView.deleteRows(at: [IndexPath(item: index, section: 0)], with: .automatic)
         } else {
-            self.tableView.deleteSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+            self.tableView.deleteSections([0], with: .automatic)
             // refresh the title of section 1
-            self.tableView.headerViewForSection(1)?.textLabel?.text = self.tableView(self.tableView, titleForHeaderInSection: 1)
+            self.tableView.headerView(forSection: 1)?.textLabel?.text = self.tableView(self.tableView, titleForHeaderInSection: 1)
         }
         self.tableView.endUpdates()
 
@@ -321,14 +320,14 @@ extension LatestMessagesViewController {
     }
 
     // This method is called for sync this view controller and accout model after delete friend
-    func didDeleteFriend(notification: NSNotification) {
+    func didDeleteFriend(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
         guard let id = userInfo["idOfDeletedFriend"] as? String else { return }
 
         // see if the deleted user is exist in chat message list
-        let indexInMessageList = self.messages.indexOf {
+        let indexInMessageList = self.messages.index {
 
             // skip group message
             guard $0.group == nil else { return false }
@@ -342,15 +341,15 @@ extension LatestMessagesViewController {
 
         // sync friends data with account model manually
         // remove the chat history from messages list
-        self.messages.removeAtIndex(index)
+        self.messages.remove(at: index)
 
         // update tableview, if the number of my invitation is zero, insert into section 1
         // otherwise, remove the corresponding row in section 0
         self.tableView.beginUpdates()
         if me.friendInvitations.count > 0 {
-            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 1)], withRowAnimation: .Automatic)
+            self.tableView.deleteRows(at: [IndexPath(item: index, section: 1)], with: .automatic)
         } else {
-            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)], withRowAnimation: .Automatic)
+            self.tableView.deleteRows(at: [IndexPath(item: index, section: 0)], with: .automatic)
         }
         self.tableView.endUpdates()
 
@@ -359,14 +358,14 @@ extension LatestMessagesViewController {
         }
     }
 
-    func didLeaveGroup(notification: NSNotification) {
+    func didLeaveGroup(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
         guard let groupId = userInfo["idOfDeletedGroup"] as? String else { return }
 
         // see if the deleted group is exist in chat message list
-        let indexInMessageList = self.messages.indexOf {
+        let indexInMessageList = self.messages.index {
 
             // skip normal message
             guard let group = $0.group else { return false }
@@ -379,15 +378,15 @@ extension LatestMessagesViewController {
 
         // sync group data with account model manually
         // remove the chat history from messages list
-        self.messages.removeAtIndex(index)
+        self.messages.remove(at: index)
 
         // update tableview, if the number of my invitation is zero, insert into section 1
         // otherwise, remove the corresponding row in section 0
         self.tableView.beginUpdates()
         if me.friendInvitations.count > 0 {
-            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 1)], withRowAnimation: .Automatic)
+            self.tableView.deleteRows(at: [IndexPath(item: index, section: 1)], with: .automatic)
         } else {
-            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)], withRowAnimation: .Automatic)
+            self.tableView.deleteRows(at: [IndexPath(item: index, section: 0)], with: .automatic)
         }
         self.tableView.endUpdates()
 
@@ -397,7 +396,7 @@ extension LatestMessagesViewController {
     }
 
     // This method is called for sync this view controller and accout model after sent message
-    func didSendMessage(notification: NSNotification) {
+    func didSendMessage(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -409,7 +408,7 @@ extension LatestMessagesViewController {
         if let group = message.group {
 
             // see if the group is exists in my message list
-            indexInMessageList = self.messages.indexOf {
+            indexInMessageList = self.messages.index {
                 $0.group?.id ==  group.id
             }
 
@@ -417,13 +416,13 @@ extension LatestMessagesViewController {
         } else {
 
             // see if the message receiver is in my messages list
-            indexInMessageList = self.messages.indexOf {
+            indexInMessageList = self.messages.index {
 
                 // skip group message
                 guard $0.group == nil else { return false }
 
                 let user = ($0.from.id == me.id ? $0.to : $0.from)
-                return user.id == message.to.id
+                return user!.id == message.to.id
             }
         }
 
@@ -436,35 +435,35 @@ extension LatestMessagesViewController {
 
             // TODO: gonna blow up if I put this in the update block below, don't know why
             if me.friendInvitations.count == 0 {
-                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Automatic)
+                self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             } else {
-                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: .Automatic)
+                self.tableView.reloadRows(at: [IndexPath(row: index, section: 1)], with: .automatic)
             }
 
-            self.messages.insert(self.messages.removeAtIndex(index), atIndex: 0)
+            self.messages.insert(self.messages.remove(at: index), at: 0)
 
             // update tableview, if the number of my invitation is zero, reload the row in section 0
             // otherwise, reload the corresponding row in section 1
             self.tableView.beginUpdates()
             if me.friendInvitations.count == 0 {
-                self.tableView.moveRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), toIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+                self.tableView.moveRow(at: IndexPath(row: index, section: 0), to: IndexPath(row: 0, section: 0))
             } else {
-                self.tableView.moveRowAtIndexPath(NSIndexPath(forRow: index, inSection: 1), toIndexPath: NSIndexPath(forRow: 0, inSection: 1))
+                self.tableView.moveRow(at: IndexPath(row: index, section: 1), to: IndexPath(row: 0, section: 1))
             }
             self.tableView.endUpdates()
 
             // or insert into my message list at top
         } else {
 
-            self.messages.insert(message, atIndex: 0)
+            self.messages.insert(message, at: 0)
 
             // update tableview, if the number of my invitation is zero, insert the row in section 0
             // otherwise, insert the corresponding row in section 1
             self.tableView.beginUpdates()
             if me.friendInvitations.count == 0 {
-                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+                self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
             } else {
-                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation: .Automatic)
+                self.tableView.insertRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
             }
             self.tableView.endUpdates()
         }
@@ -473,14 +472,14 @@ extension LatestMessagesViewController {
     }
 
     // This method is called for sync this view controller and accout model after finish chat in some group
-    func didFinishGroupChat(notification: NSNotification) {
+    func didFinishGroupChat(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
         guard let groupId = userInfo["idOfTalkedGroup"] as? String else { return }
 
         // see if the deleted group is exist in chat message list
-        let indexInMessageList = self.messages.indexOf {
+        let indexInMessageList = self.messages.index {
 
             // skip normal message
             guard let group = $0.group else { return false }
@@ -491,22 +490,22 @@ extension LatestMessagesViewController {
         if let index = indexInMessageList {
 
             if me.friendInvitations.count == 0 {
-                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Automatic)
+                self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             } else {
-                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: .Automatic)
+                self.tableView.reloadRows(at: [IndexPath(row: index, section: 1)], with: .automatic)
             }
         }
     }
 
     // This method is called for sync this view controller and accout model after finish chat with someone
-    func didFinishChat(notification: NSNotification) {
+    func didFinishChat(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
         guard let userId = userInfo["idOfTalkedFriend"] as? String else { return }
 
         // see if the deleted user is exist in chat message list
-        let indexInMessageList = self.messages.indexOf {
+        let indexInMessageList = self.messages.index {
 
             // skip group message
             guard $0.group == nil else { return false }
@@ -518,15 +517,15 @@ extension LatestMessagesViewController {
         if let index = indexInMessageList {
 
             if me.friendInvitations.count == 0 {
-                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Automatic)
+                self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             } else {
-                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: .Automatic)
+                self.tableView.reloadRows(at: [IndexPath(row: index, section: 1)], with: .automatic)
             }
         }
     }
     
     // This method is called for sync this view controller and accout model after my friend invitation was accepted
-    func didMyFriendInvitationAccepted(notification: NSNotification) {
+    func didMyFriendInvitationAccepted(_ notification: NSNotification) {
         
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -534,16 +533,16 @@ extension LatestMessagesViewController {
         
         // this method is called from background thread (because it fired from notification center)
         // must switch to main thread for UI updating
-        gcd.sync(.Main) {
+        gcd.sync(.main) {
             self.tableView.beginUpdates()
             // if the number of my invitation is zero, remove the whole section of 0
             // otherwise, remove the corresponding row in section 0
             if me.friendInvitations.count > 0 {
-                self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)], withRowAnimation: .Automatic)
+                self.tableView.deleteRows(at: [IndexPath(item: index, section: 0)], with: .automatic)
             } else {
-                self.tableView.deleteSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+                self.tableView.deleteSections([0], with: .automatic)
                 // refresh the title of section 1
-                self.tableView.headerViewForSection(1)?.textLabel?.text = self.tableView(self.tableView, titleForHeaderInSection: 1)
+                self.tableView.headerView(forSection: 1)?.textLabel?.text = self.tableView(self.tableView, titleForHeaderInSection: 1)
             }
             self.tableView.endUpdates()
         }
@@ -554,17 +553,17 @@ extension LatestMessagesViewController {
 
         // this method is called from background thread (because it fired from notification center)
         // must switch to main thread for UI updating
-        gcd.sync(.Main) {
+        gcd.sync(.main) {
 
             // update tableview, if the number of my invitation is 1, insert whole section of 0
             // otherwise, insert the corresponding row in section 0 row0
             self.tableView.beginUpdates()
             if me.friendInvitations.count == 1 {
                 // refresh the title of section 0(message section)
-                self.tableView.headerViewForSection(0)?.textLabel?.text = self.tableView(self.tableView, titleForHeaderInSection: 1)
-                self.tableView.insertSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+                self.tableView.headerView(forSection: 0)?.textLabel?.text = self.tableView(self.tableView, titleForHeaderInSection: 1)
+                self.tableView.insertSections([0], with: .automatic)
             } else {
-                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+                self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
             }
             self.tableView.endUpdates()
 
@@ -573,14 +572,14 @@ extension LatestMessagesViewController {
     }
     
     // This method is called for sync this view controller and accout model after someone dump me
-    func didFriendBreak(notification: NSNotification) {
+    func didFriendBreak(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
         guard let brokenUserId = userInfo["userIdOfBrokenFriend"] as? String else { return }
 
         // see if the deleted user is exist in chat message list
-        let indexInMessageList = self.messages.indexOf {
+        let indexInMessageList = self.messages.index {
 
             // skip group message
             guard $0.group == nil else { return false }
@@ -594,19 +593,19 @@ extension LatestMessagesViewController {
 
         // sync friends data with account model manually
         // remove the chat history from messages list
-        self.messages.removeAtIndex(index)
+        self.messages.remove(at: index)
 
         // this method is called from background thread (because it fired from notification center)
         // must switch to main thread for UI updating
-        gcd.sync(.Main) {
+        gcd.sync(.main) {
 
             // update tableview, if the number of my invitation is zero, remove from section 0
             // otherwise, insert the corresponding row from section 1
             self.tableView.beginUpdates()
             if me.friendInvitations.count == 0 {
-                self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Automatic)
+                self.tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             } else {
-                self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: .Automatic)
+                self.tableView.deleteRows(at: [IndexPath(row: index, section: 1)], with: .automatic)
             }
             self.tableView.endUpdates()
 
@@ -616,7 +615,7 @@ extension LatestMessagesViewController {
         }
     }
 
-    func didReceiveMessage(notification: NSNotification) {
+    func didReceiveMessage(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -628,7 +627,7 @@ extension LatestMessagesViewController {
         if let group = message.group {
 
             // see if the group is exists in my message list
-            indexInMessageList = self.messages.indexOf {
+            indexInMessageList = self.messages.index {
                 $0.group?.id ==  group.id
             }
 
@@ -636,13 +635,13 @@ extension LatestMessagesViewController {
         } else {
 
             // see if the message sender is in my messages list
-            indexInMessageList = self.messages.indexOf {
+            indexInMessageList = self.messages.index {
                 
                 // skip group message
                 guard $0.group == nil else { return false }
 
                 let user = ($0.from.id == me.id ? $0.to : $0.from)
-                return user.id == message.from.id
+                return user!.id == message.from.id
             }
         }
 
@@ -655,24 +654,24 @@ extension LatestMessagesViewController {
 
             // this method is called from background thread (because it fired from notification center)
             // must switch to main thread for UI updating
-            gcd.sync(.Main) {
+            gcd.sync(.main) {
 
                 // TODO: gonna blow up if I put this in the update block below, don't know why
                 if me.friendInvitations.count == 0 {
-                    self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Automatic)
+                    self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
                 } else {
-                    self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: .Automatic)
+                    self.tableView.reloadRows(at: [IndexPath(row: index, section: 1)], with: .automatic)
                 }
 
-                self.messages.insert(self.messages.removeAtIndex(index), atIndex: 0)
+                self.messages.insert(self.messages.remove(at: index), at: 0)
 
                 // update tableview, if the number of my invitation is zero, reload the row in section 0
                 // otherwise, reload the corresponding row in section 1
                 self.tableView.beginUpdates()
                 if me.friendInvitations.count == 0 {
-                    self.tableView.moveRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), toIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+                    self.tableView.moveRow(at: IndexPath(row: index, section: 0), to: IndexPath(row: 0, section: 0))
                 } else {
-                    self.tableView.moveRowAtIndexPath(NSIndexPath(forRow: index, inSection: 1), toIndexPath: NSIndexPath(forRow: 0, inSection: 1))
+                    self.tableView.moveRow(at: IndexPath(row: index, section: 1), to: IndexPath(row: 0, section: 1))
                 }
                 self.tableView.endUpdates()
 
@@ -682,19 +681,19 @@ extension LatestMessagesViewController {
             // or insert into my message list at top
         } else {
 
-            self.messages.insert(message, atIndex: 0)
+            self.messages.insert(message, at: 0)
 
             // this method is called from background thread (because it fired from notification center)
             // must switch to main thread for UI updating
-            gcd.sync(.Main) {
+            gcd.sync(.main) {
 
                 // update tableview, if the number of my invitation is zero, insert the row in section 0
                 // otherwise, insert the corresponding row in section 1
                 self.tableView.beginUpdates()
                 if me.friendInvitations.count == 0 {
-                    self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+                    self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                 } else {
-                    self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation: .Automatic)
+                    self.tableView.insertRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
                 }
                 self.tableView.endUpdates()
 
@@ -732,7 +731,7 @@ final class MessageTableViewCell: UITableViewCell {
         }
 
         if let photo = user.photo {
-            self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: TomoConst.Image.DefaultAvatar)
+            self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: TomoConst.Image.DefaultAvatar)
         }
 
         self.nickNameLabel.text = user.nickName
@@ -741,7 +740,7 @@ final class MessageTableViewCell: UITableViewCell {
 
         self.dateLabel.text = self.message.createDate.relativeTimeToString()
 
-        let count = me.newMessages.reduce(0, combine: { (count, message) -> Int in
+        let count = me.newMessages.reduce(0, { (count, message) -> Int in
 
             // skip group message
             guard message.group == nil else { return count }
@@ -754,10 +753,10 @@ final class MessageTableViewCell: UITableViewCell {
         })
 
         if count > 0 {
-            self.countLabel.hidden = false
+            self.countLabel.isHidden = false
             self.countLabel.text = String(count)
         } else {
-            self.countLabel.hidden = true
+            self.countLabel.isHidden = true
         }
     }
 
@@ -795,7 +794,7 @@ final class GroupMessageTableViewCell: UITableViewCell {
         guard let group = self.message.group else { return }
 
         if let cover = group.cover {
-            self.coverImageView.sd_setImageWithURL(NSURL(string: cover), placeholderImage: TomoConst.Image.DefaultGroup)
+            self.coverImageView.sd_setImage(with: URL(string: cover), placeholderImage: TomoConst.Image.DefaultGroup)
         }
 
         self.nameLabel.text = group.name
@@ -804,7 +803,7 @@ final class GroupMessageTableViewCell: UITableViewCell {
 
         self.dateLabel.text = self.message.createDate.relativeTimeToString()
 
-        let count = me.newMessages.reduce(0, combine: { (count, message) -> Int in
+        let count = me.newMessages.reduce(0, { (count, message) -> Int in
             if message.group?.id == group.id {
                 return count + 1
             } else {
@@ -813,10 +812,10 @@ final class GroupMessageTableViewCell: UITableViewCell {
         })
 
         if count > 0 {
-            countLabel.hidden = false
+            countLabel.isHidden = false
             countLabel.text = String(count)
         } else {
-            countLabel.hidden = true
+            countLabel.isHidden = true
         }
     }
 
@@ -853,28 +852,28 @@ final class FriendInvitationTableViewCell: UITableViewCell {
 
         let user = invitation.from
 
-        if let photo = user.photo {
-            self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: TomoConst.Image.DefaultAvatar)
+        if let photo = user?.photo {
+            self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: TomoConst.Image.DefaultAvatar)
         }
 
-        self.userNameLabel.text = user.nickName
+        self.userNameLabel.text = user?.nickName
 
     }
 
-    @IBAction func accept(sender: UIButton) {
+    @IBAction func accept(_ sender: UIButton) {
 
         Router.Invitation.ModifyById(id: self.invitation.id, accepted: true).response {
             if $0.result.isFailure { return }
-            me.acceptInvitation(self.invitation)
+            me.acceptInvitation(invitation: self.invitation)
         }
     }
 
-    @IBAction func refuse(sender: UIButton) {
+    @IBAction func refuse(_ sender: UIButton) {
 
-        Util.alert(delegate, title: "拒绝好友邀请", message: "拒绝 " + self.invitation.from.nickName + " 的好友邀请么") { _ in
+        Util.alert(parentvc: delegate, title: "拒绝好友邀请", message: "拒绝 " + self.invitation.from.nickName + " 的好友邀请么") { _ in
             Router.Invitation.ModifyById(id: self.invitation.id, accepted: false).response {
                 if $0.result.isFailure { return }
-                me.refuseInvitation(self.invitation)
+                me.refuseInvitation(invitation: self.invitation)
             }
         }
     }

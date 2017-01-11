@@ -9,57 +9,57 @@ import Foundation
 
 public typealias GCDClosure = () -> ()
 public typealias GCDApplyClosure = (Int) -> ()
-public typealias GCDOnce = dispatch_once_t
+public typealias GCDOnce = Int
 
 public enum QueueType {
-    case Main
-    case High
-    case Default
-    case Low
-    case Background
-    case Custom(GCDQueue)
+    case main
+    case high
+    case `default`
+    case low
+    case background
+    case custom(GCDQueue)
     
-    public func getQueue() -> dispatch_queue_t {
+    public func getQueue() -> DispatchQueue {
         switch self {
         // return concurrent queue with hight priority
-        case .High:
-            return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+        case .high:
+            return DispatchQueue.global(qos: .userInitiated)
         
         // return concurrent queue with default priority
-        case .Default:
-            return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+        case .default:
+            return DispatchQueue.global(qos: .default)
         
         // return concurrent queue with low priority
-        case .Low:
-            return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
+        case .low:
+            return DispatchQueue.global(qos: .utility)
         
         // return background concurrent queue
-        case .Background:
-            return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
+        case .background:
+            return DispatchQueue.global(qos: .background)
             
         // return custom queue
-        case .Custom(let gcdQueue):
+        case .custom(let gcdQueue):
             return gcdQueue.dispatchQueue
             
         // return the serial dispatch queue associated with the application’s main thread
-        case .Main:
+        case .main:
             fallthrough
         
         default:
-            return dispatch_get_main_queue()
+            return DispatchQueue.main
         }
     }
 }
 
 public class GCDQueue
 {
-    let dispatchQueue: dispatch_queue_t
+    let dispatchQueue: DispatchQueue
     
     /**
     *  Init with main queue (tasks execute serially on your application’s main thread)
     */
     public init() {
-        dispatchQueue = dispatch_get_main_queue()
+        dispatchQueue = DispatchQueue.main
     }
     
     /**
@@ -69,10 +69,10 @@ public class GCDQueue
     */
     public init(serial label: String?) {
         if label != nil {
-            dispatchQueue = dispatch_queue_create(label!, DISPATCH_QUEUE_SERIAL)
+            dispatchQueue = DispatchQueue(label: label!)
         }
         else {
-            dispatchQueue = dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL)
+            dispatchQueue = DispatchQueue(label: "GCDQueue")
         }
     }
     
@@ -83,10 +83,10 @@ public class GCDQueue
     */
     public init(concurrent label: String?) {
         if label != nil {
-            dispatchQueue = dispatch_queue_create(label!, DISPATCH_QUEUE_CONCURRENT)
+            dispatchQueue = DispatchQueue(label: label!, attributes: .concurrent)
         }
         else {
-            dispatchQueue = dispatch_queue_create(nil, DISPATCH_QUEUE_CONCURRENT)
+            dispatchQueue = DispatchQueue(label: "GCDQueue", attributes: .concurrent)
         }
     }
     
@@ -96,8 +96,8 @@ public class GCDQueue
     *  @param GCDClosure
     *
     */
-    public func asyncBarrier(closure: GCDClosure) {
-        dispatch_barrier_async(dispatchQueue, closure)
+    public func asyncBarrier(_ closure: @escaping GCDClosure) {
+        dispatchQueue.async(flags: .barrier, execute: closure)
     }
    
     /**
@@ -106,8 +106,8 @@ public class GCDQueue
     *  @param GCDClosure
     *
     */
-    public func syncBarrier(closure: GCDClosure) {
-        dispatch_barrier_sync(dispatchQueue, closure)
+    public func syncBarrier(_ closure: GCDClosure) {
+        dispatchQueue.sync(flags: .barrier, execute: closure)
     }
     
     /**
@@ -115,7 +115,7 @@ public class GCDQueue
     *
     */
     public func suspend() {
-        dispatch_suspend(dispatchQueue)
+        dispatchQueue.suspend()
     }
     
     /**
@@ -123,25 +123,25 @@ public class GCDQueue
     *
     */
     public func resume() {
-        dispatch_resume(dispatchQueue)
+        dispatchQueue.resume()
     }
     
 }
 
 public class GCDGroup
 {
-    let dispatchGroup: dispatch_group_t
+    let dispatchGroup: DispatchGroup
     
     public init() {
-        dispatchGroup = dispatch_group_create()
+        dispatchGroup = DispatchGroup()
     }
     
     public func enter() {
-        dispatch_group_enter(dispatchGroup)
+        dispatchGroup.enter()
     }
     
     public func leave() {
-        dispatch_group_leave(dispatchGroup)
+        dispatchGroup.leave()
     }
    
     /**
@@ -152,9 +152,9 @@ public class GCDGroup
     *
     *  @return all blocks associated with the group completed before the specified timeout or not
     */
-    public func wait(timeout: Double) -> Bool {
+    public func wait(_ timeout: Double) -> Bool {
         let t = timeout * Double(NSEC_PER_SEC)
-        return dispatch_group_wait(dispatchGroup, dispatch_time(DISPATCH_TIME_NOW, Int64(t))) == 0
+        return dispatchGroup.wait(timeout: DispatchTime.now() + Double(Int64(t)) / Double(NSEC_PER_SEC)) == .success
     }
     
     /**
@@ -164,8 +164,8 @@ public class GCDGroup
     *  @param GCDClosure
     *
     */
-    public func async(queueType: QueueType, closure: GCDClosure) {
-        dispatch_group_async(dispatchGroup, queueType.getQueue(), closure)
+    public func async(_ queueType: QueueType, closure: @escaping GCDClosure) {
+        queueType.getQueue().async(group: dispatchGroup, execute: closure)
     }
    
     /**
@@ -176,8 +176,8 @@ public class GCDGroup
     *  @param GCDClosure
     *
     */
-    public func notify(queueType: QueueType, closure: GCDClosure) {
-        dispatch_group_notify(dispatchGroup, queueType.getQueue(), closure)
+    public func notify(_ queueType: QueueType, closure: @escaping GCDClosure) {
+        dispatchGroup.notify(queue: queueType.getQueue(), execute: closure)
     }
 }
 
@@ -191,14 +191,13 @@ public class gcd
     *  @param GCDClosure : the block will be run
     *
     */
-    public class func async(queueType: QueueType, closure: GCDClosure) {
-        dispatch_async(queueType.getQueue(), closure)
+    public class func async(_ queueType: QueueType, closure: @escaping GCDClosure) {
+        queueType.getQueue().async(execute: closure)
     }
    
     // Enqueue a block for execution at the specified time
-    public class func async(queueType: QueueType, delay: Double, closure: GCDClosure) {
-        let t = delay * Double(NSEC_PER_SEC)
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(t)), queueType.getQueue(), closure)
+    public class func async(_ queueType: QueueType, delay: Double, closure: @escaping GCDClosure) {
+        queueType.getQueue().asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(Int(delay)), execute: closure)
     }
     
     /**
@@ -209,8 +208,8 @@ public class gcd
     *  @param GCDClosure :  the block will be run
     *
     */
-    public class func sync(queueType: QueueType, closure: GCDClosure) {
-        dispatch_sync(queueType.getQueue(), closure)
+    public class func sync(_ queueType: QueueType, closure: GCDClosure) {
+        queueType.getQueue().sync(execute: closure)
     }
    
     /**
@@ -222,19 +221,7 @@ public class gcd
     *  @param GCDApplyClosure :  the block will be run
     *
     */
-    public class func apply(queueType: QueueType, interators: UInt, closure: GCDApplyClosure) {
-        dispatch_apply(Int(interators), queueType.getQueue(), closure)
-    }
-    
-    /**
-    *
-    *
-    *  @param UnsafePointer<dispatch_once_t>
-    *  @param GCDClosure
-    *
-    *  @return
-    */
-    public class func once(predicate: UnsafeMutablePointer<dispatch_once_t>, closure: GCDClosure) {
-        dispatch_once(predicate, closure)
+    public class func apply(_ queueType: QueueType, interators: UInt, closure: @escaping GCDApplyClosure) {
+        DispatchQueue.concurrentPerform(iterations: Int(interators), execute: closure)
     }
 }

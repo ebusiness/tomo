@@ -18,11 +18,11 @@ final class CreatePostViewController: UIViewController {
     
     var group: GroupEntity?
     
-    var photos: PHFetchResult?
+    var photos: PHFetchResult<PHAsset>?
 
     var newPhotos = [UIImage]()
 
-    var timer: NSTimer?
+    var timer: Timer?
 
     var location: CLLocation?
 
@@ -68,16 +68,16 @@ final class CreatePostViewController: UIViewController {
 
     // If do this in viewDidLoad, there will be a wired animation  because
     // the keyborad show up. so bring up the keyborad after view appeared.
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         self.postTextView.becomeFirstResponder()
     }
 
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
-
+    
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
 }
@@ -86,7 +86,7 @@ final class CreatePostViewController: UIViewController {
 
 extension CreatePostViewController {
     
-    private func setupAppearance() {
+    fileprivate func setupAppearance() {
 
         if let group = self.group {
             self.groupLabel.text = "发布在：\(group.name)"
@@ -97,23 +97,23 @@ extension CreatePostViewController {
         self.collectionView.allowsMultipleSelection = true
     }
     
-    private func registerForKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShown:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHidden:", name: UIKeyboardWillHideNotification, object: nil)
+    fileprivate func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: "keyboardWillShown:", name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "keyboardWillHidden:", name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func keyboardWillShown(notification: NSNotification) {
 
         guard let info = notification.userInfo else { return }
         
-        if let keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height {
+        if let keyboardHeight = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height {
 
             // key the text view stay above the key board
             self.paperViewBottomConstraint.constant = 8 + keyboardHeight
             // hide photo collection view below the screen
             self.collectionViewTopConstraint.constant = 0
             
-            UIView.animateWithDuration(0.3, animations: { _ in
+            UIView.animate(withDuration: 0.3, animations: { _ in
                 self.view.layoutIfNeeded()
             })
         }
@@ -124,25 +124,25 @@ extension CreatePostViewController {
         // make the text view full screen height whit a gap
         self.paperViewBottomConstraint.constant = 8
         
-        UIView.animateWithDuration(0.3, animations: { _ in
+        UIView.animate(withDuration: 0.3, animations: { _ in
             self.view.layoutIfNeeded()
         })
     }
     
-    private func updateNumberBadge() {
+    fileprivate func updateNumberBadge() {
         
-        let selectedPics = (self.collectionView.indexPathsForSelectedItems() ?? []).count
+        let selectedPics = (self.collectionView.indexPathsForSelectedItems ?? []).count
         
         if selectedPics > 0 {
             self.numberBadge.text = String(selectedPics)
-            self.numberBadge.hidden = false
+            self.numberBadge.isHidden = false
         } else {
             self.numberBadge.text = String(0)
-            self.numberBadge.hidden = true
+            self.numberBadge.isHidden = true
         }
     }
     
-    private func updateLocationLabel() {
+    fileprivate func updateLocationLabel() {
         
         if let placemark = self.placemark {
             
@@ -165,113 +165,113 @@ extension CreatePostViewController {
             }
             
             self.locationLabel.text = address
-            self.locationLabel.hidden = false
-            clearLocationButton.hidden = false
-            locationButton.setImage(nil, forState: UIControlState.Normal)
+            self.locationLabel.isHidden = false
+            clearLocationButton.isHidden = false
+            locationButton.setImage(nil, for: .normal)
             locationButtonWidthConstraint.constant = 0.0
         } else {
             locationLabel.text = nil
-            locationLabel.hidden = true
-            clearLocationButton.hidden = true
-            locationButton.setImage(UIImage(named: "marker"), forState: UIControlState.Normal)
+            locationLabel.isHidden = true
+            clearLocationButton.isHidden = true
+            locationButton.setImage(UIImage(named: "marker"), for: .normal)
             locationButtonWidthConstraint.constant = 30.0
         }
     }
     
-    private func photoServiceAuthorized() -> Bool {
+    fileprivate func photoServiceAuthorized() -> Bool {
         
         let status = PHPhotoLibrary.authorizationStatus()
         
         switch status {
-        case .Authorized:
+        case .authorized:
             return true
-        case .NotDetermined:
+        case .notDetermined:
             PHPhotoLibrary.requestAuthorization { _ in
             }
             return false
-        case .Restricted:
+        case .restricted:
             return false
-        case .Denied:
+        case .denied:
             showPhotoServiceDisabledAlert()
             return false
         }
     }
     
-    private func showPhotoServiceDisabledAlert() {
+    fileprivate func showPhotoServiceDisabledAlert() {
         
-        let alert = UIAlertController(title: "現場Tomo需要访问您的照片", message: "为了能够在您发表的帖子中加入照片，请您允许現場Tomo访问您的照片", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "現場Tomo需要访问您的照片", message: "为了能够在您发表的帖子中加入照片，请您允许現場Tomo访问您的照片", preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "不允许", style: .Destructive, handler: nil))
-        alert.addAction(UIAlertAction(title: "好", style: .Default, handler: { _ in
-            let url = NSURL(string: UIApplicationOpenSettingsURLString)
-            UIApplication.sharedApplication().openURL(url!)
+        alert.addAction(UIAlertAction(title: "不允许", style: .destructive, handler: nil))
+        alert.addAction(UIAlertAction(title: "好", style: .default, handler: { _ in
+            let url = URL(string: UIApplicationOpenSettingsURLString)
+            UIApplication.shared.openURL(url!)
         }))
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    private func cameraServiceAuthorized() -> Bool {
+    fileprivate func cameraServiceAuthorized() -> Bool {
         
-        let status = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+        let status = AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo)
         
         switch status {
-        case .Authorized:
+        case .authorized:
             return true
-        case .NotDetermined:
-            AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo, completionHandler: nil)
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: nil)
             return false
-        case .Restricted:
+        case .restricted:
             return false
-        case .Denied:
+        case .denied:
             showCameraServiceDisabledAlert()
             return false
         }
     }
     
-    private func showCameraServiceDisabledAlert() {
+    fileprivate func showCameraServiceDisabledAlert() {
         
-        let alert = UIAlertController(title: "現場Tomo需要访问您的相机", message: "为了能够拍照，请您允许現場Tomo访问您的相机", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "現場Tomo需要访问您的相机", message: "为了能够拍照，请您允许現場Tomo访问您的相机", preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "不允许", style: .Destructive, handler: nil))
-        alert.addAction(UIAlertAction(title: "好", style: .Default, handler: { _ in
-            let url = NSURL(string: UIApplicationOpenSettingsURLString)
-            UIApplication.sharedApplication().openURL(url!)
+        alert.addAction(UIAlertAction(title: "不允许", style: .destructive, handler: nil))
+        alert.addAction(UIAlertAction(title: "好", style: .default, handler: { _ in
+            let url = URL(string: UIApplicationOpenSettingsURLString)
+            UIApplication.shared.openURL(url!)
         }))
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 
-    private func uploadMeida(completion: (imagelist: AnyObject)->()) {
-        guard let selectedIndexes = collectionView.indexPathsForSelectedItems() else { return }
+    fileprivate func uploadMeida(completion: @escaping (_ imagelist: Any)->()) {
+        guard let selectedIndexes = collectionView.indexPathsForSelectedItems else { return }
         
         var imagelist = [String]()
         
         for index in selectedIndexes {
             
-            let name = NSUUID().UUIDString
+            let name = NSUUID().uuidString
             let imagePath = NSTemporaryDirectory() + name
             let remotePath = Constants.postPath(fileName: name)
             
             if index.item < self.newPhotos.count {
-                let scaledImage = self.resize(self.newPhotos[index.item])
-                scaledImage.saveToPath(imagePath)
+                let scaledImage = self.resize(image: self.newPhotos[index.item])
+                scaledImage.save(toPath: imagePath)
             } else {
                 
-                let asset = self.photos?[index.item - self.newPhotos.count] as? PHAsset
+                let asset = self.photos?[index.item - self.newPhotos.count]
                 
                 let options = PHImageRequestOptions()
-                options.synchronous = true
-                options.resizeMode = PHImageRequestOptionsResizeMode.Exact
+                options.isSynchronous = true
+                options.resizeMode = PHImageRequestOptionsResizeMode.exact
                 
-                PHImageManager.defaultManager().requestImageForAsset(asset!, targetSize: PHImageManagerMaximumSize, contentMode: .AspectFill, options: options) { (image, info) -> Void in
+                PHImageManager.default().requestImage(for: asset!, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFill, options: options) { (image, info) -> Void in
                     
                     if let image = image {
-                        self.resize(image).saveToPath(imagePath)
+                        self.resize(image: image).save(toPath: imagePath)
                     }
                 }
             }
             
-            S3Controller.uploadFile(imagePath, remotePath: remotePath, done: { (error) -> Void in
+            S3Controller.uploadFile(localPath: imagePath, remotePath: remotePath, done: { (error) -> Void in
                 
                 imagelist.append(name)
                 
@@ -284,7 +284,7 @@ extension CreatePostViewController {
         
     }
     
-    private func postContent(imageList: AnyObject?) {
+    fileprivate func postContent(imageList: Any?) {
 
         var parameters = Router.Post.CreateParameters(content: self.postTextView.text!)
         
@@ -323,23 +323,23 @@ extension CreatePostViewController {
         
         Router.Post.Create(parameters: parameters).response {
             switch $0.result {
-            case .Success(let value):
-                self.performSegueWithIdentifier("CreatePost", sender: PostEntity(value))
+            case .success(let value):
+                self.performSegue(withIdentifier: "CreatePost", sender: PostEntity(value))
             default:
                 break
             }
 
-            self.postButton.enabled = true
+            self.postButton.isEnabled = true
         }
     }
     
     // TODO - refactor out
-    private func resize(image: UIImage) -> UIImage {
+    fileprivate func resize(image: UIImage) -> UIImage {
         
         let imageData = UIImageJPEGRepresentation(image, 1)!
         
         // if the image smaller than 1MB, do nothing
-        if !(imageData.length/1024/1024 > 1) {
+        if !(imageData.count/1024/1024 > 1) {
             return image.normalizedImage()
         }
         
@@ -347,10 +347,10 @@ extension CreatePostViewController {
         let resizeFactor:CGFloat = 1
         
         // based on iPhone6 plus screen
-        let widthBase = UIScreen.mainScreen().bounds.size.width * resizeFactor
-        let heigthBase = UIScreen.mainScreen().bounds.size.height * resizeFactor
+        let widthBase = UIScreen.main.bounds.size.width * resizeFactor
+        let heigthBase = UIScreen.main.bounds.size.height * resizeFactor
         
-        return image.scaleToFitSize( CGSizeMake(widthBase, heigthBase) ).normalizedImage()
+        return image.scale( toFit: CGSize(width: widthBase, height: heigthBase) )!.normalizedImage()
     }
 }
 
@@ -358,19 +358,19 @@ extension CreatePostViewController {
 
 extension CreatePostViewController {
     
-    @IBAction func cancel(sender: AnyObject) {
+    @IBAction func cancel(_ sender: Any) {
         self.postTextView.resignFirstResponder()
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func post(sender: AnyObject) {
+    @IBAction func post(_ sender: Any) {
 
-        self.postButton.enabled = false
+        self.postButton.isEnabled = false
         
-        if (collectionView.indexPathsForSelectedItems() ?? []).count > 0 {
-            self.uploadMeida(postContent)
+        if (collectionView.indexPathsForSelectedItems ?? []).count > 0 {
+            self.uploadMeida(completion: postContent)
         } else {
-            self.postContent(nil)
+            self.postContent(imageList: nil)
         }
     }
     
@@ -379,26 +379,26 @@ extension CreatePostViewController {
         self.paperViewBottomConstraint.constant = 8
         self.collectionViewTopConstraint.constant = 216
 
-        UIView.animateWithDuration(0.3, animations: { _ in
+        UIView.animate(withDuration: 0.3, animations: { _ in
             self.view.layoutIfNeeded()
         })
 
-        if (photoServiceAuthorized() && self.photos?.count <= 0) {
+        if (photoServiceAuthorized() && (self.photos?.count)! <= 0) {
 
 
-            let assetCollection = PHAssetCollection.fetchAssetCollectionsWithType(.SmartAlbum, subtype: .SmartAlbumUserLibrary, options: nil)
+            let assetCollection = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil)
             
-            if let assetCollection = assetCollection.firstObject as? PHAssetCollection {
+            if let assetCollection = assetCollection.firstObject {
                 
                 let options = PHFetchOptions()
                 
                 let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
-                let predicate = NSPredicate(format: "mediaType = %@", NSNumber(integer: PHAssetMediaType.Image.rawValue))
+                let predicate = NSPredicate(format: "mediaType = %@", NSNumber(value: PHAssetMediaType.image.rawValue))
                 
                 options.sortDescriptors = [sortDescriptor]
                 options.predicate = predicate
                 
-                self.photos = PHAsset.fetchAssetsInAssetCollection(assetCollection, options: options)
+                self.photos = PHAsset.fetchAssets(in: assetCollection, options: options)
                 self.collectionView.reloadData()
             }
         }
@@ -406,34 +406,34 @@ extension CreatePostViewController {
         self.postTextView.resignFirstResponder()
     }
     
-    @IBAction func takePhoto(sender: AnyObject) {
+    @IBAction func takePhoto(_ sender: Any) {
         
-        if cameraServiceAuthorized() && UIImagePickerController.isSourceTypeAvailable(.Camera) {
+        if cameraServiceAuthorized() && UIImagePickerController.isSourceTypeAvailable(.camera) {
 
-            if let _ = UIImagePickerController.availableMediaTypesForSourceType(.Camera) {
+            if let _ = UIImagePickerController.availableMediaTypes(for: .camera) {
                 
                 let picker = UIImagePickerController()
-                picker.sourceType = .Camera
+                picker.sourceType = .camera
                 picker.mediaTypes = [kUTTypeImage as String]
                 picker.delegate = self
-                self.presentViewController(picker, animated: true, completion: nil)
+                self.present(picker, animated: true, completion: nil)
                 
                 self.choosePhoto()
             }
         }
     }
     
-    @IBAction func markLocation(sender: AnyObject) {
+    @IBAction func markLocation(_ sender: Any) {
 
         // user ask for add location explicitly, notify user if the location is not enabled.
-        LocationController.shareInstance.doActionWithPlacemark(self) { placemark, location in
+        LocationController.shareInstance.doActionWithPlacemark(authRequestOnController: self) { placemark, location in
             self.placemark = placemark
             self.location = location
             self.updateLocationLabel()
         }
     }
     
-    @IBAction func clearLocationButtonPressed(sender: AnyObject) {
+    @IBAction func clearLocationButtonPressed(sender: Any) {
         location = nil
         placemark = nil
         updateLocationLabel()
@@ -445,7 +445,7 @@ extension CreatePostViewController {
 
 extension CreatePostViewController {
     func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
-        return .TopAttached
+        return .topAttached
     }
 }
 
@@ -453,19 +453,19 @@ extension CreatePostViewController {
 
 extension CreatePostViewController: UITextViewDelegate {
     
-    func textViewDidBeginEditing(textView: UITextView) {
+    func textViewDidBeginEditing(_ textView: UITextView) {
         textView.text = nil
-        textView.textColor = UIColor.darkTextColor()
+        textView.textColor = UIColor.darkText
     }
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         
         let postContent = textView.text.trimmed()
         
-        if postContent.length > 0 {
-            self.postButton.enabled = true
+        if postContent.characters.count > 0 {
+            self.postButton.isEnabled = true
         } else {
-            self.postButton.enabled = false
+            self.postButton.isEnabled = false
         }
     }
 }
@@ -474,14 +474,14 @@ extension CreatePostViewController: UITextViewDelegate {
 
 extension CreatePostViewController: UICollectionViewDataSource {
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return (self.photos?.count ?? 0) + self.newPhotos.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("defaultCell", forIndexPath: indexPath) 
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath) 
         
         // clear cell contents
         for subview in cell.contentView.subviews {
@@ -492,38 +492,38 @@ extension CreatePostViewController: UICollectionViewDataSource {
         if indexPath.item < self.newPhotos.count {
             
             let imageView = UIImageView(image: self.newPhotos[indexPath.item])
-            imageView.contentMode = .ScaleAspectFill
-            imageView.frame = CGRectMake(0, 0, 200, 200)
+            imageView.contentMode = .scaleAspectFill
+            imageView.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
             
             cell.contentView.addSubview(imageView)
             
         // or show the photo in photo library
-        } else if let asset = self.photos?[indexPath.item - self.newPhotos.count] as? PHAsset {
+        } else if let asset = self.photos?[indexPath.item - self.newPhotos.count] {
             
             let options = PHImageRequestOptions()
-            options.deliveryMode = .HighQualityFormat
-            options.resizeMode = .Exact
+            options.deliveryMode = .highQualityFormat
+            options.resizeMode = .exact
             
-            PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: CGSizeMake(200, 200), contentMode: .AspectFill, options: options) { (image, info) -> Void in
+            PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: options) { (image, info) -> Void in
                 let imageView = UIImageView(image: image)
-                cell.contentView.insertSubview(imageView, atIndex: 0)
+                cell.contentView.insertSubview(imageView, at: 0)
             }
         }
         
         // add visual clue for the selected cell
-        if let selectedIndexes = collectionView.indexPathsForSelectedItems() {
+        if let selectedIndexes = collectionView.indexPathsForSelectedItems {
             
             if selectedIndexes.contains(indexPath) {
                 
-                UIView.animateWithDuration(0.1, animations: { () -> Void in
-                    cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+                UIView.animate(withDuration: 0.1, animations: { () -> Void in
+                    cell.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
                 }, completion: { (_) -> Void in
                     let mark = UIImageView(image: UIImage(named: "ok"))
                     let position = CGPoint(x: 4, y: 4)
                     mark.frame.origin = position
                     mark.roundedCorner = true
                     mark.layer.borderWidth = 2.0
-                    mark.layer.borderColor = UIColor.whiteColor().CGColor
+                    mark.layer.borderColor = UIColor.white.cgColor
                     cell.contentView.addSubview(mark)
                 })
             }
@@ -537,35 +537,35 @@ extension CreatePostViewController: UICollectionViewDataSource {
 
 extension CreatePostViewController: UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         
-        if (collectionView.indexPathsForSelectedItems() ?? []).count > 10 {
-            collectionView.deselectItemAtIndexPath(indexPath, animated: false)
+        if (collectionView.indexPathsForSelectedItems ?? []).count > 10 {
+            collectionView.deselectItem(at: indexPath, animated: false)
             return
         }
         
-        UIView.animateWithDuration(0.1, animations: { () -> Void in
-            cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+        UIView.animate(withDuration: 0.1, animations: { () -> Void in
+            cell.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             }, completion: { (_) -> Void in
                 let mark = UIImageView(image: UIImage(named: "ok"))
                 let position = CGPoint(x: 4, y: 4)
                 mark.frame.origin = position
                 mark.roundedCorner = true
                 mark.layer.borderWidth = 2.0
-                mark.layer.borderColor = UIColor.whiteColor().CGColor
+                mark.layer.borderColor = UIColor.white.cgColor
                 cell.contentView.addSubview(mark)
         })
         
         self.updateNumberBadge()
     }
     
-    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) else { return }
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         
-        UIView.animateWithDuration(0.1, animations: { () -> Void in
-            cell.transform = CGAffineTransformIdentity
+        UIView.animate(withDuration: 0.1, animations: { () -> Void in
+            cell.transform = CGAffineTransform.identity
             }, completion: { (_) -> Void in
                 cell.contentView.subviews.last?.removeFromSuperview()
         })
@@ -579,24 +579,24 @@ extension CreatePostViewController: UICollectionViewDelegate {
 
 extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
             return
         }
         
-        self.newPhotos.insert(image.normalizedImage(), atIndex: 0)
-        let insertPath = NSIndexPath(forItem: 0, inSection: 0)
+        self.newPhotos.insert(image.normalizedImage(), at: 0)
+        let insertPath = IndexPath(item: 0, section: 0)
         
-        self.dismissViewControllerAnimated(true) {
+        self.dismiss(animated: true) {
             
-            self.collectionView.insertItemsAtIndexPaths([insertPath])
-            self.collectionView.selectItemAtIndexPath(insertPath, animated: true, scrollPosition: .Left)
+            self.collectionView.insertItems(at: [insertPath])
+            self.collectionView.selectItem(at: insertPath, animated: true, scrollPosition: .left)
             self.updateNumberBadge()
             
-            if let cell = self.collectionView.cellForItemAtIndexPath(insertPath) {
-                UIView.animateWithDuration(0.1, animations: { () -> Void in
-                    cell.transform = CGAffineTransformMakeScale(0.9, 0.9)
+            if let cell = self.collectionView.cellForItem(at: insertPath) {
+                UIView.animate(withDuration: 0.1, animations: { () -> Void in
+                    cell.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
                     }, completion: { (_) -> Void in
                         let mark = UIImageView(image: UIImage(named: "ok"))
                         cell.contentView.addSubview(mark)
@@ -605,7 +605,7 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigatio
         }
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

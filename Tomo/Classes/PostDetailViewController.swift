@@ -67,26 +67,26 @@ final class PostDetailViewController: UIViewController {
 
         if let initialImageIndex = self.initialImageIndex {
             // TODO: here cause a warning, but it works for now
-            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: initialImageIndex, inSection: 0), atScrollPosition: .CenteredHorizontally, animated: false)
+            self.collectionView.scrollToItem(at: IndexPath(item: initialImageIndex, section: 0), at: .centeredHorizontally, animated: false)
         }
 
         if let initialCommentIndex = self.initialCommentIndex {
-            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: initialCommentIndex, inSection: 0), atScrollPosition: .Top, animated: false)
+            self.tableView.scrollToRow(at: IndexPath(item: initialCommentIndex, section: 0), at: .top, animated: false)
         }
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         // restore the normal navigation bar before disappear
-        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         self.navigationController?.navigationBar.shadowImage = nil
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.configNavigationBarByScrollPosition()
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -94,91 +94,91 @@ final class PostDetailViewController: UIViewController {
 
 extension PostDetailViewController {
 
-    private func registerForKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
+    fileprivate func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: "keyboardWillShow:", name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: "keyboardWillBeHidden:", name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
-    private func configDisplay() {
+    fileprivate func configDisplay() {
 
         // don't interrupt the scroll to top function of main scroll view
         self.collectionView.scrollsToTop = false
         self.commentTextView.scrollsToTop = false
 
-        if let imageNumber = self.post.images?.count where imageNumber > 0 {
+        if let imageNumber = self.post.images?.count, imageNumber > 0 {
 
             if imageNumber > 1 {
                 self.pageControl.numberOfPages = imageNumber
                 self.pageControl.currentPage = 0
             } else {
-                self.pageControl.hidden = true
+                self.pageControl.isHidden = true
             }
 
             // set the header view's size according the screen size
-            self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.headerViewSize)
+            self.tableView.tableHeaderView?.frame = CGRect(origin: CGPoint.zero, size: self.headerViewSize)
 
         } else {
 
             // set the header view's size as tall as the top bar
-            self.tableView.tableHeaderView?.frame = CGRect(origin: CGPointZero, size: self.emptyHeaderViewSize)
+            self.tableView.tableHeaderView?.frame = CGRect(origin: CGPoint.zero, size: self.emptyHeaderViewSize)
         }
 
     }
 
-    private func calculateRowHeight() {
+    fileprivate func calculateRowHeight() {
 
-        let authorInfoCell = self.tableView.dequeueReusableCellWithIdentifier("AuthorInfoCell") as! PostDisplayCell
-        let contentCell = self.tableView.dequeueReusableCellWithIdentifier("ContentCell") as! PostDisplayCell
+        let authorInfoCell = self.tableView.dequeueReusableCell(withIdentifier: "AuthorInfoCell") as! PostDisplayCell
+        let contentCell = self.tableView.dequeueReusableCell(withIdentifier: "ContentCell") as! PostDisplayCell
 
         authorInfoCell.post = self.post
         contentCell.post = self.post
 
         // calculate the author info cell
-        let authorInfoCellSize = authorInfoCell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        let authorInfoCellSize = authorInfoCell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
 
         // calculate the content cell
-        let contentCellSize = contentCell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        let contentCellSize = contentCell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
 
-        self.rowHeights.push(authorInfoCellSize.height)
-        self.rowHeights.push(contentCellSize.height)
+        self.rowHeights.append(authorInfoCellSize.height)
+        self.rowHeights.append(contentCellSize.height)
 
         // calculate all the comment cells
         if let comments = self.post.comments {
 
-            let commentCell = self.tableView.dequeueReusableCellWithIdentifier("CommentCell") as! PostCommentCell
+            let commentCell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! PostCommentCell
 
-            self.rowHeights.appendContentsOf(comments.reverse().map {
+            self.rowHeights.append(contentsOf: comments.reversed().map {
                 commentCell.comment = $0
-                let commentCellSize = commentCell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+                let commentCellSize = commentCell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
                 return commentCellSize.height
             })
         }
     }
 
-    private func configInfoLabel() {
+    fileprivate func configInfoLabel() {
 
         var info = [String]()
 
-        if let likes = post.like where likes.contains(me.id) {
-            self.likeButton.setImage(TomoConst.Image.FilledHeart, forState: .Normal)
-            info.push("\(likes.count)赞")
+        if let likes = post.like, likes.contains(me.id) {
+            self.likeButton.setImage(TomoConst.Image.FilledHeart, for: .normal)
+            info.append("\(likes.count)赞")
         } else {
-            self.likeButton.setImage(TomoConst.Image.EmptyHeart, forState: .Normal)
+            self.likeButton.setImage(TomoConst.Image.EmptyHeart, for: .normal)
         }
 
-        if let bookmarks = post.bookmark where bookmarks.contains(me.id) {
-            self.bookmarkButton.setImage(TomoConst.Image.FilledStar, forState: .Normal)
-            info.push("\(bookmarks.count)收藏")
+        if let bookmarks = post.bookmark, bookmarks.contains(me.id) {
+            self.bookmarkButton.setImage(TomoConst.Image.FilledStar, for: .normal)
+            info.append("\(bookmarks.count)收藏")
         } else {
-            self.bookmarkButton.setImage(TomoConst.Image.EmptyStar, forState: .Normal)
+            self.bookmarkButton.setImage(TomoConst.Image.EmptyStar, for: .normal)
         }
 
-        if let comments = post.comments where comments.count > 0 {
-            info.push("\(comments.count)评论")
+        if let comments = post.comments, comments.count > 0 {
+            info.append("\(comments.count)评论")
         }
 
         if info.count > 0 {
-            self.infoLabel.text = info.joinWithSeparator(" ")
+            self.infoLabel.text = info.joined(separator: " ")
         } else {
             self.infoLabel.text = nil
         }
@@ -187,12 +187,12 @@ extension PostDetailViewController {
     func keyboardWillShow(notification: NSNotification) {
         guard
             let info = notification.userInfo,
-            keyboardHeight = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size.height,
-            duration = info[UIKeyboardAnimationDurationUserInfoKey] as? NSTimeInterval
+            let keyboardHeight = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height,
+            let duration = info[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval
             else { return }
 
         self.bottomConstraint.constant = keyboardHeight
-        UIView.animateWithDuration(duration, animations: { () -> Void in
+        UIView.animate(withDuration: duration, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
     }
@@ -200,21 +200,21 @@ extension PostDetailViewController {
     func keyboardWillBeHidden(notification: NSNotification) {
         guard
             let info = notification.userInfo,
-            duration = info[UIKeyboardAnimationDurationUserInfoKey] as? NSTimeInterval
+            let duration = info[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval
             else { return }
 
         self.bottomConstraint.constant = -132
-        UIView.animateWithDuration(duration, animations: { () -> Void in
+        UIView.animate(withDuration: duration, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
     }
 
-    private func configNavigationBarByScrollPosition() {
+    fileprivate func configNavigationBarByScrollPosition() {
 
         let offsetY = self.tableView.contentOffset.y
         var headerHeight = TomoConst.UI.TopBarHeight
 
-        if let imageNumber = self.post.images?.count where imageNumber > 0 {
+        if let imageNumber = self.post.images?.count, imageNumber > 0 {
             headerHeight = self.headerHeight
         }
 
@@ -225,12 +225,12 @@ extension PostDetailViewController {
         if offsetY > headerHeight - TomoConst.UI.TopBarHeight * 2 {
 
             let distance = headerHeight - offsetY - TomoConst.UI.TopBarHeight * 2
-            let image = Util.imageWithColor(0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
-            self.navigationController?.navigationBar.setBackgroundImage(image, forBarMetrics: .Default)
+            let image = Util.imageWithColor(rgbValue: 0x0288D1, alpha: abs(distance) / TomoConst.UI.TopBarHeight)
+            self.navigationController?.navigationBar.setBackgroundImage(image, for: .default)
 
             // if user scroll down so the table header view got shown, just keep the navigation bar transparent
         } else {
-            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
         }
     }
@@ -240,9 +240,9 @@ extension PostDetailViewController {
 
 extension PostDetailViewController {
 
-    @IBAction func moreButtonTapped(sender: UIBarButtonItem) {
+    @IBAction func moreButtonTapped(_ sender: UIBarButtonItem) {
 
-        var optionalList = Dictionary<String,((UIAlertAction!) -> Void)!>()
+        var optionalList = Dictionary<String,((UIAlertAction?) -> Void)!>()
 
         /* wechat share is disable tempraray
         if (WechatManager.sharedInstance.isInstalled()) {
@@ -258,10 +258,10 @@ extension PostDetailViewController {
         if post.owner.id != me.id {
             optionalList["举报此内容"] = { _ in
 
-                Util.alert(self, title: "举报此内容", message: "您确定要举报此内容吗？") { _ in
+                Util.alert(parentvc: self, title: "举报此内容", message: "您确定要举报此内容吗？") { _ in
                     Router.Report.Post(id: self.post.id).response { _ in
-                        Util.showInfo("举报信息已发送")
-                        self.navigationController?.popViewControllerAnimated(true)
+                        Util.showInfo(title: "举报信息已发送")
+                        self.navigationController?.popViewController(animated: true)
                     }
                 }
             }
@@ -269,27 +269,27 @@ extension PostDetailViewController {
 
         if post.owner.id == me.id {
             optionalList["删除"] = { _ in
-                Util.alert(self, title: "删除帖子", message: "确定删除该帖子吗？") { _ in
+                Util.alert(parentvc: self, title: "删除帖子", message: "确定删除该帖子吗？") { _ in
                     Router.Post.Delete(id: self.post.id).response { _ in
-                        Util.showInfo("帖子已删除")
+                        Util.showInfo(title: "帖子已删除")
                         // TODO remove the post in HomeViewController
-                        self.navigationController?.popViewControllerAnimated(true)
+                        self.navigationController?.popViewController(animated: true)
                     }
                 }
             }
         }
 
-        Util.alertActionSheet(self, optionalDict: optionalList)
+        Util.alertActionSheet(parentvc: self, optionalDict: optionalList)
     }
 
-    @IBAction func likeButtonTapped(sender: UIButton) {
+    @IBAction func likeButtonTapped(_ sender: UIButton) {
 
-        sender.userInteractionEnabled = false
+        sender.isUserInteractionEnabled = false
 
         Router.Post.Like(id: post.id).response {
 
             if $0.result.isFailure {
-                sender.userInteractionEnabled = true
+                sender.isUserInteractionEnabled = true
                 return
             }
 
@@ -301,18 +301,18 @@ extension PostDetailViewController {
 
             self.configInfoLabel()
 
-            sender.userInteractionEnabled = true
+            sender.isUserInteractionEnabled = true
         }
     }
 
-    @IBAction func bookmarkButtonTapped(sender: UIButton) {
+    @IBAction func bookmarkButtonTapped(_ sender: UIButton) {
 
-        sender.userInteractionEnabled = false
+        sender.isUserInteractionEnabled = false
 
         Router.Post.Bookmark(id: post.id).response {
 
             if $0.result.isFailure {
-                sender.userInteractionEnabled = true
+                sender.isUserInteractionEnabled = true
                 return
             }
 
@@ -326,34 +326,34 @@ extension PostDetailViewController {
 
             self.configInfoLabel()
 
-            sender.userInteractionEnabled = true
+            sender.isUserInteractionEnabled = true
         }
     }
 
-    @IBAction func commentButtonTapped(sender: UIButton) {
+    @IBAction func commentButtonTapped(_ sender: UIButton) {
         // keyboard will show up here, enable the tableview tap recongnizer,
         // so the keyboard will be dismissed later when tap anywhere on screen
-        self.blurEffectView.hidden = false
-        self.tableViewTapRecognizer.enabled = true
+        self.blurEffectView.isHidden = false
+        self.tableViewTapRecognizer.isEnabled = true
         self.commentTextView.becomeFirstResponder()
     }
 
-    @IBAction func viewTapped(sender: UITapGestureRecognizer) {
+    @IBAction func viewTapped(_ sender: UITapGestureRecognizer) {
         // keyboard is dismissed here, disable the tableview tap recongnizer,
         // so the tap event won't block the table cell tap event.
-        self.blurEffectView.hidden = true
-        self.tableViewTapRecognizer.enabled = false
+        self.blurEffectView.isHidden = true
+        self.tableViewTapRecognizer.isEnabled = false
         self.commentTextView.resignFirstResponder()
     }
 
-    @IBAction func sendButtonTapped(sender: UIButton) {
+    @IBAction func sendButtonTapped(_ sender: UIButton) {
 
-        self.sendButton.enabled = false
+        self.sendButton.isEnabled = false
 
         // keyboard is dismissed here, disable the tableview tap recongnizer,
         // so the tap event won't block the table cell tap event.
-        self.blurEffectView.hidden = true
-        self.tableViewTapRecognizer.enabled = false
+        self.blurEffectView.isHidden = true
+        self.tableViewTapRecognizer.isEnabled = false
         self.commentTextView.resignFirstResponder()
 
         let commentContent = self.commentTextView.text.trimmed()
@@ -369,12 +369,12 @@ extension PostDetailViewController {
             let comment = CommentEntity()
             comment.owner = me
             comment.content = commentContent
-            comment.createDate = NSDate()
+            comment.createDate = Date()
 
             // use the comment entity to calculate the height of the comment cell that will be insert
-            let commentCell = self.tableView.dequeueReusableCellWithIdentifier("CommentCell") as! PostCommentCell
+            let commentCell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! PostCommentCell
             commentCell.comment = comment
-            let commentCellSize = commentCell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+            let commentCellSize = commentCell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
 
             // create a empty new comment array if the post has no comment
             if self.post.comments == nil {
@@ -385,11 +385,11 @@ extension PostDetailViewController {
             self.post.comments?.append(comment)
 
             // insert row height
-            self.rowHeights.insert([commentCellSize.height], atIndex: 2)
+            self.rowHeights.insert(commentCellSize.height, at: 2)
 
             // insert the comment cell into table view, and show it
-            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: 2, inSection: 0)], withRowAnimation: .Automatic)
-            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 2, inSection: 0), atScrollPosition: .Middle, animated: true)
+            self.tableView.insertRows(at: [IndexPath(item: 2, section: 0)], with: .automatic)
+            self.tableView.scrollToRow(at: IndexPath(item: 2, section: 0), at: .middle, animated: true)
         }
     }
 }
@@ -399,7 +399,7 @@ extension PostDetailViewController {
 extension PostDetailViewController: UITableViewDataSource {
 
     // The row number is one author cell + one content cell + all the comment cells
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let comments = self.post.comments {
             return comments.count + 2
         } else {
@@ -407,20 +407,20 @@ extension PostDetailViewController: UITableViewDataSource {
         }
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell: UITableViewCell
 
         switch indexPath.row {
         case 0:
-            cell = tableView.dequeueReusableCellWithIdentifier("AuthorInfoCell", forIndexPath: indexPath)
+            cell = tableView.dequeueReusableCell(withIdentifier: "AuthorInfoCell", for: indexPath)
             (cell as! PostDisplayCell).post = self.post
         case 1:
-            cell = tableView.dequeueReusableCellWithIdentifier("ContentCell", forIndexPath: indexPath)
+            cell = tableView.dequeueReusableCell(withIdentifier: "ContentCell", for: indexPath)
             (cell as! PostDisplayCell).post = self.post
         default:
-            cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath)
-            (cell as! PostCommentCell).comment = self.post.comments?.reverse()[indexPath.row - 2]
+            cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+            (cell as! PostCommentCell).comment = self.post.comments?.reversed()[indexPath.row - 2]
         }
 
         return cell
@@ -432,25 +432,25 @@ extension PostDetailViewController: UITableViewDataSource {
 extension PostDetailViewController: UITableViewDelegate {
 
     // Just return the pre-calculate row heights
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.rowHeights[indexPath.row]
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
             // No need to see myself on profile view
             guard me.id != post.owner.id else { return }
-            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+            let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
             vc.user = post.owner
             self.navigationController?.pushViewController(vc, animated: true)
         case 1:
             return
         default:
-            let commentOwner = post.comments?.reverse()[indexPath.row - 2].owner
+            let commentOwner = post.comments?.reversed()[indexPath.row - 2].owner
             // No need to see myself on profile view
             guard me.id != commentOwner!.id else { return }
-            let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+            let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
             vc.user = commentOwner
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -461,12 +461,12 @@ extension PostDetailViewController: UITableViewDelegate {
 
 extension PostDetailViewController: UICollectionViewDataSource {
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.post.images?.count ?? 0
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SingleImageCell", forIndexPath: indexPath) as! SingleImageCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SingleImageCell", for: indexPath) as! SingleImageCollectionViewCell
         cell.imageURL = self.post.images?[indexPath.row]
         return cell
     }
@@ -477,24 +477,24 @@ extension PostDetailViewController: UICollectionViewDataSource {
 extension PostDetailViewController: UICollectionViewDelegate {
 
     // when the image collection was tapped, display full size image
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! SingleImageCollectionViewCell
-        let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.ImageViewerNavigationBarShown)
+        let cell = collectionView.cellForItem(at: indexPath) as! SingleImageCollectionViewCell
+        let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.imageViewerNavigationBarShown)
 
-        gallery.galleryItems = self.post.images!.map { MHGalleryItem(URL: $0, galleryType: .Image) }
-        gallery.presentationIndex = indexPath.item
-        gallery.presentingFromImageView = cell.imageView
+        gallery?.galleryItems = self.post.images!.map { MHGalleryItem(url: $0, galleryType: .image) }
+        gallery?.presentationIndex = indexPath.item
+        gallery?.presentingFromImageView = cell.imageView
 
-        gallery.UICustomization.showOverView = false
-        gallery.UICustomization.useCustomBackButtonImageOnImageViewer = false
-        gallery.UICustomization.showMHShareViewInsteadOfActivityViewController = false
+        gallery?.uiCustomization.showOverView = false
+        gallery?.uiCustomization.useCustomBackButtonImageOnImageViewer = false
+        gallery?.uiCustomization.showMHShareViewInsteadOfActivityViewController = false
 
-        gallery.finishedCallback = { (currentIndex, image, transition, viewMode) -> Void in
-            gallery.dismissViewControllerAnimated(true, dismissImageView: cell.imageView, completion: nil)
+        gallery?.finishedCallback = { (currentIndex, image, transition, viewMode) -> Void in
+            gallery?.dismiss(animated: true, dismiss: cell.imageView, completion: nil)
         }
 
-        presentMHGalleryController(gallery, animated: true, completion: nil)
+        present(gallery, animated: true, completion: nil)
     }
 
     // one image on one cell
@@ -512,7 +512,7 @@ extension PostDetailViewController {
     func scrollViewDidScroll(scrollView: UIScrollView) {
 
         // if the post has no image, do nothing
-        guard let imageNumber = self.post.images?.count where imageNumber > 0 else { return }
+        guard let imageNumber = self.post.images?.count, imageNumber > 0 else { return }
 
         // in the case that the image collection view was scrolled, update page control
         if scrollView == self.collectionView {
@@ -538,10 +538,10 @@ extension PostDetailViewController: UITextViewDelegate {
 
     func textViewDidChange(textView: UITextView) {
 
-        if textView.text.trimmed().length > 0 {
-            self.sendButton.enabled = true
+        if textView.text.trimmed().characters.count > 0 {
+            self.sendButton.isEnabled = true
         } else {
-            self.sendButton.enabled = false
+            self.sendButton.isEnabled = false
         }
     }
 }
@@ -566,7 +566,7 @@ final class PostAuthorInfoCell: PostDisplayCell {
     override func configDisplay() {
 
         if let photo = self.post.owner.photo {
-            self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
+            self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: DefaultAvatarImage)
         }
         self.nickNameLabel.text = self.post.owner.nickName
         self.dateLabel.text = self.post.createDate.toString()
@@ -620,7 +620,7 @@ final class PostCommentCell: UITableViewCell {
     func configDisplay() {
 
         if let photo = self.comment.owner.photo {
-            self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: DefaultAvatarImage)
+            self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: DefaultAvatarImage)
         }
         self.nickNameLabel.text = self.comment.owner.nickName
         self.commentLabel.text = self.comment.content

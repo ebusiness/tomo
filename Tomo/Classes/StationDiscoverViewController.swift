@@ -46,7 +46,7 @@ final class StationDiscoverViewController: UIViewController {
 
         // load initial data with location
         LocationController.shareInstance.doActionWithLocation {
-            self.loadInitData($0)
+            self.loadInitData(location: $0)
         }
     }
 
@@ -56,8 +56,8 @@ final class StationDiscoverViewController: UIViewController {
 
 extension StationDiscoverViewController {
 
-    @IBAction func closeButtonPressed(sender: AnyObject) {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func closeButtonPressed(_ sender: Any) {
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -65,13 +65,13 @@ extension StationDiscoverViewController {
 
 extension StationDiscoverViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return groups.count
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("StationCell", forIndexPath: indexPath) as! StationCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as! StationCollectionViewCell
 
         cell.group = self.groups[indexPath.row]
 
@@ -79,24 +79,24 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
     }
 
     // Make the CollectionView as two-column layout
-    func collectionView(collectionView: UICollectionView, layout : UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout : UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (TomoConst.UI.ScreenWidth - 2.0) / 2.0
         let height = width / 3.0 * 4.0
-        return CGSizeMake(width, height)
+        return CGSize(width: width, height: height)
     }
 
     // When cell was tapped, move to group detail
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let groupVC = Util.createViewControllerWithIdentifier("GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+        let groupVC = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
         groupVC.group = groups[indexPath.row]
 
         self.navigationController?.pushViewController(groupVC, animated: true)
     }
 
     // Give CollectionView footer view, and hold a reference of it
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        self.footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Footer", forIndexPath: indexPath) as! SearchResultReusableView
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        self.footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath) as! SearchResultReusableView
         return self.footerView
     }
 
@@ -106,7 +106,7 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
 
 extension StationDiscoverViewController {
 
-    private func loadInitData(location: CLLocation?) {
+    fileprivate func loadInitData(location: CLLocation?) {
         
         self.isLoading = true
 
@@ -128,17 +128,17 @@ extension StationDiscoverViewController {
                 return
             }
 
-            if let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) {
-                self.groups.appendContentsOf(groups)
-                self.appendCells(groups.count)
-                self.page++
+            if let groups: [GroupEntity] = GroupEntity.collection(json: $0.result.value!) {
+                self.groups.append(contentsOf: groups)
+                self.appendCells(count: groups.count)
+                self.page += 1
             }
 
             self.isLoading = false
         }
     }
     
-    private func loadMoreData() {
+    fileprivate func loadMoreData() {
 
         if self.isLoading || self.isExhausted || self.groups.count == 0 {
             return
@@ -161,55 +161,55 @@ extension StationDiscoverViewController {
             if $0.result.isFailure {
                 self.isLoading = false
                 self.isExhausted = true
-                self.stopActivityIndicator("没有更多的结果了")
+                self.stopActivityIndicator(withString: "没有更多的结果了")
                 return
             }
             
-            if let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) {
-                self.groups.appendContentsOf(groups)
-                self.appendCells(groups.count)
-                self.page++
+            if let groups: [GroupEntity] = GroupEntity.collection(json: $0.result.value!) {
+                self.groups.append(contentsOf: groups)
+                self.appendCells(count: groups.count)
+                self.page += 1
             }
 
             self.isLoading = false
         }
     }
     
-    private func startActivityIndicator() {
+    fileprivate func startActivityIndicator() {
         self.footerView.activityIndicator.startAnimating()
         self.footerView.searchResultLabel.alpha = 0
     }
 
-    private func stopActivityIndicator(withString: String?) {
+    fileprivate func stopActivityIndicator(withString: String?) {
         self.footerView.activityIndicator.stopAnimating()
         self.footerView.searchResultLabel.text = withString
-        UIView.animateWithDuration(TomoConst.Duration.Short) {
+        UIView.animate(withDuration: TomoConst.Duration.Short) {
             self.footerView.searchResultLabel.alpha = 1.0
         }
     }
 
-    private func appendCells(count: Int) {
+    fileprivate func appendCells(count: Int) {
 
         let startIndex = self.groups.count - count
         let endIndex = self.groups.count
 
-        var indexPaths = [NSIndexPath]()
+        var indexPaths = [IndexPath]()
 
         for i in startIndex..<endIndex {
-            let indexPath = NSIndexPath(forItem: i, inSection: 0)
+            let indexPath = IndexPath(item: i, section: 0)
             indexPaths.append(indexPath)
         }
 
-        self.collectionView.insertItemsAtIndexPaths(indexPaths)
+        self.collectionView.insertItems(at: indexPaths)
     }
 }
 
 extension StationDiscoverViewController: UISearchBarDelegate {
 
     // Search by user input
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 
-        guard let text = searchBar.text where text.trimmed().length > 0 else { return }
+        guard let text = searchBar.text, text.trimmed().characters.count > 0 else { return }
 
         // do nothing if the search word didn't change
         guard self.searchText != text else { return }
@@ -232,19 +232,19 @@ extension StationDiscoverViewController: UISearchBarDelegate {
 
         // scroll to top for new result, check the zero contents case
         if self.groups.count > 0 {
-            let firstItemIndex = NSIndexPath(forItem: 0, inSection: 0)
-            self.collectionView.scrollToItemAtIndexPath(firstItemIndex, atScrollPosition: .Top, animated: true)
+            let firstItemIndex = IndexPath(item: 0, section: 0)
+            self.collectionView.scrollToItem(at: firstItemIndex, at: .top, animated: true)
         }
 
         // prepare for remove all current cell for new result
-        var removeIndex: [NSIndexPath] = []
+        var removeIndex: [IndexPath] = []
         for _ in self.groups {
-            removeIndex.append(NSIndexPath(forItem: removeIndex.count, inSection: 0))
+            removeIndex.append(IndexPath(item: removeIndex.count, section: 0))
         }
 
         // reset content
         self.groups = [GroupEntity]()
-        self.collectionView.deleteItemsAtIndexPaths(removeIndex)
+        self.collectionView.deleteItems(at: removeIndex)
 
         // prepare
         var parameters = Router.Group.FindParameters(category: .discover)
@@ -258,14 +258,14 @@ extension StationDiscoverViewController: UISearchBarDelegate {
             if $0.result.isFailure {
                 self.isLoading = false
                 self.isExhausted = true
-                self.stopActivityIndicator("没有找到与“\(self.searchText!)”相关的结果")
+                self.stopActivityIndicator(withString: "没有找到与“\(self.searchText!)”相关的结果")
                 return
             }
 
-            if let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) {
+            if let groups: [GroupEntity] = GroupEntity.collection(json: $0.result.value!) {
                 self.groups = groups
-                self.appendCells(groups.count)
-                self.page++
+                self.appendCells(count: groups.count)
+                self.page += 1
             }
 
             self.isLoading = false
@@ -298,14 +298,14 @@ final class SearchResultReusableView: UICollectionReusableView {
 
     func showActivityIndicator() {
         self.activityIndicator.startAnimating()
-        UIView.animateWithDuration(TomoConst.Duration.Short) { _ in
+        UIView.animate(withDuration: TomoConst.Duration.Short) { _ in
             self.emptyResultView.alpha = 0
         }
     }
 
     func showSearchResultView() {
         self.activityIndicator.stopAnimating()
-        UIView.animateWithDuration(TomoConst.Duration.Short) {
+        UIView.animate(withDuration: TomoConst.Duration.Short) {
             self.emptyResultView.alpha = 0.0
             self.searchResultLabel.alpha = 1.0
         }
@@ -313,7 +313,7 @@ final class SearchResultReusableView: UICollectionReusableView {
 
     func showEmptyResultView() {
         self.activityIndicator.stopAnimating()
-        UIView.animateWithDuration(TomoConst.Duration.Short) { _ in
+        UIView.animate(withDuration: TomoConst.Duration.Short) { _ in
             self.emptyResultView.alpha = 1.0
             self.searchResultLabel.alpha = 0.0
         }

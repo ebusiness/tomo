@@ -28,7 +28,7 @@ final class ContactsViewController: UITableViewController {
     }
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -36,14 +36,14 @@ final class ContactsViewController: UITableViewController {
 
 extension ContactsViewController {
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         return self.friends.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCellWithIdentifier("ContactCell", forIndexPath: indexPath) as! ContactTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as! ContactTableViewCell
         cell.user = self.friends[indexPath.item]
         return cell
     }
@@ -53,15 +53,15 @@ extension ContactsViewController {
 
 extension ContactsViewController {
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 66
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
 
-        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
 
         vc.user = self.friends[indexPath.item]
 
@@ -73,7 +73,7 @@ extension ContactsViewController {
 
 extension ContactsViewController {
 
-    private func loadContacts() {
+    fileprivate func loadContacts() {
 
         // skip if already in loading
         if self.isLoading {
@@ -91,30 +91,30 @@ extension ContactsViewController {
                 return
             }
 
-            if let friends: [UserEntity] = UserEntity.collection($0.result.value!) {
+            if let friends: [UserEntity] = UserEntity.collection(json: $0.result.value!) {
 
                 self.friends += friends
 
                 // let table view display new contents
-                self.appendRows(friends.count)
+                self.appendRows(rows: friends.count)
             }
         }
     }
 
     // Append specific number of rows on table view
-    private func appendRows(rows: Int) {
+    fileprivate func appendRows(rows: Int) {
 
         let firstIndex = self.friends.count - rows
         let lastIndex = self.friends.count
 
-        var indexPathes = [NSIndexPath]()
+        var indexPathes = [IndexPath]()
 
         for index in firstIndex..<lastIndex {
-            indexPathes.push(NSIndexPath(forRow: index, inSection: 0))
+            indexPathes.append(IndexPath(row: index, section: 0))
         }
 
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths(indexPathes, withRowAnimation: .Fade)
+        tableView.insertRows(at: indexPathes, with: .fade)
         tableView.endUpdates()
     }
 }
@@ -123,14 +123,14 @@ extension ContactsViewController {
 
 extension ContactsViewController {
 
-    private func configEventObserver() {
+    fileprivate func configEventObserver() {
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didAcceptInvitation:", name: "didAcceptInvitation", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didDeleteFriend:", name: "didDeleteFriend", object: me)
+        NotificationCenter.default.addObserver(self, selector: "didAcceptInvitation:", name: NSNotification.Name(rawValue: "didAcceptInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didDeleteFriend:", name: NSNotification.Name(rawValue: "didDeleteFriend"), object: me)
 
         // notification from background thread
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didMyFriendInvitationAccepted:", name: "didMyFriendInvitationAccepted", object: me)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didFriendBreak:", name: "didFriendBreak", object: me)
+        NotificationCenter.default.addObserver(self, selector: "didMyFriendInvitationAccepted:", name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
+        NotificationCenter.default.addObserver(self, selector: "didFriendBreak:", name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
     }
 
     // This method is called for sync this view controller and accout model after accept invitation
@@ -143,11 +143,11 @@ extension ContactsViewController {
         // note the invitation data is referring the account model, but friends data is not.
         // so the account model already removed the accepted invitation, but the friends data
         // still need to be sync with account model manually
-        self.friends.insert(friend, atIndex: 0)
+        self.friends.insert(friend, at: 0)
 
         // insert the friend data in table view
         self.tableView.beginUpdates()
-        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)], withRowAnimation: .Automatic)
+        self.tableView.insertRows(at: [IndexPath(item: 0, section: 0)], with: .automatic)
         self.tableView.endUpdates()
     }
 
@@ -157,15 +157,15 @@ extension ContactsViewController {
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
         guard let id = userInfo["idOfDeletedFriend"] as? String else { return }
-        guard let index = self.friends.indexOf({ $0.id == id }) else { return }
+        guard let index = self.friends.index(where: { $0.id == id }) else { return }
 
         // sync friends data with account model manually
-        self.friends.removeAtIndex(index)
+        self.friends.remove(at: index)
 
         // update tableview, if the number of my invitation is zero, insert into section 1
         // otherwise, remove the corresponding row in section 0
         self.tableView.beginUpdates()
-        self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)], withRowAnimation: .Automatic)
+        self.tableView.deleteRows(at: [IndexPath(item: index, section: 0)], with: .automatic)
         self.tableView.endUpdates()
     }
 
@@ -176,15 +176,15 @@ extension ContactsViewController {
         guard let userInfo = notification.userInfo else { return }
         guard let newFriend = userInfo["userEntityOfNewFriend"] as? UserEntity else { return }
 
-        self.friends.insert(newFriend, atIndex: 0)
+        self.friends.insert(newFriend, at: 0)
 
         // this method is called from background thread (because it fired from notification center)
         // must switch to main thread for UI updating
-        gcd.sync(.Main) {
+        gcd.sync(.main) {
 
             // update tableview, insert the corresponding row in section 0
             self.tableView.beginUpdates()
-            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+            self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
             self.tableView.endUpdates()
         }
     }
@@ -195,17 +195,17 @@ extension ContactsViewController {
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
         guard let brokenUserId = userInfo["userIdOfBrokenFriend"] as? String else { return }
-        guard let index = self.friends.indexOf({ $0.id == brokenUserId }) else { return }
+        guard let index = self.friends.index(where: { $0.id == brokenUserId }) else { return }
 
-        self.friends.removeAtIndex(index)
+        self.friends.remove(at: index)
 
         // this method is called from background thread (because it fired from notification center)
         // must switch to main thread for UI updating
-        gcd.sync(.Main) {
+        gcd.sync(.main) {
 
             // update tableview, delete the corresponding row from section 0
             self.tableView.beginUpdates()
-            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Automatic)
+            self.tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             self.tableView.endUpdates()
         }
     }
@@ -225,7 +225,7 @@ final class ContactTableViewCell: UITableViewCell {
     private func configDisplay() {
 
         if let photo = user.photo {
-            self.avatarImageView.sd_setImageWithURL(NSURL(string: photo), placeholderImage: TomoConst.Image.DefaultAvatar)
+            self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: TomoConst.Image.DefaultAvatar)
         }
 
         self.nickNameLabel.text = user.nickName
