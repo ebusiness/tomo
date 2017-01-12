@@ -52,9 +52,7 @@
         [mutableCanonicalizedAMZHeaderString appendFormat:@"%@:%@\n", field, value];
     }
     
-    //    NSString *canonicalizedResource = bucket ? [NSString stringWithFormat:@"/%@", request.URL.path] : request.URL.path;
-    
-    NSString *canonicalizedResource = request.URL.path;
+    NSString *canonicalizedResource = [AmazonS3SignatureHelpers canonicalizedResourceFromURL:request.URL];
     NSString *method = [request HTTPMethod];
     NSString *contentMD5 = [request valueForHTTPHeaderField:@"Content-MD5"];
     NSString *contentType = [request valueForHTTPHeaderField:@"Content-Type"];
@@ -69,6 +67,11 @@
     
     NSData *data = [self HMACSHA1EncodedDataFromString:mutableString withKey:key];
     return [self Base64EncodedStringFromData:data];
+}
+
++ (NSString *)canonicalizedResourceFromURL:(NSURL *)url
+{
+    return [url.path stringByAddingPercentEncodingWithAllowedCharacters: [NSCharacterSet URLQueryAllowedCharacterSet]];
 }
 
 + (NSData *)HMACSHA1EncodedDataFromString:(NSString *)string withKey:(NSString *)key

@@ -237,7 +237,6 @@
 		D0DB07DF1B9D3E1400C06C4E /* RemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteNotification.swift; path = Classes/RemoteNotification.swift; sourceTree = "<group>"; };
 		D0DB07E41B9D65BE00C06C4E /* ListenerEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListenerEvent.swift; path = Classes/ListenerEvent.swift; sourceTree = "<group>"; };
 		D0E523201C4CEEB600B6CF7B /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Account.swift; path = Classes/Account.swift; sourceTree = "<group>"; };
-		D0E9B2AF1E24ED2E00101277 /* AmazonS3RequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonS3RequestManager.h; sourceTree = "<group>"; };
 		D0E9B2B01E24ED2E00101277 /* AmazonS3RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestManager.swift; sourceTree = "<group>"; };
 		D0E9B2B11E24ED2E00101277 /* AmazonS3SignatureHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonS3SignatureHelpers.h; sourceTree = "<group>"; };
 		D0E9B2B21E24ED2E00101277 /* AmazonS3SignatureHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonS3SignatureHelpers.m; sourceTree = "<group>"; };
@@ -456,7 +455,6 @@
 		299389421AD3B33800043D91 /* AmazonS3RequestManager */ = {
 			isa = PBXGroup;
 			children = (
-				D0E9B2AF1E24ED2E00101277 /* AmazonS3RequestManager.h */,
 				D0E9B2B01E24ED2E00101277 /* AmazonS3RequestManager.swift */,
 				D0E9B2B11E24ED2E00101277 /* AmazonS3SignatureHelpers.h */,
 				D0E9B2B21E24ED2E00101277 /* AmazonS3SignatureHelpers.m */,

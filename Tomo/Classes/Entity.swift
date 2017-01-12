@@ -10,7 +10,7 @@ import SwiftyJSON
 
 public protocol CollectionSerializable {
     init(_ json: JSON)
-    static func collection<T: CollectionSerializable>(json: JSON) -> [T]?
+    static func collection<T: CollectionSerializable>(_ json: JSON) -> [T]?
 }
 
 extension CollectionSerializable {
@@ -19,7 +19,7 @@ extension CollectionSerializable {
         self.init(JSON(respunse))
     }
     
-    static func collection<T: CollectionSerializable>(json: JSON) -> [T]? {
+    static func collection<T: CollectionSerializable>(_ json: JSON) -> [T]? {
         
         if let array = json.array {
             return array.map { T($0) }
@@ -28,7 +28,7 @@ extension CollectionSerializable {
     }
     
     static func collection<T: CollectionSerializable>(respunse: Any) -> [T]? {
-        return collection(json: JSON(respunse))
+        return collection(JSON(respunse))
     }
 }
 

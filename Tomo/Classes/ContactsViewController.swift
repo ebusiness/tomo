@@ -91,7 +91,7 @@ extension ContactsViewController {
                 return
             }
 
-            if let friends: [UserEntity] = UserEntity.collection(json: $0.result.value!) {
+            if let friends: [UserEntity] = UserEntity.collection($0.result.value!) {
 
                 self.friends += friends
 

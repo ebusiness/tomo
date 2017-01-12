@@ -135,7 +135,7 @@ extension ProfileViewController {
             optionalList["举报此用户"] = { (_) -> Void in
                 
                 Util.alert(parentvc: self, title: "举报用户", message: "您确定要举报此用户吗？") { _ in
-                    Router.Report.User(id: self.user.id).request
+                    Router.Report.User(id: self.user.id).request()
                 }
             }
         }

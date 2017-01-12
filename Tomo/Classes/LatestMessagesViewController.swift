@@ -205,7 +205,7 @@ extension LatestMessagesViewController {
                 return
             }
 
-            if let messages: [MessageEntity] = MessageEntity.collection(json: $0.result.value!) {
+            if let messages: [MessageEntity] = MessageEntity.collection($0.result.value!) {
 
                 self.messages += messages.sorted {
                     $0.createDate.compare($1.createDate) == ComparisonResult.orderedDescending

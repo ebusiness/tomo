@@ -260,7 +260,7 @@ extension GroupDetailViewController {
                 return
             }
 
-            if let newPosts = PostEntity.collection(json: $0.result.value!) as [PostEntity]? {
+            if let newPosts = PostEntity.collection($0.result.value!) as [PostEntity]? {
 
                 // append new posts
                 self.posts += newPosts
@@ -293,7 +293,7 @@ extension GroupDetailViewController {
             }
 
             // prepend new contents
-            if let loadPosts:[PostEntity] = PostEntity.collection(json: $0.result.value!) {
+            if let loadPosts:[PostEntity] = PostEntity.collection($0.result.value!) {
                 self.posts = loadPosts + self.posts
                 self.rowHeights = loadPosts.map { self.simulateLayout(post: $0) } + self.rowHeights
                 self.prependRows(rows: loadPosts.count)

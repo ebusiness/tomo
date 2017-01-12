@@ -135,7 +135,7 @@ extension SearchFriendViewController: UISearchBarDelegate {
                 return
             }
 
-            if let users: [UserEntity] = UserEntity.collection(json: $0.result.value!) {
+            if let users: [UserEntity] = UserEntity.collection($0.result.value!) {
                 self.users = users
                 self.appendCells(count: users.count)
                 self.page+=1

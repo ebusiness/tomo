@@ -170,7 +170,7 @@ extension BookmarkedPostsViewController {
                 return
             }
             
-            let posts:[PostEntity]? = PostEntity.collection(json: $0.result.value!)
+            let posts:[PostEntity]? = PostEntity.collection($0.result.value!)
             
             if let loadPosts:[PostEntity] = posts {
 

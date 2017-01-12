@@ -329,7 +329,7 @@ public class AmazonS3RequestManager {
             
             let signature = AmazonS3SignatureHelpers.awsSignature(for: request,
                                                                             timeStamp: timestamp,
-                                                                            secret: secret)
+                                                                            secret: secret!)
             
             request.setValue(timestamp, forHTTPHeaderField: "Date")
             request.setValue("AWS \(accessKey!):\(signature)", forHTTPHeaderField: "Authorization")

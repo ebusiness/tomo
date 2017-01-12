@@ -128,7 +128,7 @@ extension StationDiscoverViewController {
                 return
             }
 
-            if let groups: [GroupEntity] = GroupEntity.collection(json: $0.result.value!) {
+            if let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) {
                 self.groups.append(contentsOf: groups)
                 self.appendCells(count: groups.count)
                 self.page += 1
@@ -165,7 +165,7 @@ extension StationDiscoverViewController {
                 return
             }
             
-            if let groups: [GroupEntity] = GroupEntity.collection(json: $0.result.value!) {
+            if let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) {
                 self.groups.append(contentsOf: groups)
                 self.appendCells(count: groups.count)
                 self.page += 1
@@ -262,7 +262,7 @@ extension StationDiscoverViewController: UISearchBarDelegate {
                 return
             }
 
-            if let groups: [GroupEntity] = GroupEntity.collection(json: $0.result.value!) {
+            if let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) {
                 self.groups = groups
                 self.appendCells(count: groups.count)
                 self.page += 1

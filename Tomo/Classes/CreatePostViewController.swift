@@ -65,7 +65,7 @@ final class CreatePostViewController: UIViewController {
             self.updateLocationLabel()
         }
     }
-
+    
     // If do this in viewDidLoad, there will be a wired animation  because
     // the keyborad show up. so bring up the keyborad after view appeared.
     override func viewDidAppear(_ animated: Bool) {
@@ -102,7 +102,7 @@ extension CreatePostViewController {
         NotificationCenter.default.addObserver(self, selector: "keyboardWillHidden:", name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    func keyboardWillShown(notification: NSNotification) {
+    func keyboardWillShown(_ notification: NSNotification) {
 
         guard let info = notification.userInfo else { return }
         
@@ -119,7 +119,7 @@ extension CreatePostViewController {
         }
     }
     
-    func keyboardWillHidden(notification: NSNotification) {
+    func keyboardWillHidden(_ notification: NSNotification) {
 
         // make the text view full screen height whit a gap
         self.paperViewBottomConstraint.constant = 8
@@ -382,25 +382,30 @@ extension CreatePostViewController {
         UIView.animate(withDuration: 0.3, animations: { _ in
             self.view.layoutIfNeeded()
         })
-
-        if (photoServiceAuthorized() && (self.photos?.count)! <= 0) {
-
-
-            let assetCollection = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil)
+        
+        if let photos = self.photos, photos.count > 0 {
+            self.postTextView.resignFirstResponder()
+            return
+        }
+        
+        if !photoServiceAuthorized() {
+            return
+        }
+        
+        let assetCollection = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil)
+        
+        if let assetCollection = assetCollection.firstObject {
             
-            if let assetCollection = assetCollection.firstObject {
-                
-                let options = PHFetchOptions()
-                
-                let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
-                let predicate = NSPredicate(format: "mediaType = %@", NSNumber(value: PHAssetMediaType.image.rawValue))
-                
-                options.sortDescriptors = [sortDescriptor]
-                options.predicate = predicate
-                
-                self.photos = PHAsset.fetchAssets(in: assetCollection, options: options)
-                self.collectionView.reloadData()
-            }
+            let options = PHFetchOptions()
+            
+            let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
+            let predicate = NSPredicate(format: "mediaType = %@", NSNumber(value: PHAssetMediaType.image.rawValue))
+            
+            options.sortDescriptors = [sortDescriptor]
+            options.predicate = predicate
+            
+            self.photos = PHAsset.fetchAssets(in: assetCollection, options: options)
+            self.collectionView.reloadData()
         }
         
         self.postTextView.resignFirstResponder()

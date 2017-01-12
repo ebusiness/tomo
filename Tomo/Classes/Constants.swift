@@ -14,6 +14,7 @@ struct TomoConfig {
         static let `Protocol` = "https"
 //        static let Domain = "api.dev.genbatomo.com"
         static let Domain = "192.168.11.86:8443"
+//        static let Domain = "api.genbatomo.com"
 
         static var UrlString: String {
             return "\(self.Protocol)://\(self.Domain)"
@@ -28,6 +29,7 @@ struct TomoConfig {
         struct S3 {
             static let Url = "https://s3-ap-northeast-1.amazonaws.com"
             static let Bucket = "tomo-dev"
+//            static let Bucket = "tomo-prod"
         }
     }
 #else
@@ -130,15 +132,15 @@ let DefaultGroupImage = UIImage(named: "group_cover_default")!
 class Constants: NSObject {
    
     class func postPath(fileName name: String) -> String {
-        return "/users/\(me.id)/post/\(name)"
+        return "/users/\(me.id!)/post/\(name)"
     }
     
     class func avatarPath() -> String {
-        return "/users/\(me.id)/photo.png"
+        return "/users/\(me.id!)/photo.png"
     }
     
     class func coverPath() -> String {
-        return "/users/\(me.id)/cover.png"
+        return "/users/\(me.id!)/cover.png"
     }
     
     class func groupCoverPath(groupId id: String) -> String {

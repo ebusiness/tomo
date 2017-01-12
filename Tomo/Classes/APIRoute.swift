@@ -67,13 +67,13 @@ extension APIRoute {
 
 // MARK: - extension
 extension APIRoute {
-    
-    var request: DataRequest {
+    @discardableResult
+    func request() -> DataRequest {
         return Alamofire.SessionManager.default.request(self).validate()
     }
     
     @discardableResult
     func response(completionHandler: @escaping (DataResponse<JSON>) -> Void) -> Request {
-        return request.responseSwiftyJSON(completionHandler: completionHandler)
+        return request().responseSwiftyJSON(completionHandler: completionHandler)
     }
 }

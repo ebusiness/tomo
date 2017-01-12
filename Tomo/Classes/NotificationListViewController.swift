@@ -112,7 +112,7 @@ extension NotificationListViewController {
                 return
             }
             
-            if let loadNotifications:[NotificationEntity] = NotificationEntity.collection(json: $0.result.value!) {
+            if let loadNotifications:[NotificationEntity] = NotificationEntity.collection($0.result.value!) {
                 self.notifications += loadNotifications
                 self.appendRows(rows: loadNotifications.count)
             }

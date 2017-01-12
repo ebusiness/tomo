@@ -103,7 +103,7 @@ extension MessageViewController {
                 return
             }
             
-            guard let messages:  [JSQMessageEntity] = JSQMessageEntity.collection(json: $0.result.value!) else {
+            guard let messages:  [JSQMessageEntity] = JSQMessageEntity.collection($0.result.value!) else {
                 self.isLoading = false
                 return
             }

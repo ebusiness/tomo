@@ -48,7 +48,7 @@ final class GroupChatViewController: CommonMessageController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         // open all message when leave
-        Router.GroupMessage.FindByGroupId(id: self.group.id, before: nil).request
+        Router.GroupMessage.FindByGroupId(id: self.group.id, before: nil).request()
 
         // tell account model I finished talk
         me.finishGroupChat(group: self.group)
@@ -106,7 +106,7 @@ extension GroupChatViewController {
                     self.isExhausted = true
                     return
                 }
-                guard let messages:[JSQMessageEntity] = JSQMessageEntity.collection(json: $0.result.value!) else {
+                guard let messages:[JSQMessageEntity] = JSQMessageEntity.collection($0.result.value!) else {
                     return
                 }
                 

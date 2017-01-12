@@ -183,7 +183,7 @@ extension HomeViewController {
  
         Router.Group.Find(parameters: parameters).response {
             if $0.result.isFailure { return }
-            self.recommendGroups = GroupEntity.collection(json: $0.result.value!)
+            self.recommendGroups = GroupEntity.collection($0.result.value!)
         }
     }
 
@@ -213,7 +213,7 @@ extension HomeViewController {
                 return
             }
             
-            let posts: [PostEntity]? = PostEntity.collection(json: $0.result.value!)
+            let posts: [PostEntity]? = PostEntity.collection($0.result.value!)
             
             if let loadPosts: [Any] = posts {
 
@@ -272,7 +272,7 @@ extension HomeViewController {
             }
 
             // prepend new contents
-            if let loadPosts:[PostEntity] = PostEntity.collection(json: $0.result.value!) {
+            if let loadPosts:[PostEntity] = PostEntity.collection($0.result.value!) {
                 self.contents = loadPosts + self.contents
                 self.rowHeights = loadPosts.map { self.simulateLayout(post: $0) } + self.rowHeights
                 self.prependRows(rows: loadPosts.count)

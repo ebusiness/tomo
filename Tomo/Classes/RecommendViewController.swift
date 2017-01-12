@@ -98,7 +98,7 @@ extension RecommendViewController {
             self.activityIndicator.stopAnimating()
 
             if $0.result.isFailure { return }
-            self.recommendGroups = GroupEntity.collection(json: $0.result.value!)
+            self.recommendGroups = GroupEntity.collection($0.result.value!)
         }
     }
 
@@ -327,7 +327,7 @@ extension RecommendViewController: UISearchBarDelegate {
                 self.present(alert, animated: true, completion: nil)
                 return
             }
-            self.recommendGroups = GroupEntity.collection(json: $0.result.value!)
+            self.recommendGroups = GroupEntity.collection($0.result.value!)
         }
     }
 }

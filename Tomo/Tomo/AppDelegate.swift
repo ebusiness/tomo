@@ -79,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        Router.Setting.UpdateDevice(deviceToken: deviceToken).request
+        Router.Setting.UpdateDevice(deviceToken: deviceToken).request()
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {

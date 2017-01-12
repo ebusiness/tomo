@@ -119,7 +119,7 @@ extension FriendListSendRequestController {
                 return
             }
 
-            if let result:[UserEntity] = UserEntity.collection(json: $0.result.value!) {
+            if let result:[UserEntity] = UserEntity.collection($0.result.value!) {
 
                 // append new contents
                 self.invitedUsers += result
