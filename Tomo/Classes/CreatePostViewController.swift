@@ -98,8 +98,8 @@ extension CreatePostViewController {
     }
     
     fileprivate func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: "keyboardWillShown:", name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "keyboardWillHidden:", name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(CreatePostViewController.keyboardWillShown(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(CreatePostViewController.keyboardWillHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func keyboardWillShown(_ notification: NSNotification) {

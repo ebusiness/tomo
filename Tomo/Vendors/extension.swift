@@ -242,3 +242,16 @@ internal extension Array {
         })
     }
 }
+
+extension UINavigationController {
+
+    func pop(to viewController: UIViewController, animated: Bool) {
+        _ = self.popToViewController(viewController, animated: animated)
+    }
+    
+    @discardableResult
+    func pop(animated: Bool) {
+        _ = self.popViewController(animated: animated)
+    }
+}
+

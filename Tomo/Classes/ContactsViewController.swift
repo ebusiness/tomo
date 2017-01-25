@@ -125,16 +125,16 @@ extension ContactsViewController {
 
     fileprivate func configEventObserver() {
 
-        NotificationCenter.default.addObserver(self, selector: "didAcceptInvitation:", name: NSNotification.Name(rawValue: "didAcceptInvitation"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didDeleteFriend:", name: NSNotification.Name(rawValue: "didDeleteFriend"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(ContactsViewController.didAcceptInvitation(_:)), name: NSNotification.Name(rawValue: "didAcceptInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(ContactsViewController.didDeleteFriend(_:)), name: NSNotification.Name(rawValue: "didDeleteFriend"), object: me)
 
         // notification from background thread
-        NotificationCenter.default.addObserver(self, selector: "didMyFriendInvitationAccepted:", name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didFriendBreak:", name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(ContactsViewController.didMyFriendInvitationAccepted(_:)), name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(ContactsViewController.didFriendBreak(_:)), name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
     }
 
     // This method is called for sync this view controller and accout model after accept invitation
-    func didAcceptInvitation(notification: NSNotification) {
+    func didAcceptInvitation(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -152,7 +152,7 @@ extension ContactsViewController {
     }
 
     // This method is called for sync this view controller and accout model after delete friend
-    func didDeleteFriend(notification: NSNotification) {
+    func didDeleteFriend(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -170,7 +170,7 @@ extension ContactsViewController {
     }
 
     // This method is called for sync this view controller and accout model after my friend invitation was accepted
-    func didMyFriendInvitationAccepted(notification: NSNotification) {
+    func didMyFriendInvitationAccepted(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -190,7 +190,7 @@ extension ContactsViewController {
     }
 
     // This method is called for sync this view controller and accout model after someone dump me
-    func didFriendBreak(notification: NSNotification) {
+    func didFriendBreak(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }

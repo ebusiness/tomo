@@ -33,7 +33,7 @@ final class MessageViewController: CommonMessageController {
         
         //receive message realtime
 //        ListenerEvent.Message.addObserver(self, selector: Selector("receiveMessage:"))
-        NotificationCenter.default.addObserver(self, selector: Selector("didReceiveMessage:"), name: NSNotification.Name(rawValue: ListenerEvent.Message.rawValue), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MessageViewController.didReceiveMessage(_:)), name: NSNotification.Name(rawValue: ListenerEvent.Message.rawValue), object: nil)
 
         // page title
         title = friend.nickName
@@ -184,7 +184,7 @@ extension MessageViewController: CommonMessageDelegate {
 
 extension MessageViewController {
     
-    func didReceiveMessage(notification: NSNotification) {
+    func didReceiveMessage(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }

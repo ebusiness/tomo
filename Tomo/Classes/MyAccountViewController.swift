@@ -110,11 +110,10 @@ extension MyAccountViewController {
 
             Router.Signout().response { _ in
                 
-                Defaults.remove(key: "openid")
-                Defaults.remove(key: "deviceToken")
+                UserDefaults.standard.removeObject(forKey: "deviceToken")
 
-                Defaults.remove(key: "email")
-                Defaults.remove(key: "password")
+                UserDefaults.standard.removeObject(forKey: "email")
+                UserDefaults.standard.removeObject(forKey: "password")
 
                 me = Account()
                 let main = Util.createViewControllerWithIdentifier(id: nil, storyboardName: "Main")
@@ -210,21 +209,21 @@ extension MyAccountViewController {
     
     fileprivate func configEventObserver() {
 
-        NotificationCenter.default.addObserver(self, selector: "updateBadgeInMainTheard:", name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "updateBadgeInMainTheard:", name: NSNotification.Name(rawValue: "didMyFriendInvitationRefused"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "updateBadgeInMainTheard:", name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(MyAccountViewController.updateBadgeInMainTheard(_:)), name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(MyAccountViewController.updateBadgeInMainTheard(_:)), name: NSNotification.Name(rawValue: "didMyFriendInvitationRefused"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(MyAccountViewController.updateBadgeInMainTheard(_:)), name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
 
-        NotificationCenter.default.addObserver(self, selector: "updateBadgeInMainTheard:", name: NSNotification.Name(rawValue: "didReceivePost"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "updateBadgeInMainTheard:", name: NSNotification.Name(rawValue: "didPostLiked"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "updateBadgeInMainTheard:", name: NSNotification.Name(rawValue: "didPostCommented"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "updateBadgeInMainTheard:", name: NSNotification.Name(rawValue: "didPostBookmarked"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(MyAccountViewController.updateBadgeInMainTheard(_:)), name: NSNotification.Name(rawValue: "didReceivePost"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(MyAccountViewController.updateBadgeInMainTheard(_:)), name: NSNotification.Name(rawValue: "didPostLiked"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(MyAccountViewController.updateBadgeInMainTheard(_:)), name: NSNotification.Name(rawValue: "didPostCommented"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(MyAccountViewController.updateBadgeInMainTheard(_:)), name: NSNotification.Name(rawValue: "didPostBookmarked"), object: me)
 
         // these events is not come from background thread
-        NotificationCenter.default.addObserver(self, selector: "updateBadge:", name: NSNotification.Name(rawValue: "didCheckAllNotification"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "updateProfile:", name: NSNotification.Name(rawValue: "didEditProfile"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MyAccountViewController.updateBadge(_:)), name: NSNotification.Name(rawValue: "didCheckAllNotification"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(MyAccountViewController.updateProfile(_:)), name: NSNotification.Name(rawValue: "didEditProfile"), object: nil)
     }
     
-    func updateBadgeInMainTheard(notification: NSNotification) {
+    func updateBadgeInMainTheard(_ notification: NSNotification) {
         
         gcd.sync(.main) {
             if me.notifications > 0 {
@@ -236,7 +235,7 @@ extension MyAccountViewController {
         }
     }
 
-    func updateBadge(notification: NSNotification) {
+    func updateBadge(_ notification: NSNotification) {
 
         if me.notifications > 0 {
             self.badgeView.text = String(me.notifications)
@@ -246,7 +245,7 @@ extension MyAccountViewController {
         }
     }
 
-    func updateProfile(notification: NSNotification) {
+    func updateProfile(_ notification: NSNotification) {
         self.configDisplay()
     }
 }

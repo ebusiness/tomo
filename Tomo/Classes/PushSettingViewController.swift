@@ -45,7 +45,7 @@ final class PushSettingViewController: UITableViewController {
                 self.tableView.reloadSections([groupSection], with: .automatic)
                 self.tableView.endUpdates()
 //                self.scrollViewDidScroll(self.tableView)
-                if Defaults["deviceToken"].string == nil && allowNotification {
+                if UserDefaults.standard.string(forKey: "deviceToken") == nil && allowNotification {
                     Util.setupPush()
                 }
             }
@@ -105,7 +105,7 @@ final class PushSettingViewController: UITableViewController {
         
         if !allowNotification {
             parameters.removeDevice = "1"
-            Defaults.remove(key: "deviceToken")
+            UserDefaults.standard.removeObject(forKey: "deviceToken")
         }
         
         guard parameters.getParameters() != nil else { return }

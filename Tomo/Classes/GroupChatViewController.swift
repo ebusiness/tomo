@@ -28,7 +28,7 @@ final class GroupChatViewController: CommonMessageController {
         
         // page title
         title = group.name
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "line_group"), style: .plain, target: self, action: "groupDetail")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "line_group"), style: .plain, target: self, action: #selector(GroupChatViewController.groupDetail))
         
         //receive notification
         self.registerForNotifications()
@@ -40,7 +40,7 @@ final class GroupChatViewController: CommonMessageController {
         super.viewWillAppear(animated)
         
         guard let groups = me.groups, groups.contains(self.group.id) else {
-            self.navigationController?.popViewController(animated: true)
+            self.navigationController?.pop(animated: true)
             return
         }
     }
@@ -140,7 +140,7 @@ extension GroupChatViewController {
         }
     }
     
-    @objc private func groupDetail(){
+    func groupDetail(){
         let vc = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
         vc.group = group
         self.navigationController?.pushViewController(vc, animated: true)
@@ -195,10 +195,10 @@ extension GroupChatViewController: CommonMessageDelegate {
 extension GroupChatViewController {
     
     fileprivate func registerForNotifications() {
-        NotificationCenter.default.addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.GroupMessage.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GroupChatViewController.didReceiveMessage(_:)), name: ListenerEvent.GroupMessage.notificationName, object: nil)
     }
     
-    func didReceiveMessage(notification: NSNotification) {
+    func didReceiveMessage(_ notification: NSNotification) {
         
         guard let userInfo = notification.userInfo else { return }
         

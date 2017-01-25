@@ -11,6 +11,7 @@ import Alamofire
 *  delegate
 */
 public protocol CommonMessageDelegate {
+    @discardableResult
     func createMessage(type: MessageType, text: String) -> IndexPath
     func sendMessage(type: MessageType, text: String, done: ( ()->() )?)
 }
@@ -32,7 +33,7 @@ class CommonMessageController: JSQMessagesViewController {
     
     var recordTap: UILongPressGestureRecognizer! {
         get {
-            return UILongPressGestureRecognizer(target: self,action:"record:")
+            return UILongPressGestureRecognizer(target: self,action:Selector(("record:")))
         }
     }
     
@@ -310,7 +311,7 @@ extension CommonMessageController {
                 
                 S3Controller.uploadFile(localPath: url, remotePath: MessageType.voice.remotePath(fileName), done: { error in
                     print("done")
-                    print(error)
+                    print(error ?? "no errors")
                 })
             }
             //            VoiceController.instance.play(url)
@@ -437,7 +438,7 @@ extension CommonMessageController {
 //                showGalleryView(indexPath: indexPath, message: message)
             }
         case .voice:
-            var fileURL = Util.getDocumentsURL(forFile: content)
+            let fileURL = Util.getDocumentsURL(forFile: content)
             
             if FileManager.default.fileExists(atPath: fileURL.path) {
                 VoiceController.instance.playOrStop(path: fileURL.path)

@@ -63,18 +63,18 @@ class Account: UserEntity {
         
         self.pushSetting = PushSetting(json["pushSetting"])
 
-        NotificationCenter.default.addObserver(self, selector: "didReceiveFriendInvitation:", name: ListenerEvent.FriendInvited.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "didFriendInvitationAccepted:", name: ListenerEvent.FriendAccepted.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "didFriendInvitationRefused:", name: ListenerEvent.FriendRefused.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "didFriendBroke:", name: ListenerEvent.FriendBreak.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didReceiveFriendInvitation(_:)), name: ListenerEvent.FriendInvited.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didFriendInvitationAccepted(_:)), name: ListenerEvent.FriendAccepted.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didFriendInvitationRefused(_:)), name: ListenerEvent.FriendRefused.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didFriendBroke(_:)), name: ListenerEvent.FriendBreak.notificationName, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.Message.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.GroupMessage.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didReceiveMessage(_:)), name: ListenerEvent.Message.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didReceiveMessage(_:)), name: ListenerEvent.GroupMessage.notificationName, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: "didReceivePost:", name: ListenerEvent.PostNew.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "didPostLiked:", name: ListenerEvent.PostLiked.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "didPostCommented:", name: ListenerEvent.PostCommented.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "didPostBookmarked:", name: ListenerEvent.PostBookmarked.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didReceivePost(_:)), name: ListenerEvent.PostNew.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didPostLiked(_:)), name: ListenerEvent.PostLiked.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didPostCommented(_:)), name: ListenerEvent.PostCommented.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didPostBookmarked(_:)), name: ListenerEvent.PostBookmarked.notificationName, object: nil)
     }
 
     deinit {
@@ -223,7 +223,7 @@ extension Account {
 
 extension Account {
 
-    func didReceiveFriendInvitation(notification: NSNotification) {
+    func didReceiveFriendInvitation(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -241,7 +241,7 @@ extension Account {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didReceiveFriendInvitation"), object: self, userInfo: nil)
     }
 
-    func didFriendInvitationAccepted(notification: NSNotification) {
+    func didFriendInvitationAccepted(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -273,7 +273,7 @@ extension Account {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: self, userInfo: postUserInfo)
     }
 
-    func didFriendInvitationRefused(notification: NSNotification) {
+    func didFriendInvitationRefused(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -294,7 +294,7 @@ extension Account {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didMyFriendInvitationRefused"), object: self, userInfo: ["idOfRemovedMyInvitation": notification.from.id])
     }
 
-    func didFriendBroke(notification: NSNotification) {
+    func didFriendBroke(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -315,7 +315,7 @@ extension Account {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didFriendBreak"), object: self, userInfo: ["userIdOfBrokenFriend": notification.from.id])
     }
 
-    func didReceiveMessage(notification: NSNotification) {
+    func didReceiveMessage(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -329,7 +329,7 @@ extension Account {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didReceiveMessage"), object: self, userInfo: ["messageEntityOfNewMessage": message])
     }
 
-    func didReceivePost(notification: NSNotification) {
+    func didReceivePost(_ notification: NSNotification) {
 
         self.notifications = self.notifications + 1
 
@@ -338,7 +338,7 @@ extension Account {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didReceivePost"), object: self, userInfo: nil)
     }
 
-    func didPostLiked(notification: NSNotification) {
+    func didPostLiked(_ notification: NSNotification) {
 
         self.notifications = self.notifications + 1
 
@@ -347,7 +347,7 @@ extension Account {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didPostLiked"), object: self, userInfo: nil)
     }
 
-    func didPostCommented(notification: NSNotification) {
+    func didPostCommented(_ notification: NSNotification) {
 
         self.notifications = self.notifications + 1
 
@@ -356,7 +356,7 @@ extension Account {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didPostCommented"), object: self, userInfo: nil)
     }
 
-    func didPostBookmarked(notification: NSNotification) {
+    func didPostBookmarked(_ notification: NSNotification) {
 
         self.notifications = self.notifications + 1
 

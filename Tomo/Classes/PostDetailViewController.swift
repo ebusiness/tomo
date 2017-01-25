@@ -95,8 +95,8 @@ final class PostDetailViewController: UIViewController {
 extension PostDetailViewController {
 
     fileprivate func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: "keyboardWillShow:", name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "keyboardWillBeHidden:", name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PostDetailViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PostDetailViewController.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
     fileprivate func configDisplay() {
@@ -184,7 +184,7 @@ extension PostDetailViewController {
         }
     }
 
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: NSNotification) {
         guard
             let info = notification.userInfo,
             let keyboardHeight = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height,
@@ -197,7 +197,7 @@ extension PostDetailViewController {
         })
     }
 
-    func keyboardWillBeHidden(notification: NSNotification) {
+    func keyboardWillBeHidden(_ notification: NSNotification) {
         guard
             let info = notification.userInfo,
             let duration = info[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval
@@ -261,7 +261,7 @@ extension PostDetailViewController {
                 Util.alert(parentvc: self, title: "举报此内容", message: "您确定要举报此内容吗？") { _ in
                     Router.Report.Post(id: self.post.id).response { _ in
                         Util.showInfo(title: "举报信息已发送")
-                        self.navigationController?.popViewController(animated: true)
+                        self.navigationController?.pop(animated: true)
                     }
                 }
             }
@@ -273,7 +273,7 @@ extension PostDetailViewController {
                     Router.Post.Delete(id: self.post.id).response { _ in
                         Util.showInfo(title: "帖子已删除")
                         // TODO remove the post in HomeViewController
-                        self.navigationController?.popViewController(animated: true)
+                        self.navigationController?.pop(animated: true)
                     }
                 }
             }
@@ -479,7 +479,7 @@ extension PostDetailViewController: UICollectionViewDelegate {
     // when the image collection was tapped, display full size image
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        let cell = collectionView.cellForItem(at: indexPath) as! SingleImageCollectionViewCell
+//        let cell = collectionView.cellForItem(at: indexPath) as! SingleImageCollectionViewCell
 //        let gallery = MHGalleryController(presentationStyle: MHGalleryViewMode.imageViewerNavigationBarShown)
 //
 //        gallery?.galleryItems = self.post.images!.map { MHGalleryItem(url: $0, galleryType: .image) }
@@ -536,7 +536,7 @@ extension PostDetailViewController {
 
 extension PostDetailViewController: UITextViewDelegate {
 
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
 
         if textView.text.trimmed().characters.count > 0 {
             self.sendButton.isEnabled = true

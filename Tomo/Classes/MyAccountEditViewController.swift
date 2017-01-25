@@ -203,7 +203,7 @@ extension MyAccountEditViewController {
 
                 guard error == nil else {
                     #if DEBUG
-                        print(error)
+                        print(error ?? "no error?")
                         print("done")
                     #endif
                     return
@@ -241,7 +241,7 @@ extension MyAccountEditViewController {
 
                 guard error == nil else {
                     #if DEBUG
-                        print(error)
+                        print(error ?? "no error?")
                         print("done")
                     #endif
                     return

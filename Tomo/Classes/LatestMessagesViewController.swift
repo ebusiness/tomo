@@ -255,19 +255,19 @@ extension LatestMessagesViewController {
 
     fileprivate func configEventObserver() {
 
-        NotificationCenter.default.addObserver(self, selector: "didRefuseInvitation:", name: NSNotification.Name(rawValue: "didRefuseInvitation"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didAcceptInvitation:", name: NSNotification.Name(rawValue: "didAcceptInvitation"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didDeleteFriend:", name: NSNotification.Name(rawValue: "didDeleteFriend"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didLeaveGroup:", name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didSendMessage:", name: NSNotification.Name(rawValue: "didSendMessage"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didFinishGroupChat:", name: NSNotification.Name(rawValue: "didFinishGroupChat"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didFinishChat:", name: NSNotification.Name(rawValue: "didFinishChat"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didMyFriendInvitationAccepted:", name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(LatestMessagesViewController.didRefuseInvitation(_:)), name: NSNotification.Name(rawValue: "didRefuseInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(LatestMessagesViewController.didAcceptInvitation(_:)), name: NSNotification.Name(rawValue: "didAcceptInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(LatestMessagesViewController.didDeleteFriend(_:)), name: NSNotification.Name(rawValue: "didDeleteFriend"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(LatestMessagesViewController.didLeaveGroup(_:)), name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(LatestMessagesViewController.didSendMessage(_:)), name: NSNotification.Name(rawValue: "didSendMessage"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(LatestMessagesViewController.didFinishGroupChat(_:)), name: NSNotification.Name(rawValue: "didFinishGroupChat"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(LatestMessagesViewController.didFinishChat(_:)), name: NSNotification.Name(rawValue: "didFinishChat"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(LatestMessagesViewController.didMyFriendInvitationAccepted(_:)), name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
 
         // notification from background thread
-        NotificationCenter.default.addObserver(self, selector: "didReceiveFriendInvitation", name: NSNotification.Name(rawValue: "didReceiveFriendInvitation"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didFriendBreak:", name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didReceiveMessage:", name: NSNotification.Name(rawValue: "didReceiveMessage"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(LatestMessagesViewController.didReceiveFriendInvitation), name: NSNotification.Name(rawValue: "didReceiveFriendInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(LatestMessagesViewController.didFriendBreak(_:)), name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(LatestMessagesViewController.didReceiveMessage(_:)), name: NSNotification.Name(rawValue: "didReceiveMessage"), object: me)
     }
 
     // This method is called for sync this view controller and accout model after refuse invitation

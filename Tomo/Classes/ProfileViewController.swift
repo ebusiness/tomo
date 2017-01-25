@@ -213,7 +213,7 @@ extension ProfileViewController {
         let messageViewController = self.navigationController?.childViewControllers.first(where: { ($0 as? MessageViewController)?.friend.id == self.user.id }) as? MessageViewController
         
         if let messageViewController = messageViewController {
-            self.navigationController?.popToViewController(messageViewController, animated: true)
+            self.navigationController?.pop(to: messageViewController, animated: true)
         } else {
             let vc = MessageViewController()
             vc.hidesBottomBarWhenPushed = true
@@ -366,14 +366,14 @@ extension ProfileViewController {
 
     fileprivate func configEventObserver() {
 
-        NotificationCenter.default.addObserver(self, selector: "configUserStatus", name: NSNotification.Name(rawValue: "didAcceptInvitation"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "configUserStatus", name: NSNotification.Name(rawValue: "didRefuseInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.configUserStatus), name: NSNotification.Name(rawValue: "didAcceptInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.configUserStatus), name: NSNotification.Name(rawValue: "didRefuseInvitation"), object: me)
 
         // notification from background thread
-        NotificationCenter.default.addObserver(self, selector: "reviseUserStatus", name: NSNotification.Name(rawValue: "didReceiveFriendInvitation"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "reviseUserStatus", name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "reviseUserStatus", name: NSNotification.Name(rawValue: "didMyFriendInvitationRefused"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "reviseUserStatus", name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.reviseUserStatus), name: NSNotification.Name(rawValue: "didReceiveFriendInvitation"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.reviseUserStatus), name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.reviseUserStatus), name: NSNotification.Name(rawValue: "didMyFriendInvitationRefused"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.reviseUserStatus), name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
     }
 
     func reviseUserStatus() {

@@ -27,6 +27,6 @@ final class DatePickerViewController: UIViewController {
     
     @IBAction func save(_ sender: Any) {
         self.didSelected(datePicker.date)
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.pop(animated: true)
     }
 }

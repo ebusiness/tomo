@@ -180,11 +180,11 @@ extension GroupDetailViewController {
 extension GroupDetailViewController {
 
     fileprivate func configEventObserver() {
-        NotificationCenter.default.addObserver(self, selector: "didJoinGroup:", name: NSNotification.Name(rawValue: "didJoinGroup"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didLeaveGroup:", name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(GroupDetailViewController.didJoinGroup(_:)), name: NSNotification.Name(rawValue: "didJoinGroup"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(GroupDetailViewController.didLeaveGroup(_:)), name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
     }
 
-    func didJoinGroup(notification: NSNotification) {
+    func didJoinGroup(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -195,7 +195,7 @@ extension GroupDetailViewController {
         self.configDisplay()
     }
 
-    func didLeaveGroup(notification: NSNotification) {
+    func didLeaveGroup(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }

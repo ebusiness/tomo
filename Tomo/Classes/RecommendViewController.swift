@@ -122,12 +122,11 @@ extension RecommendViewController {
             return
         }
         Router.Signout().response { _ in
+            
+            UserDefaults.standard.removeObject(forKey: "deviceToken")
 
-            Defaults.remove(key: "openid")
-            Defaults.remove(key: "deviceToken")
-
-            Defaults.remove(key: "email")
-            Defaults.remove(key: "password")
+            UserDefaults.standard.removeObject(forKey: "email")
+            UserDefaults.standard.removeObject(forKey: "password")
 
             me = nil
             let main = Util.createViewControllerWithIdentifier(id: nil, storyboardName: "Main")

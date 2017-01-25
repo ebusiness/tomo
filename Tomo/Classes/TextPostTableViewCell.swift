@@ -120,7 +120,7 @@ class TextPostTableViewCell: UITableViewCell {
         let profileViewController = self.delegate?.childViewControllers.first(where: { ($0 as? ProfileViewController)?.user.id == owner.id}) as? ProfileViewController
 
         if let profileViewController = profileViewController {
-            self.delegate?.popToViewController(profileViewController, animated: true)
+            self.delegate?.pop(to: profileViewController, animated: true)
         } else {
             let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
             vc.user = owner
@@ -141,7 +141,7 @@ class TextPostTableViewCell: UITableViewCell {
             let profileViewController = self.delegate?.childViewControllers.first(where: { $0 is ProfileViewController }) as? ProfileViewController
 
             if let profileViewController = profileViewController {
-                self.delegate?.popToViewController(profileViewController, animated: true)
+                self.delegate?.pop(to: profileViewController, animated: true)
                 return
             }
         }

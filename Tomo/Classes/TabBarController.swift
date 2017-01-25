@@ -1,3 +1,4 @@
+
 //
 //  TabBarController.swift
 //  spot
@@ -166,21 +167,21 @@ extension TabBarController {
 
     fileprivate func registerForNotification() {
         
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendInvited.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendAccepted.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendRefused.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.FriendBreak.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.FriendInvited.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.FriendAccepted.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.FriendRefused.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.FriendBreak.notificationName, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostNew.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostLiked.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostCommented.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.PostBookmarked.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.PostNew.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.PostLiked.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.PostCommented.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.PostBookmarked.notificationName, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.GroupJoined.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: ListenerEvent.GroupLeft.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.GroupJoined.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.GroupLeft.notificationName, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: "didReceiveMessage:", name: ListenerEvent.Message.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "didReceiveGroupMessage:", name: ListenerEvent.GroupMessage.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveMessage(_:)), name: ListenerEvent.Message.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveGroupMessage(_:)), name: ListenerEvent.GroupMessage.notificationName, object: nil)
     }
 
     fileprivate func openNotificationBar() {
@@ -210,7 +211,7 @@ extension TabBarController {
 
 extension TabBarController {
 
-    func didReceiveNotification(notification: NSNotification) {
+    func didReceiveNotification(_ notification: NSNotification) {
 
         gcd.sync(.main) {
             self.notificationBar.notification = NotificationEntity(notification.userInfo!)
@@ -218,31 +219,31 @@ extension TabBarController {
         }
     }
 
-    func didReceiveMessage(notification: NSNotification) {
+    func didReceiveMessage(_ notification: NSNotification) {
 
         gcd.sync(.main) {
             self.notificationBar.notification = NotificationEntity(notification.userInfo!)
 
             // if received normal message in chat view controller, don't show notification bar
             let topViewController = self.selectedViewController?.childViewControllers.last
-//            if topViewController is MessageViewController {
-//                return
-//            }
+            if topViewController is MessageViewController {
+                return
+            }
 
             self.openNotificationBar()
         }
     }
 
-    func didReceiveGroupMessage(notification: NSNotification) {
+    func didReceiveGroupMessage(_ notification: NSNotification) {
 
         gcd.sync(.main) {
             self.notificationBar.notification = NotificationEntity(notification.userInfo!)
 
             // if received group message in group chat view controller, don't show notification bar
             let topViewController = self.selectedViewController?.childViewControllers.last
-//            if topViewController is GroupChatViewController {
-//                return
-//            }
+            if topViewController is GroupChatViewController {
+                return
+            }
 
             self.openNotificationBar()
         }

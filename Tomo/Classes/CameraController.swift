@@ -101,7 +101,7 @@ extension CameraController: UIImagePickerControllerDelegate, UINavigationControl
     
     //MARK: - Delegates
     //What to do when the picker returns with a photo
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         picker.dismiss(animated: true, completion: nil)
         
         gcd.async(.default) {
@@ -136,7 +136,7 @@ extension CameraController: UIImagePickerControllerDelegate, UINavigationControl
     }
     
     //What to do if the image picker cancels.
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
     

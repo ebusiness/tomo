@@ -55,14 +55,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // "touch" the LocationControll, so it been initialized here, 
         // cause the didChangeAuthorizationStatus will called at once 
         // after initialization that gonna mess the auth process
-        LocationController.shareInstance
+        _ = LocationController.shareInstance
         
         return true
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
 
-        Defaults["mapLastTimeStamp"] = NSDate()
+        
+        UserDefaults.standard.set(Date(), forKey: "mapLastTimeStamp")
 
         // check if the rootViewController is the TabBarController (it will not when the app go background for wechat login)
         if let rootvc = self.window?.rootViewController as? TabBarController {

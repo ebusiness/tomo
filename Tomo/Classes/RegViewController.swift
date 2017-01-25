@@ -94,15 +94,15 @@ extension RegViewController {
     }
     
     fileprivate func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShown(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(RegViewController.keyboardWillShown(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(RegViewController.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func keyboardWillShown(_ notification: NSNotification) {
         
         guard let info = notification.userInfo else { return }
         
-        if let keyboardHeight = (info[UIKeyboardFrameEndUserInfoKey] as? AnyObject)?.cgRectValue.size.height {
+        if let keyboardHeight = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height {
             
             UIView.animate(withDuration: 0.3, animations: { () -> Void in
                 self.inputAreaBottomSpace.constant = keyboardHeight
@@ -141,7 +141,7 @@ extension RegViewController {
             switch result {
             case .failure(let errCode)://登录失败
                 self.failure(errCode: Int(errCode))
-            case .success(let value):
+            case .success(_):
                 Router.Signin.WeChat(openid: WechatManager.openid, access_token: WechatManager.accessToken).response {
                     switch $0.result {
                     case .success(let value):
@@ -173,8 +173,8 @@ extension RegViewController {
             switch $0.result {
             case .success(let value):
                 
-                Defaults["email"] = self.emailTextField.text
-                Defaults["password"] = self.passwordTextField.text
+                UserDefaults.standard.set(self.emailTextField.text, forKey: "email")
+                UserDefaults.standard.set(self.passwordTextField.text, forKey: "password")
                 
                 me = Account(value)
                 self.changeRootToTab()
@@ -197,7 +197,7 @@ extension RegViewController {
 
 extension RegViewController: UITextFieldDelegate {
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         var email = (self.emailTextField.text ?? "") as NSString
         var password = (self.passwordTextField.text ?? "") as NSString

@@ -49,12 +49,12 @@ class Util: NSObject {
         application.registerForRemoteNotifications()
     }
     
-    class func showInfo(title: String, maskType: SVProgressHUDMaskType = .clear) {
-        SVProgressHUD.showInfo(withStatus: title, maskType: maskType)
+    class func showInfo(title: String) {
+        SVProgressHUD.showInfo(withStatus: title)
     }
     
-    class func showHUD(maskType: SVProgressHUDMaskType = .clear) {
-        SVProgressHUD.show(with: maskType)
+    class func showHUD() {
+        SVProgressHUD.show()
     }
     
     class func dismissHUD() {

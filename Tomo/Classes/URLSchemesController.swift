@@ -21,6 +21,7 @@ class URLSchemesController {
         WechatManager.sharedInstance.shareDelegate = self
     }
     
+    @discardableResult
     func handleOpenURL(_ url: URL)->Bool {
         
         if WechatManager.sharedInstance.handleOpenURL(url) {
@@ -49,7 +50,7 @@ class URLSchemesController {
         
         return false
     }
-    
+    @discardableResult
     func runTask()->Bool{
         if let url = self.taskURL {
             self.taskURL = nil

@@ -169,11 +169,11 @@ extension GroupDescriptionViewController: UICollectionViewDelegateFlowLayout {
 extension GroupDescriptionViewController {
     
     fileprivate func configEventObserver() {
-        NotificationCenter.default.addObserver(self, selector: "didJoinGroup:", name: NSNotification.Name(rawValue: "didJoinGroup"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didLeaveGroup:", name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(GroupDescriptionViewController.didJoinGroup(_:)), name: NSNotification.Name(rawValue: "didJoinGroup"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(GroupDescriptionViewController.didLeaveGroup(_:)), name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
     }
 
-    func didJoinGroup(notification: NSNotification) {
+    func didJoinGroup(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -185,7 +185,7 @@ extension GroupDescriptionViewController {
         self.collectionView!.insertItems(at: [IndexPath(item: 0, section: 0)])
     }
 
-    func didLeaveGroup(notification: NSNotification) {
+    func didLeaveGroup(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }

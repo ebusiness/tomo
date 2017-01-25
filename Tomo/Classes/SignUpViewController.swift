@@ -96,11 +96,11 @@ extension SignUpViewController {
     }
 
     fileprivate func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: "keyboardWillShown:", name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: "keyboardWillBeHidden:", name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SignUpViewController.keyboardWillShown(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SignUpViewController.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
-    func keyboardWillShown(notification: NSNotification) {
+    func keyboardWillShown(_ notification: NSNotification) {
         guard let info = notification.userInfo else { return }
         guard let keyboardHeight = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height else { return }
         
@@ -116,7 +116,7 @@ extension SignUpViewController {
         })
     }
 
-    func keyboardWillBeHidden(notification: NSNotification) {
+    func keyboardWillBeHidden(_ notification: NSNotification) {
         guard let info = notification.userInfo else { return }
         
         self.scrollViewBottomConstraint.constant = 0

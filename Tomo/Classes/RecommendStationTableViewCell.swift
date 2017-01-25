@@ -199,11 +199,11 @@ final class StationCollectionViewCell: UICollectionViewCell {
     }
 
     private func configEventObserver() {
-        NotificationCenter.default.addObserver(self, selector: "didJoinGroup:", name: NSNotification.Name(rawValue: "didJoinGroup"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didLeaveGroup:", name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(StationCollectionViewCell.didJoinGroup(_:)), name: NSNotification.Name(rawValue: "didJoinGroup"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(StationCollectionViewCell.didLeaveGroup(_:)), name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
     }
 
-    func didJoinGroup(notification: NSNotification) {
+    func didJoinGroup(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
@@ -214,7 +214,7 @@ final class StationCollectionViewCell: UICollectionViewCell {
         self.configDisplay()
     }
 
-    func didLeaveGroup(notification: NSNotification) {
+    func didLeaveGroup(_ notification: NSNotification) {
 
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }

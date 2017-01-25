@@ -48,7 +48,7 @@ class JSQMessageEntity: MessageEntity, JSQMessageData {
         
         var item: JSQMediaItem!
         
-        var fileURL = Util.getDocumentsURL(forFile: self.content)
+        let fileURL = Util.getDocumentsURL(forFile: self.content)
         
         switch self.type {
         case .video:
@@ -90,7 +90,7 @@ class JSQMessageEntity: MessageEntity, JSQMessageData {
         }
         
         
-        var fileURL = Util.getDocumentsURL(forFile: self.content)
+        let fileURL = Util.getDocumentsURL(forFile: self.content)
             
         guard
             self.type == .photo && !FileManager.default.fileExists(atPath: fileURL.path)

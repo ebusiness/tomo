@@ -145,17 +145,17 @@ extension NotificationListViewController {
 
     fileprivate func configEventObserver() {
         
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: NSNotification.Name(rawValue: "didMyFriendInvitationRefused"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(NotificationListViewController.didReceiveNotification(_:)), name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(NotificationListViewController.didReceiveNotification(_:)), name: NSNotification.Name(rawValue: "didMyFriendInvitationRefused"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(NotificationListViewController.didReceiveNotification(_:)), name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
 
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: NSNotification.Name(rawValue: "didReceivePost"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: NSNotification.Name(rawValue: "didPostLiked"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: NSNotification.Name(rawValue: "didPostCommented"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didReceiveNotification:", name: NSNotification.Name(rawValue: "didPostBookmarked"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(NotificationListViewController.didReceiveNotification(_:)), name: NSNotification.Name(rawValue: "didReceivePost"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(NotificationListViewController.didReceiveNotification(_:)), name: NSNotification.Name(rawValue: "didPostLiked"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(NotificationListViewController.didReceiveNotification(_:)), name: NSNotification.Name(rawValue: "didPostCommented"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(NotificationListViewController.didReceiveNotification(_:)), name: NSNotification.Name(rawValue: "didPostBookmarked"), object: me)
     }
     
-    func didReceiveNotification(notification: Notification) {
+    func didReceiveNotification(_ notification: Notification) {
         guard let userInfo = notification.userInfo else { return}
         let remoteNotification = NotificationEntity(userInfo)
         

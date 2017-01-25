@@ -49,6 +49,6 @@ extension PickerTableViewController {
         self.tableView.reloadData()
         
         self.didSelected(self.pickerData[indexPath.row])
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.pop(animated: true)
     }
 }
