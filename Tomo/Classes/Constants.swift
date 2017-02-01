@@ -12,9 +12,9 @@ struct TomoConfig {
     struct Api {
 
         static let `Protocol` = "https"
-//        static let Domain = "api.dev.genbatomo.com"
+        static let Domain = "api.dev.genbatomo.com"
 //        static let Domain = "192.168.11.86:8443"
-        static let Domain = "api.genbatomo.com"
+//        static let Domain = "api.genbatomo.com"
 
         static var UrlString: String {
             return "\(self.Protocol)://\(self.Domain)"
@@ -28,8 +28,8 @@ struct TomoConfig {
     struct AWS {
         struct S3 {
             static let Url = "https://s3-ap-northeast-1.amazonaws.com"
-//            static let Bucket = "tomo-dev"
-            static let Bucket = "tomo-prod"
+            static let Bucket = "tomo-dev"
+//            static let Bucket = "tomo-prod"
         }
     }
 #else
