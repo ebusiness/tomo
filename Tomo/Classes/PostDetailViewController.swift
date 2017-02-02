@@ -474,7 +474,7 @@ extension PostDetailViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionView delegate
 
-extension PostDetailViewController: UICollectionViewDelegate {
+extension PostDetailViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     // when the image collection was tapped, display full size image
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -498,7 +498,7 @@ extension PostDetailViewController: UICollectionViewDelegate {
     }
 
     // one image on one cell
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return self.headerViewSize
     }
 }
