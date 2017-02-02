@@ -70,20 +70,20 @@ final class MyAccountEditViewController: UITableViewController {
             
         } else if segue.identifier == "gender_picker" {
             
-            let vc = segue.destination as! PickerTableViewController
-            vc.selected = me.gender
+            let vc = segue.destination as? PickerTableViewController
+            vc?.selected = me.gender
 
-            vc.didSelected = {
+            vc?.didSelected = {
                 self.genderLabel.text = $0
                 self.inputGender = $0
             }
             
         } else if segue.identifier == "birthday_picker" {
             
-            let vc = segue.destination as! DatePickerViewController
-            vc.date = me.birthDay
+            let vc = segue.destination as? DatePickerViewController
+            vc?.date = me.birthDay
             
-            vc.didSelected = {
+            vc?.didSelected = {
                 self.birthDayLabel.text = $0.toString(dateStyle: .medium, timeStyle: .none)
                 self.inputBirthDay = $0
             }
@@ -97,7 +97,7 @@ extension MyAccountEditViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        if let cell = tableView.cellForRow(at: indexPath), cell.contentView.subviews.count > 0 {
+        if let cell = tableView.cellForRow(at: indexPath), !cell.contentView.subviews.isEmpty {
             
             let views: Any? = cell.contentView.subviews.filter { $0 is UITextView || $0 is UITextField }
             if let views = views as? [UIView], let lastView = views.last {
@@ -130,7 +130,7 @@ extension MyAccountEditViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
 
-        guard textView.text.trimmed().characters.count != 0 else { return }
+        guard !textView.text.trimmed().isEmpty else { return }
         
         textView.textColor = TomoConst.UI.PlaceHolderColor
         textView.text = self.placeholderBio
@@ -388,7 +388,7 @@ extension MyAccountEditViewController {
 
     fileprivate func saveImage(image: UIImage) -> (filePath: String, fileName: String) {
 
-        let tempImage = image.scaleToFitSize(CGSize(width: MaxWidth, height: MaxWidth))
+        let tempImage = image.scaleToFitSize(CGSize(width: maxWidth, height: maxWidth))
         let name = NSUUID().uuidString
         let path = NSTemporaryDirectory() + name
         tempImage?.save(toPath: path)

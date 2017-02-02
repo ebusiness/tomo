@@ -46,10 +46,10 @@ extension FriendListSendRequestController {
 
         let user = self.invitedUsers[indexPath.row]
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! RequestFriendCell
-        cell.user = user
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? RequestFriendCell
+        cell!.user = user
         
-        return cell
+        return cell!
     }
 }
 
@@ -61,10 +61,10 @@ extension FriendListSendRequestController {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
-        vc.user = self.invitedUsers[indexPath.row]
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+        vc!.user = self.invitedUsers[indexPath.row]
         
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
 }
 
@@ -169,7 +169,7 @@ final class RequestFriendCell: UITableViewCell {
         didSet {
 
             if let photo = user.photo {
-                self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: DefaultAvatarImage)
+                self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: defaultAvatarImage)
             }
 
             self.userNameLabel.text = user.nickName

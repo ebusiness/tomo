@@ -45,9 +45,8 @@ class StationAnnotationView: AggregatableAnnotationView {
 
             if let containedAnnotations = annotation.containedAnnotations {
 
-                let count = containedAnnotations.count
-
-                if count > 0 {
+                if !containedAnnotations.isEmpty {
+                    let count = containedAnnotations.count
                     numberLabel.text = "\(count + 1)"
                     imageView.addSubview(numberLabel)
                 } else {
@@ -60,7 +59,7 @@ class StationAnnotationView: AggregatableAnnotationView {
                 numberBadge.layer.cornerRadius = numberBadge.frame.height / 2
                 addSubview(numberBadge)
             }
-            imageView.sd_setImage(with: NSURL(string: annotation.group.cover) as URL!, placeholderImage: DefaultGroupImage)
+            imageView.sd_setImage(with: NSURL(string: annotation.group.cover) as URL!, placeholderImage: defaultGroupImage)
 
             if let groups = me.groups, groups.contains(where: { $0 == annotation.group.id }) {
                 imageView.layer.borderColor = Palette.Pink.primaryColor.cgColor

@@ -105,7 +105,12 @@ extension Account {
         self.friends?.append(invitation.from.id)
 
         // tell every observer the changes: which invitation was deleted, and who is the new friend
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didAcceptInvitation"), object: self, userInfo: ["indexOfRemovedInvitation": index, "userEntityOfNewFriend": invitation.from])
+        let name = NSNotification.Name(rawValue: "didAcceptInvitation")
+        let userInfo: [String : Any] = [
+            "indexOfRemovedInvitation": index,
+            "userEntityOfNewFriend": invitation.from
+        ]
+        NotificationCenter.default.post(name: name, object: self, userInfo: userInfo)
     }
 
     // Refuse the make friend invitation
@@ -268,7 +273,7 @@ extension Account {
         // asdd the user to my friends list
         self.friends?.insert(notification.from.id, at: 0)
 
-        self.notifications = self.notifications + 1
+        self.notifications! += 1
 
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: self, userInfo: postUserInfo)
     }
@@ -289,7 +294,7 @@ extension Account {
         // remove the user from my inviting list
         self.invitations?.remove(notification.from.id)
 
-        self.notifications = self.notifications + 1
+        self.notifications! += 1
 
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didMyFriendInvitationRefused"), object: self, userInfo: ["idOfRemovedMyInvitation": notification.from.id])
     }
@@ -310,7 +315,7 @@ extension Account {
         // remove the user from my inviting list
         self.friends?.remove(notification.from.id)
 
-        self.notifications = self.notifications + 1
+        self.notifications! += 1
 
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didFriendBreak"), object: self, userInfo: ["userIdOfBrokenFriend": notification.from.id])
     }
@@ -331,7 +336,7 @@ extension Account {
 
     func didReceivePost(_ notification: NSNotification) {
 
-        self.notifications = self.notifications + 1
+        self.notifications! += 1
 
         // TODO: I haven't do anything about this event yet!
         // just relay it and tell setting screen update it's badge
@@ -340,7 +345,7 @@ extension Account {
 
     func didPostLiked(_ notification: NSNotification) {
 
-        self.notifications = self.notifications + 1
+        self.notifications! += 1
 
         // TODO: I haven't do anything about this event yet!
         // just relay it and tell setting screen update it's badge
@@ -349,7 +354,7 @@ extension Account {
 
     func didPostCommented(_ notification: NSNotification) {
 
-        self.notifications = self.notifications + 1
+        self.notifications! += 1
 
         // TODO: I haven't do anything about this event yet!
         // just relay it and tell setting screen update it's badge
@@ -358,7 +363,7 @@ extension Account {
 
     func didPostBookmarked(_ notification: NSNotification) {
 
-        self.notifications = self.notifications + 1
+        self.notifications! += 1
 
         // TODO: I haven't do anything about this event yet!
         // just relay it and tell setting screen update it's badge

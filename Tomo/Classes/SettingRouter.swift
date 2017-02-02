@@ -136,7 +136,7 @@ extension Router.Setting {
                     "groupLeft": pushSetting.groupLeft,
                 ]
             }
-            if parameters.count > 0 {
+            if !parameters.isEmpty {
                 return parameters
             } else {
                 return nil

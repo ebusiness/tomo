@@ -57,9 +57,9 @@ extension SearchFriendViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchFriendCell", for: indexPath) as! SearchFriendCell
-        cell.user = self.users[indexPath.row]
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchFriendCell", for: indexPath) as? SearchFriendCell
+        cell?.user = self.users[indexPath.row]
+        return cell!
     }
 }
 
@@ -75,9 +75,9 @@ extension SearchFriendViewController {
 
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
-        vc.user = self.users[indexPath.row]
-        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+        vc?.user = self.users[indexPath.row]
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
 }
 
@@ -87,7 +87,7 @@ extension SearchFriendViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        guard let text = self.searchBar.text, text.trimmed().characters.count > 0 else { return }
+        guard let text = self.searchBar.text, !text.trimmed().isEmpty else { return }
 
         // do nothing if the search word didn't change
         guard self.searchText != text else { return }
@@ -109,7 +109,7 @@ extension SearchFriendViewController: UISearchBarDelegate {
         self.isExhausted = false
 
         // scroll to top for new result, check the zero contents case
-        if self.users.count > 0 {
+        if !self.users.isEmpty {
             let firstItemIndex = IndexPath(item: 0, section: 0)
             self.tableView.scrollToRow(at: firstItemIndex, at: .top, animated: true)
         }
@@ -193,7 +193,7 @@ class SearchFriendCell: UITableViewCell {
         didSet {
 
             if let photo = user.photo {
-                self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: DefaultAvatarImage)
+                self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: defaultAvatarImage)
             }
 
             self.userNameLabel.text = user.nickName

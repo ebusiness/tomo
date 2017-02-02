@@ -68,8 +68,8 @@ extension HomeViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "postdetail" {
             if let post = sender as? PostEntity {
-                let vc = segue.destination as! PostDetailViewController
-                vc.post = post
+                let vc = segue.destination as? PostDetailViewController
+                vc?.post = post
             }
         }
     }
@@ -94,16 +94,16 @@ extension HomeViewController {
         // If the content is array of group, display as StationGroup recommendation.
         if let groups = contents[indexPath.item] as? [GroupEntity] {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "StationRecommendCell", for: indexPath) as! RecommendStationTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "StationRecommendCell", for: indexPath) as? RecommendStationTableViewCell
 
             // Give the cell group list data, this will tirgger configDisplay
-            cell.groups = groups
+            cell?.groups = groups
 
             // Set current navigation controller as the cell's delegate, 
             // for the navigation when post author's photo been tapped, etc.
-            cell.delegate = self.navigationController
+            cell?.delegate = self.navigationController
 
-            return cell
+            return cell!
 
         // If the content is a post, display as post summary.
         } else if let post = contents[indexPath.row] as? PostEntity {
@@ -112,9 +112,9 @@ extension HomeViewController {
 
             // If the post has one or more images, use ImagePostTableViewCell, otherwise use the TextPostTableViewCell.
             if (post.images?.count)! > 0 {
-                cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as! ImagePostTableViewCell
+                cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as? ImagePostTableViewCell
             } else {
-                cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as! TextPostTableViewCell
+                cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as? TextPostTableViewCell
             }
 
             // Give the cell post data, this will tirgger configDisplay
@@ -224,7 +224,7 @@ extension HomeViewController {
                 self.contents += loadPosts
 
                 // calculate the cell height for display these contents
-                self.rowHeights += loadPosts.map { self.simulateLayout(post: $0 as! PostEntity) }
+                self.rowHeights += loadPosts.map { self.simulateLayout(post: ($0 as? PostEntity)!) }
 
                 // if the recommend contents arrived, insert them in the middle of new content
                 if let recommendStations = self.recommendGroups {
@@ -325,12 +325,12 @@ extension HomeViewController {
     // Calulate the cell height beforehand
     private func simulateLayout(post: PostEntity) -> CGFloat {
 
-        let cell: TextPostTableViewCell
+        let cell: TextPostTableViewCell!
 
         if (post.images?.count)! > 0 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as! ImagePostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as? ImagePostTableViewCell
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as! TextPostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as? TextPostTableViewCell
         }
 
         cell.post = post

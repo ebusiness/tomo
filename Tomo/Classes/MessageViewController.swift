@@ -77,7 +77,7 @@ extension MessageViewController {
                 self.avatarFriend = self.defaultAvatar
             }
             
-            if self.messages.count > 0 {
+            if !self.messages.isEmpty {
                 let indexPaths = self.collectionView!.indexPathsForVisibleItems
                 self.collectionView!.reloadItems(at: indexPaths)
             }
@@ -206,10 +206,10 @@ extension MessageViewController {
     
     func setting(){
         //push setting or prifile?
-        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
-        vc.user = friend
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+        vc?.user = friend
         
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
     
 }
@@ -250,9 +250,9 @@ extension MessageViewController {
         
         let message = messages[indexPath.item]
         
-        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
-        vc.user = message.senderId() == me.id ? me : friend
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+        vc?.user = message.senderId() == me.id ? me : friend
         
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
 }

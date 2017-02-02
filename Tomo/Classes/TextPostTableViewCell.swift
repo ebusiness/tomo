@@ -122,9 +122,9 @@ class TextPostTableViewCell: UITableViewCell {
         if let profileViewController = profileViewController {
             self.delegate?.pop(to: profileViewController, animated: true)
         } else {
-            let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
-            vc.user = owner
-            self.delegate?.pushViewController(vc, animated: true)
+            let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+            vc?.user = owner
+            self.delegate?.pushViewController(vc!, animated: true)
         }
     }
 
@@ -135,8 +135,8 @@ class TextPostTableViewCell: UITableViewCell {
         guard me.id != post.comments?.last?.owner.id else { return }
         guard let owner = post.comments?.last?.owner else { return }
 
-        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
-        vc.user = owner
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+        vc?.user = owner
         if owner.id == post.owner.id {
             let profileViewController = self.delegate?.childViewControllers.first(where: { $0 is ProfileViewController }) as? ProfileViewController
 
@@ -145,7 +145,7 @@ class TextPostTableViewCell: UITableViewCell {
                 return
             }
         }
-        delegate?.pushViewController(vc, animated: true)
+        delegate?.pushViewController(vc!, animated: true)
     }
 
     // When comment was tappaed, move to comment area of the post detail
@@ -153,13 +153,13 @@ class TextPostTableViewCell: UITableViewCell {
 
         if nil == post.comments?.last { return }
 
-        let vc = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
-        vc.post = post!
+        let vc = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as? PostDetailViewController
+        vc?.post = post!
 
         // TODO: this should be dynamic via user input,
-        vc.initialCommentIndex = 2
+        vc?.initialCommentIndex = 2
         
-        self.delegate?.pushViewController(vc, animated: true)
+        self.delegate?.pushViewController(vc!, animated: true)
     }
 
     func configDisplay() {
@@ -198,7 +198,7 @@ class TextPostTableViewCell: UITableViewCell {
             self.commentDateLabel.text = nil
         }
         
-        if info.count > 0 {
+        if !info.isEmpty {
             self.infoLabel.text = info.joined(separator: " ")
         } else {
             self.infoLabel.text = nil

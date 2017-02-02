@@ -47,14 +47,14 @@ extension ImagePostTableViewCell: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SingleImageCell", for: indexPath) as! SingleImageCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SingleImageCell", for: indexPath) as? SingleImageCollectionViewCell
 
         if let imageURL = post.images?[indexPath.row] {
-            cell.imageURL = imageURL
+            cell!.imageURL = imageURL
         } else {
-            cell.imageURL = nil
+            cell!.imageURL = nil
         }
-        return cell
+        return cell!
     }
 
 }
@@ -65,12 +65,12 @@ extension ImagePostTableViewCell: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        let postVC = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
-        postVC.post = post
+        let postVC = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as? PostDetailViewController
+        postVC?.post = post
         if indexPath.row != 0 {
-            postVC.initialImageIndex = indexPath.row
+            postVC?.initialImageIndex = indexPath.row
         }
-        delegate?.pushViewController(postVC, animated: true)
+        delegate?.pushViewController(postVC!, animated: true)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {

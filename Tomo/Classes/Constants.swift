@@ -123,10 +123,10 @@ struct TomoConst {
     }
 }
 
-let MaxWidth: CGFloat = 500
+let maxWidth: CGFloat = 500
 
-let DefaultAvatarImage = UIImage(named: "avatar")!
-let DefaultGroupImage = UIImage(named: "group_cover_default")!
+let defaultAvatarImage = UIImage(named: "avatar")!
+let defaultGroupImage = UIImage(named: "group_cover_default")!
 
 #if !TEST
 class Constants: NSObject {

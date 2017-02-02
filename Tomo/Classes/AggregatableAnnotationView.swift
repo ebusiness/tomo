@@ -41,11 +41,11 @@ class AggregatableAnnotationView: MKAnnotationView {
         let count = containedAnnotations.count
         var exRate = CGFloat(1)
         
-        if count > 0 {
+        if containedAnnotations.isEmpty {
+            numberBadge.removeFromSuperview()
+        } else {
             numberBadge.text = "\(count + 1)"
             addSubview(numberBadge)
-        } else {
-            numberBadge.removeFromSuperview()
         }
         
         switch count {

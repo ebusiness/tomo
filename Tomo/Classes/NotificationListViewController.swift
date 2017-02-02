@@ -70,9 +70,9 @@ extension NotificationListViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NotificationCell
-        cell.notification = self.notifications[indexPath.row]
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? NotificationCell
+        cell?.notification = self.notifications[indexPath.row]
+        return cell!
     }
 }
 
@@ -81,8 +81,8 @@ extension NotificationListViewController {
 extension NotificationListViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let cell = tableView.cellForRow(at: indexPath) as! NotificationCell
-        cell.didSelect(vc: self)
+        let cell = tableView.cellForRow(at: indexPath) as? NotificationCell
+        cell?.didSelect(vc: self)
     }
 }
 
@@ -145,14 +145,22 @@ extension NotificationListViewController {
 
     fileprivate func configEventObserver() {
         
-        NotificationCenter.default.addObserver(self, selector: #selector(NotificationListViewController.didReceiveNotification(_:)), name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
-        NotificationCenter.default.addObserver(self, selector: #selector(NotificationListViewController.didReceiveNotification(_:)), name: NSNotification.Name(rawValue: "didMyFriendInvitationRefused"), object: me)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(NotificationListViewController.didReceiveNotification(_:)),
+                                               name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(NotificationListViewController.didReceiveNotification(_:)),
+                                               name: NSNotification.Name(rawValue: "didMyFriendInvitationRefused"), object: me)
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationListViewController.didReceiveNotification(_:)), name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
 
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationListViewController.didReceiveNotification(_:)), name: NSNotification.Name(rawValue: "didReceivePost"), object: me)
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationListViewController.didReceiveNotification(_:)), name: NSNotification.Name(rawValue: "didPostLiked"), object: me)
-        NotificationCenter.default.addObserver(self, selector: #selector(NotificationListViewController.didReceiveNotification(_:)), name: NSNotification.Name(rawValue: "didPostCommented"), object: me)
-        NotificationCenter.default.addObserver(self, selector: #selector(NotificationListViewController.didReceiveNotification(_:)), name: NSNotification.Name(rawValue: "didPostBookmarked"), object: me)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(NotificationListViewController.didReceiveNotification(_:)),
+                                               name: NSNotification.Name(rawValue: "didPostCommented"), object: me)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(NotificationListViewController.didReceiveNotification(_:)),
+                                               name: NSNotification.Name(rawValue: "didPostBookmarked"), object: me)
     }
     
     func didReceiveNotification(_ notification: Notification) {
@@ -185,7 +193,7 @@ final class NotificationCell: UITableViewCell {
         didSet{
 
             if let photo = self.notification.from.photo {
-                self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: DefaultAvatarImage)
+                self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: defaultAvatarImage)
             }
 
             self.nickNameLabelView.text = self.notification.from.nickName
@@ -256,19 +264,19 @@ extension NotificationCell {
     }
 
     fileprivate func presentProfileView(vc: UIViewController) {
-        let profileVC = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
-        profileVC.user = self.notification.from
-        vc.navigationController?.pushViewController(profileVC, animated: true)
+        let profileVC = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+        profileVC?.user = self.notification.from
+        vc.navigationController?.pushViewController(profileVC!, animated: true)
     }
 
     fileprivate func presentPostView(vc: UIViewController) {
         Router.Post.FindById(id: self.notification.targetId).response {
             if $0.result.isFailure { return }
 
-            let postVC = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
-            postVC.post = PostEntity($0.result.value!)
-            if postVC.post.id == self.notification.targetId {
-                vc.navigationController?.pushViewController(postVC, animated: true)
+            let postVC = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as? PostDetailViewController
+            postVC?.post = PostEntity($0.result.value!)
+            if postVC?.post.id == self.notification.targetId {
+                vc.navigationController?.pushViewController(postVC!, animated: true)
             } else {
                 Util.showInfo(title: "帖子已被删除")
             }
@@ -279,9 +287,9 @@ extension NotificationCell {
         Router.Group.FindById(id: self.notification.targetId).response {
             if $0.result.isFailure { return }
 
-            let groupVC = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
-            groupVC.group = GroupEntity($0.result.value!)
-            vc.navigationController?.pushViewController(groupVC, animated: true)
+            let groupVC = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as? GroupDetailViewController
+            groupVC?.group = GroupEntity($0.result.value!)
+            vc.navigationController?.pushViewController(groupVC!, animated: true)
         }
     }
 }

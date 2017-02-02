@@ -19,7 +19,7 @@ final class SocketController {
         self.socket = SocketIOClient(socketURL: TomoConfig.Api.Url)
         self.socket.onAny {
 
-            guard let items = $0.items, items.count > 0 else {return}
+            guard let items = $0.items, !items.isEmpty else {return}
             guard let result = items[0] as? [NSObject : Any] else {return}
             guard let socketEvent = ListenerEvent(rawValue: $0.event) else {return}
 

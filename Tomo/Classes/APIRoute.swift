@@ -54,7 +54,11 @@ extension APIRoute {
             print("Parameters: \(parameters)")
         #endif
         guard let parameters = self.parameters else { return mutableURLRequest }
-        return try! encoding.encode(mutableURLRequest, with: parameters)
+        do {
+            return try encoding.encode(mutableURLRequest, with: parameters)
+        } catch let err {
+            throw err
+        }
     }
 }
 

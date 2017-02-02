@@ -41,7 +41,7 @@ enum TabItem: Int {
             barButtonImage = UIImage(named: "speech_bubble")!
             barButtonTitle = "聊天"
 
-            if me.newMessages.count + me.friendInvitations.count > 0 {
+            if !me.newMessages.isEmpty && !me.friendInvitations.isEmpty {
                 barButtonBadge = String(me.newMessages.count + me.friendInvitations.count)
             } else {
                 barButtonBadge = nil
@@ -123,7 +123,7 @@ extension TabBarController {
 
     fileprivate func initiateNotificationBar() {
 
-        self.notificationBar = Bundle.main.loadNibNamed("NotificationView", owner: nil, options: nil)?[0] as! NotificationView
+        self.notificationBar = Bundle.main.loadNibNamed("NotificationView", owner: nil, options: nil)?.first as? NotificationView
         self.notificationBar.delegate = self
 
         self.view.addSubview(self.notificationBar)

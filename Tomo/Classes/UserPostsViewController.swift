@@ -74,9 +74,9 @@ extension UserPostsViewController {
 
         // If the post has one or more images, use ImagePostTableViewCell, otherwise use the TextPostTableViewCell.
         if (post.images?.count)! > 0 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as! ImagePostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as? ImagePostTableViewCell
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as! TextPostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as? TextPostTableViewCell
         }
 
         // Give the cell post data, this will tirgger configDisplay
@@ -95,9 +95,9 @@ extension UserPostsViewController {
 extension UserPostsViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
-        vc.post = posts[indexPath.row]
-        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as? PostDetailViewController
+        vc?.post = posts[indexPath.row]
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -214,12 +214,12 @@ extension UserPostsViewController {
     // Calulate the cell height beforehand
     fileprivate func simulateLayout(post: PostEntity) -> CGFloat {
 
-        let cell: TextPostTableViewCell
+        let cell: TextPostTableViewCell!
 
         if (post.images?.count)! > 0 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as! ImagePostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as? ImagePostTableViewCell
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as! TextPostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as? TextPostTableViewCell
         }
 
         cell.post = post

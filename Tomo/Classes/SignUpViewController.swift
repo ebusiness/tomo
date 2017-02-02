@@ -198,7 +198,7 @@ extension SignUpViewController: UITextFieldDelegate {
             
             let nickName = self.nickNameTextField.text!.trimmed()
             
-            if nickName.characters.count == 0 || nickName.characters.count > 10 {
+            if nickName.isEmpty || nickName.characters.count > 10 {
                 nickNameValid = false
                 showHintLabel(label: nickNameHintLabel)
             } else {

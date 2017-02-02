@@ -35,8 +35,8 @@ final class GroupViewController: UICollectionViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if segue.identifier == "ShowGroupDetail" {
-            let groupDetailViewController = segue.destination as! GroupDetailViewController
-            groupDetailViewController.group = sender as! GroupEntity
+            let groupDetailViewController = segue.destination as? GroupDetailViewController
+            groupDetailViewController?.group = sender as? GroupEntity
         }
     }
 
@@ -55,11 +55,11 @@ extension GroupViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as! MyGroupCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as? MyGroupCollectionViewCell
 
-        cell.group = self.groups[indexPath.row]
+        cell?.group = self.groups[indexPath.row]
     
-        return cell
+        return cell!
     }
 
 }
@@ -83,12 +83,12 @@ extension GroupViewController {
     // Give CollectionView footer view, and hold a reference of it
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
-        self.footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath) as! SearchResultReusableView
+        self.footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath) as? SearchResultReusableView
 
-        if self.isExhausted && self.groups.count == 0 {
+        if self.isExhausted && self.groups.isEmpty {
             self.footerView.showEmptyResultView()
 
-        } else if self.isExhausted && self.groups.count > 0 {
+        } else if self.isExhausted && !self.groups.isEmpty {
             self.footerView.showSearchResultView()
 
         } else {
@@ -105,7 +105,7 @@ extension GroupViewController: UICollectionViewDelegateFlowLayout {
         // the footerView is about 200 point height initially, for the convinence of design empty data view on stroyboard
         // if need to show the empty result view, make it full screen
         // if need to show the loading indicator, make it shorter -- 64 point height
-        if self.isExhausted && self.groups.count == 0 {
+        if self.isExhausted && self.groups.isEmpty {
             return TomoConst.UI.ViewSizeMiddleFullScreen
         } else {
             return TomoConst.UI.ViewSizeTopBarHeight
@@ -151,7 +151,7 @@ extension GroupViewController {
                 self.isExhausted = true
 
                 // if the data is exhausted and we still have zero data
-                if self.groups.count == 0 {
+                if self.groups.isEmpty {
 
                     // TODO: this is shit, cause when the first time table footer get shown, 
                     // the UICollectionViewDelegateFlowLayout won't be asked, so I have to get the

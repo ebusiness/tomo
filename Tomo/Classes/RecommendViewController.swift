@@ -146,14 +146,14 @@ extension RecommendViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath as IndexPath) as! GroupRecommendCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath as IndexPath) as? GroupRecommendCollectionViewCell
         
         let group = self.recommendGroups![indexPath.item]
         
-        cell.coverImageView.sd_setImage(with:NSURL(string: group.cover) as URL!, placeholderImage: TomoConst.Image.DefaultGroup)
-        cell.nameLabel.text = group.name
+        cell?.coverImageView.sd_setImage(with:NSURL(string: group.cover) as URL!, placeholderImage: TomoConst.Image.DefaultGroup)
+        cell?.nameLabel.text = group.name
         
-        return cell
+        return cell!
     }
 }
 
@@ -222,7 +222,7 @@ extension RecommendViewController: MKMapViewDelegate {
             stationAnnotationView?.annotation = annotation
         }
 
-        (stationAnnotationView as! StationAnnotationView).setupDisplay()
+        (stationAnnotationView as? StationAnnotationView)!.setupDisplay()
 
         self.currentAnnotationView = stationAnnotationView
 
@@ -233,16 +233,16 @@ extension RecommendViewController: MKMapViewDelegate {
 
         guard let annotationView = self.currentAnnotationView else { return }
         
-        let vc = Util.createViewControllerWithIdentifier(id: "GroupPopoverViewController", storyboardName: "Main") as! GroupPopoverViewController
+        let vc = Util.createViewControllerWithIdentifier(id: "GroupPopoverViewController", storyboardName: "Main") as? GroupPopoverViewController
         
-        vc.modalPresentationStyle = .popover
-        vc.presentationController?.delegate = self
+        vc?.modalPresentationStyle = .popover
+        vc?.presentationController?.delegate = self
         
-        vc.groupAnnotation = annotationView.annotation as! GroupAnnotation
+        vc?.groupAnnotation = annotationView.annotation as? GroupAnnotation
 
-        self.present(vc, animated: true, completion: nil)
+        self.present(vc!, animated: true, completion: nil)
         
-        if let pop = vc.popoverPresentationController {
+        if let pop = vc?.popoverPresentationController {
             pop.passthroughViews = [self.view]
             pop.permittedArrowDirections = .down
             pop.sourceView = annotationView
@@ -272,7 +272,7 @@ extension RecommendViewController: UISearchBarDelegate {
 
         self.hideSearchBar()
 
-        guard let text = searchBar.text, text.characters.count > 0 else { return }
+        guard let text = searchBar.text, !text.isEmpty else { return }
 
         LocationController.shareInstance.doActionWithLocation {
             self.currentSelectedIndexPath = nil
@@ -284,7 +284,7 @@ extension RecommendViewController: UISearchBarDelegate {
 
         self.hideSearchBar()
 
-        guard let text = searchBar.text, text.characters.count == 0 else { return }
+        guard let text = searchBar.text, text.isEmpty else { return }
 
         LocationController.shareInstance.doActionWithLocation {
             self.currentSelectedIndexPath = nil

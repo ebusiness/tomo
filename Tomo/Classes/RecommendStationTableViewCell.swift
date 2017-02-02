@@ -35,12 +35,12 @@ extension RecommendStationTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as! StationCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as? StationCollectionViewCell
 
         // Give the cell group data, this will trigger configDisplay.
-        cell.group = groups[indexPath.item]
+        cell?.group = groups[indexPath.item]
 
-        return cell
+        return cell!
     }
 }
 
@@ -54,13 +54,13 @@ extension RecommendStationTableViewCell:UICollectionViewDelegate {
         collectionView.deselectItem(at: indexPath, animated: true)
 
         // Create group detail view controller.
-        let groupVC = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
+        let groupVC = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as? GroupDetailViewController
 
         // Give group detail view controller group data.
-        groupVC.group = self.groups[indexPath.item]
+        groupVC?.group = self.groups[indexPath.item]
 
         // Push the group detail view on the current navigation controler.
-        self.delegate?.pushViewController(groupVC, animated: true)
+        self.delegate?.pushViewController(groupVC!, animated: true)
     }
 }
 

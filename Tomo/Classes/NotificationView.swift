@@ -23,7 +23,7 @@ class NotificationView: UIView {
     var notification: NotificationEntity! {
         didSet {
             if let photo = self.notification.from.photo {
-                self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: DefaultAvatarImage)
+                self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: defaultAvatarImage)
             }
 
             self.messageLabelView.text = self.notification.message

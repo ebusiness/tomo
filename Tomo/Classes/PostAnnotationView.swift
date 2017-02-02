@@ -38,7 +38,7 @@ class PostAnnotationView: AggregatableAnnotationView {
         super.setupDisplay()
         
         if let annotation = self.annotation as? PostAnnotation {
-            imageView.sd_setImage(with: URL(string:  annotation.post.owner.photo!), placeholderImage: DefaultAvatarImage)
+            imageView.sd_setImage(with: URL(string:  annotation.post.owner.photo!), placeholderImage: defaultAvatarImage)
         }
     }
 

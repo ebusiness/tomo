@@ -71,11 +71,11 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as! StationCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as? StationCollectionViewCell
 
-        cell.group = self.groups[indexPath.row]
+        cell?.group = self.groups[indexPath.row]
 
-        return cell
+        return cell!
     }
 
     // Make the CollectionView as two-column layout
@@ -88,16 +88,16 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
     // When cell was tapped, move to group detail
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let groupVC = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
-        groupVC.group = groups[indexPath.row]
+        let groupVC = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as? GroupDetailViewController
+        groupVC?.group = groups[indexPath.row]
 
-        self.navigationController?.pushViewController(groupVC, animated: true)
+        self.navigationController?.pushViewController(groupVC!, animated: true)
     }
 
     // Give CollectionView footer view, and hold a reference of it
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        self.footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath) as! SearchResultReusableView
-        return self.footerView
+        self.footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath) as? SearchResultReusableView
+        return self.footerView!
     }
 
 }
@@ -140,7 +140,7 @@ extension StationDiscoverViewController {
     
     fileprivate func loadMoreData() {
 
-        if self.isLoading || self.isExhausted || self.groups.count == 0 {
+        if self.isLoading || self.isExhausted || self.groups.isEmpty {
             return
         }
 
@@ -209,7 +209,7 @@ extension StationDiscoverViewController: UISearchBarDelegate {
     // Search by user input
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 
-        guard let text = searchBar.text, text.trimmed().characters.count > 0 else { return }
+        guard let text = searchBar.text, !text.trimmed().isEmpty else { return }
 
         // do nothing if the search word didn't change
         guard self.searchText != text else { return }
@@ -231,7 +231,7 @@ extension StationDiscoverViewController: UISearchBarDelegate {
         self.isExhausted = false
 
         // scroll to top for new result, check the zero contents case
-        if self.groups.count > 0 {
+        if !self.groups.isEmpty {
             let firstItemIndex = IndexPath(item: 0, section: 0)
             self.collectionView.scrollToItem(at: firstItemIndex, at: .top, animated: true)
         }

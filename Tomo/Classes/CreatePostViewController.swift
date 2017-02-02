@@ -367,7 +367,7 @@ extension CreatePostViewController {
 
         self.postButton.isEnabled = false
         
-        if (collectionView.indexPathsForSelectedItems ?? []).count > 0 {
+        if !(collectionView.indexPathsForSelectedItems ?? []).isEmpty {
             self.uploadMeida(completion: postContent)
         } else {
             self.postContent(imageList: nil)
@@ -383,7 +383,7 @@ extension CreatePostViewController {
             self.view.layoutIfNeeded()
         })
         
-        if let photos = self.photos, photos.count > 0 {
+        if let _ = self.photos {
             self.postTextView.resignFirstResponder()
             return
         }
@@ -467,7 +467,7 @@ extension CreatePostViewController: UITextViewDelegate {
         
         let postContent = textView.text.trimmed()
         
-        if postContent.characters.count > 0 {
+        if !postContent.isEmpty {
             self.postButton.isEnabled = true
         } else {
             self.postButton.isEnabled = false

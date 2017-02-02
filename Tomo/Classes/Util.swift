@@ -22,8 +22,8 @@ class Util: NSObject {
         return storyboard.instantiateInitialViewController()!
     }
     
-    class func createViewWithNibName(name: String) -> UIView {
-        return UINib(nibName: name, bundle: nil).instantiate(withOwner: self, options: nil)[0] as! UIView
+    class func createViewWithNibName(name: String) -> UIView! {
+        return UINib(nibName: name, bundle: nil).instantiate(withOwner: self, options: nil)[0] as? UIView
     }
     
     class func changeRootViewController(from fromVC: UIViewController, to toVC: UIViewController) {
@@ -190,7 +190,14 @@ extension Util {
         }
     }
     
-    class func alert(parentvc: UIViewController, title: String, message: String, cancel: String = "取消",ok: String = "确定", cancelHandler:((UIAlertAction?) -> Void)? = nil, okHandler:((UIAlertAction?) -> Void)? = nil){
+    class func alert(parentvc: UIViewController,
+                     title: String,
+                     message: String,
+                     cancel: String = "取消",
+                     ok: String = "确定",
+                     cancelHandler:((UIAlertAction?) -> Void)? = nil,
+                     okHandler:((UIAlertAction?) -> Void)? = nil) {
+        
         gcd.async(.default) {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             
@@ -222,12 +229,12 @@ extension Util {
 
 extension UIApplication {
     
-    class func appVersion() -> String {
-        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+    class func appVersion() -> String! {
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
     }
     
-    class func appBuild() -> String {
-        return Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as NSString as String) as! String
+    class func appBuild() -> String! {
+        return Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as NSString as String) as? String
     }
     
     class func versionBuild() -> String {

@@ -116,27 +116,27 @@ extension GroupDescriptionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemberCell", for: indexPath) as! GroupDescriptionMemberAvatarCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemberCell", for: indexPath) as? GroupDescriptionMemberAvatarCell
 
-        cell.avatarImageView.layer.cornerRadius = (TomoConst.UI.ScreenWidth - 50) / 4 / 2
-        cell.avatarImageView.layer.masksToBounds = true
+        cell?.avatarImageView.layer.cornerRadius = (TomoConst.UI.ScreenWidth - 50) / 4 / 2
+        cell?.avatarImageView.layer.masksToBounds = true
 
-        cell.avatarImageView.sd_setImage(with: URL(string: self.members[indexPath.row].photo ?? ""), placeholderImage: UIImage(named: "avatar"))
-        cell.nickNameLabel.text = self.members[indexPath.row].nickName
+        cell?.avatarImageView.sd_setImage(with: URL(string: self.members[indexPath.row].photo ?? ""), placeholderImage: UIImage(named: "avatar"))
+        cell?.nickNameLabel.text = self.members[indexPath.row].nickName
 
 
-        return cell;
+        return cell!;
     }
 
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
         if kind == UICollectionElementKindSectionHeader {
-            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as! GroupDescriptionHeaderCell
-            headerView.group = self.group
-            return headerView
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as? GroupDescriptionHeaderCell
+            headerView?.group = self.group
+            return headerView!
         } else {
-            self.footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath) as! GroupDescriptionFooterCell
-            return self.footerView
+            self.footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath) as? GroupDescriptionFooterCell
+            return self.footerView!
         }
     }
     
@@ -147,9 +147,9 @@ extension GroupDescriptionViewController {
 extension GroupDescriptionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
-        vc.user = self.members[indexPath.row]
-        navigationController?.pushViewController(vc, animated: true)
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+        vc?.user = self.members[indexPath.row]
+        navigationController?.pushViewController(vc!, animated: true)
     }
 }
 

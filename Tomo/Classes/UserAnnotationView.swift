@@ -45,9 +45,8 @@ class UserAnnotationView: AggregatableAnnotationView {
 
             if let containedAnnotations = annotation.containedAnnotations {
 
-                let count = containedAnnotations.count
-
-                if count > 0 {
+                if !containedAnnotations.isEmpty {
+                    let count = containedAnnotations.count
                     numberLabel.text = "\(count + 1)"
                     imageView.addSubview(numberLabel)
                 } else {
@@ -61,7 +60,7 @@ class UserAnnotationView: AggregatableAnnotationView {
                 addSubview(numberBadge)
             }
             
-            imageView.sd_setImage(with: URL(string:  annotation.user.photo!), placeholderImage: DefaultAvatarImage, options: .retryFailed)
+            imageView.sd_setImage(with: URL(string:  annotation.user.photo!), placeholderImage: defaultAvatarImage, options: .retryFailed)
 
             if let friends = me.friends, friends.contains(where: { $0 == annotation.user.id }) {
                 imageView.layer.borderColor = Palette.Pink.primaryColor.cgColor

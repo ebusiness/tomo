@@ -105,12 +105,12 @@ extension CameraController: UIImagePickerControllerDelegate, UINavigationControl
         picker.dismiss(animated: true, completion: nil)
         
         gcd.async(.default) {
-            let mediaType = info["UIImagePickerControllerMediaType"] as! String
+            let mediaType = info["UIImagePickerControllerMediaType"] as? String
             
             if mediaType == kUTTypeMovie as String {
-                let url = info[UIImagePickerControllerMediaURL] as! NSURL
-                let path = url.path!
-                UISaveVideoAtPathToSavedPhotosAlbum(path, self, nil, nil)
+                let url = info[UIImagePickerControllerMediaURL] as? URL
+                let path = url?.path
+                UISaveVideoAtPathToSavedPhotosAlbum(path!, self, nil, nil)
                 
                 gcd.sync(.main) {
                     self.completion?(nil, path)
@@ -121,7 +121,7 @@ extension CameraController: UIImagePickerControllerDelegate, UINavigationControl
                 if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
                     imageTaked = image
                 } else {
-                    imageTaked = info[UIImagePickerControllerOriginalImage] as! UIImage
+                    imageTaked = info[UIImagePickerControllerOriginalImage] as? UIImage
                 }
                 if picker.sourceType == .camera {
                     UIImageWriteToSavedPhotosAlbum(imageTaked, nil, nil, nil)

@@ -209,8 +209,12 @@ extension MyAccountViewController {
     
     fileprivate func configEventObserver() {
 
-        NotificationCenter.default.addObserver(self, selector: #selector(MyAccountViewController.updateBadgeInMainTheard(_:)), name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
-        NotificationCenter.default.addObserver(self, selector: #selector(MyAccountViewController.updateBadgeInMainTheard(_:)), name: NSNotification.Name(rawValue: "didMyFriendInvitationRefused"), object: me)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(MyAccountViewController.updateBadgeInMainTheard(_:)),
+                                               name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(MyAccountViewController.updateBadgeInMainTheard(_:)),
+                                               name: NSNotification.Name(rawValue: "didMyFriendInvitationRefused"), object: me)
         NotificationCenter.default.addObserver(self, selector: #selector(MyAccountViewController.updateBadgeInMainTheard(_:)), name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
 
         NotificationCenter.default.addObserver(self, selector: #selector(MyAccountViewController.updateBadgeInMainTheard(_:)), name: NSNotification.Name(rawValue: "didReceivePost"), object: me)

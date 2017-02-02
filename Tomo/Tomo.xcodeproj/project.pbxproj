@@ -87,7 +87,6 @@
 		D0A7C8BC1E1CDD870046E571 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C8BB1E1CDD870046E571 /* extension.swift */; };
 		D0A7C8BD1E1CDFC50046E571 /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D099B6171BDA3B63006C9D01 /* LocationController.swift */; };
 		D0A7C8DC1E1CE1AE0046E571 /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB07DF1B9D3E1400C06C4E /* RemoteNotification.swift */; };
-		D0A7C8DD1E1CE2F50046E571 /* SwiftyUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */; };
 		D0DB07D71B9D1B5200C06C4E /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0DB07D61B9D1B5200C06C4E /* NotificationView.xib */; };
 		D0DB07D91B9D224900C06C4E /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB07D81B9D224900C06C4E /* NotificationView.swift */; };
 		D0E9B2801E24D0E200101277 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA9C5081C5106C9004A683C /* PostDetailViewController.swift */; };
@@ -189,7 +188,6 @@
 		29A5D1E01ACCCFB400D95B77 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		29BE7E111AC54224008110B4 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = ../Classes/Util.swift; sourceTree = "<group>"; };
 		29C1DA781AD36659009A02CC /* S3Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3Controller.swift; path = Classes/S3Controller.swift; sourceTree = "<group>"; };
-		29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyUserDefaults.swift; sourceTree = "<group>"; };
 		29CA441D1AD4CAF0009EB177 /* Setting.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Setting.storyboard; path = Classes/Setting.storyboard; sourceTree = "<group>"; };
 		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
 		29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TomoVideoMediaItem.swift; sourceTree = "<group>"; };
@@ -441,7 +439,6 @@
 				293EB4231B132B06006BAF27 /* JSQVoiceMediaItem.h */,
 				293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */,
 				2994AF901B019AA100656C39 /* GCD.swift */,
-				29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */,
 				29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */,
 				299389421AD3B33800043D91 /* AmazonS3RequestManager */,
 				17B992FE1AF353C200204E97 /* opencore-amr */,
@@ -776,7 +773,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\n/usr/local/bin/carthage copy-frameworks";
 		};
 		331D22A39C079A7B3EAFBAD4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -882,7 +879,6 @@
 				D0E9B2801E24D0E200101277 /* PostDetailViewController.swift in Sources */,
 				D007D8821E25DD780005DC21 /* LatestMessagesViewController.swift in Sources */,
 				D0E9B2B41E24ED2E00101277 /* AmazonS3SignatureHelpers.m in Sources */,
-				D0A7C8DD1E1CE2F50046E571 /* SwiftyUserDefaults.swift in Sources */,
 				D0E9B2861E24DA0000101277 /* ProfileViewController.swift in Sources */,
 				D007D88D1E25F8BC0005DC21 /* StationAnnotation.swift in Sources */,
 				D0F6E2BD1E24CDC2000B0EC3 /* HomeViewController.swift in Sources */,

@@ -13,7 +13,7 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
     private var recorder:AVAudioRecorder!
     private var player:AVAudioPlayer!
     private var paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-    private var path_wav = ""
+    private var pathWav = ""
     //インスタンス
     class var instance : VoiceController {
         struct Static {
@@ -25,7 +25,7 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
     //初期化
     private override init() {
         super.init()
-        self.path_wav = "\(paths[0])/recorder.wav"//"\(paths[0])/recorder\(NSDate.timeIntervalSinceReferenceDate() * 1000.0).wav"
+        self.pathWav = "\(paths[0])/recorder.wav"//"\(paths[0])/recorder\(NSDate.timeIntervalSinceReferenceDate() * 1000.0).wav"
     }
     
     private func setup(){
@@ -41,7 +41,7 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
         ]
         
         do {
-            recorder = try AVAudioRecorder(url: URL(fileURLWithPath: self.path_wav), settings: recordSettings)
+            recorder = try AVAudioRecorder(url: URL(fileURLWithPath: self.pathWav), settings: recordSettings)
             recorder.delegate = self
             recorder.isMeteringEnabled = true
             //creates the file and gets ready to record. happens automatically on record.
@@ -71,7 +71,7 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
         recorder.stop()
         let name = NSUUID().uuidString.lowercased()
         let path = "\(paths[0])/\(name)"
-        self.wavToAmr(wavPath: self.path_wav, savePath: path)
+        self.wavToAmr(wavPath: self.pathWav, savePath: path)
         recorder = nil;
         return (path, name)
     }
@@ -140,10 +140,10 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
     
     func play(path:String!){
         /////
-        self.amrToWav(amrPath: path, savePath: self.path_wav)
+        self.amrToWav(amrPath: path, savePath: self.pathWav)
         /////
         do {
-            player = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: self.path_wav), fileTypeHint: nil)
+            player = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: self.pathWav), fileTypeHint: nil)
 //            player.delegate = self
             try AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
             

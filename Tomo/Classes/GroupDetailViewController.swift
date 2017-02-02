@@ -99,9 +99,9 @@ extension GroupDetailViewController {
     }
     
     @IBAction func postButtonTapped(_ sender: UIBarButtonItem) {
-        let postCreateViewController = Util.createViewControllerWithIdentifier(id: "PostCreateView", storyboardName: "Home") as! CreatePostViewController
-        postCreateViewController.group = self.group
-        self.present(postCreateViewController, animated: true, completion: nil)
+        let postCreateViewController = Util.createViewControllerWithIdentifier(id: "PostCreateView", storyboardName: "Home") as? CreatePostViewController
+        postCreateViewController?.group = self.group
+        self.present(postCreateViewController!, animated: true, completion: nil)
     }
 
     @IBAction func chatButtonTapped(_ sender: UIBarButtonItem) {
@@ -121,8 +121,8 @@ extension GroupDetailViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "pushGroupDescription" {
-            let destination = segue.destination as! GroupDescriptionViewController
-            destination.group = group
+            let destination = segue.destination as? GroupDescriptionViewController
+            destination?.group = group
         }
     }
 }
@@ -143,19 +143,19 @@ extension GroupDetailViewController {
 
         // If the post has one or more images, use ImagePostTableViewCell, otherwise use the TextPostTableViewCell.
         if (post.images?.count)! > 0 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as! ImagePostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as? ImagePostTableViewCell
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as! TextPostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as? TextPostTableViewCell
         }
 
         // Give the cell post data, this will tirgger configDisplay
-        cell.post = post
+        cell!.post = post
 
         // Set current navigation controller as the cell's delegate,
         // for the navigation when post author's photo been tapped, etc.
-        cell.delegate = self.navigationController
+        cell!.delegate = self.navigationController
 
-        return cell
+        return cell!
     }
 }
 
@@ -169,9 +169,9 @@ extension GroupDetailViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyBoard = UIStoryboard(name: "Home", bundle: nil)
-        let postDetailVC = storyBoard.instantiateViewController(withIdentifier: "PostDetailViewController") as! PostDetailViewController
-        postDetailVC.post = self.posts[indexPath.row]
-        navigationController?.pushViewController(postDetailVC, animated: true)
+        let postDetailVC = storyBoard.instantiateViewController(withIdentifier: "PostDetailViewController") as? PostDetailViewController
+        postDetailVC?.post = self.posts[indexPath.row]
+        navigationController?.pushViewController(postDetailVC!, animated: true)
     }
 }
 
@@ -217,7 +217,7 @@ extension GroupDetailViewController {
         self.joinButton.layer.borderWidth = 2
 
         self.title = self.group.name
-        self.coverImageView.sd_setImage(with: URL(string: group.cover), placeholderImage: DefaultGroupImage)
+        self.coverImageView.sd_setImage(with: URL(string: group.cover), placeholderImage: defaultGroupImage)
 
         // set the header view's size according the screen size
         self.tableView.tableHeaderView?.frame = CGRect(origin: CGPoint.zero, size: self.headerViewSize)
@@ -346,12 +346,12 @@ extension GroupDetailViewController {
     // Calulate the cell height beforehand
     fileprivate func simulateLayout(post: PostEntity) -> CGFloat {
 
-        let cell: TextPostTableViewCell
+        let cell: TextPostTableViewCell!
 
         if (post.images?.count)! > 0 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as! ImagePostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "ImagePostCell") as? ImagePostTableViewCell
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as! TextPostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "TextPostCell") as? TextPostTableViewCell
         }
 
         cell.post = post

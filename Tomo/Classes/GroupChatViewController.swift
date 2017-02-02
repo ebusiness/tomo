@@ -139,9 +139,9 @@ extension GroupChatViewController {
     }
     
     func groupDetail(){
-        let vc = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as! GroupDetailViewController
-        vc.group = group
-        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as? GroupDetailViewController
+        vc?.group = group
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
     
 }

@@ -151,7 +151,10 @@ extension RegViewController {
                             
                             guard let parameters = userinfoResult.value else { return }
                             
-                            let wechat = Router.Signup.WeChat(openid: WechatManager.openid, nickname: parameters["nickname"] as? String ?? "", gender: parameters["sex"] as? String, headimgurl: parameters["headimgurl"] as? String)
+                            let wechat = Router.Signup.WeChat(openid: WechatManager.openid,
+                                                              nickname: parameters["nickname"] as? String ?? "",
+                                                              gender: parameters["sex"] as? String,
+                                                              headimgurl: parameters["headimgurl"] as? String)
                             
                             wechat.response {
                                 if $0.result.isFailure {
@@ -270,37 +273,6 @@ extension RegViewController {
 
 // MARK: - WechatManagerDelegate
 extension RegViewController {
-    
-//    func checkIfNeeded(completion: ((_ res: Any?, _ errCode: Int?) -> ())) -> Bool {
-//        
-//        Router.Signin.WeChat(openid: WechatManager.openid, access_token: WechatManager.accessToken).response {
-//            switch $0.result {
-//            case .Success(let value):
-//                
-//                completion(res: value.dictionaryObject, errCode: nil)
-//                
-//            case .Failure:
-//                
-//                let errCode = $0.response?.statusCode ?? $0.result.error?.code
-//                completion(res: nil,errCode: errCode )
-//            }
-//        }
-//        return true
-//    }
-//    
-//    func signupIfNeeded(var parameters: [String : Any], completion: ((_ res: Any) -> ())) {
-//        
-//        let wechat = Router.Signup.WeChat(openid: WechatManager.openid, nickname: parameters["nickname"] as? String ?? "", gender: parameters["sex"] as? String, headimgurl: parameters["headimgurl"] as? String)
-//        
-//        wechat.response {
-//            
-//            if $0.result.isFailure {
-//                self.failure(400)
-//            } else {
-//                completion(res: $0.result.value!.dictionaryObject!)
-//            }
-//        }
-//    }
     
     func success(res: Any) {
         me = Account(res)

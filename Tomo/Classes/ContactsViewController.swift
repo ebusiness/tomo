@@ -43,9 +43,9 @@ extension ContactsViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as! ContactTableViewCell
-        cell.user = self.friends[indexPath.item]
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as? ContactTableViewCell
+        cell!.user = self.friends[indexPath.item]
+        return cell!
     }
 }
 
@@ -61,11 +61,11 @@ extension ContactsViewController {
 
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
 
-        vc.user = self.friends[indexPath.item]
+        vc!.user = self.friends[indexPath.item]
 
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
 }
 
@@ -129,7 +129,9 @@ extension ContactsViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(ContactsViewController.didDeleteFriend(_:)), name: NSNotification.Name(rawValue: "didDeleteFriend"), object: me)
 
         // notification from background thread
-        NotificationCenter.default.addObserver(self, selector: #selector(ContactsViewController.didMyFriendInvitationAccepted(_:)), name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(ContactsViewController.didMyFriendInvitationAccepted(_:)),
+                                               name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
         NotificationCenter.default.addObserver(self, selector: #selector(ContactsViewController.didFriendBreak(_:)), name: NSNotification.Name(rawValue: "didFriendBreak"), object: me)
     }
 

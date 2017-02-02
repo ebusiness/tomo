@@ -20,13 +20,13 @@ public protocol CommonMessageDelegate {
 
 class CommonMessageController: JSQMessagesViewController {
     
-    fileprivate var textView_text :String = ""
-    fileprivate var btn_voice :UIButton?
+    fileprivate var textViewText :String = ""
+    fileprivate var btnVoice :UIButton?
     
-    fileprivate var icon_speaker_normal:UIImage!
-    fileprivate var icon_speaker_highlighted:UIImage!
-    fileprivate var icon_keyboard_normal:UIImage!
-    fileprivate var icon_keyboard_highlighted:UIImage!
+    fileprivate var iconSpeakerNormal:UIImage!
+    fileprivate var iconSpeakerHighlighted:UIImage!
+    fileprivate var iconKeyboardNormal:UIImage!
+    fileprivate var iconKeyboardHighlighted:UIImage!
     
     private let navigationBarImage = Util.imageWithColor(rgbValue: 0x0288D1, alpha: 1)
     static let BubbleFactory = JSQMessagesBubbleImageFactory()
@@ -42,7 +42,7 @@ class CommonMessageController: JSQMessagesViewController {
     let outgoingBubbleImageData = BubbleFactory?.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
     let incomingBubbleImageData = BubbleFactory?.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleGreen())
     
-    let defaultAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: DefaultAvatarImage, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+    let defaultAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: defaultAvatarImage, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
     
     let avatarSize = CGSize(width: 50, height: 50)
     var avatarMe: JSQMessagesAvatarImage!
@@ -129,22 +129,22 @@ extension CommonMessageController {
 //        let icon_speaker = UIImage(named: "icon_speaker")!
         let icon_keyboard = UIImage(named: "icon_keyboard")!
         
-        self.icon_speaker_normal = UIImage.jsq_defaultAccessory().jsq_imageMasked(with: UIColor.lightGray)
-        self.icon_speaker_highlighted = UIImage.jsq_defaultAccessory().jsq_imageMasked(with: UIColor.darkGray)
+        self.iconSpeakerNormal = UIImage.jsq_defaultAccessory().jsq_imageMasked(with: UIColor.lightGray)
+        self.iconSpeakerHighlighted = UIImage.jsq_defaultAccessory().jsq_imageMasked(with: UIColor.darkGray)
         
-        self.icon_keyboard_normal = icon_keyboard.jsq_imageMasked(with: UIColor.lightGray)
-        self.icon_keyboard_highlighted = icon_keyboard.jsq_imageMasked(with: UIColor.darkGray)
+        self.iconKeyboardNormal = icon_keyboard.jsq_imageMasked(with: UIColor.lightGray)
+        self.iconKeyboardHighlighted = icon_keyboard.jsq_imageMasked(with: UIColor.darkGray)
         self.inputToolbar!.contentView!.leftBarButtonItemWidth = 32
         self.changeAccessoryButtonImage(tag: 0)
     }
     
     fileprivate func changeAccessoryButtonImage(tag: Int) {
         if tag == 0{
-            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_speaker_normal, for: .normal)
-            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_speaker_highlighted, for: .highlighted)
+            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.iconSpeakerNormal, for: .normal)
+            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.iconSpeakerHighlighted, for: .highlighted)
         }else{
-            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_keyboard_normal, for: .normal)
-            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.icon_keyboard_highlighted, for: .highlighted)
+            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.iconKeyboardNormal, for: .normal)
+            self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.iconKeyboardHighlighted, for: .highlighted)
         }
     }
 }
@@ -174,7 +174,7 @@ extension CommonMessageController {
                     
                 } else {
                     
-                    let image = image!.scale(toFit: CGSize(width: MaxWidth, height: MaxWidth))
+                    let image = image!.scale(toFit: CGSize(width: maxWidth, height: maxWidth))
                     image?.save(to: localURL)
                     
                     messaeType = .photo
@@ -186,12 +186,20 @@ extension CommonMessageController {
                 let progressView = UIProgressView(frame: CGRect.zero)
                 progressView.tintColor = UIColor.green
                 
-                let cell = self.collectionView!.cellForItem(at: indexPath) as! JSQMessagesCollectionViewCell
-                cell.addSubview(progressView)
+                let cell = self.collectionView!.cellForItem(at: indexPath) as? JSQMessagesCollectionViewCell!
+                cell!.addSubview(progressView)
                 
                 progressView.translatesAutoresizingMaskIntoConstraints = false
-                cell.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[progressView(==1)]-0-|", options: [], metrics: nil, views: ["progressView" : progressView]))
-                cell.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[progressView(==messageBubbleContainerView)]-0-[avatarContainerView]", options: [], metrics: nil, views: ["messageBubbleContainerView" : cell.messageBubbleContainerView!, "progressView" : progressView,"avatarContainerView":cell.avatarContainerView!]))
+                cell!.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[progressView(==1)]-0-|", options: [], metrics: nil, views: ["progressView" : progressView]))
+                cell!.addConstraints(NSLayoutConstraint.constraints(
+                    withVisualFormat: "H:[progressView(==messageBubbleContainerView)]-0-[avatarContainerView]",
+                    options: [],
+                    metrics: nil,
+                    views: [
+                        "messageBubbleContainerView" : cell!.messageBubbleContainerView!,
+                        "progressView" : progressView,
+                        "avatarContainerView":cell!.avatarContainerView!
+                    ]))
                 
                 S3Controller.uploadFile(localPath: localURL.path, remotePath: remotePath, done: { (error) -> Void in
                     self.delegate.sendMessage(type: messaeType, text: fileName){ ()->() in
@@ -221,12 +229,12 @@ extension CommonMessageController {
     */
     override func didPressAccessoryButton(_ sender: UIButton!) {
         //録音モード
-        if btn_voice?.tag == 1 {
-            btn_voice?.tag = 0
+        if btnVoice?.tag == 1 {
+            btnVoice?.tag = 0
             self.changeAccessoryButtonImage(tag: 0)
-            self.inputToolbar!.contentView!.textView!.text = textView_text
-            textView_text = ""
-            btn_voice?.removeFromSuperview()
+            self.inputToolbar!.contentView!.textView!.text = textViewText
+            textViewText = ""
+            btnVoice?.removeFromSuperview()
             self.inputToolbar!.contentView!.removeGestureRecognizer(self.recordTap)
             self.inputToolbar!.contentView!.textView!.becomeFirstResponder()
             return
@@ -240,14 +248,14 @@ extension CommonMessageController {
                 CameraController.sharedInstance.open(vc: self, sourceType: .savedPhotosAlbum, completion: self.pressAccessoryBlock)
             },
 //            "语音输入":{ (_) -> Void in
-//                if self.btn_voice == nil {
+//                if self.btnVoice == nil {
 //                    self.setVoiceButton()
 //                }
-//                if self.btn_voice?.tag == 0{
-//                    self.btn_voice?.tag = 1
+//                if self.btnVoice?.tag == 0{
+//                    self.btnVoice?.tag = 1
 //                    self.changeAccessoryButtonImage(1)
-//                    self.inputToolbar!.contentView!.addSubview(self.btn_voice!)
-//                    self.textView_text = self.inputToolbar!.contentView!.textView!.text
+//                    self.inputToolbar!.contentView!.addSubview(self.btnVoice!)
+//                    self.textViewText = self.inputToolbar!.contentView!.textView!.text
 //                    self.inputToolbar!.contentView!.textView!.text = ""
 //                    self.inputToolbar!.contentView!.textView!.resignFirstResponder()
 //                }
@@ -262,25 +270,25 @@ extension CommonMessageController {
         var frame = self.inputToolbar!.contentView!.textView!.frame
         frame.size.height = 30;
         
-        btn_voice = UIButton(frame:frame)
+        btnVoice = UIButton(frame:frame)
         let l = self.inputToolbar!.contentView!.textView!.layer
         
-        btn_voice?.layer.borderWidth = l.borderWidth//0.5;
-        btn_voice?.layer.borderColor = l.borderColor//UIColor.lightGrayColor().CGColor;
-        btn_voice?.layer.cornerRadius = l.cornerRadius//6.0;
+        btnVoice?.layer.borderWidth = l.borderWidth//0.5;
+        btnVoice?.layer.borderColor = l.borderColor//UIColor.lightGrayColor().CGColor;
+        btnVoice?.layer.cornerRadius = l.cornerRadius//6.0;
         
-        let rect = btn_voice?.bounds
+        let rect = btnVoice?.bounds
         let label = UILabel(frame: rect!)
         label.textAlignment = .center
         label.text = "按住说话"
-        btn_voice?.addSubview(label)
+        btnVoice?.addSubview(label)
         
-        btn_voice?.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+        btnVoice?.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         
         self.inputToolbar!.contentView!.addGestureRecognizer(self.recordTap)
-//        btn_voice?.addGestureRecognizer(UILongPressGestureRecognizer(target: self,action:"record:"))
-        //btn_voice?.addTarget(self, action: "holdOn", forControlEvents: UIControlEvents.TouchDown)
-        //btn_voice?.addTarget(self, action: "sendVoice", forControlEvents: UIControlEvents.TouchUpInside)
+//        btnVoice?.addGestureRecognizer(UILongPressGestureRecognizer(target: self,action:"record:"))
+        //btnVoice?.addTarget(self, action: "holdOn", forControlEvents: UIControlEvents.TouchDown)
+        //btnVoice?.addTarget(self, action: "sendVoice", forControlEvents: UIControlEvents.TouchUpInside)
     }
 }
 
@@ -295,14 +303,14 @@ extension CommonMessageController {
     */
     func record(longPressedRecognizer: UILongPressGestureRecognizer) {
         if longPressedRecognizer.state == UIGestureRecognizerState.began {
-            btn_voice?.backgroundColor = Util.UIColorFromRGB(0x0EAA00, alpha: 1)
+            btnVoice?.backgroundColor = Util.UIColorFromRGB(0x0EAA00, alpha: 1)
             VoiceController.instance.start()
             NSLog("hold Down");
             
         }//长按结束
         else if longPressedRecognizer.state == UIGestureRecognizerState.ended || longPressedRecognizer.state == UIGestureRecognizerState.cancelled {
             
-            btn_voice?.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+            btnVoice?.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
             if let (url, fileName) = VoiceController.instance.stop() {
                 self.delegate.createMessage(type: .voice, text: fileName)
                 self.delegate.sendMessage(type: .voice, text: fileName, done: nil)
@@ -361,7 +369,9 @@ extension CommonMessageController {
 
 extension CommonMessageController {
     
-    override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAt indexPath: IndexPath!) -> CGFloat {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!,
+                                 layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!,
+                                 heightForCellTopLabelAt indexPath: IndexPath!) -> CGFloat {
         
         if nil != self.collectionView(collectionView, attributedTextForCellTopLabelAt: indexPath) {
             return 40
@@ -369,11 +379,15 @@ extension CommonMessageController {
         return 0
     }
     
-    override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAt indexPath: IndexPath!) -> CGFloat {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!,
+                                 layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!,
+                                 heightForMessageBubbleTopLabelAt indexPath: IndexPath!) -> CGFloat {
         return 20
     }
     
-    override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellBottomLabelAt indexPath: IndexPath!) -> CGFloat {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!,
+                                 layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!,
+                                 heightForCellBottomLabelAt indexPath: IndexPath!) -> CGFloat {
         return 0
     }
     
@@ -381,9 +395,9 @@ extension CommonMessageController {
         
         let message = messages[indexPath.item]
         
-        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
-        vc.user = message.from
-        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+        vc!.user = message.from
+        self.navigationController?.pushViewController(vc!, animated: true)
     }
 }
 
@@ -397,21 +411,21 @@ extension CommonMessageController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
+        let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as? JSQMessagesCollectionViewCell
         
         let message = messages[indexPath.item]
         
         if !message.isMediaMessage() {
             if message.senderId() == me.id {
-                cell.textView!.textColor = UIColor.black
+                cell!.textView!.textColor = UIColor.black
             } else {
-                cell.textView!.textColor = UIColor.white
+                cell!.textView!.textColor = UIColor.white
             }
         }
         
-        self.addBadgeViewIfNeeded(cell: cell, message: message)
+        self.addBadgeViewIfNeeded(cell: cell!, message: message)
         
-        return cell
+        return cell!
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAt indexPath: IndexPath!) {

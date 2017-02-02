@@ -127,17 +127,17 @@ extension PostDetailViewController {
 
     fileprivate func calculateRowHeight() {
 
-        let authorInfoCell = self.tableView.dequeueReusableCell(withIdentifier: "AuthorInfoCell") as! PostDisplayCell
-        let contentCell = self.tableView.dequeueReusableCell(withIdentifier: "ContentCell") as! PostDisplayCell
+        let authorInfoCell = self.tableView.dequeueReusableCell(withIdentifier: "AuthorInfoCell") as? PostDisplayCell
+        let contentCell = self.tableView.dequeueReusableCell(withIdentifier: "ContentCell") as? PostDisplayCell
 
-        authorInfoCell.post = self.post
-        contentCell.post = self.post
+        authorInfoCell?.post = self.post
+        contentCell?.post = self.post
 
         // calculate the author info cell
-        let authorInfoCellSize = authorInfoCell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+        let authorInfoCellSize = authorInfoCell!.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
 
         // calculate the content cell
-        let contentCellSize = contentCell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+        let contentCellSize = contentCell!.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
 
         self.rowHeights.append(authorInfoCellSize.height)
         self.rowHeights.append(contentCellSize.height)
@@ -145,12 +145,12 @@ extension PostDetailViewController {
         // calculate all the comment cells
         if let comments = self.post.comments {
 
-            let commentCell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! PostCommentCell
+            let commentCell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as? PostCommentCell
 
             self.rowHeights.append(contentsOf: comments.reversed().map {
-                commentCell.comment = $0
-                let commentCellSize = commentCell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
-                return commentCellSize.height
+                commentCell?.comment = $0
+                let commentCellSize = commentCell?.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+                return commentCellSize!.height
             })
         }
     }
@@ -173,11 +173,11 @@ extension PostDetailViewController {
             self.bookmarkButton.setImage(TomoConst.Image.EmptyStar, for: .normal)
         }
 
-        if let comments = post.comments, comments.count > 0 {
+        if let comments = post.comments, !comments.isEmpty {
             info.append("\(comments.count)评论")
         }
 
-        if info.count > 0 {
+        if !info.isEmpty {
             self.infoLabel.text = info.joined(separator: " ")
         } else {
             self.infoLabel.text = nil
@@ -372,9 +372,9 @@ extension PostDetailViewController {
             comment.createDate = Date()
 
             // use the comment entity to calculate the height of the comment cell that will be insert
-            let commentCell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! PostCommentCell
-            commentCell.comment = comment
-            let commentCellSize = commentCell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+            let commentCell = self.tableView.dequeueReusableCell(withIdentifier: "CommentCell") as? PostCommentCell
+            commentCell?.comment = comment
+            let commentCellSize = commentCell!.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
 
             // create a empty new comment array if the post has no comment
             if self.post.comments == nil {
@@ -414,13 +414,13 @@ extension PostDetailViewController: UITableViewDataSource {
         switch indexPath.row {
         case 0:
             cell = tableView.dequeueReusableCell(withIdentifier: "AuthorInfoCell", for: indexPath)
-            (cell as! PostDisplayCell).post = self.post
+            (cell as? PostDisplayCell)!.post = self.post
         case 1:
             cell = tableView.dequeueReusableCell(withIdentifier: "ContentCell", for: indexPath)
-            (cell as! PostDisplayCell).post = self.post
+            (cell as? PostDisplayCell)!.post = self.post
         default:
             cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
-            (cell as! PostCommentCell).comment = self.post.comments?.reversed()[indexPath.row - 2]
+            (cell as? PostCommentCell)!.comment = self.post.comments?.reversed()[indexPath.row - 2]
         }
 
         return cell
@@ -441,18 +441,18 @@ extension PostDetailViewController: UITableViewDelegate {
         case 0:
             // No need to see myself on profile view
             guard me.id != post.owner.id else { return }
-            let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
-            vc.user = post.owner
-            self.navigationController?.pushViewController(vc, animated: true)
+            let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+            vc?.user = post.owner
+            self.navigationController?.pushViewController(vc!, animated: true)
         case 1:
             return
         default:
             let commentOwner = post.comments?.reversed()[indexPath.row - 2].owner
             // No need to see myself on profile view
             guard me.id != commentOwner!.id else { return }
-            let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as! ProfileViewController
-            vc.user = commentOwner
-            self.navigationController?.pushViewController(vc, animated: true)
+            let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+            vc?.user = commentOwner
+            self.navigationController?.pushViewController(vc!, animated: true)
         }
     }
 }
@@ -466,9 +466,9 @@ extension PostDetailViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SingleImageCell", for: indexPath) as! SingleImageCollectionViewCell
-        cell.imageURL = self.post.images?[indexPath.row]
-        return cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SingleImageCell", for: indexPath) as? SingleImageCollectionViewCell
+        cell?.imageURL = self.post.images?[indexPath.row]
+        return cell!
     }
 }
 
@@ -538,7 +538,7 @@ extension PostDetailViewController: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
 
-        if textView.text.trimmed().characters.count > 0 {
+        if !textView.text.trimmed().isEmpty {
             self.sendButton.isEnabled = true
         } else {
             self.sendButton.isEnabled = false
@@ -566,7 +566,7 @@ final class PostAuthorInfoCell: PostDisplayCell {
     override func configDisplay() {
 
         if let photo = self.post.owner.photo {
-            self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: DefaultAvatarImage)
+            self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: defaultAvatarImage)
         }
         self.nickNameLabel.text = self.post.owner.nickName
         self.dateLabel.text = self.post.createDate.toString()
@@ -620,7 +620,7 @@ final class PostCommentCell: UITableViewCell {
     func configDisplay() {
 
         if let photo = self.comment.owner.photo {
-            self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: DefaultAvatarImage)
+            self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: defaultAvatarImage)
         }
         self.nickNameLabel.text = self.comment.owner.nickName
         self.commentLabel.text = self.comment.content
