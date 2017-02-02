@@ -56,13 +56,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // cause the didChangeAuthorizationStatus will called at once 
         // after initialization that gonna mess the auth process
         _ = LocationController.shareInstance
-        
+
         return true
     }
-    
+
     func applicationDidEnterBackground(_ application: UIApplication) {
 
-        
         UserDefaults.standard.set(Date(), forKey: "mapLastTimeStamp")
 
         // check if the rootViewController is the TabBarController (it will not when the app go background for wechat login)
@@ -78,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
     }
-    
+
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Router.Setting.UpdateDevice(deviceToken: deviceToken).request()
     }
@@ -90,13 +89,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
         RemoteNotification.sharedInstance.receiveRemoteNotification(userInfo)
     }
-    
+
     func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
         return self.application(application, open: url, sourceApplication: nil, annotation: [])
     }
-    
+
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         return URLSchemesController.sharedInstance.handleOpenURL(url)
     }
 }
-

@@ -46,15 +46,14 @@ final class SearchFriendViewController: UITableViewController {
     }
 }
 
-
 // MARK: - UITableView datasource
 
 extension SearchFriendViewController {
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.users.count
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchFriendCell", for: indexPath) as? SearchFriendCell
@@ -70,7 +69,7 @@ extension SearchFriendViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 88
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         tableView.deselectRow(at: indexPath, animated: true)
@@ -84,9 +83,9 @@ extension SearchFriendViewController {
 // MARK: - UISearchBarDelegate
 
 extension SearchFriendViewController: UISearchBarDelegate {
-    
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
+
         guard let text = self.searchBar.text, !text.trimmed().isEmpty else { return }
 
         // do nothing if the search word didn't change

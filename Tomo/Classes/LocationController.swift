@@ -18,7 +18,7 @@ final class LocationController: NSObject {
     static let shareInstance = LocationController()
 
     private var placemark: CLPlacemark?
-    
+
     fileprivate let locationManager = CLLocationManager()
 
     fileprivate let geocoder = CLGeocoder()
@@ -39,18 +39,18 @@ final class LocationController: NSObject {
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.activityType = .fitness
     }
-    
+
 }
 
 // MARK: - CLLocationManagerDelegate
 
 extension LocationController: CLLocationManagerDelegate {
-    
+
     //location authorization status changed
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 
         guard self.actionWithLocation != nil else { return }
-        
+
         switch status {
 
         case .authorizedWhenInUse, .authorizedAlways:
@@ -131,7 +131,7 @@ extension LocationController {
     }
 
     func stopLocationManager() {
-        
+
         self.locationManager.stopUpdatingLocation()
 
         if let timer = self.timer {
@@ -169,7 +169,7 @@ extension LocationController {
         // If the location service authorization granted, delay the function call after locating
         guard self.determineStatus(authRequestOnController) else {
 
-            // If the first parameter is a view controller, and location service authorization 
+            // If the first parameter is a view controller, and location service authorization
             // is denied, alert will be shown, and the function invokation will be delay
             // to after user make authorization change.
             if authRequestOnController == nil {

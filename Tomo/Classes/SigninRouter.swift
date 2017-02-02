@@ -11,16 +11,16 @@ extension Router {
     struct Session: APIRoute {
         var path = "/session"
     }
-    
+
     struct Signout: APIRoute {
         let path = "/signout"
     }
-    
+
     enum Signin: APIRoute {
         case Email(email: String, password: String)
         case WeChat(openid: String, access_token: String)
         case Test(id: String)
-        
+
         var path: String {
             switch self{
             case .Email: return "/signin"

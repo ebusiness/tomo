@@ -11,7 +11,7 @@ import UIKit
 final class MyAccountEditViewController: UITableViewController {
 
     @IBOutlet weak var coverImageView: UIImageView!
-    
+
     @IBOutlet weak var avatarImageView: UIImageView!
 
     @IBOutlet weak var nickNameTextField: UITextField!
@@ -63,13 +63,13 @@ final class MyAccountEditViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+
         if segue.identifier == "UpdateFinished" {
 
             self.updateUser()
-            
+
         } else if segue.identifier == "gender_picker" {
-            
+
             let vc = segue.destination as? PickerTableViewController
             vc?.selected = me.gender
 
@@ -77,12 +77,12 @@ final class MyAccountEditViewController: UITableViewController {
                 self.genderLabel.text = $0
                 self.inputGender = $0
             }
-            
+
         } else if segue.identifier == "birthday_picker" {
-            
+
             let vc = segue.destination as? DatePickerViewController
             vc?.date = me.birthDay
-            
+
             vc?.didSelected = {
                 self.birthDayLabel.text = $0.toString(dateStyle: .medium, timeStyle: .none)
                 self.inputBirthDay = $0
@@ -94,11 +94,11 @@ final class MyAccountEditViewController: UITableViewController {
 // MARK: - UITableView delegate
 
 extension MyAccountEditViewController {
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         if let cell = tableView.cellForRow(at: indexPath), !cell.contentView.subviews.isEmpty {
-            
+
             let views: Any? = cell.contentView.subviews.filter { $0 is UITextView || $0 is UITextField }
             if let views = views as? [UIView], let lastView = views.last {
                 lastView.becomeFirstResponder()
@@ -110,13 +110,13 @@ extension MyAccountEditViewController {
 // MARK: - UITextView delegate
 
 extension MyAccountEditViewController: UITextViewDelegate {
-    
+
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text != self.placeholderBio { return }
         textView.text = ""
         textView.textColor = UIColor.black
     }
-    
+
     func textViewDidChange(_ textView: UITextView) {
 
         guard textView.markedTextRange == nil else { return }
@@ -127,18 +127,18 @@ extension MyAccountEditViewController: UITextViewDelegate {
             textView.text = textView.text.substring(with: 0 ..< maxLengthBio)
         }
     }
-    
+
     func textViewDidEndEditing(_ textView: UITextView) {
 
         guard !textView.text.trimmed().isEmpty else { return }
-        
+
         textView.textColor = TomoConst.UI.PlaceHolderColor
         textView.text = self.placeholderBio
     }
 }
 
 extension MyAccountEditViewController:UIGestureRecognizerDelegate {
-    
+
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
 
         if NSStringFromClass(touch.view!.classForCoder) == "UITableViewCellContentView" {
@@ -158,11 +158,10 @@ extension MyAccountEditViewController {
     }
 }
 
-
 // MARK: - Actions
 
 extension MyAccountEditViewController {
-    
+
     @IBAction func textFieldDidChange(_ sender: UITextField) {
 
         guard sender.markedTextRange == nil else { return }
@@ -186,7 +185,7 @@ extension MyAccountEditViewController {
             sender.text = sender.text!.substring(with: 0 ..< maxLength)
         }
     }
-    
+
     @IBAction func tableTapped(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }

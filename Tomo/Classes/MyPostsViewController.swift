@@ -18,9 +18,9 @@ final class MyPostsViewController: UITableViewController {
     @IBOutlet weak var nickNameLabel: UILabel!
 
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
-    
+
     @IBOutlet weak var loadingLabel: UILabel!
-    
+
     // Array holds all cell contents
     var posts = [PostEntity]()
 
@@ -58,13 +58,13 @@ final class MyPostsViewController: UITableViewController {
 // MARK: UITableView DataSource
 
 extension MyPostsViewController {
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.posts.count
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         let post = self.posts[indexPath.row]
 
         var cell: TextPostTableViewCell!
@@ -82,7 +82,7 @@ extension MyPostsViewController {
         // Set current navigation controller as the cell's delegate,
         // for the navigation when post author's photo been tapped, etc.
         cell.delegate = self.navigationController
-        
+
         return cell
     }
 }
@@ -90,14 +90,14 @@ extension MyPostsViewController {
 // MARK: UITableView Delegate
 
 extension MyPostsViewController {
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         let vc = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as? PostDetailViewController
         vc?.post = self.posts[indexPath.row]
         self.navigationController?.pushViewController(vc!, animated: true)
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.rowHeights[indexPath.item]
     }
@@ -106,7 +106,7 @@ extension MyPostsViewController {
 // MARK: UIScrollView Delegate
 
 extension MyPostsViewController {
-    
+
     // Fetch more contents when scroll down to bottom
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
@@ -144,22 +144,22 @@ extension MyPostsViewController {
 
         self.nickNameLabel.text = me.nickName
     }
-    
+
     fileprivate func loadMoreContent() {
-        
+
         // skip if already in loading or no more contents
         if self.isLoading || self.isExhausted {
             return
         }
 
         self.isLoading = true
-        
+
         var parameters = Router.Post.FindParameters(category: .mine)
-        
+
         if let oldestContent = self.oldestContent {
             parameters.before = oldestContent.createDate.timeIntervalSince1970
         }
-        
+
         Router.Post.Find(parameters: parameters).response {
 
             // Mark as exhausted when something wrong (probably 404)
@@ -170,9 +170,9 @@ extension MyPostsViewController {
                 self.loadingLabel.isHidden = false
                 return
             }
-            
+
             let posts:[PostEntity]? = PostEntity.collection($0.result.value!)
-            
+
             if let loadPosts:[PostEntity] = posts {
 
                 // append new contents
@@ -187,21 +187,21 @@ extension MyPostsViewController {
             self.isLoading = false
         }
     }
-    
+
     private func appendRows(rows: Int) {
-        
+
         let firstIndex = self.posts.count - rows
         let lastIndex = self.posts.count
-        
+
         var indexPathes = [IndexPath]()
-        
+
         for index in firstIndex..<lastIndex {
             indexPathes.append(IndexPath(row: index, section: 0))
         }
-        
+
         // hold the oldest content for pull-up loading
         oldestContent = self.posts.last
-        
+
         tableView.beginUpdates()
         tableView.insertRows(at: indexPathes, with: .middle)
         tableView.endUpdates()

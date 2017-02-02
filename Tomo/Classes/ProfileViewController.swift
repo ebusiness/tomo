@@ -68,7 +68,7 @@ final class ProfileViewController: UITableViewController {
     }
 
     override func viewDidLoad() {
-        
+
         super.viewDidLoad()
 
         self.configUserStatus()
@@ -116,11 +116,11 @@ final class ProfileViewController: UITableViewController {
 // MARK: - @IBAction
 
 extension ProfileViewController {
-    
+
     @IBAction func acceptInvitation(_ sender: UIButton) {
         self.invitationAccept(accept: true)
     }
-    
+
     @IBAction func refuseInvitation(_ sender: UIButton) {
         Util.alert(parentvc: self, title: "拒绝好友邀请", message: "拒绝 " + self.user.nickName + " 的好友邀请么") { _ in
             self.invitationAccept(accept: false)
@@ -128,33 +128,33 @@ extension ProfileViewController {
     }
 
     @IBAction func moreBtnTapped(_ sender: Any) {
-        
+
         var optionalList = Dictionary<String,((UIAlertAction?) -> Void)!>()
 
         if self.user.id != me.id {
             optionalList["举报此用户"] = { (_) -> Void in
-                
+
                 Util.alert(parentvc: self, title: "举报用户", message: "您确定要举报此用户吗？") { _ in
                     Router.Report.User(id: self.user.id).request()
                 }
             }
         }
-        
+
         if self.user.id != me.id {
-            
+
             if let blockUsers = me.blockUsers, blockUsers.contains(self.user.id) {
-                
+
                 optionalList["取消屏蔽"] = { (_) -> Void in
                     Router.User.Block(id: self.user.id).response {
                         if $0.result.isFailure { return }
                         me.blockUsers?.remove(self.user.id)
                     }
                 }
-                
+
             } else {
-                
+
                 optionalList["屏蔽此用户"] = { (_) -> Void in
-                    
+
                     Util.alert(parentvc: self, title: "屏蔽用户", message: "您确定要屏蔽此用户吗？") { _ in
                         Router.User.Block(id: self.user.id).response {
                             if $0.result.isFailure { return }
@@ -163,12 +163,12 @@ extension ProfileViewController {
                     }
                 }
             }
-            
+
         }
-        
+
         if let friends = me.friends, friends.contains(self.user.id) {
             optionalList["删除好友"] = { (_) -> Void in
-                
+
                 Util.alert(parentvc: self, title: "删除好友", message: "确定删除该好友么?") { _ in
                     Router.Contact.Delete(id: self.user.id).response {
                         if $0.result.isFailure { return }
@@ -178,22 +178,22 @@ extension ProfileViewController {
                 }
             }
         }
-        
+
         Util.alertActionSheet(parentvc: self, optionalDict: optionalList)
-        
+
     }
-    
+
     @IBAction func addFriend(_ sender: UIButton) {
-        
+
         sender.isUserInteractionEnabled = false
-        
+
         Router.Invitation.SendTo(id: self.user.id).response {
 
             if $0.result.isFailure {
                 sender.isUserInteractionEnabled = true
                 return
             }
-            
+
             if me.invitations == nil {
                 me.invitations = []
             }
@@ -205,21 +205,21 @@ extension ProfileViewController {
             self.configUserStatus()
         }
     }
-    
+
     @IBAction func sendMessage(_ sender: UIButton) {
 
         // TODO: infinite loop here
 
         let messageViewController = self.navigationController?.childViewControllers.first(where: { ($0 as? MessageViewController)?.friend.id == self.user.id }) as? MessageViewController
-        
+
         if let messageViewController = messageViewController {
             self.navigationController?.pop(to: messageViewController, animated: true)
         } else {
             let vc = MessageViewController()
             vc.hidesBottomBarWhenPushed = true
-            
+
             vc.friend = self.user
-            
+
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

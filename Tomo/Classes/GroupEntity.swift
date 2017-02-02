@@ -10,68 +10,68 @@ import Foundation
 import SwiftyJSON
 
 class GroupEntity: Entity {
-    
+
     var id: String!
-    
+
     var owner: UserEntity!
-    
+
     var type: String!
-    
+
     var name: String!
-    
+
     var cover: String!
-    
+
     var introduction: String?
-    
+
     var coordinate: [Double]?
-    
+
     var address: String?
-    
+
     var pref: String?
-    
+
     var members: [UserEntity]?
-    
+
     var posts: [PostEntity]?
-    
+
     var createDate: Date!
-    
+
     var lastMessage: MessageEntity? {
         didSet {
-            
+
         }
     }
-    
+
     override init() {
         super.init()
     }
-    
+
     required init(_ json: JSON) {
-        
+
         super.init()
-        
+
         if let id = json.string { //id only
             self.id = id
             return
         }
-        
+
         self.id = json["_id"].string ?? json["id"].stringValue
-        
+
         self.owner = UserEntity(json["owner"])
-        
+
         self.type = json["type"].stringValue
-        
+
         self.name = json["name"].stringValue
-        
+
         self.cover = json["cover_ref"].string ?? json["cover"].string
-        
+
         self.introduction = json["introduction"].stringValue
-        
+
         self.coordinate = json["coordinate"].arrayObject as? [Double]
-        
+
         self.address = json["address"].stringValue
-        
+
         self.pref = json["pref"].stringValue
-        
+
         if let members = json["members"].array {
             self.members = []
             members.forEach { memberJson in
@@ -79,7 +79,7 @@ class GroupEntity: Entity {
                 self.members!.append(member)
             }
         }
-        
+
         if let posts = json["posts"].array {
             self.posts = []
             posts.forEach { postJson in
@@ -87,13 +87,13 @@ class GroupEntity: Entity {
                 self.posts!.append(post)
             }
         }
-        
+
         self.createDate = json["createDate"].stringValue.toDate(format: TomoConfig.Date.Format)
-        
+
         if !( json["lastMessage"].object is NSNull ) {
             self.lastMessage = MessageEntity(json["lastMessage"])
         }
-        
+
     }
 }
 // MARK: - group

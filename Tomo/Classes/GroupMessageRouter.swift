@@ -8,12 +8,12 @@
 
 // MARK: - Group Messages
 extension Router {
-    
+
     enum GroupMessage: APIRoute {
 
         case FindByGroupId(id: String, before: TimeInterval?)
         case SendByGroupId(id: String, type: MessageType, content: String)
-        
+
         var path: String {
             switch self {
             case let .FindByGroupId(id, _):
@@ -42,6 +42,5 @@ extension Router {
             return nil
         }
     }
-    
-    
+
 }

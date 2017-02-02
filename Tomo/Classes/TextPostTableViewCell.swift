@@ -111,7 +111,7 @@ class TextPostTableViewCell: UITableViewCell {
 
     // When post author avatar was tappaed, move to post author's profile
     func avatarTapped() {
-        
+
         // No need to see myself on profile view
         guard me.id != post.owner.id else { return }
         guard let owner = post.owner else { return }
@@ -158,7 +158,7 @@ class TextPostTableViewCell: UITableViewCell {
 
         // TODO: this should be dynamic via user input,
         vc?.initialCommentIndex = 2
-        
+
         self.delegate?.pushViewController(vc!, animated: true)
     }
 
@@ -197,12 +197,12 @@ class TextPostTableViewCell: UITableViewCell {
             self.commentContentLabel.text = nil
             self.commentDateLabel.text = nil
         }
-        
+
         if !info.isEmpty {
             self.infoLabel.text = info.joined(separator: " ")
         } else {
             self.infoLabel.text = nil
         }
     }
-    
+
 }

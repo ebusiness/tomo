@@ -10,18 +10,18 @@
 extension Router {
 
     enum Group: APIRoute {
-        
+
         case FindById(id: String)
         case Find(parameters: FindParameters)
         case FindPosts(id: String, before: TimeInterval?)
-        
+
         case Create(parameters: CreateParameters)
-        
+
         case Join(id: String)
         case Leave(id: String)
 
         case Map(parameters: MapParameters)
-        
+
         var path: String {
             switch self {
             case let .FindById(id):
@@ -74,22 +74,22 @@ extension Router.Group {
     enum Category: String  {
         case mine, discover, all
     }
-    
+
     enum `Type`: String  {
         case station
     }
-    
+
     struct FindParameters {
         var category: Category , page: Int?
         var type: Type?, name: String?, after: TimeInterval?, coordinate: [Double]?, hasMembers: Bool?
-        
+
         init(category: Category) {
             self.category = category
         }
-        
+
         func getParameters() -> [String: Any] {
             var parameters = [String: Any]()
-            
+
             parameters["category"] = category.rawValue
 //            if let page = page {
 //                parameters["page"] = page
@@ -102,7 +102,7 @@ extension Router.Group {
             }
             parameters["coordinate"] = coordinate
             parameters["hasMembers"] = hasMembers
-            
+
             return parameters
         }
     }
@@ -135,23 +135,21 @@ extension Router.Group {
     struct CreateParameters {
         var name: String
         var introduction: String?, address: String?, cover: String?, members: [String]?
-        
+
         init(name: String) {
             self.name = name
         }
-        
+
         func getParameters() -> [String: Any] {
             var parameters = [String: Any]()
-            
+
             parameters["name"] = name
             parameters["introduction"] = introduction
             parameters["address"] = address
             parameters["cover"] = cover
             parameters["members"] = members
-            
+
             return parameters
         }
     }
 }
-
-

@@ -10,23 +10,23 @@ import Foundation
 import SwiftyJSON
 
 class NotificationEntity: Entity {
-    
+
     var id: String!
-    
+
     var from: UserEntity!
-    
+
     var type: String!
-    
+
     var message: String!
-    
+
     var targetId: String!
-    
+
     var createDate: Date!
-    
+
     override init() {
         super.init()
     }
-    
+
     required init(_ json: JSON) {
         super.init()
         if let id = json.string { //id only
@@ -36,13 +36,13 @@ class NotificationEntity: Entity {
         self.id = json["_id"].string ?? json["id"].stringValue
         self.from = UserEntity(json["from"])
         self.type = json["type"].stringValue
-        
+
         if let createDate = json["createDate"].string {
             self.createDate = createDate.toDate(format: TomoConfig.Date.Format)
         } else {
             self.createDate = Date()
         }
-        
+
         self.message = json["aps"]["alert"].stringValue
         self.targetId = json["targetId"].stringValue
     }

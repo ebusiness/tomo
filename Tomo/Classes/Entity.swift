@@ -14,31 +14,31 @@ public protocol CollectionSerializable {
 }
 
 extension CollectionSerializable {
-    
+
     init(_ respunse: Any) {
         self.init(JSON(respunse))
     }
-    
+
     static func collection<T: CollectionSerializable>(_ json: JSON) -> [T]? {
-        
+
         if let array = json.array {
             return array.map { T($0) }
         }
         return nil
     }
-    
+
     static func collection<T: CollectionSerializable>(respunse: Any) -> [T]? {
         return collection(JSON(respunse))
     }
 }
 
 class Entity: NSObject, CollectionSerializable {
-    
+
     //MARK - NSObject
     override init() {
         super.init()
     }
-    
+
     //MARK - ResponseCollectionSerializable
     required init(_ json: JSON) {
         super.init()

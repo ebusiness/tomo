@@ -10,9 +10,9 @@ import Foundation
 import SwiftyJSON
 
 final class PushSettingViewController: UITableViewController {
-    
+
     @IBOutlet weak var pushSwitch: UISwitch!
-    
+
     /// Switch
     @IBOutlet weak var switchAnnouncement: UISwitch!
     @IBOutlet weak var switchMessage: UISwitch!
@@ -27,13 +27,13 @@ final class PushSettingViewController: UITableViewController {
     @IBOutlet weak var switchPostBookmarked: UISwitch!
     @IBOutlet weak var switchGroupJoined: UISwitch!
     @IBOutlet weak var switchGroupLeft: UISwitch!
-    
+
     let pushSettingSection = 0
     let messageSection = 1
     let friendSection = 2
     let postSection = 3
     let groupSection = 4
-    
+
     /// push setting
     var allowNotification = false {
         didSet {
@@ -51,7 +51,7 @@ final class PushSettingViewController: UITableViewController {
             }
         }
     }
-    
+
     var pushSettingProperty: Account.PushSetting! {
         didSet {
             if oldValue != pushSettingProperty {
@@ -71,18 +71,18 @@ final class PushSettingViewController: UITableViewController {
             }
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         pushSettingProperty = me.pushSetting
         self.becomeActive()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+
         let pushSetting = Account.PushSetting()
-        
+
         pushSetting.announcement = switchAnnouncement.isOn
         pushSetting.message = switchMessage.isOn
         pushSetting.groupMessage = switchGroupMessage.isOn
@@ -96,32 +96,32 @@ final class PushSettingViewController: UITableViewController {
         pushSetting.postBookmarked = switchPostBookmarked.isOn
         pushSetting.groupJoined = switchGroupJoined.isOn
         pushSetting.groupLeft = switchGroupLeft.isOn
-        
+
         var parameters = Router.Setting.MeParameter()
-        
+
         if me.pushSetting != pushSetting {
             parameters.pushSetting = pushSetting
         }
-        
+
         if !allowNotification {
             parameters.removeDevice = "1"
             UserDefaults.standard.removeObject(forKey: "deviceToken")
         }
-        
+
         guard parameters.getParameters() != nil else { return }
-        
+
         Router.Setting.UpdateUserInfo(parameters: parameters).response {
             if $0.result.isFailure { return }
             me.pushSetting = Account.PushSetting($0.result.value!["pushSetting"])
         }
-        
+
     }
-    
+
     @IBAction func openSystemSettings(_ sender: UISwitch) {
         let url = URL(string: UIApplicationOpenSettingsURLString)
         UIApplication.shared.openURL(url!)
     }
-    
+
 }
 
 extension PushSettingViewController {
@@ -129,28 +129,27 @@ extension PushSettingViewController {
         if section != pushSettingSection && !allowNotification {
             return 0
         }
-        
+
         return super.tableView(self.tableView, numberOfRowsInSection: section)
     }
-    
+
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section != pushSettingSection && !allowNotification {
             return nil
         }
-        
+
         return super.tableView(self.tableView, titleForHeaderInSection: section)
     }
 }
 
-
 extension PushSettingViewController {
-    
+
     func becomeActive() {
 
         let settings = UIApplication.shared.currentUserNotificationSettings!
         allowNotification = settings.types != .none
-        
+
         pushSwitch.setOn(allowNotification, animated: false)
     }
-    
+
 }

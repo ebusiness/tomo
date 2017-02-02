@@ -9,9 +9,9 @@
 import SocketIO
 
 final class SocketController {
-    
+
     private var socket: SocketIOClient!
-    
+
     static let sharedInstance: SocketController = SocketController()
 
     private init() {
@@ -28,7 +28,7 @@ final class SocketController {
             }
         }
     }
-    
+
     class func connect() {
         self.sharedInstance.socket.connect()
     }

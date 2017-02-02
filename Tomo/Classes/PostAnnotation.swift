@@ -9,13 +9,13 @@
 import Foundation
 
 class PostAnnotation: AggregatableAnnotation {
-    
+
     var post: PostEntity!
 
     override var title: String {
         return post.owner.nickName
     }
-    
+
     override var subtitle: String {
         return post.content
     }

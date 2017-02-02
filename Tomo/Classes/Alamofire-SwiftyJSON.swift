@@ -12,28 +12,23 @@ import Alamofire
 import SwiftyJSON
 
 extension Alamofire.SessionManager {
-    
+
     open static let `default`: SessionManager = {
-        
-        
         let serverTrustPolicies: [String: ServerTrustPolicy] = [
             TomoConfig.Api.Domain: .disableEvaluation
         ]
-    
+
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
-        
-        
-        
         let manager = SessionManager(
             configuration: configuration,
             serverTrustPolicyManager: ServerTrustPolicyManager(policies: serverTrustPolicies)
         )
-        
+
         manager.delegate.sessionDidReceiveChallenge = { session, challenge in
             var disposition: URLSession.AuthChallengeDisposition = .performDefaultHandling
             var credential: URLCredential?
-            
+
             if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
                 disposition = URLSession.AuthChallengeDisposition.useCredential
                 credential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
@@ -49,8 +44,6 @@ extension Alamofire.SessionManager {
             }
             return (disposition, credential)
         }
-        
-        
         return manager
     }()
 }
@@ -77,7 +70,7 @@ extension DataRequest {
                                                            error: error)
             }
     }
-    
+
     /// Adds a handler to be called once the request has finished.
     ///
     /// - parameter options:
@@ -118,18 +111,18 @@ extension Request {
         error: Error?)
         -> Result<JSON> {
             guard error == nil else { return .failure(error!) }
-            
+
             if let response = response, emptyDataStatusCodes.contains(response.statusCode) {
                 return .success(JSON.null)
             }
-            
+
             guard let validData = data, !validData.isEmpty else {
                 return .failure(AFError.responseSerializationFailed(reason: .inputDataNilOrZeroLength))
             }
-            
+
             do {
                 let json = try JSONSerialization.jsonObject(with: validData, options: options)
-                
+
                 return .success(JSON(json))
             } catch {
                 return .failure(AFError.responseSerializationFailed(
@@ -137,4 +130,3 @@ extension Request {
             }
     }
 }
-

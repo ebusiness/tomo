@@ -9,19 +9,19 @@
 import Foundation
 
 class AggregatableAnnotationView: MKAnnotationView {
-    
+
     var numberBadge: UILabel!
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     override init(annotation: MKAnnotation!, reuseIdentifier: String!) {
-        
+
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        
+
         self.canShowCallout = false
-        
+
         numberBadge = UILabel()
         numberBadge.textColor = UIColor.white
         numberBadge.textAlignment = NSTextAlignment.center
@@ -31,23 +31,23 @@ class AggregatableAnnotationView: MKAnnotationView {
         numberBadge.layer.borderColor = UIColor.white.cgColor
         numberBadge.backgroundColor = UIColor.red
     }
-    
+
     func setupDisplay() {
         guard
             let annotation = self.annotation as? AggregatableAnnotation,
             let containedAnnotations = annotation.containedAnnotations
             else { return }
-        
+
         let count = containedAnnotations.count
         var exRate = CGFloat(1)
-        
+
         if containedAnnotations.isEmpty {
             numberBadge.removeFromSuperview()
         } else {
             numberBadge.text = "\(count + 1)"
             addSubview(numberBadge)
         }
-        
+
         switch count {
         case 1..<10:
             exRate = CGFloat(1.2)
@@ -62,10 +62,10 @@ class AggregatableAnnotationView: MKAnnotationView {
         default:
             exRate = 1
         }
-        
+
         UIView.animate(withDuration: 0.3, animations: { () -> Void in
             self.transform = CGAffineTransform(scaleX: exRate, y: exRate)
         })
     }
-    
+
 }

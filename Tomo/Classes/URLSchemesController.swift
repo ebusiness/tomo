@@ -8,22 +8,22 @@
 import WechatKit
 
 class URLSchemesController {
-    
+
     var tabBarController: TabBarController!
     var taskURL: URL?
-    
+
     // static initialize
     static let sharedInstance : URLSchemesController = URLSchemesController()
 
     private init() {
-        
+
         WechatManager.appid = "wx4079dacf73fef72d"
         WechatManager.sharedInstance.shareDelegate = self
     }
-    
+
     @discardableResult
     func handleOpenURL(_ url: URL)->Bool {
-        
+
         if WechatManager.sharedInstance.handleOpenURL(url) {
             return true
         } else if let rootvc = UIApplication.shared.keyWindow?.rootViewController as? TabBarController {
@@ -47,7 +47,7 @@ class URLSchemesController {
         } else {
             self.taskURL = url
         }
-        
+
         return false
     }
     @discardableResult
@@ -62,9 +62,9 @@ class URLSchemesController {
 }
 
 extension URLSchemesController{
-    
+
     fileprivate func pushViewController(tabSelectedIndex: Int, viewController: UIViewController, animated: Bool){
-        
+
         if self.tabBarController.childViewControllers.count > tabSelectedIndex {
             self.tabBarController.selectedIndex = tabSelectedIndex
 //            self.tabBarController.selectedViewController
@@ -81,54 +81,54 @@ extension URLSchemesController{
 // MARK -- OpenURL
 
 extension URLSchemesController{
-    
+
     fileprivate func openMessage(_ id: String){
-        
+
         Router.User.FindById(id: id).response {
             if $0.result.isFailure { return }
-            
+
 //            let vc = MessageViewController()
 //            vc.hidesBottomBarWhenPushed = true
 //            vc.friend = UserEntity($0.result.value!)
-//            
+//
 //            self.pushViewController(1, viewController: vc, animated: true)
         }
     }
-    
+
     fileprivate func openGroupMessage(_ id: String){
-        
+
         Router.Group.FindById(id: id).response {
             if $0.result.isFailure { return }
-            
+
 //            let vc = GroupChatViewController()
 //            vc.hidesBottomBarWhenPushed = true
 //            vc.group = GroupEntity($0.result.value!)
-//            
+//
 //            self.pushViewController(2, viewController: vc, animated: true)
         }
     }
-    
+
     fileprivate func openProfile(_ id: String){
-        
+
 //        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
 //        vc.user = UserEntity()
 //        vc.user.id = id
-//        
+//
 //        self.pushViewController(1, viewController: vc, animated: true)
     }
-    
+
     fileprivate func openPost(_ id: String){
-        
+
         Router.Post.FindById(id: id).response {
             if $0.result.isFailure { return }
-//            
+//
 //            let vc = Util.createViewControllerWithIdentifier("PostDetailViewController", storyboardName: "Home") as! PostDetailViewController
 //            vc.post = PostEntity($0.result.value!)
-//            
+//
 //            self.pushViewController(0, viewController: vc, animated: true)
         }
     }
-    
+
 }
 
 extension URLSchemesController: WechatManagerShareDelegate {

@@ -154,7 +154,7 @@ extension MapViewController: MKMapViewDelegate {
             } else {
                 annotationView!.annotation = annotation
             }
-            
+
             (annotationView as? UserAnnotationView)!.setupDisplay()
 
             return annotationView
@@ -274,7 +274,6 @@ extension MapViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
 
         if let userAnnotation = self.annotationsForTable![indexPath.item] as? UserAnnotation {
 
@@ -522,7 +521,7 @@ extension MapViewController {
             }
 
             let verticalSortedAnnotations = annotations.sorted { (obj1, obj2) -> Bool in
-                
+
                 let mapPoint1 = MKMapPointForCoordinate(((obj1 as? MKAnnotation)?.coordinate)!)
                 let mapPoint2 = MKMapPointForCoordinate(((obj2 as? MKAnnotation)?.coordinate)!)
 
@@ -570,10 +569,10 @@ extension MapViewController {
 
             let mapPoint1 = MKMapPointForCoordinate((obj1 as? MKAnnotation)!.coordinate)
             let mapPoint2 = MKMapPointForCoordinate((obj2 as? MKAnnotation)!.coordinate)
-            
+
             let distance1 = MKMetersBetweenMapPoints(mapPoint1, centerMapPoint)
             let distance2 = MKMetersBetweenMapPoints(mapPoint2, centerMapPoint)
-            
+
             if distance1 < distance2 {
                 return true
             } else {
@@ -589,7 +588,7 @@ extension MapViewController {
 //                let temp = groupAnnotations.find {
 //                    return groups.contains($0.station.id)
 //                }
-//                
+//
 //                if let groupAnnotation = temp {
 //                    return groupAnnotation
 //                }
@@ -652,5 +651,5 @@ class GroupCell: UITableViewCell {
         introLabel.text = group.introduction
         memberLabel.text = "\(group.members!.count)个成员"
     }
-    
+
 }

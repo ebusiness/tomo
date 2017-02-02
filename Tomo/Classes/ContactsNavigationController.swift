@@ -15,10 +15,10 @@ class ContactsNavigationController: UINavigationController {
         super.init(coder: aDecoder)
 
         let notificationCenter = NotificationCenter.default
-        
+
         let selector = #selector(ContactsNavigationController.updateTabBarItemBadge)
         let selectorOnMainThread = #selector(ContactsNavigationController.updateTabBarItemBadgeOnMainThread)
-        
+
         // attach event observer when init, so they start to work as TabController initiated. do this in viewDidLoad will be too late.
         notificationCenter.addObserver(self, selector: selector, name: NSNotification.Name(rawValue: "didRefuseInvitation"), object: me)
         notificationCenter.addObserver(self, selector: selector, name: NSNotification.Name(rawValue: "didAcceptInvitation"), object: me)
@@ -28,7 +28,7 @@ class ContactsNavigationController: UINavigationController {
         // this event is emit from notificaton center, must switch to main thread to make visual effect (update badge)
         let didReceiveFriendInvitation = NSNotification.Name(rawValue: "didReceiveFriendInvitation")
         let didReceiveMessage = NSNotification.Name(rawValue: "didReceiveMessage")
-        
+
         notificationCenter.addObserver(self, selector: selectorOnMainThread, name: didReceiveFriendInvitation, object: me)
         notificationCenter.addObserver(self, selector: selectorOnMainThread, name: didReceiveMessage, object: me)
     }

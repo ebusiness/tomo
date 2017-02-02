@@ -13,7 +13,7 @@ final class LatestMessagesViewController: UITableViewController {
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
 
     @IBOutlet weak var emptyResultView: UIView!
-    
+
     var messages = [MessageEntity]()
 
     var isLoading = false
@@ -527,14 +527,14 @@ extension LatestMessagesViewController {
             }
         }
     }
-    
+
     // This method is called for sync this view controller and accout model after my friend invitation was accepted
     func didMyFriendInvitationAccepted(_ notification: NSNotification) {
-        
+
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
         guard let index = userInfo["indexOfRemovedInvitation"] as? Int else { return }
-        
+
         // this method is called from background thread (because it fired from notification center)
         // must switch to main thread for UI updating
         gcd.sync(.main) {
@@ -574,7 +574,7 @@ extension LatestMessagesViewController {
             self.hideEmptyResultView()
         }
     }
-    
+
     // This method is called for sync this view controller and accout model after someone dump me
     func didFriendBreak(_ notification: NSNotification) {
 
@@ -640,7 +640,7 @@ extension LatestMessagesViewController {
 
             // see if the message sender is in my messages list
             indexInMessageList = self.messages.index {
-                
+
                 // skip group message
                 guard $0.group == nil else { return false }
 

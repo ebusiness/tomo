@@ -59,7 +59,7 @@ class UserAnnotationView: AggregatableAnnotationView {
                 numberBadge.layer.cornerRadius = numberBadge.frame.height / 2
                 addSubview(numberBadge)
             }
-            
+
             imageView.sd_setImage(with: URL(string:  annotation.user.photo!), placeholderImage: defaultAvatarImage, options: .retryFailed)
 
             if let friends = me.friends, friends.contains(where: { $0 == annotation.user.id }) {

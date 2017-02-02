@@ -104,7 +104,7 @@ final class TabBarController: UITabBarController {
 
         Util.setupPush()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         URLSchemesController.sharedInstance.runTask()
@@ -166,7 +166,7 @@ extension TabBarController {
     }
 
     fileprivate func registerForNotification() {
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.FriendInvited.notificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.FriendAccepted.notificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.FriendRefused.notificationName, object: nil)

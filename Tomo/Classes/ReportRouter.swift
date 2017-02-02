@@ -8,11 +8,11 @@
 
 // MARK: - report
 extension Router {
-    
+
     enum Report: APIRoute {
         case Post(id: String)
         case User(id: String)
-        
+
         var path: String {
             switch self {
             case let .Post(id): return "/reports/posts/\(id)"

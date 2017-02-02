@@ -11,7 +11,7 @@ import UIKit
 final class ImagePostTableViewCell: TextPostTableViewCell {
 
     @IBOutlet weak var imageCollectionView: UICollectionView!
-    
+
     @IBOutlet weak var pageControl: UIPageControl!
 
     override func awakeFromNib() {
@@ -40,7 +40,7 @@ final class ImagePostTableViewCell: TextPostTableViewCell {
 // MARK: - UICollectionView datasource
 
 extension ImagePostTableViewCell: UICollectionViewDataSource {
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return post.images?.count ?? 0
     }
@@ -124,5 +124,5 @@ final class SingleImageCollectionViewCell: UICollectionViewCell {
     }
 
     @IBOutlet weak var imageView: UIImageView!
-    
+
 }

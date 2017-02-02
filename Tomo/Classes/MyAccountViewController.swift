@@ -25,7 +25,7 @@ final class MyAccountViewController: UITableViewController {
     @IBOutlet weak var addressLabel: UILabel!
 
     @IBOutlet weak var primaryStation: UILabel!
-    
+
     @IBOutlet weak var notificationCell: UITableViewCell!
 
     var notificationCellAccessoryView: UIView?
@@ -38,7 +38,7 @@ final class MyAccountViewController: UITableViewController {
         label.textColor = UIColor.white
         label.font = UIFont.systemFont(ofSize: 12)
         label.textAlignment = .center
-        
+
         return label
     }()
 
@@ -109,7 +109,7 @@ extension MyAccountViewController {
         Util.alert(parentvc: self, title: "退出账号", message: "真的要退出当前的账号吗？") { _ in
 
             Router.Signout().response { _ in
-                
+
                 UserDefaults.standard.removeObject(forKey: "deviceToken")
 
                 UserDefaults.standard.removeObject(forKey: "email")
@@ -130,7 +130,7 @@ extension MyAccountViewController {
 // MARK: - Internal Method
 
 extension MyAccountViewController {
-    
+
     fileprivate func configDisplay() {
 
         self.avatarImageView.layer.borderColor = UIColor.white.cgColor
@@ -156,19 +156,19 @@ extension MyAccountViewController {
         if me.firstName != nil && me.lastName != nil {
             self.fullNameLabel.text = me.fullName()
         }
-        
+
         if let gender = me.gender {
             self.genderLabel.text = gender
         }
-        
+
         if let birthDay = me.birthDay {
             self.birthDayLabel.text = birthDay.toString(dateStyle: .medium, timeStyle: .none)
         }
-        
+
         if let address = me.address {
             self.addressLabel.text = address
         }
-        
+
         if let stationName = me.primaryStation?.name {
             self.primaryStation.text = stationName
         }
@@ -206,7 +206,7 @@ extension MyAccountViewController {
 // MARK: Event Observer
 
 extension MyAccountViewController {
-    
+
     fileprivate func configEventObserver() {
 
         NotificationCenter.default.addObserver(self,
@@ -226,9 +226,9 @@ extension MyAccountViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(MyAccountViewController.updateBadge(_:)), name: NSNotification.Name(rawValue: "didCheckAllNotification"), object: me)
         NotificationCenter.default.addObserver(self, selector: #selector(MyAccountViewController.updateProfile(_:)), name: NSNotification.Name(rawValue: "didEditProfile"), object: nil)
     }
-    
+
     func updateBadgeInMainTheard(_ notification: NSNotification) {
-        
+
         gcd.sync(.main) {
             if me.notifications > 0 {
                 self.badgeView.text = String(me.notifications)
@@ -253,4 +253,3 @@ extension MyAccountViewController {
         self.configDisplay()
     }
 }
-

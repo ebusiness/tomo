@@ -8,12 +8,12 @@
 
 // MARK: - user setting
 extension Router {
-    
+
     enum Setting: APIRoute {
         case UpdateDevice(deviceToken: Data)
         case UpdateUserInfo(parameters: MeParameter)
         case FindNotification(before: TimeInterval?)
-        
+
         var path: String {
             switch self{
             case .UpdateDevice: return "/device"
@@ -21,7 +21,7 @@ extension Router {
             case .FindNotification: return "/notifications"
             }
         }
-        
+
         var method: RouteMethod {
             switch self{
             case .UpdateDevice: return .POST
@@ -29,7 +29,7 @@ extension Router {
             case .FindNotification: return .GET
             }
         }
-        
+
         var parameters: [String: Any]? {
             switch self{
             case let .UpdateDevice(deviceToken):
@@ -49,11 +49,11 @@ extension Router {
             }
         }
     }
-    
+
 }
 
 extension Router.Setting {
-    
+
     struct MeParameter {
         var nickName: String?,
         firstName: String?,
@@ -66,15 +66,15 @@ extension Router.Setting {
         cover: String?,
         birthDay: Date?,
         primaryStation: String?
-        
+
         var removeDevice: String?, pushSetting: Account.PushSetting?
-        
+
         init(){}
-        
+
         func getParameters() -> [String: Any]? {
-            
+
             var parameters = [String: Any]()
-            
+
             if let nickName = nickName {
                 parameters["nickName"] = nickName
             }
@@ -117,8 +117,7 @@ extension Router.Setting {
             if let removeDevice = removeDevice {
                 parameters["removeDevice"] = removeDevice
             }
-            
-            
+
             if let pushSetting = pushSetting {
                 parameters["pushSetting"] = [
                     "announcement": pushSetting.announcement,

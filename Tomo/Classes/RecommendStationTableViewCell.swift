@@ -9,7 +9,7 @@
 import UIKit
 
 final class RecommendStationTableViewCell: UITableViewCell {
-    
+
     @IBOutlet weak var collectionView: UICollectionView!
 
     weak var delegate: UINavigationController?
@@ -28,11 +28,11 @@ final class RecommendStationTableViewCell: UITableViewCell {
 // MARK: - UICollectionView datasource
 
 extension RecommendStationTableViewCell: UICollectionViewDataSource {
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return groups.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as? StationCollectionViewCell
@@ -50,7 +50,7 @@ extension RecommendStationTableViewCell:UICollectionViewDelegate {
 
     // Move the group detail view, when colleciton view cell was tapped.
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+
         collectionView.deselectItem(at: indexPath, animated: true)
 
         // Create group detail view controller.
@@ -67,7 +67,7 @@ extension RecommendStationTableViewCell:UICollectionViewDelegate {
 // MARK: - UICollectionView FlowLayout
 
 extension RecommendStationTableViewCell: UICollectionViewDelegateFlowLayout {
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         // Size of the group cell, if the cell height changed,
@@ -82,7 +82,7 @@ final class StationCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
 
     @IBOutlet weak var actionButton: UIButton!
-    
+
     @IBOutlet weak var backgroundImageView: UIImageView!
 
     private var isJoined = false
@@ -149,7 +149,7 @@ final class StationCollectionViewCell: UICollectionViewCell {
 
         if self.isJoined {
 
-            // If this is a joined group and the button was tapped, 
+            // If this is a joined group and the button was tapped,
             // Make the leave group request.
             Router.Group.Leave(id: group.id).response {
 
@@ -195,7 +195,7 @@ final class StationCollectionViewCell: UICollectionViewCell {
                 })
             }
         }
-        
+
     }
 
     private func configEventObserver() {

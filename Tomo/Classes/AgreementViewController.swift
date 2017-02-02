@@ -11,7 +11,7 @@ import UIKit
 final class AgreementViewController: UIViewController {
 
     @IBOutlet weak var webView: UIWebView!
-    
+
     override func viewDidLoad() {
 
         super.viewDidLoad()
@@ -39,4 +39,3 @@ extension AgreementViewController: UINavigationBarDelegate {
         return .topAttached
     }
 }
-

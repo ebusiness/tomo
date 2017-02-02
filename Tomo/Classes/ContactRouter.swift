@@ -7,11 +7,11 @@
 //
 
 extension Router {
-    
+
     enum Contact: APIRoute {
         case Delete(id: String)
         case All
-        
+
         var path: String {
             switch self {
             case let .Delete(id):

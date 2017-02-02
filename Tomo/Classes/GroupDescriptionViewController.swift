@@ -27,7 +27,7 @@ final class GroupDescriptionViewController: UICollectionViewController {
         self.configDisplay()
 
         self.loadGroupDescription()
-        
+
         self.configEventObserver()
     }
 
@@ -60,7 +60,7 @@ extension GroupDescriptionViewController {
     }
 
     fileprivate func loadGroupDescription() {
-        
+
         Router.Group.FindById(id: group.id).response {
 
             if $0.result.isFailure { return }
@@ -124,7 +124,6 @@ extension GroupDescriptionViewController {
         cell?.avatarImageView.sd_setImage(with: URL(string: self.members[indexPath.row].photo ?? ""), placeholderImage: UIImage(named: "avatar"))
         cell?.nickNameLabel.text = self.members[indexPath.row].nickName
 
-
         return cell!;
     }
 
@@ -139,7 +138,7 @@ extension GroupDescriptionViewController {
             return self.footerView!
         }
     }
-    
+
 }
 
 // MARK: - UICollectionView Delegate
@@ -158,7 +157,7 @@ extension GroupDescriptionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (TomoConst.UI.ScreenWidth - 50) / 4, height: (TomoConst.UI.ScreenWidth - 50) / 4 + 30)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return self.headerViewSize
     }
@@ -167,7 +166,7 @@ extension GroupDescriptionViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - Event Observer
 
 extension GroupDescriptionViewController {
-    
+
     fileprivate func configEventObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(GroupDescriptionViewController.didJoinGroup(_:)), name: NSNotification.Name(rawValue: "didJoinGroup"), object: me)
         NotificationCenter.default.addObserver(self, selector: #selector(GroupDescriptionViewController.didLeaveGroup(_:)), name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
@@ -199,7 +198,6 @@ extension GroupDescriptionViewController {
     }
 }
 
-
 // MARK: - UICollectionView Header Cell
 
 final class GroupDescriptionHeaderCell: UICollectionReusableView {
@@ -230,17 +228,17 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
             self.joinGroup()
         }
     }
-    
+
     private func didSetGroup(){
-        
+
         if let myGroups = me.groups, myGroups.contains(self.group.id) {
-            
+
             self.actionButton.setTitle(" 退出群组 ", for: .normal)
             self.actionButton.backgroundColor = Palette.Red.primaryColor
             self.actionButton.sizeToFit()
-            
+
         } else  {
-            
+
             self.actionButton.setTitle(" 加入群组 ", for: .normal)
             self.actionButton.backgroundColor = Palette.Green.primaryColor
             self.actionButton.sizeToFit()
@@ -260,7 +258,7 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
             UIView.animate(withDuration: TomoConst.Duration.Short) {
                 self.didSetGroup()
             }
-            
+
             self.actionButton.isUserInteractionEnabled = true
         }
     }
@@ -285,7 +283,7 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
                 UIView.animate(withDuration: TomoConst.Duration.Short) {
                     self.didSetGroup()
                 }
-                
+
                 self.actionButton.isUserInteractionEnabled = true
             }
         }))

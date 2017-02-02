@@ -10,19 +10,19 @@ import Foundation
 import SwiftyJSON
 
 class CommentEntity: Entity {
-    
+
     var id: String!
-    
+
     var owner: UserEntity!
-    
+
     var content: String!
-    
+
     var createDate: Date!
-    
+
     override init() {
         super.init()
     }
-    
+
     required init(_ json: JSON) {
         super.init()
         if let id = json.string { //id only
@@ -33,6 +33,6 @@ class CommentEntity: Entity {
         self.owner = UserEntity(json["owner"])
         self.content = json["content"].stringValue
         self.createDate = json["createDate"].stringValue.toDate(format: TomoConfig.Date.Format)
-        
+
     }
 }

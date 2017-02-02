@@ -18,10 +18,10 @@ final class HomeViewController: UITableViewController {
 
     var latestContent: Any?
     var oldestContent: Any?
-    
+
     var isLoading = false
     var isExhausted = false
-    
+
     var recommendGroups: [GroupEntity]?
 
     // Table footer view, with a loading activity indicator.
@@ -42,7 +42,7 @@ final class HomeViewController: UITableViewController {
     }()
 
     override func viewDidLoad() {
-        
+
         super.viewDidLoad()
 
         // Wire refresh control with loadNewContent method.
@@ -84,22 +84,22 @@ extension HomeViewController {
 // MARK: - UITableView datasource
 
 extension HomeViewController {
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contents.count
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         // If the content is array of group, display as StationGroup recommendation.
         if let groups = contents[indexPath.item] as? [GroupEntity] {
-            
+
             let cell = tableView.dequeueReusableCell(withIdentifier: "StationRecommendCell", for: indexPath) as? RecommendStationTableViewCell
 
             // Give the cell group list data, this will tirgger configDisplay
             cell?.groups = groups
 
-            // Set current navigation controller as the cell's delegate, 
+            // Set current navigation controller as the cell's delegate,
             // for the navigation when post author's photo been tapped, etc.
             cell?.delegate = self.navigationController
 
@@ -107,7 +107,7 @@ extension HomeViewController {
 
         // If the content is a post, display as post summary.
         } else if let post = contents[indexPath.row] as? PostEntity {
-            
+
             var cell: TextPostTableViewCell!
 
             // If the post has one or more images, use ImagePostTableViewCell, otherwise use the TextPostTableViewCell.
@@ -120,16 +120,16 @@ extension HomeViewController {
             // Give the cell post data, this will tirgger configDisplay
             cell.post = post
 
-            // Set current navigation controller as the cell's delegate, 
+            // Set current navigation controller as the cell's delegate,
             // for the navigation when post author's photo been tapped, etc.
             cell.delegate = self.navigationController
 
             return cell
-            
+
         } else {
             return UITableViewCell()
         }
-        
+
     }
 }
 
@@ -141,7 +141,7 @@ extension HomeViewController {
             self.performSegue(withIdentifier: "postdetail", sender: post)
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath)  -> CGFloat {
         return self.rowHeights[indexPath.item]
     }
@@ -180,7 +180,7 @@ extension HomeViewController {
         } else {
             parameters.coordinate = TomoConst.Geo.CoordinateTokyo
         }
- 
+
         Router.Group.Find(parameters: parameters).response {
             if $0.result.isFailure { return }
             self.recommendGroups = GroupEntity.collection($0.result.value!)
@@ -189,20 +189,20 @@ extension HomeViewController {
 
     // Fetch more content as use scroll down to the bottom of table view.
     fileprivate func loadMoreContent() {
-        
+
         // skip if already in loading or no more contents
         if self.isLoading || self.isExhausted {
             return
         }
-        
+
         self.isLoading = true
 
         var parameters = Router.Post.FindParameters(category: .all)
-    
+
         if let oldestContent = oldestContent as? PostEntity {
             parameters.before = oldestContent.createDate.timeIntervalSince1970
         }
-        
+
         Router.Post.Find(parameters: parameters).response {
 
             // Mark as exhausted when something wrong (probably 404)
@@ -212,9 +212,9 @@ extension HomeViewController {
                 self.tableView.tableFooterView = nil
                 return
             }
-            
+
             let posts: [PostEntity]? = PostEntity.collection($0.result.value!)
-            
+
             if let loadPosts: [Any] = posts {
 
                 // total number of rows will be append to table view
@@ -256,12 +256,12 @@ extension HomeViewController {
     func loadNewContent() {
 
         var parameters = Router.Post.FindParameters(category: .all)
-        
+
         if let latestContent = latestContent as? PostEntity {
             // TODO - This is a dirty solution
             parameters.after = latestContent.createDate.timeIntervalSince1970 + 1
         }
-        
+
         Router.Post.Find(parameters: parameters).response {
 
             // stop refresh control
@@ -282,24 +282,24 @@ extension HomeViewController {
 
     // Append specific number of rows on table view
     private func appendRows(rows: Int) {
-        
+
         let firstIndex = contents.count - rows
         let lastIndex = contents.count
-        
+
         var indexPathes = [IndexPath]()
-        
+
         for index in firstIndex..<lastIndex {
             indexPathes.append(IndexPath(row: index, section: 0))
         }
-        
+
         // hold the oldest content for pull-up loading
         self.oldestContent = self.contents.last
-        
+
         // hold the latest content for pull-down loading
         if firstIndex == 0 {
             self.latestContent = self.contents.first
         }
-        
+
         tableView.beginUpdates()
         tableView.insertRows(at: indexPathes, with: .fade)
         tableView.endUpdates()
@@ -307,16 +307,16 @@ extension HomeViewController {
 
     // Prepend specific number of rows on table view
     private func prependRows(rows: Int) {
-        
+
         var indexPathes = [IndexPath]()
-        
+
         for index in 0..<rows {
             indexPathes.append(IndexPath(row: index, section: 0))
         }
-        
+
         // hold the latest content for pull-up loading
         self.latestContent = self.contents.first
-        
+
         tableView.beginUpdates()
         tableView.insertRows(at: indexPathes, with: .fade)
         tableView.endUpdates()

@@ -8,59 +8,59 @@
 
 import SwiftyJSON
 class Account: UserEntity {
-    
+
     var telNo: String?
-    
+
     var friends: [String]?
-    
+
     var groups: [String]?
-    
+
     var invitations: [String]?
-    
+
     var blockUsers: [String]?
-    
+
     var friendInvitations: [NotificationEntity]!
-    
+
     var newMessages: [MessageEntity]!
-    
+
     var notifications: Int!
-    
+
     var pushSetting = PushSetting()
-    
+
     override init() {
         super.init()
     }
-    
+
     required init(_ json: JSON) {
-        
+
         super.init(json)
-        
+
         self.telNo = json["telNo"].string
-        
+
         self.friends = json["friends"].arrayObject as? [String]
-        
+
         self.groups = json["groups"].arrayObject as? [String]
-        
+
         self.invitations = json["invitations"].arrayObject as? [String]
-        
+
         self.blockUsers = json["blockUsers"].arrayObject as? [String]
-        
+
         self.friendInvitations = []
         if let invitations = json["friendInvitations"].array {
             invitations.forEach { (invitation) -> () in
                 self.friendInvitations.append( NotificationEntity(invitation) )
             }
         }
-        
+
         self.newMessages = []
         if let messages = json["newMessages"].array {
             messages.forEach { (message) -> () in
                 self.newMessages.append( MessageEntity(message) )
             }
         }
-        
+
         self.notifications = json["notifications"].intValue
-        
+
         self.pushSetting = PushSetting(json["pushSetting"])
 
         NotificationCenter.default.addObserver(self, selector: #selector(Account.didReceiveFriendInvitation(_:)), name: ListenerEvent.FriendInvited.notificationName, object: nil)
@@ -258,18 +258,18 @@ extension Account {
 
         // my friends list must not contain the notification sender
         guard !friends.contains(notification.from.id) else { return }
-        
+
         var postUserInfo = ["idOfRemovedMyInvitation": notification.from.id, "userEntityOfNewFriend": notification.from] as [String : Any]
 
         // remove the user from my inviting list
         self.invitations?.remove(notification.from.id)
-        
+
         // remove the user from the list of invited me
         if let index = self.friendInvitations.index(where: { $0.from.id == notification.from.id }) {
             self.friendInvitations.remove(at: index)
             postUserInfo["indexOfRemovedInvitation"] = index
         }
-        
+
         // asdd the user to my friends list
         self.friends?.insert(notification.from.id, at: 0)
 
@@ -386,15 +386,15 @@ extension Account {
         var postBookmarked: Bool = true
         var groupJoined: Bool = true
         var groupLeft: Bool = true
-        
+
         override init() {
             super.init()
         }
-        
+
         required init(_ json: JSON) {
-            
+
             super.init()
-            
+
             self.announcement = json["announcement"].boolValue
             self.message = json["message"].boolValue
             self.groupMessage = json["groupMessage"].boolValue

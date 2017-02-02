@@ -12,7 +12,7 @@ import SwiftyJSON
 struct Router {}
 /**
  HTTP method definitions.
- 
+
  See https://tools.ietf.org/html/rfc7231#section-4.3
  */
 public enum RouteMethod : String {
@@ -42,7 +42,7 @@ protocol APIRoute: URLRequestConvertible {
 
 // MARK: - URLRequestConvertible
 extension APIRoute {
-    
+
     public func asURLRequest() throws -> URLRequest {
         let requestUrl = TomoConfig.Api.Url.appendingPathComponent(self.path)
         var mutableURLRequest = URLRequest(url: requestUrl)
@@ -75,7 +75,7 @@ extension APIRoute {
     func request() -> DataRequest {
         return Alamofire.SessionManager.default.request(self).validate()
     }
-    
+
     @discardableResult
     func response(completionHandler: @escaping (DataResponse<JSON>) -> Void) -> Request {
         return request().responseSwiftyJSON(completionHandler: completionHandler)

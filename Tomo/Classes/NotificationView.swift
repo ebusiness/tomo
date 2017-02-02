@@ -9,7 +9,7 @@
 import UIKit
 
 class NotificationView: UIView {
-    
+
     @IBOutlet weak var backgroundView: UIView!
 
     @IBOutlet weak var avatarImageView: UIImageView!
@@ -40,40 +40,40 @@ class NotificationView: UIView {
                         self.superview?.layoutIfNeeded()
                     })
                 }
-                
+
             })
         }
     }
-    
+
     @IBAction func bodyTapped(_ sender: UITapGestureRecognizer) {
-        
+
         if let event = ListenerEvent(rawValue: self.notification.type) {
-            
+
             switch event {
             case .Announcement:
                 return
             case .GroupMessage: // GroupMessage
                 URLSchemesController.sharedInstance.handleOpenURL(URL(string: "tomo://\(self.notification.type)/\(self.notification.targetId)")!)
-                
+
             case .Message: // Message
                 fallthrough
-                
+
             case .FriendAccepted, .FriendRefused, .FriendBreak, .FriendInvited: // User
-                
+
                 self.avatarTapped(sender)
-                
+
             case .PostNew, .PostLiked, .PostCommented, .PostBookmarked: // Post
                 URLSchemesController.sharedInstance.handleOpenURL(URL(string: "tomo://\(self.notification.type)/\(self.notification.targetId)")!)
-                
+
             default:
                 break
             }
         }
     }
-    
+
     @IBAction func avatarTapped(_ sender: UITapGestureRecognizer) {
         URLSchemesController.sharedInstance.handleOpenURL(URL(string: "tomo://\(self.notification.type)/\(self.notification.targetId)")!)
-    
+
     }
-    
+
 }

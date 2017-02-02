@@ -8,13 +8,13 @@
 
 // MARK: - Connection
 extension Router {
-    
+
     enum Invitation: APIRoute {
-        
+
         case Find
         case ModifyById(id: String, accepted: Bool)
         case SendTo(id: String)
-        
+
         var path: String {
             switch self {
             case let .ModifyById(id, _):
@@ -30,7 +30,7 @@ extension Router {
             case .SendTo: return .POST
             }
         }
-        
+
         var parameters: [String : Any]? {
             switch self {
             case .Find: return nil
@@ -39,5 +39,5 @@ extension Router {
             }
         }
     }
-    
+
 }

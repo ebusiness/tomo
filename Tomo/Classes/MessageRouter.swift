@@ -7,12 +7,12 @@
 //
 
 extension Router {
-    
+
     enum Message: APIRoute {
         case Latest
         case FindByUserId(id: String, before: TimeInterval?)
         case SendTo(id: String, type: MessageType, content: String)
-        
+
         var path: String {
             switch self {
             case .Latest:
@@ -23,7 +23,7 @@ extension Router {
                 return "/messages"
             }
         }
-        
+
         var method: RouteMethod {
             switch self {
             case .Latest: return .GET
@@ -31,7 +31,7 @@ extension Router {
             case .SendTo: return .POST
             }
         }
-        
+
         var parameters: [String : Any]? {
             switch self {
             case .Latest:

@@ -15,7 +15,7 @@ final class GroupDetailViewController: UITableViewController {
     @IBOutlet weak var joinButton: UIButton!
 
     @IBOutlet weak var loadingLabel: UILabel!
-    
+
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
 
     // The group entity
@@ -35,7 +35,7 @@ final class GroupDetailViewController: UITableViewController {
 
     let headerHeight = TomoConst.UI.ScreenHeight * 0.382
     let headerViewSize = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.ScreenHeight * 0.382)
-    
+
     override func viewDidLoad() {
 
         super.viewDidLoad()
@@ -43,7 +43,7 @@ final class GroupDetailViewController: UITableViewController {
         self.configDisplay()
 
         self.loadMorePosts()
-        
+
         self.configEventObserver()
     }
 
@@ -78,11 +78,11 @@ final class GroupDetailViewController: UITableViewController {
 // MARK: - Actions
 
 extension GroupDetailViewController {
-    
+
     @IBAction func joinGroup(_ sender: UIButton) {
 
         sender.isUserInteractionEnabled = false
-        
+
         Router.Group.Join(id: self.group.id).response {
             if $0.result.isFailure {
                 sender.isUserInteractionEnabled = true
@@ -92,12 +92,12 @@ extension GroupDetailViewController {
             }
         }
     }
-    
+
     @IBAction func didCreatePost(_ segue: UIStoryboardSegue) {
         self.loadNewPost()
         self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
-    
+
     @IBAction func postButtonTapped(_ sender: UIBarButtonItem) {
         let postCreateViewController = Util.createViewControllerWithIdentifier(id: "PostCreateView", storyboardName: "Home") as? CreatePostViewController
         postCreateViewController?.group = self.group
@@ -130,7 +130,7 @@ extension GroupDetailViewController {
 // MARK: - UITableView datasource
 
 extension GroupDetailViewController {
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
@@ -236,7 +236,7 @@ extension GroupDetailViewController {
             self.joinButton.isHidden = false
         }
     }
-    
+
     // Fetch more post as use scroll down to the bottom of table view.
     fileprivate func loadMorePosts() {
 
@@ -271,7 +271,7 @@ extension GroupDetailViewController {
                 // let table view display new contents
                 self.appendRows(rows: newPosts.count)
             }
-            
+
             self.isLoading = false
         }
     }
@@ -357,7 +357,7 @@ extension GroupDetailViewController {
         cell.post = post
 
         let size = cell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
-        
+
         return size.height
     }
 

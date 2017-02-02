@@ -16,19 +16,19 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var inputAreaHeight: NSLayoutConstraint!
 
     @IBOutlet weak var signUpButton: UIButton!
-    
+
     @IBOutlet weak var nickNameTextField: UITextField!
     @IBOutlet weak var nickNameHintLabel: UILabel!
     var nickNameValid = false
-    
+
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var emailHintLabel: UILabel!
     var emailValid = false
-    
+
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var passwordHintLabel: UILabel!
     var passwordValid = false
-    
+
     @IBOutlet weak var repassTextField: UITextField!
     @IBOutlet weak var repassHintLabel: UILabel!
     var repassValid = false
@@ -46,11 +46,11 @@ class SignUpViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -60,11 +60,11 @@ class SignUpViewController: UIViewController {
 // MARK: - Internal Methods
 
 extension SignUpViewController {
-    
+
     fileprivate func setupAppearance() {
-        
+
         func customizeTextField(textField: UITextField) {
-            
+
             // draw a white bottom border
             let border = CALayer()
             let width = CGFloat(1.0)
@@ -73,7 +73,7 @@ extension SignUpViewController {
             border.borderWidth = width
             textField.layer.addSublayer(border)
             textField.layer.masksToBounds = true
-            
+
             // make placeholder text white
             let attributeString = NSAttributedString(string: textField.placeholder!, attributes: [
                 NSForegroundColorAttributeName: UIColor.white
@@ -87,7 +87,7 @@ extension SignUpViewController {
         signUpButton.layer.borderColor = UIColor.white.cgColor
         signUpButton.layer.borderWidth = 1
         signUpButton.layer.cornerRadius = 2
-        
+
         // customize email input field
         customizeTextField(textField: nickNameTextField)
         customizeTextField(textField: emailTextField)
@@ -103,13 +103,13 @@ extension SignUpViewController {
     func keyboardWillShown(_ notification: NSNotification) {
         guard let info = notification.userInfo else { return }
         guard let keyboardHeight = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height else { return }
-        
+
         var duration = 0.3
-        
+
         if let keyboardDuration = info[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
             duration = keyboardDuration
         }
-        
+
         self.scrollViewBottomConstraint.constant = keyboardHeight
         UIView.animate(withDuration: duration, animations: { () -> Void in
             self.view.layoutIfNeeded()
@@ -118,15 +118,15 @@ extension SignUpViewController {
 
     func keyboardWillBeHidden(_ notification: NSNotification) {
         guard let info = notification.userInfo else { return }
-        
+
         self.scrollViewBottomConstraint.constant = 0
-        
+
         var duration = 0.3
-        
+
         if let keyboardDuration = info[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
             duration = keyboardDuration
         }
-        
+
         UIView.animate(withDuration: duration, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
@@ -137,7 +137,7 @@ extension SignUpViewController {
             label.alpha = 1.0
         })
     }
-    
+
     fileprivate func hideHintLabel(label: UILabel) {
         UIView.animate(withDuration: 0.3, animations: { () -> Void in
             label.alpha = 0.0
@@ -148,25 +148,25 @@ extension SignUpViewController {
 // MARK: - Actions
 
 extension SignUpViewController {
-    
+
     @IBAction func releaseResponder(_ sender: Any) {
         self.view.endEditing(true)
     }
-    
+
     @IBAction func cancel(_ sender: Any) {
         self.view.endEditing(true)
         dismiss(animated: true, completion: nil)
     }
-    
+
     @IBAction func signUp(_ sender: Any) {
-        
+
         Router.Signup.Email(email: emailTextField.text!, password: passwordTextField.text!, nickName: nickNameTextField.text!).response {
-            
+
             let buttonTitle = "好"
             var title = "注册失败"
             var message = "您输入的邮件地址已经被使用，请更换其他的邮件地址"
             var handler: ((UIAlertAction?) -> Void)?
-            
+
             if $0.result.isSuccess {
                 title = "感谢您注册現場Tomo"
                 message = "认证邮件已发送至您的邮箱，请查收。激活您的帐号后即可开始使用現場Tomo"
@@ -176,7 +176,7 @@ extension SignUpViewController {
             }
             Util.alert(parentvc: self, title: title, message: message, cancel: buttonTitle, cancelHandler: handler)
         }
-        
+
     }
     @IBAction func agreement(_ sender: UIButton) {
         let agreementView = Util.createViewControllerWithIdentifier(id: "AgreementView", storyboardName: "Setting")
@@ -193,11 +193,11 @@ extension SignUpViewController: UITextFieldDelegate {
     }
 
     @IBAction func textFieldDidChange(_ sender: UITextField) {
-        
+
         if sender == self.nickNameTextField {
-            
+
             let nickName = self.nickNameTextField.text!.trimmed()
-            
+
             if nickName.isEmpty || nickName.characters.count > 10 {
                 nickNameValid = false
                 showHintLabel(label: nickNameHintLabel)
@@ -206,9 +206,9 @@ extension SignUpViewController: UITextFieldDelegate {
                 hideHintLabel(label: nickNameHintLabel)
             }
         }
-        
+
         if sender == self.emailTextField {
-            
+
             if !self.emailTextField.text!.isEmail {
                 emailValid = false
                 showHintLabel(label: emailHintLabel)
@@ -217,13 +217,13 @@ extension SignUpViewController: UITextFieldDelegate {
                 hideHintLabel(label: emailHintLabel)
             }
         }
-        
+
         if sender == self.passwordTextField {
-            
+
             let repass = self.repassTextField.text!
-            
+
             let password = self.passwordTextField.text!
-            
+
             if !password.isValidPassword() {
                 passwordValid = false
                 showHintLabel(label: passwordHintLabel)
@@ -231,7 +231,7 @@ extension SignUpViewController: UITextFieldDelegate {
                 passwordValid = true
                 hideHintLabel(label: passwordHintLabel)
             }
-            
+
             if repass != password {
                 repassValid = false
                 showHintLabel(label: repassHintLabel)
@@ -240,13 +240,13 @@ extension SignUpViewController: UITextFieldDelegate {
                 hideHintLabel(label: repassHintLabel)
             }
         }
-        
+
         if sender == self.repassTextField {
-            
+
             let password = self.passwordTextField.text
-            
+
             let repass = self.repassTextField.text
-            
+
             if repass != password {
                 repassValid = false
                 showHintLabel(label: repassHintLabel)
@@ -255,25 +255,25 @@ extension SignUpViewController: UITextFieldDelegate {
                 hideHintLabel(label: repassHintLabel)
             }
         }
-        
+
         if nickNameValid && emailValid && passwordValid && repassValid {
             self.signUpButton.isEnabled = true
         } else {
             self.signUpButton.isEnabled = false
         }
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
+
         let nextTag = textField.tag + 1
-        
+
         if let nextResponder = self.view.viewWithTag(nextTag) {
             nextResponder.becomeFirstResponder()
         } else {
             textField.resignFirstResponder()
         }
-        
+
         return false
     }
-    
+
 }

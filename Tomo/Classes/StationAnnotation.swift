@@ -9,13 +9,13 @@
 import Foundation
 
 class StationAnnotation: AggregatableAnnotation {
-    
+
     var station: GroupEntity!
-    
+
     override var title: String {
         return station.name
     }
-    
+
     override var subtitle: String {
         return station.name
     }

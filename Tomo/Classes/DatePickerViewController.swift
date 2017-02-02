@@ -9,13 +9,13 @@
 import UIKit
 
 final class DatePickerViewController: UIViewController {
-    
+
     var date:Date?
 
     @IBOutlet weak var datePicker: UIDatePicker!
 
     var didSelected: ((_ selected:Date) -> Void)!
-    
+
     override func viewDidLoad() {
 
         super.viewDidLoad()
@@ -24,7 +24,7 @@ final class DatePickerViewController: UIViewController {
             self.datePicker.setDate(date, animated: true)
         }
     }
-    
+
     @IBAction func save(_ sender: Any) {
         self.didSelected(datePicker.date)
         self.navigationController?.pop(animated: true)

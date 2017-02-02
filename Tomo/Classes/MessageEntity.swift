@@ -10,25 +10,25 @@ import Foundation
 import SwiftyJSON
 
 class MessageEntity: Entity {
-    
+
     var id: String!
-    
+
     var to: UserEntity!
-    
+
     var from: UserEntity!
-    
+
     var type = MessageType.text
-    
+
     var group: GroupEntity?
-    
+
     var content: String!
-    
+
     var createDate: Date!
-    
+
     override init() {
         super.init()
     }
-    
+
     required init(_ json: JSON) {
         super.init()
         if let id = json.string { //id only
@@ -41,19 +41,19 @@ class MessageEntity: Entity {
         if let type = MessageType(rawValue: json["messagetype"].string ?? json["type"].stringValue) {
             self.type = type
         }
-        
+
         if !(json["group"].object is NSNull) {
             self.group = GroupEntity(json["group"])
         }
         self.content = json["content"].string ?? json["aps"]["alert"].stringValue
         self.createDate = json["createDate"].stringValue.toDate(format: TomoConfig.Date.Format)
-        
+
     }
 }
 
 public enum MessageType: String {
     case voice, photo, video, text
-    
+
     func remotePath(_ name: String) -> String {
         switch self {
         case .photo:
@@ -70,5 +70,5 @@ public enum MessageType: String {
         let remote = remotePath(name)
         return "\(TomoConfig.AWS.S3.Url)/\(TomoConfig.AWS.S3.Bucket)\(remote)"
     }
-    
+
 }

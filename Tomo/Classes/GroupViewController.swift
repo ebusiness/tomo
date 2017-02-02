@@ -54,11 +54,11 @@ extension GroupViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    
+
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as? MyGroupCollectionViewCell
 
         cell?.group = self.groups[indexPath.row]
-    
+
         return cell!
     }
 
@@ -153,7 +153,7 @@ extension GroupViewController {
                 // if the data is exhausted and we still have zero data
                 if self.groups.isEmpty {
 
-                    // TODO: this is shit, cause when the first time table footer get shown, 
+                    // TODO: this is shit, cause when the first time table footer get shown,
                     // the UICollectionViewDelegateFlowLayout won't be asked, so I have to get the
                     // footer view size right here, may be I should use other stratigy
                     self.footerView.frame = TomoConst.UI.ViewFrameMiddleFullScreen
@@ -205,7 +205,7 @@ extension GroupViewController {
     }
 
     func didJoinGroup(_ notification: NSNotification) {
-        
+
         // ensure the data needed
         guard let userInfo = notification.userInfo else { return }
         guard let group = userInfo["groupEntityOfNewGroup"] as? GroupEntity else { return }

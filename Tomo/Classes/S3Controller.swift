@@ -17,11 +17,9 @@ class S3Controller: NSObject {
             region: .APNortheast1,
             accessKey: AmazonS3AccessKey,
             secret: AmazonS3Secret)
-        
+
         return amazonS3Manager.putObject(fileURL: URL(fileURLWithPath: localPath), destinationPath: remotePath, done: {(error) in
             done(error)
         })
     }
 }
-
-

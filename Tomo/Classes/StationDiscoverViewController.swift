@@ -87,7 +87,7 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
 
     // When cell was tapped, move to group detail
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+
         let groupVC = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as? GroupDetailViewController
         groupVC?.group = groups[indexPath.row]
 
@@ -107,7 +107,7 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
 extension StationDiscoverViewController {
 
     fileprivate func loadInitData(location: CLLocation?) {
-        
+
         self.isLoading = true
 
         var parameters = Router.Group.FindParameters(category: .discover)
@@ -137,7 +137,7 @@ extension StationDiscoverViewController {
             self.isLoading = false
         }
     }
-    
+
     fileprivate func loadMoreData() {
 
         if self.isLoading || self.isExhausted || self.groups.isEmpty {
@@ -151,11 +151,11 @@ extension StationDiscoverViewController {
         parameters.page = self.page
         parameters.type = .station
         parameters.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
-        
+
         if let searchText = searchText {
             parameters.name = searchText
         }
-        
+
         Router.Group.Find(parameters: parameters).response {
 
             if $0.result.isFailure {
@@ -164,7 +164,7 @@ extension StationDiscoverViewController {
                 self.stopActivityIndicator(withString: "没有更多的结果了")
                 return
             }
-            
+
             if let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) {
                 self.groups.append(contentsOf: groups)
                 self.appendCells(count: groups.count)
@@ -174,7 +174,7 @@ extension StationDiscoverViewController {
             self.isLoading = false
         }
     }
-    
+
     fileprivate func startActivityIndicator() {
         self.footerView.activityIndicator.startAnimating()
         self.footerView.searchResultLabel.alpha = 0

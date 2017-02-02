@@ -60,7 +60,7 @@ struct TomoConfig {
     }
 
     struct Util {
-        
+
     }
 }
 
@@ -87,7 +87,7 @@ struct TomoConst {
 
         static let EmptyHeart = UIImage(named: "hearts")!
         static let FilledHeart = UIImage(named: "hearts_filled")!
-        
+
         static let EmptyStar = UIImage(named: "star")!
         static let FilledStar = UIImage(named: "star_filled")!
     }
@@ -130,19 +130,19 @@ let defaultGroupImage = UIImage(named: "group_cover_default")!
 
 #if !TEST
 class Constants: NSObject {
-   
+
     class func postPath(fileName name: String) -> String {
         return "/users/\(me.id!)/post/\(name)"
     }
-    
+
     class func avatarPath() -> String {
         return "/users/\(me.id!)/photo.png"
     }
-    
+
     class func coverPath() -> String {
         return "/users/\(me.id!)/cover.png"
     }
-    
+
     class func groupCoverPath(groupId id: String) -> String {
         return "/groups/\(id)/cover.png"
     }

@@ -19,13 +19,13 @@ final class NotificationListViewController: UITableViewController {
 
     fileprivate var isLoading = false
     fileprivate var isExhausted = false
-    
+
     override func viewDidLoad() {
 
         super.viewDidLoad()
 
         self.loadMoreContent()
-        
+
         self.configEventObserver()
     }
 
@@ -63,11 +63,11 @@ extension NotificationListViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.notifications.count
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 88
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? NotificationCell
@@ -89,18 +89,18 @@ extension NotificationListViewController {
 // MARK: - Internal Methods
 
 extension NotificationListViewController {
-    
+
     fileprivate func loadMoreContent() {
-        
+
         // skip if already in loading or no more contents
         if self.isLoading || self.isExhausted {
             return
         }
-        
+
         self.isLoading = true
 
         let notification = Router.Setting.FindNotification(before: self.notifications.last?.createDate.timeIntervalSince1970)
-        
+
         notification.response {
 
             // Mark as exhausted when something wrong (probably 404)
@@ -111,7 +111,7 @@ extension NotificationListViewController {
                 self.loadingLabel.isHidden = false
                 return
             }
-            
+
             if let loadNotifications:[NotificationEntity] = NotificationEntity.collection($0.result.value!) {
                 self.notifications += loadNotifications
                 self.appendRows(rows: loadNotifications.count)
@@ -120,19 +120,19 @@ extension NotificationListViewController {
             self.isLoading = false
         }
     }
-    
+
     fileprivate func appendRows(rows: Int) {
 
         let notificationsCount = self.notifications.count
         let firstIndex = notificationsCount - rows
         let lastIndex = notificationsCount
-        
+
         var indexPathes = [IndexPath]()
-        
+
         for index in firstIndex..<lastIndex {
             indexPathes.append(IndexPath(row: index, section: 0))
         }
-        
+
         tableView.beginUpdates()
         tableView.insertRows(at: indexPathes, with: .fade)
         tableView.endUpdates()
@@ -144,7 +144,7 @@ extension NotificationListViewController {
 extension NotificationListViewController {
 
     fileprivate func configEventObserver() {
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(NotificationListViewController.didReceiveNotification(_:)),
                                                name: NSNotification.Name(rawValue: "didMyFriendInvitationAccepted"), object: me)
@@ -162,11 +162,11 @@ extension NotificationListViewController {
                                                selector: #selector(NotificationListViewController.didReceiveNotification(_:)),
                                                name: NSNotification.Name(rawValue: "didPostBookmarked"), object: me)
     }
-    
+
     func didReceiveNotification(_ notification: Notification) {
         guard let userInfo = notification.userInfo else { return}
         let remoteNotification = NotificationEntity(userInfo)
-        
+
         self.notifications.insert(remoteNotification, at: 0)
 
         gcd.sync(.main) {

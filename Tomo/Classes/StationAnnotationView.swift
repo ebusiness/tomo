@@ -72,5 +72,5 @@ class StationAnnotationView: AggregatableAnnotationView {
             }
         }
     }
-    
+
 }

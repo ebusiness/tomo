@@ -36,13 +36,13 @@ final class UserPostsViewController: UITableViewController {
 
     let headerHeight = TomoConst.UI.ScreenHeight * 0.382 - 58
     let headerViewSize = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.ScreenHeight * 0.382 + 58)
-    
+
     override func viewDidLoad() {
 
         super.viewDidLoad()
 
         self.configDisplay()
-        
+
         self.loadMoreContent()
     }
 
@@ -61,15 +61,15 @@ final class UserPostsViewController: UITableViewController {
 // MARK: UITableView DataSource
 
 extension UserPostsViewController {
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let post = self.posts[indexPath.row]
-        
+
         var cell: TextPostTableViewCell!
 
         // If the post has one or more images, use ImagePostTableViewCell, otherwise use the TextPostTableViewCell.
@@ -93,7 +93,7 @@ extension UserPostsViewController {
 // MARK: UITableView Delegate
 
 extension UserPostsViewController {
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as? PostDetailViewController
         vc?.post = posts[indexPath.row]
@@ -108,7 +108,7 @@ extension UserPostsViewController {
 // MARK: UIScrollView Delegate
 
 extension UserPostsViewController {
-    
+
     // Fetch more contents when scroll down to bottom
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
@@ -151,16 +151,16 @@ extension UserPostsViewController {
             self.bioLabel.text = bio
         }
     }
-    
+
     fileprivate func loadMoreContent() {
-        
+
         // skip if already in loading or no more contents
         if self.isLoading || self.isExhausted {
             return
         }
-        
+
         self.isLoading = true
-        
+
         let request = Router.User.Posts(id: self.user.id, before: oldestContent?.createDate.timeIntervalSince1970)
 
         request.response {
@@ -192,23 +192,23 @@ extension UserPostsViewController {
 
     // Append specific number of rows on table view
     fileprivate func appendRows(rows: Int) {
-        
+
         let firstIndex = posts.count - rows
         let lastIndex = posts.count
-        
+
         var indexPathes = [IndexPath]()
-        
+
         for index in firstIndex..<lastIndex {
             indexPathes.append(IndexPath(row: index, section: 0))
         }
-        
+
         // hold the oldest content for pull-up loading
         oldestContent = posts.last
-        
+
         tableView.beginUpdates()
         tableView.insertRows(at: indexPathes, with: UITableViewRowAnimation.middle)
         tableView.endUpdates()
-        
+
     }
 
     // Calulate the cell height beforehand
@@ -225,7 +225,7 @@ extension UserPostsViewController {
         cell.post = post
 
         let size = cell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
-        
+
         return size.height
     }
 
@@ -250,4 +250,3 @@ extension UserPostsViewController {
         }
     }
 }
-

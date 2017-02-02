@@ -5,8 +5,6 @@
 //  Created by starboychina on 2015/07/21.
 //  Copyright (c) 2015年 &#24373;&#24535;&#33775;. All rights reserved.
 //
-
-
 import UIKit
 
 final class FriendListSendRequestController: UITableViewController {
@@ -33,22 +31,22 @@ final class FriendListSendRequestController: UITableViewController {
 // MARK: - UITableView DataSource
 
 extension FriendListSendRequestController {
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.invitedUsers.count
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 88
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let user = self.invitedUsers[indexPath.row]
-        
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? RequestFriendCell
         cell!.user = user
-        
+
         return cell!
     }
 }
@@ -56,14 +54,14 @@ extension FriendListSendRequestController {
 // MARK: - UITableView Delegate
 
 extension FriendListSendRequestController {
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+
         tableView.deselectRow(at: indexPath, animated: true)
-        
+
         let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
         vc!.user = self.invitedUsers[indexPath.row]
-        
+
         self.navigationController?.pushViewController(vc!, animated: true)
     }
 }
@@ -177,4 +175,3 @@ final class RequestFriendCell: UITableViewCell {
         }
     }
 }
-

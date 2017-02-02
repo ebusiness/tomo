@@ -8,14 +8,14 @@
 
 
 extension Router {
-    
+
     enum User: APIRoute {
         case FindByNickName(nickName: String?)
         case FindById(id: String)
         case Posts(id: String, before: TimeInterval?)
         case Block(id: String)
         case Map
-        
+
         var path: String {
             switch self {
             case .FindByNickName: return "/users"
@@ -25,14 +25,14 @@ extension Router {
             case .Map: return "/map/users"
             }
         }
-        
+
         var method: RouteMethod {
             switch self {
             case .Block: return .POST
             default: return .GET
             }
         }
-        
+
         var parameters: [String : Any]? {
             switch self {
             case let .FindByNickName(nickName):
@@ -49,4 +49,3 @@ extension Router {
         }
     }
 }
-

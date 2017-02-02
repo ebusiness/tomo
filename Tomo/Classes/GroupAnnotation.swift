@@ -9,13 +9,13 @@
 import Foundation
 
 class GroupAnnotation: AggregatableAnnotation {
-    
+
     var group: GroupEntity!
-    
+
     override var title: String {
         return group.name
     }
-    
+
     override var subtitle: String {
         if let introduction = group.introduction {
             return introduction
