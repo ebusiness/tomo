@@ -3,7 +3,7 @@
 //
 
 //#import "SVProgressHUD.h"
-#import <WebImage/WebImage.h>
+#import <SDWebImage/SDWebImage.h>
 #import "AmazonS3SignatureHelpers.h"
 #import "JSQMessages.h"
 

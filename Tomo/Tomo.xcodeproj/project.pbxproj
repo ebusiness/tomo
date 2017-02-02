@@ -88,7 +88,6 @@
 		D0A7C8BD1E1CDFC50046E571 /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D099B6171BDA3B63006C9D01 /* LocationController.swift */; };
 		D0A7C8DC1E1CE1AE0046E571 /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB07DF1B9D3E1400C06C4E /* RemoteNotification.swift */; };
 		D0A7C8DD1E1CE2F50046E571 /* SwiftyUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C1DA7B1AD368EC009A02CC /* SwiftyUserDefaults.swift */; };
-		D0D5A4471E261A4F00757F4E /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = D0D5A4461E261A4F00757F4E /* Cartfile */; };
 		D0DB07D71B9D1B5200C06C4E /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0DB07D61B9D1B5200C06C4E /* NotificationView.xib */; };
 		D0DB07D91B9D224900C06C4E /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB07D81B9D224900C06C4E /* NotificationView.swift */; };
 		D0E9B2801E24D0E200101277 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA9C5081C5106C9004A683C /* PostDetailViewController.swift */; };
@@ -698,7 +697,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.Push = {
 								enabled = 1;
@@ -739,7 +738,6 @@
 				559DCAD51C5FB373003FA73C /* Map.storyboard in Resources */,
 				D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */,
 				D0DB07D71B9D1B5200C06C4E /* NotificationView.xib in Resources */,
-				D0D5A4471E261A4F00757F4E /* Cartfile in Resources */,
 				29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */,
 				1FF9B95F1C59EB5C008BB6ED /* Chat.storyboard in Resources */,
 				1FF6930D1C1E95FC00777BD5 /* Landing.storyboard in Resources */,
@@ -771,7 +769,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SocketIO.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WechatKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/WebImage.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SDWebImage.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SVProgressHUD.framework",
 			);
 			outputPaths = (
