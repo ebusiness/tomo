@@ -73,21 +73,19 @@ extension GroupChatViewController {
         
         guard let photo = user.photo else { return }
         
-        let sdBlock: SDWebImageCompletionWithFinishedBlock = { (image, error, _, _, _) -> Void in
-
+        _ = SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: photo), progress: nil, completed: { (image, error, _, _) in
+            
             guard let image = image else { return }
             
             self.avatars[user.id] = JSQMessagesAvatarImageFactory.avatarImage(with: image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
             
             self.collectionView!.visibleCells.forEach { cell in
                 if let indexPath = self.collectionView!.indexPath(for: cell ), self.messages[indexPath.item].senderId() == user.id {
-                        
-                        self.collectionView!.reloadItems(at: [indexPath])
+                    
+                    self.collectionView!.reloadItems(at: [indexPath])
                 }
             }
-        }
-        
-        SDWebImageManager.shared().downloadImage(with: URL(string: photo), options: .retryFailed, progress: nil, completed: sdBlock)
+        })
     }
     
     fileprivate func loadMessages() {

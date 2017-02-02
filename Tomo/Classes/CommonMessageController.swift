@@ -113,15 +113,13 @@ extension CommonMessageController {
     }
     
     fileprivate func loadAvatars() {
-        
-        SDWebImageManager.shared().downloadImage(with: URL(string: me.photo!), options: .retryFailed, progress: nil) {
-            (image, error, _, _, _) -> Void in
+        _ = SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: me.photo!), progress: nil, completed: { (image, error, _, _) in
             if let image = image {
                 self.avatarMe = JSQMessagesAvatarImageFactory.avatarImage(with: image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
             } else {
                 self.avatarMe = self.defaultAvatar
             }
-        }
+        })
     }
     
     /**

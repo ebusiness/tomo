@@ -70,8 +70,7 @@ final class MessageViewController: CommonMessageController {
 extension MessageViewController {
     
     fileprivate func loadAvatars() {
-        SDWebImageManager.shared().downloadImage(with: NSURL(string: friend.photo!) as URL!, options: .retryFailed, progress: nil) {
-            (image, error, _, _, _) -> Void in
+        _ = SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: friend.photo!), progress: nil, completed: { (image, error, _, _) in
             if let image = image {
                 self.avatarFriend = JSQMessagesAvatarImageFactory.avatarImage(with: image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
             } else {
@@ -82,7 +81,7 @@ extension MessageViewController {
                 let indexPaths = self.collectionView!.indexPathsForVisibleItems
                 self.collectionView!.reloadItems(at: indexPaths)
             }
-        }
+        })
     }
     
     fileprivate func loadMessages() {
