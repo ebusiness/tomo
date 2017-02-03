@@ -16,7 +16,11 @@ public protocol CollectionSerializable {
 extension CollectionSerializable {
 
     init(_ respunse: Any) {
-        self.init(JSON(respunse))
+        if let json = respunse as? JSON {
+            self.init(json)
+        } else {
+            self.init(JSON(respunse))
+        }
     }
 
     static func collection<T: CollectionSerializable>(_ json: JSON) -> [T]? {
