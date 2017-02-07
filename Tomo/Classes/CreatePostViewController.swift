@@ -438,12 +438,11 @@ extension CreatePostViewController {
         }
     }
 
-    @IBAction func clearLocationButtonPressed(sender: Any) {
+    @IBAction func clearLocationBtnTapped(_ sender: Any) {
         location = nil
         placemark = nil
         updateLocationLabel()
     }
-
 }
 
 // MARK: - UINavigationBar Delegate

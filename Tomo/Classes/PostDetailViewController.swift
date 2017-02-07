@@ -509,7 +509,7 @@ extension PostDetailViewController {
 
     // Display the navigation bar background, the idea is
     // let the navigation bar become opaque when user just scroll over the image area
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
         // if the post has no image, do nothing
         guard let imageNumber = self.post.images?.count, imageNumber > 0 else { return }
