@@ -1,9 +1,9 @@
 //
-//  Me.swift
+//  Account.swift
 //  Tomo
 //
 //  Created by starboychina on 2016/01/18.
-//  Copyright © 2016年 &#24373;&#24535;&#33775;. All rights reserved.
+//  Copyright © 2016 e-business. All rights reserved.
 //
 
 import SwiftyJSON

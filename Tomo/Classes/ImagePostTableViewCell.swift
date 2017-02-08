@@ -3,7 +3,7 @@
 //  Tomo
 //
 //  Created by ebuser on 2016/01/20.
-//  Copyright © 2016年 &#24373;&#24535;&#33775;. All rights reserved.
+//  Copyright © 2016 e-business. All rights reserved.
 //
 
 import UIKit

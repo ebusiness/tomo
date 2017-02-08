@@ -3,7 +3,7 @@
 //  Tomo
 //
 //  Created by 張志華 on 2015/03/26.
-//  Copyright (c) 2015年 &#24373;&#24535;&#33775;. All rights reserved.
+//  Copyright © 2015 e-business. All rights reserved.
 //
 
 struct TomoConfig {

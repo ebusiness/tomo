@@ -1,9 +1,9 @@
 //
 //  S3Controller.swift
-//  S3BackgroundTransferSampleSwift
+//  TOMO
 //
 //  Created by 張志華 on 2015/04/06.
-//  Copyright (c) 2015年 Amazon. All rights reserved.
+//  Copyright © 2015 e-business. All rights reserved.
 //
 
 import UIKit

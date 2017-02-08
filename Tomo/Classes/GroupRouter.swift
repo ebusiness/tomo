@@ -3,7 +3,7 @@
 //  Tomo
 //
 //  Created by starboychina on 2015/12/15.
-//  Copyright © 2015年 &#24373;&#24535;&#33775;. All rights reserved.
+//  Copyright © 2015 e-business. All rights reserved.
 //
 
 // MARK: - Group

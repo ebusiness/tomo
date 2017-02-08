@@ -1,9 +1,9 @@
 //
 //  GroupChatViewController.swift
-//  spot
+//  Tomo
 //
 //  Created by 張志華 on 2015/02/18.
-//  Copyright (c) 2015年 e-business. All rights reserved.
+//  Copyright © 2015 e-business. All rights reserved.
 //
 
 import UIKit

@@ -3,7 +3,7 @@
 //  Tomo
 //
 //  Created by starboychina on 2015/10/23.
-//  Copyright (c) 2015年 &#24373;&#24535;&#33775;. All rights reserved.
+//  Copyright © 2015 e-business. All rights reserved.
 //
 
 import UIKit

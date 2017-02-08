@@ -1,9 +1,9 @@
 //
 //  CommonMessageController.swift
-//  spot
+//  Tomo
 //
 //  Created by Hikaru on 2015/03/11.
-//  Copyright (c) 2015年 e-business. All rights reserved.
+//  Copyright © 2015 e-business. All rights reserved.
 //
 
 import Alamofire

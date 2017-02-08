@@ -3,7 +3,7 @@
 //  Tomo
 //
 //  Created by 張志華 on 2015/03/26.
-//  Copyright (c) 2015年 張志華. All rights reserved.
+//  Copyright (c) 2015 e-business. All rights reserved.
 //
 
 import UIKit

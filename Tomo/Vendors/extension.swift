@@ -3,7 +3,7 @@
 //  Tomo
 //
 //  Created by starboychina on 2017/01/04.
-//  Copyright © 2017 &#24373;&#24535;&#33775;. All rights reserved.
+//  Copyright © 2015 e-business. All rights reserved.
 //
 
 import Foundation

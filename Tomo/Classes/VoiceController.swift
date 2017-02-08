@@ -1,9 +1,9 @@
 //
 //  VoiceController.swift
-//  spot
+//  Tomo
 //
 //  Created by Hikaru on 2015/03/12.
-//  Copyright (c) 2015年 e-business. All rights reserved.
+//  Copyright © 2015年 e-business. All rights reserved.
 //
 
 import AVFoundation
