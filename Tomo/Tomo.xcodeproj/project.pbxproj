@@ -768,6 +768,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/WechatKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SDWebImage.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SVProgressHUD.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SlackTextViewController.framework",
 			);
 			outputPaths = (
 			);
