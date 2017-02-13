@@ -242,9 +242,9 @@ extension GroupChatViewController {
 
         if message.senderId() != me.id {
             return avatars[message.senderId()]
+        } else {
+            return avatarMe
         }
-
-        return avatarMe
     }
 
 }
