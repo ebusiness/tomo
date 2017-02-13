@@ -65,9 +65,10 @@ extension GroupChatViewController {
 
     fileprivate func loadAvatarForUser(user: UserEntity){
 
-        if user.id == me.id {
-            return
-        }
+//        if user.id == me.id {
+//            
+//            return
+//        }
 
         self.avatars[user.id] = self.defaultAvatar
 
@@ -186,7 +187,6 @@ extension GroupChatViewController: CommonMessageDelegate {
     }
 
 }
-
 
 // MARK: - NSNotificationCenter
 

@@ -8,8 +8,6 @@
 
 import UIKit
 
-private let reuseIdentifier = "StationCell"
-
 final class GroupViewController: UICollectionViewController {
 
     var isLoading = false
@@ -48,17 +46,17 @@ final class GroupViewController: UICollectionViewController {
 // MARK: UICollectionViewDataSource
 
 extension GroupViewController {
-
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.groups.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as? MyGroupCollectionViewCell
-
+        
         cell?.group = self.groups[indexPath.row]
-
+        
         return cell!
     }
 
@@ -69,7 +67,7 @@ extension GroupViewController {
 extension GroupViewController {
 
     // Make the CollectionView as two-column layout
-    func collectionView(collectionView: UICollectionView, layout : UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout : UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (TomoConst.UI.ScreenWidth - 2.0) / 2.0
         let height = width / 3.0 * 4.0
         return CGSize(width: width, height: height)
@@ -100,7 +98,7 @@ extension GroupViewController {
 }
 
 extension GroupViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
 
         // the footerView is about 200 point height initially, for the convinence of design empty data view on stroyboard
         // if need to show the empty result view, make it full screen
@@ -113,7 +111,7 @@ extension GroupViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension GroupViewController  {
+extension GroupViewController {
 
     // Fetch more contents when scroll down to bottom
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -165,7 +163,7 @@ extension GroupViewController {
                 return
             }
 
-            if let groups: [GroupEntity] = GroupEntity.collection(json: $0.result.value!) {
+            if let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) {
                 self.groups.append(contentsOf: groups)
                 self.appendCells(count: groups.count)
                 self.page += 1
@@ -200,8 +198,8 @@ extension GroupViewController {
 extension GroupViewController {
 
     fileprivate func configEventObserver() {
-        NotificationCenter.default.addObserver(self, selector: "didJoinGroup:", name: NSNotification.Name(rawValue: "didJoinGroup"), object: me)
-        NotificationCenter.default.addObserver(self, selector: "didLeaveGroup:", name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(GroupViewController.didJoinGroup(_:)), name: NSNotification.Name(rawValue: "didJoinGroup"), object: me)
+        NotificationCenter.default.addObserver(self, selector: #selector(GroupViewController.didLeaveGroup(_:)), name: NSNotification.Name(rawValue: "didLeaveGroup"), object: me)
     }
 
     func didJoinGroup(_ notification: NSNotification) {
@@ -211,7 +209,7 @@ extension GroupViewController {
         guard let group = userInfo["groupEntityOfNewGroup"] as? GroupEntity else { return }
 
         // add the new group into collection view data model
-        self.groups.insert(group, atIndex: 0)
+        self.groups.insert(group, at: 0)
 
         // update collection view, insert the corresponding row in section 0 row 0
         self.collectionView?.performBatchUpdates({
@@ -261,7 +259,7 @@ final class MyGroupCollectionViewCell: UICollectionViewCell {
 
         self.nameLabel.text = self.group.name
 
-        self.backgroundImageView.sd_setImageWithURL(NSURL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
+        self.backgroundImageView.sd_setImage(with: URL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
 
     }
 }
