@@ -11,11 +11,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="234" id="aoT-SY-iiQ" customClass="ChatTableViewCell" customModule="tomo" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="234"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="337" id="aoT-SY-iiQ" customClass="ChatTableViewCell" customModule="tomo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="337"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aoT-SY-iiQ" id="Krn-tC-dNE">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="233"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="337"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NER-oi-K1R">
@@ -44,7 +44,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ss3-eG-M00">
-                        <rect key="frame" x="66" y="56" width="243" height="77"/>
+                        <rect key="frame" x="66" y="56" width="243" height="131"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -59,17 +59,10 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Di-AW-dsy">
-                        <rect key="frame" x="66" y="133" width="243" height="100"/>
-                        <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="0.5" colorSpace="calibratedRGB"/>
+                        <rect key="frame" x="66" y="187" width="243" height="150"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="100" id="fTO-GU-Rkf"/>
+                            <constraint firstAttribute="height" constant="150" id="fTO-GU-Rkf"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <integer key="value" value="5"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                        </userDefinedRuntimeAttributes>
                     </imageView>
                 </subviews>
                 <constraints>
@@ -84,11 +77,11 @@
                     <constraint firstItem="dt3-gc-wG9" firstAttribute="top" secondItem="Krn-tC-dNE" secondAttribute="top" constant="8" id="VcQ-8w-owT"/>
                     <constraint firstItem="Ss3-eG-M00" firstAttribute="leading" secondItem="NER-oi-K1R" secondAttribute="trailing" constant="8" id="dLR-BD-8s0"/>
                     <constraint firstItem="dt3-gc-wG9" firstAttribute="centerX" secondItem="Krn-tC-dNE" secondAttribute="centerX" id="e7k-iQ-y1T"/>
+                    <constraint firstItem="7Di-AW-dsy" firstAttribute="leading" secondItem="Ss3-eG-M00" secondAttribute="leading" id="hDD-g8-JQC"/>
                     <constraint firstItem="NER-oi-K1R" firstAttribute="leading" secondItem="Krn-tC-dNE" secondAttribute="leading" constant="8" id="hhD-fC-Hnc"/>
-                    <constraint firstItem="7Di-AW-dsy" firstAttribute="trailing" secondItem="Ss3-eG-M00" secondAttribute="trailing" id="lU2-zO-3HV"/>
                     <constraint firstItem="eUR-JQ-ntM" firstAttribute="height" secondItem="NER-oi-K1R" secondAttribute="height" id="oL4-LV-Ad1"/>
+                    <constraint firstItem="7Di-AW-dsy" firstAttribute="trailing" secondItem="Ss3-eG-M00" secondAttribute="trailing" id="pV9-kZ-5wa"/>
                     <constraint firstItem="eUR-JQ-ntM" firstAttribute="top" secondItem="NER-oi-K1R" secondAttribute="top" id="sAp-qi-n0t"/>
-                    <constraint firstItem="7Di-AW-dsy" firstAttribute="leading" secondItem="Ss3-eG-M00" secondAttribute="leading" id="xPM-zF-RQO"/>
                     <constraint firstAttribute="bottom" secondItem="7Di-AW-dsy" secondAttribute="bottom" id="xjF-cq-yMc"/>
                 </constraints>
             </tableViewCellContentView>
@@ -100,10 +93,10 @@
                 <outlet property="nickname" destination="86d-uw-RxE" id="aF9-xf-1qJ"/>
                 <outlet property="outgoingAvatar" destination="eUR-JQ-ntM" id="mFb-HH-RCi"/>
                 <outlet property="thumbnail" destination="7Di-AW-dsy" id="h3I-Wd-Iql"/>
-                <outlet property="thumbnailConstraint" destination="fTO-GU-Rkf" id="Dt0-HC-Kcd"/>
+                <outlet property="thumbnailHeight" destination="fTO-GU-Rkf" id="GGn-pH-DvR"/>
                 <outlet property="topConstraint" destination="O07-bU-bT3" id="JeI-Ci-MvG"/>
             </connections>
-            <point key="canvasLocation" x="-691.5" y="-841"/>
+            <point key="canvasLocation" x="-691.5" y="-789.5"/>
         </tableViewCell>
     </objects>
 </document>

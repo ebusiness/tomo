@@ -10,38 +10,48 @@ import UIKit
 
 final class ChatTableViewCell: UITableViewCell {
 
-    @IBOutlet weak private var incomingAvatar: UIImageView!
-    @IBOutlet weak private var outgoingAvatar: UIImageView!
+    @IBOutlet weak fileprivate var incomingAvatar: UIImageView!
+    @IBOutlet weak fileprivate var outgoingAvatar: UIImageView!
 
-    @IBOutlet weak private var createDate: UILabel!
-    @IBOutlet weak private var nickname: UILabel!
-    @IBOutlet weak private var content: UILabel!
-    @IBOutlet weak private var thumbnail: UIImageView!
+    @IBOutlet weak fileprivate var createDate: UILabel!
+    @IBOutlet weak fileprivate var nickname: UILabel!
+    @IBOutlet weak fileprivate var content: UILabel!
+    @IBOutlet weak fileprivate var thumbnail: UIImageView!
 
-    @IBOutlet weak private var topConstraint: NSLayoutConstraint!
-    @IBOutlet weak private var contentTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak private var thumbnailConstraint: NSLayoutConstraint!
+    @IBOutlet weak fileprivate var topConstraint: NSLayoutConstraint!
+    @IBOutlet weak fileprivate var contentTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak fileprivate var thumbnailHeight: NSLayoutConstraint!
 
     var message: MessageEntity! {
         didSet {
-            showCreateDateIfNeeded()
+            self.showCreateDateIfNeeded()
             let isReceived = self.message.from.id != me.id
             self.showAvatar(isReceived: isReceived)
             self.showNickname(isReceived: isReceived)
+            self.showContent(isReceived: isReceived)
         }
     }
 
     var dateOfPreviousMessage: Date! {
         didSet {
-            showCreateDateIfNeeded()
+            self.showCreateDateIfNeeded()
         }
     }
 
     func getHeight() -> CGFloat {
-        let regular = self.topConstraint.constant + self.contentTopConstraint.constant
+        let regular = self.topConstraint.constant + 8
 
-        self.content.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
-        let variable = self.thumbnailConstraint.constant + self.content.frame.size.height
+        if self.content.preferredMaxLayoutWidth == 0 {
+//            self.content.preferredMaxLayoutWidth = self.content.frame.size.width
+            let width = self.frame.size.width - self.incomingAvatar.frame.size.width * 2 - 8 * 4
+            self.content.preferredMaxLayoutWidth = width
+        }
+        self.content.frame.size.width = self.content.preferredMaxLayoutWidth
+        self.content.sizeToFit()
+
+        let variable = self.thumbnailHeight.constant
+                        + self.content.frame.size.height
+                        + self.contentTopConstraint.constant
 
         if variable < self.incomingAvatar.frame.size.height {
             return regular + self.incomingAvatar.frame.size.height
@@ -49,9 +59,12 @@ final class ChatTableViewCell: UITableViewCell {
 
         return regular + variable
     }
+}
 
-    private func showCreateDateIfNeeded() {
+extension ChatTableViewCell {
+    fileprivate func showCreateDateIfNeeded() {
         self.topConstraint.constant = 8
+        self.createDate.text = ""
         guard self.message != nil else {
             return
         }
@@ -67,7 +80,7 @@ final class ChatTableViewCell: UITableViewCell {
         }
     }
 
-    private func showAvatar(isReceived: Bool) {
+    fileprivate func showAvatar(isReceived: Bool) {
         self.outgoingAvatar.isHidden = isReceived
         self.incomingAvatar.isHidden = !isReceived
 
@@ -81,23 +94,50 @@ final class ChatTableViewCell: UITableViewCell {
         }
     }
 
-    private func showNickname(isReceived: Bool) {
+    fileprivate func showNickname(isReceived: Bool) {
         self.contentTopConstraint.constant = isReceived ? 24 : 0
+        self.nickname.isHidden = !isReceived
         self.nickname.text = self.message.from.nickName
     }
 
-    private func showContent(isReceived: Bool) {
+    fileprivate func showContent(isReceived: Bool) {
+        self.content.text = ""
+        self.thumbnail.image = nil
         if self.message.type == .text {
-            self.thumbnailConstraint.constant = 0
-            self.content.text = self.message.content
+            self.showTextContent(isReceived: isReceived)
         } else if self.message.type == .voice {
-            self.thumbnailConstraint.constant = 20
+            self.thumbnailHeight.constant = 20
             let voiceImageName = isReceived ? "Receiver" : "Sender"
             self.thumbnail.image = UIImage(named: "\(voiceImageName)VoiceNodePlaying.png")
         } else {
-            self.thumbnailConstraint.constant = 150
-            let url = URL(string: self.message.content)
-            self.thumbnail.sd_setImage(with: url)
+            self.showMediaContent(isReceived: isReceived)
+        }
+    }
+
+    private func showTextContent(isReceived: Bool) {
+        self.thumbnailHeight.constant = 0
+        self.content.text = self.message.content
+        self.content.textAlignment = .left
+        self.content.sizeToFit()
+        if !isReceived && self.content.frame.size.height < 20 {
+            self.content.textAlignment = .right
+        }
+    }
+
+    private func showMediaContent(isReceived: Bool) {
+        self.thumbnailHeight.constant = 150
+        let url = URL(string: self.message.type.fullPath(name: self.message.content))
+        self.thumbnail.contentMode = isReceived ? .topLeft : .topRight
+        let placeholderImageName = "placeholder.png"
+        self.thumbnail.image = UIImage(named: placeholderImageName)
+        self.thumbnail.sd_setImage(with: url) { (image, _, _, _) in
+            guard let image = image else {
+                let brokenImageName = "file_broken.png"
+                self.thumbnail.image = UIImage(named:brokenImageName)
+                return
+            }
+            let width = image.size.width / image.size.height * self.thumbnailHeight.constant
+            self.thumbnail.image = image.scale(toFit: CGSize(width: width, height: 150))
         }
     }
 
