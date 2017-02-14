@@ -8,6 +8,8 @@
 
 import UIKit
 
+private let reuseIdentifier = "StationCell"
+
 final class GroupViewController: UICollectionViewController {
 
     var isLoading = false
@@ -53,7 +55,7 @@ extension GroupViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as? MyGroupCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? MyGroupCollectionViewCell
         
         cell?.group = self.groups[indexPath.row]
         

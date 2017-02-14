@@ -32,7 +32,6 @@ final class GroupChatViewController: CommonMessageController {
 
         //receive notification
         self.registerForNotifications()
-
         self.loadMessages()
     }
 
@@ -65,10 +64,10 @@ extension GroupChatViewController {
 
     fileprivate func loadAvatarForUser(user: UserEntity){
 
-//        if user.id == me.id {
-//            
-//            return
-//        }
+        if user.id == me.id {
+            
+            return
+        }
 
         self.avatars[user.id] = self.defaultAvatar
 
@@ -239,12 +238,24 @@ extension GroupChatViewController {
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
 
         let message = messages[indexPath.item]
-
+        
         if message.senderId() != me.id {
             return avatars[message.senderId()]
-        } else {
-            return avatarMe
         }
+
+        if avatarMe == nil {
+            _ = SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: me.photo!), progress: nil, completed: { (image, error, _, _) in
+                if let image = image {
+                    self.avatarMe = JSQMessagesAvatarImageFactory.avatarImage(with: image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+                } else {
+                    self.avatarMe = self.defaultAvatar
+                }
+                self.collectionView.reloadItems(at: [indexPath])
+            })
+            return self.defaultAvatar
+        }
+
+        return avatarMe
     }
 
 }

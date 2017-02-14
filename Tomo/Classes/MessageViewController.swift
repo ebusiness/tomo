@@ -237,6 +237,18 @@ extension MessageViewController {
             return avatarFriend
         }
 
+        if avatarMe == nil {
+            _ = SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: me.photo!), progress: nil, completed: { (image, error, _, _) in
+                if let image = image {
+                    self.avatarMe = JSQMessagesAvatarImageFactory.avatarImage(with: image, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
+                } else {
+                    self.avatarMe = self.defaultAvatar
+                }
+                self.collectionView.reloadItems(at: [indexPath])
+            })
+            return self.defaultAvatar
+        }
+
         return avatarMe
     }
 
