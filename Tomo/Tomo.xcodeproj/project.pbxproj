@@ -58,6 +58,9 @@
 		D0223CEC1E1F8333004D5FE3 /* TomoVideoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */; };
 		D0223CED1E1F8507004D5FE3 /* JSQVoiceMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */; };
 		D0223CEE1E1F856E004D5FE3 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
+		D05FFF2F1E514A8D00B60F15 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FFF2E1E514A8D00B60F15 /* ChatViewController.swift */; };
+		D05FFF501E5185EF00B60F15 /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D05FFF4F1E5185EF00B60F15 /* ChatTableViewCell.xib */; };
+		D05FFF521E5186F200B60F15 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FFF511E5186F200B60F15 /* ChatTableViewCell.swift */; };
 		D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */; };
 		D0A104951BEB055100AEE356 /* statements.html in Resources */ = {isa = PBXBuildFile; fileRef = D0A104941BEB055100AEE356 /* statements.html */; };
 		D0A578061E1D02B100F8A8BC /* SocketController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */; };
@@ -209,6 +212,9 @@
 		D0244C5C1C20130800EA87C1 /* GroupRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupRouter.swift; path = Classes/GroupRouter.swift; sourceTree = "<group>"; };
 		D029F7311BCCB39E00CDE18B /* PushSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PushSettingViewController.swift; path = Classes/PushSettingViewController.swift; sourceTree = "<group>"; };
 		D040E1641BDDC00D00417174 /* RecommendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendViewController.swift; path = Classes/RecommendViewController.swift; sourceTree = "<group>"; };
+		D05FFF2E1E514A8D00B60F15 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = Classes/ChatViewController.swift; sourceTree = "<group>"; };
+		D05FFF4F1E5185EF00B60F15 /* ChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChatTableViewCell.xib; path = Classes/ChatTableViewCell.xib; sourceTree = "<group>"; };
+		D05FFF511E5186F200B60F15 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatTableViewCell.swift; path = Classes/ChatTableViewCell.swift; sourceTree = "<group>"; };
 		D06DC6311C240691009B19D1 /* UserRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserRouter.swift; path = Classes/UserRouter.swift; sourceTree = "<group>"; };
 		D06DC6331C2407A1009B19D1 /* GroupMessageRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupMessageRouter.swift; path = Classes/GroupMessageRouter.swift; sourceTree = "<group>"; };
 		D073E6F71B84C1BF00066F42 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraController.swift; path = Classes/CameraController.swift; sourceTree = "<group>"; };
@@ -366,6 +372,7 @@
 		1FB61D881BB0FEF000E6A05C /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				D05FFF4E1E5185BB00B60F15 /* Components */,
 				29539C771B13175D00545509 /* CommonMessageController.swift */,
 				296D8BB01AFC5A250058D400 /* MessageViewController.swift */,
 				296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */,
@@ -373,6 +380,7 @@
 				1FF9B9601C59FC29008BB6ED /* ContactsViewController.swift */,
 				1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */,
 				1FAE41831C5EFDF90050CEED /* ContactsNavigationController.swift */,
+				D05FFF2E1E514A8D00B60F15 /* ChatViewController.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -578,6 +586,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		D05FFF4E1E5185BB00B60F15 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D05FFF4F1E5185EF00B60F15 /* ChatTableViewCell.xib */,
+				D05FFF511E5186F200B60F15 /* ChatTableViewCell.swift */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
 		D07793831B704EA00056B7CB /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -734,6 +751,7 @@
 			files = (
 				1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */,
 				559DCAD51C5FB373003FA73C /* Map.storyboard in Resources */,
+				D05FFF501E5185EF00B60F15 /* ChatTableViewCell.xib in Resources */,
 				D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */,
 				D0DB07D71B9D1B5200C06C4E /* NotificationView.xib in Resources */,
 				29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */,
@@ -886,6 +904,7 @@
 				D0F6E2BD1E24CDC2000B0EC3 /* HomeViewController.swift in Sources */,
 				D0A7C8B61E1CD3920046E571 /* GCD.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
+				D05FFF521E5186F200B60F15 /* ChatTableViewCell.swift in Sources */,
 				D0E9B28B1E24E6C700101277 /* VoiceController.swift in Sources */,
 				D0A7C8BD1E1CDFC50046E571 /* LocationController.swift in Sources */,
 				D007D89B1E25FBD60005DC21 /* PushSettingViewController.swift in Sources */,
@@ -915,6 +934,7 @@
 				D0A7C8911E1CD03D0046E571 /* SettingRouter.swift in Sources */,
 				D0E9B28A1E24E6C300101277 /* CameraController.swift in Sources */,
 				296D8BAC1AFC59F10058D400 /* TabBarController.swift in Sources */,
+				D05FFF2F1E514A8D00B60F15 /* ChatViewController.swift in Sources */,
 				D007D8951E25FBD60005DC21 /* MyAccountEditViewController.swift in Sources */,
 				D0A7C88D1E1CD03D0046E571 /* InvitationRouter.swift in Sources */,
 				D007D8811E25C8A40005DC21 /* GroupDescriptionViewController.swift in Sources */,
