@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 import SwiftyJSON
 import WechatKit
 
@@ -50,6 +51,7 @@ extension RegViewController {
 
     fileprivate func setupAppearance() {
 
+        
         func customizeTextField(textField: UITextField) {
 
             // draw a white bottom border
@@ -119,7 +121,7 @@ extension RegViewController {
         })
     }
 
-    fileprivate func changeRootToTab(){
+    fileprivate func changeRootToTab() {
         Util.dismissHUD()
         if me.primaryStation != nil {
 //            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
@@ -131,63 +133,66 @@ extension RegViewController {
     }
 }
 
-// MARK: - Actions
+// MARK: - Actions login_wechat
 
 extension RegViewController {
 
     @IBAction func login_wechat(_ sender: Any) {
-
-        WechatManager.sharedInstance.checkAuth { result in
-            switch result {
-            case .failure(let errCode)://登录失败
-                self.failure(errCode: Int(errCode))
-            case .success(_):
-                Router.Signin.WeChat(openid: WechatManager.openid, access_token: WechatManager.accessToken).response {
-                    switch $0.result {
-                    case .success(let value):
-                        self.success(res: value);
-                    case .failure:
-                        WechatManager.sharedInstance.getUserInfo { userinfoResult in
-
-                            guard let parameters = userinfoResult.value else { return }
-
-                            let wechat = Router.Signup.WeChat(openid: WechatManager.openid,
-                                                              nickname: parameters["nickname"] as? String ?? "",
-                                                              gender: parameters["sex"] as? String,
-                                                              headimgurl: parameters["headimgurl"] as? String)
-
-                            wechat.response {
-                                if $0.result.isFailure {
-                                    self.failure(errCode: 400)
-                                } else {
-                                    self.success(res: $0.result.value!.dictionaryObject!)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        WechatManager.sharedInstance.rxCheckAuth()
+            .subscribe(onNext: { _ in
+                self.signWithOpenid()
+            }, onError: { _ in
+                self.failure()
+            })
     }
 
+    private func signWithOpenid() {
+        Router.Signin.WeChat(openid: WechatManager.openid, access_token: WechatManager.accessToken)
+            .rxRequest()
+            .subscribe(onNext: {
+                self.success(res: $0)
+            }, onError: { _ in
+                self.getWeChatInfo()
+            })
+    }
+
+    private func getWeChatInfo() {
+        WechatManager.sharedInstance.rxGetUserInfo()
+            .subscribe(onNext: { userInfo in
+                self.registByWechatInfo(userInfo: userInfo)
+            })
+    }
+
+    private func registByWechatInfo(userInfo: [String : Any]) {
+        Router.Signup.WeChat(openid: WechatManager.openid,
+                             nickname: userInfo["nickname"] as? String ?? "",
+                             gender: userInfo["sex"] as? String,
+                             headimgurl: userInfo["headimgurl"] as? String)
+            .rxRequest()
+            .subscribe(onNext: {
+                self.success(res: $0.dictionaryObject!)
+            }, onError: { _ in
+                self.failure()
+            })
+    }
+}
+
+// MARK: - Actions accountLogin
+
+extension RegViewController {
+
     @IBAction func accountLogin(_ sender: Any) {
-
-        Router.Signin.Email(email: emailTextField.text!, password: passwordTextField.text!).response {
-            switch $0.result {
-            case .success(let value):
-
+        Router.Signin.Email(email: emailTextField.text!, password: passwordTextField.text!)
+            .rxRequest()
+            .subscribe(onNext: {
                 UserDefaults.standard.set(self.emailTextField.text, forKey: "email")
                 UserDefaults.standard.set(self.passwordTextField.text, forKey: "password")
 
-                me = Account(value)
+                me = Account($0)
                 self.changeRootToTab()
-
-            case .failure:
-
+            }, onError: { _ in
                 Util.alert(parentvc: self, title: "登录失败", message: "您输入的账号或密码不正确", cancel: "重试")
-            }
-        }
-
+            })
     }
 
     @IBAction func releaseResponder(_ sender: Any) {
@@ -200,7 +205,8 @@ extension RegViewController {
 
 extension RegViewController: UITextFieldDelegate {
 
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
         var email = (self.emailTextField.text ?? "") as NSString
         var password = (self.passwordTextField.text ?? "") as NSString
@@ -232,8 +238,7 @@ extension RegViewController {
         sender.isUserInteractionEnabled = false
         var id: String!
 
-        switch testSegment.selectedSegmentIndex
-        {
+        switch testSegment.selectedSegmentIndex {
         case 0:
             id = "55a319577b6eb5a66e91edaa"
         case 1:
@@ -249,7 +254,7 @@ extension RegViewController {
         case 6:
             id = "55c870e3a96768e7609cdf2a"
         default:
-            break;
+            break
         }
 
         Router.Signin.Test(id: id).response {
@@ -279,7 +284,7 @@ extension RegViewController {
         self.changeRootToTab()
     }
 
-    fileprivate func failure(errCode: Int) {
+    fileprivate func failure() {
         self.inputArea.isHidden = false
         UIView.animate(withDuration: 0.3, animations: { () -> Void in
             self.inputArea.alpha = 1

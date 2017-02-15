@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import RxSwift
 import SwiftyJSON
 
 struct Router {}
@@ -79,5 +80,60 @@ extension APIRoute {
     @discardableResult
     func response(completionHandler: @escaping (DataResponse<JSON>) -> Void) -> Request {
         return request().responseSwiftyJSON(completionHandler: completionHandler)
+    }
+}
+
+// MARK: - RxSwift
+extension APIRoute {
+
+    /// deferred request
+    ///
+    /// - Returns: <#return value description#>
+    func rxRequest() -> Observable<JSON> {
+        return Observable<JSON>.deferred {
+            return self.createObservable()
+        }
+    }
+
+    /// create an Observable of Alamofire request
+    ///
+    /// - Returns: <#return value description#>
+    private func createObservable() -> Observable<JSON> {
+        return Observable<JSON>.create { observer in
+            let disposable = Disposables.create()
+            self.request().responseSwiftyJSON {
+                guard let value = $0.result.value else {
+                    observer.onError($0.result.error!)
+                    disposable.dispose()
+                    return
+                }
+                observer.onNext(value)
+                observer.onCompleted()
+                disposable.dispose()
+            }
+            return disposable
+        }
+    }
+}
+
+extension ObservableType {
+    /**
+     Subscribes an element handler, an error handler to an observable sequence.
+     
+     - parameter onNext: Action to invoke for each element in the observable sequence.
+     - parameter onError: Action to invoke upon errored termination of the observable sequence.
+     - returns: Subscription object used to unsubscribe from the observable sequence.
+     */
+    @discardableResult
+    public func subscribe(onNext: ((Self.E) -> Void)? = nil, onError: ((Error) -> Void)? = nil) -> Disposable {
+        #if DEBUG
+            return self.subscribe(onNext: onNext, onError: onError, onCompleted: {
+                print("onCompleted")
+            }, onDisposed: {
+                print("onCompleted")
+            })
+        #else
+            return self.subscribe(onNext: onNext, onError: onError)
+        #endif
     }
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 import MobileCoreServices
+import RxSwift
 
 extension UIImage {
     // MARK: - URL style
@@ -255,3 +256,11 @@ extension UINavigationController {
     }
 }
 
+// MARK: - extension for rxSwift
+extension UIViewController {
+
+    /// When a DisposeBag is deallocated, it will call dispose on each of the added disposables.
+    var disposeBag: DisposeBag {
+        return DisposeBag()
+    }
+}

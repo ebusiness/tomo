@@ -58,6 +58,7 @@
 		D0223CEC1E1F8333004D5FE3 /* TomoVideoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */; };
 		D0223CED1E1F8507004D5FE3 /* JSQVoiceMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */; };
 		D0223CEE1E1F856E004D5FE3 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
+		D04CDF151E5432770069F02C /* WechatKit+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04CDF141E5432770069F02C /* WechatKit+RxSwift.swift */; };
 		D05FFF2F1E514A8D00B60F15 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FFF2E1E514A8D00B60F15 /* ChatViewController.swift */; };
 		D05FFF501E5185EF00B60F15 /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D05FFF4F1E5185EF00B60F15 /* ChatTableViewCell.xib */; };
 		D05FFF521E5186F200B60F15 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FFF511E5186F200B60F15 /* ChatTableViewCell.swift */; };
@@ -212,6 +213,7 @@
 		D0244C5C1C20130800EA87C1 /* GroupRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupRouter.swift; path = Classes/GroupRouter.swift; sourceTree = "<group>"; };
 		D029F7311BCCB39E00CDE18B /* PushSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PushSettingViewController.swift; path = Classes/PushSettingViewController.swift; sourceTree = "<group>"; };
 		D040E1641BDDC00D00417174 /* RecommendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendViewController.swift; path = Classes/RecommendViewController.swift; sourceTree = "<group>"; };
+		D04CDF141E5432770069F02C /* WechatKit+RxSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "WechatKit+RxSwift.swift"; path = "Classes/WechatKit+RxSwift.swift"; sourceTree = "<group>"; };
 		D05FFF2E1E514A8D00B60F15 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = Classes/ChatViewController.swift; sourceTree = "<group>"; };
 		D05FFF4F1E5185EF00B60F15 /* ChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChatTableViewCell.xib; path = Classes/ChatTableViewCell.xib; sourceTree = "<group>"; };
 		D05FFF511E5186F200B60F15 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatTableViewCell.swift; path = Classes/ChatTableViewCell.swift; sourceTree = "<group>"; };
@@ -475,6 +477,7 @@
 				29C1DA781AD36659009A02CC /* S3Controller.swift */,
 				D073E6F71B84C1BF00066F42 /* CameraController.swift */,
 				D099B6171BDA3B63006C9D01 /* LocationController.swift */,
+				D04CDF141E5432770069F02C /* WechatKit+RxSwift.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -788,6 +791,8 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SDWebImage.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SVProgressHUD.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SlackTextViewController.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
 			);
 			outputPaths = (
 			);
@@ -919,6 +924,7 @@
 				D0A7C8891E1CD0230046E571 /* Account.swift in Sources */,
 				D0E9B2881E24DF1300101277 /* UserPostsViewController.swift in Sources */,
 				D0A7C8B81E1CD9400046E571 /* URLSchemesController.swift in Sources */,
+				D04CDF151E5432770069F02C /* WechatKit+RxSwift.swift in Sources */,
 				D007D88A1E25F8BC0005DC21 /* GroupAnnotationView.swift in Sources */,
 				D0A7C88F1E1CD03D0046E571 /* PostRouter.swift in Sources */,
 				D0A7C8B71E1CD8DA0046E571 /* ListenerEvent.swift in Sources */,
