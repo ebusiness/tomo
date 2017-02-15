@@ -26,7 +26,7 @@ class CameraController: NSObject {
         picker.videoMaximumDuration = 10
     }
 
-    func open(vc: UIViewController, sourceType: UIImagePickerControllerSourceType, withVideo: Bool = false, allowsEditing: Bool = false, completion: @escaping CameraBlock ){
+    func open(vc: UIViewController, sourceType: UIImagePickerControllerSourceType, withVideo: Bool = false, allowsEditing: Bool = false, completion: @escaping CameraBlock ) {
         self.completion = completion
         picker.sourceType = sourceType
         picker.allowsEditing = allowsEditing
@@ -37,7 +37,7 @@ class CameraController: NSObject {
         self.presentViewController()
     }
 
-    private func presentViewController(){
+    private func presentViewController() {
 
         let status = picker.sourceType == .camera ?
             AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo).rawValue: PHPhotoLibrary.authorizationStatus().rawValue
@@ -58,7 +58,7 @@ class CameraController: NSObject {
         }
     }
 
-    private func requestAuthorization(){
+    private func requestAuthorization() {
         if picker.sourceType == .camera {
             AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo) { granted in
                 if granted {

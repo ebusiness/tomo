@@ -22,21 +22,21 @@ extension Router {
         case Test(id: String)
 
         var path: String {
-            switch self{
+            switch self {
             case .Email: return "/signin"
             case .WeChat: return "/signin-wechat"
             case .Test: return "/signin-test"
             }
         }
         var method: RouteMethod {
-            switch self{
+            switch self {
             case .Email: return .POST
             case .WeChat: return .POST
             case .Test: return .GET
             }
         }
         var parameters: [String: Any]? {
-            switch self{
+            switch self {
             case let .Email(email, password):
                 return ["email": email, "password": password]
             case let .WeChat(openid, access_token):

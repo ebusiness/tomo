@@ -8,7 +8,7 @@
 
 import AVFoundation
 
-class VoiceController: NSObject,AVAudioRecorderDelegate{
+class VoiceController: NSObject,AVAudioRecorderDelegate {
 
     private var recorder: AVAudioRecorder!
     private var player: AVAudioPlayer!
@@ -28,7 +28,7 @@ class VoiceController: NSObject,AVAudioRecorderDelegate{
         self.pathWav = "\(paths[0])/recorder.wav"//"\(paths[0])/recorder\(NSDate.timeIntervalSinceReferenceDate() * 1000.0).wav"
     }
 
-    private func setup(){
+    private func setup() {
         let recordSettings: [String: Any] =
         [
             AVFormatIDKey: Int(kAudioFormatLinearPCM),
@@ -53,7 +53,7 @@ class VoiceController: NSObject,AVAudioRecorderDelegate{
         }
 
     }
-    func start(){
+    func start() {
         if nil == recorder {
             self.setup()
             do {
@@ -65,7 +65,7 @@ class VoiceController: NSObject,AVAudioRecorderDelegate{
             }
         }
     }
-    func stop()-> (String, String)?{
+    func stop()-> (String, String)? {
         if nil == recorder { return nil }
 
         recorder.stop()
@@ -138,7 +138,7 @@ class VoiceController: NSObject,AVAudioRecorderDelegate{
         play(path: filepath)
     }
 
-    func play(path: String!){
+    func play(path: String!) {
         /////
         self.amrToWav(amrPath: path, savePath: self.pathWav)
         /////
@@ -154,10 +154,10 @@ class VoiceController: NSObject,AVAudioRecorderDelegate{
         }
     }
 
-    func wavToAmr(wavPath: String,savePath: String){
+    func wavToAmr(wavPath: String,savePath: String) {
         EncodeWAVEFileToAMRFile(wavPath.cString(using: String.Encoding.utf8)!,savePath.cString(using: String.Encoding.utf8)!,1,16)
     }
-    func amrToWav(amrPath: String,savePath: String){
+    func amrToWav(amrPath: String,savePath: String) {
         DecodeAMRFileToWAVEFile(amrPath.cString(using: String.Encoding.utf8)!,savePath.cString(using: String.Encoding.utf8)!)
     }
 

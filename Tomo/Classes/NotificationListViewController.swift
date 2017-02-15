@@ -190,7 +190,7 @@ final class NotificationCell: UITableViewCell {
     @IBOutlet weak fileprivate var createDateLabelView: UILabel!
 
     var notification: NotificationEntity! {
-        didSet{
+        didSet {
 
             if let photo = self.notification.from.photo {
                 self.avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: defaultAvatarImage)

@@ -204,7 +204,7 @@ extension MessageViewController {
         })
     }
 
-    func setting(){
+    func setting() {
         //push setting or prifile?
         let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
         vc?.user = friend

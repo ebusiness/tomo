@@ -199,7 +199,7 @@ extension TabBarController {
     func closeNotificationBar() {
         gcd.sync(.main) {
             self.topConstraint.constant = -64
-            UIView.animate(withDuration: TomoConst.Duration.Short){
+            UIView.animate(withDuration: TomoConst.Duration.Short) {
                 self.view.layoutIfNeeded()
             }
         }

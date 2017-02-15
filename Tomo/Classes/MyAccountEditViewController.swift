@@ -325,7 +325,7 @@ extension MyAccountEditViewController {
         }
     }
 
-    fileprivate func updateUser(){
+    fileprivate func updateUser() {
 
         var parameters = Router.Setting.MeParameter()
 

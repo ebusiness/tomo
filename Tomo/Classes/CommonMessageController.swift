@@ -139,10 +139,10 @@ extension CommonMessageController {
     }
 
     fileprivate func changeAccessoryButtonImage(tag: Int) {
-        if tag == 0{
+        if tag == 0 {
             self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.iconSpeakerNormal, for: .normal)
             self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.iconSpeakerHighlighted, for: .highlighted)
-        }else{
+        } else {
             self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.iconKeyboardNormal, for: .normal)
             self.inputToolbar!.contentView!.leftBarButtonItem!.setImage(self.iconKeyboardHighlighted, for: .highlighted)
         }
@@ -202,7 +202,7 @@ extension CommonMessageController {
                     ]))
 
                 S3Controller.uploadFile(localPath: localURL.path, remotePath: remotePath, done: { (error) -> Void in
-                    self.delegate.sendMessage(type: messaeType, text: fileName){ ()->() in
+                    self.delegate.sendMessage(type: messaeType, text: fileName) { ()->() in
                         progressView.removeFromSuperview()
                     }
                 })
@@ -241,17 +241,17 @@ extension CommonMessageController {
         }
 
         Util.alertActionSheet(parentvc: self, optionalDict: [
-            "拍摄/视频":{ (_) -> Void in
+            "拍摄/视频": { (_) -> Void in
                 CameraController.sharedInstance.open(vc: self, sourceType: .camera, withVideo: true, completion: self.pressAccessoryBlock)
             },
-            "从相册选择":{ (_) -> Void in
+            "从相册选择": { (_) -> Void in
                 CameraController.sharedInstance.open(vc: self, sourceType: .savedPhotosAlbum, completion: self.pressAccessoryBlock)
             },
-//            "语音输入":{ (_) -> Void in
+//            "语音输入": { (_) -> Void in
 //                if self.btnVoice == nil {
 //                    self.setVoiceButton()
 //                }
-//                if self.btnVoice?.tag == 0{
+//                if self.btnVoice?.tag == 0 {
 //                    self.btnVoice?.tag = 1
 //                    self.changeAccessoryButtonImage(1)
 //                    self.inputToolbar!.contentView!.addSubview(self.btnVoice!)
@@ -266,7 +266,7 @@ extension CommonMessageController {
     /**
     hold on button
     */
-    func setVoiceButton(){
+    func setVoiceButton() {
         var frame = self.inputToolbar!.contentView!.textView!.frame
         frame.size.height = 30;
 
@@ -477,7 +477,7 @@ extension CommonMessageController {
 
 extension CommonMessageController {
 
-    func addBadgeViewIfNeeded (cell: JSQMessagesCollectionViewCell, message: JSQMessageEntity){
+    func addBadgeViewIfNeeded (cell: JSQMessagesCollectionViewCell, message: JSQMessageEntity) {
         if message.senderId() == me.id { return }
         guard message.type == .voice else { return }
 

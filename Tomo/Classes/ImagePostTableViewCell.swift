@@ -111,7 +111,7 @@ final class SingleImageCollectionViewCell: UICollectionViewCell {
                     } else if ratio > SingleImageCollectionViewCell.maxAspectFitScale
                         || ratio < SingleImageCollectionViewCell.minAspectFitScale {
                             self.imageView.contentMode = .scaleAspectFit
-                    }else {
+                    } else {
                         self.imageView.contentMode = .scaleAspectFill
                         //                        self.imageView.faceAwareFill()
                     }

@@ -80,7 +80,7 @@ class JSQMessageEntity: MessageEntity, JSQMessageData {
         return item
     }
 
-    func download(_ completion: @escaping ()->() ){
+    func download(_ completion: @escaping ()->() ) {
         if self.isTaskRunning || self.brokenImage != nil {
             return
         } else {
@@ -114,7 +114,7 @@ class JSQMessageEntity: MessageEntity, JSQMessageData {
         }
     }
 
-    func reload(completion: @escaping ()->() ){
+    func reload(completion: @escaping ()->() ) {
         if self.taskTryCount < -2 {
             return
         }

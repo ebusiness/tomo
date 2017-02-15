@@ -49,7 +49,7 @@ class ContactsNavigationController: UINavigationController {
         }
     }
 
-    private func calculateBadge() -> String?{
+    private func calculateBadge() -> String? {
 
         if me.newMessages.isEmpty && me.friendInvitations.isEmpty {
             return nil

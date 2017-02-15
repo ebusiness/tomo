@@ -50,7 +50,7 @@ enum ListenerEvent: String {
         NotificationCenter.default.addObserver(observer, selector: aSelector, name: self.notificationName, object: nil)
     }
 
-    func addObserver(observer: UIViewController, usingBlock block: @escaping (NSNotification!) -> Void){
+    func addObserver(observer: UIViewController, usingBlock block: @escaping (NSNotification!) -> Void) {
 
         if let observer: Any = observers[observer.description] {
             NotificationCenter.default.removeObserver(observer)

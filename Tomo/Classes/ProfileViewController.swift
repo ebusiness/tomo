@@ -353,7 +353,7 @@ extension ProfileViewController {
         }
     }
 
-    fileprivate func invitationAccept(accept: Bool){
+    fileprivate func invitationAccept(accept: Bool) {
 
         let invitation = me.friendInvitations.first(where: { $0.from.id == self.user.id })
 

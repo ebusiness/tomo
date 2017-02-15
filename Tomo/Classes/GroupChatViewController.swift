@@ -62,7 +62,7 @@ final class GroupChatViewController: CommonMessageController {
 
 extension GroupChatViewController {
 
-    fileprivate func loadAvatarForUser(user: UserEntity){
+    fileprivate func loadAvatarForUser(user: UserEntity) {
 
         if user.id == me.id {
 
@@ -138,7 +138,7 @@ extension GroupChatViewController {
         }
     }
 
-    func groupDetail(){
+    func groupDetail() {
         let vc = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as? GroupDetailViewController
         vc?.group = group
         self.navigationController?.pushViewController(vc!, animated: true)

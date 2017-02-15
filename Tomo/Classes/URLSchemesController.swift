@@ -51,7 +51,7 @@ class URLSchemesController {
         return false
     }
     @discardableResult
-    func runTask()->Bool{
+    func runTask()->Bool {
         if let url = self.taskURL {
             self.taskURL = nil
             return handleOpenURL(url)
@@ -61,9 +61,9 @@ class URLSchemesController {
     }
 }
 
-extension URLSchemesController{
+extension URLSchemesController {
 
-    fileprivate func pushViewController(tabSelectedIndex: Int, viewController: UIViewController, animated: Bool){
+    fileprivate func pushViewController(tabSelectedIndex: Int, viewController: UIViewController, animated: Bool) {
 
         if self.tabBarController.childViewControllers.count > tabSelectedIndex {
             self.tabBarController.selectedIndex = tabSelectedIndex
@@ -80,9 +80,9 @@ extension URLSchemesController{
 
 // MARK -- OpenURL
 
-extension URLSchemesController{
+extension URLSchemesController {
 
-    fileprivate func openMessage(_ id: String){
+    fileprivate func openMessage(_ id: String) {
 
         Router.User.FindById(id: id).response {
             if $0.result.isFailure { return }
@@ -95,7 +95,7 @@ extension URLSchemesController{
         }
     }
 
-    fileprivate func openGroupMessage(_ id: String){
+    fileprivate func openGroupMessage(_ id: String) {
 
         Router.Group.FindById(id: id).response {
             if $0.result.isFailure { return }
@@ -108,7 +108,7 @@ extension URLSchemesController{
         }
     }
 
-    fileprivate func openProfile(_ id: String){
+    fileprivate func openProfile(_ id: String) {
 
 //        let vc = Util.createViewControllerWithIdentifier("ProfileView", storyboardName: "Profile") as! ProfileViewController
 //        vc.user = UserEntity()
@@ -117,7 +117,7 @@ extension URLSchemesController{
 //        self.pushViewController(1, viewController: vc, animated: true)
     }
 
-    fileprivate func openPost(_ id: String){
+    fileprivate func openPost(_ id: String) {
 
         Router.Post.FindById(id: id).response {
             if $0.result.isFailure { return }

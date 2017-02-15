@@ -20,7 +20,7 @@ class RemoteNotification {
 
     func receiveRemoteNotification(_ userInfo: [AnyHashable: Any]) {
         gcd.async(.default) {
-            if UIApplication.shared.keyWindow?.rootViewController is TabBarController{
+            if UIApplication.shared.keyWindow?.rootViewController is TabBarController {
 
                 let type = JSON(userInfo)["type"].stringValue
 
@@ -33,7 +33,7 @@ class RemoteNotification {
         }
     }
 
-    func runTask(){
+    func runTask() {
         guard let userInfo = self.taskUserInfo else { return }
         self.taskUserInfo = nil
         receiveRemoteNotification(userInfo)

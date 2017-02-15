@@ -45,7 +45,7 @@ class Util: NSObject {
         if #available(iOS 10.0, *) {
             let center  = UNUserNotificationCenter.current()
             center.requestAuthorization(options: [.sound, .alert, .badge]) { (granted, error) in
-                if error == nil{
+                if error == nil {
                     UIApplication.shared.registerForRemoteNotifications()
                 }
             }
@@ -59,7 +59,7 @@ class Util: NSObject {
 
 //        // iOS 10 support
 //        if #available(iOS 10, *) {
-//            UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]){ (granted, error) in }
+//            UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in }
 //            application.registerForRemoteNotifications()
 //        }
 //            // iOS 9 support
@@ -159,7 +159,7 @@ extension Util {
         return result
     }
 
-    class func changeImageColorForButton(btn: UIButton?,color: UIColor){
+    class func changeImageColorForButton(btn: UIButton?,color: UIColor) {
         guard let image = btn?.imageView?.image else { return }
         gcd.async(.default) {
             let image = Util.coloredImage( image: image, color: color)
@@ -170,7 +170,7 @@ extension Util {
     }
 
     //ActionSheet
-    class func alertActionSheet(parentvc: UIViewController, optionalDict: Dictionary<String,((UIAlertAction?) -> Void)?>){
+    class func alertActionSheet(parentvc: UIViewController, optionalDict: Dictionary<String,((UIAlertAction?) -> Void)?>) {
 
         gcd.async(.default) {
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

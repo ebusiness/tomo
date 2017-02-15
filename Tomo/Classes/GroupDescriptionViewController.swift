@@ -229,7 +229,7 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
         }
     }
 
-    private func didSetGroup(){
+    private func didSetGroup() {
 
         if let myGroups = me.groups, myGroups.contains(self.group.id) {
 

@@ -15,7 +15,7 @@ extension Router {
         case FindNotification(before: TimeInterval?)
 
         var path: String {
-            switch self{
+            switch self {
             case .UpdateDevice: return "/device"
             case .UpdateUserInfo: return "/me"
             case .FindNotification: return "/notifications"
@@ -23,7 +23,7 @@ extension Router {
         }
 
         var method: RouteMethod {
-            switch self{
+            switch self {
             case .UpdateDevice: return .POST
             case .UpdateUserInfo: return .PATCH
             case .FindNotification: return .GET
@@ -31,7 +31,7 @@ extension Router {
         }
 
         var parameters: [String: Any]? {
-            switch self{
+            switch self {
             case let .UpdateDevice(deviceToken):
                 let token = deviceToken.map { String(format: "%.2hhx", $0) }.joined()
                 let device = UIDevice.current
@@ -69,7 +69,7 @@ extension Router.Setting {
 
         var removeDevice: String?, pushSetting: Account.PushSetting?
 
-        init(){}
+        init() {}
 
         func getParameters() -> [String: Any]? {
 
