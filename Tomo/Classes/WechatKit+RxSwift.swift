@@ -13,8 +13,8 @@ extension WechatManager {
     /// create an Observable of WechatKit.CheckAuth
     ///
     /// - Returns: <#return value description#>
-    func rxCheckAuth() -> Observable<[String : Any]> {
-        return Observable<[String : Any]>.create { observer in
+    func rxCheckAuth() -> Observable<[String: Any]> {
+        return Observable<[String: Any]>.create { observer in
             let disposable = Disposables.create()
             self.checkAuth {
                 self.observerTask(disposable: disposable, observer: observer, response: $0)
@@ -26,8 +26,8 @@ extension WechatManager {
     /// create an Observable of WechatKit.getUserInfo
     ///
     /// - Returns: <#return value description#>
-    func rxGetUserInfo() -> Observable<[String : Any]> {
-        return Observable<[String : Any]>.create { observer in
+    func rxGetUserInfo() -> Observable<[String: Any]> {
+        return Observable<[String: Any]>.create { observer in
             let disposable = Disposables.create()
             self.getUserInfo {
                 self.observerTask(disposable: disposable, observer: observer, response: $0)
@@ -44,8 +44,8 @@ extension WechatManager {
     ///   - observer: <#observer description#>
     ///   - response: <#response description#>
     private func observerTask(disposable: Disposable,
-                              observer: AnyObserver<[String : Any]>,
-                              response: WechatKit.Result<[String : Any], Int32>) {
+                              observer: AnyObserver<[String: Any]>,
+                              response: WechatKit.Result<[String: Any], Int32>) {
         guard let parameters = response.value else {
             let err = NSError(domain: "errorDomain", code: Int(response.error!), userInfo: nil)
             observer.onError(err)

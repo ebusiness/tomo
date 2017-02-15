@@ -44,9 +44,9 @@ final class ProfileViewController: UITableViewController {
     let headerViewSize = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.ScreenHeight * 0.382 + 58)
 
     enum Relation {
-        
+
         case Me
-        
+
         case Stranger
 
         case Friend
@@ -56,7 +56,7 @@ final class ProfileViewController: UITableViewController {
         case InvitedingMe
 
         case Blocking
-        
+
         func message(user: UserEntity) -> String {
             switch self {
             case .InvitedByMe:
@@ -248,15 +248,15 @@ extension ProfileViewController {
                 self.relation = .Me
             }
         }
-        
+
         if let _ = me.friendInvitations.first(where: { $0.from.id == self.user.id }) {
             self.relation = .InvitedingMe
         }
-        
+
         self.statusLabel.text = self.relation.message(user: self.user)
 
         switch self.relation {
-            
+
         case .Me:
             self.addFriendButton.isHidden = true
             self.messageButton.isHidden = true

@@ -32,7 +32,7 @@ extension Router {
             }
         }
 
-        var parameters: [String : Any]? {
+        var parameters: [String: Any]? {
             switch self {
             case .Latest:
                 return nil

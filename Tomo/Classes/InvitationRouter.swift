@@ -31,7 +31,7 @@ extension Router {
             }
         }
 
-        var parameters: [String : Any]? {
+        var parameters: [String: Any]? {
             switch self {
             case .Find: return nil
             case let .ModifyById(_, accepted): return ["result": accepted ? "accept" : "refuse"]

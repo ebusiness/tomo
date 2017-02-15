@@ -169,9 +169,9 @@ extension BookmarkedPostsViewController {
                 return
             }
 
-            let posts:[PostEntity]? = PostEntity.collection($0.result.value!)
+            let posts: [PostEntity]? = PostEntity.collection($0.result.value!)
 
-            if let loadPosts:[PostEntity] = posts {
+            if let loadPosts: [PostEntity] = posts {
 
                 // append new contents
                 self.bookmarks += loadPosts

@@ -106,7 +106,7 @@ extension Account {
 
         // tell every observer the changes: which invitation was deleted, and who is the new friend
         let name = NSNotification.Name(rawValue: "didAcceptInvitation")
-        let userInfo: [String : Any] = [
+        let userInfo: [String: Any] = [
             "indexOfRemovedInvitation": index,
             "userEntityOfNewFriend": invitation.from
         ]
@@ -259,7 +259,7 @@ extension Account {
         // my friends list must not contain the notification sender
         guard !friends.contains(notification.from.id) else { return }
 
-        var postUserInfo = ["idOfRemovedMyInvitation": notification.from.id, "userEntityOfNewFriend": notification.from] as [String : Any]
+        var postUserInfo = ["idOfRemovedMyInvitation": notification.from.id, "userEntityOfNewFriend": notification.from] as [String: Any]
 
         // remove the user from my inviting list
         self.invitations?.remove(notification.from.id)

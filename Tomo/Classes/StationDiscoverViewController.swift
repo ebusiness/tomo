@@ -79,7 +79,7 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
     }
 
     // Make the CollectionView as two-column layout
-    func collectionView(_ collectionView: UICollectionView, layout : UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (TomoConst.UI.ScreenWidth - 2.0) / 2.0
         let height = width / 3.0 * 4.0
         return CGSize(width: width, height: height)

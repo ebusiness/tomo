@@ -174,7 +174,7 @@ extension UserPostsViewController {
                 return
             }
 
-            if let loadPosts:[PostEntity] = PostEntity.collection($0.result.value!) {
+            if let loadPosts: [PostEntity] = PostEntity.collection($0.result.value!) {
 
                 // append new contents
                 self.posts += loadPosts

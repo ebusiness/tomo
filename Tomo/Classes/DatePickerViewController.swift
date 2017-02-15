@@ -10,11 +10,11 @@ import UIKit
 
 final class DatePickerViewController: UIViewController {
 
-    var date:Date?
+    var date: Date?
 
     @IBOutlet weak fileprivate var datePicker: UIDatePicker!
 
-    var didSelected: ((_ selected:Date) -> Void)!
+    var didSelected: ((_ selected: Date) -> Void)!
 
     override func viewDidLoad() {
 

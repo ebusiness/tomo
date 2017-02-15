@@ -150,7 +150,7 @@ extension RecommendViewController: UICollectionViewDataSource {
 
         let group = self.recommendGroups![indexPath.item]
 
-        cell?.coverImageView.sd_setImage(with:NSURL(string: group.cover) as URL!, placeholderImage: TomoConst.Image.DefaultGroup)
+        cell?.coverImageView.sd_setImage(with: NSURL(string: group.cover) as URL!, placeholderImage: TomoConst.Image.DefaultGroup)
         cell?.nameLabel.text = group.name
 
         return cell!

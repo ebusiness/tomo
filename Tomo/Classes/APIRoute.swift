@@ -38,7 +38,7 @@ protocol APIRoute: URLRequestConvertible {
     /// Encoding
     var encoding: Alamofire.ParameterEncoding { get }
     /// Parameters
-    var parameters: [String : Any]? { get }
+    var parameters: [String: Any]? { get }
 }
 
 // MARK: - URLRequestConvertible
@@ -67,7 +67,7 @@ extension APIRoute {
 extension APIRoute {
     public var method: RouteMethod { return .GET }
     public var encoding: Alamofire.ParameterEncoding { return Alamofire.URLEncoding.default }
-    public var parameters: [String : Any]? { return nil }
+    public var parameters: [String: Any]? { return nil }
 }
 
 // MARK: - extension

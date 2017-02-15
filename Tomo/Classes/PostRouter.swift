@@ -43,7 +43,7 @@ extension Router {
             }
         }
 
-        var parameters: [String : Any]? {
+        var parameters: [String: Any]? {
             switch self {
             case let .Find(parameters): return parameters.getParameters()
             case let .Create(parameters): return parameters.getParameters()

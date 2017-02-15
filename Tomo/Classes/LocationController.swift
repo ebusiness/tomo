@@ -102,7 +102,7 @@ extension LocationController {
 
         switch CLLocationManager.authorizationStatus() {
 
-        case .authorizedAlways, .authorizedWhenInUse :
+        case .authorizedAlways, .authorizedWhenInUse:
             return true
 
         case .notDetermined:

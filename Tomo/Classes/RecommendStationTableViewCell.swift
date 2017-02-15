@@ -46,7 +46,7 @@ extension RecommendStationTableViewCell: UICollectionViewDataSource {
 
 // MARK: - UICollectionView delegate
 
-extension RecommendStationTableViewCell:UICollectionViewDelegate {
+extension RecommendStationTableViewCell: UICollectionViewDelegate {
 
     // Move the group detail view, when colleciton view cell was tapped.
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -11,8 +11,8 @@ import UIKit
 final class PickerTableViewController: UITableViewController {
 
     var pickerData = ["男","女"]
-    var selected:String?
-    var didSelected: ((_ selected:String) -> Void)!
+    var selected: String?
+    var didSelected: ((_ selected: String) -> Void)!
 
 }
 

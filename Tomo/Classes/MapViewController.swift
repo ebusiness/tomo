@@ -83,7 +83,7 @@ extension MapViewController {
         case 2:
             self.mode = .FriendsMap
             self.loadContents()
-        default :
+        default:
             return
         }
     }
@@ -337,7 +337,7 @@ extension MapViewController {
                     return
                 }
 
-                guard let groups:[GroupEntity] = GroupEntity.collection($0.result.value!) else { return }
+                guard let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) else { return }
 
                 let annotations = groups.map { group -> GroupAnnotation in
                     let annotation = GroupAnnotation()
@@ -363,7 +363,7 @@ extension MapViewController {
                     return
                 }
 
-                guard let users:[UserEntity] = UserEntity.collection($0.result.value!) else { return }
+                guard let users: [UserEntity] = UserEntity.collection($0.result.value!) else { return }
 
                 let annotations = users.map { user -> UserAnnotation in
                     let annotation = UserAnnotation()

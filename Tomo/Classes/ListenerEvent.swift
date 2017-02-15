@@ -6,7 +6,7 @@
 //  Copyright © 2015 e-business. All rights reserved.
 //
 
-private var observers = [String:Any]()
+private var observers = [String: Any]()
 
 enum ListenerEvent: String {
 
@@ -42,7 +42,7 @@ enum ListenerEvent: String {
         return NSNotification.Name(rawValue: "tomoNotification-" + self.rawValue)
     }
 
-    func relayToNoticationCenter(_ userInfo: [AnyHashable : Any]) {
+    func relayToNoticationCenter(_ userInfo: [AnyHashable: Any]) {
         NotificationCenter.default.post(name: self.notificationName, object: nil, userInfo: userInfo)
     }
 

@@ -16,9 +16,9 @@ class CameraController: NSObject {
 
     private let picker = UIImagePickerController()
     fileprivate var completion: CameraBlock!
-    private var vc:UIViewController!
+    private var vc: UIViewController!
 
-    static let sharedInstance : CameraController = CameraController()
+    static let sharedInstance: CameraController = CameraController()
 
     private override init() {
         super.init()
@@ -26,7 +26,7 @@ class CameraController: NSObject {
         picker.videoMaximumDuration = 10
     }
 
-    func open(vc:UIViewController, sourceType: UIImagePickerControllerSourceType, withVideo:Bool = false, allowsEditing: Bool = false, completion: @escaping CameraBlock ){
+    func open(vc: UIViewController, sourceType: UIImagePickerControllerSourceType, withVideo: Bool = false, allowsEditing: Bool = false, completion: @escaping CameraBlock ){
         self.completion = completion
         picker.sourceType = sourceType
         picker.allowsEditing = allowsEditing
@@ -40,16 +40,16 @@ class CameraController: NSObject {
     private func presentViewController(){
 
         let status = picker.sourceType == .camera ?
-            AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo).rawValue : PHPhotoLibrary.authorizationStatus().rawValue
+            AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo).rawValue: PHPhotoLibrary.authorizationStatus().rawValue
 
         switch status {
-        case 0://NotDetermined
+        case 0: //NotDetermined
             self.requestAuthorization()
-        case 1://Restricted
+        case 1: //Restricted
             fallthrough
-        case 2://Denied
+        case 2: //Denied
             showServiceDisabledAlert()
-        case 3://Authorized
+        case 3: //Authorized
             if UIImagePickerController.isSourceTypeAvailable(picker.sourceType) {
                 vc.present(picker, animated: true, completion: nil)
             }
@@ -100,7 +100,7 @@ extension CameraController: UIImagePickerControllerDelegate, UINavigationControl
 
     //MARK: - Delegates
     //What to do when the picker returns with a photo
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
         picker.dismiss(animated: true, completion: nil)
 
         gcd.async(.default) {
@@ -116,7 +116,7 @@ extension CameraController: UIImagePickerControllerDelegate, UINavigationControl
                 }
 
             } else {
-                var imageTaked:UIImage!
+                var imageTaked: UIImage!
                 if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
                     imageTaked = image
                 } else {
@@ -150,7 +150,7 @@ extension CameraController: UIImagePickerControllerDelegate, UINavigationControl
         }
 
         // modify this value to change result size
-        let resizeFactor:CGFloat = 1
+        let resizeFactor: CGFloat = 1
 
         // based on iPhone6 plus screen
         let widthBase = UIScreen.main.bounds.size.width * resizeFactor

@@ -51,7 +51,7 @@ extension RegViewController {
 
     fileprivate func setupAppearance() {
 
-        
+
         func customizeTextField(textField: UITextField) {
 
             // draw a white bottom border
@@ -163,7 +163,7 @@ extension RegViewController {
             })
     }
 
-    private func registByWechatInfo(userInfo: [String : Any]) {
+    private func registByWechatInfo(userInfo: [String: Any]) {
         Router.Signup.WeChat(openid: WechatManager.openid,
                              nickname: userInfo["nickname"] as? String ?? "",
                              gender: userInfo["sex"] as? String,

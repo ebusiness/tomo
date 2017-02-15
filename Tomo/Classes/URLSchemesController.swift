@@ -13,7 +13,7 @@ class URLSchemesController {
     var taskURL: URL?
 
     // static initialize
-    static let sharedInstance : URLSchemesController = URLSchemesController()
+    static let sharedInstance: URLSchemesController = URLSchemesController()
 
     private init() {
 

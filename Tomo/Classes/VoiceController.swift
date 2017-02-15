@@ -8,16 +8,16 @@
 
 import AVFoundation
 
-class VoiceController :NSObject,AVAudioRecorderDelegate{
+class VoiceController: NSObject,AVAudioRecorderDelegate{
 
-    private var recorder:AVAudioRecorder!
-    private var player:AVAudioPlayer!
+    private var recorder: AVAudioRecorder!
+    private var player: AVAudioPlayer!
     private var paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
     private var pathWav = ""
     //インスタンス
-    class var instance : VoiceController {
+    class var instance: VoiceController {
         struct Static {
-            static let instance : VoiceController = VoiceController()
+            static let instance: VoiceController = VoiceController()
         }
         return Static.instance
     }
@@ -29,13 +29,13 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
     }
 
     private func setup(){
-        let recordSettings: [String:Any] =
+        let recordSettings: [String: Any] =
         [
             AVFormatIDKey: Int(kAudioFormatLinearPCM),
             AVSampleRateKey: 8000.00,
             AVNumberOfChannelsKey: 1,
             AVLinearPCMBitDepthKey: 16,
-            //AVLinearPCMIsNonInterleaved:false,
+            //AVLinearPCMIsNonInterleaved: false,
             //AVLinearPCMIsBigEndianKey: false,
             //AVLinearPCMIsFloatKey: false,
         ]
@@ -138,7 +138,7 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
         play(path: filepath)
     }
 
-    func play(path:String!){
+    func play(path: String!){
         /////
         self.amrToWav(amrPath: path, savePath: self.pathWav)
         /////
@@ -154,10 +154,10 @@ class VoiceController :NSObject,AVAudioRecorderDelegate{
         }
     }
 
-    func wavToAmr(wavPath:String,savePath:String){
+    func wavToAmr(wavPath: String,savePath: String){
         EncodeWAVEFileToAMRFile(wavPath.cString(using: String.Encoding.utf8)!,savePath.cString(using: String.Encoding.utf8)!,1,16)
     }
-    func amrToWav(amrPath:String,savePath:String){
+    func amrToWav(amrPath: String,savePath: String){
         DecodeAMRFileToWAVEFile(amrPath.cString(using: String.Encoding.utf8)!,savePath.cString(using: String.Encoding.utf8)!)
     }
 

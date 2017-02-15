@@ -583,7 +583,7 @@ extension CreatePostViewController: UICollectionViewDelegate {
 
 extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
             self.dismiss(animated: true, completion: nil)
             return

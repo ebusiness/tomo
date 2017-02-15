@@ -272,7 +272,7 @@ extension HomeViewController {
             }
 
             // prepend new contents
-            if let loadPosts:[PostEntity] = PostEntity.collection($0.result.value!) {
+            if let loadPosts: [PostEntity] = PostEntity.collection($0.result.value!) {
                 self.contents = loadPosts + self.contents
                 self.rowHeights = loadPosts.map { self.simulateLayout(post: $0) } + self.rowHeights
                 self.prependRows(rows: loadPosts.count)

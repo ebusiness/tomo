@@ -65,7 +65,7 @@ extension GroupChatViewController {
     fileprivate func loadAvatarForUser(user: UserEntity){
 
         if user.id == me.id {
-            
+
             return
         }
 
@@ -104,7 +104,7 @@ extension GroupChatViewController {
                     self.isExhausted = true
                     return
                 }
-                guard let messages:[JSQMessageEntity] = JSQMessageEntity.collection($0.result.value!) else {
+                guard let messages: [JSQMessageEntity] = JSQMessageEntity.collection($0.result.value!) else {
                     return
                 }
 
@@ -238,7 +238,7 @@ extension GroupChatViewController {
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
 
         let message = messages[indexPath.item]
-        
+
         if message.senderId() != me.id {
             return avatars[message.senderId()]
         }

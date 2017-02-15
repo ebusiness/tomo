@@ -59,7 +59,7 @@ class Util: NSObject {
 
 //        // iOS 10 support
 //        if #available(iOS 10, *) {
-//            UNUserNotificationCenter.current().requestAuthorization(options:[.badge, .alert, .sound]){ (granted, error) in }
+//            UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]){ (granted, error) in }
 //            application.registerForRemoteNotifications()
 //        }
 //            // iOS 9 support
@@ -93,7 +93,7 @@ class Util: NSObject {
 
 extension Util {
     //RGB To Color
-    class func UIColorFromRGB(_ rgbValue: UInt,alpha:CGFloat) -> UIColor {
+    class func UIColorFromRGB(_ rgbValue: UInt,alpha: CGFloat) -> UIColor {
         return UIColor(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
             green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
@@ -102,8 +102,8 @@ extension Util {
         )
     }
 
-    class func colorWithHexString (hex:String) -> UIColor {
-        var cString:String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
+    class func colorWithHexString (hex: String) -> UIColor {
+        var cString: String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
 
         if (cString.hasPrefix("#")) {
             cString = (cString as NSString).substring(from: 1)
@@ -117,7 +117,7 @@ extension Util {
         let gString = ((cString as NSString).substring(from: 2) as NSString).substring(to: 2)
         let bString = ((cString as NSString).substring(from: 4) as NSString).substring(to: 2)
 
-        var r:CUnsignedInt = 0, g:CUnsignedInt = 0, b:CUnsignedInt = 0;
+        var r: CUnsignedInt = 0, g: CUnsignedInt = 0, b: CUnsignedInt = 0;
         Scanner(string: rString).scanHexInt32(&r)
         Scanner(string: gString).scanHexInt32(&g)
         Scanner(string: bString).scanHexInt32(&b)
@@ -145,7 +145,7 @@ extension Util {
     }
 
     //重绘纯色图片
-    class func coloredImage(image: UIImage, color:UIColor) -> UIImage! {
+    class func coloredImage(image: UIImage, color: UIColor) -> UIImage! {
         let rect = CGRect(origin: CGPoint.zero, size: image.size)
         UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
         let context = UIGraphicsGetCurrentContext()
@@ -159,7 +159,7 @@ extension Util {
         return result
     }
 
-    class func changeImageColorForButton(btn:UIButton?,color:UIColor){
+    class func changeImageColorForButton(btn: UIButton?,color: UIColor){
         guard let image = btn?.imageView?.image else { return }
         gcd.async(.default) {
             let image = Util.coloredImage( image: image, color: color)
@@ -193,8 +193,8 @@ extension Util {
                      message: String,
                      cancel: String = "取消",
                      ok: String = "确定",
-                     cancelHandler:((UIAlertAction?) -> Void)? = nil,
-                     okHandler:((UIAlertAction?) -> Void)? = nil) {
+                     cancelHandler: ((UIAlertAction?) -> Void)? = nil,
+                     okHandler: ((UIAlertAction?) -> Void)? = nil) {
 
         gcd.async(.default) {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)

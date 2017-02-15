@@ -190,14 +190,14 @@ extension CommonMessageController {
                 cell!.addSubview(progressView)
 
                 progressView.translatesAutoresizingMaskIntoConstraints = false
-                cell!.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[progressView(==1)]-0-|", options: [], metrics: nil, views: ["progressView" : progressView]))
+                cell!.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[progressView(==1)]-0-|", options: [], metrics: nil, views: ["progressView": progressView]))
                 cell!.addConstraints(NSLayoutConstraint.constraints(
                     withVisualFormat: "H:[progressView(==messageBubbleContainerView)]-0-[avatarContainerView]",
                     options: [],
                     metrics: nil,
                     views: [
-                        "messageBubbleContainerView" : cell!.messageBubbleContainerView!,
-                        "progressView" : progressView,
+                        "messageBubbleContainerView": cell!.messageBubbleContainerView!,
+                        "progressView": progressView,
                         "avatarContainerView":cell!.avatarContainerView!
                     ]))
 
@@ -492,7 +492,7 @@ extension CommonMessageController {
 
         cell.addSubview(badgeView)
         badgeView.translatesAutoresizingMaskIntoConstraints = false
-        let views = ["badgeView" : badgeView]
+        let views = ["badgeView": badgeView]
         cell.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[badgeView(==\(width))]-\(avatarHeight-width)-|", options: [], metrics: nil, views: views))
         cell.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[badgeView(==\(width))]-\(avatarHeight+voiceBackgroundImageWidth)-|", options: [], metrics: nil, views:views))
     }

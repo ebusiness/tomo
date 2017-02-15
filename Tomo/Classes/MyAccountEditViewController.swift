@@ -137,7 +137,7 @@ extension MyAccountEditViewController: UITextViewDelegate {
     }
 }
 
-extension MyAccountEditViewController:UIGestureRecognizerDelegate {
+extension MyAccountEditViewController: UIGestureRecognizerDelegate {
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
 
@@ -192,7 +192,7 @@ extension MyAccountEditViewController {
 
     @IBAction func coverTapped(_ sender: UITapGestureRecognizer) {
 
-        let block:CameraController.CameraBlock = { image, _ in
+        let block: CameraController.CameraBlock = { image, _ in
 
             guard let image = image else { return }
 
@@ -219,10 +219,10 @@ extension MyAccountEditViewController {
 
         Util.alertActionSheet(parentvc: self, optionalDict: [
 
-            "拍摄":{ (_) -> Void in
+            "拍摄": { (_) -> Void in
                 CameraController.sharedInstance.open(vc: self, sourceType: .camera, allowsEditing: false, completion: block)
             },
-            "从相册选择":{ (_) -> () in
+            "从相册选择": { (_) -> () in
                 CameraController.sharedInstance.open(vc: self, sourceType: .savedPhotosAlbum, allowsEditing: false, completion: block)
             }
         ])
@@ -230,7 +230,7 @@ extension MyAccountEditViewController {
 
     @IBAction func avatarTapped(_ sender: UITapGestureRecognizer) {
 
-        let block:CameraController.CameraBlock = { image, _ in
+        let block: CameraController.CameraBlock = { image, _ in
 
             guard let image = image else { return }
 
@@ -259,10 +259,10 @@ extension MyAccountEditViewController {
 
         Util.alertActionSheet(parentvc: self, optionalDict: [
 
-            "拍摄":{ (_) -> Void in
+            "拍摄": { (_) -> Void in
                 CameraController.sharedInstance.open(vc: self, sourceType: .camera, allowsEditing: true, completion: block)
             },
-            "从相册选择":{ (_) -> () in
+            "从相册选择": { (_) -> () in
                 CameraController.sharedInstance.open(vc: self, sourceType: .savedPhotosAlbum, allowsEditing: true, completion: block)
             }
         ])

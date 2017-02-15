@@ -33,7 +33,7 @@ extension Router {
             }
         }
 
-        var parameters: [String : Any]? {
+        var parameters: [String: Any]? {
             switch self {
             case let .FindByNickName(nickName):
                 guard let nickName = nickName else { return nil }

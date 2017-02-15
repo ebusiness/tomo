@@ -133,7 +133,7 @@ extension ChatTableViewCell {
         self.thumbnail.sd_setImage(with: url) { (image, _, _, _) in
             guard let image = image else {
                 let brokenImageName = "file_broken.png"
-                self.thumbnail.image = UIImage(named:brokenImageName)
+                self.thumbnail.image = UIImage(named: brokenImageName)
                 return
             }
             let width = image.size.width / image.size.height * self.thumbnailHeight.constant
