@@ -10,27 +10,27 @@ import UIKit
 
 final class MyAccountEditViewController: UITableViewController {
 
-    @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak fileprivate var coverImageView: UIImageView!
 
-    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
 
-    @IBOutlet weak var nickNameTextField: UITextField!
+    @IBOutlet weak fileprivate var nickNameTextField: UITextField!
 
-    @IBOutlet weak var bioTextView: UITextView!
+    @IBOutlet weak fileprivate var bioTextView: UITextView!
 
-    @IBOutlet weak var lastNameTextField: UITextField!
+    @IBOutlet weak fileprivate var lastNameTextField: UITextField!
 
-    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak fileprivate var firstNameTextField: UITextField!
 
-    @IBOutlet weak var genderLabel: UILabel!
+    @IBOutlet weak fileprivate var genderLabel: UILabel!
 
-    @IBOutlet weak var birthDayLabel: UILabel!
+    @IBOutlet weak fileprivate var birthDayLabel: UILabel!
 
-    @IBOutlet weak var telTextField: UITextField!
+    @IBOutlet weak fileprivate var telTextField: UITextField!
 
-    @IBOutlet weak var addressTextField: UITextField!
+    @IBOutlet weak fileprivate var addressTextField: UITextField!
 
-    @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak fileprivate var saveButton: UIBarButtonItem!
 
     let placeholderBio = "个性签名（20个字以内）"
     let placeholderSelect = "未选择"

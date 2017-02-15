@@ -13,15 +13,15 @@ import Alamofire
 public protocol CommonMessageDelegate {
     @discardableResult
     func createMessage(type: MessageType, text: String) -> IndexPath
-    func sendMessage(type: MessageType, text: String, done: ( ()->() )?)
+    func sendMessage(type: MessageType, text: String, done: ( () -> Void )?)
 }
 
 // MARK: - Voice
 
 class CommonMessageController: JSQMessagesViewController {
 
-    fileprivate var textViewText :String = ""
-    fileprivate var btnVoice :UIButton?
+    fileprivate var textViewText: String = ""
+    fileprivate var btnVoice: UIButton?
 
     fileprivate var iconSpeakerNormal:UIImage!
     fileprivate var iconSpeakerHighlighted:UIImage!

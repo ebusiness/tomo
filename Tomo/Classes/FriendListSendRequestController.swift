@@ -9,9 +9,9 @@ import UIKit
 
 final class FriendListSendRequestController: UITableViewController {
 
-    @IBOutlet weak var loadingLabel: UILabel!
+    @IBOutlet weak fileprivate var loadingLabel: UILabel!
 
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak fileprivate var loadingIndicator: UIActivityIndicatorView!
 
     var invitedUsers = [UserEntity]()
 
@@ -156,11 +156,11 @@ extension FriendListSendRequestController {
 
 final class RequestFriendCell: UITableViewCell {
 
-    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
 
-    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak fileprivate var userNameLabel: UILabel!
 
-    @IBOutlet weak var bioLabel: UILabel!
+    @IBOutlet weak fileprivate var bioLabel: UILabel!
 
     var user: UserEntity! {
 

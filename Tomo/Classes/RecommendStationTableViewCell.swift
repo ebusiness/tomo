@@ -10,7 +10,7 @@ import UIKit
 
 final class RecommendStationTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak fileprivate var collectionView: UICollectionView!
 
     weak var delegate: UINavigationController?
 
@@ -79,11 +79,11 @@ extension RecommendStationTableViewCell: UICollectionViewDelegateFlowLayout {
 
 final class StationCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak fileprivate var nameLabel: UILabel!
 
-    @IBOutlet weak var actionButton: UIButton!
+    @IBOutlet weak fileprivate var actionButton: UIButton!
 
-    @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak fileprivate var backgroundImageView: UIImageView!
 
     private var isJoined = false
 

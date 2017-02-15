@@ -10,9 +10,9 @@ import UIKit
 
 final class ContactsViewController: UITableViewController {
 
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak fileprivate var loadingIndicator: UIActivityIndicatorView!
 
-    @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak fileprivate var infoLabel: UILabel!
 
     var friends = [UserEntity]()
 
@@ -217,8 +217,8 @@ extension ContactsViewController {
 
 final class ContactTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var nickNameLabel: UILabel!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var nickNameLabel: UILabel!
 
     var user: UserEntity! {
         didSet { self.configDisplay() }

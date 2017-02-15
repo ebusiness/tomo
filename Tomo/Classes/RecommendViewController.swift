@@ -10,12 +10,12 @@ import UIKit
 
 final class RecommendViewController: UIViewController {
 
-    @IBOutlet weak var recommendGroupCollectionView: UICollectionView!
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var maskView: UIView!
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var searchBarBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak fileprivate var recommendGroupCollectionView: UICollectionView!
+    @IBOutlet weak fileprivate var mapView: MKMapView!
+    @IBOutlet weak fileprivate var maskView: UIView!
+    @IBOutlet weak fileprivate var searchBar: UISearchBar!
+    @IBOutlet weak fileprivate var searchBarBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak fileprivate var activityIndicator: UIActivityIndicatorView!
 
     fileprivate var currentAnnotationView: MKAnnotationView?
     fileprivate var currentSelectedIndexPath: IndexPath?
@@ -343,9 +343,9 @@ extension RecommendViewController: UIAdaptivePresentationControllerDelegate {
 
 final class GroupRecommendCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak fileprivate var coverImageView: UIImageView!
 
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak fileprivate var nameLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -367,10 +367,10 @@ final class GroupPopoverViewController: UIViewController {
         }
     }
 
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var introLabel: UILabel!
-    @IBOutlet weak var coverImageView: UIImageView!
-    @IBOutlet weak var joinButton: UIButton!
+    @IBOutlet weak fileprivate var nameLabel: UILabel!
+    @IBOutlet weak fileprivate var introLabel: UILabel!
+    @IBOutlet weak fileprivate var coverImageView: UIImageView!
+    @IBOutlet weak fileprivate var joinButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()

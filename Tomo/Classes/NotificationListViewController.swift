@@ -11,9 +11,9 @@ import UIKit
 
 final class NotificationListViewController: UITableViewController {
 
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak fileprivate var loadingIndicator: UIActivityIndicatorView!
 
-    @IBOutlet weak var loadingLabel: UILabel!
+    @IBOutlet weak fileprivate var loadingLabel: UILabel!
 
     fileprivate var notifications = [NotificationEntity]()
 
@@ -181,13 +181,13 @@ extension NotificationListViewController {
 
 final class NotificationCell: UITableViewCell {
 
-    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
 
-    @IBOutlet weak var nickNameLabelView: UILabel!
+    @IBOutlet weak fileprivate var nickNameLabelView: UILabel!
 
-    @IBOutlet weak var messageLabelView: UILabel!
+    @IBOutlet weak fileprivate var messageLabelView: UILabel!
 
-    @IBOutlet weak var createDateLabelView: UILabel!
+    @IBOutlet weak fileprivate var createDateLabelView: UILabel!
 
     var notification: NotificationEntity! {
         didSet{

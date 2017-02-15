@@ -11,15 +11,15 @@ import SwiftyJSON
 
 final class MyPostsViewController: UITableViewController {
 
-    @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak fileprivate var coverImageView: UIImageView!
 
-    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
 
-    @IBOutlet weak var nickNameLabel: UILabel!
+    @IBOutlet weak fileprivate var nickNameLabel: UILabel!
 
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak fileprivate var loadingIndicator: UIActivityIndicatorView!
 
-    @IBOutlet weak var loadingLabel: UILabel!
+    @IBOutlet weak fileprivate var loadingLabel: UILabel!
 
     // Array holds all cell contents
     var posts = [PostEntity]()

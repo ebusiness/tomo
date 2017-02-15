@@ -246,9 +246,9 @@ extension GroupViewController {
 
 final class MyGroupCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak fileprivate var nameLabel: UILabel!
 
-    @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak fileprivate var backgroundImageView: UIImageView!
 
     private var isJoined = false
 

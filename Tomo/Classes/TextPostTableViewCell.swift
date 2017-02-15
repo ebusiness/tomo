@@ -12,27 +12,27 @@ class TextPostTableViewCell: UITableViewCell {
 
     @IBOutlet weak var avatarImageView: UIImageView!
 
-    @IBOutlet weak var nickNameLabel: UILabel!
+    @IBOutlet weak fileprivate var nickNameLabel: UILabel!
 
-    @IBOutlet weak var postDateLabel: UILabel!
+    @IBOutlet weak fileprivate var postDateLabel: UILabel!
 
-    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak fileprivate var contentLabel: UILabel!
 
-    @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak fileprivate var infoLabel: UILabel!
 
-    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak fileprivate var likeButton: UIButton!
 
-    @IBOutlet weak var bookmarkButton: UIButton!
+    @IBOutlet weak fileprivate var bookmarkButton: UIButton!
 
-    @IBOutlet weak var commentArea: UIView!
+    @IBOutlet weak fileprivate var commentArea: UIView!
 
-    @IBOutlet weak var commentAreaHeight: NSLayoutConstraint!
+    @IBOutlet weak fileprivate var commentAreaHeight: NSLayoutConstraint!
 
-    @IBOutlet weak var commentAvatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var commentAvatarImageView: UIImageView!
 
-    @IBOutlet weak var commentContentLabel: UILabel!
+    @IBOutlet weak fileprivate var commentContentLabel: UILabel!
 
-    @IBOutlet weak var commentDateLabel: UILabel!
+    @IBOutlet weak fileprivate var commentDateLabel: UILabel!
 
     weak var delegate: UINavigationController?
 

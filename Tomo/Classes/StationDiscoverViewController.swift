@@ -10,7 +10,7 @@ import UIKit
 
 final class StationDiscoverViewController: UIViewController {
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak fileprivate var collectionView: UICollectionView!
 
     var isLoading = false
     var isExhausted = false
@@ -290,11 +290,11 @@ extension StationDiscoverViewController  {
 
 final class SearchResultReusableView: UICollectionReusableView {
 
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak fileprivate var activityIndicator: UIActivityIndicatorView!
 
-    @IBOutlet weak var searchResultLabel: UILabel!
+    @IBOutlet weak fileprivate var searchResultLabel: UILabel!
 
-    @IBOutlet weak var emptyResultView: UIView!
+    @IBOutlet weak fileprivate var emptyResultView: UIView!
 
     func showActivityIndicator() {
         self.activityIndicator.startAnimating()

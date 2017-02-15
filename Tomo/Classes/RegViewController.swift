@@ -13,15 +13,15 @@ import WechatKit
 
 final class RegViewController: UIViewController {
 
-    @IBOutlet weak var testSegment: UISegmentedControl!
-    @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak fileprivate var testSegment: UISegmentedControl!
+    @IBOutlet weak fileprivate var loginButton: UIButton!
+    @IBOutlet weak fileprivate var emailTextField: UITextField!
+    @IBOutlet weak fileprivate var passwordTextField: UITextField!
+    @IBOutlet weak fileprivate var signInButton: UIButton!
 
-    @IBOutlet weak var inputArea: UIView!
-    @IBOutlet weak var inputAreaBottomSpace: NSLayoutConstraint!
-    @IBOutlet weak var registerBottomSpace: NSLayoutConstraint!
+    @IBOutlet weak fileprivate var inputArea: UIView!
+    @IBOutlet weak fileprivate var inputAreaBottomSpace: NSLayoutConstraint!
+    @IBOutlet weak fileprivate var registerBottomSpace: NSLayoutConstraint!
 
     override func viewDidLoad() {
 

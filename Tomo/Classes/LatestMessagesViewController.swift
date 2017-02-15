@@ -10,9 +10,9 @@ import UIKit
 
 final class LatestMessagesViewController: UITableViewController {
 
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak fileprivate var loadingIndicator: UIActivityIndicatorView!
 
-    @IBOutlet weak var emptyResultView: UIView!
+    @IBOutlet weak fileprivate var emptyResultView: UIView!
 
     var messages = [MessageEntity]()
 
@@ -712,11 +712,11 @@ extension LatestMessagesViewController {
 
 final class MessageTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var countLabel: UILabel!
-    @IBOutlet weak var nickNameLabel: UILabel!
-    @IBOutlet weak var contentLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var countLabel: UILabel!
+    @IBOutlet weak fileprivate var nickNameLabel: UILabel!
+    @IBOutlet weak fileprivate var contentLabel: UILabel!
+    @IBOutlet weak fileprivate var dateLabel: UILabel!
 
     var message: MessageEntity! {
         didSet { self.configDisplay() }
@@ -783,11 +783,11 @@ final class MessageTableViewCell: UITableViewCell {
 
 final class GroupMessageTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var coverImageView: UIImageView!
-    @IBOutlet weak var countLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var contentLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak fileprivate var coverImageView: UIImageView!
+    @IBOutlet weak fileprivate var countLabel: UILabel!
+    @IBOutlet weak fileprivate var nameLabel: UILabel!
+    @IBOutlet weak fileprivate var contentLabel: UILabel!
+    @IBOutlet weak fileprivate var dateLabel: UILabel!
 
     var message: MessageEntity! {
         didSet { self.configDisplay() }
@@ -843,8 +843,8 @@ final class GroupMessageTableViewCell: UITableViewCell {
 
 final class FriendInvitationTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var userNameLabel: UILabel!
 
     weak var delegate: UIViewController!
 

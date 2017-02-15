@@ -10,9 +10,9 @@ import UIKit
 
 final class SearchFriendViewController: UITableViewController {
 
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak fileprivate var activityIndicator: UIActivityIndicatorView!
 
-    @IBOutlet weak var searchResultLabel: UILabel!
+    @IBOutlet weak fileprivate var searchResultLabel: UILabel!
 
     var users = [UserEntity]()
 
@@ -182,11 +182,11 @@ extension SearchFriendViewController {
 
 class SearchFriendCell: UITableViewCell {
 
-    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
 
-    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak fileprivate var userNameLabel: UILabel!
 
-    @IBOutlet weak var bioLabel: UILabel!
+    @IBOutlet weak fileprivate var bioLabel: UILabel!
 
     var user: UserEntity! {
         didSet {

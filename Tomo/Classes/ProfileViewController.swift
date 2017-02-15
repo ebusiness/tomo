@@ -11,29 +11,29 @@ import SwiftyJSON
 
 final class ProfileViewController: UITableViewController {
 
-    @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak fileprivate var coverImageView: UIImageView!
 
-    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
 
-    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak fileprivate var statusLabel: UILabel!
 
-    @IBOutlet weak var bioLabel: UILabel!
+    @IBOutlet weak fileprivate var bioLabel: UILabel!
 
-    @IBOutlet weak var genderLabel: UILabel!
+    @IBOutlet weak fileprivate var genderLabel: UILabel!
 
-    @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak fileprivate var addressLabel: UILabel!
 
-    @IBOutlet weak var fullNameLabel: UILabel!
+    @IBOutlet weak fileprivate var fullNameLabel: UILabel!
 
-    @IBOutlet weak var birthDayLabel: UILabel!
+    @IBOutlet weak fileprivate var birthDayLabel: UILabel!
 
-    @IBOutlet weak var addFriendButton: UIButton!
+    @IBOutlet weak fileprivate var addFriendButton: UIButton!
 
-    @IBOutlet weak var messageButton: UIButton!
+    @IBOutlet weak fileprivate var messageButton: UIButton!
 
-    @IBOutlet weak var acceptButton: UIButton!
+    @IBOutlet weak fileprivate var acceptButton: UIButton!
 
-    @IBOutlet weak var refuseButton: UIButton!
+    @IBOutlet weak fileprivate var refuseButton: UIButton!
 
     // Displayed User Entity
     var user: UserEntity!

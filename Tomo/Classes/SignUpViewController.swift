@@ -10,27 +10,27 @@ import UIKit
 
 class SignUpViewController: UIViewController {
 
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak fileprivate var scrollView: UIScrollView!
 
-    @IBOutlet weak var scrollViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var inputAreaHeight: NSLayoutConstraint!
+    @IBOutlet weak fileprivate var scrollViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak fileprivate var inputAreaHeight: NSLayoutConstraint!
 
-    @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak fileprivate var signUpButton: UIButton!
 
-    @IBOutlet weak var nickNameTextField: UITextField!
-    @IBOutlet weak var nickNameHintLabel: UILabel!
+    @IBOutlet weak fileprivate var nickNameTextField: UITextField!
+    @IBOutlet weak fileprivate var nickNameHintLabel: UILabel!
     var nickNameValid = false
 
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var emailHintLabel: UILabel!
+    @IBOutlet weak fileprivate var emailTextField: UITextField!
+    @IBOutlet weak fileprivate var emailHintLabel: UILabel!
     var emailValid = false
 
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var passwordHintLabel: UILabel!
+    @IBOutlet weak fileprivate var passwordTextField: UITextField!
+    @IBOutlet weak fileprivate var passwordHintLabel: UILabel!
     var passwordValid = false
 
-    @IBOutlet weak var repassTextField: UITextField!
-    @IBOutlet weak var repassHintLabel: UILabel!
+    @IBOutlet weak fileprivate var repassTextField: UITextField!
+    @IBOutlet weak fileprivate var repassHintLabel: UILabel!
     var repassValid = false
 
     override func viewDidLoad() {

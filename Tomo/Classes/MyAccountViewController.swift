@@ -10,23 +10,23 @@ import UIKit
 
 final class MyAccountViewController: UITableViewController {
 
-    @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak fileprivate var coverImageView: UIImageView!
 
-    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
 
-    @IBOutlet weak var bioLabel: UILabel!
+    @IBOutlet weak fileprivate var bioLabel: UILabel!
 
-    @IBOutlet weak var fullNameLabel: UILabel!
+    @IBOutlet weak fileprivate var fullNameLabel: UILabel!
 
-    @IBOutlet weak var genderLabel: UILabel!
+    @IBOutlet weak fileprivate var genderLabel: UILabel!
 
-    @IBOutlet weak var birthDayLabel: UILabel!
+    @IBOutlet weak fileprivate var birthDayLabel: UILabel!
 
-    @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak fileprivate var addressLabel: UILabel!
 
-    @IBOutlet weak var primaryStation: UILabel!
+    @IBOutlet weak fileprivate var primaryStation: UILabel!
 
-    @IBOutlet weak var notificationCell: UITableViewCell!
+    @IBOutlet weak fileprivate var notificationCell: UITableViewCell!
 
     var notificationCellAccessoryView: UIView?
 

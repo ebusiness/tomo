@@ -10,15 +10,15 @@ import UIKit
 
 final class UserPostsViewController: UITableViewController {
 
-    @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak fileprivate var coverImageView: UIImageView!
 
-    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
 
-    @IBOutlet weak var bioLabel: UILabel!
+    @IBOutlet weak fileprivate var bioLabel: UILabel!
 
-    @IBOutlet weak var loadingLabel: UILabel!
+    @IBOutlet weak fileprivate var loadingLabel: UILabel!
 
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak fileprivate var loadingIndicator: UIActivityIndicatorView!
 
     // The user been displayed
     var user: UserEntity!

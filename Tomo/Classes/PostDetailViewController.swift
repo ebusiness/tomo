@@ -10,29 +10,29 @@ import UIKit
 
 final class PostDetailViewController: UIViewController {
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak fileprivate var collectionView: UICollectionView!
 
-    @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak fileprivate var pageControl: UIPageControl!
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak fileprivate var tableView: UITableView!
 
-    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak fileprivate var likeButton: UIButton!
 
-    @IBOutlet weak var bookmarkButton: UIButton!
+    @IBOutlet weak fileprivate var bookmarkButton: UIButton!
 
-    @IBOutlet weak var commentButton: UIButton!
+    @IBOutlet weak fileprivate var commentButton: UIButton!
 
-    @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak fileprivate var infoLabel: UILabel!
 
-    @IBOutlet weak var commentTextView: UITextView!
+    @IBOutlet weak fileprivate var commentTextView: UITextView!
 
-    @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak fileprivate var sendButton: UIButton!
 
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak fileprivate var bottomConstraint: NSLayoutConstraint!
 
     @IBOutlet var tableViewTapRecognizer: UITapGestureRecognizer!
 
-    @IBOutlet weak var blurEffectView: UIVisualEffectView!
+    @IBOutlet weak fileprivate var blurEffectView: UIVisualEffectView!
 
 //    var headerView: UIView!
     let headerHeight = TomoConst.UI.ScreenHeight * 0.618
@@ -559,9 +559,9 @@ class PostDisplayCell: UITableViewCell {
 
 final class PostAuthorInfoCell: PostDisplayCell {
 
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var nickNameLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var nickNameLabel: UILabel!
+    @IBOutlet weak fileprivate var dateLabel: UILabel!
 
     override func configDisplay() {
 
@@ -575,7 +575,7 @@ final class PostAuthorInfoCell: PostDisplayCell {
 
 final class PostContentCell: PostDisplayCell {
 
-    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak fileprivate var contentLabel: UILabel!
 
     override func awakeFromNib() {
 
@@ -604,10 +604,10 @@ final class PostCommentCell: UITableViewCell {
         didSet { self.configDisplay() }
     }
 
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var nickNameLabel: UILabel!
-    @IBOutlet weak var commentLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var nickNameLabel: UILabel!
+    @IBOutlet weak fileprivate var commentLabel: UILabel!
+    @IBOutlet weak fileprivate var dateLabel: UILabel!
 
     override func awakeFromNib() {
 

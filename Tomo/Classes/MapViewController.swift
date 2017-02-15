@@ -31,11 +31,11 @@ final class MapViewController: UIViewController {
 
     var annotationsForTable: [AggregatableAnnotation]?
 
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var tableViewTopConstrian: NSLayoutConstraint!
-    @IBOutlet weak var tableViewHeightConstranit: NSLayoutConstraint!
+    @IBOutlet weak fileprivate var mapView: MKMapView!
+    @IBOutlet weak fileprivate var segmentedControl: UISegmentedControl!
+    @IBOutlet weak fileprivate var tableView: UITableView!
+    @IBOutlet weak fileprivate var tableViewTopConstrian: NSLayoutConstraint!
+    @IBOutlet weak fileprivate var tableViewHeightConstranit: NSLayoutConstraint!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -612,10 +612,10 @@ extension MapViewController {
 
 class UserCell: UITableViewCell {
 
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var bioLabel: UILabel!
-    @IBOutlet weak var stationLabel: UILabel!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var userNameLabel: UILabel!
+    @IBOutlet weak fileprivate var bioLabel: UILabel!
+    @IBOutlet weak fileprivate var stationLabel: UILabel!
 
     var user: UserEntity!
 
@@ -634,10 +634,10 @@ class UserCell: UITableViewCell {
 
 class GroupCell: UITableViewCell {
 
-    @IBOutlet weak var coverImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var introLabel: UILabel!
-    @IBOutlet weak var memberLabel: UILabel!
+    @IBOutlet weak fileprivate var coverImageView: UIImageView!
+    @IBOutlet weak fileprivate var nameLabel: UILabel!
+    @IBOutlet weak fileprivate var introLabel: UILabel!
+    @IBOutlet weak fileprivate var memberLabel: UILabel!
 
     var group: GroupEntity!
 

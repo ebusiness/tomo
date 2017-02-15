@@ -28,27 +28,27 @@ final class CreatePostViewController: UIViewController {
 
     var placemark: CLPlacemark?
 
-    @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak fileprivate var postButton: UIBarButtonItem!
 
-    @IBOutlet weak var postTextView: UITextView!
+    @IBOutlet weak fileprivate var postTextView: UITextView!
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak fileprivate var collectionView: UICollectionView!
 
-    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak fileprivate var locationLabel: UILabel!
 
-    @IBOutlet weak var groupLabel: UILabel!
+    @IBOutlet weak fileprivate var groupLabel: UILabel!
 
-    @IBOutlet weak var numberBadge: UILabel!
+    @IBOutlet weak fileprivate var numberBadge: UILabel!
 
-    @IBOutlet weak var locationButton: UIButton!
+    @IBOutlet weak fileprivate var locationButton: UIButton!
 
-    @IBOutlet weak var clearLocationButton: UIButton!
+    @IBOutlet weak fileprivate var clearLocationButton: UIButton!
 
-    @IBOutlet weak var collectionViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak fileprivate var collectionViewTopConstraint: NSLayoutConstraint!
 
-    @IBOutlet weak var paperViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak fileprivate var paperViewBottomConstraint: NSLayoutConstraint!
 
-    @IBOutlet weak var locationButtonWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak fileprivate var locationButtonWidthConstraint: NSLayoutConstraint!
 
     override func viewDidLoad() {
 

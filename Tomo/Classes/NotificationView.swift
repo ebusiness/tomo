@@ -10,13 +10,13 @@ import UIKit
 
 class NotificationView: UIView {
 
-    @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak fileprivate var backgroundView: UIView!
 
-    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
 
-    @IBOutlet weak var messageLabelView: UILabel!
+    @IBOutlet weak fileprivate var messageLabelView: UILabel!
 
-    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak fileprivate var closeButton: UIButton!
 
     weak var delegate: TabBarController!
 

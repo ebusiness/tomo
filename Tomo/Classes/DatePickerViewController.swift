@@ -12,7 +12,7 @@ final class DatePickerViewController: UIViewController {
 
     var date:Date?
 
-    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak fileprivate var datePicker: UIDatePicker!
 
     var didSelected: ((_ selected:Date) -> Void)!
 

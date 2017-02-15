@@ -11,22 +11,22 @@ import SwiftyJSON
 
 final class PushSettingViewController: UITableViewController {
 
-    @IBOutlet weak var pushSwitch: UISwitch!
+    @IBOutlet weak fileprivate var pushSwitch: UISwitch!
 
     /// Switch
-    @IBOutlet weak var switchAnnouncement: UISwitch!
-    @IBOutlet weak var switchMessage: UISwitch!
-    @IBOutlet weak var switchGroupMessage: UISwitch!
-    @IBOutlet weak var switchFriendInvited: UISwitch!
-    @IBOutlet weak var switchFriendAccepted: UISwitch!
-    @IBOutlet weak var switchFriendRefused: UISwitch!
-    @IBOutlet weak var switchFriendBreak: UISwitch!
-    @IBOutlet weak var switchPostNew: UISwitch!
-    @IBOutlet weak var switchPostCommented: UISwitch!
-    @IBOutlet weak var switchPostLiked: UISwitch!
-    @IBOutlet weak var switchPostBookmarked: UISwitch!
-    @IBOutlet weak var switchGroupJoined: UISwitch!
-    @IBOutlet weak var switchGroupLeft: UISwitch!
+    @IBOutlet weak fileprivate var switchAnnouncement: UISwitch!
+    @IBOutlet weak fileprivate var switchMessage: UISwitch!
+    @IBOutlet weak fileprivate var switchGroupMessage: UISwitch!
+    @IBOutlet weak fileprivate var switchFriendInvited: UISwitch!
+    @IBOutlet weak fileprivate var switchFriendAccepted: UISwitch!
+    @IBOutlet weak fileprivate var switchFriendRefused: UISwitch!
+    @IBOutlet weak fileprivate var switchFriendBreak: UISwitch!
+    @IBOutlet weak fileprivate var switchPostNew: UISwitch!
+    @IBOutlet weak fileprivate var switchPostCommented: UISwitch!
+    @IBOutlet weak fileprivate var switchPostLiked: UISwitch!
+    @IBOutlet weak fileprivate var switchPostBookmarked: UISwitch!
+    @IBOutlet weak fileprivate var switchGroupJoined: UISwitch!
+    @IBOutlet weak fileprivate var switchGroupLeft: UISwitch!
 
     let pushSettingSection = 0
     let messageSection = 1

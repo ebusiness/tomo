@@ -10,13 +10,13 @@ import UIKit
 
 final class GroupDetailViewController: UITableViewController {
 
-    @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak fileprivate var coverImageView: UIImageView!
 
-    @IBOutlet weak var joinButton: UIButton!
+    @IBOutlet weak fileprivate var joinButton: UIButton!
 
-    @IBOutlet weak var loadingLabel: UILabel!
+    @IBOutlet weak fileprivate var loadingLabel: UILabel!
 
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak fileprivate var loadingIndicator: UIActivityIndicatorView!
 
     // The group entity
     var group: GroupEntity!

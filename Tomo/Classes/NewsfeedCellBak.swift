@@ -10,9 +10,9 @@ import UIKit
 
 class NewsfeedCell: UITableViewCell {
 
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak fileprivate var nameLabel: UILabel!
+    @IBOutlet weak fileprivate var dateLabel: UILabel!
+    @IBOutlet weak fileprivate var contentLabel: UILabel!
 
     var newsfeed: Newsfeed! {
         didSet {

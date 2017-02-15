@@ -10,9 +10,9 @@ import UIKit
 
 final class ImagePostTableViewCell: TextPostTableViewCell {
 
-    @IBOutlet weak var imageCollectionView: UICollectionView!
+    @IBOutlet weak fileprivate var imageCollectionView: UICollectionView!
 
-    @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak fileprivate var pageControl: UIPageControl!
 
     override func awakeFromNib() {
 
@@ -123,6 +123,6 @@ final class SingleImageCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak fileprivate var imageView: UIImageView!
 
 }

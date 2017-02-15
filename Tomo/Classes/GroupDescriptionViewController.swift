@@ -202,9 +202,9 @@ extension GroupDescriptionViewController {
 
 final class GroupDescriptionHeaderCell: UICollectionReusableView {
 
-    @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak fileprivate var coverImageView: UIImageView!
 
-    @IBOutlet weak var actionButton: UIButton!
+    @IBOutlet weak fileprivate var actionButton: UIButton!
 
     var group: GroupEntity! {
         didSet {
@@ -295,12 +295,12 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
 // MARK: - UICollectionView Content Cell
 
 final class GroupDescriptionMemberAvatarCell: UICollectionViewCell {
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var nickNameLabel: UILabel!
+    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
+    @IBOutlet weak fileprivate var nickNameLabel: UILabel!
 }
 
 // MARK: - UICollectionView Footer Cell
 
 final class GroupDescriptionFooterCell: UICollectionReusableView {
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak fileprivate var loadingIndicator: UIActivityIndicatorView!
 }
