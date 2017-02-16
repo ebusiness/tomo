@@ -6,8 +6,6 @@
 //  Copyright © 2014 SwiftyJSON. All rights reserved.
 //
 
-import Foundation
-
 import Alamofire
 import SwiftyJSON
 
@@ -36,7 +34,8 @@ extension Alamofire.SessionManager {
                 if challenge.previousFailureCount > 0 {
                     disposition = .cancelAuthenticationChallenge
                 } else {
-                    credential = manager.session.configuration.urlCredentialStorage?.defaultCredential(for: challenge.protectionSpace)
+                    let urlCredentialStorage = manager.session.configuration.urlCredentialStorage
+                    credential = urlCredentialStorage?.defaultCredential(for: challenge.protectionSpace)
                     if credential != nil {
                         disposition = .useCredential
                     }

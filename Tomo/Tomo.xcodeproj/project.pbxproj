@@ -58,10 +58,16 @@
 		D0223CEC1E1F8333004D5FE3 /* TomoVideoMediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */; };
 		D0223CED1E1F8507004D5FE3 /* JSQVoiceMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */; };
 		D0223CEE1E1F856E004D5FE3 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
-		D04CDF151E5432770069F02C /* WechatKit+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04CDF141E5432770069F02C /* WechatKit+RxSwift.swift */; };
 		D05FFF2F1E514A8D00B60F15 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FFF2E1E514A8D00B60F15 /* ChatViewController.swift */; };
 		D05FFF501E5185EF00B60F15 /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D05FFF4F1E5185EF00B60F15 /* ChatTableViewCell.xib */; };
 		D05FFF521E5186F200B60F15 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FFF511E5186F200B60F15 /* ChatTableViewCell.swift */; };
+		D097AE9C1E553D1300615728 /* Alamofire-SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AE951E553D1300615728 /* Alamofire-SwiftyJSON.swift */; };
+		D097AE9D1E553D1300615728 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AE961E553D1300615728 /* Array.swift */; };
+		D097AE9E1E553D1300615728 /* RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AE971E553D1300615728 /* RxSwift.swift */; };
+		D097AE9F1E553D1300615728 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AE981E553D1300615728 /* String.swift */; };
+		D097AEA01E553D1300615728 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AE991E553D1300615728 /* UIImage.swift */; };
+		D097AEA11E553D1300615728 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AE9A1E553D1300615728 /* UIViewController.swift */; };
+		D097AEA21E553D1300615728 /* WechatKit+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AE9B1E553D1300615728 /* WechatKit+RxSwift.swift */; };
 		D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */; };
 		D0A104951BEB055100AEE356 /* statements.html in Resources */ = {isa = PBXBuildFile; fileRef = D0A104941BEB055100AEE356 /* statements.html */; };
 		D0A578061E1D02B100F8A8BC /* SocketController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */; };
@@ -78,7 +84,6 @@
 		D0A7C8931E1CD03D0046E571 /* SignupRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0244C521C1FC65100EA87C1 /* SignupRouter.swift */; };
 		D0A7C8941E1CD03D0046E571 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06DC6311C240691009B19D1 /* UserRouter.swift */; };
 		D0A7C8951E1CD03D0046E571 /* APIRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FDC3511C1EA0670045826B /* APIRoute.swift */; };
-		D0A7C8961E1CD03D0046E571 /* Alamofire-SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FDC3531C1EA09F0045826B /* Alamofire-SwiftyJSON.swift */; };
 		D0A7C8971E1CD0500046E571 /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */; };
 		D0A7C8981E1CD0530046E571 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07E48531B9EB35B00BF04B2 /* Entity.swift */; };
 		D0A7C8991E1CD0BA0046E571 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA1E661B722260000F2936 /* MessageEntity.swift */; };
@@ -89,7 +94,6 @@
 		D0A7C8B61E1CD3920046E571 /* GCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2994AF901B019AA100656C39 /* GCD.swift */; };
 		D0A7C8B71E1CD8DA0046E571 /* ListenerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB07E41B9D65BE00C06C4E /* ListenerEvent.swift */; };
 		D0A7C8B81E1CD9400046E571 /* URLSchemesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */; };
-		D0A7C8BC1E1CDD870046E571 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A7C8BB1E1CDD870046E571 /* extension.swift */; };
 		D0A7C8BD1E1CDFC50046E571 /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D099B6171BDA3B63006C9D01 /* LocationController.swift */; };
 		D0A7C8DC1E1CE1AE0046E571 /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB07DF1B9D3E1400C06C4E /* RemoteNotification.swift */; };
 		D0DB07D71B9D1B5200C06C4E /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0DB07D61B9D1B5200C06C4E /* NotificationView.xib */; };
@@ -213,7 +217,6 @@
 		D0244C5C1C20130800EA87C1 /* GroupRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupRouter.swift; path = Classes/GroupRouter.swift; sourceTree = "<group>"; };
 		D029F7311BCCB39E00CDE18B /* PushSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PushSettingViewController.swift; path = Classes/PushSettingViewController.swift; sourceTree = "<group>"; };
 		D040E1641BDDC00D00417174 /* RecommendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendViewController.swift; path = Classes/RecommendViewController.swift; sourceTree = "<group>"; };
-		D04CDF141E5432770069F02C /* WechatKit+RxSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "WechatKit+RxSwift.swift"; path = "Classes/WechatKit+RxSwift.swift"; sourceTree = "<group>"; };
 		D05FFF2E1E514A8D00B60F15 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = Classes/ChatViewController.swift; sourceTree = "<group>"; };
 		D05FFF4F1E5185EF00B60F15 /* ChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChatTableViewCell.xib; path = Classes/ChatTableViewCell.xib; sourceTree = "<group>"; };
 		D05FFF511E5186F200B60F15 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatTableViewCell.swift; path = Classes/ChatTableViewCell.swift; sourceTree = "<group>"; };
@@ -228,13 +231,19 @@
 		D07E48531B9EB35B00BF04B2 /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Entity.swift; path = Classes/Entity.swift; sourceTree = "<group>"; };
 		D08BFB0A1B744C2D00771F70 /* JSQMessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSQMessageEntity.swift; path = Classes/JSQMessageEntity.swift; sourceTree = "<group>"; };
 		D0960AAB1BC376FB00A63733 /* UltravisualLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UltravisualLayout.swift; sourceTree = "<group>"; };
+		D097AE951E553D1300615728 /* Alamofire-SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire-SwiftyJSON.swift"; sourceTree = "<group>"; };
+		D097AE961E553D1300615728 /* Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		D097AE971E553D1300615728 /* RxSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSwift.swift; sourceTree = "<group>"; };
+		D097AE981E553D1300615728 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		D097AE991E553D1300615728 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		D097AE9A1E553D1300615728 /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		D097AE9B1E553D1300615728 /* WechatKit+RxSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WechatKit+RxSwift.swift"; sourceTree = "<group>"; };
 		D099B6171BDA3B63006C9D01 /* LocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationController.swift; path = Classes/LocationController.swift; sourceTree = "<group>"; };
 		D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Profile.storyboard; path = Classes/Profile.storyboard; sourceTree = "<group>"; };
 		D0A0C0311B5F5BF900ABFA5F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = Classes/ProfileViewController.swift; sourceTree = "<group>"; };
 		D0A0C0331B5F5D0500ABFA5F /* UserPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserPostsViewController.swift; path = Classes/UserPostsViewController.swift; sourceTree = "<group>"; };
 		D0A104901BEAF1C700AEE356 /* AgreementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AgreementViewController.swift; path = Classes/AgreementViewController.swift; sourceTree = "<group>"; };
 		D0A104941BEB055100AEE356 /* statements.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = statements.html; path = Resources/statements.html; sourceTree = SOURCE_ROOT; };
-		D0A7C8BB1E1CDD870046E571 /* extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = extension.swift; sourceTree = "<group>"; };
 		D0B40BBE1B78AF0400685D67 /* ExNSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExNSDate.swift; path = Classes/ExNSDate.swift; sourceTree = SOURCE_ROOT; };
 		D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLSchemesController.swift; path = Classes/URLSchemesController.swift; sourceTree = "<group>"; };
 		D0D5A4461E261A4F00757F4E /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = SOURCE_ROOT; };
@@ -251,7 +260,6 @@
 		D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendListSendRequestController.swift; path = Classes/FriendListSendRequestController.swift; sourceTree = "<group>"; };
 		D0F6E2BC1E24C469000B0EC3 /* tomo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = tomo.entitlements; sourceTree = "<group>"; };
 		D0FDC3511C1EA0670045826B /* APIRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRoute.swift; path = Classes/APIRoute.swift; sourceTree = "<group>"; };
-		D0FDC3531C1EA09F0045826B /* Alamofire-SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Alamofire-SwiftyJSON.swift"; path = "Classes/Alamofire-SwiftyJSON.swift"; sourceTree = "<group>"; };
 		D0FDC3561C1EA30D0045826B /* SigninRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SigninRouter.swift; path = Classes/SigninRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -390,6 +398,7 @@
 		290134C91AC3991C00BBFE29 = {
 			isa = PBXGroup;
 			children = (
+				D097AE941E553D1300615728 /* Extensions */,
 				1F9ACAF61B69F96100648A82 /* Entity */,
 				D0FDC3501C1EA04C0045826B /* Router */,
 				299389531AD3C71500043D91 /* storyboard */,
@@ -446,7 +455,6 @@
 		296040441ACE669900D2A338 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
-				D0A7C8BB1E1CDD870046E571 /* extension.swift */,
 				293EB4231B132B06006BAF27 /* JSQVoiceMediaItem.h */,
 				293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */,
 				2994AF901B019AA100656C39 /* GCD.swift */,
@@ -477,7 +485,6 @@
 				29C1DA781AD36659009A02CC /* S3Controller.swift */,
 				D073E6F71B84C1BF00066F42 /* CameraController.swift */,
 				D099B6171BDA3B63006C9D01 /* LocationController.swift */,
-				D04CDF141E5432770069F02C /* WechatKit+RxSwift.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -607,6 +614,20 @@
 			name = Components;
 			sourceTree = "<group>";
 		};
+		D097AE941E553D1300615728 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D097AE951E553D1300615728 /* Alamofire-SwiftyJSON.swift */,
+				D097AE961E553D1300615728 /* Array.swift */,
+				D097AE971E553D1300615728 /* RxSwift.swift */,
+				D097AE981E553D1300615728 /* String.swift */,
+				D097AE991E553D1300615728 /* UIImage.swift */,
+				D097AE9A1E553D1300615728 /* UIViewController.swift */,
+				D097AE9B1E553D1300615728 /* WechatKit+RxSwift.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		D0DB07E31B9D655600C06C4E /* Listener */ = {
 			isa = PBXGroup;
 			children = (
@@ -623,7 +644,6 @@
 			children = (
 				D0FDC3551C1EA2F10045826B /* API */,
 				D0FDC3511C1EA0670045826B /* APIRoute.swift */,
-				D0FDC3531C1EA09F0045826B /* Alamofire-SwiftyJSON.swift */,
 			);
 			name = Router;
 			sourceTree = "<group>";
@@ -852,10 +872,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D097AEA01E553D1300615728 /* UIImage.swift in Sources */,
 				D0A7C89C1E1CD1C00046E571 /* CommentEntity.swift in Sources */,
 				D0A7C8931E1CD03D0046E571 /* SignupRouter.swift in Sources */,
 				D0E9B2891E24DF3900101277 /* CommonMessageController.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
+				D097AEA21E553D1300615728 /* WechatKit+RxSwift.swift in Sources */,
 				D0A7C88E1E1CD03D0046E571 /* MessageRouter.swift in Sources */,
 				D0223CEC1E1F8333004D5FE3 /* TomoVideoMediaItem.swift in Sources */,
 				D0E9B2811E24D11B00101277 /* RecommendStationTableViewCell.swift in Sources */,
@@ -864,13 +886,12 @@
 				D0223CEE1E1F856E004D5FE3 /* RegViewController.swift in Sources */,
 				D007D8961E25FBD60005DC21 /* MyAccountViewController.swift in Sources */,
 				D0A7C88B1E1CD03D0046E571 /* GroupMessageRouter.swift in Sources */,
-				D0A7C8BC1E1CDD870046E571 /* extension.swift in Sources */,
+				D097AE9C1E553D1300615728 /* Alamofire-SwiftyJSON.swift in Sources */,
 				D007D8891E25E9100005DC21 /* LandingViewController.swift in Sources */,
 				D0F6E2B81E24A893000B0EC3 /* GroupAnnotation.swift in Sources */,
 				D007D8971E25FBD60005DC21 /* BookmarkedPostsViewController.swift in Sources */,
 				D007D8911E25FB500005DC21 /* PickerTableViewController.swift in Sources */,
 				D0A7C8901E1CD03D0046E571 /* ReportRouter.swift in Sources */,
-				D0A7C8961E1CD03D0046E571 /* Alamofire-SwiftyJSON.swift in Sources */,
 				D0E9B2B31E24ED2E00101277 /* AmazonS3RequestManager.swift in Sources */,
 				D0A7C8991E1CD0BA0046E571 /* MessageEntity.swift in Sources */,
 				D0E9B2831E24D14700101277 /* ImagePostTableViewCell.swift in Sources */,
@@ -878,9 +899,11 @@
 				D0A7C89D1E1CD1CC0046E571 /* PostEntity.swift in Sources */,
 				D0DB07D91B9D224900C06C4E /* NotificationView.swift in Sources */,
 				D0A7C88A1E1CD03D0046E571 /* ContactRouter.swift in Sources */,
+				D097AEA11E553D1300615728 /* UIViewController.swift in Sources */,
 				D0F6E2BB1E24A909000B0EC3 /* AggregatableAnnotationView.swift in Sources */,
 				D007D89D1E25FBD60005DC21 /* SettingNavigationController.swift in Sources */,
 				D007D8981E25FBD60005DC21 /* FriendListSendRequestController.swift in Sources */,
+				D097AE9F1E553D1300615728 /* String.swift in Sources */,
 				D007D88F1E25F8BC0005DC21 /* UserAnnotationView.swift in Sources */,
 				D0A7C8981E1CD0530046E571 /* Entity.swift in Sources */,
 				D007D89A1E25FBD60005DC21 /* MyPostsViewController.swift in Sources */,
@@ -894,6 +917,7 @@
 				D007D8871E25E7E00005DC21 /* StationDiscoverViewController.swift in Sources */,
 				D0A578061E1D02B100F8A8BC /* SocketController.swift in Sources */,
 				D0A7C8971E1CD0500046E571 /* UserEntity.swift in Sources */,
+				D097AE9E1E553D1300615728 /* RxSwift.swift in Sources */,
 				D007D8921E25FB500005DC21 /* DatePickerViewController.swift in Sources */,
 				D0223CEB1E1F8301004D5FE3 /* JSQMessageEntity.swift in Sources */,
 				D0E9B2871E24DF0A00101277 /* MessageViewController.swift in Sources */,
@@ -904,6 +928,7 @@
 				D0E9B2801E24D0E200101277 /* PostDetailViewController.swift in Sources */,
 				D007D8821E25DD780005DC21 /* LatestMessagesViewController.swift in Sources */,
 				D0E9B2B41E24ED2E00101277 /* AmazonS3SignatureHelpers.m in Sources */,
+				D097AE9D1E553D1300615728 /* Array.swift in Sources */,
 				D0E9B2861E24DA0000101277 /* ProfileViewController.swift in Sources */,
 				D007D88D1E25F8BC0005DC21 /* StationAnnotation.swift in Sources */,
 				D0F6E2BD1E24CDC2000B0EC3 /* HomeViewController.swift in Sources */,
@@ -924,7 +949,6 @@
 				D0A7C8891E1CD0230046E571 /* Account.swift in Sources */,
 				D0E9B2881E24DF1300101277 /* UserPostsViewController.swift in Sources */,
 				D0A7C8B81E1CD9400046E571 /* URLSchemesController.swift in Sources */,
-				D04CDF151E5432770069F02C /* WechatKit+RxSwift.swift in Sources */,
 				D007D88A1E25F8BC0005DC21 /* GroupAnnotationView.swift in Sources */,
 				D0A7C88F1E1CD03D0046E571 /* PostRouter.swift in Sources */,
 				D0A7C8B71E1CD8DA0046E571 /* ListenerEvent.swift in Sources */,
