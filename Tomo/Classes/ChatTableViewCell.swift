@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ChatTableViewCellDelegate: class {
+    func userAvatarTapped(message: MessageEntity)
+}
+
 final class ChatTableViewCell: UITableViewCell {
 
     @IBOutlet weak fileprivate var incomingAvatar: UIImageView!
@@ -21,6 +25,18 @@ final class ChatTableViewCell: UITableViewCell {
     @IBOutlet weak fileprivate var topConstraint: NSLayoutConstraint!
     @IBOutlet weak fileprivate var contentTopConstraint: NSLayoutConstraint!
     @IBOutlet weak fileprivate var thumbnailHeight: NSLayoutConstraint!
+
+    weak var delegate: ChatTableViewCellDelegate?
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+//        let tapped = UITapGestureRecognizer(target: self, action: #selector(ChatTableViewCell.avatarTapped(_:)))
+        let incomingAvatarTapped = UITapGestureRecognizer(target: self, action: #selector(ChatTableViewCell.avatarTapped(_:)))
+        self.incomingAvatar.addGestureRecognizer(incomingAvatarTapped)
+
+        let outgoingAvatarTapped = UITapGestureRecognizer(target: self, action: #selector(ChatTableViewCell.avatarTapped(_:)))
+        self.outgoingAvatar.addGestureRecognizer(outgoingAvatarTapped)
+    }
 
     var message: MessageEntity! {
         didSet {
@@ -36,6 +52,10 @@ final class ChatTableViewCell: UITableViewCell {
         didSet {
             self.showCreateDateIfNeeded()
         }
+    }
+
+    func avatarTapped(_ sender: UITapGestureRecognizer) {
+        self.delegate?.userAvatarTapped(message: message)
     }
 
     func getHeight() -> CGFloat {
@@ -125,8 +145,14 @@ extension ChatTableViewCell {
     }
 
     private func showMediaContent(isReceived: Bool) {
+        // TODO display video file
         self.thumbnailHeight.constant = 150
-        let url = URL(string: self.message.type.fullPath(name: self.message.content))
+
+        var url = Util.getDocumentsURL(forFile: self.message.content)
+        if !FileManager.default.fileExists(atPath: url.path) {
+            url = URL(string: self.message.type.fullPath(name: self.message.content))!
+        }
+
         self.thumbnail.contentMode = isReceived ? .topLeft : .topRight
         let placeholderImageName = "placeholder.png"
         self.thumbnail.image = UIImage(named: placeholderImageName)

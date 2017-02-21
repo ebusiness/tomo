@@ -30,6 +30,27 @@ final class LatestMessagesViewController: UITableViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        segueForChatDetail(segue, sender: sender)
+    }
+
+    private func segueForChatDetail(_ segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier != "SegueChatDetail" { return }
+        guard let vc = segue.destination as? ChatViewController else {
+            return
+        }
+        vc.hidesBottomBarWhenPushed = true
+        guard let message = sender as? MessageEntity else {
+            return
+        }
+
+        if let group = message.group {
+            vc.group = group
+        } else {
+            vc.friend = message.from.id == me.id ? message.to : message.from
+        }
+    }
 }
 
 // MARK: - UITableView datasource
@@ -59,7 +80,6 @@ extension LatestMessagesViewController {
             return self.messages.count
         }
     }
-
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
@@ -154,27 +174,9 @@ extension LatestMessagesViewController {
 
         tableView.deselectRow(at: indexPath, animated: true)
 
-        if !me.friendInvitations.isEmpty && indexPath.section == 0 {
-
-            let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
-            vc?.user = me.friendInvitations[indexPath.item].from
-            self.navigationController?.pushViewController(vc!, animated: true)
-            return
-        }
-
         let message = self.messages[indexPath.row]
 
-        if let group = message.group {
-            let vc = GroupChatViewController()
-            vc.group = group
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
-        } else {
-            let vc = MessageViewController()
-            vc.friend = (message.from.id == me.id ? message.to : message.from)
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        self.performSegue(withIdentifier: "SegueChatDetail", sender: message)
     }
 }
 

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="HTn-5g-Hng">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="ytO-dT-eim">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -24,20 +24,20 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="2kv-WH-okA">
-                                    <rect key="frame" x="177.5" y="22" width="20" height="20"/>
+                                    <rect key="frame" x="178" y="22" width="20" height="20"/>
                                 </activityIndicatorView>
                                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWz-rb-Flg">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="read_message" translatesAutoresizingMaskIntoConstraints="NO" id="f5f-GM-PLD">
-                                            <rect key="frame" x="139.5" y="-64" width="96" height="96"/>
+                                            <rect key="frame" x="140" y="-64" width="96" height="96"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="96" id="Qgf-t3-VpA"/>
                                                 <constraint firstAttribute="width" constant="96" id="nAt-PK-G45"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您还没有收到任何消息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tzl-2C-eSK">
-                                            <rect key="frame" x="101" y="40" width="173.5" height="21"/>
+                                            <rect key="frame" x="101" y="40" width="174" height="21"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -84,7 +84,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用户名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KSR-j9-hZk">
-                                            <rect key="frame" x="84" y="24" width="190" height="20"/>
+                                            <rect key="frame" x="84" y="23" width="190" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="190" id="0aP-bK-ueM"/>
                                             </constraints>
@@ -93,7 +93,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="希望添加你为好友" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pTY-Ky-6jm">
-                                            <rect key="frame" x="84" y="48" width="114.5" height="17"/>
+                                            <rect key="frame" x="84" y="48" width="115" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -331,6 +331,7 @@
                         <outlet property="emptyResultView" destination="kWz-rb-Flg" id="FDh-2W-YQe"/>
                         <outlet property="loadingIndicator" destination="2kv-WH-okA" id="rYj-XM-sxc"/>
                         <segue destination="Jcn-dd-kJ4" kind="push" id="DQQ-9t-dCR"/>
+                        <segue destination="CFE-ex-tuS" kind="push" identifier="SegueChatDetail" id="qEj-ft-2fR"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uhG-KL-JHp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -356,7 +357,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FYp-eg-tck" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="451" y="285"/>
+            <point key="canvasLocation" x="460" y="303"/>
         </scene>
         <!--通讯录-->
         <scene sceneID="5IH-b2-9iF">
@@ -371,7 +372,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="V7K-WT-a5H">
-                                    <rect key="frame" x="177.5" y="22" width="20" height="20"/>
+                                    <rect key="frame" x="178" y="22" width="20" height="20"/>
                                 </activityIndicatorView>
                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="没有联系人" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rI3-vg-9cR">
                                     <rect key="frame" x="144" y="22" width="87" height="21"/>
@@ -450,7 +451,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mZs-fG-Bg5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1452" y="285"/>
+            <point key="canvasLocation" x="1790" y="303"/>
         </scene>
         <!--Search Friend View Controller-->
         <scene sceneID="sF7-Wm-tCA">
@@ -465,7 +466,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="yzy-Co-psy">
-                                    <rect key="frame" x="177.5" y="22" width="20" height="20"/>
+                                    <rect key="frame" x="178" y="22" width="20" height="20"/>
                                 </activityIndicatorView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="没有更多的结果了" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2dD-HB-sWd">
                                     <rect key="frame" x="118" y="22" width="139" height="21"/>
@@ -599,31 +600,10 @@
             </objects>
             <point key="canvasLocation" x="1452" y="1204"/>
         </scene>
-        <!--Contacts Navigation Controller-->
-        <scene sceneID="7BK-HG-hVK">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HTn-5g-Hng" customClass="ContactsNavigationController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" backIndicatorImage="back" backIndicatorTransitionMaskImage="back" id="TZr-AL-5zw">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.0078431372550000003" green="0.53333333329999999" blue="0.81960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="CFE-ex-tuS" kind="relationship" relationship="rootViewController" id="vcq-fA-uRE"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TCj-7g-qoM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="451" y="-494"/>
-        </scene>
         <!--聊天-->
         <scene sceneID="ndH-av-aMR">
             <objects>
-                <viewController id="CFE-ex-tuS" customClass="ChatViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatViewController" id="CFE-ex-tuS" customClass="ChatViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nl5-xH-NZt"/>
                         <viewControllerLayoutGuide type="bottom" id="pIT-vT-kKT"/>
@@ -637,7 +617,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BGF-iw-HS8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="983" y="-495"/>
+            <point key="canvasLocation" x="1452" y="-473"/>
         </scene>
     </scenes>
     <resources>

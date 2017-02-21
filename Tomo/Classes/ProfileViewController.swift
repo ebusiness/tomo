@@ -93,6 +93,15 @@ final class ProfileViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ChatViewController" {
+            guard let vc = segue.destination as? ChatViewController else {
+                return
+            }
+            vc.hidesBottomBarWhenPushed = true
+
+            vc.friend = self.user
+            return
+        }
         if let vc = segue.destination as? UserPostsViewController {
             vc.user = self.user
         }
@@ -212,17 +221,12 @@ extension ProfileViewController {
 
         // TODO: infinite loop here
 
-        let messageViewController = self.navigationController?.childViewControllers.first(where: { ($0 as? MessageViewController)?.friend.id == self.user.id }) as? MessageViewController
+        let chatViewController = self.navigationController?.childViewControllers.first(where: { ($0 as? ChatViewController)?.friend?.id == self.user.id }) as? ChatViewController
 
-        if let messageViewController = messageViewController {
-            self.navigationController?.pop(to: messageViewController, animated: true)
+        if let chatViewController = chatViewController {
+            self.navigationController?.pop(to: chatViewController, animated: true)
         } else {
-            let vc = MessageViewController()
-            vc.hidesBottomBarWhenPushed = true
-
-            vc.friend = self.user
-
-            self.navigationController?.pushViewController(vc, animated: true)
+            self.performSegue(withIdentifier: "ChatViewController", sender: nil)
         }
     }
 }
