@@ -28,7 +28,6 @@
 		29BE7E121AC54224008110B4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE7E111AC54224008110B4 /* Util.swift */; };
 		29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CA441D1AD4CAF0009EB177 /* Setting.storyboard */; };
 		559DCAD51C5FB373003FA73C /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 559DCAD41C5FB373003FA73C /* Map.storyboard */; };
-		921D652A40BCC0046D5D2D16 /* libPods-Tomo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE6AF7657BE1C951C6D2F24 /* libPods-Tomo.a */; };
 		D000F17D1C2809DF00AD873C /* TomoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D000F17C1C2809DF00AD873C /* TomoTests.swift */; };
 		D007D8801E25C3730005DC21 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18B8331B844665003BD469 /* CreatePostViewController.swift */; };
 		D007D8811E25C8A40005DC21 /* GroupDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CB45E01BB13FB200182924 /* GroupDescriptionViewController.swift */; };
@@ -165,7 +164,6 @@
 		1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentEntity.swift; path = Classes/CommentEntity.swift; sourceTree = "<group>"; };
 		1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationEntity.swift; path = Classes/NotificationEntity.swift; sourceTree = "<group>"; };
 		1FCA1E661B722260000F2936 /* MessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageEntity.swift; path = Classes/MessageEntity.swift; sourceTree = "<group>"; };
-		1FE6AF7657BE1C951C6D2F24 /* libPods-Tomo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tomo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FE7CEF41B8C9561006700FC /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = Classes/SignUpViewController.swift; sourceTree = "<group>"; };
 		1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendStationTableViewCell.swift; path = Classes/RecommendStationTableViewCell.swift; sourceTree = "<group>"; };
 		1FEE80E71B4E552A0061B913 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Home.storyboard; path = Classes/Home.storyboard; sourceTree = "<group>"; };
@@ -198,8 +196,6 @@
 		29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SocketController.swift; path = Classes/SocketController.swift; sourceTree = "<group>"; };
 		559DCAD41C5FB373003FA73C /* Map.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Map.storyboard; path = Classes/Map.storyboard; sourceTree = "<group>"; };
 		55DB7B931C5FCF6100F921F9 /* SettingNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingNavigationController.swift; path = Classes/SettingNavigationController.swift; sourceTree = "<group>"; };
-		8D106AA049AF24859046F443 /* Pods-Tomo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tomo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tomo/Pods-Tomo.debug.xcconfig"; sourceTree = "<group>"; };
-		B4FB56640FDFEDCA62E5107C /* Pods-Tomo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tomo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tomo/Pods-Tomo.release.xcconfig"; sourceTree = "<group>"; };
 		D000F17A1C2809DF00AD873C /* TomoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TomoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D000F17C1C2809DF00AD873C /* TomoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomoTests.swift; sourceTree = "<group>"; };
 		D000F17E1C2809DF00AD873C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -263,7 +259,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				17B993081AF3540D00204E97 /* libopencore-amrnb.a in Frameworks */,
-				921D652A40BCC0046D5D2D16 /* libPods-Tomo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,7 +394,6 @@
 				D000F17B1C2809DF00AD873C /* TomoTests */,
 				290134D31AC3991C00BBFE29 /* Products */,
 				D4F3CDABDCA581BFF7D35DBA /* Frameworks */,
-				D02EC5502F8871A26095E144 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -573,15 +567,6 @@
 			name = Components;
 			sourceTree = "<group>";
 		};
-		D02EC5502F8871A26095E144 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				8D106AA049AF24859046F443 /* Pods-Tomo.debug.xcconfig */,
-				B4FB56640FDFEDCA62E5107C /* Pods-Tomo.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		D05FFF4E1E5185BB00B60F15 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -661,7 +646,6 @@
 			isa = PBXGroup;
 			children = (
 				29A5D1E01ACCCFB400D95B77 /* Reveal.framework */,
-				1FE6AF7657BE1C951C6D2F24 /* libPods-Tomo.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -673,13 +657,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 290134F11AC3991D00BBFE29 /* Build configuration list for PBXNativeTarget "Tomo" */;
 			buildPhases = (
-				331D22A39C079A7B3EAFBAD4 /* [CP] Check Pods Manifest.lock */,
 				290134CE1AC3991C00BBFE29 /* Sources */,
 				290134CF1AC3991C00BBFE29 /* Frameworks */,
 				290134D01AC3991C00BBFE29 /* Resources */,
 				1F1ECE0A1C1176FC00A3CADA /* ShellScript */,
-				55E0304193A9E0F1DCDEC9E9 /* [CP] Embed Pods Frameworks */,
-				558C9AF3A4A6FAC03AB566A9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -812,51 +793,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\n/usr/local/bin/carthage copy-frameworks";
-		};
-		331D22A39C079A7B3EAFBAD4 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		558C9AF3A4A6FAC03AB566A9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tomo/Pods-Tomo-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		55E0304193A9E0F1DCDEC9E9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tomo/Pods-Tomo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1068,7 +1004,6 @@
 		};
 		290134F21AC3991D00BBFE29 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8D106AA049AF24859046F443 /* Pods-Tomo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1107,7 +1042,6 @@
 		};
 		290134F31AC3991D00BBFE29 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B4FB56640FDFEDCA62E5107C /* Pods-Tomo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
