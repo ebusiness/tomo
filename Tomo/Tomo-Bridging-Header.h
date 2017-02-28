@@ -5,7 +5,7 @@
 //#import "SVProgressHUD.h"
 #import <SDWebImage/SDWebImage.h>
 #import "AmazonS3SignatureHelpers.h"
-#import "JSQMessages.h"
+//#import "JSQMessages.h"
 
 //voice
 #include "interf_dec.h"
@@ -13,8 +13,8 @@
 #include "amrFileCodec.h"
 
 //#import "FCFileManager.h"
-#import "JSQPhotoMediaItem.h"
+//#import "JSQPhotoMediaItem.h"
 //#import "MHGallery.h"
 
-#import "JSQVoiceMediaItem.h"
+//#import "JSQVoiceMediaItem.h"
 //#import "UIView+DCAnimationKit.h"

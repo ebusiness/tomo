@@ -225,7 +225,7 @@ extension TabBarController {
 
             // if received normal message in chat view controller, don't show notification bar
             let topViewController = self.selectedViewController?.childViewControllers.last
-            if topViewController is MessageViewController {
+            if topViewController is ChatViewController {
                 return
             }
 
@@ -240,7 +240,7 @@ extension TabBarController {
 
             // if received group message in group chat view controller, don't show notification bar
             let topViewController = self.selectedViewController?.childViewControllers.last
-            if topViewController is GroupChatViewController {
+            if topViewController is ChatViewController {
                 return
             }
 

@@ -105,10 +105,12 @@ extension GroupDetailViewController {
     }
 
     @IBAction func chatButtonTapped(_ sender: UIBarButtonItem) {
-        let groupChatViewController = GroupChatViewController()
-        groupChatViewController.group = self.group
-        groupChatViewController.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(groupChatViewController, animated: true)
+//        let groupChatViewController = ChatViewController()
+//        groupChatViewController.group = self.group
+//        groupChatViewController.hidesBottomBarWhenPushed = true
+//        self.navigationController?.pushViewController(groupChatViewController, animated: true)
+        
+        self.performSegue(withIdentifier: "SegueToChat", sender: self.group)
     }
 
 }
@@ -123,6 +125,12 @@ extension GroupDetailViewController {
         if segue.identifier == "pushGroupDescription" {
             let destination = segue.destination as? GroupDescriptionViewController
             destination?.group = group
+        }
+
+        if segue.identifier == "SegueToChat" {
+            let chatVC = segue.destination as? ChatViewController
+            chatVC?.group = sender as? GroupEntity
+            chatVC?.hidesBottomBarWhenPushed = true
         }
     }
 }

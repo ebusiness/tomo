@@ -29,14 +29,14 @@ final class ChatViewController: SLKTextViewController {
 
     var messages = [MessageEntity]()
 
-    fileprivate var cellForCalculatorHeight: ChatTableViewCell!
+    fileprivate var cellForCalculatorHeight: ChatTableViewTextCell!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureTableView()
 
-        let nibs = Bundle.main.loadNibNamed("ChatTableViewCell", owner: nil, options: nil)!
-        if let cell = nibs.first as? ChatTableViewCell {
+        let nibs = Bundle.main.loadNibNamed("ChatTableViewTextCell", owner: nil, options: nil)!
+        if let cell = nibs.first as? ChatTableViewTextCell {
             self.cellForCalculatorHeight = cell
         }
 
@@ -53,9 +53,10 @@ final class ChatViewController: SLKTextViewController {
         self.leftButton.setImage(#imageLiteral(resourceName: "icon_keyboard"), for: .normal)
 
         self.textView.placeholder = "Message"
-
-        let nib = UINib(nibName: "ChatTableViewCell", bundle: nil)
-        self.tableView.register(nib, forCellReuseIdentifier: "Cell")
+        let textNib = UINib(nibName: "ChatTableViewTextCell", bundle: nil)
+        self.tableView.register(textNib, forCellReuseIdentifier: "ChatTableViewTextCell")
+        let imageNib = UINib(nibName: "ChatTableViewImageCell", bundle: nil)
+        self.tableView.register(imageNib, forCellReuseIdentifier: "ChatTableViewImageCell")
         self.tableView.separatorStyle = .none
     }
 }
@@ -70,20 +71,24 @@ extension ChatViewController {
             return
         }
 
-        Router.Message.FindByUserId(id: friendId, before: nil).rxRequest().subscribe(onNext: { value in
-
-            guard let result: [MessageEntity] = MessageEntity.collection(value) else {
-                return
-            }
-
-            self.messages = result.map {
-                if $0.from.id == me.id {
-                    $0.from = me
+        Router.Message.FindByUserId(id: friendId, before: nil)
+            .request()
+            .responseSwiftyJSON { res in
+                if res.result.isFailure {
+                    return
                 }
-                return $0
+                guard let result: [MessageEntity] = MessageEntity.collection(res.result.value!) else {
+                    return
+                }
+                
+                self.messages = result.map {
+                    if $0.from.id == me.id {
+                        $0.from = me
+                    }
+                    return $0
+                }
+                self.tableView.reloadData()
             }
-            self.tableView.reloadData()
-        })
     }
 
     fileprivate func loadGroupMessages() {
@@ -92,18 +97,24 @@ extension ChatViewController {
             return
         }
 
-        Router.GroupMessage.FindByGroupId(id: groupId, before: nil).rxRequest().subscribe(onNext: { value in
-            guard let result: [MessageEntity] = MessageEntity.collection(value) else {
-                return
-            }
-            self.messages = result.map {
-                if $0.from.id == me.id {
-                    $0.from = me
+        Router.GroupMessage.FindByGroupId(id: groupId, before: nil)
+            .request()
+            .responseSwiftyJSON { res in
+                if res.result.isFailure {
+                    return
                 }
-                return $0
-            }
-            self.tableView.reloadData()
-        })
+                guard let result: [MessageEntity] = MessageEntity.collection(res.result.value!) else {
+                    return
+                }
+                
+                self.messages = result.map {
+                    if $0.from.id == me.id {
+                        $0.from = me
+                    }
+                    return $0
+                }
+                self.tableView.reloadData()
+        }
     }
 }
 
@@ -182,27 +193,44 @@ extension ChatViewController {
 
 // MARK: - TableViewControllerDataSource
 
-extension ChatViewController {
+extension ChatViewController: ChatTableViewTextCellDelegate, ChatTableViewImageCellDelegate {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.messages.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? ChatTableViewCell
+        let message = messages[indexPath.row]
+        if message.type == .text {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ChatTableViewTextCell", for: indexPath) as? ChatTableViewTextCell
 
-        self.configure(cell: cell!, forRowAt: indexPath)
-        cell?.delegate = self
-        cell?.transform = tableView.transform
-        return cell!
+            self.configureText(cell: cell!, forRowAt: indexPath)
+            cell?.delegate = self
+            cell?.transform = tableView.transform
+            return cell!
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ChatTableViewImageCell", for: indexPath) as? ChatTableViewImageCell
+
+            self.configureImage(cell: cell!, forRowAt: indexPath)
+            cell?.delegate = self
+            cell?.transform = tableView.transform
+            return cell!
+        }
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        self.configure(cell: self.cellForCalculatorHeight!, forRowAt: indexPath)
-        return self.cellForCalculatorHeight.getHeight()
+        let message = messages[indexPath.row]
+        if message.type == .text {
+            self.configureText(cell: self.cellForCalculatorHeight!, forRowAt: indexPath)
+            return self.cellForCalculatorHeight.getHeight()
+        } else if message.type == .photo || message.type == .video {
+            return 200
+        } else {
+            return 80
+        }
     }
 
-    private func configure(cell: ChatTableViewCell, forRowAt indexPath: IndexPath) {
+    private func configureText(cell: ChatTableViewTextCell, forRowAt indexPath: IndexPath) {
         cell.selectionStyle = .none
         cell.message = self.messages[indexPath.row]
         if indexPath.row == self.messages.count - 1 {
@@ -211,11 +239,16 @@ extension ChatViewController {
             cell.dateOfPreviousMessage = self.messages[indexPath.row + 1].createDate
         }
     }
-}
 
-// MARK: - ChatTableViewCellDelegate
-
-extension ChatViewController: ChatTableViewCellDelegate {
+    private func configureImage(cell: ChatTableViewImageCell, forRowAt indexPath: IndexPath) {
+        cell.selectionStyle = .none
+        cell.message = self.messages[indexPath.row]
+        if indexPath.row == self.messages.count - 1 {
+            cell.dateOfPreviousMessage = Date(timeIntervalSince1970: 0)
+        } else {
+            cell.dateOfPreviousMessage = self.messages[indexPath.row + 1].createDate
+        }
+    }
 
     func userAvatarTapped(message: MessageEntity) {
         let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile")
@@ -224,6 +257,18 @@ extension ChatViewController: ChatTableViewCellDelegate {
         self.navigationController?.pushViewController(profileVC, animated: true)
     }
 }
+
+// MARK: - ChatTableViewCellDelegate
+
+//extension ChatViewController: ChatTableViewCellDelegate {
+//
+//    func userAvatarTapped(message: MessageEntity) {
+//        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile")
+//        guard let profileVC = vc as? ProfileViewController else { return }
+//        profileVC.user = message.from.id == me.id ? me: message.from
+//        self.navigationController?.pushViewController(profileVC, animated: true)
+//    }
+//}
 
 // MARK: - ActionSheet
 
@@ -359,7 +404,7 @@ extension ChatViewController: UIActionSheetDelegate {
 
     /**
      hold on
-     
+
      - parameter longPressedRecognizer: longPressedRecognizer
      */
 

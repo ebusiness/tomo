@@ -148,12 +148,14 @@ extension RegViewController {
 
     private func signWithOpenid() {
         Router.Signin.WeChat(openid: WechatManager.openid, access_token: WechatManager.accessToken)
-            .rxRequest()
-            .subscribe(onNext: {
-                self.success(res: $0)
-            }, onError: { _ in
-                self.getWeChatInfo()
-            })
+            .request()
+            .responseSwiftyJSON { res in
+                if res.result.isSuccess {
+                    self.success(res: res.result.value!)
+                } else {
+                    self.getWeChatInfo()
+                }
+            }
     }
 
     private func getWeChatInfo() {
@@ -168,12 +170,14 @@ extension RegViewController {
                              nickname: userInfo["nickname"] as? String ?? "",
                              gender: userInfo["sex"] as? String,
                              headimgurl: userInfo["headimgurl"] as? String)
-            .rxRequest()
-            .subscribe(onNext: {
-                self.success(res: $0.dictionaryObject!)
-            }, onError: { _ in
-                self.failure()
-            })
+            .request()
+            .responseSwiftyJSON { res in
+                if res.result.isSuccess {
+                    self.success(res: res.result.value!)
+                } else {
+                    self.failure()
+                }
+            }
     }
 }
 
@@ -183,16 +187,18 @@ extension RegViewController {
 
     @IBAction func accountLogin(_ sender: Any) {
         Router.Signin.Email(email: emailTextField.text!, password: passwordTextField.text!)
-            .rxRequest()
-            .subscribe(onNext: {
-                UserDefaults.standard.set(self.emailTextField.text, forKey: "email")
-                UserDefaults.standard.set(self.passwordTextField.text, forKey: "password")
-
-                me = Account($0)
-                self.changeRootToTab()
-            }, onError: { _ in
-                Util.alert(parentvc: self, title: "登录失败", message: "您输入的账号或密码不正确", cancel: "重试")
-            })
+            .request()
+            .responseSwiftyJSON { res in
+                if res.result.isSuccess {
+                    UserDefaults.standard.set(self.emailTextField.text, forKey: "email")
+                    UserDefaults.standard.set(self.passwordTextField.text, forKey: "password")
+                    
+                    me = Account(res.result.value!)
+                    self.changeRootToTab()
+                } else {
+                    Util.alert(parentvc: self, title: "登录失败", message: "您输入的账号或密码不正确", cancel: "重试")
+                }
+            }
     }
 
     @IBAction func releaseResponder(_ sender: Any) {

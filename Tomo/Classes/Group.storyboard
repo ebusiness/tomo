@@ -12,6 +12,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--ChatViewController-->
+        <scene sceneID="yqO-4p-EFg">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Chat" referencedIdentifier="ChatViewController" id="22X-XO-dzZ" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="I8b-rT-jXh"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="alP-EG-PTw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1014" y="776"/>
+        </scene>
         <!--现场详细-->
         <scene sceneID="1bh-eZ-gfI">
             <objects>
@@ -535,6 +545,7 @@
                         <outlet property="loadingIndicator" destination="ATL-BJ-P5t" id="mm5-2U-Le6"/>
                         <outlet property="loadingLabel" destination="QDL-vS-TXJ" id="bo1-wg-xEV"/>
                         <segue destination="Q6G-5u-zfh" kind="unwind" identifier="addedPost" unwindAction="addedPost:" id="YNh-gf-wlF"/>
+                        <segue destination="22X-XO-dzZ" kind="push" identifier="SegueToChat" id="AI7-3A-Rpv"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s9l-oX-kAz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -688,7 +699,7 @@
         <scene sceneID="aCp-Jx-zvH">
             <objects>
                 <collectionViewController id="lHJ-06-T7m" customClass="GroupViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="mrt-aU-6b4">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="mrt-aU-6b4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="1" id="WVV-aG-Gb0">
