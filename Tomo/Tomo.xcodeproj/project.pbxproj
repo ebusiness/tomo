@@ -184,23 +184,17 @@
 		290134FA1AC3A3D200BBFE29 /* Tomo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tomo-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		2901351C1AC3A90C00BBFE29 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Classes/Constants.swift; sourceTree = "<group>"; };
 		290144161ADF6D890048F3D8 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = Classes/MapViewController.swift; sourceTree = "<group>"; };
-		293EB4231B132B06006BAF27 /* JSQVoiceMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQVoiceMediaItem.h; sourceTree = "<group>"; };
-		293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQVoiceMediaItem.m; sourceTree = "<group>"; };
 		295272CF1AD51B2300FC7833 /* S3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3.swift; path = ../../../S3.swift; sourceTree = "<group>"; };
 		29539C761B13175D00545509 /* VoiceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VoiceController.swift; path = Classes/VoiceController.swift; sourceTree = "<group>"; };
-		29539C771B13175D00545509 /* CommonMessageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommonMessageController.swift; path = Classes/CommonMessageController.swift; sourceTree = "<group>"; };
 		296D8BAA1AFC59F10058D400 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarController.swift; path = Classes/TabBarController.swift; sourceTree = "<group>"; };
-		296D8BB01AFC5A250058D400 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewController.swift; path = Classes/MessageViewController.swift; sourceTree = "<group>"; };
 		296D8BBC1AFC5A680058D400 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = ../Classes/LaunchScreen.xib; sourceTree = "<group>"; };
 		296D8BBD1AFC5A680058D400 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Classes/Main.storyboard; sourceTree = "<group>"; };
-		296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupChatViewController.swift; path = Classes/GroupChatViewController.swift; sourceTree = "<group>"; };
 		2994AF901B019AA100656C39 /* GCD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCD.swift; sourceTree = "<group>"; };
 		29A5D1E01ACCCFB400D95B77 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		29BE7E111AC54224008110B4 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Util.swift; path = ../Classes/Util.swift; sourceTree = "<group>"; };
 		29C1DA781AD36659009A02CC /* S3Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = S3Controller.swift; path = Classes/S3Controller.swift; sourceTree = "<group>"; };
 		29CA441D1AD4CAF0009EB177 /* Setting.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Setting.storyboard; path = Classes/Setting.storyboard; sourceTree = "<group>"; };
 		29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegViewController.swift; path = Classes/RegViewController.swift; sourceTree = "<group>"; };
-		29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TomoVideoMediaItem.swift; sourceTree = "<group>"; };
 		29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SocketController.swift; path = Classes/SocketController.swift; sourceTree = "<group>"; };
 		559DCAD41C5FB373003FA73C /* Map.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Map.storyboard; path = Classes/Map.storyboard; sourceTree = "<group>"; };
 		55DB7B931C5FCF6100F921F9 /* SettingNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingNavigationController.swift; path = Classes/SettingNavigationController.swift; sourceTree = "<group>"; };
@@ -230,7 +224,6 @@
 		D07793861B704F410056B7CB /* DatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DatePickerViewController.swift; path = Classes/DatePickerViewController.swift; sourceTree = "<group>"; };
 		D07D8A191B99A3DF00D13096 /* NotificationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationListViewController.swift; path = Classes/NotificationListViewController.swift; sourceTree = "<group>"; };
 		D07E48531B9EB35B00BF04B2 /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Entity.swift; path = Classes/Entity.swift; sourceTree = "<group>"; };
-		D08BFB0A1B744C2D00771F70 /* JSQMessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSQMessageEntity.swift; path = Classes/JSQMessageEntity.swift; sourceTree = "<group>"; };
 		D0960AAB1BC376FB00A63733 /* UltravisualLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UltravisualLayout.swift; sourceTree = "<group>"; };
 		D097AE951E553D1300615728 /* Alamofire-SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire-SwiftyJSON.swift"; sourceTree = "<group>"; };
 		D097AE961E553D1300615728 /* Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
@@ -345,7 +338,6 @@
 				1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */,
 				D07E48531B9EB35B00BF04B2 /* Entity.swift */,
 				1F9A32361BA6AD8B001C43CE /* GroupEntity.swift */,
-				D08BFB0A1B744C2D00771F70 /* JSQMessageEntity.swift */,
 				1FCA1E661B722260000F2936 /* MessageEntity.swift */,
 				1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */,
 				1F9ACAF91B69F99F00648A82 /* PostEntity.swift */,
@@ -384,9 +376,6 @@
 			isa = PBXGroup;
 			children = (
 				D05FFF4E1E5185BB00B60F15 /* Components */,
-				29539C771B13175D00545509 /* CommonMessageController.swift */,
-				296D8BB01AFC5A250058D400 /* MessageViewController.swift */,
-				296D8BCD1B004C6B0058D400 /* GroupChatViewController.swift */,
 				1F07C34E1C5F7C8200CD9212 /* LatestMessagesViewController.swift */,
 				1FF9B9601C59FC29008BB6ED /* ContactsViewController.swift */,
 				1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */,
@@ -456,13 +445,10 @@
 		296040441ACE669900D2A338 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
-				293EB4231B132B06006BAF27 /* JSQVoiceMediaItem.h */,
-				293EB4241B132B06006BAF27 /* JSQVoiceMediaItem.m */,
 				2994AF901B019AA100656C39 /* GCD.swift */,
-				29DCEFE81B14519300A7C7AF /* TomoVideoMediaItem.swift */,
+				D0960AAB1BC376FB00A63733 /* UltravisualLayout.swift */,
 				299389421AD3B33800043D91 /* AmazonS3RequestManager */,
 				17B992FE1AF353C200204E97 /* opencore-amr */,
-				D0960AAB1BC376FB00A63733 /* UltravisualLayout.swift */,
 			);
 			path = Vendors;
 			sourceTree = "<group>";
@@ -621,9 +607,9 @@
 		D097AE941E553D1300615728 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				D097AEA31E55421400615728 /* Date.swift */,
 				D097AE951E553D1300615728 /* Alamofire-SwiftyJSON.swift */,
 				D097AE961E553D1300615728 /* Array.swift */,
+				D097AEA31E55421400615728 /* Date.swift */,
 				D097AE971E553D1300615728 /* RxSwift.swift */,
 				D097AE981E553D1300615728 /* String.swift */,
 				D097AE991E553D1300615728 /* UIImage.swift */,
