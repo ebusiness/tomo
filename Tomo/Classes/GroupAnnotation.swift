@@ -1,4 +1,3 @@
-//
 //  GroupAnnotation.swift
 //  Tomo
 //

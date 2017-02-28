@@ -72,7 +72,7 @@ class VoiceController: NSObject,AVAudioRecorderDelegate {
         let name = NSUUID().uuidString.lowercased()
         let path = "\(paths[0])/\(name)"
         self.wavToAmr(wavPath: self.pathWav, savePath: path)
-        recorder = nil;
+        recorder = nil
         return (path, name)
     }
 

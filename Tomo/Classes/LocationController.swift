@@ -11,9 +11,9 @@ import CoreLocation
 
 final class LocationController: NSObject {
 
-    typealias ActionWithLocation = (_ location: CLLocation?) -> ()
+    typealias ActionWithLocation = (_ location: CLLocation?) -> Void
 
-    typealias ActionWithPlacemark = (_ placemark: CLPlacemark?, _ location: CLLocation?) -> ()
+    typealias ActionWithPlacemark = (_ placemark: CLPlacemark?, _ location: CLLocation?) -> Void
 
     static let shareInstance = LocationController()
 

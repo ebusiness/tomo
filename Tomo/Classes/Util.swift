@@ -117,7 +117,7 @@ extension Util {
         let gString = ((cString as NSString).substring(from: 2) as NSString).substring(to: 2)
         let bString = ((cString as NSString).substring(from: 4) as NSString).substring(to: 2)
 
-        var r: CUnsignedInt = 0, g: CUnsignedInt = 0, b: CUnsignedInt = 0;
+        var r: CUnsignedInt = 0, g: CUnsignedInt = 0, b: CUnsignedInt = 0
         Scanner(string: rString).scanHexInt32(&r)
         Scanner(string: gString).scanHexInt32(&g)
         Scanner(string: bString).scanHexInt32(&b)
@@ -133,7 +133,7 @@ extension Util {
         let color = Util.UIColorFromRGB(rgbValue, alpha: alpha)
 
         UIGraphicsBeginImageContext(rect.size)
-        let context = UIGraphicsGetCurrentContext();
+        let context = UIGraphicsGetCurrentContext()
 
         context!.setFillColor(color.cgColor)
         context!.fill(rect)

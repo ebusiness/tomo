@@ -425,12 +425,12 @@ extension MapViewController {
         // This value to controls the number of off screen annotations are displayed.
         // A bigger number means more annotations, less chance of seeing annotation views pop in but decreased performance.
         // A smaller number means fewer annotations, more chance of seeing annotation views pop in but better performance.
-        let marginFactor = 1.0;
+        let marginFactor = 1.0
 
         // Adjust this roughly based on the dimensions of your annotations views.
         // Bigger numbers more aggressively coalesce annotations (fewer annotations displayed but better performance).
         // Numbers too small result in overlapping annotations views and too many annotations on screen.
-        let bucketSize = 120.0;
+        let bucketSize = 120.0
 
         // find all the annotations in the visible area + a wide margin to avoid popping annotation views in and out while panning the map.
         let visibleMapRect = mapView.visibleMapRect

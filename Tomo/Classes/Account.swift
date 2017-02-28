@@ -47,14 +47,14 @@ class Account: UserEntity {
 
         self.friendInvitations = []
         if let invitations = json["friendInvitations"].array {
-            invitations.forEach { (invitation) -> () in
+            invitations.forEach { (invitation) -> Void in
                 self.friendInvitations.append( NotificationEntity(invitation) )
             }
         }
 
         self.newMessages = []
         if let messages = json["newMessages"].array {
-            messages.forEach { (message) -> () in
+            messages.forEach { (message) -> Void in
                 self.newMessages.append( MessageEntity(message) )
             }
         }

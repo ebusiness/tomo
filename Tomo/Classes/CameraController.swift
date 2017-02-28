@@ -12,7 +12,7 @@ import Photos
 import AVFoundation
 
 class CameraController: NSObject {
-    typealias CameraBlock = (_ image: UIImage?, _ videoPath: String?) -> ()
+    typealias CameraBlock = (_ image: UIImage?, _ videoPath: String?) -> Void
 
     private let picker = UIImagePickerController()
     fileprivate var completion: CameraBlock!

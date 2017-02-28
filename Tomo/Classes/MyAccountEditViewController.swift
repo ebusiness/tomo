@@ -222,7 +222,7 @@ extension MyAccountEditViewController {
             "拍摄": { (_) -> Void in
                 CameraController.sharedInstance.open(vc: self, sourceType: .camera, allowsEditing: false, completion: block)
             },
-            "从相册选择": { (_) -> () in
+            "从相册选择": { (_) -> Void in
                 CameraController.sharedInstance.open(vc: self, sourceType: .savedPhotosAlbum, allowsEditing: false, completion: block)
             }
         ])
@@ -262,7 +262,7 @@ extension MyAccountEditViewController {
             "拍摄": { (_) -> Void in
                 CameraController.sharedInstance.open(vc: self, sourceType: .camera, allowsEditing: true, completion: block)
             },
-            "从相册选择": { (_) -> () in
+            "从相册选择": { (_) -> Void in
                 CameraController.sharedInstance.open(vc: self, sourceType: .savedPhotosAlbum, allowsEditing: true, completion: block)
             }
         ])

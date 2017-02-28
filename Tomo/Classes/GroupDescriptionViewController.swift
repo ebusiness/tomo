@@ -124,7 +124,7 @@ extension GroupDescriptionViewController {
         cell?.avatarImageView.sd_setImage(with: URL(string: self.members[indexPath.row].photo ?? ""), placeholderImage: UIImage(named: "avatar"))
         cell?.nickNameLabel.text = self.members[indexPath.row].nickName
 
-        return cell!;
+        return cell!
     }
 
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

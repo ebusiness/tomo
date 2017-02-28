@@ -109,7 +109,7 @@ extension GroupDetailViewController {
 //        groupChatViewController.group = self.group
 //        groupChatViewController.hidesBottomBarWhenPushed = true
 //        self.navigationController?.pushViewController(groupChatViewController, animated: true)
-        
+
         self.performSegue(withIdentifier: "SegueToChat", sender: self.group)
     }
 

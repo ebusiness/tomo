@@ -192,7 +192,7 @@ extension RegViewController {
                 if res.result.isSuccess {
                     UserDefaults.standard.set(self.emailTextField.text, forKey: "email")
                     UserDefaults.standard.set(self.passwordTextField.text, forKey: "password")
-                    
+
                     me = Account(res.result.value!)
                     self.changeRootToTab()
                 } else {

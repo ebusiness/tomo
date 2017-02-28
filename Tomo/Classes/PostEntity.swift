@@ -62,7 +62,7 @@ class PostEntity: Entity {
 
         if let postComments = json["comments"].array {
             self.comments = []
-            postComments.forEach { (commentJson) -> () in
+            postComments.forEach { (commentJson) -> Void in
                 let comment = CommentEntity(commentJson)
                 self.comments!.append(comment)
             }

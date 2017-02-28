@@ -39,7 +39,7 @@ extension Router {
                     "token": token,
                     "os": device.systemName,
                     "model": device.model,
-                    "version": device.systemVersion,
+                    "version": device.systemVersion
                 ]
             case let .UpdateUserInfo(parameters):
                 return parameters.getParameters()
@@ -132,7 +132,7 @@ extension Router.Setting {
                     "postLiked": pushSetting.postLiked,
                     "postBookmarked": pushSetting.postBookmarked,
                     "groupJoined": pushSetting.groupJoined,
-                    "groupLeft": pushSetting.groupLeft,
+                    "groupLeft": pushSetting.groupLeft
                 ]
             }
             if !parameters.isEmpty {

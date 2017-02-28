@@ -20,7 +20,7 @@ final class RecommendViewController: UIViewController {
     fileprivate var currentAnnotationView: MKAnnotationView?
     fileprivate var currentSelectedIndexPath: IndexPath?
 
-    var exitAction: (()->())?
+    var exitAction: (() -> Void)?
 
     fileprivate let itemSize: CGSize = {
         let height = UIScreen.main.bounds.height * 0.3 - 8

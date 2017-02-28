@@ -80,7 +80,7 @@ extension ChatViewController {
                 guard let result: [MessageEntity] = MessageEntity.collection(res.result.value!) else {
                     return
                 }
-                
+
                 self.messages = result.map {
                     if $0.from.id == me.id {
                         $0.from = me
@@ -106,7 +106,7 @@ extension ChatViewController {
                 guard let result: [MessageEntity] = MessageEntity.collection(res.result.value!) else {
                     return
                 }
-                
+
                 self.messages = result.map {
                     if $0.from.id == me.id {
                         $0.from = me
@@ -114,7 +114,7 @@ extension ChatViewController {
                     return $0
                 }
                 self.tableView.reloadData()
-        }
+            }
     }
 }
 

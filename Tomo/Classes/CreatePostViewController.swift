@@ -241,7 +241,7 @@ extension CreatePostViewController {
         self.present(alert, animated: true, completion: nil)
     }
 
-    fileprivate func uploadMeida(completion: @escaping (_ imagelist: Any)->()) {
+    fileprivate func uploadMeida(completion: @escaping (_ imagelist: Any) -> Void) {
         guard let selectedIndexes = collectionView.indexPathsForSelectedItems else { return }
 
         var imagelist = [String]()
@@ -297,7 +297,7 @@ extension CreatePostViewController {
         }
 
         if let location = self.location {
-            parameters.coordinate = [String(stringInterpolationSegment: location.coordinate.latitude),String(stringInterpolationSegment: location.coordinate.longitude)];
+            parameters.coordinate = [String(stringInterpolationSegment: location.coordinate.latitude),String(stringInterpolationSegment: location.coordinate.longitude)]
         }
 
         if let placemark = placemark {

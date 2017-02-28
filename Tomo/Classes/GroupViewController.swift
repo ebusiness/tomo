@@ -48,17 +48,17 @@ final class GroupViewController: UICollectionViewController {
 // MARK: UICollectionViewDataSource
 
 extension GroupViewController {
-    
+
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.groups.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? MyGroupCollectionViewCell
-        
+
         cell?.group = self.groups[indexPath.row]
-        
+
         return cell!
     }
 
