@@ -51,7 +51,6 @@ extension RegViewController {
 
     fileprivate func setupAppearance() {
 
-
         func customizeTextField(textField: UITextField) {
 
             // draw a white bottom border
@@ -79,7 +78,7 @@ extension RegViewController {
         // hide all controls on startup
         inputArea.isHidden = false
 
-        if (WechatManager.sharedInstance.isInstalled()) {
+        if WechatManager.sharedInstance.isInstalled() {
             // customize wechat login button
             loginButton.layer.borderColor = UIColor.white.cgColor
             loginButton.layer.borderWidth = 1
