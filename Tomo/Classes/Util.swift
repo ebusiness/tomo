@@ -6,8 +6,8 @@
 //  Copyright © 2015 e-business. All rights reserved.
 //
 
-import UIKit
 import SVProgressHUD
+import UIKit
 import UserNotifications
 
 //Util
@@ -262,7 +262,7 @@ extension UIImageView {
 
 extension CGFloat {
     static var almostZero: CGFloat {
-        return 0.00001
+        return 0.000_01
     }
 }
 

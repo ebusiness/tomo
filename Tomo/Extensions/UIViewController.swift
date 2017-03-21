@@ -19,12 +19,3 @@ extension UINavigationController {
         _ = self.popViewController(animated: animated)
     }
 }
-
-// MARK: - extension for rxSwift
-extension UIViewController {
-
-    /// When a DisposeBag is deallocated, it will call dispose on each of the added disposables.
-    var disposeBag: DisposeBag {
-        return DisposeBag()
-    }
-}

@@ -6,10 +6,10 @@
 //  Copyright © 2015 e-business. All rights reserved.
 //
 
-import UIKit
+import AVFoundation
 import MobileCoreServices
 import Photos
-import AVFoundation
+import UIKit
 
 class CameraController: NSObject {
     typealias CameraBlock = (_ image: UIImage?, _ videoPath: String?) -> Void
@@ -145,7 +145,7 @@ extension CameraController: UIImagePickerControllerDelegate, UINavigationControl
         let imageData = UIImageJPEGRepresentation(image, 1)!
 
         // if the image smaller than 1MB, do nothing
-        if !(imageData.count/1024/1024 > 1) {
+        if !(imageData.count / 1024 / 1024 > 1) {
             return image.normalizedImage()
         }
 

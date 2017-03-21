@@ -8,7 +8,7 @@
 
 import AVFoundation
 
-class VoiceController: NSObject,AVAudioRecorderDelegate {
+class VoiceController: NSObject, AVAudioRecorderDelegate {
 
     private var recorder: AVAudioRecorder!
     private var player: AVAudioPlayer!
@@ -25,16 +25,16 @@ class VoiceController: NSObject,AVAudioRecorderDelegate {
     //初期化
     private override init() {
         super.init()
-        self.pathWav = "\(paths[0])/recorder.wav"//"\(paths[0])/recorder\(NSDate.timeIntervalSinceReferenceDate() * 1000.0).wav"
+        self.pathWav = "\(paths[0])/recorder.wav"
     }
 
     private func setup() {
         let recordSettings: [String: Any] =
         [
             AVFormatIDKey: Int(kAudioFormatLinearPCM),
-            AVSampleRateKey: 8000.00,
+            AVSampleRateKey: 8_000.00,
             AVNumberOfChannelsKey: 1,
-            AVLinearPCMBitDepthKey: 16,
+            AVLinearPCMBitDepthKey: 16
             //AVLinearPCMIsNonInterleaved: false,
             //AVLinearPCMIsBigEndianKey: false,
             //AVLinearPCMIsFloatKey: false,
@@ -57,15 +57,16 @@ class VoiceController: NSObject,AVAudioRecorderDelegate {
         if nil == recorder {
             self.setup()
             do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord,with: .defaultToSpeaker)
-                try AVAudioSession.sharedInstance().setActive(true)
+                let audioSession = AVAudioSession.sharedInstance()
+                try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord, with: .defaultToSpeaker)
+                try audioSession.setActive(true)
                 recorder.record() //start or resume
             } catch {
 
             }
         }
     }
-    func stop()-> (String, String)? {
+    func stop() -> (String, String)? {
         if nil == recorder { return nil }
 
         recorder.stop()
@@ -154,11 +155,14 @@ class VoiceController: NSObject,AVAudioRecorderDelegate {
         }
     }
 
-    func wavToAmr(wavPath: String,savePath: String) {
-        EncodeWAVEFileToAMRFile(wavPath.cString(using: String.Encoding.utf8)!,savePath.cString(using: String.Encoding.utf8)!,1,16)
+    func wavToAmr(wavPath: String, savePath: String) {
+        let utf8 = String.Encoding.utf8
+        EncodeWAVEFileToAMRFile(wavPath.cString(using: utf8)!, savePath.cString(using: utf8)!, 1, 16)
     }
-    func amrToWav(amrPath: String,savePath: String) {
-        DecodeAMRFileToWAVEFile(amrPath.cString(using: String.Encoding.utf8)!,savePath.cString(using: String.Encoding.utf8)!)
+
+    func amrToWav(amrPath: String, savePath: String) {
+        let utf8 = String.Encoding.utf8
+        DecodeAMRFileToWAVEFile(amrPath.cString(using: utf8)!, savePath.cString(using: utf8)!)
     }
 
 }

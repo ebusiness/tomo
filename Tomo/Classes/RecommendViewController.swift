@@ -395,8 +395,9 @@ final class GroupPopoverViewController: UIViewController {
 
                 guard $0.result.isSuccess else { return }
 
-                if let rvc = self.presentationController?.delegate as? RecommendViewController
-                    ,let exitAction = rvc.exitAction {
+                if
+                    let rvc = self.presentationController?.delegate as? RecommendViewController,
+                    let exitAction = rvc.exitAction {
                         me.primaryStation = self.groupAnnotation.group
                         self.dismiss(animated: true) { _ in
                             exitAction()

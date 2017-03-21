@@ -6,8 +6,8 @@
 //  Copyright © 2015 e-business. All rights reserved.
 //
 
-import UIKit
 import CoreLocation
+import UIKit
 
 final class LocationController: NSObject {
 
@@ -182,7 +182,10 @@ extension LocationController {
             return
         }
 
-        self.timer = Timer.scheduledTimer(timeInterval: TomoConst.Timeout.Short, target: self, selector: #selector(LocationController.stopLocationManager), userInfo: nil, repeats: false)
+        self.timer = Timer.scheduledTimer(timeInterval: TomoConst.Timeout.Short,
+                                          target: self,
+                                          selector: #selector(LocationController.stopLocationManager),
+                                          userInfo: nil, repeats: false)
 
         self.locationManager.startUpdatingLocation()
     }

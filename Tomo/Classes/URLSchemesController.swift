@@ -22,14 +22,14 @@ class URLSchemesController {
     }
 
     @discardableResult
-    func handleOpenURL(_ url: URL)->Bool {
+    func handleOpenURL(_ url: URL) -> Bool {
 
         if WechatManager.sharedInstance.handleOpenURL(url) {
             return true
         } else if let rootvc = UIApplication.shared.keyWindow?.rootViewController as? TabBarController {
             self.tabBarController = rootvc
             guard let host = url.host, let event = ListenerEvent(rawValue: host) else { return false }
-            let id =  url.path.replacingOccurrences(of: "/", with: "")
+            let id = url.path.replacingOccurrences(of: "/", with: "")
             switch event {
             case .Message:
                 openMessage(id)
@@ -40,7 +40,7 @@ class URLSchemesController {
             case .PostNew, .PostLiked, .PostCommented, .PostBookmarked:
                 openPost(id)
             default:
-                //                    println(url) // TODO
+                // println(url) // TODO
                 return false
             }
             return true
@@ -51,7 +51,7 @@ class URLSchemesController {
         return false
     }
     @discardableResult
-    func runTask()->Bool {
+    func runTask() -> Bool {
         if let url = self.taskURL {
             self.taskURL = nil
             return handleOpenURL(url)

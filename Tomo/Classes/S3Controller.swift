@@ -6,8 +6,8 @@
 //  Copyright © 2015 e-business. All rights reserved.
 //
 
-import UIKit
 import Alamofire
+import UIKit
 
 class S3Controller: NSObject {
 
@@ -18,7 +18,8 @@ class S3Controller: NSObject {
             accessKey: AmazonS3AccessKey,
             secret: AmazonS3Secret)
 
-        return amazonS3Manager.putObject(fileURL: URL(fileURLWithPath: localPath), destinationPath: remotePath, done: {(error) in
+        let url = URL(fileURLWithPath: localPath)
+        return amazonS3Manager.putObject(fileURL: url, destinationPath: remotePath, done: {(error) in
             done(error)
         })
     }

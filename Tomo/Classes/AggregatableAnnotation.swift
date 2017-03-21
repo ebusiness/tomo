@@ -10,7 +10,7 @@ import Foundation
 
 class AggregatableAnnotation: NSObject, MKAnnotation {
 
-    var containedAnnotations: Array<AggregatableAnnotation>?
+    var containedAnnotations: [AggregatableAnnotation]?
 
     var clusterAnnotation: AggregatableAnnotation?
 
