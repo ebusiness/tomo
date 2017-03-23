@@ -6,7 +6,6 @@
 //  Copyright © 2017 e-business. All rights reserved.
 //
 
-
 public extension String {
     func index(from: Int) -> Index {
         return self.index(startIndex, offsetBy: from)

@@ -6,9 +6,10 @@
 //  Copyright © 2015 e-business. All rights reserved.
 //
 
-import UIKit
+import RxCocoa
 import RxSwift
 import SwiftyJSON
+import UIKit
 import WechatKit
 
 final class RegViewController: UIViewController {
@@ -23,11 +24,15 @@ final class RegViewController: UIViewController {
     @IBOutlet weak fileprivate var inputAreaBottomSpace: NSLayoutConstraint!
     @IBOutlet weak fileprivate var registerBottomSpace: NSLayoutConstraint!
 
+    let disposeBag = DisposeBag()
+
     override func viewDidLoad() {
 
         super.viewDidLoad()
 
         self.setupWechatManager()
+
+        self.registerForRxSwift()
 
         self.setupAppearance()
 
@@ -39,36 +44,29 @@ final class RegViewController: UIViewController {
         return true
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+}
 
+// MARK: - RxSwift
+extension RegViewController {
+    fileprivate func registerForRxSwift() {
+        /// emailValid
+        let emailValid = self.emailTextField.rx.text.orEmpty.map { !$0.isEmpty && $0.isEmail }.shareReplay(1)
+
+        /// passwordValid
+        let passwordValid = self.passwordTextField.rx.text.orEmpty.map { $0.isValidPassword() }.shareReplay(1)
+
+        /// everythingValid
+        let everythingValid = Observable.combineLatest(emailValid, passwordValid) { $0 && $1 }.shareReplay(1)
+
+        /// signInButton
+        everythingValid.bindTo(self.signInButton.rx.isEnabled).addDisposableTo(self.disposeBag)
+    }
 }
 
 // MARK: - Internal Methods
-
 extension RegViewController {
 
     fileprivate func setupAppearance() {
-
-        func customizeTextField(textField: UITextField) {
-
-            // draw a white bottom border
-            let border = CALayer()
-            let width = CGFloat(1.0)
-            border.borderColor = UIColor.white.cgColor
-            border.frame = CGRect(x: 0, y: textField.frame.size.height - width, width: textField.frame.size.width, height: textField.frame.size.height)
-            border.borderWidth = width
-            textField.layer.addSublayer(border)
-            textField.layer.masksToBounds = true
-
-            // make placeholder text white
-            let attributeString = NSAttributedString(string: textField.placeholder!, attributes: [
-                NSForegroundColorAttributeName: UIColor.white
-                ])
-            textField.attributedPlaceholder = attributeString
-        }
-
         // show test login buttons on debug schema
         testSegment.isHidden = true
         #if DEBUG
@@ -78,49 +76,43 @@ extension RegViewController {
         // hide all controls on startup
         inputArea.isHidden = false
 
-        if WechatManager.sharedInstance.isInstalled() {
-            // customize wechat login button
-            loginButton.layer.borderColor = UIColor.white.cgColor
-            loginButton.layer.borderWidth = 1
-            loginButton.layer.cornerRadius = 2
-        } else {
-            registerBottomSpace.constant = 16
-            loginButton.isHidden = true
-        }
-
-        // customize email input field
-        customizeTextField(textField: emailTextField)
-        customizeTextField(textField: passwordTextField)
+//        if !WechatManager.sharedInstance.isInstalled() {
+//            registerBottomSpace.constant = 16
+//            loginButton.isHidden = true
+//        }
 
     }
 
     fileprivate func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(RegViewController.keyboardWillShown(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(RegViewController.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-    }
 
-    func keyboardWillShown(_ notification: NSNotification) {
+        NotificationCenter.default.rx
+            .notification(.UIKeyboardWillChangeFrame)
+//            .takeUntil(rx.methodInvoked(#selector(RegViewController.viewWillDisappear(_:))))
+            .subscribe(onNext: { [weak self] notification in
+                guard let info = notification.userInfo else { return }
+                guard let frameEnd = info[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
+                let cgRectValue = frameEnd.cgRectValue
 
-        guard let info = notification.userInfo else { return }
+                var constant: CGFloat = 0
+                if cgRectValue.origin.y < UIScreen.main.bounds.size.height {
+                    constant = cgRectValue.size.height
+                }
 
-        if let keyboardHeight = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height {
+                var duration = 0.3
 
-            UIView.animate(withDuration: 0.3, animations: { () -> Void in
-                self.inputAreaBottomSpace.constant = keyboardHeight
-                self.view.layoutIfNeeded()
-            })
-        }
-    }
+                if let keyboardDuration = info[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval {
+                    duration = keyboardDuration
+                }
 
-    func keyboardWillBeHidden(_ notification: NSNotification) {
-
-        UIView.animate(withDuration: 0.3, animations: { () -> Void in
-            self.inputAreaBottomSpace.constant = 0
-            self.view.layoutIfNeeded()
-        })
+                UIView.animate(withDuration: duration, animations: { () -> Void in
+                    self?.inputAreaBottomSpace.constant = constant
+                    self?.view.layoutIfNeeded()
+                })
+            }).addDisposableTo(self.disposeBag)
     }
 
     fileprivate func changeRootToTab() {
+
         Util.dismissHUD()
         if me.primaryStation != nil {
 //            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
@@ -133,8 +125,14 @@ extension RegViewController {
 }
 
 // MARK: - Actions login_wechat
-
 extension RegViewController {
+
+    /// WechatManager
+    fileprivate func setupWechatManager() {
+
+        WechatManager.appid = WechatAppid
+        WechatManager.appSecret = WechatSecret
+    }
 
     @IBAction func login_wechat(_ sender: Any) {
         WechatManager.sharedInstance.rxCheckAuth()
@@ -147,8 +145,7 @@ extension RegViewController {
 
     private func signWithOpenid() {
         Router.Signin.WeChat(openid: WechatManager.openid, access_token: WechatManager.accessToken)
-            .request()
-            .responseSwiftyJSON { res in
+            .response { res in
                 if res.result.isSuccess {
                     self.success(res: res.result.value!)
                 } else {
@@ -169,14 +166,25 @@ extension RegViewController {
                              nickname: userInfo["nickname"] as? String ?? "",
                              gender: userInfo["sex"] as? String,
                              headimgurl: userInfo["headimgurl"] as? String)
-            .request()
-            .responseSwiftyJSON { res in
+            .response { res in
                 if res.result.isSuccess {
                     self.success(res: res.result.value!)
                 } else {
                     self.failure()
                 }
             }
+    }
+
+    private func success(res: Any) {
+        me = Account(res)
+        self.changeRootToTab()
+    }
+
+    private func failure() {
+        self.inputArea.isHidden = false
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
+            self.inputArea.alpha = 1
+        })
     }
 }
 
@@ -186,8 +194,7 @@ extension RegViewController {
 
     @IBAction func accountLogin(_ sender: Any) {
         Router.Signin.Email(email: emailTextField.text!, password: passwordTextField.text!)
-            .request()
-            .responseSwiftyJSON { res in
+            .response { res in
                 if res.result.isSuccess {
                     UserDefaults.standard.set(self.emailTextField.text, forKey: "email")
                     UserDefaults.standard.set(self.passwordTextField.text, forKey: "password")
@@ -210,27 +217,17 @@ extension RegViewController {
 
 extension RegViewController: UITextFieldDelegate {
 
-    func textField(_ textField: UITextField,
-                   shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
-        var email = (self.emailTextField.text ?? "") as NSString
-        var password = (self.passwordTextField.text ?? "") as NSString
+        let nextTag = textField.tag + 1
 
-        if textField == self.emailTextField {
-            email = email.replacingCharacters(in: range, with: string).trimmed() as NSString
-        }
-
-        if textField == self.passwordTextField {
-            password = password.replacingCharacters(in: range, with: string).trimmed() as NSString
-        }
-
-        if email.length > 0 && password.length > 0 {
-            self.signInButton.isEnabled = true
+        if let nextResponder = self.view.viewWithTag(nextTag) {
+            nextResponder.becomeFirstResponder()
         } else {
-            self.signInButton.isEnabled = false
+            textField.resignFirstResponder()
         }
 
-        return true
+        return false
     }
 }
 
@@ -268,31 +265,5 @@ extension RegViewController {
             me = Account($0.result.value!)
             self.changeRootToTab()
         }
-    }
-}
-
-// MARK: - WechatManager
-extension RegViewController {
-
-    fileprivate func setupWechatManager() {
-
-        WechatManager.appid = "wx4079dacf73fef72d"
-        WechatManager.appSecret = "d4ec5214ea3ac56752ff75692fb88f48"
-    }
-}
-
-// MARK: - WechatManagerDelegate
-extension RegViewController {
-
-    func success(res: Any) {
-        me = Account(res)
-        self.changeRootToTab()
-    }
-
-    fileprivate func failure() {
-        self.inputArea.isHidden = false
-        UIView.animate(withDuration: 0.3, animations: { () -> Void in
-            self.inputArea.alpha = 1
-        })
     }
 }

@@ -71,24 +71,22 @@ extension ChatViewController {
             return
         }
 
-        Router.Message.FindByUserId(id: friendId, before: nil)
-            .request()
-            .responseSwiftyJSON { res in
-                if res.result.isFailure {
-                    return
-                }
-                guard let result: [MessageEntity] = MessageEntity.collection(res.result.value!) else {
-                    return
-                }
-
-                self.messages = result.map {
-                    if $0.from.id == me.id {
-                        $0.from = me
-                    }
-                    return $0
-                }
-                self.tableView.reloadData()
+        Router.Message.FindByUserId(id: friendId, before: nil).response { res in
+            if res.result.isFailure {
+                return
             }
+            guard let result: [MessageEntity] = MessageEntity.collection(res.result.value!) else {
+                return
+            }
+
+            self.messages = result.map {
+                if $0.from.id == me.id {
+                    $0.from = me
+                }
+                return $0
+            }
+            self.tableView.reloadData()
+        }
     }
 
     fileprivate func loadGroupMessages() {
@@ -97,24 +95,22 @@ extension ChatViewController {
             return
         }
 
-        Router.GroupMessage.FindByGroupId(id: groupId, before: nil)
-            .request()
-            .responseSwiftyJSON { res in
-                if res.result.isFailure {
-                    return
-                }
-                guard let result: [MessageEntity] = MessageEntity.collection(res.result.value!) else {
-                    return
-                }
-
-                self.messages = result.map {
-                    if $0.from.id == me.id {
-                        $0.from = me
-                    }
-                    return $0
-                }
-                self.tableView.reloadData()
+        Router.GroupMessage.FindByGroupId(id: groupId, before: nil).response { res in
+            if res.result.isFailure {
+                return
             }
+            guard let result: [MessageEntity] = MessageEntity.collection(res.result.value!) else {
+                return
+            }
+
+            self.messages = result.map {
+                if $0.from.id == me.id {
+                    $0.from = me
+                }
+                return $0
+            }
+            self.tableView.reloadData()
+        }
     }
 }
 
