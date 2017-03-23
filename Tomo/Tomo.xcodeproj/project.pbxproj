@@ -57,6 +57,7 @@
 		D007D89C1E25FBD60005DC21 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A104901BEAF1C700AEE356 /* AgreementViewController.swift */; };
 		D007D89D1E25FBD60005DC21 /* SettingNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DB7B931C5FCF6100F921F9 /* SettingNavigationController.swift */; };
 		D0223CEE1E1F856E004D5FE3 /* RegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */; };
+		D0349BB81E81021200D6877F /* IBInspectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0349BB71E81021200D6877F /* IBInspectable.swift */; };
 		D05FFF2F1E514A8D00B60F15 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FFF2E1E514A8D00B60F15 /* ChatViewController.swift */; };
 		D05FFF501E5185EF00B60F15 /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D05FFF4F1E5185EF00B60F15 /* ChatTableViewCell.xib */; };
 		D097AE9C1E553D1300615728 /* Alamofire-SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AE951E553D1300615728 /* Alamofire-SwiftyJSON.swift */; };
@@ -207,6 +208,7 @@
 		D0244C5A1C20034C00EA87C1 /* InvitationRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InvitationRouter.swift; path = Classes/InvitationRouter.swift; sourceTree = "<group>"; };
 		D0244C5C1C20130800EA87C1 /* GroupRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupRouter.swift; path = Classes/GroupRouter.swift; sourceTree = "<group>"; };
 		D029F7311BCCB39E00CDE18B /* PushSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PushSettingViewController.swift; path = Classes/PushSettingViewController.swift; sourceTree = "<group>"; };
+		D0349BB71E81021200D6877F /* IBInspectable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBInspectable.swift; sourceTree = "<group>"; };
 		D040E1641BDDC00D00417174 /* RecommendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendViewController.swift; path = Classes/RecommendViewController.swift; sourceTree = "<group>"; };
 		D05FFF2E1E514A8D00B60F15 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = Classes/ChatViewController.swift; sourceTree = "<group>"; };
 		D05FFF4F1E5185EF00B60F15 /* ChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChatTableViewCell.xib; path = Classes/ChatTableViewCell.xib; sourceTree = "<group>"; };
@@ -600,6 +602,7 @@
 				D097AE991E553D1300615728 /* UIImage.swift */,
 				D097AE9A1E553D1300615728 /* UIViewController.swift */,
 				D097AE9B1E553D1300615728 /* WechatKit+RxSwift.swift */,
+				D0349BB71E81021200D6877F /* IBInspectable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -890,6 +893,7 @@
 				D05FFF2F1E514A8D00B60F15 /* ChatViewController.swift in Sources */,
 				D007D8951E25FBD60005DC21 /* MyAccountEditViewController.swift in Sources */,
 				D0A7C88D1E1CD03D0046E571 /* InvitationRouter.swift in Sources */,
+				D0349BB81E81021200D6877F /* IBInspectable.swift in Sources */,
 				D007D8811E25C8A40005DC21 /* GroupDescriptionViewController.swift in Sources */,
 				1F7AEE4E1E5EB9C8009F3806 /* ChatTableViewTextCell.swift in Sources */,
 			);
