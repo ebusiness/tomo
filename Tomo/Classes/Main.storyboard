@@ -25,8 +25,8 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash10" translatesAutoresizingMaskIntoConstraints="NO" id="MQ0-Ma-91e">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="en0-bU-l7P">
-                                <rect key="frame" x="-25" y="294" width="370" height="29"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="en0-bU-l7P">
+                                <rect key="frame" x="-4.5" y="393" width="384" height="29"/>
                                 <segments>
                                     <segment title="test01"/>
                                     <segment title="test02"/>
@@ -49,8 +49,8 @@ COePvuWgtFRvbW8
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="—最懂IT职场的社交平台" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndm-VF-r07">
-                                <rect key="frame" x="69" y="171" width="218" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="—最懂IT职场的社交平台" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndm-VF-r07">
+                                <rect key="frame" x="121.5" y="171" width="221.5" height="24"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -575,8 +575,8 @@ COePvuWgtFRvbW8
                                     <constraint firstAttribute="trailing" secondItem="G5T-rc-KB5" secondAttribute="trailing" constant="20" id="pKJ-dU-niy"/>
                                 </constraints>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AD0-os-qfK">
-                                <rect key="frame" x="1" y="396" width="320" height="172"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AD0-os-qfK">
+                                <rect key="frame" x="0.0" y="466" width="375" height="201"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eY3-PS-f2p">
                                     <size key="itemSize" width="140" height="170"/>
@@ -585,12 +585,12 @@ COePvuWgtFRvbW8
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" id="d4p-k7-HAr">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="172"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="201"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="defaultCell" id="k9j-vq-rI2" customClass="GroupRecommendCollectionViewCell" customModule="tomo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="1" width="140" height="170"/>
+                                        <rect key="frame" x="0.0" y="16" width="140" height="170"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="140" height="170"/>
@@ -701,7 +701,7 @@ COePvuWgtFRvbW8
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QFj-iJ-hIz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="211" y="1324"/>
+            <point key="canvasLocation" x="-271" y="1472"/>
         </scene>
         <!--Group Popover View Controller-->
         <scene sceneID="soj-ZL-e0d">
@@ -778,7 +778,7 @@ COePvuWgtFRvbW8
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UHd-xx-jlG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="553" y="1140"/>
+            <point key="canvasLocation" x="143" y="1238"/>
         </scene>
     </scenes>
     <resources>
