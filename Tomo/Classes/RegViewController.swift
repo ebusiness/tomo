@@ -118,7 +118,7 @@ extension RegViewController {
 //            let tab = Util.createViewControllerWithIdentifier(nil, storyboardName: "Tab")
             Util.changeRootViewController(from: self, to: TabBarController())
         } else {
-            let main = Util.createViewControllerWithIdentifier(id: "RecommendView", storyboardName: "Main")
+            let main = Util.createViewController(storyboardName: "Main", id: "RecommendView")
             Util.changeRootViewController(from: self, to: main)
         }
     }

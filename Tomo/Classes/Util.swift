@@ -13,7 +13,7 @@ import UserNotifications
 //Util
 class Util: NSObject {
 
-    class func createViewControllerWithIdentifier(id: String?, storyboardName: String) -> UIViewController {
+    class func createViewController(storyboardName: String, id: String?) -> UIViewController {
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         if let id = id {
             return storyboard.instantiateViewController(withIdentifier: id)

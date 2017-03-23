@@ -91,7 +91,7 @@ extension BookmarkedPostsViewController {
 extension BookmarkedPostsViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as? PostDetailViewController
+        let vc = Util.createViewController(storyboardName: "Home", id: "PostDetailViewController") as? PostDetailViewController
         vc?.post = self.bookmarks[indexPath.row]
         self.navigationController?.pushViewController(vc!, animated: true)
     }

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 e-business. All rights reserved.
 //
 
-import UIKit
 import Alamofire
 import SwiftyJSON
+import UIKit
 
 var me: Account!
 
@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    // swiftlint:disable:next line_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         self.window!.backgroundColor = UIColor.white
@@ -36,19 +37,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if me.primaryStation != nil {
                     rootViewController = TabBarController()
                 } else {
-                    rootViewController = Util.createViewControllerWithIdentifier(id: "RecommendView", storyboardName: "Main")
+                    rootViewController = Util.createViewController(storyboardName: "Main", id: "RecommendView")
                 }
 
             // I'm not log in yet, take me to the sign-in view
             } else {
-                rootViewController = Util.createViewControllerWithIdentifier(id: nil, storyboardName: "Main")
+                rootViewController = Util.createViewController(storyboardName: "Main", id: nil)
             }
 
             Util.changeRootViewController(from: (self.window?.rootViewController)!, to: rootViewController)
         }
 
         // the application was start up from notification
-        if let launchOpts = launchOptions, let userInfo = launchOpts[UIApplicationLaunchOptionsKey.remoteNotification] as? [NSObject : AnyObject] {
+        if let launchOpts = launchOptions,
+            let userInfo = launchOpts[UIApplicationLaunchOptionsKey.remoteNotification] as? [NSObject : AnyObject] {
+
             self.application(application, didReceiveRemoteNotification: userInfo)
         }
 
@@ -64,18 +67,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UserDefaults.standard.set(Date(), forKey: "mapLastTimeStamp")
 
-        // check if the rootViewController is the TabBarController (it will not when the app go background for wechat login)
-        if let rootvc = self.window?.rootViewController as? TabBarController {
+        /// check if the rootViewController is the TabBarController
+        /// (it will not when the app go background for wechat login)
+        guard let rootvc = self.window?.rootViewController as? TabBarController else { return }
 
-            // update the application icon badge before entering background
-            application.applicationIconBadgeNumber = rootvc.viewControllers!.reduce(0) { (count, vc ) -> Int in
-                if let badgeValue = vc.tabBarItem.badgeValue, let badge = Int(badgeValue) {
-                    return count + badge
-                }
-                return count
+        // update the application icon badge before entering background
+        application.applicationIconBadgeNumber = rootvc.viewControllers!.reduce(0) { (count, vc ) -> Int in
+            if let badgeValue = vc.tabBarItem.badgeValue, let badge = Int(badgeValue) {
+                return count + badge
             }
+            return count
         }
-
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {

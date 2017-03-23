@@ -129,7 +129,7 @@ extension RecommendViewController {
             UserDefaults.standard.removeObject(forKey: "password")
 
             me = nil
-            let main = Util.createViewControllerWithIdentifier(id: nil, storyboardName: "Main")
+            let main = Util.createViewController(storyboardName: "Main", id: nil)
             Util.changeRootViewController(from: self, to: main)
 
         }
@@ -233,7 +233,7 @@ extension RecommendViewController: MKMapViewDelegate {
 
         guard let annotationView = self.currentAnnotationView else { return }
 
-        let vc = Util.createViewControllerWithIdentifier(id: "GroupPopoverViewController", storyboardName: "Main") as? GroupPopoverViewController
+        let vc = Util.createViewController(storyboardName: "Main", id: "GroupPopoverViewController") as? GroupPopoverViewController
 
         vc?.modalPresentationStyle = .popover
         vc?.presentationController?.delegate = self

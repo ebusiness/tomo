@@ -146,7 +146,7 @@ extension GroupDescriptionViewController {
 extension GroupDescriptionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+        let vc = Util.createViewController(storyboardName: "Profile", id: "ProfileView") as? ProfileViewController
         vc?.user = self.members[indexPath.row]
         navigationController?.pushViewController(vc!, animated: true)
     }

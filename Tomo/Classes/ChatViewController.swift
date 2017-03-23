@@ -247,7 +247,7 @@ extension ChatViewController: ChatTableViewTextCellDelegate, ChatTableViewImageC
     }
 
     func userAvatarTapped(message: MessageEntity) {
-        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile")
+        let vc = Util.createViewController(storyboardName: "Profile", id: "ProfileView")
         guard let profileVC = vc as? ProfileViewController else { return }
         profileVC.user = message.from.id == me.id ? me: message.from
         self.navigationController?.pushViewController(profileVC, animated: true)

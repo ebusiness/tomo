@@ -54,7 +54,7 @@ extension RecommendStationTableViewCell: UICollectionViewDelegate {
         collectionView.deselectItem(at: indexPath, animated: true)
 
         // Create group detail view controller.
-        let groupVC = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as? GroupDetailViewController
+        let groupVC = Util.createViewController(storyboardName: "Group", id: "GroupDetailView") as? GroupDetailViewController
 
         // Give group detail view controller group data.
         groupVC?.group = self.groups[indexPath.item]

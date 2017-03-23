@@ -88,7 +88,7 @@ extension StationDiscoverViewController: UICollectionViewDataSource, UICollectio
     // When cell was tapped, move to group detail
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        let groupVC = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as? GroupDetailViewController
+        let groupVC = Util.createViewController(storyboardName: "Group", id: "GroupDetailView") as? GroupDetailViewController
         groupVC?.group = groups[indexPath.row]
 
         self.navigationController?.pushViewController(groupVC!, animated: true)

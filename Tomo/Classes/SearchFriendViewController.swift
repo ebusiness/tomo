@@ -74,7 +74,7 @@ extension SearchFriendViewController {
 
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+        let vc = Util.createViewController(storyboardName: "Profile", id: "ProfileView") as? ProfileViewController
         vc?.user = self.users[indexPath.row]
         self.navigationController?.pushViewController(vc!, animated: true)
     }

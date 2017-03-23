@@ -122,7 +122,7 @@ class TextPostTableViewCell: UITableViewCell {
         if let profileViewController = profileViewController {
             self.delegate?.pop(to: profileViewController, animated: true)
         } else {
-            let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+            let vc = Util.createViewController(storyboardName: "Profile", id: "ProfileView") as? ProfileViewController
             vc?.user = owner
             self.delegate?.pushViewController(vc!, animated: true)
         }
@@ -135,7 +135,7 @@ class TextPostTableViewCell: UITableViewCell {
         guard me.id != post.comments?.last?.owner.id else { return }
         guard let owner = post.comments?.last?.owner else { return }
 
-        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+        let vc = Util.createViewController(storyboardName: "Profile", id: "ProfileView") as? ProfileViewController
         vc?.user = owner
         if owner.id == post.owner.id {
             let profileViewController = self.delegate?.childViewControllers.first(where: { $0 is ProfileViewController }) as? ProfileViewController
@@ -153,7 +153,7 @@ class TextPostTableViewCell: UITableViewCell {
 
         if nil == post.comments?.last { return }
 
-        let vc = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as? PostDetailViewController
+        let vc = Util.createViewController(storyboardName: "Home", id: "PostDetailViewController") as? PostDetailViewController
         vc?.post = post!
 
         // TODO: this should be dynamic via user input,

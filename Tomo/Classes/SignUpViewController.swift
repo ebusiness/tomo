@@ -125,9 +125,11 @@ extension SignUpViewController {
     }
 
     @IBAction func signUp(_ sender: Any) {
+        guard let email = self.emailTextField.text else { return }
+        guard let password = self.passwordTextField.text else { return }
+        guard let nickName = self.nickNameTextField.text else { return }
 
-        // swiftlint:disable:next line_length
-        Router.Signup.Email(email: emailTextField.text!, password: passwordTextField.text!, nickName: nickNameTextField.text!)
+        Router.Signup.Email(email: email, password: password, nickName: nickName)
             .response {
                 let buttonTitle = "好"
                 var title = "注册失败"
@@ -147,7 +149,7 @@ extension SignUpViewController {
     }
 
     @IBAction func agreement(_ sender: UIButton) {
-        let agreementView = Util.createViewControllerWithIdentifier(id: "AgreementView", storyboardName: "Setting")
+        let agreementView = Util.createViewController(storyboardName: "Setting", id: "AgreementView")
         self.present(agreementView, animated: true, completion: nil)
     }
 }

@@ -59,7 +59,7 @@ extension FriendListSendRequestController {
 
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+        let vc = Util.createViewController(storyboardName: "Profile", id: "ProfileView") as? ProfileViewController
         vc!.user = self.invitedUsers[indexPath.row]
 
         self.navigationController?.pushViewController(vc!, animated: true)
@@ -88,7 +88,7 @@ extension FriendListSendRequestController {
 extension FriendListSendRequestController {
 
     @IBAction func searchFriend(_ sender: Any) {
-        let vc = Util.createViewControllerWithIdentifier(id: "SearchFriend", storyboardName: "Contacts")
+        let vc = Util.createViewController(storyboardName: "Contacts", id: "SearchFriend")
         self.present(vc, animated: true, completion: nil)
     }
 }

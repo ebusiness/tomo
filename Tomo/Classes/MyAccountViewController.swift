@@ -116,7 +116,7 @@ extension MyAccountViewController {
                 UserDefaults.standard.removeObject(forKey: "password")
 
                 me = Account()
-                let main = Util.createViewControllerWithIdentifier(id: nil, storyboardName: "Main")
+                let main = Util.createViewController(storyboardName: "Main", id: nil)
                 Util.changeRootViewController(from: self, to: main)
             }
         }

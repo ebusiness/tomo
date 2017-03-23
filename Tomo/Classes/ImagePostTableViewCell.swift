@@ -65,7 +65,7 @@ extension ImagePostTableViewCell: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        let postVC = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as? PostDetailViewController
+        let postVC = Util.createViewController(storyboardName: "Home", id: "PostDetailViewController") as? PostDetailViewController
         postVC?.post = post
         if indexPath.row != 0 {
             postVC?.initialImageIndex = indexPath.row

@@ -264,7 +264,7 @@ extension NotificationCell {
     }
 
     fileprivate func presentProfileView(vc: UIViewController) {
-        let profileVC = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+        let profileVC = Util.createViewController(storyboardName: "Profile", id: "ProfileView") as? ProfileViewController
         profileVC?.user = self.notification.from
         vc.navigationController?.pushViewController(profileVC!, animated: true)
     }
@@ -273,7 +273,7 @@ extension NotificationCell {
         Router.Post.FindById(id: self.notification.targetId).response {
             if $0.result.isFailure { return }
 
-            let postVC = Util.createViewControllerWithIdentifier(id: "PostDetailViewController", storyboardName: "Home") as? PostDetailViewController
+            let postVC = Util.createViewController(storyboardName: "Home", id: "PostDetailViewController") as? PostDetailViewController
             postVC?.post = PostEntity($0.result.value!)
             if postVC?.post.id == self.notification.targetId {
                 vc.navigationController?.pushViewController(postVC!, animated: true)
@@ -287,7 +287,7 @@ extension NotificationCell {
         Router.Group.FindById(id: self.notification.targetId).response {
             if $0.result.isFailure { return }
 
-            let groupVC = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as? GroupDetailViewController
+            let groupVC = Util.createViewController(storyboardName: "Group", id: "GroupDetailView") as? GroupDetailViewController
             groupVC?.group = GroupEntity($0.result.value!)
             vc.navigationController?.pushViewController(groupVC!, animated: true)
         }

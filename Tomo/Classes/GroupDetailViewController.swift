@@ -99,7 +99,7 @@ extension GroupDetailViewController {
     }
 
     @IBAction func postButtonTapped(_ sender: UIBarButtonItem) {
-        let postCreateViewController = Util.createViewControllerWithIdentifier(id: "PostCreateView", storyboardName: "Home") as? CreatePostViewController
+        let postCreateViewController = Util.createViewController(storyboardName: "Home", id: "PostCreateView") as? CreatePostViewController
         postCreateViewController?.group = self.group
         self.present(postCreateViewController!, animated: true, completion: nil)
     }

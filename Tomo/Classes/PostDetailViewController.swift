@@ -441,7 +441,7 @@ extension PostDetailViewController: UITableViewDelegate {
         case 0:
             // No need to see myself on profile view
             guard me.id != post.owner.id else { return }
-            let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+            let vc = Util.createViewController(storyboardName: "Profile", id: "ProfileView") as? ProfileViewController
             vc?.user = post.owner
             self.navigationController?.pushViewController(vc!, animated: true)
         case 1:
@@ -450,7 +450,7 @@ extension PostDetailViewController: UITableViewDelegate {
             let commentOwner = post.comments?.reversed()[indexPath.row - 2].owner
             // No need to see myself on profile view
             guard me.id != commentOwner!.id else { return }
-            let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+            let vc = Util.createViewController(storyboardName: "Profile", id: "ProfileView") as? ProfileViewController
             vc?.user = commentOwner
             self.navigationController?.pushViewController(vc!, animated: true)
         }

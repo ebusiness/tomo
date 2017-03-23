@@ -61,7 +61,7 @@ extension ContactsViewController {
 
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile") as? ProfileViewController
+        let vc = Util.createViewController(storyboardName: "Profile", id: "ProfileView") as? ProfileViewController
 
         vc!.user = self.friends[indexPath.item]
 

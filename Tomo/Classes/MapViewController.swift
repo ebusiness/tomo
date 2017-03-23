@@ -209,7 +209,7 @@ extension MapViewController: MKMapViewDelegate {
 
             if groupAnnotation!.containedAnnotations!.isEmpty {
 
-                let pvc = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as? GroupDetailViewController
+                let pvc = Util.createViewController(storyboardName: "Group", id: "GroupDetailView") as? GroupDetailViewController
                 pvc!.group = groupAnnotation!.group
 
                 self.navigationController?.pushViewController(pvc!, animated: true)
@@ -239,7 +239,7 @@ extension MapViewController: MKMapViewDelegate {
 
             if userAnnotation!.containedAnnotations!.isEmpty {
 
-                let pvc = Util.createViewControllerWithIdentifier(id: "UserPostsView", storyboardName: "Profile") as? UserPostsViewController
+                let pvc = Util.createViewController(storyboardName: "Profile", id: "UserPostsView") as? UserPostsViewController
                 pvc!.user = userAnnotation!.user
 
                 self.navigationController?.pushViewController(pvc!, animated: true)
@@ -304,13 +304,13 @@ extension MapViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
 
         if let userAnnotation = self.annotationsForTable![indexPath.item] as? UserAnnotation {
-            let pvc = Util.createViewControllerWithIdentifier(id: "UserPostsView", storyboardName: "Profile") as? UserPostsViewController
+            let pvc = Util.createViewController(storyboardName: "Profile", id: "UserPostsView") as? UserPostsViewController
             pvc?.user = userAnnotation.user
             self.navigationController?.pushViewController(pvc!, animated: true)
         }
 
         if let groupAnnotation = self.annotationsForTable![indexPath.item] as? GroupAnnotation {
-            let pvc = Util.createViewControllerWithIdentifier(id: "GroupDetailView", storyboardName: "Group") as? GroupDetailViewController
+            let pvc = Util.createViewController(storyboardName: "Group", id: "GroupDetailView") as? GroupDetailViewController
             pvc?.group = groupAnnotation.group
             self.navigationController?.pushViewController(pvc!, animated: true)
         }
