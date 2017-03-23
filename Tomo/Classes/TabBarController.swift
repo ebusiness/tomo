@@ -190,14 +190,14 @@ extension TabBarController {
         UIView.animate(withDuration: TomoConst.Duration.Short, animations: {
             self.view.layoutIfNeeded()
             }, completion: { finished in
-                gcd.async(.default, delay: TomoConst.Timeout.Mini) {
+                DispatchQueue.default.async(delay: TomoConst.Timeout.Mini) {
                     self.closeNotificationBar()
                 }
         })
     }
 
     func closeNotificationBar() {
-        gcd.sync(.main) {
+        DispatchQueue.main.sync {
             self.topConstraint.constant = -64
             UIView.animate(withDuration: TomoConst.Duration.Short) {
                 self.view.layoutIfNeeded()
@@ -212,7 +212,7 @@ extension TabBarController {
 
     func didReceiveNotification(_ notification: NSNotification) {
 
-        gcd.sync(.main) {
+        DispatchQueue.main.sync {
             self.notificationBar.notification = NotificationEntity(notification.userInfo!)
             self.openNotificationBar()
         }
@@ -220,7 +220,7 @@ extension TabBarController {
 
     func didReceiveMessage(_ notification: NSNotification) {
 
-        gcd.sync(.main) {
+        DispatchQueue.main.sync {
             self.notificationBar.notification = NotificationEntity(notification.userInfo!)
 
             // if received normal message in chat view controller, don't show notification bar
@@ -235,7 +235,7 @@ extension TabBarController {
 
     func didReceiveGroupMessage(_ notification: NSNotification) {
 
-        gcd.sync(.main) {
+        DispatchQueue.main.sync {
             self.notificationBar.notification = NotificationEntity(notification.userInfo!)
 
             // if received group message in group chat view controller, don't show notification bar

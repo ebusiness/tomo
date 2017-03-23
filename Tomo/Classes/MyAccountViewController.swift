@@ -229,7 +229,7 @@ extension MyAccountViewController {
 
     func updateBadgeInMainTheard(_ notification: NSNotification) {
 
-        gcd.sync(.main) {
+        DispatchQueue.main.sync {
             if me.notifications > 0 {
                 self.badgeView.text = String(me.notifications)
                 self.notificationCell.accessoryView = self.badgeView

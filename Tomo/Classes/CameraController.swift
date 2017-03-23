@@ -103,7 +103,7 @@ extension CameraController: UIImagePickerControllerDelegate, UINavigationControl
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
         picker.dismiss(animated: true, completion: nil)
 
-        gcd.async(.default) {
+        DispatchQueue.default.async {
             let mediaType = info["UIImagePickerControllerMediaType"] as? String
 
             if mediaType == kUTTypeMovie as String {
@@ -111,7 +111,7 @@ extension CameraController: UIImagePickerControllerDelegate, UINavigationControl
                 let path = url?.path
                 UISaveVideoAtPathToSavedPhotosAlbum(path!, self, nil, nil)
 
-                gcd.sync(.main) {
+                DispatchQueue.main.sync {
                     self.completion?(nil, path)
                 }
 
@@ -127,7 +127,7 @@ extension CameraController: UIImagePickerControllerDelegate, UINavigationControl
                 }
                 imageTaked = self.resize(image: imageTaked)
 
-                gcd.sync(.main) {
+                DispatchQueue.main.sync {
                     self.completion?(imageTaked, nil)
                 }
             }

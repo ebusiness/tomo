@@ -44,7 +44,7 @@ class ContactsNavigationController: UINavigationController {
 
     func updateTabBarItemBadgeOnMainThread() {
 
-        gcd.sync(.main) {
+        DispatchQueue.main.sync {
             self.tabBarItem.badgeValue = self.calculateBadge()
         }
     }

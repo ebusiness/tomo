@@ -169,7 +169,7 @@ extension NotificationListViewController {
 
         self.notifications.insert(remoteNotification, at: 0)
 
-        gcd.sync(.main) {
+        DispatchQueue.main.sync {
             self.tableView.beginUpdates()
             self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
             self.tableView.endUpdates()

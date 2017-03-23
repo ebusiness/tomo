@@ -23,7 +23,7 @@ final class SocketController {
             guard let result = items[0] as? [NSObject: Any] else { return }
             guard let socketEvent = ListenerEvent(rawValue: $0.event) else { return }
 
-            gcd.async( .high ) { () -> Void in
+            DispatchQueue.high.async {
                 socketEvent.relayToNoticationCenter(result)
             }
         }

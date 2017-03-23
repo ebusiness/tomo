@@ -395,7 +395,7 @@ extension ProfileViewController {
     }
 
     func reviseUserStatus() {
-        gcd.sync(.main) {
+        DispatchQueue.main.sync {
             self.configUserStatus()
         }
     }

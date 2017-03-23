@@ -182,7 +182,7 @@ extension ContactsViewController {
 
         // this method is called from background thread (because it fired from notification center)
         // must switch to main thread for UI updating
-        gcd.sync(.main) {
+        DispatchQueue.main.sync {
 
             // update tableview, insert the corresponding row in section 0
             self.tableView.beginUpdates()
@@ -203,7 +203,7 @@ extension ContactsViewController {
 
         // this method is called from background thread (because it fired from notification center)
         // must switch to main thread for UI updating
-        gcd.sync(.main) {
+        DispatchQueue.main.sync {
 
             // update tableview, delete the corresponding row from section 0
             self.tableView.beginUpdates()

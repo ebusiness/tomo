@@ -49,7 +49,7 @@ class SettingNavigationController: UINavigationController {
     }
 
     func updateTabBarItemBadgeInMainThread() {
-        gcd.sync(.main) {
+        DispatchQueue.main.sync {
             if me.notifications > 0 {
                 self.tabBarItem.badgeValue = String(me.notifications)
             } else {

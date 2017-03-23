@@ -161,9 +161,9 @@ extension Util {
 
     class func changeImageColorForButton(btn: UIButton?,color: UIColor) {
         guard let image = btn?.imageView?.image else { return }
-        gcd.async(.default) {
+        DispatchQueue.default.async {
             let image = Util.coloredImage( image: image, color: color)
-            gcd.sync(.main) {
+            DispatchQueue.main.sync {
                 btn?.setImage(image, for: .normal)
             }
         }
@@ -172,7 +172,7 @@ extension Util {
     //ActionSheet
     class func alertActionSheet(parentvc: UIViewController, optionalDict: Dictionary<String,((UIAlertAction?) -> Void)?>) {
 
-        gcd.async(.default) {
+        DispatchQueue.default.async {
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
             let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
@@ -182,7 +182,7 @@ extension Util {
                 let action = UIAlertAction(title: optional.0, style: .default, handler: optional.1)
                 alertController.addAction(action)
             }
-            gcd.sync(.main) {
+            DispatchQueue.main.sync {
                 parentvc.present(alertController, animated: true, completion: nil)
             }
         }
@@ -196,7 +196,7 @@ extension Util {
                      cancelHandler: ((UIAlertAction?) -> Void)? = nil,
                      okHandler: ((UIAlertAction?) -> Void)? = nil) {
 
-        gcd.async(.default) {
+        DispatchQueue.default.async {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
             let cancelAction = UIAlertAction(title: cancel, style: .cancel, handler: cancelHandler)
@@ -207,7 +207,7 @@ extension Util {
                 alertController.addAction(okAction)
             }
 
-            gcd.sync(.main) {
+            DispatchQueue.main.sync {
                 parentvc.present(alertController, animated: true, completion: nil)
             }
         }

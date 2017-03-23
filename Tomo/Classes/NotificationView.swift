@@ -31,10 +31,10 @@ class NotificationView: UIView {
     }
 
     @IBAction func closeTapped() {
-        gcd.async(.default) {
+        DispatchQueue.default.async {
             self.superview!.constraints.forEach({ (constraint) in
                 if !(constraint.firstAttribute == .top && constraint.firstItem is NotificationView) { return }
-                gcd.sync(.main) {
+                DispatchQueue.main.sync {
                     constraint.constant = -64
                     UIView.animate(withDuration: 0.2, animations: { () -> Void in
                         self.superview?.layoutIfNeeded()

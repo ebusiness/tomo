@@ -539,7 +539,7 @@ extension LatestMessagesViewController {
 
         // this method is called from background thread (because it fired from notification center)
         // must switch to main thread for UI updating
-        gcd.sync(.main) {
+        DispatchQueue.main.sync {
             self.tableView.beginUpdates()
             // if the number of my invitation is zero, remove the whole section of 0
             // otherwise, remove the corresponding row in section 0
@@ -559,7 +559,7 @@ extension LatestMessagesViewController {
 
         // this method is called from background thread (because it fired from notification center)
         // must switch to main thread for UI updating
-        gcd.sync(.main) {
+        DispatchQueue.main.sync {
 
             // update tableview, if the number of my invitation is 1, insert whole section of 0
             // otherwise, insert the corresponding row in section 0 row0
@@ -603,7 +603,7 @@ extension LatestMessagesViewController {
 
         // this method is called from background thread (because it fired from notification center)
         // must switch to main thread for UI updating
-        gcd.sync(.main) {
+        DispatchQueue.main.sync {
 
             // update tableview, if the number of my invitation is zero, remove from section 0
             // otherwise, insert the corresponding row from section 1
@@ -660,7 +660,7 @@ extension LatestMessagesViewController {
 
             // this method is called from background thread (because it fired from notification center)
             // must switch to main thread for UI updating
-            gcd.sync(.main) {
+            DispatchQueue.main.sync {
 
                 // TODO: gonna blow up if I put this in the update block below, don't know why
                 if me.friendInvitations.isEmpty {
@@ -691,7 +691,7 @@ extension LatestMessagesViewController {
 
             // this method is called from background thread (because it fired from notification center)
             // must switch to main thread for UI updating
-            gcd.sync(.main) {
+            DispatchQueue.main.sync {
 
                 // update tableview, if the number of my invitation is zero, insert the row in section 0
                 // otherwise, insert the corresponding row in section 1
