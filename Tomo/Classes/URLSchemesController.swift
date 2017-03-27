@@ -18,13 +18,13 @@ class URLSchemesController {
     private init() {
 
         WechatManager.appid = "wx4079dacf73fef72d"
-        WechatManager.sharedInstance.shareDelegate = self
+        WechatManager.shared.shareDelegate = self
     }
 
     @discardableResult
     func handleOpenURL(_ url: URL) -> Bool {
 
-        if WechatManager.sharedInstance.handleOpenURL(url) {
+        if WechatManager.shared.handleOpenURL(url) {
             return true
         } else if let rootvc = UIApplication.shared.keyWindow?.rootViewController as? TabBarController {
             self.tabBarController = rootvc
