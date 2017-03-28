@@ -8,92 +8,14 @@
 
 import UIKit
 
-enum TabItem: Int {
-
-    case Home
-
-    case Chat
-
-    case Group
-
-    case Map
-
-    case Setting
-
-    var viewController: UIViewController {
-
-        let storyBoardName: String
-        let barButtonImage: UIImage
-        let barButtonBadge: String?
-        let barButtonTitle: String
-
-        switch self {
-
-        case .Home:
-            storyBoardName = "Home"
-            barButtonImage = UIImage(named: "home")!
-            barButtonBadge = nil
-            barButtonTitle = "动态"
-
-        case .Chat:
-            storyBoardName = "Chat"
-            barButtonImage = UIImage(named: "speech_bubble")!
-            barButtonTitle = "聊天"
-
-            if !me.newMessages.isEmpty && !me.friendInvitations.isEmpty {
-                barButtonBadge = String(me.newMessages.count + me.friendInvitations.count)
-            } else {
-                barButtonBadge = nil
-            }
-
-        case .Group:
-            storyBoardName = "Group"
-            barButtonImage = UIImage(named: "group")!
-            barButtonBadge = nil
-            barButtonTitle = "群组"
-
-        case .Map:
-            storyBoardName = "Map"
-            barButtonImage = UIImage(named: "globe")!
-            barButtonBadge = nil
-            barButtonTitle = "地图"
-
-        case .Setting:
-            storyBoardName = "Setting"
-            barButtonImage = UIImage(named: "user_male_circle")!
-            barButtonTitle = "我"
-
-            if me.notifications > 0 {
-                barButtonBadge = String(me.notifications)
-            } else {
-                barButtonBadge = nil
-            }
-        }
-
-        let viewController = UIStoryboard(name: storyBoardName, bundle: nil).instantiateInitialViewController()!
-        viewController.tabBarItem = UITabBarItem(title: barButtonTitle, image: barButtonImage, selectedImage: barButtonImage)
-        viewController.tabBarItem.badgeValue = barButtonBadge
-
-        return viewController
-    }
-}
-
 final class TabBarController: UITabBarController {
 
-    var notificationBar: NotificationView!
+    @IBOutlet fileprivate var notificationBar: NotificationView!
     var topConstraint: NSLayoutConstraint!
 
     override func viewDidLoad() {
 
         super.viewDidLoad()
-
-        self.viewControllers = [
-            TabItem.Home.viewController,
-            TabItem.Chat.viewController,
-            TabItem.Group.viewController,
-            TabItem.Map.viewController,
-            TabItem.Setting.viewController
-        ]
 
         self.initiateNotificationBar()
 
@@ -106,7 +28,7 @@ final class TabBarController: UITabBarController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        URLSchemesController.sharedInstance.runTask()
+        URLSchemesController.shared.runTask()
         RemoteNotification.sharedInstance.runTask()
     }
 
@@ -121,9 +43,6 @@ final class TabBarController: UITabBarController {
 extension TabBarController {
 
     fileprivate func initiateNotificationBar() {
-
-        self.notificationBar = Bundle.main.loadNibNamed("NotificationView", owner: nil, options: nil)?.first as? NotificationView
-        self.notificationBar.delegate = self
 
         self.view.addSubview(self.notificationBar)
 
@@ -189,7 +108,7 @@ extension TabBarController {
         self.topConstraint.constant = 0
         UIView.animate(withDuration: TomoConst.Duration.Short, animations: {
             self.view.layoutIfNeeded()
-            }, completion: { finished in
+            }, completion: { _ in
                 DispatchQueue.default.async(delay: TomoConst.Timeout.Mini) {
                     self.closeNotificationBar()
                 }

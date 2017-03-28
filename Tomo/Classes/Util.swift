@@ -227,12 +227,12 @@ extension Util {
 
 extension UIApplication {
 
-    class func appVersion() -> String! {
-        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+    class func appVersion() -> String {
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
     }
 
-    class func appBuild() -> String! {
-        return Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as NSString as String) as? String
+    class func appBuild() -> String {
+        return Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as NSString as String) as? String ?? ""
     }
 
     class func versionBuild() -> String {

@@ -10,15 +10,11 @@ import UIKit
 
 class NotificationView: UIView {
 
-    @IBOutlet weak fileprivate var backgroundView: UIView!
-
     @IBOutlet weak fileprivate var avatarImageView: UIImageView!
 
     @IBOutlet weak fileprivate var messageLabelView: UILabel!
 
     @IBOutlet weak fileprivate var closeButton: UIButton!
-
-    weak var delegate: TabBarController!
 
     var notification: NotificationEntity! {
         didSet {
@@ -53,7 +49,8 @@ class NotificationView: UIView {
             case .Announcement:
                 return
             case .GroupMessage: // GroupMessage
-                URLSchemesController.sharedInstance.handleOpenURL(URL(string: "tomo://\(self.notification.type)/\(self.notification.targetId)")!)
+                let url = URL(string: "tomo://\(self.notification.type)/\(self.notification.targetId)")!
+                URLSchemesController.shared.handleOpen(url: url)
 
             case .Message: // Message
                 fallthrough
@@ -63,7 +60,8 @@ class NotificationView: UIView {
                 self.avatarTapped(sender)
 
             case .PostNew, .PostLiked, .PostCommented, .PostBookmarked: // Post
-                URLSchemesController.sharedInstance.handleOpenURL(URL(string: "tomo://\(self.notification.type)/\(self.notification.targetId)")!)
+                let url = URL(string: "tomo://\(self.notification.type)/\(self.notification.targetId)")!
+                URLSchemesController.shared.handleOpen(url: url)
 
             default:
                 break
@@ -72,7 +70,8 @@ class NotificationView: UIView {
     }
 
     @IBAction func avatarTapped(_ sender: UITapGestureRecognizer) {
-        URLSchemesController.sharedInstance.handleOpenURL(URL(string: "tomo://\(self.notification.type)/\(self.notification.targetId)")!)
+        let url = URL(string: "tomo://\(self.notification.type)/\(self.notification.targetId)")!
+        URLSchemesController.shared.handleOpen(url: url)
 
     }
 

@@ -18,6 +18,11 @@ final class LatestMessagesViewController: UITableViewController {
 
     var isLoading = false
 
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.setBadgeValue()
+    }
+
     override func viewDidLoad() {
 
         super.viewDidLoad()
@@ -53,6 +58,21 @@ final class LatestMessagesViewController: UITableViewController {
     }
 }
 
+// MARK: - initialize
+extension LatestMessagesViewController {
+
+    /// Badge
+    fileprivate func setBadgeValue() {
+        let barButtonBadge: String?
+        if !me.newMessages.isEmpty && !me.friendInvitations.isEmpty {
+            barButtonBadge = String(me.newMessages.count + me.friendInvitations.count)
+        } else {
+            barButtonBadge = nil
+        }
+        self.navigationController?.tabBarItem.badgeValue = barButtonBadge
+    }
+
+}
 // MARK: - UITableView datasource
 
 extension LatestMessagesViewController {
@@ -83,42 +103,44 @@ extension LatestMessagesViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        func makeInvitationCell() -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "InvitationCell", for: indexPath) as? FriendInvitationTableViewCell
-            cell!.invitation = me.friendInvitations[indexPath.item]
-            cell!.delegate = self
-            return cell!
-        }
-
-        func makeMessageCell() -> UITableViewCell {
-
-            let message = self.messages[indexPath.item]
-
-            if message.group != nil {
-
-                let cell = tableView.dequeueReusableCell(withIdentifier: "GroupMessageCell", for: indexPath) as? GroupMessageTableViewCell
-                cell!.message = message
-                return cell!
-
-            } else {
-
-                let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? MessageTableViewCell
-                cell!.message = message
-                return cell!
-            }
-        }
-
         if !me.friendInvitations.isEmpty {
 
             switch indexPath.section {
             case 0:
-                return makeInvitationCell()
+                return self.getInvitationCell(tableView, cellForRowAt: indexPath)
             default:
-                return makeMessageCell()
+                return self.getMessageCell(tableView, cellForRowAt: indexPath)
             }
 
         } else {
-            return makeMessageCell()
+            return self.getMessageCell(tableView, cellForRowAt: indexPath)
+        }
+    }
+
+    private func getInvitationCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let tableViewCell = tableView.dequeueReusableCell(withIdentifier: "InvitationCell", for: indexPath)
+        guard let cell = tableViewCell as? FriendInvitationTableViewCell else { return tableViewCell }
+        cell.invitation = me.friendInvitations[indexPath.item]
+        cell.delegate = self
+        return cell
+    }
+
+    private func getMessageCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let message = self.messages[indexPath.item]
+
+        if message.group != nil {
+            let tableViewCell = tableView.dequeueReusableCell(withIdentifier: "GroupMessageCell", for: indexPath)
+            guard let cell = tableViewCell as? GroupMessageTableViewCell else { return tableViewCell }
+            cell.message = message
+            return cell
+
+        } else {
+
+            let tableViewCell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath)
+            guard let cell = tableViewCell as? MessageTableViewCell else { return tableViewCell }
+            cell.message = message
+            return cell
         }
     }
 
@@ -415,7 +437,7 @@ extension LatestMessagesViewController {
 
             // see if the group is exists in my message list
             indexInMessageList = self.messages.index {
-                $0.group?.id ==  group.id
+                $0.group?.id == group.id
             }
 
             // if the message is a normal message
@@ -634,7 +656,7 @@ extension LatestMessagesViewController {
 
             // see if the group is exists in my message list
             indexInMessageList = self.messages.index {
-                $0.group?.id ==  group.id
+                $0.group?.id == group.id
             }
 
             // if the message is a normal message
@@ -766,7 +788,7 @@ final class MessageTableViewCell: UITableViewCell {
         }
     }
 
-    private func getMediaString()-> String {
+    private func getMediaString() -> String {
         let msg = self.message.from.id == me.id ? "您发送了" : "给您发送了"
         switch self.message.type {
         case .photo:
@@ -825,7 +847,7 @@ final class GroupMessageTableViewCell: UITableViewCell {
         }
     }
 
-    private func getMediaString()-> String {
+    private func getMediaString() -> String {
         let msg = self.message.from.id == me.id ? "您发送了" : "给您发送了"
         switch self.message.type {
         case .photo:
@@ -839,7 +861,6 @@ final class GroupMessageTableViewCell: UITableViewCell {
         }
     }
 }
-
 
 // MARK: - FriendInvitationTableViewCell
 
@@ -876,7 +897,8 @@ final class FriendInvitationTableViewCell: UITableViewCell {
 
     @IBAction func refuse(_ sender: UIButton) {
 
-        Util.alert(parentvc: delegate, title: "拒绝好友邀请", message: "拒绝 " + self.invitation.from.nickName + " 的好友邀请么") { _ in
+        let message = "拒绝 " + self.invitation.from.nickName + " 的好友邀请么"
+        Util.alert(parentvc: delegate, title: "拒绝好友邀请", message: message) { _ in
             Router.Invitation.ModifyById(id: self.invitation.id, accepted: false).response {
                 if $0.result.isFailure { return }
                 me.refuseInvitation(invitation: self.invitation)

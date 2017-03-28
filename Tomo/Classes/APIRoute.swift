@@ -52,7 +52,7 @@ extension APIRoute {
         #if DEBUG
             print("URL: \(requestUrl)")
             print("Method: \(self.method.rawValue)")
-            print("Parameters: \(parameters)")
+            print("Parameters: \(String(describing: parameters))")
         #endif
         guard let parameters = self.parameters else { return mutableURLRequest }
         do {

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="UXu-t1-ZqZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="UXu-t1-ZqZ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -590,7 +589,7 @@ COePvuWgtFRvbW8
                                 </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="defaultCell" id="k9j-vq-rI2" customClass="GroupRecommendCollectionViewCell" customModule="tomo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="16" width="140" height="170"/>
+                                        <rect key="frame" x="0.0" y="15.5" width="140" height="170"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="140" height="170"/>
@@ -778,10 +777,173 @@ COePvuWgtFRvbW8
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UHd-xx-jlG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="143" y="1238"/>
+            <point key="canvasLocation" x="-338" y="2054"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="mdZ-lw-DFR">
+            <objects>
+                <tabBarController storyboardIdentifier="TabBarController" id="9Ri-7Y-4Ye" customClass="TabBarController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="EWB-b8-abE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <outlet property="notificationBar" destination="T1q-eF-7x7" id="BrD-yR-cQj"/>
+                        <segue destination="XMn-aF-AFu" kind="relationship" relationship="viewControllers" id="Nne-I1-noY"/>
+                        <segue destination="o00-Jm-Rg3" kind="relationship" relationship="viewControllers" id="8uQ-tm-S4L"/>
+                        <segue destination="wMz-BE-Dnk" kind="relationship" relationship="viewControllers" id="git-K8-twV"/>
+                        <segue destination="QJe-04-96Z" kind="relationship" relationship="viewControllers" id="bVt-Bk-so8"/>
+                        <segue destination="unT-Pj-X3P" kind="relationship" relationship="viewControllers" id="XrC-2Y-bBE"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uoJ-pF-ZLP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="T1q-eF-7x7" customClass="NotificationView" customModule="tomo" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Pq-Bc-exF">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                            <color key="backgroundColor" red="0.0078431372550000003" green="0.53333333329999999" blue="0.81960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <gestureRecognizers/>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nAS-mt-i9I">
+                            <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="bTg-Dh-RPx">
+                                    <rect key="frame" x="8" y="4" width="36" height="36"/>
+                                    <gestureRecognizers/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="36" id="LP4-eG-QMg"/>
+                                        <constraint firstAttribute="height" constant="36" id="LeB-0b-jg6"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="18"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="k4C-7D-mn2" appends="YES" id="i6E-Re-C7M"/>
+                                    </connections>
+                                </imageView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YiY-Iu-O1u">
+                                    <rect key="frame" x="282" y="7" width="30" height="30"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="30" id="2zZ-9v-jqx"/>
+                                        <constraint firstAttribute="height" constant="30" id="RlW-qV-MET"/>
+                                    </constraints>
+                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <state key="normal" image="delete_sign"/>
+                                    <connections>
+                                        <action selector="closeTapped" destination="T1q-eF-7x7" eventType="touchUpInside" id="j4Q-0u-r7c"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="通知信息" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ls5-W2-6VF">
+                                    <rect key="frame" x="52" y="13" width="222" height="18"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="centerY" secondItem="bTg-Dh-RPx" secondAttribute="centerY" id="4li-gG-xlg"/>
+                                <constraint firstAttribute="trailing" secondItem="YiY-Iu-O1u" secondAttribute="trailing" constant="8" id="Ey2-Cm-aon"/>
+                                <constraint firstItem="bTg-Dh-RPx" firstAttribute="centerY" secondItem="YiY-Iu-O1u" secondAttribute="centerY" id="Wai-NM-ZvK"/>
+                                <constraint firstItem="bTg-Dh-RPx" firstAttribute="leading" secondItem="nAS-mt-i9I" secondAttribute="leading" constant="8" id="blB-MJ-Scq"/>
+                                <constraint firstItem="bTg-Dh-RPx" firstAttribute="centerY" secondItem="Ls5-W2-6VF" secondAttribute="centerY" id="cQK-kb-U5d"/>
+                                <constraint firstItem="Ls5-W2-6VF" firstAttribute="leading" secondItem="bTg-Dh-RPx" secondAttribute="trailing" constant="8" id="uiv-dO-UlG"/>
+                                <constraint firstItem="YiY-Iu-O1u" firstAttribute="leading" secondItem="Ls5-W2-6VF" secondAttribute="trailing" constant="8" id="ywt-v2-mFS"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <gestureRecognizers/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="5Pq-Bc-exF" secondAttribute="trailing" id="2i6-E7-QcP"/>
+                        <constraint firstItem="nAS-mt-i9I" firstAttribute="top" secondItem="5Pq-Bc-exF" secondAttribute="top" constant="20" id="5RQ-UK-2ba"/>
+                        <constraint firstAttribute="bottom" secondItem="5Pq-Bc-exF" secondAttribute="bottom" id="Dcy-U4-7GR"/>
+                        <constraint firstItem="5Pq-Bc-exF" firstAttribute="trailing" secondItem="nAS-mt-i9I" secondAttribute="trailing" id="HLt-pL-CzX"/>
+                        <constraint firstItem="5Pq-Bc-exF" firstAttribute="bottom" secondItem="nAS-mt-i9I" secondAttribute="bottom" id="QAn-Ri-xij"/>
+                        <constraint firstItem="5Pq-Bc-exF" firstAttribute="leading" secondItem="T1q-eF-7x7" secondAttribute="leading" id="itI-P5-LJP"/>
+                        <constraint firstItem="5Pq-Bc-exF" firstAttribute="top" secondItem="T1q-eF-7x7" secondAttribute="top" id="jdU-sc-0TU"/>
+                        <constraint firstItem="5Pq-Bc-exF" firstAttribute="leading" secondItem="nAS-mt-i9I" secondAttribute="leading" id="sup-fe-Bm9"/>
+                    </constraints>
+                    <connections>
+                        <outlet property="avatarImageView" destination="bTg-Dh-RPx" id="eg9-qe-jnu"/>
+                        <outlet property="closeButton" destination="YiY-Iu-O1u" id="eTH-14-sci"/>
+                        <outlet property="messageLabelView" destination="Ls5-W2-6VF" id="pbK-al-yka"/>
+                        <outletCollection property="gestureRecognizers" destination="ZzU-ph-oBb" appends="YES" id="D2b-PV-Igv"/>
+                    </connections>
+                </view>
+                <tapGestureRecognizer id="k4C-7D-mn2">
+                    <connections>
+                        <action selector="avatarTapped:" destination="T1q-eF-7x7" id="gyp-wb-I9B"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="ZzU-ph-oBb">
+                    <connections>
+                        <action selector="bodyTapped:" destination="T1q-eF-7x7" id="YQP-Fr-IMw"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="211" y="1472"/>
+        </scene>
+        <!--Home-->
+        <scene sceneID="U3y-Ya-AWB">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Home" id="XMn-aF-AFu" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="Uvw-ha-nfL"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A6d-ab-1Q4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="670" y="1265"/>
+        </scene>
+        <!--Chat-->
+        <scene sceneID="2y5-TE-pDE">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Chat" id="o00-Jm-Rg3" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="r0v-de-PJe"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yQf-dP-icv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="667" y="1328"/>
+        </scene>
+        <!--Group-->
+        <scene sceneID="P2S-kZ-Cf3">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Group" id="wMz-BE-Dnk" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="vp4-JE-ugm"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iLf-nV-EIJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="671" y="1398"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="LRq-vz-bH2">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Map" id="QJe-04-96Z" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="DoN-zE-37c"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lle-tQ-IYP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="665" y="1471"/>
+        </scene>
+        <!--Setting-->
+        <scene sceneID="gR3-88-hpj">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Setting" id="unT-Pj-X3P" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="yKO-6X-egJ"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="33v-9R-OOe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="674" y="1557"/>
         </scene>
     </scenes>
     <resources>
+        <image name="avatar" width="80" height="80"/>
+        <image name="delete_sign" width="25" height="25"/>
         <image name="exit" width="32" height="32"/>
         <image name="group_cover_default" width="414" height="160"/>
         <image name="search" width="32" height="32"/>

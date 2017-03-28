@@ -13,7 +13,7 @@ class URLSchemesController {
     var taskURL: URL?
 
     // static initialize
-    static let sharedInstance: URLSchemesController = URLSchemesController()
+    static let shared: URLSchemesController = URLSchemesController()
 
     private init() {
 
@@ -22,7 +22,7 @@ class URLSchemesController {
     }
 
     @discardableResult
-    func handleOpenURL(_ url: URL) -> Bool {
+    func handleOpen(url: URL) -> Bool {
 
         if WechatManager.shared.handleOpenURL(url) {
             return true
@@ -54,7 +54,7 @@ class URLSchemesController {
     func runTask() -> Bool {
         if let url = self.taskURL {
             self.taskURL = nil
-            return handleOpenURL(url)
+            return handleOpen(url: url)
         } else {
             return false
         }
@@ -133,6 +133,6 @@ extension URLSchemesController {
 
 extension URLSchemesController: WechatManagerShareDelegate {
     func showMessage(_ message: String) {
-        URLSchemesController.sharedInstance.handleOpenURL(URL(string: "tomo://post-new/\(message)")!)
+        URLSchemesController.shared.handleOpen(url: URL(string: "tomo://post-new/\(message)")!)
     }
 }

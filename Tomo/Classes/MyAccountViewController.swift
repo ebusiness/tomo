@@ -45,6 +45,11 @@ final class MyAccountViewController: UITableViewController {
     let headerHeight = TomoConst.UI.ScreenHeight * 0.382 - 58
     let headerViewSize = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.ScreenHeight * 0.382 + 58)
 
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.setBadgeValue()
+    }
+
     override func viewDidLoad() {
 
         super.viewDidLoad()
@@ -57,12 +62,14 @@ final class MyAccountViewController: UITableViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         // restore the normal navigation bar before disappear
         self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         self.navigationController?.navigationBar.shadowImage = nil
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.configNavigationBarByScrollPosition()
     }
 
@@ -79,6 +86,22 @@ final class MyAccountViewController: UITableViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+}
+
+// MARK: - initialize
+extension MyAccountViewController {
+
+    /// Badge
+    fileprivate func setBadgeValue() {
+        let barButtonBadge: String?
+        if me.notifications > 0 {
+            barButtonBadge = String(me.notifications)
+        } else {
+            barButtonBadge = nil
+        }
+        self.navigationController?.tabBarItem.badgeValue = barButtonBadge
+    }
+
 }
 
 // MARK: UITableView Delegate

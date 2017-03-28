@@ -22,35 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         self.window!.backgroundColor = UIColor.white
 
-        var rootViewController: UIViewController!
-
-        // check the session see whether I'm logged in
-        Router.Session().response {
-
-            // I'm already logged in
-            if $0.result.isSuccess {
-
-                // populate my accout model
-                me = Account($0.result.value!)
-
-                // if I don't have primary station, take me to the primary station select view
-                if me.primaryStation != nil {
-                    rootViewController = TabBarController()
-                } else {
-                    rootViewController = Util.createViewController(storyboardName: "Main", id: "RecommendView")
-                }
-
-            // I'm not log in yet, take me to the sign-in view
-            } else {
-                rootViewController = Util.createViewController(storyboardName: "Main", id: nil)
-            }
-
-            Util.changeRootViewController(from: (self.window?.rootViewController)!, to: rootViewController)
-        }
+        self.sessionCheck()
 
         // the application was start up from notification
         if let launchOpts = launchOptions,
-            let userInfo = launchOpts[UIApplicationLaunchOptionsKey.remoteNotification] as? [NSObject : AnyObject] {
+            let userInfo = launchOpts[UIApplicationLaunchOptionsKey.remoteNotification] as? [AnyHashable : Any] {
 
             self.application(application, didReceiveRemoteNotification: userInfo)
         }
@@ -97,6 +73,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return URLSchemesController.sharedInstance.handleOpenURL(url)
+        return URLSchemesController.shared.handleOpen(url: url)
+    }
+}
+
+extension AppDelegate {
+
+    fileprivate func sessionCheck() {
+        // if not log in yet, take me to the sign-in view
+        var identifier: String? = nil
+
+        // check the session see whether I'm logged in
+        Router.Session().response {
+
+            // I'm already logged in
+            if $0.result.isSuccess {
+
+                // populate my accout model
+                me = Account($0.result.value!)
+
+                // if I don't have primary station, take me to the primary station select view
+                identifier = me.primaryStation == nil ? "RecommendView" : "TabBarController"
+            }
+
+            let rootViewController = Util.createViewController(storyboardName: "Main", id: identifier)
+
+            Util.changeRootViewController(from: (self.window?.rootViewController)!, to: rootViewController)
+        }
     }
 }

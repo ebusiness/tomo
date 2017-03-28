@@ -96,7 +96,6 @@
 		D0A7C8B81E1CD9400046E571 /* URLSchemesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */; };
 		D0A7C8BD1E1CDFC50046E571 /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D099B6171BDA3B63006C9D01 /* LocationController.swift */; };
 		D0A7C8DC1E1CE1AE0046E571 /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB07DF1B9D3E1400C06C4E /* RemoteNotification.swift */; };
-		D0DB07D71B9D1B5200C06C4E /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0DB07D61B9D1B5200C06C4E /* NotificationView.xib */; };
 		D0DB07D91B9D224900C06C4E /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DB07D81B9D224900C06C4E /* NotificationView.swift */; };
 		D0E9B2801E24D0E200101277 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA9C5081C5106C9004A683C /* PostDetailViewController.swift */; };
 		D0E9B2811E24D11B00101277 /* RecommendStationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */; };
@@ -239,7 +238,6 @@
 		D0A104941BEB055100AEE356 /* statements.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = statements.html; path = Resources/statements.html; sourceTree = SOURCE_ROOT; };
 		D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLSchemesController.swift; path = Classes/URLSchemesController.swift; sourceTree = "<group>"; };
 		D0D5A4461E261A4F00757F4E /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = SOURCE_ROOT; };
-		D0DB07D61B9D1B5200C06C4E /* NotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NotificationView.xib; path = Classes/NotificationView.xib; sourceTree = "<group>"; };
 		D0DB07D81B9D224900C06C4E /* NotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationView.swift; path = Classes/NotificationView.swift; sourceTree = "<group>"; };
 		D0DB07DF1B9D3E1400C06C4E /* RemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteNotification.swift; path = Classes/RemoteNotification.swift; sourceTree = "<group>"; };
 		D0DB07E41B9D65BE00C06C4E /* ListenerEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListenerEvent.swift; path = Classes/ListenerEvent.swift; sourceTree = "<group>"; };
@@ -562,7 +560,6 @@
 		D012F5921BBBC40A00D5293D /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				D0DB07D61B9D1B5200C06C4E /* NotificationView.xib */,
 				D0DB07D81B9D224900C06C4E /* NotificationView.swift */,
 			);
 			name = Components;
@@ -751,7 +748,6 @@
 				559DCAD51C5FB373003FA73C /* Map.storyboard in Resources */,
 				D05FFF501E5185EF00B60F15 /* ChatTableViewCell.xib in Resources */,
 				D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */,
-				D0DB07D71B9D1B5200C06C4E /* NotificationView.xib in Resources */,
 				29CA441E1AD4CAF0009EB177 /* Setting.storyboard in Resources */,
 				1FF9B95F1C59EB5C008BB6ED /* Chat.storyboard in Resources */,
 				1FF6930D1C1E95FC00777BD5 /* Landing.storyboard in Resources */,
@@ -958,8 +954,15 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Reveal,
+					"-l\"z\"",
+				);
 				SDKROOT = iphoneos;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1026,12 +1029,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendors/opencore-amr/lib",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					Reveal,
-					"-l\"z\"",
-				);
+				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.e-business.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = tomo;
@@ -1063,7 +1061,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Vendors/opencore-amr/lib",
 				);
-				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.e-business.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = tomo;
 				PROVISIONING_PROFILE = "";
