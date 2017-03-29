@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-        RemoteNotification.sharedInstance.receiveRemoteNotification(userInfo)
+        RemoteNotification.shared.receive(userInfo: userInfo)
     }
 
     func application(_ application: UIApplication, handleOpen url: URL) -> Bool {

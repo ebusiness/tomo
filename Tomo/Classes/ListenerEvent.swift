@@ -42,7 +42,7 @@ enum ListenerEvent: String {
         return NSNotification.Name(rawValue: "tomoNotification-" + self.rawValue)
     }
 
-    func relayToNoticationCenter(_ userInfo: [AnyHashable: Any]) {
+    func post(userInfo: [AnyHashable: Any]) {
         NotificationCenter.default.post(name: self.notificationName, object: nil, userInfo: userInfo)
     }
 

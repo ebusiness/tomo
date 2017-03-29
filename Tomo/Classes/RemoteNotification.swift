@@ -10,32 +10,31 @@ import Foundation
 import SwiftyJSON
 
 class RemoteNotification {
+    // last notication
+    var taskUserInfo: [AnyHashable: Any]?
 
-    var taskUserInfo: [NSObject: Any]?
-    var constraints = [Any]()
-
-    static let sharedInstance: RemoteNotification = RemoteNotification()
+    static let shared: RemoteNotification = RemoteNotification()
 
     private init() {}
 
-    func receiveRemoteNotification(_ userInfo: [AnyHashable: Any]) {
+    func receive(userInfo: [AnyHashable: Any]) {
         DispatchQueue.default.async {
             if UIApplication.shared.keyWindow?.rootViewController is TabBarController {
 
                 let type = JSON(userInfo)["type"].stringValue
 
                 if let event = ListenerEvent(rawValue: type) {
-                    event.relayToNoticationCenter(userInfo)
+                    event.post(userInfo: userInfo)
                 }
             } else {
-                self.taskUserInfo = userInfo as [NSObject: Any]?
+                self.taskUserInfo = userInfo
             }
         }
     }
 
     func runTask() {
         guard let userInfo = self.taskUserInfo else { return }
+        self.receive(userInfo: userInfo)
         self.taskUserInfo = nil
-        receiveRemoteNotification(userInfo)
     }
 }

@@ -10,9 +10,9 @@ import SocketIO
 
 final class SocketController {
 
-    private var socket: SocketIOClient!
+    private var socket: SocketIOClient
 
-    static let sharedInstance: SocketController = SocketController()
+    static let shared: SocketController = SocketController()
 
     private init() {
 
@@ -24,16 +24,16 @@ final class SocketController {
             guard let socketEvent = ListenerEvent(rawValue: $0.event) else { return }
 
             DispatchQueue.high.async {
-                socketEvent.relayToNoticationCenter(result)
+                socketEvent.post(userInfo: result)
             }
         }
     }
 
     class func connect() {
-        self.sharedInstance.socket.connect()
+        self.shared.socket.connect()
     }
 
     class func disconnect() {
-        self.sharedInstance.socket.disconnect()
+        self.shared.socket.disconnect()
     }
 }
