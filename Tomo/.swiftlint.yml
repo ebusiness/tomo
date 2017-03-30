@@ -19,7 +19,6 @@ opt_in_rules: # some rules are only opt-in
   - first_where
   - sorted_imports
   - object_literal
-  - number_separator
   - prohibited_super_call
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Vendors
@@ -29,7 +28,7 @@ file_header:
   required_pattern: |
                     \/\/
                     \/\/  .*?\.swift
-                    \/\/  現場Tomo
+                    \/\/  Tomo
                     \/\/
                     \/\/  Created by .*? on \d{1,2}\/\d{1,2}\/\d{2}\.
                     \/\/  Copyright © \d{4} e-business\. All rights reserved\.

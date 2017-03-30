@@ -13,7 +13,7 @@ struct TomoConfig {
 
         static let `Protocol` = "https"
         static let Domain = "api.dev.genbatomo.com"
-//        static let Domain = "192.168.11.86:8443"
+//        static let Domain = "192.168.11.86"
 //        static let Domain = "api.genbatomo.com"
 
         static var UrlString: String {
@@ -26,6 +26,7 @@ struct TomoConfig {
     }
 
     struct AWS {
+        // swiftlint:disable:next type_name nesting
         struct S3 {
             static let Url = "https://s3-ap-northeast-1.amazonaws.com"
             static let Bucket = "tomo-dev"
@@ -48,6 +49,7 @@ struct TomoConfig {
     }
 
     struct AWS {
+        // swiftlint:disable:next type_name nesting
         struct S3 {
             static let Url = "https://s3-ap-northeast-1.amazonaws.com"
             static let Bucket = "tomo-prod"
@@ -76,7 +78,7 @@ struct TomoConst {
     struct Geo {
         static let LatitudeTokyo = 35.689521
         static let LongitudeTokyo = 139.691704
-        static let CoordinateTokyo = [LongitudeTokyo, LatitudeTokyo]
+        static let CoordinateTokyo = [LatitudeTokyo, LongitudeTokyo]
         static let CLLocationTokyo = CLLocation(latitude: LatitudeTokyo, longitude: LongitudeTokyo)
     }
 

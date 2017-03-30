@@ -115,7 +115,7 @@ extension StationDiscoverViewController {
         parameters.type = .station
 
         if let location = location {
-            parameters.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
+            parameters.coordinate = [location.coordinate.latitude, location.coordinate.longitude]
             self.location = location
         } else {
             parameters.coordinate = TomoConst.Geo.CoordinateTokyo
@@ -150,7 +150,7 @@ extension StationDiscoverViewController {
         var parameters = Router.Group.FindParameters(category: .discover)
         parameters.page = self.page
         parameters.type = .station
-        parameters.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
+        parameters.coordinate = [location.coordinate.latitude, location.coordinate.longitude]
 
         if let searchText = searchText {
             parameters.name = searchText

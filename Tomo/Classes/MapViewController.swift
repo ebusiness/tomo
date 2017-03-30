@@ -48,10 +48,12 @@ final class MapViewController: UIViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = false
     }
 
@@ -267,122 +269,11 @@ extension MapViewController: MKMapViewDelegate {
     }
 }
 
-extension MapViewController: UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.annotationsForTable?.count ?? 0
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        if let userAnnotation = self.annotationsForTable![indexPath.item] as? UserAnnotation {
-
-            let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as? UserCell
-            cell?.user = userAnnotation.user
-            cell?.setupDisplay()
-            return cell!
-
-        } else if let groupAnnotation = self.annotationsForTable![indexPath.item] as? GroupAnnotation {
-
-            let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell", for: indexPath) as? GroupCell
-            cell?.group = groupAnnotation.group
-            cell?.setupDisplay()
-            return cell!
-
-        } else {
-            return UITableViewCell()
-        }
-
-    }
-
-}
-
-extension MapViewController: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        tableView.deselectRow(at: indexPath, animated: true)
-
-        if let userAnnotation = self.annotationsForTable![indexPath.item] as? UserAnnotation {
-            let pvc = Util.createViewController(storyboardName: "Profile", id: "UserPostsView") as? UserPostsViewController
-            pvc?.user = userAnnotation.user
-            self.navigationController?.pushViewController(pvc!, animated: true)
-        }
-
-        if let groupAnnotation = self.annotationsForTable![indexPath.item] as? GroupAnnotation {
-            let pvc = Util.createViewController(storyboardName: "Group", id: "GroupDetailView") as? GroupDetailViewController
-            pvc?.group = groupAnnotation.group
-            self.navigationController?.pushViewController(pvc!, animated: true)
-        }
-    }
-}
-
-// MARK: Internal Methods
+// MARK: Contents
 
 extension MapViewController {
 
-    fileprivate func hideTableView() {
-        UIView.animate(withDuration: TomoConst.Duration.Short, animations: {
-            self.tableViewTopConstrian.constant = 0
-            self.view.layoutIfNeeded()
-        })
-    }
-
     fileprivate func loadContents() {
-
-        func findGroups(parameters: Router.Group.MapParameters) {
-            Router.Group.Map(parameters: parameters).response {
-                if $0.result.isFailure {
-                    self.segmentedControl.isEnabled = true
-                    return
-                }
-
-                guard let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) else { return }
-
-                let annotations = groups.map { group -> GroupAnnotation in
-                    let annotation = GroupAnnotation()
-                    annotation.group = group
-                    if let lon = group.coordinate?[0], let lat = group.coordinate?[1] {
-                        annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                    }
-                    return annotation
-                }
-                self.allAnnotationMapView.addAnnotations(annotations)
-                self.adjustRegion(annotations: self.allAnnotationMapView.annotations)
-                self.updateVisibleAnnotations()
-                self.lastLoadDate = Date()
-
-                self.segmentedControl.isEnabled = true
-            }
-        }
-
-        func findFriends() {
-            Router.User.Map.response {
-                if $0.result.isFailure {
-                    self.segmentedControl.isEnabled = true
-                    return
-                }
-
-                guard let users: [UserEntity] = UserEntity.collection($0.result.value!) else { return }
-
-                let annotations = users.map { user -> UserAnnotation in
-                    let annotation = UserAnnotation()
-                    annotation.user = user
-                    if let station = user.primaryStation {
-                        if let lon = station.coordinate?[0], let lat = station.coordinate?[1] {
-                            annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                        }
-                    }
-                    return annotation
-                }
-                self.allAnnotationMapView.addAnnotations(annotations)
-                self.adjustRegion(annotations: self.allAnnotationMapView.annotations)
-                self.updateVisibleAnnotations()
-                self.lastLoadDate = Date()
-
-                self.segmentedControl.isEnabled = true
-            }
-        }
 
         self.allAnnotationMapView.removeAnnotations(self.allAnnotationMapView.annotations)
         self.mapView.removeAnnotations(self.mapView.annotations)
@@ -400,24 +291,68 @@ extension MapViewController {
         case .FriendsMap:
             findFriends()
         }
-
     }
 
-    fileprivate func getCurrentBox() -> [Double] {
+    private func findGroups(parameters: Router.Group.MapParameters) {
+        Router.Group.Map(parameters: parameters).response {
+            if $0.result.isFailure {
+                self.segmentedControl.isEnabled = true
+                return
+            }
 
-        let visibleRect = mapView.visibleMapRect
+            guard let groups: [GroupEntity] = GroupEntity.collection($0.result.value!) else { return }
 
-        let left = MKMapRectGetMinX(visibleRect)
-        let right = MKMapRectGetMaxX(visibleRect)
-        let top = MKMapRectGetMinY(visibleRect)
-        let bottom = MKMapRectGetMaxY(visibleRect)
+            let annotations = groups.map { group -> GroupAnnotation in
+                let annotation = GroupAnnotation()
+                annotation.group = group
+                return annotation
+            }
+            self.addAnnotations(annotations)
+        }
+    }
 
-        let leftBottom = MKCoordinateForMapPoint(MKMapPoint(x: left, y: bottom))
-        let rightTop = MKCoordinateForMapPoint(MKMapPoint(x: right, y: top))
+    private func findFriends() {
+        Router.User.Map.response {
+            if $0.result.isFailure {
+                self.segmentedControl.isEnabled = true
+                return
+            }
 
-        // println("[\(leftBottom.latitude),\(leftBottom.longitude)],[\(rightTop.latitude),\(rightTop.longitude)]")
+            guard let users: [UserEntity] = UserEntity.collection($0.result.value!) else { return }
 
-        return [leftBottom.latitude, leftBottom.longitude, rightTop.latitude, rightTop.longitude]
+            let annotations = users.map { user -> UserAnnotation in
+                let annotation = UserAnnotation()
+                annotation.user = user
+                if let station = user.primaryStation {
+                    if let lon = station.coordinate?[0], let lat = station.coordinate?[1] {
+                        annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+                    }
+                }
+                return annotation
+            }
+            self.addAnnotations(annotations)
+        }
+    }
+
+    private func addAnnotations(_ annotations: [MKAnnotation]) {
+        self.allAnnotationMapView.addAnnotations(annotations)
+        self.adjustRegion(annotations: self.allAnnotationMapView.annotations)
+        self.updateVisibleAnnotations()
+        self.lastLoadDate = Date()
+
+        self.segmentedControl.isEnabled = true
+    }
+}
+
+// MARK: Internal Methods
+
+extension MapViewController {
+
+    fileprivate func hideTableView() {
+        UIView.animate(withDuration: TomoConst.Duration.Short, animations: {
+            self.tableViewTopConstrian.constant = 0
+            self.view.layoutIfNeeded()
+        })
     }
 
     fileprivate func updateVisibleAnnotations() {
@@ -504,51 +439,34 @@ extension MapViewController {
         }
     }
 
-    fileprivate func adjustRegion(annotations: [Any]) {
+    fileprivate func adjustRegion(annotations: [MKAnnotation]) {
 
-        if !annotations.isEmpty {
-
-            let horizontalSortedAnnotations = annotations.sorted { (obj1, obj2) -> Bool in
-
-                let mapPoint1 = MKMapPointForCoordinate(((obj1 as? MKAnnotation)?.coordinate)!)
-                let mapPoint2 = MKMapPointForCoordinate(((obj2 as? MKAnnotation)?.coordinate)!)
-
-                if mapPoint1.x < mapPoint2.x {
-                    return true
-                } else {
-                    return false
-                }
-            }
-
-            let verticalSortedAnnotations = annotations.sorted { (obj1, obj2) -> Bool in
-
-                let mapPoint1 = MKMapPointForCoordinate(((obj1 as? MKAnnotation)?.coordinate)!)
-                let mapPoint2 = MKMapPointForCoordinate(((obj2 as? MKAnnotation)?.coordinate)!)
-
-                if mapPoint1.y < mapPoint2.y {
-                    return true
-                } else {
-                    return false
-                }
-            }
-
-            let leftMostAnnotationPoint = MKMapPointForCoordinate((horizontalSortedAnnotations.first as? MKAnnotation)!.coordinate)
-            let rightMostAnnotationPoint = MKMapPointForCoordinate((horizontalSortedAnnotations.last as? MKAnnotation)!.coordinate)
-            let topMostAnnotationPoint = MKMapPointForCoordinate((verticalSortedAnnotations.first as? MKAnnotation)!.coordinate)
-            let bottomMostAnnotationPoint = MKMapPointForCoordinate((verticalSortedAnnotations.last as? MKAnnotation)!.coordinate)
-
-            let targetRect = MKMapRect(origin: MKMapPoint(x: leftMostAnnotationPoint.x, y: topMostAnnotationPoint.y),
-                                       size: MKMapSize(width: rightMostAnnotationPoint.x - leftMostAnnotationPoint.x,
-                                                       height: bottomMostAnnotationPoint.y - topMostAnnotationPoint.y))
-
-            let adjustRect = self.mapView.mapRectThatFits(targetRect, edgePadding: UIEdgeInsets(top: 120, left: 80, bottom: 120, right: 80))
-            let adjustRegion = MKCoordinateRegionForMapRect(adjustRect)
-
-            self.mapView.setRegion(adjustRegion, animated: true)
-
-        } else {
+        guard !annotations.isEmpty else {
             return
         }
+
+        let mapPoints = annotations.map {
+            MKMapPointForCoordinate($0.coordinate)
+        }
+
+        let horizontalSortedPoints = mapPoints.sorted { $0.x < $1.x }
+        let verticalSortedPoints = mapPoints.sorted { $0.y < $1.y }
+
+        let leftPoint = horizontalSortedPoints.first!
+        let rightPoint = horizontalSortedPoints.last!
+        let topPoint = verticalSortedPoints.first!
+        let bottomPoint = verticalSortedPoints.last!
+
+        let mapRect = MKMapRect(origin: MKMapPoint(x: leftPoint.x, y: topPoint.y),
+                                   size: MKMapSize(width: rightPoint.x - leftPoint.x,
+                                                   height: bottomPoint.y - topPoint.y))
+        let edgePadding = UIEdgeInsets(top: 120, left: 80, bottom: 120, right: 80)
+
+        let adjustRect = self.mapView.mapRectThatFits(mapRect, edgePadding: edgePadding)
+        let adjustRegion = MKCoordinateRegionForMapRect(adjustRect)
+
+        self.mapView.setRegion(adjustRegion, animated: true)
+
     }
 
     fileprivate func annotationInGrid(gridMapRect: MKMapRect, usingAnnotations annotations: Array<NSObject>) -> NSObject? {
@@ -606,50 +524,6 @@ extension MapViewController {
 //        }
 
         return sortedAnnotations.first
-    }
-
-}
-
-class UserCell: UITableViewCell {
-
-    @IBOutlet weak fileprivate var avatarImageView: UIImageView!
-    @IBOutlet weak fileprivate var userNameLabel: UILabel!
-    @IBOutlet weak fileprivate var bioLabel: UILabel!
-    @IBOutlet weak fileprivate var stationLabel: UILabel!
-
-    var user: UserEntity!
-
-    func setupDisplay() {
-
-        if let photo = user.photo {
-            avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: defaultAvatarImage)
-        }
-
-        userNameLabel.text = user.nickName
-        bioLabel.text = user.bio
-        stationLabel.text = "\(user.primaryStation!.name)"
-    }
-
-}
-
-class GroupCell: UITableViewCell {
-
-    @IBOutlet weak fileprivate var coverImageView: UIImageView!
-    @IBOutlet weak fileprivate var nameLabel: UILabel!
-    @IBOutlet weak fileprivate var introLabel: UILabel!
-    @IBOutlet weak fileprivate var memberLabel: UILabel!
-
-    var group: GroupEntity!
-
-    func setupDisplay() {
-
-        if let cover = group.cover {
-            coverImageView.sd_setImage(with: URL(string: cover), placeholderImage: defaultGroupImage)
-        }
-
-        nameLabel.text = group.name
-        introLabel.text = group.introduction
-        memberLabel.text = "\(group.members!.count)个成员"
     }
 
 }

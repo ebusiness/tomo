@@ -254,18 +254,6 @@ extension ChatViewController: ChatTableViewTextCellDelegate, ChatTableViewImageC
     }
 }
 
-// MARK: - ChatTableViewCellDelegate
-
-//extension ChatViewController: ChatTableViewCellDelegate {
-//
-//    func userAvatarTapped(message: MessageEntity) {
-//        let vc = Util.createViewControllerWithIdentifier(id: "ProfileView", storyboardName: "Profile")
-//        guard let profileVC = vc as? ProfileViewController else { return }
-//        profileVC.user = message.from.id == me.id ? me: message.from
-//        self.navigationController?.pushViewController(profileVC, animated: true)
-//    }
-//}
-
 // MARK: - ActionSheet
 
 extension ChatViewController {
@@ -295,7 +283,7 @@ extension ChatViewController {
 extension ChatViewController: UIActionSheetDelegate {
 
     /// CameraBlock
-    var pressAccessoryBlock: CameraController.CameraBlock! {
+    private var cameraBlock: CameraController.CameraBlock! {
         return { (image, videoPath) -> Void in
             let fileName = NSUUID().uuidString + (videoPath == nil ? ".png" : ".mp4" )
 
@@ -339,12 +327,10 @@ extension ChatViewController: UIActionSheetDelegate {
             print("取消")
         case 1:
             print("拍摄/视频")
-            let cameraController = CameraController.sharedInstance
-            cameraController.open(vc: self, sourceType: .camera, withVideo: true, completion: self.pressAccessoryBlock)
+            CameraController.shared.open(vc: self, sourceType: .camera, withVideo: true, completion: self.cameraBlock)
         case 2:
             print("从相册选择")
-            let cameraController = CameraController.sharedInstance
-            cameraController.open(vc: self, sourceType: .savedPhotosAlbum, completion: self.pressAccessoryBlock)
+            CameraController.shared.open(vc: self, sourceType: .savedPhotosAlbum, completion: self.cameraBlock)
         case 3:
             if self.btnVoice == nil {
                 self.setVoiceButton()
@@ -372,18 +358,17 @@ extension ChatViewController: UIActionSheetDelegate {
 
         actionSheet.show(in: self.view)
     }
-    /**
-     hold on button
-     */
+
+    /// hold on button
     func setVoiceButton() {
         let frame = self.textView.frame
 
         btnVoice = UIButton(frame:frame)
-        let l = self.textInputbar.textView.layer
+        let layer = self.textInputbar.textView.layer
 
-        btnVoice?.layer.borderWidth = l.borderWidth//0.5;
-        btnVoice?.layer.borderColor = l.borderColor//UIColor.lightGrayColor().CGColor;
-        btnVoice?.layer.cornerRadius = l.cornerRadius//6.0;
+        btnVoice?.layer.borderWidth = layer.borderWidth//0.5;
+        btnVoice?.layer.borderColor = layer.borderColor//UIColor.lightGrayColor().CGColor;
+        btnVoice?.layer.cornerRadius = layer.cornerRadius//6.0;
 
         let rect = btnVoice?.bounds
         let label = UILabel(frame: rect!)
@@ -398,12 +383,9 @@ extension ChatViewController: UIActionSheetDelegate {
         btnVoice?.addGestureRecognizer(longPress)
     }
 
-    /**
-     hold on
-
-     - parameter longPressedRecognizer: longPressedRecognizer
-     */
-
+    /// hold on
+    ///
+    /// - Parameter longPressedRecognizer: <#longPressedRecognizer description#>
     func record(_ longPressedRecognizer: UILongPressGestureRecognizer) {
         if longPressedRecognizer.state == UIGestureRecognizerState.began {
             btnVoice?.backgroundColor = Util.UIColorFromRGB(0x0EAA00, alpha: 1)

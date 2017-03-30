@@ -61,6 +61,10 @@
 		D04C7AED1E83CF0A00BD2959 /* DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04C7AEC1E83CF0A00BD2959 /* DispatchQueue.swift */; };
 		D05FFF2F1E514A8D00B60F15 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05FFF2E1E514A8D00B60F15 /* ChatViewController.swift */; };
 		D05FFF501E5185EF00B60F15 /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D05FFF4F1E5185EF00B60F15 /* ChatTableViewCell.xib */; };
+		D0619B781E8BBD5200CB4AD8 /* MapViewController+MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0619B771E8BBD5100CB4AD8 /* MapViewController+MapView.swift */; };
+		D09131941E8CDDFD00E1CE39 /* GroupPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09131931E8CDDFD00E1CE39 /* GroupPopoverViewController.swift */; };
+		D09131971E8CE1FE00E1CE39 /* GroupRecommendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09131961E8CE1FE00E1CE39 /* GroupRecommendCollectionViewCell.swift */; };
+		D09528181E8BBB51002CF5A2 /* MapViewController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09528171E8BBB51002CF5A2 /* MapViewController+UITableView.swift */; };
 		D097AE9C1E553D1300615728 /* Alamofire-SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AE951E553D1300615728 /* Alamofire-SwiftyJSON.swift */; };
 		D097AE9D1E553D1300615728 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AE961E553D1300615728 /* Array.swift */; };
 		D097AE9E1E553D1300615728 /* RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AE971E553D1300615728 /* RxSwift.swift */; };
@@ -212,6 +216,7 @@
 		D05FFF2E1E514A8D00B60F15 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = Classes/ChatViewController.swift; sourceTree = "<group>"; };
 		D05FFF4F1E5185EF00B60F15 /* ChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChatTableViewCell.xib; path = Classes/ChatTableViewCell.xib; sourceTree = "<group>"; };
 		D05FFF511E5186F200B60F15 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatTableViewCell.swift; path = Classes/ChatTableViewCell.swift; sourceTree = "<group>"; };
+		D0619B771E8BBD5100CB4AD8 /* MapViewController+MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MapViewController+MapView.swift"; path = "Classes/MapViewController+MapView.swift"; sourceTree = "<group>"; };
 		D06DC6311C240691009B19D1 /* UserRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserRouter.swift; path = Classes/UserRouter.swift; sourceTree = "<group>"; };
 		D06DC6331C2407A1009B19D1 /* GroupMessageRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupMessageRouter.swift; path = Classes/GroupMessageRouter.swift; sourceTree = "<group>"; };
 		D073E6F71B84C1BF00066F42 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraController.swift; path = Classes/CameraController.swift; sourceTree = "<group>"; };
@@ -221,6 +226,9 @@
 		D07793861B704F410056B7CB /* DatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DatePickerViewController.swift; path = Classes/DatePickerViewController.swift; sourceTree = "<group>"; };
 		D07D8A191B99A3DF00D13096 /* NotificationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationListViewController.swift; path = Classes/NotificationListViewController.swift; sourceTree = "<group>"; };
 		D07E48531B9EB35B00BF04B2 /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Entity.swift; path = Classes/Entity.swift; sourceTree = "<group>"; };
+		D09131931E8CDDFD00E1CE39 /* GroupPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupPopoverViewController.swift; path = Classes/GroupPopoverViewController.swift; sourceTree = "<group>"; };
+		D09131961E8CE1FE00E1CE39 /* GroupRecommendCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupRecommendCollectionViewCell.swift; path = Classes/GroupRecommendCollectionViewCell.swift; sourceTree = "<group>"; };
+		D09528171E8BBB51002CF5A2 /* MapViewController+UITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MapViewController+UITableView.swift"; path = "Classes/MapViewController+UITableView.swift"; sourceTree = "<group>"; };
 		D0960AAB1BC376FB00A63733 /* UltravisualLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UltravisualLayout.swift; sourceTree = "<group>"; };
 		D097AE951E553D1300615728 /* Alamofire-SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire-SwiftyJSON.swift"; sourceTree = "<group>"; };
 		D097AE961E553D1300615728 /* Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
@@ -432,6 +440,8 @@
 				1FAA70F81BBB8EE600BCE5AF /* AggregatableAnnotation.swift */,
 				1FAA70F61BBB8DBE00BCE5AF /* AggregatableAnnotationView.swift */,
 				290144161ADF6D890048F3D8 /* MapViewController.swift */,
+				D09528171E8BBB51002CF5A2 /* MapViewController+UITableView.swift */,
+				D0619B771E8BBD5100CB4AD8 /* MapViewController+MapView.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -486,10 +496,12 @@
 		299389541AD3C77300043D91 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				D09131951E8CE1EF00E1CE39 /* Components */,
 				29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */,
 				1FE7CEF41B8C9561006700FC /* SignUpViewController.swift */,
 				D040E1641BDDC00D00417174 /* RecommendViewController.swift */,
 				1FF693111C1EB88800777BD5 /* LandingViewController.swift */,
+				D09131931E8CDDFD00E1CE39 /* GroupPopoverViewController.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -583,6 +595,14 @@
 			children = (
 				D07793841B704F290056B7CB /* PickerTableViewController.swift */,
 				D07793861B704F410056B7CB /* DatePickerViewController.swift */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
+		D09131951E8CE1EF00E1CE39 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D09131961E8CE1FE00E1CE39 /* GroupRecommendCollectionViewCell.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -698,7 +718,7 @@
 				LastSwiftMigration = 0710;
 				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0820;
-				ORGANIZATIONNAME = "&#24373;&#24535;&#33775;";
+				ORGANIZATIONNAME = " e-business";
 				TargetAttributes = {
 					290134D11AC3991C00BBFE29 = {
 						CreatedOnToolsVersion = 6.2;
@@ -817,6 +837,7 @@
 				D007D8891E25E9100005DC21 /* LandingViewController.swift in Sources */,
 				D0F6E2B81E24A893000B0EC3 /* GroupAnnotation.swift in Sources */,
 				D007D8971E25FBD60005DC21 /* BookmarkedPostsViewController.swift in Sources */,
+				D09528181E8BBB51002CF5A2 /* MapViewController+UITableView.swift in Sources */,
 				D007D8911E25FB500005DC21 /* PickerTableViewController.swift in Sources */,
 				D0A7C8901E1CD03D0046E571 /* ReportRouter.swift in Sources */,
 				D0E9B2B31E24ED2E00101277 /* AmazonS3RequestManager.swift in Sources */,
@@ -861,6 +882,7 @@
 				D0E9B28B1E24E6C700101277 /* VoiceController.swift in Sources */,
 				D0A7C8BD1E1CDFC50046E571 /* LocationController.swift in Sources */,
 				D007D89B1E25FBD60005DC21 /* PushSettingViewController.swift in Sources */,
+				D09131941E8CDDFD00E1CE39 /* GroupPopoverViewController.swift in Sources */,
 				D007D88E1E25F8BC0005DC21 /* UserAnnotation.swift in Sources */,
 				D097AEA41E55421400615728 /* Date.swift in Sources */,
 				D0E9B2841E24D3D800101277 /* GroupDetailViewController.swift in Sources */,
@@ -874,8 +896,10 @@
 				D007D88A1E25F8BC0005DC21 /* GroupAnnotationView.swift in Sources */,
 				D0A7C88F1E1CD03D0046E571 /* PostRouter.swift in Sources */,
 				D0A7C8B71E1CD8DA0046E571 /* ListenerEvent.swift in Sources */,
+				D0619B781E8BBD5200CB4AD8 /* MapViewController+MapView.swift in Sources */,
 				D0A7C8951E1CD03D0046E571 /* APIRoute.swift in Sources */,
 				D0E9B28C1E24E6CA00101277 /* S3Controller.swift in Sources */,
+				D09131971E8CE1FE00E1CE39 /* GroupRecommendCollectionViewCell.swift in Sources */,
 				D0A7C8DC1E1CE1AE0046E571 /* RemoteNotification.swift in Sources */,
 				295272D01AD51B2300FC7833 /* S3.swift in Sources */,
 				D0E9B2821E24D13A00101277 /* TextPostTableViewCell.swift in Sources */,

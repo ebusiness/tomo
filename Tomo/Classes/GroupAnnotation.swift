@@ -9,7 +9,12 @@ import Foundation
 
 class GroupAnnotation: AggregatableAnnotation {
 
-    var group: GroupEntity!
+    var group: GroupEntity! {
+        didSet {
+            guard let coord = self.group.coordinate else { return }
+            self.coordinate = CLLocationCoordinate2DMake(coord[0], coord[1])
+        }
+    }
 
     override var title: String {
         return group.name

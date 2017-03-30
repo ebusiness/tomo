@@ -711,35 +711,46 @@ COePvuWgtFRvbW8
                         <viewControllerLayoutGuide type="bottom" id="t7m-OI-PGm"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="hwN-jq-AQQ">
-                        <rect key="frame" x="0.0" y="0.0" width="240" height="200"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group_cover_default" translatesAutoresizingMaskIntoConstraints="NO" id="fVQ-DQ-bNh">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="200"/>
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text_protection" translatesAutoresizingMaskIntoConstraints="NO" id="bgU-RZ-khj">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="200"/>
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车站名称" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dao-H6-Ogl">
-                                <rect key="frame" x="16" y="16" width="208" height="29"/>
+                                <rect key="frame" x="16" y="16" width="268" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <color key="textColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cU5-Hk-auX">
-                                <rect key="frame" x="29" y="151" width="183" height="33"/>
+                                <rect key="frame" x="58.5" y="251" width="183" height="33"/>
                                 <color key="backgroundColor" red="0.29803921570000003" green="0.68627450980000004" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <size key="titleShadowOffset" width="0.0" height="2.2250738585072014e-308"/>
                                 <state key="normal" title="  在这里开始現場Tomo  ">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="joinButtonTapped:" destination="kcS-mz-s8h" eventType="touchUpInside" id="Tco-AR-rqI"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车站介绍" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jNj-cC-vMJ">
-                                <rect key="frame" x="16" y="53" width="208" height="17"/>
+                                <rect key="frame" x="16" y="53" width="268" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -767,7 +778,7 @@ COePvuWgtFRvbW8
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="240" height="200"/>
+                    <size key="freeformSize" width="300" height="300"/>
                     <connections>
                         <outlet property="coverImageView" destination="fVQ-DQ-bNh" id="utV-iS-Z9Z"/>
                         <outlet property="introLabel" destination="jNj-cC-vMJ" id="NSh-Nh-xUD"/>
@@ -777,7 +788,7 @@ COePvuWgtFRvbW8
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UHd-xx-jlG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-338" y="2054"/>
+            <point key="canvasLocation" x="-271" y="2277"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="mdZ-lw-DFR">

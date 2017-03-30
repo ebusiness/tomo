@@ -297,7 +297,7 @@ extension CreatePostViewController {
         }
 
         if let location = self.location {
-            parameters.coordinate = [String(stringInterpolationSegment: location.coordinate.latitude),String(stringInterpolationSegment: location.coordinate.longitude)]
+            parameters.coordinate = [String(stringInterpolationSegment: location.coordinate.latitude), String(stringInterpolationSegment: location.coordinate.longitude)]
         }
 
         if let placemark = placemark {
@@ -483,6 +483,7 @@ extension CreatePostViewController: UICollectionViewDataSource {
         return (self.photos?.count ?? 0) + self.newPhotos.count
     }
 
+    // swiftlint:disable:next line_length
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath)

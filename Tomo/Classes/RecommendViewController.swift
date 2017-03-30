@@ -35,18 +35,18 @@ final class RecommendViewController: UIViewController {
             var removeIndex: [IndexPath] = []
             var insertIndex: [IndexPath] = []
 
-            if let oldValue = oldValue {
-                for _ in oldValue {
-                    removeIndex.append(IndexPath(row: removeIndex.count, section: 0))
-                }
+            oldValue?.forEach { _ in
+                removeIndex.append(IndexPath(row: removeIndex.count, section: 0))
             }
+
+            if self.recommendGroups == nil { self.recommendGroups = [] }
+
             if let primaryStation = me.primaryStation {
+                self.recommendGroups = self.recommendGroups?.filter { $0.id != primaryStation.id }
                 self.recommendGroups?.insert(primaryStation, at: 0)
             }
-            if let newValue = self.recommendGroups {
-                for _ in newValue {
-                    insertIndex.append(IndexPath(row: insertIndex.count, section: 0))
-                }
+            self.recommendGroups?.forEach { _ in
+                insertIndex.append(IndexPath(row: insertIndex.count, section: 0))
             }
 
             self.recommendGroupCollectionView.performBatchUpdates({
@@ -82,11 +82,11 @@ extension RecommendViewController {
 
     fileprivate func getRecommendInfo(location: CLLocation?) {
 
-        var parameters = Router.Group.FindParameters(category: .discover)
+        var parameters = Router.Group.FindParameters(category: .all)
         parameters.type = .station
 
         if let location = location {
-            parameters.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
+            parameters.coordinate = [location.coordinate.latitude, location.coordinate.longitude]
         } else {
             parameters.coordinate = TomoConst.Geo.CoordinateTokyo
         }
@@ -144,16 +144,16 @@ extension RecommendViewController: UICollectionViewDataSource {
         return self.recommendGroups?.count ?? 0
     }
 
+    // swiftlint:disable:next line_length
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath as IndexPath) as? GroupRecommendCollectionViewCell
+        let defaultCell = collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath)
 
-        let group = self.recommendGroups![indexPath.item]
+        guard let cell = defaultCell as? GroupRecommendCollectionViewCell else { return defaultCell }
 
-        cell?.coverImageView.sd_setImage(with: NSURL(string: group.cover) as URL!, placeholderImage: TomoConst.Image.DefaultGroup)
-        cell?.nameLabel.text = group.name
+        cell.group = self.recommendGroups![indexPath.item]
 
-        return cell!
+        return cell
     }
 }
 
@@ -168,10 +168,6 @@ extension RecommendViewController: UICollectionViewDelegate {
 
         self.currentSelectedIndexPath = indexPath
 
-        if let presentedViewController = self.presentedViewController {
-            presentedViewController.dismiss(animated: true, completion: nil)
-        }
-
         self.selectGroup(group: group)
 
         guard self.maskView.alpha > 0 else { return }
@@ -182,22 +178,20 @@ extension RecommendViewController: UICollectionViewDelegate {
     }
 
     fileprivate func selectGroup(group: GroupEntity) {
-        guard let latitude = group.coordinate?[1] else { return }
-        guard let longitude = group.coordinate?[0] else { return }
-
-        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-
-        let unit = MKMetersPerMapPointAtLatitude(latitude)
-
-        let point = MKMapPointForCoordinate(coordinate)
-        let origin = MKMapPoint(x: point.x - 1500/unit, y: point.y - 2100/unit)
-        let rect = MKMapRect(origin: origin, size: MKMapSize(width: 3000/unit, height: 3000/unit))
-
-        self.mapView.setVisibleMapRect(rect, animated: true)
-
         let annotation = GroupAnnotation()
         annotation.group = group
-        annotation.coordinate = coordinate
+
+        if let presentedViewController = self.presentedViewController as? GroupPopoverViewController {
+            presentedViewController.groupAnnotation = annotation
+        }
+
+        let unit = MKMetersPerMapPointAtLatitude(annotation.coordinate.latitude)
+
+        let point = MKMapPointForCoordinate(annotation.coordinate)
+        let origin = MKMapPoint(x: point.x - 1500 / unit, y: point.y - 2100 / unit)
+        let rect = MKMapRect(origin: origin, size: MKMapSize(width: 3000 / unit, height: 3000 / unit))
+
+        self.mapView.setVisibleMapRect(rect, animated: true)
 
         self.mapView.removeAnnotations(self.mapView.annotations)
         self.mapView.addAnnotation(annotation)
@@ -228,6 +222,11 @@ extension RecommendViewController: MKMapViewDelegate {
 
         return stationAnnotationView
     }
+    func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+        if let presentedViewController = self.presentedViewController {
+            presentedViewController.dismiss(animated: true, completion: nil)
+        }
+    }
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
 
@@ -236,9 +235,9 @@ extension RecommendViewController: MKMapViewDelegate {
         let vc = Util.createViewController(storyboardName: "Main", id: "GroupPopoverViewController") as? GroupPopoverViewController
 
         vc?.modalPresentationStyle = .popover
-        vc?.presentationController?.delegate = self
-
+        vc?.popoverPresentationController!.delegate = self
         vc?.groupAnnotation = annotationView.annotation as? GroupAnnotation
+//        vc?.preferredContentSize = CGSize(width: 300, height: 200)
 
         self.present(vc!, animated: true, completion: nil)
 
@@ -252,6 +251,9 @@ extension RecommendViewController: MKMapViewDelegate {
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let _ = self.presentedViewController {
+            return
+        }
         self.mapView(mapView, regionDidChangeAnimated: true)
     }
 }
@@ -259,6 +261,7 @@ extension RecommendViewController: MKMapViewDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension RecommendViewController: UICollectionViewDelegateFlowLayout {
+    // swiftlint:disable:next line_length
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return itemSize
     }
@@ -309,7 +312,7 @@ extension RecommendViewController: UISearchBarDelegate {
         parameters.name = keyword
 
         if let location = location {
-            parameters.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
+            parameters.coordinate = [location.coordinate.latitude, location.coordinate.longitude]
         } else {
             parameters.coordinate = TomoConst.Geo.CoordinateTokyo
         }
@@ -331,103 +334,10 @@ extension RecommendViewController: UISearchBarDelegate {
     }
 }
 
-// MARK: - UIAdaptivePresentationControllerDelegate
+// MARK: - UIPopoverPresentationControllerDelegate
 
-extension RecommendViewController: UIAdaptivePresentationControllerDelegate {
-    @nonobjc func adaptivePresentationStyleForPresentationController(controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        return .none
-    }
-}
-
-// MARK: - GroupRecommendCollectionViewCell
-
-final class GroupRecommendCollectionViewCell: UICollectionViewCell {
-
-    @IBOutlet weak fileprivate var coverImageView: UIImageView!
-
-    @IBOutlet weak fileprivate var nameLabel: UILabel!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.contentView.layer.cornerRadius = 5
-        self.contentView.clipsToBounds = true
-    }
-
-}
-
-// MARK: - GroupPopoverViewController
-
-final class GroupPopoverViewController: UIViewController {
-
-    var groupAnnotation: GroupAnnotation! {
-        didSet {
-            if self.isViewLoaded {
-                self.setupDisplay()
-            }
-        }
-    }
-
-    @IBOutlet weak fileprivate var nameLabel: UILabel!
-    @IBOutlet weak fileprivate var introLabel: UILabel!
-    @IBOutlet weak fileprivate var coverImageView: UIImageView!
-    @IBOutlet weak fileprivate var joinButton: UIButton!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.setupDisplay()
-    }
-
-    @IBAction func joinButtonTapped(_ sender: Any) {
-
-        guard let delegate = UIApplication.shared.delegate else { return }
-        guard let window = delegate.window else { return }
-        guard let rootViewController = window?.rootViewController else { return }
-
-        Router.Group.Join(id: groupAnnotation.group.id).response {
-
-            guard $0.result.isSuccess else { return }
-            me.primaryStation = self.groupAnnotation.group
-
-            var param = Router.Setting.MeParameter()
-            param.primaryStation = self.groupAnnotation.group.id
-
-            Router.Setting.UpdateUserInfo(parameters: param).response {
-
-                guard $0.result.isSuccess else { return }
-
-                if
-                    let rvc = self.presentationController?.delegate as? RecommendViewController,
-                    let exitAction = rvc.exitAction {
-                        me.primaryStation = self.groupAnnotation.group
-                        self.dismiss(animated: true) { _ in
-                            exitAction()
-                        }
-                        return
-                }
-
-                Util.changeRootViewController(from: rootViewController, to: TabBarController())
-            }
-        }
-    }
-
-    private func setupDisplay() {
-
-        self.joinButton.layer.borderColor = UIColor.white.cgColor
-        self.joinButton.layer.borderWidth = 1
-        self.joinButton.layer.cornerRadius = 2
-
-        guard let group = groupAnnotation.group else { return }
-        self.nameLabel.text = group.name
-        self.introLabel.text = group.introduction
-        self.coverImageView.sd_setImage(with: URL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup, options: .retryFailed)
-
-        guard let me = me else { return }
-
-        if group.id == me.primaryStation?.id {
-            self.joinButton.isHidden = true
-        } else {
-            self.joinButton.isHidden = false
-            self.joinButton.setTitle("设置为当前现场", for: .normal)
-        }
+extension RecommendViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
     }
 }

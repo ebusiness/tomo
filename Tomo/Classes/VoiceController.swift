@@ -32,7 +32,7 @@ class VoiceController: NSObject, AVAudioRecorderDelegate {
         let recordSettings: [String: Any] =
         [
             AVFormatIDKey: Int(kAudioFormatLinearPCM),
-            AVSampleRateKey: 8_000.00,
+            AVSampleRateKey: 8000.00,
             AVNumberOfChannelsKey: 1,
             AVLinearPCMBitDepthKey: 16
             //AVLinearPCMIsNonInterleaved: false,

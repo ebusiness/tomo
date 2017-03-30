@@ -22,7 +22,7 @@ extension ObservableType {
             return self.subscribe(onNext: onNext, onError: onError, onCompleted: {
                 print("onCompleted")
             }, onDisposed: {
-                print("onCompleted")
+                print("onDisposed")
             })
         #else
             return self.subscribe(onNext: onNext, onError: onError)

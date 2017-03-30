@@ -18,7 +18,7 @@ class CameraController: NSObject {
     fileprivate var completion: CameraBlock!
     private var vc: UIViewController!
 
-    static let sharedInstance: CameraController = CameraController()
+    static let shared: CameraController = CameraController()
 
     private override init() {
         super.init()

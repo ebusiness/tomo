@@ -1,9 +1,9 @@
 //
-//  AlamofireSwiftyJSON.swift
-//  AlamofireSwiftyJSON
+//  Alamofire-SwiftyJSON.swift
+//  Tomo
 //
-//  Created by Pinglin Tang on 14-9-22.
-//  Copyright © 2014 SwiftyJSON. All rights reserved.
+//  Created by Hikaru on 2016/01/29.
+//  Copyright © 2016 e-business. All rights reserved.
 //
 
 import Alamofire

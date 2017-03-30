@@ -51,12 +51,14 @@ final class MyAccountEditViewController: UITableViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         // restore the normal navigation bar before disappear
         self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         self.navigationController?.navigationBar.shadowImage = nil
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.configNavigationBarByScrollPosition()
     }
 
@@ -220,10 +222,10 @@ extension MyAccountEditViewController {
         Util.alertActionSheet(parentvc: self, optionalDict: [
 
             "拍摄": { (_) -> Void in
-                CameraController.sharedInstance.open(vc: self, sourceType: .camera, allowsEditing: false, completion: block)
+                CameraController.shared.open(vc: self, sourceType: .camera, allowsEditing: false, completion: block)
             },
             "从相册选择": { (_) -> Void in
-                CameraController.sharedInstance.open(vc: self, sourceType: .savedPhotosAlbum, allowsEditing: false, completion: block)
+                CameraController.shared.open(vc: self, sourceType: .savedPhotosAlbum, allowsEditing: false, completion: block)
             }
         ])
     }
@@ -260,10 +262,10 @@ extension MyAccountEditViewController {
         Util.alertActionSheet(parentvc: self, optionalDict: [
 
             "拍摄": { (_) -> Void in
-                CameraController.sharedInstance.open(vc: self, sourceType: .camera, allowsEditing: true, completion: block)
+                CameraController.shared.open(vc: self, sourceType: .camera, allowsEditing: true, completion: block)
             },
             "从相册选择": { (_) -> Void in
-                CameraController.sharedInstance.open(vc: self, sourceType: .savedPhotosAlbum, allowsEditing: true, completion: block)
+                CameraController.shared.open(vc: self, sourceType: .savedPhotosAlbum, allowsEditing: true, completion: block)
             }
         ])
     }
