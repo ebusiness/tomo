@@ -38,8 +38,8 @@ class GroupAnnotationView: AggregatableAnnotationView {
 
         super.setupDisplay()
 
-        let annotation = self.annotation as? GroupAnnotation
-        imageView.sd_setImage(with: URL(string: annotation!.group.cover!), placeholderImage: defaultGroupImage)
+        guard let annotation = self.annotation as? GroupAnnotation else { return }
+        imageView.sd_setImage(with: URL(string: annotation.group.cover!), placeholderImage: defaultGroupImage)
     }
 
 }

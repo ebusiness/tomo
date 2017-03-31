@@ -33,6 +33,8 @@ class GroupEntity: Entity {
 
     var posts: [PostEntity]?
 
+    var companies: [CompanyEntity]?
+
     var createDate: Date!
 
     var lastMessage: MessageEntity? {
@@ -85,6 +87,14 @@ class GroupEntity: Entity {
             posts.forEach { postJson in
                 let post = PostEntity(postJson)
                 self.posts!.append(post)
+            }
+        }
+
+        if let companies = json["companies"].array {
+            self.companies = []
+            companies.forEach {
+                let company = CompanyEntity($0)
+                self.companies!.append(company)
             }
         }
 
