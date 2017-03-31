@@ -31,7 +31,7 @@ class UserEntity: Entity {
 
     var address: String?
 
-    var primaryStation: GroupEntity?
+    var primaryGroup: GroupEntity?
 
     var lastMessage: MessageEntity? {
         didSet {
@@ -74,8 +74,8 @@ class UserEntity: Entity {
 
         self.address = json["address"].string
 
-        if !( json["primaryStation"].object is NSNull ) {
-            self.primaryStation = GroupEntity(json["primaryStation"])
+        if !( json["primaryGroup"].object is NSNull ) {
+            self.primaryGroup = GroupEntity(json["primaryGroup"])
         }
 
         if !( json["lastMessage"].object is NSNull ) {

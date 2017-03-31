@@ -41,9 +41,9 @@ final class RecommendViewController: UIViewController {
 
             if self.recommendGroups == nil { self.recommendGroups = [] }
 
-            if let primaryStation = me.primaryStation {
-                self.recommendGroups = self.recommendGroups?.filter { $0.id != primaryStation.id }
-                self.recommendGroups?.insert(primaryStation, at: 0)
+            if let primaryGroup = me.primaryGroup {
+                self.recommendGroups = self.recommendGroups?.filter { $0.id != primaryGroup.id }
+                self.recommendGroups?.insert(primaryGroup, at: 0)
             }
             self.recommendGroups?.forEach { _ in
                 insertIndex.append(IndexPath(row: insertIndex.count, section: 0))
@@ -62,9 +62,9 @@ final class RecommendViewController: UIViewController {
 
         super.viewDidLoad()
 
-        if let primaryStation = me.primaryStation {
+        if let primaryGroup = me.primaryGroup {
             self.maskView.alpha = 0
-            self.selectGroup(group: primaryStation)
+            self.selectGroup(group: primaryGroup)
         }
         LocationController.shareInstance.doActionWithLocation {
             self.getRecommendInfo(location: $0)

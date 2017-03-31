@@ -92,8 +92,8 @@ extension AppDelegate {
                 // populate my accout model
                 me = Account($0.result.value!)
 
-                // if I don't have primary station, take me to the primary station select view
-                identifier = me.primaryStation == nil ? "RecommendView" : "TabBarController"
+                // if I don't have primary group, take me to the primary group select view
+                identifier = me.primaryGroup == nil ? "RecommendView" : "TabBarController"
             }
 
             let rootViewController = Util.createViewController(storyboardName: "Main", id: identifier)

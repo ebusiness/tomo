@@ -65,7 +65,7 @@ extension Router.Setting {
         photo: String?,
         cover: String?,
         birthDay: Date?,
-        primaryStation: String?
+        primaryGroup: String?
 
         var removeDevice: String?, pushSetting: Account.PushSetting?
 
@@ -111,8 +111,8 @@ extension Router.Setting {
             if let photo = photo {
                 parameters["photo"] = photo
             }
-            if let primaryStation = primaryStation {
-                parameters["primaryStation"] = primaryStation
+            if let primaryGroup = primaryGroup {
+                parameters["primaryGroup"] = primaryGroup
             }
             if let removeDevice = removeDevice {
                 parameters["removeDevice"] = removeDevice

@@ -75,7 +75,9 @@ class UserCell: UITableViewCell {
 
         userNameLabel.text = user.nickName
         bioLabel.text = user.bio
-        stationLabel.text = "\(user.primaryStation!.name)"
+        if let groupName = user.primaryGroup?.name {
+            stationLabel.text = "\(groupName)"
+        }
     }
 
 }

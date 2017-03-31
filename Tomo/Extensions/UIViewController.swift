@@ -10,12 +10,13 @@ import RxSwift
 
 extension UINavigationController {
 
-    func pop(to viewController: UIViewController, animated: Bool) {
-        _ = self.popToViewController(viewController, animated: animated)
+    @discardableResult
+    func pop(to viewController: UIViewController, animated: Bool) -> [UIViewController]? {
+        return self.popToViewController(viewController, animated: animated)
     }
 
     @discardableResult
-    func pop(animated: Bool) {
-        _ = self.popViewController(animated: animated)
+    func pop(animated: Bool) -> UIViewController? {
+        return self.popViewController(animated: animated)
     }
 }

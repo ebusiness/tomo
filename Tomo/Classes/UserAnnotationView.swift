@@ -53,7 +53,9 @@ class UserAnnotationView: AggregatableAnnotationView {
                     numberLabel.removeFromSuperview()
                 }
 
-                numberBadge.text = "\(annotation.user.primaryStation!.name!)"
+                if let groupName = annotation.user.primaryGroup?.name {
+                    numberBadge.text = "\(groupName)"
+                }
                 numberBadge.sizeToFit()
                 numberBadge.frame = CGRect(x: 45, y: 0, width: numberBadge.bounds.width + 10, height: numberBadge.bounds.height + 10)
                 numberBadge.layer.cornerRadius = numberBadge.frame.height / 2

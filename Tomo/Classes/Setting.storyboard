@@ -372,7 +372,7 @@
                         <outlet property="fullNameLabel" destination="pY4-IG-I22" id="gzf-bS-v2B"/>
                         <outlet property="genderLabel" destination="VLB-C2-sSj" id="6EO-z8-ITh"/>
                         <outlet property="notificationCell" destination="Ivi-JZ-nf3" id="epg-gL-oy2"/>
-                        <outlet property="primaryStation" destination="fgQ-w0-NH5" id="VgD-Ff-MeG"/>
+                        <outlet property="primaryGroup" destination="fgQ-w0-NH5" id="VgD-Ff-MeG"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bwx-Dy-Bpf" userLabel="First Responder" sceneMemberID="firstResponder"/>

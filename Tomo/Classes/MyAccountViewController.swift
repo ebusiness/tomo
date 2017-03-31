@@ -24,7 +24,7 @@ final class MyAccountViewController: UITableViewController {
 
     @IBOutlet weak fileprivate var addressLabel: UILabel!
 
-    @IBOutlet weak fileprivate var primaryStation: UILabel!
+    @IBOutlet weak fileprivate var primaryGroup: UILabel!
 
     @IBOutlet weak fileprivate var notificationCell: UITableViewCell!
 
@@ -192,8 +192,8 @@ extension MyAccountViewController {
             self.addressLabel.text = address
         }
 
-        if let stationName = me.primaryStation?.name {
-            self.primaryStation.text = stationName
+        if let stationName = me.primaryGroup?.name {
+            self.primaryGroup.text = stationName
         }
 
         if me.notifications > 0 {

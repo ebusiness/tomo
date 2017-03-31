@@ -17,8 +17,6 @@ final class TabBarController: UITabBarController {
 
         super.viewDidLoad()
 
-        self.initiateNotificationBar()
-
         self.registerForNotification()
 
         SocketController.connect()
@@ -42,47 +40,6 @@ final class TabBarController: UITabBarController {
 
 extension TabBarController {
 
-    fileprivate func initiateNotificationBar() {
-
-        self.view.addSubview(self.notificationBar)
-
-        let leadingConstraint = NSLayoutConstraint(item: self.notificationBar,
-            attribute: .leading,
-            relatedBy: .equal,
-            toItem: self.view,
-            attribute: .leading,
-            multiplier: 1,
-            constant: 0)
-
-        let trailingConstraint = NSLayoutConstraint(item: self.notificationBar,
-            attribute: .trailing,
-            relatedBy: .equal,
-            toItem: self.view,
-            attribute: .trailing,
-            multiplier: 1,
-            constant: 0)
-
-        self.topConstraint = NSLayoutConstraint(item: self.notificationBar,
-            attribute: .top,
-            relatedBy: .equal,
-            toItem: self.view,
-            attribute: .top,
-            multiplier: 1,
-            constant: -64)
-
-        let heightContraint = NSLayoutConstraint(item: self.notificationBar,
-            attribute: .height,
-            relatedBy: .equal,
-            toItem: nil,
-            attribute: .notAnAttribute,
-            multiplier: 1,
-            constant: 64)
-
-        self.view.addConstraints([leadingConstraint, trailingConstraint, topConstraint])
-        self.notificationBar.translatesAutoresizingMaskIntoConstraints = false
-        self.notificationBar.addConstraint(heightContraint)
-    }
-
     fileprivate func registerForNotification() {
 
         NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.FriendInvited.notificationName, object: nil)
@@ -104,6 +61,10 @@ extension TabBarController {
 
     fileprivate func openNotificationBar() {
 
+        if self.notificationBar.superview == nil {
+            self.initiateNotificationBar()
+        }
+
         self.view.bringSubview(toFront: self.notificationBar)
         self.topConstraint.constant = 0
         UIView.animate(withDuration: TomoConst.Duration.Short, animations: {
@@ -113,6 +74,51 @@ extension TabBarController {
                     self.closeNotificationBar()
                 }
         })
+    }
+
+    private func initiateNotificationBar() {
+
+        guard self.notificationBar != nil else {
+            return
+        }
+
+        self.view.addSubview(self.notificationBar)
+
+        let leadingConstraint = NSLayoutConstraint(item: self.notificationBar,
+                                                   attribute: .leading,
+                                                   relatedBy: .equal,
+                                                   toItem: self.view,
+                                                   attribute: .leading,
+                                                   multiplier: 1,
+                                                   constant: 0)
+
+        let trailingConstraint = NSLayoutConstraint(item: self.notificationBar,
+                                                    attribute: .trailing,
+                                                    relatedBy: .equal,
+                                                    toItem: self.view,
+                                                    attribute: .trailing,
+                                                    multiplier: 1,
+                                                    constant: 0)
+
+        self.topConstraint = NSLayoutConstraint(item: self.notificationBar,
+                                                attribute: .top,
+                                                relatedBy: .equal,
+                                                toItem: self.view,
+                                                attribute: .top,
+                                                multiplier: 1,
+                                                constant: -64)
+
+        let heightContraint = NSLayoutConstraint(item: self.notificationBar,
+                                                 attribute: .height,
+                                                 relatedBy: .equal,
+                                                 toItem: nil,
+                                                 attribute: .notAnAttribute,
+                                                 multiplier: 1,
+                                                 constant: 64)
+
+        self.view.addConstraints([leadingConstraint, trailingConstraint, topConstraint])
+        self.notificationBar.translatesAutoresizingMaskIntoConstraints = false
+        self.notificationBar.addConstraint(heightContraint)
     }
 
     func closeNotificationBar() {

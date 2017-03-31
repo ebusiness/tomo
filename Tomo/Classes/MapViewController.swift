@@ -323,8 +323,8 @@ extension MapViewController {
             let annotations = users.map { user -> UserAnnotation in
                 let annotation = UserAnnotation()
                 annotation.user = user
-                if let station = user.primaryStation {
-                    if let lon = station.coordinate?[0], let lat = station.coordinate?[1] {
+                if let station = user.primaryGroup {
+                    if let lon = station.coordinate?[1], let lat = station.coordinate?[0] {
                         annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
                     }
                 }
