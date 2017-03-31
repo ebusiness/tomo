@@ -321,9 +321,9 @@
 		1F1EBEB21C4F6BAD00B3439F /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				1F1EBEB31C4F6C3300B3439F /* TextPostTableViewCell.swift */,
 				1F1EBEB51C4F6C8A00B3439F /* ImagePostTableViewCell.swift */,
 				1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */,
+				1F1EBEB31C4F6C3300B3439F /* TextPostTableViewCell.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -340,15 +340,15 @@
 		1F9ACAF61B69F96100648A82 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				D0E523201C4CEEB600B6CF7B /* Account.swift */,
 				1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */,
+				D091C8C41E8E07D900C05B75 /* CompanyEntity.swift */,
 				D07E48531B9EB35B00BF04B2 /* Entity.swift */,
 				1F9A32361BA6AD8B001C43CE /* GroupEntity.swift */,
 				1FCA1E661B722260000F2936 /* MessageEntity.swift */,
 				1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */,
 				1F9ACAF91B69F99F00648A82 /* PostEntity.swift */,
 				1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */,
-				D0E523201C4CEEB600B6CF7B /* Account.swift */,
-				D091C8C41E8E07D900C05B75 /* CompanyEntity.swift */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -366,11 +366,11 @@
 		1FAA70FA1BBB904300BCE5AF /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				1FAA70FB1BBBF97B00BCE5AF /* CompanyAnnotation.swift */,
 				1FC2687F1BBABED8006F1FDA /* GroupAnnotation.swift */,
 				1FC268811BBABF20006F1FDA /* GroupAnnotationView.swift */,
 				1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */,
 				1F350B2A1B68D32800088C1E /* PostAnnotationView.swift */,
-				1FAA70FB1BBBF97B00BCE5AF /* CompanyAnnotation.swift */,
 				1FAA70FD1BBBF99100BCE5AF /* StationAnnotationView.swift */,
 				1F36D6E51C3E2DD8007769F0 /* UserAnnotation.swift */,
 				1F36D6E71C3E2E4C007769F0 /* UserAnnotationView.swift */,
@@ -382,11 +382,11 @@
 			isa = PBXGroup;
 			children = (
 				D05FFF4E1E5185BB00B60F15 /* Components */,
-				1F07C34E1C5F7C8200CD9212 /* LatestMessagesViewController.swift */,
-				1FF9B9601C59FC29008BB6ED /* ContactsViewController.swift */,
-				1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */,
-				1FAE41831C5EFDF90050CEED /* ContactsNavigationController.swift */,
 				D05FFF2E1E514A8D00B60F15 /* ChatViewController.swift */,
+				1FAE41831C5EFDF90050CEED /* ContactsNavigationController.swift */,
+				1FF9B9601C59FC29008BB6ED /* ContactsViewController.swift */,
+				1F07C34E1C5F7C8200CD9212 /* LatestMessagesViewController.swift */,
+				1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -420,17 +420,17 @@
 		290134D51AC3991C00BBFE29 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D0D5A4461E261A4F00757F4E /* Cartfile */,
-				D0F6E2BC1E24C469000B0EC3 /* tomo.entitlements */,
-				D0A104941BEB055100AEE356 /* statements.html */,
-				296D8BBC1AFC5A680058D400 /* LaunchScreen.xib */,
-				290134FA1AC3A3D200BBFE29 /* Tomo-Bridging-Header.h */,
-				290134D61AC3991C00BBFE29 /* Info.plist */,
 				290134D71AC3991C00BBFE29 /* AppDelegate.swift */,
+				D0D5A4461E261A4F00757F4E /* Cartfile */,
 				2901351C1AC3A90C00BBFE29 /* Constants.swift */,
-				295272CF1AD51B2300FC7833 /* S3.swift */,
-				29BE7E111AC54224008110B4 /* Util.swift */,
 				290134DE1AC3991C00BBFE29 /* Images.xcassets */,
+				290134D61AC3991C00BBFE29 /* Info.plist */,
+				296D8BBC1AFC5A680058D400 /* LaunchScreen.xib */,
+				295272CF1AD51B2300FC7833 /* S3.swift */,
+				D0A104941BEB055100AEE356 /* statements.html */,
+				290134FA1AC3A3D200BBFE29 /* Tomo-Bridging-Header.h */,
+				D0F6E2BC1E24C469000B0EC3 /* tomo.entitlements */,
+				29BE7E111AC54224008110B4 /* Util.swift */,
 			);
 			name = "Supporting Files";
 			path = Tomo;
@@ -443,8 +443,8 @@
 				1FAA70F81BBB8EE600BCE5AF /* AggregatableAnnotation.swift */,
 				1FAA70F61BBB8DBE00BCE5AF /* AggregatableAnnotationView.swift */,
 				290144161ADF6D890048F3D8 /* MapViewController.swift */,
-				D09528171E8BBB51002CF5A2 /* MapViewController+UITableView.swift */,
 				D0619B771E8BBD5100CB4AD8 /* MapViewController+MapView.swift */,
+				D09528171E8BBB51002CF5A2 /* MapViewController+UITableView.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -473,10 +473,10 @@
 			isa = PBXGroup;
 			children = (
 				D0DB07E31B9D655600C06C4E /* Listener */,
-				29539C761B13175D00545509 /* VoiceController.swift */,
-				29C1DA781AD36659009A02CC /* S3Controller.swift */,
 				D073E6F71B84C1BF00066F42 /* CameraController.swift */,
 				D099B6171BDA3B63006C9D01 /* LocationController.swift */,
+				29C1DA781AD36659009A02CC /* S3Controller.swift */,
+				29539C761B13175D00545509 /* VoiceController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -489,9 +489,9 @@
 				1FEE80E71B4E552A0061B913 /* Home.storyboard */,
 				1FF6930C1C1E95FC00777BD5 /* Landing.storyboard */,
 				296D8BBD1AFC5A680058D400 /* Main.storyboard */,
+				559DCAD41C5FB373003FA73C /* Map.storyboard */,
 				D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */,
 				29CA441D1AD4CAF0009EB177 /* Setting.storyboard */,
-				559DCAD41C5FB373003FA73C /* Map.storyboard */,
 			);
 			name = storyboard;
 			sourceTree = "<group>";
@@ -500,11 +500,11 @@
 			isa = PBXGroup;
 			children = (
 				D09131951E8CE1EF00E1CE39 /* Components */,
+				D09131931E8CDDFD00E1CE39 /* GroupPopoverViewController.swift */,
+				1FF693111C1EB88800777BD5 /* LandingViewController.swift */,
+				D040E1641BDDC00D00417174 /* RecommendViewController.swift */,
 				29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */,
 				1FE7CEF41B8C9561006700FC /* SignUpViewController.swift */,
-				D040E1641BDDC00D00417174 /* RecommendViewController.swift */,
-				1FF693111C1EB88800777BD5 /* LandingViewController.swift */,
-				D09131931E8CDDFD00E1CE39 /* GroupPopoverViewController.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -530,8 +530,8 @@
 				1F1EBEB21C4F6BAD00B3439F /* Components */,
 				1F18B8331B844665003BD469 /* CreatePostViewController.swift */,
 				1FEE80E91B4E59CF0061B913 /* HomeViewController.swift */,
-				2869D71B1BB545FB00D1C479 /* StationDiscoverViewController.swift */,
 				1FA9C5081C5106C9004A683C /* PostDetailViewController.swift */,
+				2869D71B1BB545FB00D1C479 /* StationDiscoverViewController.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -540,14 +540,14 @@
 			isa = PBXGroup;
 			children = (
 				D07793831B704EA00056B7CB /* Components */,
-				1F937FE71B58EE8B009722CE /* MyAccountEditViewController.swift */,
-				1F937FE51B58C2E3009722CE /* MyAccountViewController.swift */,
+				D0A104901BEAF1C700AEE356 /* AgreementViewController.swift */,
 				D0F44FAA1B5E4790009E12AA /* BookmarkedPostsViewController.swift */,
 				D0F44FAE1B5E540F009E12AA /* FriendListSendRequestController.swift */,
-				D07D8A191B99A3DF00D13096 /* NotificationListViewController.swift */,
+				1F937FE71B58EE8B009722CE /* MyAccountEditViewController.swift */,
+				1F937FE51B58C2E3009722CE /* MyAccountViewController.swift */,
 				D0F44FAC1B5E534B009E12AA /* MyPostsViewController.swift */,
+				D07D8A191B99A3DF00D13096 /* NotificationListViewController.swift */,
 				D029F7311BCCB39E00CDE18B /* PushSettingViewController.swift */,
-				D0A104901BEAF1C700AEE356 /* AgreementViewController.swift */,
 				55DB7B931C5FCF6100F921F9 /* SettingNavigationController.swift */,
 			);
 			name = Setting;
@@ -583,12 +583,12 @@
 		D05FFF4E1E5185BB00B60F15 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				D05FFF4F1E5185EF00B60F15 /* ChatTableViewCell.xib */,
 				D05FFF511E5186F200B60F15 /* ChatTableViewCell.swift */,
-				1F7AEE4D1E5EB9C8009F3806 /* ChatTableViewTextCell.swift */,
+				D05FFF4F1E5185EF00B60F15 /* ChatTableViewCell.xib */,
 				1F7AEE4F1E5EB9E0009F3806 /* ChatTableViewImageCell.swift */,
-				1F7AEE491E5EB988009F3806 /* ChatTableViewTextCell.xib */,
 				1F7AEE4B1E5EB99F009F3806 /* ChatTableViewImageCell.xib */,
+				1F7AEE4D1E5EB9C8009F3806 /* ChatTableViewTextCell.swift */,
+				1F7AEE491E5EB988009F3806 /* ChatTableViewTextCell.xib */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -596,8 +596,8 @@
 		D07793831B704EA00056B7CB /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				D07793841B704F290056B7CB /* PickerTableViewController.swift */,
 				D07793861B704F410056B7CB /* DatePickerViewController.swift */,
+				D07793841B704F290056B7CB /* PickerTableViewController.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -616,13 +616,13 @@
 				D097AE951E553D1300615728 /* Alamofire-SwiftyJSON.swift */,
 				D097AE961E553D1300615728 /* Array.swift */,
 				D097AEA31E55421400615728 /* Date.swift */,
+				D04C7AEC1E83CF0A00BD2959 /* DispatchQueue.swift */,
+				D0349BB71E81021200D6877F /* IBInspectable.swift */,
 				D097AE971E553D1300615728 /* RxSwift.swift */,
 				D097AE981E553D1300615728 /* String.swift */,
 				D097AE991E553D1300615728 /* UIImage.swift */,
 				D097AE9A1E553D1300615728 /* UIViewController.swift */,
 				D097AE9B1E553D1300615728 /* WechatKit+RxSwift.swift */,
-				D0349BB71E81021200D6877F /* IBInspectable.swift */,
-				D04C7AEC1E83CF0A00BD2959 /* DispatchQueue.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -630,10 +630,10 @@
 		D0DB07E31B9D655600C06C4E /* Listener */ = {
 			isa = PBXGroup;
 			children = (
+				D0DB07E41B9D65BE00C06C4E /* ListenerEvent.swift */,
+				D0DB07DF1B9D3E1400C06C4E /* RemoteNotification.swift */,
 				29EA55AF1AEDC1F3006A1F41 /* SocketController.swift */,
 				D0B6364D1B81A9C70012C4E8 /* URLSchemesController.swift */,
-				D0DB07DF1B9D3E1400C06C4E /* RemoteNotification.swift */,
-				D0DB07E41B9D65BE00C06C4E /* ListenerEvent.swift */,
 			);
 			name = Listener;
 			sourceTree = "<group>";

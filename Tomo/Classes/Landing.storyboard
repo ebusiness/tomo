@@ -1,42 +1,54 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="CVK-GZ-ggJ">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Landing View Controller-->
-        <scene sceneID="atS-Cw-71N">
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
             <objects>
-                <viewController id="CVK-GZ-ggJ" customClass="LandingViewController" customModule="tomo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Ah1-gh-cHc"/>
-                        <viewControllerLayoutGuide type="bottom" id="9l4-Av-YRU"/>
+                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="TGR-gu-Zs2">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash10" translatesAutoresizingMaskIntoConstraints="NO" id="Hii-I5-b6N">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Wvg-M6-f9B">
+                                <rect key="frame" x="98" y="154" width="180" height="180"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="180" id="WX3-NA-kwO"/>
+                                    <constraint firstAttribute="width" constant="180" id="kYq-Gk-CM5"/>
+                                </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="現場Tomo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z8N-xt-yby">
+                                <rect key="frame" x="120" y="342" width="136.5" height="36"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.12941176470588234" green="0.58823529411764708" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Hii-I5-b6N" firstAttribute="leading" secondItem="TGR-gu-Zs2" secondAttribute="leading" id="Fn5-TI-pTG"/>
-                            <constraint firstItem="Hii-I5-b6N" firstAttribute="top" secondItem="TGR-gu-Zs2" secondAttribute="top" id="hSF-C8-Hbs"/>
-                            <constraint firstItem="9l4-Av-YRU" firstAttribute="top" secondItem="Hii-I5-b6N" secondAttribute="bottom" id="qoF-u5-k7V"/>
-                            <constraint firstAttribute="trailing" secondItem="Hii-I5-b6N" secondAttribute="trailing" id="rnp-lj-iUW"/>
+                            <constraint firstItem="Wvg-M6-f9B" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="56O-p8-msv"/>
+                            <constraint firstItem="Z8N-xt-yby" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="UyA-EH-e6t"/>
+                            <constraint firstItem="Z8N-xt-yby" firstAttribute="top" secondItem="Wvg-M6-f9B" secondAttribute="bottom" constant="8" id="cgJ-w2-VZi"/>
+                            <constraint firstItem="Wvg-M6-f9B" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-90" id="hfM-P0-MdP"/>
                         </constraints>
                     </view>
-                    <nil key="simulatedStatusBarMetrics"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="30w-p7-2Py" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="202" y="386"/>
+            <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
     <resources>
-        <image name="splash10" width="1000" height="666"/>
+        <image name="logo" width="256" height="256"/>
     </resources>
 </document>

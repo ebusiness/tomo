@@ -30,6 +30,6 @@ file_header:
                     \/\/  .*?\.swift
                     \/\/  Tomo
                     \/\/
-                    \/\/  Created by .*? on \d{1,2}\/\d{1,2}\/\d{2}\.
+                    \/\/  Created by .*? on \d{4}\/\d{1,2}\/\d{1,2}\.
                     \/\/  Copyright © \d{4} e-business\. All rights reserved\.
                     \/\/

@@ -1,34 +1,49 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+        <view contentMode="scaleToFill" id="8EB-LV-20s">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash10" translatesAutoresizingMaskIntoConstraints="NO" id="XVw-wh-KDq">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <animations/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Qtm-Ac-cyG">
+                    <rect key="frame" x="98" y="154" width="180" height="180"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="180" id="ibt-ZM-G4h"/>
+                        <constraint firstAttribute="height" constant="180" id="y71-2D-Wfx"/>
+                    </constraints>
                 </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="現場Tomo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XBP-gP-TMz">
+                    <rect key="frame" x="120" y="342" width="136.5" height="36"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="30"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
-            <animations/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.12941176469999999" green="0.58823529409999997" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="XVw-wh-KDq" secondAttribute="bottom" id="IwH-ZN-1XZ"/>
-                <constraint firstAttribute="trailing" secondItem="XVw-wh-KDq" secondAttribute="trailing" id="LW0-wp-Qhs"/>
-                <constraint firstItem="XVw-wh-KDq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bSt-fD-nGC"/>
-                <constraint firstItem="XVw-wh-KDq" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="yVU-cu-c5F"/>
+                <constraint firstItem="XBP-gP-TMz" firstAttribute="top" secondItem="Qtm-Ac-cyG" secondAttribute="bottom" constant="8" id="Fyn-kt-ia7"/>
+                <constraint firstItem="XBP-gP-TMz" firstAttribute="centerX" secondItem="8EB-LV-20s" secondAttribute="centerX" id="RgZ-W2-SzZ"/>
+                <constraint firstItem="Qtm-Ac-cyG" firstAttribute="centerY" secondItem="8EB-LV-20s" secondAttribute="centerY" constant="-90" id="Tgi-pU-lj1"/>
+                <constraint firstItem="Qtm-Ac-cyG" firstAttribute="centerX" secondItem="8EB-LV-20s" secondAttribute="centerX" id="euI-ho-SAk"/>
             </constraints>
-            <nil key="simulatedStatusBarMetrics"/>
-            <point key="canvasLocation" x="548" y="455"/>
+            <point key="canvasLocation" x="548" y="473"/>
         </view>
     </objects>
     <resources>
-        <image name="splash10" width="1000" height="666"/>
+        <image name="logo" width="256" height="256"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
 </document>
