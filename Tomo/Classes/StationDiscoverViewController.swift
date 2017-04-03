@@ -24,7 +24,7 @@ final class StationDiscoverViewController: UIViewController {
     var groups = [GroupEntity]()
 
     // Default loaction use Tokyo
-    var location = TomoConst.Geo.CLLocationTokyo
+    var location = TomoConst.Geo.Tokyo.Location
 
     // Search bar, design it in stroyBoard looks ugly, have to make it by code
     lazy var searchBar: UISearchBar = {
@@ -118,7 +118,7 @@ extension StationDiscoverViewController {
             parameters.coordinate = [location.coordinate.latitude, location.coordinate.longitude]
             self.location = location
         } else {
-            parameters.coordinate = TomoConst.Geo.CoordinateTokyo
+            parameters.coordinate = TomoConst.Geo.Tokyo.Coordinate
         }
 
         Router.Group.Find(parameters: parameters).response {

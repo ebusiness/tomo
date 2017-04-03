@@ -10,7 +10,6 @@ import Foundation
 
 class UserAnnotationView: AggregatableAnnotationView {
 
-    var imageView: UIImageView!
     var numberLabel: UILabel!
 
     required init?(coder aDecoder: NSCoder) {

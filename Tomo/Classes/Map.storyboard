@@ -29,13 +29,13 @@
                                     <outletCollection property="gestureRecognizers" destination="Dji-OA-Mzs" appends="YES" id="Cgk-jd-ZPe"/>
                                 </connections>
                             </mapView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="2" translatesAutoresizingMaskIntoConstraints="NO" id="OYO-gx-7sa">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="OYO-gx-7sa">
                                 <rect key="frame" x="84.5" y="16" width="206" height="29"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <segments>
-                                    <segment title="当前热点"/>
-                                    <segment title="我的关注"/>
-                                    <segment title="好友地图"/>
+                                    <segment title="项目"/>
+                                    <segment title="SI"/>
+                                    <segment title="最终用户"/>
                                 </segments>
                                 <connections>
                                     <action selector="changeMode:" destination="GpU-Ki-F38" eventType="valueChanged" id="N37-EJ-t3J"/>
@@ -159,6 +159,31 @@
                                             <outlet property="introLabel" destination="bE0-TC-HT5" id="cZs-0W-UQr"/>
                                             <outlet property="memberLabel" destination="R6a-Gd-XSL" id="Azb-4P-jKF"/>
                                             <outlet property="nameLabel" destination="T9e-7i-6Vm" id="Lho-GI-fCi"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CompanyCell" rowHeight="44" id="xgc-15-vcb" customClass="CompanyCell" customModule="tomo" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="204" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xgc-15-vcb" id="PAI-EK-4Kv">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="群组名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgl-Ck-IaL">
+                                                    <rect key="frame" x="16" y="8" width="343" height="28"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="qgl-Ck-IaL" firstAttribute="leading" secondItem="PAI-EK-4Kv" secondAttribute="leading" constant="16" id="7Na-1M-kTE"/>
+                                                <constraint firstItem="qgl-Ck-IaL" firstAttribute="top" secondItem="PAI-EK-4Kv" secondAttribute="top" constant="8" id="7aq-bf-a0T"/>
+                                                <constraint firstAttribute="trailing" secondItem="qgl-Ck-IaL" secondAttribute="trailing" constant="16" id="VAs-Qf-HWY"/>
+                                                <constraint firstAttribute="bottom" secondItem="qgl-Ck-IaL" secondAttribute="bottom" constant="8" id="ayR-WV-WuV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="nameLabel" destination="qgl-Ck-IaL" id="1Km-Hx-uIA"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

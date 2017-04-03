@@ -234,13 +234,13 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
         if let myGroups = me.groups, myGroups.contains(self.group.id) {
 
             self.actionButton.setTitle(" 退出群组 ", for: .normal)
-            self.actionButton.backgroundColor = Palette.Red.primaryColor
+            self.actionButton.backgroundColor = Palette.red.primaryColor
             self.actionButton.sizeToFit()
 
         } else  {
 
             self.actionButton.setTitle(" 加入群组 ", for: .normal)
-            self.actionButton.backgroundColor = Palette.Green.primaryColor
+            self.actionButton.backgroundColor = Palette.green.primaryColor
             self.actionButton.sizeToFit()
         }
     }

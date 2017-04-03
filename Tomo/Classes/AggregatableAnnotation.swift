@@ -10,14 +10,14 @@ import Foundation
 
 class AggregatableAnnotation: NSObject, MKAnnotation {
 
-    var containedAnnotations: [AggregatableAnnotation]?
+    var containedAnnotations = [AggregatableAnnotation]()
 
     var clusterAnnotation: AggregatableAnnotation?
 
     dynamic var coordinate: CLLocationCoordinate2D
 
     override init() {
-        self.coordinate = CLLocationCoordinate2DMake(33, 133)
+        self.coordinate = CLLocationCoordinate2DMake(TomoConst.Geo.Tokyo.Latitude, TomoConst.Geo.Tokyo.Longitude)
         super.init()
     }
 

@@ -88,7 +88,7 @@ extension RecommendViewController {
         if let location = location {
             parameters.coordinate = [location.coordinate.latitude, location.coordinate.longitude]
         } else {
-            parameters.coordinate = TomoConst.Geo.CoordinateTokyo
+            parameters.coordinate = TomoConst.Geo.Tokyo.Coordinate
         }
 
         self.activityIndicator.startAnimating()
@@ -208,19 +208,18 @@ extension RecommendViewController: MKMapViewDelegate {
             return nil
         }
 
-        var stationAnnotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: "identifier")
+        var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: "identifier")
 
-        if stationAnnotationView == nil {
-            stationAnnotationView = StationAnnotationView(annotation: annotation, reuseIdentifier: "identifier")
+        if let annotationView = annotationView as? AggregatableAnnotationView {
+            annotationView.annotation = annotation
+            annotationView.setupDisplay()
         } else {
-            stationAnnotationView?.annotation = annotation
+            annotationView = AggregatableAnnotationView(annotation: annotation, reuseIdentifier: "identifier")
         }
 
-        (stationAnnotationView as? StationAnnotationView)!.setupDisplay()
+        self.currentAnnotationView = annotationView
 
-        self.currentAnnotationView = stationAnnotationView
-
-        return stationAnnotationView
+        return annotationView
     }
     func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
         if let presentedViewController = self.presentedViewController {
@@ -314,7 +313,7 @@ extension RecommendViewController: UISearchBarDelegate {
         if let location = location {
             parameters.coordinate = [location.coordinate.latitude, location.coordinate.longitude]
         } else {
-            parameters.coordinate = TomoConst.Geo.CoordinateTokyo
+            parameters.coordinate = TomoConst.Geo.Tokyo.Coordinate
         }
 
         self.activityIndicator.startAnimating()

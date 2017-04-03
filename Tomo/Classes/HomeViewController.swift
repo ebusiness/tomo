@@ -178,7 +178,7 @@ extension HomeViewController {
         if let location = location {
             parameters.coordinate = [location.coordinate.latitude, location.coordinate.longitude]
         } else {
-            parameters.coordinate = TomoConst.Geo.CoordinateTokyo
+            parameters.coordinate = TomoConst.Geo.Tokyo.Coordinate
         }
 
         Router.Group.Find(parameters: parameters).response {

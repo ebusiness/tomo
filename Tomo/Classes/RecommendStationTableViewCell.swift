@@ -132,14 +132,14 @@ final class StationCollectionViewCell: UICollectionViewCell {
 
     // Make the action button as join button
     private func makeJoinButton() {
-        self.actionButton.backgroundColor = Palette.Green.primaryColor
+        self.actionButton.backgroundColor = Palette.green.primaryColor
         self.actionButton.setTitle("  加入  ", for: .normal)
         self.actionButton.sizeToFit()
     }
 
     // Make the action button as leave button
     private func makeLeaveButton() {
-        self.actionButton.backgroundColor = Palette.Red.primaryColor
+        self.actionButton.backgroundColor = Palette.red.primaryColor
         self.actionButton.setTitle("  退出  ", for: .normal)
         self.actionButton.sizeToFit()
     }

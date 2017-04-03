@@ -29,6 +29,12 @@ extension MapViewController: UITableViewDataSource {
             cell?.setupDisplay()
             return cell!
 
+        } else if let annotation = self.annotationsForTable![indexPath.item] as? CompanyAnnotation {
+
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CompanyCell", for: indexPath) as? CompanyCell
+            cell?.company = annotation.entity
+            return cell!
+            
         } else {
             return UITableViewCell()
         }
@@ -100,6 +106,18 @@ class GroupCell: UITableViewCell {
         nameLabel.text = group.name
         introLabel.text = group.introduction
         memberLabel.text = "\(group.members!.count)个成员"
+    }
+    
+}
+
+class CompanyCell: UITableViewCell {
+
+    @IBOutlet weak fileprivate var nameLabel: UILabel!
+
+    var company: CompanyEntity! {
+        didSet {
+            nameLabel.text = company.name
+        }
     }
     
 }
