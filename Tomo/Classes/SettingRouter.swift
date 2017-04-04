@@ -10,29 +10,29 @@
 extension Router {
 
     enum Setting: APIRoute {
-        case UpdateDevice(deviceToken: Data)
-        case UpdateUserInfo(parameters: MeParameter)
-        case FindNotification(before: TimeInterval?)
+        case updateDevice(deviceToken: Data)
+        case updateUserInfo(parameters: MeParameter)
+        case findNotification(before: TimeInterval?)
 
         var path: String {
             switch self {
-            case .UpdateDevice: return "/device"
-            case .UpdateUserInfo: return "/me"
-            case .FindNotification: return "/notifications"
+            case .updateDevice: return "/device"
+            case .updateUserInfo: return "/me"
+            case .findNotification: return "/notifications"
             }
         }
 
         var method: RouteMethod {
             switch self {
-            case .UpdateDevice: return .POST
-            case .UpdateUserInfo: return .PATCH
-            case .FindNotification: return .GET
+            case .updateDevice: return .POST
+            case .updateUserInfo: return .PATCH
+            case .findNotification: return .GET
             }
         }
 
         var parameters: [String: Any]? {
             switch self {
-            case let .UpdateDevice(deviceToken):
+            case let .updateDevice(deviceToken):
                 let token = deviceToken.map { String(format: "%.2hhx", $0) }.joined()
                 let device = UIDevice.current
                 return [
@@ -41,9 +41,9 @@ extension Router {
                     "model": device.model,
                     "version": device.systemVersion
                 ]
-            case let .UpdateUserInfo(parameters):
+            case let .updateUserInfo(parameters):
                 return parameters.getParameters()
-            case let .FindNotification(before):
+            case let .findNotification(before):
                 guard let before = before else { return nil }
                 return ["before": String(before)]
             }

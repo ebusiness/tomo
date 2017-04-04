@@ -106,7 +106,7 @@ extension FriendListSendRequestController {
 
         self.isLoading = true
 
-        Router.Invitation.Find.response {
+        Router.Invitation.find.response {
 
             // Mark as exhausted when something wrong (probably 404)
             if $0.result.isFailure {

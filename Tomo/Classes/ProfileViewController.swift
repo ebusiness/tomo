@@ -39,29 +39,29 @@ final class ProfileViewController: UITableViewController {
     var user: UserEntity!
 
     // The relationship of me and displayed user
-    var relation = Relation.Stranger
+    var relation = Relation.stranger
 
     let headerViewSize = CGSize(width: TomoConst.UI.ScreenWidth, height: TomoConst.UI.ScreenHeight * 0.382 + 58)
 
     enum Relation {
 
-        case Me
+        case me
 
-        case Stranger
+        case stranger
 
-        case Friend
+        case friend
 
-        case InvitedByMe
+        case invitedByMe
 
-        case InvitedingMe
+        case invitedingMe
 
-        case Blocking
+        case blocking
 
         func message(user: UserEntity) -> String {
             switch self {
-            case .InvitedByMe:
+            case .invitedByMe:
                 return "好友邀请已发送，请等待对方接受"
-            case .Blocking:
+            case .blocking:
                 return "您已屏蔽此用户"
             default:
                 return ""
@@ -79,7 +79,7 @@ final class ProfileViewController: UITableViewController {
         self.configDisplay()
 
         // load fully populated user entity
-        Router.User.FindById(id: self.user.id).response {
+        Router.User.findById(id: self.user.id).response {
 
             if $0.result.isFailure { return }
 
@@ -146,7 +146,7 @@ extension ProfileViewController {
             optionalList["举报此用户"] = { (_) -> Void in
 
                 Util.alert(parentvc: self, title: "举报用户", message: "您确定要举报此用户吗？") { _ in
-                    Router.Report.User(id: self.user.id).request()
+                    Router.Report.user(id: self.user.id).request()
                 }
             }
         }
@@ -156,7 +156,7 @@ extension ProfileViewController {
             if let blockUsers = me.blockUsers, blockUsers.contains(self.user.id) {
 
                 optionalList["取消屏蔽"] = { (_) -> Void in
-                    Router.User.Block(id: self.user.id).response {
+                    Router.User.block(id: self.user.id).response {
                         if $0.result.isFailure { return }
                         me.blockUsers?.remove(self.user.id)
                     }
@@ -167,7 +167,7 @@ extension ProfileViewController {
                 optionalList["屏蔽此用户"] = { (_) -> Void in
 
                     Util.alert(parentvc: self, title: "屏蔽用户", message: "您确定要屏蔽此用户吗？") { _ in
-                        Router.User.Block(id: self.user.id).response {
+                        Router.User.block(id: self.user.id).response {
                             if $0.result.isFailure { return }
                             me.blockUsers?.append(self.user.id)
                         }
@@ -181,7 +181,7 @@ extension ProfileViewController {
             optionalList["删除好友"] = { (_) -> Void in
 
                 Util.alert(parentvc: self, title: "删除好友", message: "确定删除该好友么?") { _ in
-                    Router.Contact.Delete(id: self.user.id).response {
+                    Router.Contact.delete(id: self.user.id).response {
                         if $0.result.isFailure { return }
                         me.deleteFriend(user: self.user)
                         self.configUserStatus()
@@ -198,7 +198,7 @@ extension ProfileViewController {
 
         sender.isUserInteractionEnabled = false
 
-        Router.Invitation.SendTo(id: self.user.id).response {
+        Router.Invitation.sendTo(id: self.user.id).response {
 
             if $0.result.isFailure {
                 sender.isUserInteractionEnabled = true
@@ -240,58 +240,58 @@ extension ProfileViewController {
 //        self.relation = .Stranger
 
         if let myFriends = me.friends, myFriends.contains(self.user.id) {
-            self.relation = .Friend
+            self.relation = .friend
         }
 
         if let myInvitations = me.invitations, myInvitations.contains(self.user.id) {
-            self.relation = .InvitedByMe
+            self.relation = .invitedByMe
         }
 
         if let user = user {
             if user.id == me.id {
-                self.relation = .Me
+                self.relation = .me
             }
         }
 
         if let _ = me.friendInvitations.first(where: { $0.from.id == self.user.id }) {
-            self.relation = .InvitedingMe
+            self.relation = .invitedingMe
         }
 
         self.statusLabel.text = self.relation.message(user: self.user)
 
         switch self.relation {
 
-        case .Me:
+        case .me:
             self.addFriendButton.isHidden = true
             self.messageButton.isHidden = true
             self.acceptButton.isHidden = true
             self.refuseButton.isHidden = true
 
-        case .Stranger:
+        case .stranger:
             self.addFriendButton.isHidden = false
             self.messageButton.isHidden = true
             self.acceptButton.isHidden = true
             self.refuseButton.isHidden = true
 
-        case .Friend:
+        case .friend:
             self.addFriendButton.isHidden = true
             self.messageButton.isHidden = false
             self.acceptButton.isHidden = true
             self.refuseButton.isHidden = true
 
-        case .InvitedByMe:
+        case .invitedByMe:
             self.addFriendButton.isHidden = true
             self.messageButton.isHidden = true
             self.acceptButton.isHidden = true
             self.refuseButton.isHidden = true
 
-        case .InvitedingMe:
+        case .invitedingMe:
             self.addFriendButton.isHidden = true
             self.messageButton.isHidden = true
             self.acceptButton.isHidden = false
             self.refuseButton.isHidden = false
 
-        case .Blocking:
+        case .blocking:
             self.addFriendButton.isHidden = true
             self.messageButton.isHidden = true
             self.acceptButton.isHidden = true
@@ -363,7 +363,7 @@ extension ProfileViewController {
 
         if let invitation = invitation {
 
-            Router.Invitation.ModifyById(id: invitation.id, accepted: accept).response {
+            Router.Invitation.modifyById(id: invitation.id, accepted: accept).response {
 
                 if $0.result.isFailure { return }
 

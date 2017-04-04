@@ -215,7 +215,7 @@ extension LatestMessagesViewController {
 
         self.isLoading = true
 
-        Router.Message.Latest.response {
+        Router.Message.latest.response {
 
             self.loadingIndicator.stopAnimating()
 
@@ -889,7 +889,7 @@ final class FriendInvitationTableViewCell: UITableViewCell {
 
     @IBAction func accept(_ sender: UIButton) {
 
-        Router.Invitation.ModifyById(id: self.invitation.id, accepted: true).response {
+        Router.Invitation.modifyById(id: self.invitation.id, accepted: true).response {
             if $0.result.isFailure { return }
             me.acceptInvitation(invitation: self.invitation)
         }
@@ -899,7 +899,7 @@ final class FriendInvitationTableViewCell: UITableViewCell {
 
         let message = "拒绝 " + self.invitation.from.nickName + " 的好友邀请么"
         Util.alert(parentvc: delegate, title: "拒绝好友邀请", message: message) { _ in
-            Router.Invitation.ModifyById(id: self.invitation.id, accepted: false).response {
+            Router.Invitation.modifyById(id: self.invitation.id, accepted: false).response {
                 if $0.result.isFailure { return }
                 me.refuseInvitation(invitation: self.invitation)
             }

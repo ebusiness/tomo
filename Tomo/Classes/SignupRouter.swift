@@ -8,13 +8,13 @@
 
 extension Router {
     enum Signup: APIRoute {
-        case Email(email: String, password: String, nickName: String)
-        case WeChat(openid: String, nickname: String, gender: String?, headimgurl: String?)
+        case email(email: String, password: String, nickName: String)
+        case weChat(openid: String, nickname: String, gender: String?, headimgurl: String?)
 
         var path: String {
             switch self {
-            case .Email: return "/signup"
-            case .WeChat: return "/signup-wechat"
+            case .email: return "/signup"
+            case .weChat: return "/signup-wechat"
             }
         }
 
@@ -25,9 +25,9 @@ extension Router {
         var parameters: [String: Any]? {
 
             switch self {
-            case let .Email(email, password, nickName):
+            case let .email(email, password, nickName):
                 return ["email": email, "password": password, "nickName": nickName]
-            case let .WeChat(openid, nickname, gender, headimgurl):
+            case let .weChat(openid, nickname, gender, headimgurl):
                 var parameters = ["openid": openid, "nickname": nickname]
 
                 if let gender = gender {

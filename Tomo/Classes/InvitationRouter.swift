@@ -11,13 +11,13 @@ extension Router {
 
     enum Invitation: APIRoute {
 
-        case Find
-        case ModifyById(id: String, accepted: Bool)
-        case SendTo(id: String)
+        case find
+        case modifyById(id: String, accepted: Bool)
+        case sendTo(id: String)
 
         var path: String {
             switch self {
-            case let .ModifyById(id, _):
+            case let .modifyById(id, _):
                 return "/invitations/\(id)"
             default:
                 return "/invitations"
@@ -25,17 +25,17 @@ extension Router {
         }
         var method: RouteMethod {
             switch self {
-            case .Find: return .GET
-            case .ModifyById: return .PATCH
-            case .SendTo: return .POST
+            case .find: return .GET
+            case .modifyById: return .PATCH
+            case .sendTo: return .POST
             }
         }
 
         var parameters: [String: Any]? {
             switch self {
-            case .Find: return nil
-            case let .ModifyById(_, accepted): return ["result": accepted ? "accept" : "refuse"]
-            case let .SendTo(id): return ["id": id]
+            case .find: return nil
+            case let .modifyById(_, accepted): return ["result": accepted ? "accept" : "refuse"]
+            case let .sendTo(id): return ["id": id]
             }
         }
     }

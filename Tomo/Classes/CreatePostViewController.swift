@@ -321,7 +321,7 @@ extension CreatePostViewController {
             parameters.location = address
         }
 
-        Router.Post.Create(parameters: parameters).response {
+        Router.Post.create(parameters: parameters).response {
             switch $0.result {
             case .success(let value):
                 self.performSegue(withIdentifier: "CreatePost", sender: PostEntity(value))

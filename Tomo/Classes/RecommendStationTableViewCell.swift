@@ -151,7 +151,7 @@ final class StationCollectionViewCell: UICollectionViewCell {
 
             // If this is a joined group and the button was tapped,
             // Make the leave group request.
-            Router.Group.Leave(id: group.id).response {
+            Router.Group.leave(id: group.id).response {
 
                 if $0.result.isFailure { return }
 
@@ -175,7 +175,7 @@ final class StationCollectionViewCell: UICollectionViewCell {
 
             // If this is a group I haven't join, and the button was tapped,
             // Make the join group request.
-            Router.Group.Join(id: group.id).response {
+            Router.Group.join(id: group.id).response {
 
                 if $0.result.isFailure { return }
 

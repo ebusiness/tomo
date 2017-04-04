@@ -121,7 +121,7 @@ extension StationDiscoverViewController {
             parameters.coordinate = TomoConst.Geo.Tokyo.Coordinate
         }
 
-        Router.Group.Find(parameters: parameters).response {
+        Router.Group.find(parameters: parameters).response {
 
             if $0.result.isFailure {
                 self.isLoading = false
@@ -156,7 +156,7 @@ extension StationDiscoverViewController {
             parameters.name = searchText
         }
 
-        Router.Group.Find(parameters: parameters).response {
+        Router.Group.find(parameters: parameters).response {
 
             if $0.result.isFailure {
                 self.isLoading = false
@@ -253,7 +253,7 @@ extension StationDiscoverViewController: UISearchBarDelegate {
         parameters.coordinate = [location.coordinate.longitude, location.coordinate.latitude]
 
         // search
-        Router.Group.Find(parameters: parameters).response {
+        Router.Group.find(parameters: parameters).response {
 
             if $0.result.isFailure {
                 self.isLoading = false

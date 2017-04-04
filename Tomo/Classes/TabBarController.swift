@@ -42,21 +42,21 @@ extension TabBarController {
 
     fileprivate func registerForNotification() {
 
-        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.FriendInvited.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.FriendAccepted.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.FriendRefused.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.FriendBreak.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.friendInvited.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.friendAccepted.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.friendRefused.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.friendBreak.notificationName, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.PostNew.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.PostLiked.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.PostCommented.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.PostBookmarked.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.postNew.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.postLiked.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.postCommented.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.postBookmarked.notificationName, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.GroupJoined.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.GroupLeft.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.groupJoined.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveNotification(_:)), name: ListenerEvent.groupLeft.notificationName, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveMessage(_:)), name: ListenerEvent.Message.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveGroupMessage(_:)), name: ListenerEvent.GroupMessage.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveMessage(_:)), name: ListenerEvent.message.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TabBarController.didReceiveGroupMessage(_:)), name: ListenerEvent.groupMessage.notificationName, object: nil)
     }
 
     fileprivate func openNotificationBar() {

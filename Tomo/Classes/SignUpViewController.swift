@@ -129,7 +129,7 @@ extension SignUpViewController {
         guard let password = self.passwordTextField.text else { return }
         guard let nickName = self.nickNameTextField.text else { return }
 
-        Router.Signup.Email(email: email, password: password, nickName: nickName)
+        Router.Signup.email(email: email, password: password, nickName: nickName)
             .response {
                 let buttonTitle = "好"
                 var title = "注册失败"

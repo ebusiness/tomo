@@ -61,7 +61,7 @@ extension GroupDescriptionViewController {
 
     fileprivate func loadGroupDescription() {
 
-        Router.Group.FindById(id: group.id).response {
+        Router.Group.findById(id: group.id).response {
 
             if $0.result.isFailure { return }
 
@@ -247,7 +247,7 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
 
     private func joinGroup() {
 
-        Router.Group.Join(id: self.group.id).response {
+        Router.Group.join(id: self.group.id).response {
 
             if $0.result.isFailure {
                 self.actionButton.isUserInteractionEnabled = true
@@ -272,7 +272,7 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
         }))
 
         alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { _ in
-            Router.Group.Leave(id: self.group.id).response {
+            Router.Group.leave(id: self.group.id).response {
 
                 if $0.result.isFailure {
                     self.actionButton.isUserInteractionEnabled = true

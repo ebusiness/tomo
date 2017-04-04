@@ -110,7 +110,7 @@ final class PushSettingViewController: UITableViewController {
 
         guard parameters.getParameters() != nil else { return }
 
-        Router.Setting.UpdateUserInfo(parameters: parameters).response {
+        Router.Setting.updateUserInfo(parameters: parameters).response {
             if $0.result.isFailure { return }
             me.pushSetting = Account.PushSetting($0.result.value!["pushSetting"])
         }

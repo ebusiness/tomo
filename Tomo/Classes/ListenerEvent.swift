@@ -10,31 +10,31 @@ private var observers = [String: Any]()
 
 enum ListenerEvent: String {
 
-    case Announcement   = "new-announcement"
+    case announcement   = "new-announcement"
 
-    case Message        = "message-new"
+    case message        = "message-new"
 
-    case GroupMessage   = "message-group"
+    case groupMessage   = "message-group"
 
-    case FriendAccepted = "friend-accepted"
+    case friendAccepted = "friend-accepted"
 
-    case FriendRefused  = "friend-refused"
+    case friendRefused  = "friend-refused"
 
-    case FriendInvited  = "friend-invited"
+    case friendInvited  = "friend-invited"
 
-    case FriendBreak    = "friend-break"
+    case friendBreak    = "friend-break"
 
-    case PostNew        = "post-new"
+    case postNew        = "post-new"
 
-    case PostLiked      = "post-liked"
+    case postLiked      = "post-liked"
 
-    case PostCommented  = "post-commented"
+    case postCommented  = "post-commented"
 
-    case PostBookmarked = "post-bookmarked"
+    case postBookmarked = "post-bookmarked"
 
-    case GroupJoined    = "group-joined"
+    case groupJoined    = "group-joined"
 
-    case GroupLeft      = "group-left"
+    case groupLeft      = "group-left"
 
     case any = "any"
 

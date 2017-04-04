@@ -10,13 +10,13 @@
 extension Router {
 
     enum Report: APIRoute {
-        case Post(id: String)
-        case User(id: String)
+        case post(id: String)
+        case user(id: String)
 
         var path: String {
             switch self {
-            case let .Post(id): return "/reports/posts/\(id)"
-            case let .User(id): return "/reports/users/\(id)"
+            case let .post(id): return "/reports/posts/\(id)"
+            case let .user(id): return "/reports/users/\(id)"
             }
         }
         var method: RouteMethod {

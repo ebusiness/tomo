@@ -140,7 +140,7 @@ extension RegViewController {
     }
 
     private func signWithOpenid() {
-        Router.Signin.WeChat(openid: WechatManager.shared.openid, access_token: WechatManager.shared.accessToken)
+        Router.Signin.weChat(openid: WechatManager.shared.openid, access_token: WechatManager.shared.accessToken)
             .response { res in
                 if res.result.isSuccess {
                     self.success(res: res.result.value!)
@@ -158,7 +158,7 @@ extension RegViewController {
     }
 
     private func registByWechatInfo(userInfo: [String: Any]) {
-        Router.Signup.WeChat(openid: WechatManager.shared.openid,
+        Router.Signup.weChat(openid: WechatManager.shared.openid,
                              nickname: userInfo["nickname"] as? String ?? "",
                              gender: userInfo["sex"] as? String,
                              headimgurl: userInfo["headimgurl"] as? String)
@@ -189,7 +189,7 @@ extension RegViewController {
 extension RegViewController {
 
     @IBAction func accountLogin(_ sender: Any) {
-        Router.Signin.Email(email: emailTextField.text!, password: passwordTextField.text!)
+        Router.Signin.email(email: emailTextField.text!, password: passwordTextField.text!)
             .response { res in
                 if res.result.isSuccess {
                     UserDefaults.standard.set(self.emailTextField.text, forKey: "email")
@@ -255,7 +255,7 @@ extension RegViewController {
             break
         }
 
-        Router.Signin.Test(id: id).response {
+        Router.Signin.test(id: id).response {
             sender.isUserInteractionEnabled = true
             if $0.result.isFailure { return }
             me = Account($0.result.value!)

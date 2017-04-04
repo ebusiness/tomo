@@ -181,7 +181,7 @@ extension HomeViewController {
             parameters.coordinate = TomoConst.Geo.Tokyo.Coordinate
         }
 
-        Router.Group.Find(parameters: parameters).response {
+        Router.Group.find(parameters: parameters).response {
             if $0.result.isFailure { return }
             self.recommendGroups = GroupEntity.collection($0.result.value!)
         }
@@ -203,7 +203,7 @@ extension HomeViewController {
             parameters.before = oldestContent.createDate.timeIntervalSince1970
         }
 
-        Router.Post.Find(parameters: parameters).response {
+        Router.Post.find(parameters: parameters).response {
 
             // Mark as exhausted when something wrong (probably 404)
             if $0.result.isFailure {
@@ -262,7 +262,7 @@ extension HomeViewController {
             parameters.after = latestContent.createDate.timeIntervalSince1970 + 1
         }
 
-        Router.Post.Find(parameters: parameters).response {
+        Router.Post.find(parameters: parameters).response {
 
             // stop refresh control
             self.refreshControl!.endRefreshing()

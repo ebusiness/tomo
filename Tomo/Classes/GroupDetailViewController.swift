@@ -83,7 +83,7 @@ extension GroupDetailViewController {
 
         sender.isUserInteractionEnabled = false
 
-        Router.Group.Join(id: self.group.id).response {
+        Router.Group.join(id: self.group.id).response {
             if $0.result.isFailure {
                 sender.isUserInteractionEnabled = true
                 return
@@ -255,7 +255,7 @@ extension GroupDetailViewController {
 
         self.isLoading = true
 
-        let postRouter = Router.Group.FindPosts(id: self.group.id, before: self.oldestPost?.createDate.timeIntervalSince1970)
+        let postRouter = Router.Group.findPosts(id: self.group.id, before: self.oldestPost?.createDate.timeIntervalSince1970)
 
         postRouter.response {
 
@@ -294,7 +294,7 @@ extension GroupDetailViewController {
             parameters.after = latestPost.createDate.timeIntervalSince1970 + 1
         }
 
-        Router.Post.Find(parameters: parameters).response {
+        Router.Post.find(parameters: parameters).response {
 
             if $0.result.isFailure {
                 return

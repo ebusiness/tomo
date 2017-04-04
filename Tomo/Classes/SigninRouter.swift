@@ -17,31 +17,31 @@ extension Router {
     }
 
     enum Signin: APIRoute {
-        case Email(email: String, password: String)
-        case WeChat(openid: String, access_token: String)
-        case Test(id: String)
+        case email(email: String, password: String)
+        case weChat(openid: String, access_token: String)
+        case test(id: String)
 
         var path: String {
             switch self {
-            case .Email: return "/signin"
-            case .WeChat: return "/signin-wechat"
-            case .Test: return "/signin-test"
+            case .email: return "/signin"
+            case .weChat: return "/signin-wechat"
+            case .test: return "/signin-test"
             }
         }
         var method: RouteMethod {
             switch self {
-            case .Email: return .POST
-            case .WeChat: return .POST
-            case .Test: return .GET
+            case .email: return .POST
+            case .weChat: return .POST
+            case .test: return .GET
             }
         }
         var parameters: [String: Any]? {
             switch self {
-            case let .Email(email, password):
+            case let .email(email, password):
                 return ["email": email, "password": password]
-            case let .WeChat(openid, access_token):
+            case let .weChat(openid, access_token):
                 return ["openid": openid, "access_token": access_token, "type": "wechat"]
-            case let .Test(id):
+            case let .test(id):
                 return ["id": id]
             }
         }

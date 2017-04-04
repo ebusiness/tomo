@@ -35,7 +35,7 @@ final class GroupPopoverViewController: UIViewController {
         guard let window = delegate.window else { return }
         guard let rootViewController = window?.rootViewController else { return }
 
-        Router.Group.Join(id: groupAnnotation.group.id).response {
+        Router.Group.join(id: groupAnnotation.group.id).response {
 
             guard $0.result.isSuccess else { return }
             me.primaryGroup = self.groupAnnotation.group
@@ -43,7 +43,7 @@ final class GroupPopoverViewController: UIViewController {
             var param = Router.Setting.MeParameter()
             param.primaryGroup = self.groupAnnotation.group.id
 
-            Router.Setting.UpdateUserInfo(parameters: param).response {
+            Router.Setting.updateUserInfo(parameters: param).response {
 
                 guard $0.result.isSuccess else { return }
 

@@ -31,13 +31,13 @@ class URLSchemesController {
             guard let host = url.host, let event = ListenerEvent(rawValue: host) else { return false }
             let id = url.path.replacingOccurrences(of: "/", with: "")
             switch event {
-            case .Message:
+            case .message:
                 openMessage(id)
-            case .GroupMessage:
+            case .groupMessage:
                 openGroupMessage(id)
-            case .FriendInvited, .FriendAccepted, .FriendRefused, .FriendBreak:
+            case .friendInvited, .friendAccepted, .friendRefused, .friendBreak:
                 openProfile(id)
-            case .PostNew, .PostLiked, .PostCommented, .PostBookmarked:
+            case .postNew, .postLiked, .postCommented, .postBookmarked:
                 openPost(id)
             default:
                 // println(url) // TODO
@@ -84,7 +84,7 @@ extension URLSchemesController {
 
     fileprivate func openMessage(_ id: String) {
 
-        Router.User.FindById(id: id).response {
+        Router.User.findById(id: id).response {
             if $0.result.isFailure { return }
 
 //            let vc = MessageViewController()
@@ -97,7 +97,7 @@ extension URLSchemesController {
 
     fileprivate func openGroupMessage(_ id: String) {
 
-        Router.Group.FindById(id: id).response {
+        Router.Group.findById(id: id).response {
             if $0.result.isFailure { return }
 
 //            let vc = GroupChatViewController()
@@ -119,7 +119,7 @@ extension URLSchemesController {
 
     fileprivate func openPost(_ id: String) {
 
-        Router.Post.FindById(id: id).response {
+        Router.Post.findById(id: id).response {
             if $0.result.isFailure { return }
 //
 //            let vc = Util.createViewControllerWithIdentifier("PostDetailViewController", storyboardName: "Home") as! PostDetailViewController

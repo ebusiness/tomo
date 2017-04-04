@@ -10,44 +10,44 @@
 extension Router {
 
     enum Post: APIRoute {
-        case FindById(id: String)
-        case Find(parameters: FindParameters)
+        case findById(id: String)
+        case find(parameters: FindParameters)
 
-        case Create(parameters: CreateParameters)
-        case Delete(id: String)
+        case create(parameters: CreateParameters)
+        case delete(id: String)
 
-        case Comment(id: String, content: String)
-        case Bookmark(id: String)
-        case Like(id: String)
+        case comment(id: String, content: String)
+        case bookmark(id: String)
+        case like(id: String)
 
         var path: String {
             switch self {
-            case let .FindById(id): return "/posts/\(id)"
-            case .Find: return "/posts"
-            case .Create: return "/posts"
-            case let .Delete(id): return "/posts/\(id)"
-            case let .Comment(id, _): return "/posts/\(id)/comments"
-            case let .Bookmark(id): return "/posts/\(id)/bookmark"
-            case let .Like(id): return "/posts/\(id)/like"
+            case let .findById(id): return "/posts/\(id)"
+            case .find: return "/posts"
+            case .create: return "/posts"
+            case let .delete(id): return "/posts/\(id)"
+            case let .comment(id, _): return "/posts/\(id)/comments"
+            case let .bookmark(id): return "/posts/\(id)/bookmark"
+            case let .like(id): return "/posts/\(id)/like"
             }
         }
 
         var method: RouteMethod {
             switch self {
-            case .Create: return .POST
-            case .Delete: return .DELETE
-            case .Comment: return .POST
-            case .Bookmark: return .PATCH
-            case .Like: return .PATCH
+            case .create: return .POST
+            case .delete: return .DELETE
+            case .comment: return .POST
+            case .bookmark: return .PATCH
+            case .like: return .PATCH
             default: return .GET
             }
         }
 
         var parameters: [String: Any]? {
             switch self {
-            case let .Find(parameters): return parameters.getParameters()
-            case let .Create(parameters): return parameters.getParameters()
-            case let .Comment(_, content): return ["content": content]
+            case let .find(parameters): return parameters.getParameters()
+            case let .create(parameters): return parameters.getParameters()
+            case let .comment(_, content): return ["content": content]
             default: return nil
             }
         }

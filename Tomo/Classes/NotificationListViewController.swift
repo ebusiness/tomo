@@ -99,7 +99,7 @@ extension NotificationListViewController {
 
         self.isLoading = true
 
-        let notification = Router.Setting.FindNotification(before: self.notifications.last?.createDate.timeIntervalSince1970)
+        let notification = Router.Setting.findNotification(before: self.notifications.last?.createDate.timeIntervalSince1970)
 
         notification.response {
 
@@ -208,21 +208,21 @@ extension NotificationCell {
     func didSelect(vc: UIViewController) {
         guard let type = ListenerEvent(rawValue: self.notification.type) else { return }
         switch type {
-        case .Announcement:
+        case .announcement:
             //                print("系统通知")
             return
-        case .FriendAccepted, .FriendRefused, .FriendBreak: // User
+        case .friendAccepted, .friendRefused, .friendBreak: // User
             //                print("接受了您的好友请求")
             //                print("拒绝了您的好友邀请")
             //                print("解除了与您的好友关系")
             self.presentProfileView(vc: vc)
-        case .PostNew, .PostLiked, .PostCommented, .PostBookmarked: // Post
+        case .postNew, .postLiked, .postCommented, .postBookmarked: // Post
             //                print("发表了新的帖子")
             //                print("赞了您的帖子")
             //                print("评论了您的帖子")
             //                print("收藏了您的帖子")
             self.presentPostView(vc: vc)
-        case .GroupJoined: // Group
+        case .groupJoined: // Group
             //                print("加入了您的群组")
             self.presentGroupView(vc: vc)
         default:
@@ -237,25 +237,25 @@ extension NotificationCell {
         guard let type = ListenerEvent(rawValue: self.notification.type) else { return "未知处理" }
         var message = self.notification.type
         switch type {
-        case .Announcement:
+        case .announcement:
             message = "系统通知"
-        case .FriendAccepted:
+        case .friendAccepted:
             message = "接受了您的好友请求"
-        case .FriendRefused:
+        case .friendRefused:
             message = "拒绝了您的好友邀请"
-        case .FriendBreak:
+        case .friendBreak:
             message = "解除了与您的好友关系"
-        case .PostNew:
+        case .postNew:
             message = "发表了新的帖子"
-        case .PostLiked:
+        case .postLiked:
             message = "赞了您的帖子"
-        case .PostCommented:
+        case .postCommented:
             message = "评论了您的帖子"
-        case .PostBookmarked:
+        case .postBookmarked:
             message = "收藏了您的帖子"
-        case .GroupJoined:
+        case .groupJoined:
             message = "加入了您的群组"
-        case .GroupLeft:
+        case .groupLeft:
             message = "退出了您的群组"
         default:
             message = "未知处理"
@@ -270,7 +270,7 @@ extension NotificationCell {
     }
 
     fileprivate func presentPostView(vc: UIViewController) {
-        Router.Post.FindById(id: self.notification.targetId).response {
+        Router.Post.findById(id: self.notification.targetId).response {
             if $0.result.isFailure { return }
 
             let postVC = Util.createViewController(storyboardName: "Home", id: "PostDetailViewController") as? PostDetailViewController
@@ -284,7 +284,7 @@ extension NotificationCell {
     }
 
     fileprivate func presentGroupView(vc: UIViewController) {
-        Router.Group.FindById(id: self.notification.targetId).response {
+        Router.Group.findById(id: self.notification.targetId).response {
             if $0.result.isFailure { return }
 
             let groupVC = Util.createViewController(storyboardName: "Group", id: "GroupDetailView") as? GroupDetailViewController

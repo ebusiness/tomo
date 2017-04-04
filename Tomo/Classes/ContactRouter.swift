@@ -9,21 +9,21 @@
 extension Router {
 
     enum Contact: APIRoute {
-        case Delete(id: String)
-        case All
+        case delete(id: String)
+        case all
 
         var path: String {
             switch self {
-            case let .Delete(id):
+            case let .delete(id):
                 return "/friends/\(id)"
-            case .All:
+            case .all:
                 return "/friends"
 //                return "/contacts"
             }
         }
         var method: RouteMethod {
             switch self {
-            case .Delete:
+            case .delete:
                 return .DELETE
             default:
                 return .GET

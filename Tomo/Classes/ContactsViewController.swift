@@ -82,7 +82,7 @@ extension ContactsViewController {
 
         self.isLoading = true
 
-        Router.Contact.All.response {
+        Router.Contact.all.response {
 
             self.loadingIndicator.stopAnimating()
 

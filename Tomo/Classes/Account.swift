@@ -63,18 +63,18 @@ class Account: UserEntity {
 
         self.pushSetting = PushSetting(json["pushSetting"])
 
-        NotificationCenter.default.addObserver(self, selector: #selector(Account.didReceiveFriendInvitation(_:)), name: ListenerEvent.FriendInvited.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(Account.didFriendInvitationAccepted(_:)), name: ListenerEvent.FriendAccepted.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(Account.didFriendInvitationRefused(_:)), name: ListenerEvent.FriendRefused.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(Account.didFriendBroke(_:)), name: ListenerEvent.FriendBreak.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didReceiveFriendInvitation(_:)), name: ListenerEvent.friendInvited.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didFriendInvitationAccepted(_:)), name: ListenerEvent.friendAccepted.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didFriendInvitationRefused(_:)), name: ListenerEvent.friendRefused.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didFriendBroke(_:)), name: ListenerEvent.friendBreak.notificationName, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(Account.didReceiveMessage(_:)), name: ListenerEvent.Message.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(Account.didReceiveMessage(_:)), name: ListenerEvent.GroupMessage.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didReceiveMessage(_:)), name: ListenerEvent.message.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didReceiveMessage(_:)), name: ListenerEvent.groupMessage.notificationName, object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(Account.didReceivePost(_:)), name: ListenerEvent.PostNew.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(Account.didPostLiked(_:)), name: ListenerEvent.PostLiked.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(Account.didPostCommented(_:)), name: ListenerEvent.PostCommented.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(Account.didPostBookmarked(_:)), name: ListenerEvent.PostBookmarked.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didReceivePost(_:)), name: ListenerEvent.postNew.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didPostLiked(_:)), name: ListenerEvent.postLiked.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didPostCommented(_:)), name: ListenerEvent.postCommented.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Account.didPostBookmarked(_:)), name: ListenerEvent.postBookmarked.notificationName, object: nil)
     }
 
     deinit {

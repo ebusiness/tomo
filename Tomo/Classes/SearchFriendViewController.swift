@@ -125,7 +125,7 @@ extension SearchFriendViewController: UISearchBarDelegate {
         self.tableView.deleteRows(at: removeIndex, with: .automatic)
         self.tableView.endUpdates()
 
-        Router.User.FindByNickName(nickName: text).response {
+        Router.User.findByNickName(nickName: text).response {
 
             if $0.result.isFailure {
                 self.isLoading = false

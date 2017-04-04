@@ -160,7 +160,7 @@ extension MyPostsViewController {
             parameters.before = oldestContent.createDate.timeIntervalSince1970
         }
 
-        Router.Post.Find(parameters: parameters).response {
+        Router.Post.find(parameters: parameters).response {
 
             // Mark as exhausted when something wrong (probably 404)
             if $0.result.isFailure {

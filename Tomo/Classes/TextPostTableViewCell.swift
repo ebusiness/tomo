@@ -65,7 +65,7 @@ class TextPostTableViewCell: UITableViewCell {
 
         sender.isUserInteractionEnabled = false
 
-        Router.Post.Like(id: post.id).response {
+        Router.Post.like(id: post.id).response {
 
             if $0.result.isFailure {
                 sender.isUserInteractionEnabled = true
@@ -88,7 +88,7 @@ class TextPostTableViewCell: UITableViewCell {
 
         sender.isUserInteractionEnabled = false
 
-        Router.Post.Bookmark(id: post.id).response {
+        Router.Post.bookmark(id: post.id).response {
 
             if $0.result.isFailure {
                 sender.isUserInteractionEnabled = true

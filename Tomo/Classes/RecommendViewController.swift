@@ -93,7 +93,7 @@ extension RecommendViewController {
 
         self.activityIndicator.startAnimating()
 
-        Router.Group.Find(parameters: parameters).response {
+        Router.Group.find(parameters: parameters).response {
 
             self.activityIndicator.stopAnimating()
 
@@ -318,7 +318,7 @@ extension RecommendViewController: UISearchBarDelegate {
 
         self.activityIndicator.startAnimating()
 
-        Router.Group.Find(parameters: parameters).response {
+        Router.Group.find(parameters: parameters).response {
 
             self.activityIndicator.stopAnimating()
 

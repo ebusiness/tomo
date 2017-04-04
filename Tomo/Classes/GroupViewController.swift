@@ -144,7 +144,7 @@ extension GroupViewController {
         parameters.page = self.page
         parameters.type = .station
 
-        Router.Group.Find(parameters: parameters).response {
+        Router.Group.find(parameters: parameters).response {
 
             if $0.result.isFailure {
                 self.isLoading = false

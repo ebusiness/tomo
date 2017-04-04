@@ -161,7 +161,7 @@ extension UserPostsViewController {
 
         self.isLoading = true
 
-        let request = Router.User.Posts(id: self.user.id, before: oldestContent?.createDate.timeIntervalSince1970)
+        let request = Router.User.posts(id: self.user.id, before: oldestContent?.createDate.timeIntervalSince1970)
 
         request.response {
 

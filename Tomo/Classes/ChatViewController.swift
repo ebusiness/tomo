@@ -71,7 +71,7 @@ extension ChatViewController {
             return
         }
 
-        Router.Message.FindByUserId(id: friendId, before: nil).response { res in
+        Router.Message.findByUserId(id: friendId, before: nil).response { res in
             if res.result.isFailure {
                 return
             }
@@ -95,7 +95,7 @@ extension ChatViewController {
             return
         }
 
-        Router.GroupMessage.FindByGroupId(id: groupId, before: nil).response { res in
+        Router.GroupMessage.findByGroupId(id: groupId, before: nil).response { res in
             if res.result.isFailure {
                 return
             }
@@ -158,7 +158,7 @@ extension ChatViewController {
             return
         }
 
-        Router.Message.SendTo(id: id, type: type, content: text).response {
+        Router.Message.sendTo(id: id, type: type, content: text).response {
             if $0.result.isFailure {
                 return
             }
@@ -174,7 +174,7 @@ extension ChatViewController {
             return
         }
 
-        Router.GroupMessage.SendByGroupId(id: groupId, type: type, content: text)
+        Router.GroupMessage.sendByGroupId(id: groupId, type: type, content: text)
             .response {
                 if $0.result.isFailure {
                     return

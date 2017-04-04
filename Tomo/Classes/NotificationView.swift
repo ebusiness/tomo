@@ -46,20 +46,20 @@ class NotificationView: UIView {
         if let event = ListenerEvent(rawValue: self.notification.type) {
 
             switch event {
-            case .Announcement:
+            case .announcement:
                 return
-            case .GroupMessage: // GroupMessage
+            case .groupMessage: // GroupMessage
                 let url = URL(string: "tomo://\(self.notification.type)/\(self.notification.targetId)")!
                 URLSchemesController.shared.handleOpen(url: url)
 
-            case .Message: // Message
+            case .message: // Message
                 fallthrough
 
-            case .FriendAccepted, .FriendRefused, .FriendBreak, .FriendInvited: // User
+            case .friendAccepted, .friendRefused, .friendBreak, .friendInvited: // User
 
                 self.avatarTapped(sender)
 
-            case .PostNew, .PostLiked, .PostCommented, .PostBookmarked: // Post
+            case .postNew, .postLiked, .postCommented, .postBookmarked: // Post
                 let url = URL(string: "tomo://\(self.notification.type)/\(self.notification.targetId)")!
                 URLSchemesController.shared.handleOpen(url: url)
 

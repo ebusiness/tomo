@@ -259,7 +259,7 @@ extension PostDetailViewController {
             optionalList["举报此内容"] = { _ in
 
                 Util.alert(parentvc: self, title: "举报此内容", message: "您确定要举报此内容吗？") { _ in
-                    Router.Report.Post(id: self.post.id).response { _ in
+                    Router.Report.post(id: self.post.id).response { _ in
                         Util.showInfo(title: "举报信息已发送")
                         self.navigationController?.pop(animated: true)
                     }
@@ -270,7 +270,7 @@ extension PostDetailViewController {
         if post.owner.id == me.id {
             optionalList["删除"] = { _ in
                 Util.alert(parentvc: self, title: "删除帖子", message: "确定删除该帖子吗？") { _ in
-                    Router.Post.Delete(id: self.post.id).response { _ in
+                    Router.Post.delete(id: self.post.id).response { _ in
                         Util.showInfo(title: "帖子已删除")
                         // TODO remove the post in HomeViewController
                         self.navigationController?.pop(animated: true)
@@ -286,7 +286,7 @@ extension PostDetailViewController {
 
         sender.isUserInteractionEnabled = false
 
-        Router.Post.Like(id: post.id).response {
+        Router.Post.like(id: post.id).response {
 
             if $0.result.isFailure {
                 sender.isUserInteractionEnabled = true
@@ -309,7 +309,7 @@ extension PostDetailViewController {
 
         sender.isUserInteractionEnabled = false
 
-        Router.Post.Bookmark(id: post.id).response {
+        Router.Post.bookmark(id: post.id).response {
 
             if $0.result.isFailure {
                 sender.isUserInteractionEnabled = true
@@ -358,7 +358,7 @@ extension PostDetailViewController {
 
         let commentContent = self.commentTextView.text.trimmed()
 
-        Router.Post.Comment(id: self.post.id, content: commentContent).response {
+        Router.Post.comment(id: self.post.id, content: commentContent).response {
 
             if $0.result.isFailure { return }
 

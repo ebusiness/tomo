@@ -375,7 +375,7 @@ extension MyAccountEditViewController {
 
         guard parameters.getParameters() != nil else { return }
 
-        Router.Setting.UpdateUserInfo(parameters: parameters).response {
+        Router.Setting.updateUserInfo(parameters: parameters).response {
             if $0.result.isFailure { return }
 
             // TODO: this is wrong! 'me' was completly replaced by new object!

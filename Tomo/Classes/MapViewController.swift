@@ -225,7 +225,7 @@ extension MapViewController {
     }
 
     private func findGroups(parameters: Router.Group.MapParameters) {
-        Router.Group.Map(parameters: parameters).response {
+        Router.Group.map(parameters: parameters).response {
             if $0.result.isFailure {
                 self.segmentedControl.isEnabled = true
                 return
@@ -243,7 +243,7 @@ extension MapViewController {
     }
 
     private func findFriends() {
-        Router.User.Map.response {
+        Router.User.map.response {
             if $0.result.isFailure {
                 self.segmentedControl.isEnabled = true
                 return

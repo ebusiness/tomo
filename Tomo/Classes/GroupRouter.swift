@@ -11,28 +11,28 @@ extension Router {
 
     enum Group: APIRoute {
 
-        case FindById(id: String)
-        case Find(parameters: FindParameters)
-        case FindPosts(id: String, before: TimeInterval?)
+        case findById(id: String)
+        case find(parameters: FindParameters)
+        case findPosts(id: String, before: TimeInterval?)
 
-        case Create(parameters: CreateParameters)
+        case create(parameters: CreateParameters)
 
-        case Join(id: String)
-        case Leave(id: String)
+        case join(id: String)
+        case leave(id: String)
 
-        case Map(parameters: MapParameters)
+        case map(parameters: MapParameters)
 
         var path: String {
             switch self {
-            case let .FindById(id):
+            case let .findById(id):
                 return "/groups/\(id)"
-            case let .Join(id):
+            case let .join(id):
                 return "/groups/\(id)/join"
-            case let .Leave(id):
+            case let .leave(id):
                 return "/groups/\(id)/leave"
-            case let .FindPosts(id, _):
+            case let .findPosts(id, _):
                 return "/groups/\(id)/posts"
-            case .Map:
+            case .map:
                 return "/map/groups"
             default:
                 return "/groups"
@@ -40,11 +40,11 @@ extension Router {
         }
         var method: RouteMethod {
             switch self {
-            case .Create:
+            case .create:
                 return .POST
-            case .Join:
+            case .join:
                 return .PATCH
-            case .Leave:
+            case .leave:
                 return .PATCH
             default:
                 return .GET
@@ -52,15 +52,15 @@ extension Router {
         }
         var parameters: [String: Any]? {
             switch self {
-            case let .Find(parameters):
+            case let .find(parameters):
                 return parameters.getParameters()
-            case let .Create(parameters):
+            case let .create(parameters):
                 return parameters.getParameters()
-            case let .FindPosts(_, before):
+            case let .findPosts(_, before):
                 if let before = before {
                     return ["before": String(before)]
                 }
-            case let .Map(parameters):
+            case let .map(parameters):
                 return parameters.getParameters()
             default:
                 return nil
@@ -71,11 +71,11 @@ extension Router {
 }
 
 extension Router.Group {
-    enum Category: String  {
+    enum Category: String {
         case mine, discover, all
     }
 
-    enum `Type`: String  {
+    enum `Type`: String {
         case station
     }
 
