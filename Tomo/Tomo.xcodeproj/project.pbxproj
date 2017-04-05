@@ -10,6 +10,8 @@
 		17B993011AF353D000204E97 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B993001AF353D000204E97 /* amrFileCodec.m */; };
 		17B993081AF3540D00204E97 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17B993071AF3540D00204E97 /* libopencore-amrnb.a */; };
 		1F123E9E1E517E7100466750 /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9B9621C5A3BD0008BB6ED /* GroupViewController.swift */; };
+		1F4EE3611E948F4800A56C1B /* ProjectSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4EE3601E948F4800A56C1B /* ProjectSearchViewController.swift */; };
+		1F4EE36C1E949BBC00A56C1B /* ProjectSearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F4EE36B1E949BBC00A56C1B /* ProjectSearch.storyboard */; };
 		1F7AEE4A1E5EB988009F3806 /* ChatTableViewTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F7AEE491E5EB988009F3806 /* ChatTableViewTextCell.xib */; };
 		1F7AEE4C1E5EB99F009F3806 /* ChatTableViewImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F7AEE4B1E5EB99F009F3806 /* ChatTableViewImageCell.xib */; };
 		1F7AEE4E1E5EB9C8009F3806 /* ChatTableViewTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7AEE4D1E5EB9C8009F3806 /* ChatTableViewTextCell.swift */; };
@@ -142,6 +144,8 @@
 		1F26B2991BAA61D10063AC6B /* GroupDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupDetailViewController.swift; path = Classes/GroupDetailViewController.swift; sourceTree = "<group>"; };
 		1F36D6E51C3E2DD8007769F0 /* UserAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserAnnotation.swift; path = Classes/UserAnnotation.swift; sourceTree = "<group>"; };
 		1F36D6E71C3E2E4C007769F0 /* UserAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserAnnotationView.swift; path = Classes/UserAnnotationView.swift; sourceTree = "<group>"; };
+		1F4EE3601E948F4800A56C1B /* ProjectSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectSearchViewController.swift; sourceTree = "<group>"; };
+		1F4EE36B1E949BBC00A56C1B /* ProjectSearch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProjectSearch.storyboard; sourceTree = "<group>"; };
 		1F6AE7841B6F1A2300D7F488 /* PostAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostAnnotation.swift; path = Classes/PostAnnotation.swift; sourceTree = "<group>"; };
 		1F79C1B71B5E730E008800E1 /* SearchFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchFriendViewController.swift; path = Classes/SearchFriendViewController.swift; sourceTree = "<group>"; };
 		1F7AEE491E5EB988009F3806 /* ChatTableViewTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTableViewTextCell.xib; sourceTree = "<group>"; };
@@ -483,6 +487,7 @@
 				559DCAD41C5FB373003FA73C /* Map.storyboard */,
 				D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */,
 				29CA441D1AD4CAF0009EB177 /* Setting.storyboard */,
+				1F4EE36B1E949BBC00A56C1B /* ProjectSearch.storyboard */,
 			);
 			name = storyboard;
 			sourceTree = "<group>";
@@ -496,6 +501,7 @@
 				D040E1641BDDC00D00417174 /* RecommendViewController.swift */,
 				29D398DA1ACB9C9100FB7E40 /* RegViewController.swift */,
 				1FE7CEF41B8C9561006700FC /* SignUpViewController.swift */,
+				1F4EE3601E948F4800A56C1B /* ProjectSearchViewController.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -772,6 +778,7 @@
 				1F7AEE4C1E5EB99F009F3806 /* ChatTableViewImageCell.xib in Resources */,
 				1FA76AFE1BA27B1E004776B0 /* Group.storyboard in Resources */,
 				290134DF1AC3991C00BBFE29 /* Images.xcassets in Resources */,
+				1F4EE36C1E949BBC00A56C1B /* ProjectSearch.storyboard in Resources */,
 				296D8BC31AFC5A680058D400 /* LaunchScreen.xib in Resources */,
 				D0A104951BEB055100AEE356 /* statements.html in Resources */,
 			);
@@ -816,6 +823,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F4EE3611E948F4800A56C1B /* ProjectSearchViewController.swift in Sources */,
 				D097AEA01E553D1300615728 /* UIImage.swift in Sources */,
 				D0A7C89C1E1CD1C00046E571 /* CommentEntity.swift in Sources */,
 				D0A7C8931E1CD03D0046E571 /* SignupRouter.swift in Sources */,

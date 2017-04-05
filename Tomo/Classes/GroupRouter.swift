@@ -80,8 +80,8 @@ extension Router.Group {
     }
 
     struct FindParameters {
-        var category: Category , page: Int?
-        var type: Type?, name: String?, after: TimeInterval?, coordinate: [Double]?, hasMembers: Bool?
+        var category: Category, page: Int?
+        var type: Type?, name: String?, after: TimeInterval?, coordinate: [Double]?, hasMembers: Bool?, box: [Double]?
 
         init(category: Category) {
             self.category = category
@@ -101,6 +101,7 @@ extension Router.Group {
                 parameters["after"] = String(after)
             }
             parameters["coordinate"] = coordinate
+            parameters["box"] = box
             parameters["hasMembers"] = hasMembers
 
             return parameters
