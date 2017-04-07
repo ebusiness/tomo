@@ -30,31 +30,31 @@ final class RecommendViewController: UIViewController {
 
     fileprivate var recommendGroups: [GroupEntity]? {
         didSet {
-
-            let firstItemIndex = IndexPath(row: 0, section: 0)
-            var removeIndex: [IndexPath] = []
-            var insertIndex: [IndexPath] = []
-
-            oldValue?.forEach { _ in
-                removeIndex.append(IndexPath(row: removeIndex.count, section: 0))
-            }
-
-            if self.recommendGroups == nil { self.recommendGroups = [] }
-
-            if let primaryGroup = me.primaryGroup {
-                self.recommendGroups = self.recommendGroups?.filter { $0.id != primaryGroup.id }
-                self.recommendGroups?.insert(primaryGroup, at: 0)
-            }
-            self.recommendGroups?.forEach { _ in
-                insertIndex.append(IndexPath(row: insertIndex.count, section: 0))
-            }
-
-            self.recommendGroupCollectionView.performBatchUpdates({
-                self.recommendGroupCollectionView.deleteItems(at: removeIndex)
-                self.recommendGroupCollectionView.insertItems(at: insertIndex)
-            }) { _ in
-                self.recommendGroupCollectionView.scrollToItem(at: firstItemIndex, at: .left, animated: true)
-            }
+//
+//            let firstItemIndex = IndexPath(row: 0, section: 0)
+//            var removeIndex: [IndexPath] = []
+//            var insertIndex: [IndexPath] = []
+//
+//            oldValue?.forEach { _ in
+//                removeIndex.append(IndexPath(row: removeIndex.count, section: 0))
+//            }
+//
+//            if self.recommendGroups == nil { self.recommendGroups = [] }
+//
+//            if let primaryGroup = me.primaryGroup {
+//                self.recommendGroups = self.recommendGroups?.filter { $0.id != primaryGroup.id }
+//                self.recommendGroups?.insert(primaryGroup, at: 0)
+//            }
+//            self.recommendGroups?.forEach { _ in
+//                insertIndex.append(IndexPath(row: insertIndex.count, section: 0))
+//            }
+//
+//            self.recommendGroupCollectionView.performBatchUpdates({
+//                self.recommendGroupCollectionView.deleteItems(at: removeIndex)
+//                self.recommendGroupCollectionView.insertItems(at: insertIndex)
+//            }) { _ in
+//                self.recommendGroupCollectionView.scrollToItem(at: firstItemIndex, at: .left, animated: true)
+//            }
         }
     }
 
@@ -62,13 +62,13 @@ final class RecommendViewController: UIViewController {
 
         super.viewDidLoad()
 
-        if let primaryGroup = me.primaryGroup {
-            self.maskView.alpha = 0
-            self.selectGroup(group: primaryGroup)
-        }
-        LocationController.shareInstance.doActionWithLocation {
-            self.getRecommendInfo(location: $0)
-        }
+//        if let primaryGroup = me.primaryGroup {
+//            self.maskView.alpha = 0
+//            self.selectGroup(group: primaryGroup)
+//        }
+//        LocationController.shareInstance.doActionWithLocation {
+//            self.getRecommendInfo(location: $0)
+//        }
     }
 
     override var prefersStatusBarHidden: Bool {

@@ -93,7 +93,8 @@ extension AppDelegate {
                 me = Account($0.result.value!)
 
                 // if I don't have primary group, take me to the primary group select view
-                identifier = me.primaryGroup == nil ? "RecommendView" : "TabBarController"
+//                identifier = me.projects?.isEmpty ?? true ? "RecommendView" : "TabBarController"
+                identifier = "TabBarController"
             }
 
             let rootViewController = Util.createViewController(storyboardName: "Main", id: identifier)

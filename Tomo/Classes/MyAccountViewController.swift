@@ -192,9 +192,9 @@ extension MyAccountViewController {
             self.addressLabel.text = address
         }
 
-        if let stationName = me.primaryGroup?.name {
-            self.primaryGroup.text = stationName
-        }
+//        if let stationName = me.primaryGroup?.name {
+//            self.primaryGroup.text = stationName
+//        }
 
         if me.notifications > 0 {
             self.badgeView.text = String(me.notifications)

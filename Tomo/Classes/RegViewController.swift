@@ -114,7 +114,8 @@ extension RegViewController {
     fileprivate func changeRootToTab() {
 
         Util.dismissHUD()
-        let identifier = me.primaryGroup == nil ? "RecommendView" : "TabBarController"
+//        let identifier = me.projects?.isEmpty ?? true ? "RecommendView" : "TabBarController"
+        let identifier = "TabBarController"
         let viewController = Util.createViewController(storyboardName: "Main", id: identifier)
         Util.changeRootViewController(from: self, to: viewController)
     }

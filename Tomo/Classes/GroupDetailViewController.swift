@@ -83,14 +83,14 @@ extension GroupDetailViewController {
 
         sender.isUserInteractionEnabled = false
 
-        Router.Group.join(id: self.group.id).response {
-            if $0.result.isFailure {
-                sender.isUserInteractionEnabled = true
-                return
-            } else {
-                me.joinGroup(group: self.group)
-            }
-        }
+//        Router.Group.join(id: self.group.id).response {
+//            if $0.result.isFailure {
+//                sender.isUserInteractionEnabled = true
+//                return
+//            } else {
+//                me.joinGroup(group: self.group)
+//            }
+//        }
     }
 
     @IBAction func didCreatePost(_ segue: UIStoryboardSegue) {
@@ -221,28 +221,28 @@ extension GroupDetailViewController {
 
     fileprivate func configDisplay() {
 
-        self.joinButton.layer.borderColor = UIColor.white.cgColor
-        self.joinButton.layer.borderWidth = 2
-
-        self.title = self.group.name
-        self.coverImageView.sd_setImage(with: URL(string: group.cover), placeholderImage: defaultGroupImage)
-
-        // set the header view's size according the screen size
-        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPoint.zero, size: self.headerViewSize)
-
-        guard let myGroups = me.groups else { return }
-
-        if myGroups.contains(self.group.id) {
-            _ = navigationItem.rightBarButtonItems?.map {
-                $0.isEnabled = true
-            }
-            self.joinButton.isHidden = true
-        } else {
-            _ = navigationItem.rightBarButtonItems?.map {
-                $0.isEnabled = false
-            }
-            self.joinButton.isHidden = false
-        }
+//        self.joinButton.layer.borderColor = UIColor.white.cgColor
+//        self.joinButton.layer.borderWidth = 2
+//
+//        self.title = self.group.name
+//        self.coverImageView.sd_setImage(with: URL(string: group.cover), placeholderImage: defaultGroupImage)
+//
+//        // set the header view's size according the screen size
+//        self.tableView.tableHeaderView?.frame = CGRect(origin: CGPoint.zero, size: self.headerViewSize)
+//
+//        guard let myGroups = me.groups else { return }
+//
+//        if myGroups.contains(self.group.id) {
+//            _ = navigationItem.rightBarButtonItems?.map {
+//                $0.isEnabled = true
+//            }
+//            self.joinButton.isHidden = true
+//        } else {
+//            _ = navigationItem.rightBarButtonItems?.map {
+//                $0.isEnabled = false
+//            }
+//            self.joinButton.isHidden = false
+//        }
     }
 
     // Fetch more post as use scroll down to the bottom of table view.

@@ -39,11 +39,14 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r9H-Tk-PDj">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Dxj-lY-uTZ" id="jGJ-br-1if"/>
+                                </connections>
                             </mapView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="搜索您所在的项目名称" minimumFontSize="12" background="searchBar" translatesAutoresizingMaskIntoConstraints="NO" id="6UC-Xv-uQ0">
-                                <rect key="frame" x="6" y="32" width="363" height="46"/>
+                                <rect key="frame" x="6" y="32" width="363" height="52"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="46" id="OPU-pa-oBW"/>
+                                    <constraint firstAttribute="height" constant="52" id="OPU-pa-oBW"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -59,7 +62,7 @@
                                 </connections>
                             </textField>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arn-Tx-P5X">
-                                <rect key="frame" x="326" y="40" width="30" height="30"/>
+                                <rect key="frame" x="326" y="43" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="CIE-9x-ki5"/>
                                     <constraint firstAttribute="width" constant="30" id="XJi-Vg-4Fh"/>
@@ -69,6 +72,32 @@
                                     <action selector="searchCancelTapped:" destination="Dxj-lY-uTZ" eventType="touchUpInside" id="vp0-Al-H1f"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bc7-SM-rnE">
+                                <rect key="frame" x="121" y="92" width="132" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="NFZ-Z1-sRa"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="0.0"/>
+                                <state key="normal" title="在此区域搜索" backgroundImage="buttonNormal">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="highlighted" backgroundImage="buttonPressed"/>
+                                <connections>
+                                    <action selector="searchHereTapped:" destination="Dxj-lY-uTZ" eventType="touchUpInside" id="a9F-zC-QB8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1e-Mt-bJi" userLabel="返回">
+                                <rect key="frame" x="17" y="43" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="hvl-8G-i9Z"/>
+                                    <constraint firstAttribute="width" constant="30" id="lnf-fI-psc"/>
+                                </constraints>
+                                <state key="normal" image="arrowBack"/>
+                                <connections>
+                                    <action selector="backButtonPressed:" destination="Dxj-lY-uTZ" eventType="touchUpInside" id="285-9X-GDe"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -76,17 +105,22 @@
                             <constraint firstAttribute="trailing" secondItem="6UC-Xv-uQ0" secondAttribute="trailing" constant="6" id="7JY-ON-rLO"/>
                             <constraint firstItem="r9H-Tk-PDj" firstAttribute="leading" secondItem="oXJ-BN-fQF" secondAttribute="leading" id="DQe-f3-p7G"/>
                             <constraint firstAttribute="trailing" secondItem="r9H-Tk-PDj" secondAttribute="trailing" id="FSU-Op-T2j"/>
+                            <constraint firstItem="Bc7-SM-rnE" firstAttribute="centerX" secondItem="6UC-Xv-uQ0" secondAttribute="centerX" id="Glt-Od-iOO"/>
                             <constraint firstItem="r9H-Tk-PDj" firstAttribute="top" secondItem="oXJ-BN-fQF" secondAttribute="top" id="HbD-iF-LJ8"/>
                             <constraint firstItem="6UC-Xv-uQ0" firstAttribute="leading" secondItem="oXJ-BN-fQF" secondAttribute="leading" constant="6" id="OS5-cj-Wg1"/>
                             <constraint firstItem="Y2Q-Sh-Ndm" firstAttribute="top" secondItem="r9H-Tk-PDj" secondAttribute="bottom" id="b0g-5L-qOf"/>
+                            <constraint firstItem="d1e-Mt-bJi" firstAttribute="leading" secondItem="6UC-Xv-uQ0" secondAttribute="leading" constant="11" id="ocM-et-EIr"/>
                             <constraint firstItem="6UC-Xv-uQ0" firstAttribute="top" secondItem="oXJ-BN-fQF" secondAttribute="top" constant="32" id="pGH-cF-Ul5"/>
+                            <constraint firstItem="d1e-Mt-bJi" firstAttribute="centerY" secondItem="6UC-Xv-uQ0" secondAttribute="centerY" id="sS7-6w-rle"/>
                             <constraint firstAttribute="trailingMargin" secondItem="arn-Tx-P5X" secondAttribute="trailing" constant="3" id="uNE-Nq-zus"/>
+                            <constraint firstItem="Bc7-SM-rnE" firstAttribute="top" secondItem="6UC-Xv-uQ0" secondAttribute="bottom" constant="8" id="x8A-QD-02V"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ehx-hS-67W"/>
                     <connections>
                         <outlet property="mapView" destination="r9H-Tk-PDj" id="z0B-DL-IDt"/>
                         <outlet property="searchCancelButton" destination="arn-Tx-P5X" id="fAf-XM-Q8I"/>
+                        <outlet property="searchHereButton" destination="Bc7-SM-rnE" id="r5o-fM-H8N"/>
                         <outlet property="searchTextField" destination="6UC-Xv-uQ0" id="oKu-sH-jAI"/>
                     </connections>
                 </viewController>
@@ -96,7 +130,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrowBack" width="24" height="24"/>
+        <image name="buttonNormal" width="16" height="50"/>
+        <image name="buttonPressed" width="16" height="50"/>
         <image name="close" width="24" height="24"/>
-        <image name="searchBar" width="37" height="46"/>
+        <image name="searchBar" width="8" height="52"/>
     </resources>
 </document>

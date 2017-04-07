@@ -111,23 +111,23 @@ final class StationCollectionViewCell: UICollectionViewCell {
 
     private func configDisplay() {
 
-        self.nameLabel.text = self.group.name
-
-        self.backgroundImageView.sd_setImage(with: URL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
-
-        // If my group list has this group's id, then I had joined this group
-        // so make the join button to leave button.
-        if let myGroups = me.groups, myGroups.contains(self.group.id) {
-
-            self.isJoined = true
-            self.makeLeaveButton()
-
-        // Otherwise I haven't join this group, make up the join button.
-        } else {
-
-            self.isJoined = false
-            self.makeJoinButton()
-        }
+//        self.nameLabel.text = self.group.name
+//
+//        self.backgroundImageView.sd_setImage(with: URL(string: group.cover), placeholderImage: TomoConst.Image.DefaultGroup)
+//
+//        // If my group list has this group's id, then I had joined this group
+//        // so make the join button to leave button.
+//        if let myGroups = me.groups, myGroups.contains(self.group.id) {
+//
+//            self.isJoined = true
+//            self.makeLeaveButton()
+//
+//        // Otherwise I haven't join this group, make up the join button.
+//        } else {
+//
+//            self.isJoined = false
+//            self.makeJoinButton()
+//        }
     }
 
     // Make the action button as join button
@@ -147,54 +147,54 @@ final class StationCollectionViewCell: UICollectionViewCell {
     // Toggle the group join status when the action button tapped
     @IBAction func actionButtonTapped(_ sender: Any) {
 
-        if self.isJoined {
-
-            // If this is a joined group and the button was tapped,
-            // Make the leave group request.
-            Router.Group.leave(id: group.id).response {
-
-                if $0.result.isFailure { return }
-
-                // Acknowledge the group data
-                let group = GroupEntity($0.result.value!)
-
-                // remove it from my joined group list
-                me.leaveGroup(group: group)
-
-                // mark as not joined
-                self.isJoined = false
-
-                // animate to the join button
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.makeJoinButton()
-                    self.setNeedsLayout()
-                })
-            }
-
-        } else  {
-
-            // If this is a group I haven't join, and the button was tapped,
-            // Make the join group request.
-            Router.Group.join(id: group.id).response {
-
-                if $0.result.isFailure { return }
-
-                // Acknowledge the group data
-                let group = GroupEntity($0.result.value!)
-
-                // add the group to my joined group list
-                me.joinGroup(group: group)
-
-                // mark as joined
-                self.isJoined = true
-
-                // animate to the leave button
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.makeLeaveButton()
-                    self.setNeedsLayout()
-                })
-            }
-        }
+//        if self.isJoined {
+//
+//            // If this is a joined group and the button was tapped,
+//            // Make the leave group request.
+//            Router.Group.leave(id: group.id).response {
+//
+//                if $0.result.isFailure { return }
+//
+//                // Acknowledge the group data
+//                let group = GroupEntity($0.result.value!)
+//
+//                // remove it from my joined group list
+//                me.leaveGroup(group: group)
+//
+//                // mark as not joined
+//                self.isJoined = false
+//
+//                // animate to the join button
+//                UIView.animate(withDuration: 0.3, animations: {
+//                    self.makeJoinButton()
+//                    self.setNeedsLayout()
+//                })
+//            }
+//
+//        } else  {
+//
+//            // If this is a group I haven't join, and the button was tapped,
+//            // Make the join group request.
+//            Router.Group.join(id: group.id).response {
+//
+//                if $0.result.isFailure { return }
+//
+//                // Acknowledge the group data
+//                let group = GroupEntity($0.result.value!)
+//
+//                // add the group to my joined group list
+//                me.joinGroup(group: group)
+//
+//                // mark as joined
+//                self.isJoined = true
+//
+//                // animate to the leave button
+//                UIView.animate(withDuration: 0.3, animations: {
+//                    self.makeLeaveButton()
+//                    self.setNeedsLayout()
+//                })
+//            }
+//        }
 
     }
 

@@ -243,26 +243,26 @@ extension MapViewController {
     }
 
     private func findFriends() {
-        Router.User.map.response {
-            if $0.result.isFailure {
-                self.segmentedControl.isEnabled = true
-                return
-            }
-
-            guard let users: [UserEntity] = UserEntity.collection($0.result.value!) else { return }
-
-            let annotations = users.map { user -> UserAnnotation in
-                let annotation = UserAnnotation()
-                annotation.user = user
-                if let station = user.primaryGroup {
-                    if let lon = station.coordinate?[1], let lat = station.coordinate?[0] {
-                        annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                    }
-                }
-                return annotation
-            }
-            self.addAnnotations(annotations)
-        }
+//        Router.User.map.response {
+//            if $0.result.isFailure {
+//                self.segmentedControl.isEnabled = true
+//                return
+//            }
+//
+//            guard let users: [UserEntity] = UserEntity.collection($0.result.value!) else { return }
+//
+//            let annotations = users.map { user -> UserAnnotation in
+//                let annotation = UserAnnotation()
+//                annotation.user = user
+//                if let station = user.primaryGroup {
+//                    if let lon = station.coordinate?[1], let lat = station.coordinate?[0] {
+//                        annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+//                    }
+//                }
+//                return annotation
+//            }
+//            self.addAnnotations(annotations)
+//        }
     }
 
     private func addAnnotations(_ annotations: [MKAnnotation]) {

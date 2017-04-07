@@ -220,29 +220,29 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
 
     @IBAction func actionButtonTapped(_ sender: UIButton) {
 
-        sender.isUserInteractionEnabled = false
-
-        if let myGroups = me.groups, myGroups.contains(self.group.id) {
-            self.leaveGroup()
-        } else {
-            self.joinGroup()
-        }
+//        sender.isUserInteractionEnabled = false
+//
+//        if let myGroups = me.groups, myGroups.contains(self.group.id) {
+//            self.leaveGroup()
+//        } else {
+//            self.joinGroup()
+//        }
     }
 
     private func didSetGroup() {
 
-        if let myGroups = me.groups, myGroups.contains(self.group.id) {
-
-            self.actionButton.setTitle(" 退出群组 ", for: .normal)
-            self.actionButton.backgroundColor = Palette.red.primaryColor
-            self.actionButton.sizeToFit()
-
-        } else  {
-
-            self.actionButton.setTitle(" 加入群组 ", for: .normal)
-            self.actionButton.backgroundColor = Palette.green.primaryColor
-            self.actionButton.sizeToFit()
-        }
+//        if let myGroups = me.groups, myGroups.contains(self.group.id) {
+//
+//            self.actionButton.setTitle(" 退出群组 ", for: .normal)
+//            self.actionButton.backgroundColor = Palette.red.primaryColor
+//            self.actionButton.sizeToFit()
+//
+//        } else  {
+//
+//            self.actionButton.setTitle(" 加入群组 ", for: .normal)
+//            self.actionButton.backgroundColor = Palette.green.primaryColor
+//            self.actionButton.sizeToFit()
+//        }
     }
 
     private func joinGroup() {
@@ -254,7 +254,7 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
                 return
             }
 
-            me.joinGroup(group: self.group)
+            me.joinProject(group: self.group)
             UIView.animate(withDuration: TomoConst.Duration.Short) {
                 self.didSetGroup()
             }
@@ -279,7 +279,7 @@ final class GroupDescriptionHeaderCell: UICollectionReusableView {
                     return
                 }
 
-                me.leaveGroup(group: self.group)
+                me.leaveProject(group: self.group)
                 UIView.animate(withDuration: TomoConst.Duration.Short) {
                     self.didSetGroup()
                 }

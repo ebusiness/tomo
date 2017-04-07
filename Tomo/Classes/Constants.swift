@@ -125,6 +125,10 @@ struct TomoConst {
         static let Medium = 20
         static let Long = 40
     }
+
+    struct NetResponseCode {
+        static let NoData = 404
+    }
 }
 
 let maxWidth: CGFloat = 500

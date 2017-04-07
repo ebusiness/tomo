@@ -31,7 +31,7 @@ class UserEntity: Entity {
 
     var address: String?
 
-    var primaryGroup: GroupEntity?
+    var projects: [UserProject]?
 
     var lastMessage: MessageEntity? {
         didSet {
@@ -74,8 +74,8 @@ class UserEntity: Entity {
 
         self.address = json["address"].string
 
-        if !( json["primaryGroup"].object is NSNull ) {
-            self.primaryGroup = GroupEntity(json["primaryGroup"])
+        if !( json["groups"].object is NSNull ) {
+            self.projects = json["groups"].arrayObject as? [UserProject]
         }
 
         if !( json["lastMessage"].object is NSNull ) {
@@ -92,12 +92,40 @@ extension UserEntity {
         return "\(lName) \(fName) "
     }
 }
-// MARK: - station
-//extension UserEntity {
-//    func addStation(stationId: String) {
-//        if stationId.length > 0 {
-//            self.stations = self.stations ?? []
-//            self.stations!.append(stationId)
-//        }
-//    }
-//}
+
+class UserProject: Entity {
+
+    var isPrimary: Bool!
+
+    var joinDate: Date?
+
+    var leaveDate: Date?
+
+    var project: GroupEntity!
+
+    init(project: GroupEntity) {
+        
+        self.isPrimary = true
+        self.project = project
+
+        super.init()
+    }
+
+    required init(_ json: JSON) {
+
+        super.init()
+
+        isPrimary = json["isPrimary"].boolValue
+
+        if let joinDate = json["joinDate"].string {
+            self.joinDate = joinDate.toDate(format: TomoConfig.Date.Format)
+        }
+
+        if let leaveDate = json["leaveDate"].string {
+            self.leaveDate = leaveDate.toDate(format: TomoConfig.Date.Format)
+        }
+
+        project = GroupEntity(json["group"])
+
+    }
+}

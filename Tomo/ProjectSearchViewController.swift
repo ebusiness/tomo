@@ -13,8 +13,13 @@ final class ProjectSearchViewController: UIViewController {
     @IBOutlet fileprivate weak var mapView: MKMapView!
     @IBOutlet fileprivate weak var searchTextField: UITextField!
     @IBOutlet fileprivate weak var searchCancelButton: UIButton!
+    @IBOutlet fileprivate weak var searchHereButton: UIButton!
 
     fileprivate var tapOnMapGuesture: UITapGestureRecognizer?
+    fileprivate var dragOnMapGuesture: UIPanGestureRecognizer?
+
+    fileprivate var searchHereButtonDisappearTimer: Timer?
+    fileprivate var userDragToShowSearhButton = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +35,13 @@ final class ProjectSearchViewController: UIViewController {
     @IBAction func searchTextChanged(_ sender: UITextField) {
         searchCancelButton.isHidden = !sender.hasText
     }
+    @IBAction func searchHereTapped(_ sender: UIButton) {
+        searchHereButtonFadeout()
+        searchProjectsInVision()
+    }
+    @IBAction func backButtonPressed(_ sender: Any) {
+        dismiss(animated: true)
+    }
 }
 
 // MARK: - internal methods
@@ -37,7 +49,11 @@ final class ProjectSearchViewController: UIViewController {
 extension ProjectSearchViewController {
     fileprivate func mapInit() {
 
-        centerUserLocation(isInit: true)
+        centerUserLocation()
+
+        dragOnMapGuesture = UIPanGestureRecognizer(target: self, action: #selector(dragOnMap(_:)))
+        dragOnMapGuesture?.delegate = self
+        mapView.addGestureRecognizer(dragOnMapGuesture!)
 
     }
 
@@ -52,7 +68,7 @@ extension ProjectSearchViewController {
         searchTextField.rightView = rightView
     }
 
-    fileprivate func centerUserLocation(isInit: Bool = false) {
+    fileprivate func centerUserLocation() {
         LocationController.shareInstance.doActionWithLocation { location in
 
             let noLocation = CLLocationCoordinate2D()
@@ -73,14 +89,12 @@ extension ProjectSearchViewController {
 
             self.mapView.setCenter(center, animated: false)
 
-            if isInit {
-                self.searchProjectsNearby()
-            }
+            self.searchProjectsInVision()
 
         }
     }
 
-    fileprivate func searchProjectsNearby() {
+    fileprivate func searchProjectsInVision() {
 
         let visibleMapRect = mapView.visibleMapRect
 
@@ -93,9 +107,24 @@ extension ProjectSearchViewController {
         parameters.type = .station
         parameters.box = [neCoord.latitude, neCoord.longitude, swCoord.latitude, swCoord.longitude]
 
-        Router.Group.find(parameters: parameters).response {
+        Router.Group.find(parameters: parameters).response { dataResponse in
+            if dataResponse.result.isFailure {
+                // 404: No result
+                if dataResponse.response?.statusCode == TomoConst.NetResponseCode.NoData {
+                    let alert = UIAlertController(title: nil,
+                                                  message: "在此区域内没有找到相关项目。",
+                                                  preferredStyle: .alert)
 
-            if $0.result.isFailure { return }
+                    let cancelAction = UIAlertAction(title: "确定",
+                                                     style: .cancel)
+
+                    alert.addAction(cancelAction)
+                    self.present(alert, animated: true)
+                }
+                return
+            } else {
+                print("data found")
+            }
         }
 
     }
@@ -130,6 +159,34 @@ extension ProjectSearchViewController {
         searchTextField.resignFirstResponder()
     }
 
+    @objc
+    fileprivate func searchHereButtonFadein() {
+
+        self.searchHereButton.isHidden = false
+        UIView.animate(withDuration: TomoConst.Duration.Short, animations: {
+            self.searchHereButton.alpha = 1
+        })
+        self.searchHereButtonDisappearTimer?.invalidate()
+        self.searchHereButtonDisappearTimer = nil
+        userDragToShowSearhButton = false
+
+    }
+
+    fileprivate func searchHereButtonFadeout() {
+        UIView.animate(withDuration: TomoConst.Duration.Medium, animations: {
+            self.searchHereButton.alpha = 0
+        }, completion: { _ in
+            self.searchHereButton.isHidden = true
+        })
+    }
+
+    @objc
+    fileprivate func dragOnMap(_ sender: UIPanGestureRecognizer) {
+        if sender.state == .began {
+            userDragToShowSearhButton = true
+        }
+    }
+
 }
 
 // MARK: - UITextFieldDelegate
@@ -138,4 +195,33 @@ extension ProjectSearchViewController: UITextFieldDelegate {
         lockMap()
     }
 
+}
+
+// MARK: - MKMapViewDelegate
+extension ProjectSearchViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        if searchHereButton.isHidden && userDragToShowSearhButton {
+            searchHereButtonDisappearTimer = Timer.scheduledTimer(timeInterval: TomoConst.Duration.Long,
+                                                                  target: self,
+                                                                  selector: #selector(searchHereButtonFadein),
+                                                                  userInfo: nil,
+                                                                  repeats: false)
+        }
+    }
+
+    func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+        searchHereButtonDisappearTimer?.invalidate()
+        searchHereButtonDisappearTimer = nil
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate
+extension ProjectSearchViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer == dragOnMapGuesture {
+            return true
+        }
+        return false
+    }
 }

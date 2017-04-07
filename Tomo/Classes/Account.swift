@@ -13,8 +13,6 @@ class Account: UserEntity {
 
     var friends: [String]?
 
-    var groups: [String]?
-
     var invitations: [String]?
 
     var blockUsers: [String]?
@@ -38,8 +36,6 @@ class Account: UserEntity {
         self.telNo = json["telNo"].string
 
         self.friends = json["friends"].arrayObject as? [String]
-
-        self.groups = json["groups"].arrayObject as? [String]
 
         self.invitations = json["invitations"].arrayObject as? [String]
 
@@ -145,33 +141,36 @@ extension Account {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didDeleteFriend"), object: self, userInfo: ["idOfDeletedFriend": user.id])
     }
 
-    func joinGroup(group: GroupEntity) {
+    func joinProject(group: GroupEntity) {
 
-        // TODO: my groups list is a list of id string, this may not right!
-
-        let groups = self.groups ?? []
+        let projects = self.projects ?? []
 
         // my groups list must not contain the group will be joined
-        guard !groups.contains(group.id) else { return }
+        guard !projects.contains(where: { userProject -> Bool in
+            return userProject.project.id == group.id
+        }) else { return }
 
         // add the group into my group list
-        self.groups?.append(group.id)
+        let newProject = UserProject(group)
+        self.projects?.append(newProject)
 
         // tell every observer the changes: which group was joined
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didJoinGroup"), object: self, userInfo: ["groupEntityOfNewGroup": group])
     }
 
-    func leaveGroup(group: GroupEntity) {
+    func leaveProject(group: GroupEntity) {
 
-        // TODO: my groups list is a list of id string, this may not right!
-
-        let groups = self.groups ?? []
+        let projects = self.projects ?? []
 
         // my groups list must contain the group will be left
-        guard groups.contains(group.id) else { return }
+        guard projects.contains(where: { userProject -> Bool in
+            return userProject.project.id == group.id
+        }) else { return }
 
         // remove the group from my groups list
-        self.groups?.remove(group.id)
+        self.projects = self.projects?.filter({ userProject -> Bool in
+            return userProject.project.id != group.id
+        })
 
         // tell every observer the changes: which group was left
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "didLeaveGroup"), object: self, userInfo: ["idOfDeletedGroup": group.id])

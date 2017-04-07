@@ -8,12 +8,12 @@
           "width" : 1
         },
         "cap-insets" : {
-          "right" : 4,
-          "left" : 4
+          "right" : 9,
+          "left" : 7
         }
       },
       "idiom" : "universal",
-      "filename" : "searchBar.png",
+      "filename" : "buttonPressed.png",
       "scale" : "1x"
     },
     {
@@ -24,12 +24,12 @@
           "width" : 1
         },
         "cap-insets" : {
-          "right" : 8,
-          "left" : 8
+          "right" : 18,
+          "left" : 14
         }
       },
       "idiom" : "universal",
-      "filename" : "searchBar@2x.png",
+      "filename" : "buttonPressed@2x.png",
       "scale" : "2x"
     },
     {
@@ -40,12 +40,12 @@
           "width" : 1
         },
         "cap-insets" : {
-          "right" : 12,
-          "left" : 12
+          "right" : 27,
+          "left" : 21
         }
       },
       "idiom" : "universal",
-      "filename" : "searchBar@3x.png",
+      "filename" : "buttonPressed@3x.png",
       "scale" : "3x"
     }
   ],

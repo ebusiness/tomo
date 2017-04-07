@@ -75,15 +75,15 @@ class UserCell: UITableViewCell {
 
     func setupDisplay() {
 
-        if let photo = user.photo {
-            avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: defaultAvatarImage)
-        }
-
-        userNameLabel.text = user.nickName
-        bioLabel.text = user.bio
-        if let groupName = user.primaryGroup?.name {
-            stationLabel.text = "\(groupName)"
-        }
+//        if let photo = user.photo {
+//            avatarImageView.sd_setImage(with: URL(string: photo), placeholderImage: defaultAvatarImage)
+//        }
+//
+//        userNameLabel.text = user.nickName
+//        bioLabel.text = user.bio
+//        if let groupName = user.primaryGroup?.name {
+//            stationLabel.text = "\(groupName)"
+//        }
     }
 
 }
