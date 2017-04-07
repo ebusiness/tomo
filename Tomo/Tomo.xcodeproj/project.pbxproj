@@ -68,7 +68,6 @@
 		D097AE9F1E553D1300615728 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AE981E553D1300615728 /* String.swift */; };
 		D097AEA01E553D1300615728 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AE991E553D1300615728 /* UIImage.swift */; };
 		D097AEA11E553D1300615728 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AE9A1E553D1300615728 /* UIViewController.swift */; };
-		D097AEA21E553D1300615728 /* WechatKit+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AE9B1E553D1300615728 /* WechatKit+RxSwift.swift */; };
 		D097AEA41E55421400615728 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097AEA31E55421400615728 /* Date.swift */; };
 		D0A0C02B1B5F585B00ABFA5F /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */; };
 		D0A104951BEB055100AEE356 /* statements.html in Resources */ = {isa = PBXBuildFile; fileRef = D0A104941BEB055100AEE356 /* statements.html */; };
@@ -231,7 +230,6 @@
 		D097AE981E553D1300615728 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		D097AE991E553D1300615728 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		D097AE9A1E553D1300615728 /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
-		D097AE9B1E553D1300615728 /* WechatKit+RxSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WechatKit+RxSwift.swift"; sourceTree = "<group>"; };
 		D097AEA31E55421400615728 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		D099B6171BDA3B63006C9D01 /* LocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationController.swift; path = Classes/LocationController.swift; sourceTree = "<group>"; };
 		D0A0C02A1B5F585B00ABFA5F /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Profile.storyboard; path = Classes/Profile.storyboard; sourceTree = "<group>"; };
@@ -613,7 +611,6 @@
 				D097AE981E553D1300615728 /* String.swift */,
 				D097AE991E553D1300615728 /* UIImage.swift */,
 				D097AE9A1E553D1300615728 /* UIViewController.swift */,
-				D097AE9B1E553D1300615728 /* WechatKit+RxSwift.swift */,
 				D0F5B1551E92416F0024F29B /* UIView.swift */,
 			);
 			path = Extensions;
@@ -820,7 +817,6 @@
 				D0A7C89C1E1CD1C00046E571 /* CommentEntity.swift in Sources */,
 				D0A7C8931E1CD03D0046E571 /* SignupRouter.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
-				D097AEA21E553D1300615728 /* WechatKit+RxSwift.swift in Sources */,
 				1F7AEE501E5EB9E0009F3806 /* ChatTableViewImageCell.swift in Sources */,
 				D0A7C88E1E1CD03D0046E571 /* MessageRouter.swift in Sources */,
 				D0E9B2811E24D11B00101277 /* RecommendStationTableViewCell.swift in Sources */,

@@ -24,7 +24,7 @@ extension Router {
 
         var method: RouteMethod {
             switch self {
-            case .updateDevice: return .POST
+            case .updateDevice: return .PUT
             case .updateUserInfo: return .PATCH
             case .findNotification: return .GET
             }
