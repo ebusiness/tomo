@@ -6,9 +6,9 @@
 //  Copyright © 2015 e-business. All rights reserved.
 //
 
-import UIKit
 import RxCocoa
 import RxSwift
+import UIKit
 
 class SignUpViewController: UIViewController {
 

@@ -160,7 +160,7 @@ fileprivate final class BadgeView: UIView {
         self.backgroundView.layer.borderWidth = 1
         self.backgroundView.layer.borderColor = UIColor.white.cgColor
         self.backgroundView.alpha = 0.8
-        self.addSubview(self.backgroundView)
+        self.addSubview(self.backgroundView) 
 
         self.backgroundView.translatesAutoresizingMaskIntoConstraints = false
         self.addConstraints(format: "H:|-\(padding)-[view]-\(padding)-|", views: ["view": self.backgroundView])

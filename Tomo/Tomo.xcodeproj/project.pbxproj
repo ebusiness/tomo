@@ -17,6 +17,10 @@
 		1F7AEE4E1E5EB9C8009F3806 /* ChatTableViewTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7AEE4D1E5EB9C8009F3806 /* ChatTableViewTextCell.swift */; };
 		1F7AEE501E5EB9E0009F3806 /* ChatTableViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7AEE4F1E5EB9E0009F3806 /* ChatTableViewImageCell.swift */; };
 		1FA76AFE1BA27B1E004776B0 /* Group.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FA76AFD1BA27B1E004776B0 /* Group.storyboard */; };
+		1FDE84F01E972F5A00D2E0D9 /* ProjectAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDE84EF1E972F5A00D2E0D9 /* ProjectAnnotation.swift */; };
+		1FDE84F21E9731A300D2E0D9 /* ProjectEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDE84F11E9731A300D2E0D9 /* ProjectEntity.swift */; };
+		1FDE84F41E976CFF00D2E0D9 /* ProjectRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDE84F31E976CFF00D2E0D9 /* ProjectRouter.swift */; };
+		1FDE84F61E97A57700D2E0D9 /* MKMapView+AggregatebleAnnotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDE84F51E97A57700D2E0D9 /* MKMapView+AggregatebleAnnotations.swift */; };
 		1FEE80E81B4E552A0061B913 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FEE80E71B4E552A0061B913 /* Home.storyboard */; };
 		1FF6930D1C1E95FC00777BD5 /* Landing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FF6930C1C1E95FC00777BD5 /* Landing.storyboard */; };
 		1FF9B95F1C59EB5C008BB6ED /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FF9B95E1C59EB5C008BB6ED /* Chat.storyboard */; };
@@ -167,6 +171,10 @@
 		1FCA1E621B71D0C8000F2936 /* CommentEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentEntity.swift; path = Classes/CommentEntity.swift; sourceTree = "<group>"; };
 		1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationEntity.swift; path = Classes/NotificationEntity.swift; sourceTree = "<group>"; };
 		1FCA1E661B722260000F2936 /* MessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageEntity.swift; path = Classes/MessageEntity.swift; sourceTree = "<group>"; };
+		1FDE84EF1E972F5A00D2E0D9 /* ProjectAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectAnnotation.swift; sourceTree = "<group>"; };
+		1FDE84F11E9731A300D2E0D9 /* ProjectEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectEntity.swift; sourceTree = "<group>"; };
+		1FDE84F31E976CFF00D2E0D9 /* ProjectRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectRouter.swift; sourceTree = "<group>"; };
+		1FDE84F51E97A57700D2E0D9 /* MKMapView+AggregatebleAnnotations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MKMapView+AggregatebleAnnotations.swift"; sourceTree = "<group>"; };
 		1FE7CEF41B8C9561006700FC /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = Classes/SignUpViewController.swift; sourceTree = "<group>"; };
 		1FEA3CFA1BB391780037F3C5 /* RecommendStationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecommendStationTableViewCell.swift; path = Classes/RecommendStationTableViewCell.swift; sourceTree = "<group>"; };
 		1FEE80E71B4E552A0061B913 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Home.storyboard; path = Classes/Home.storyboard; sourceTree = "<group>"; };
@@ -348,6 +356,7 @@
 				1FCA1E641B7221F7000F2936 /* NotificationEntity.swift */,
 				1F9ACAF91B69F99F00648A82 /* PostEntity.swift */,
 				1F9ACAFB1B69FA1A00648A82 /* UserEntity.swift */,
+				1FDE84F11E9731A300D2E0D9 /* ProjectEntity.swift */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -437,6 +446,7 @@
 			children = (
 				1FAA70FA1BBB904300BCE5AF /* Components */,
 				1FAA70F81BBB8EE600BCE5AF /* AggregatableAnnotation.swift */,
+				1FDE84F51E97A57700D2E0D9 /* MKMapView+AggregatebleAnnotations.swift */,
 				1FAA70F61BBB8DBE00BCE5AF /* AggregatableAnnotationView.swift */,
 				290144161ADF6D890048F3D8 /* MapViewController.swift */,
 				D09528171E8BBB51002CF5A2 /* MapViewController+UITableView.swift */,
@@ -603,6 +613,7 @@
 			isa = PBXGroup;
 			children = (
 				D09131961E8CE1FE00E1CE39 /* GroupRecommendCollectionViewCell.swift */,
+				1FDE84EF1E972F5A00D2E0D9 /* ProjectAnnotation.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -660,6 +671,7 @@
 				D0244C521C1FC65100EA87C1 /* SignupRouter.swift */,
 				D06DC6311C240691009B19D1 /* UserRouter.swift */,
 				D0F5B1531E91D86B0024F29B /* CompanyRoute.swift */,
+				1FDE84F31E976CFF00D2E0D9 /* ProjectRouter.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -827,6 +839,7 @@
 				D097AEA01E553D1300615728 /* UIImage.swift in Sources */,
 				D0A7C89C1E1CD1C00046E571 /* CommentEntity.swift in Sources */,
 				D0A7C8931E1CD03D0046E571 /* SignupRouter.swift in Sources */,
+				1FDE84F01E972F5A00D2E0D9 /* ProjectAnnotation.swift in Sources */,
 				296040401ACE46E000D2A338 /* Constants.swift in Sources */,
 				D097AEA21E553D1300615728 /* WechatKit+RxSwift.swift in Sources */,
 				1F7AEE501E5EB9E0009F3806 /* ChatTableViewImageCell.swift in Sources */,
@@ -848,6 +861,7 @@
 				D0A7C8991E1CD0BA0046E571 /* MessageEntity.swift in Sources */,
 				D0E9B2831E24D14700101277 /* ImagePostTableViewCell.swift in Sources */,
 				D007D8901E25F9700005DC21 /* MapViewController.swift in Sources */,
+				1FDE84F41E976CFF00D2E0D9 /* ProjectRouter.swift in Sources */,
 				D0A7C89D1E1CD1CC0046E571 /* PostEntity.swift in Sources */,
 				D0DB07D91B9D224900C06C4E /* NotificationView.swift in Sources */,
 				D0A7C88A1E1CD03D0046E571 /* ContactRouter.swift in Sources */,
@@ -867,6 +881,7 @@
 				D0A7C89A1E1CD1AD0046E571 /* NotificationEntity.swift in Sources */,
 				D007D8871E25E7E00005DC21 /* StationDiscoverViewController.swift in Sources */,
 				D0A578061E1D02B100F8A8BC /* SocketController.swift in Sources */,
+				1FDE84F21E9731A300D2E0D9 /* ProjectEntity.swift in Sources */,
 				D0A7C8971E1CD0500046E571 /* UserEntity.swift in Sources */,
 				D097AE9E1E553D1300615728 /* RxSwift.swift in Sources */,
 				D007D8921E25FB500005DC21 /* DatePickerViewController.swift in Sources */,
@@ -915,6 +930,7 @@
 				D007D8951E25FBD60005DC21 /* MyAccountEditViewController.swift in Sources */,
 				D0A7C88D1E1CD03D0046E571 /* InvitationRouter.swift in Sources */,
 				D091C8C51E8E07D900C05B75 /* CompanyEntity.swift in Sources */,
+				1FDE84F61E97A57700D2E0D9 /* MKMapView+AggregatebleAnnotations.swift in Sources */,
 				D0349BB81E81021200D6877F /* IBInspectable.swift in Sources */,
 				D007D8811E25C8A40005DC21 /* GroupDescriptionViewController.swift in Sources */,
 				1F7AEE4E1E5EB9C8009F3806 /* ChatTableViewTextCell.swift in Sources */,

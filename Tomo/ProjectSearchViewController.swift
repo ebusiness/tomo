@@ -21,6 +21,12 @@ final class ProjectSearchViewController: UIViewController {
     fileprivate var searchHereButtonDisappearTimer: Timer?
     fileprivate var userDragToShowSearhButton = false
 
+    let annotationViewIdentifier = "annotationViewIdentifier"
+
+    var annotationHolder = [String: ProjectAnnotation]()
+    var lastQueryAnnotations: [ProjectAnnotation]?
+    var mapSpanOld: Double?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -98,16 +104,16 @@ extension ProjectSearchViewController {
 
         let visibleMapRect = mapView.visibleMapRect
 
-        let neMapPoint = MKMapPointMake(MKMapRectGetMaxX(visibleMapRect), visibleMapRect.origin.y)
-        let swMapPoint = MKMapPointMake(visibleMapRect.origin.x, MKMapRectGetMaxY(visibleMapRect))
-        let neCoord = MKCoordinateForMapPoint(neMapPoint)
-        let swCoord = MKCoordinateForMapPoint(swMapPoint)
+        let nwMapPoint = MKMapPointMake(MKMapRectGetMinX(visibleMapRect), MKMapRectGetMaxY(visibleMapRect))
+        let seMapPoint = MKMapPointMake(MKMapRectGetMaxX(visibleMapRect), MKMapRectGetMinY(visibleMapRect))
+        let nwCoord = MKCoordinateForMapPoint(nwMapPoint)
+        let seCoord = MKCoordinateForMapPoint(seMapPoint)
 
-        var parameters = Router.Group.FindParameters(category: .all)
-        parameters.type = .station
-        parameters.box = [neCoord.latitude, neCoord.longitude, swCoord.latitude, swCoord.longitude]
+        var parameters = Router.Project.FindParameters()
+        parameters.box = [nwCoord.latitude, nwCoord.longitude, seCoord.latitude, seCoord.longitude]
 
-        Router.Group.find(parameters: parameters).response { dataResponse in
+        Router.Project.find(parameters: parameters).response { dataResponse in
+
             if dataResponse.result.isFailure {
                 // 404: No result
                 if dataResponse.response?.statusCode == TomoConst.NetResponseCode.NoData {
@@ -123,7 +129,19 @@ extension ProjectSearchViewController {
                 }
                 return
             } else {
-                print("data found")
+                // Data Exist
+                guard let projects: [ProjectEntity] = ProjectEntity.collection(dataResponse.result.value!)
+                    else { return }
+
+                self.lastQueryAnnotations = projects.map { project -> ProjectAnnotation in
+                    if let annotation = self.annotationHolder[project.id] {
+                        return annotation
+                    } else {
+                        return ProjectAnnotation(project: project)
+                    }
+                }
+                self.holdAnnotations(self.lastQueryAnnotations!)
+                self.mapView.updateVisibleAnnotations(candidateAnnotations: self.lastQueryAnnotations!)
             }
         }
 
@@ -201,17 +219,53 @@ extension ProjectSearchViewController: UITextFieldDelegate {
 extension ProjectSearchViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         if searchHereButton.isHidden && userDragToShowSearhButton {
-            searchHereButtonDisappearTimer = Timer.scheduledTimer(timeInterval: TomoConst.Duration.Long,
+            searchHereButtonDisappearTimer = Timer.scheduledTimer(timeInterval: TomoConst.Duration.Medium,
                                                                   target: self,
                                                                   selector: #selector(searchHereButtonFadein),
                                                                   userInfo: nil,
                                                                   repeats: false)
+        }
+
+        if let mapSpanOld = mapSpanOld, let lastQueryAnnotations = lastQueryAnnotations {
+            let mapSpanNew = mapView.visibleMapRect.size.width
+            let diff = Swift.abs(mapSpanOld - mapSpanNew)
+            if diff > 1e-5 {
+                mapView.updateVisibleAnnotations(candidateAnnotations: lastQueryAnnotations)
+            }
+        }
+
+        if mapSpanOld == nil {
+            mapSpanOld = mapView.visibleMapRect.size.width
         }
     }
 
     func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
         searchHereButtonDisappearTimer?.invalidate()
         searchHereButtonDisappearTimer = nil
+    }
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+
+        return nil
+//        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationViewIdentifier)
+//
+//        if let annotationView = annotationView as? AggregatableAnnotationView {
+//            annotationView.annotation = annotation
+//            annotationView.setupDisplay()
+//        } else {
+//            annotationView = AggregatableAnnotationView(annotation: annotation,
+//                                                        reuseIdentifier: annotationViewIdentifier)
+//        }
+//
+//        return annotationView
+    }
+
+    func holdAnnotations(_ annotations: [ProjectAnnotation]) {
+        annotations.forEach { annotation in
+            if !self.annotationHolder.keys.contains(annotation.project.id) {
+                self.annotationHolder[annotation.project.id] = annotation
+            }
+        }
     }
 }
 
