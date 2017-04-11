@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		17B993011AF353D000204E97 /* amrFileCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B993001AF353D000204E97 /* amrFileCodec.m */; };
 		17B993081AF3540D00204E97 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17B993071AF3540D00204E97 /* libopencore-amrnb.a */; };
+		1F0009D41E9C7CB5008912FC /* PointAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0009D31E9C7CB5008912FC /* PointAnnotationView.swift */; };
+		1F11ED9D1E9B8852007BC836 /* ClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F11ED9C1E9B8852007BC836 /* ClusterAnnotationView.swift */; };
 		1F123E9E1E517E7100466750 /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9B9621C5A3BD0008BB6ED /* GroupViewController.swift */; };
 		1F4EE3611E948F4800A56C1B /* ProjectSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4EE3601E948F4800A56C1B /* ProjectSearchViewController.swift */; };
 		1F4EE36C1E949BBC00A56C1B /* ProjectSearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F4EE36B1E949BBC00A56C1B /* ProjectSearch.storyboard */; };
@@ -141,7 +143,9 @@
 		17B993041AF353F600204E97 /* interf_dec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interf_dec.h; path = "opencore-amr/include/opencore-amrnb/interf_dec.h"; sourceTree = "<group>"; };
 		17B993051AF353F600204E97 /* interf_enc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = interf_enc.h; path = "opencore-amr/include/opencore-amrnb/interf_enc.h"; sourceTree = "<group>"; };
 		17B993071AF3540D00204E97 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libopencore-amrnb.a"; path = "opencore-amr/lib/libopencore-amrnb.a"; sourceTree = "<group>"; };
+		1F0009D31E9C7CB5008912FC /* PointAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointAnnotationView.swift; sourceTree = "<group>"; };
 		1F07C34E1C5F7C8200CD9212 /* LatestMessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LatestMessagesViewController.swift; path = Classes/LatestMessagesViewController.swift; sourceTree = "<group>"; };
+		1F11ED9C1E9B8852007BC836 /* ClusterAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClusterAnnotationView.swift; sourceTree = "<group>"; };
 		1F18B8331B844665003BD469 /* CreatePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreatePostViewController.swift; path = Classes/CreatePostViewController.swift; sourceTree = "<group>"; };
 		1F1EBEB31C4F6C3300B3439F /* TextPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextPostTableViewCell.swift; path = Classes/TextPostTableViewCell.swift; sourceTree = "<group>"; };
 		1F1EBEB51C4F6C8A00B3439F /* ImagePostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagePostTableViewCell.swift; path = Classes/ImagePostTableViewCell.swift; sourceTree = "<group>"; };
@@ -450,6 +454,8 @@
 				1FAA70F61BBB8DBE00BCE5AF /* AggregatableAnnotationView.swift */,
 				290144161ADF6D890048F3D8 /* MapViewController.swift */,
 				D09528171E8BBB51002CF5A2 /* MapViewController+UITableView.swift */,
+				1F11ED9C1E9B8852007BC836 /* ClusterAnnotationView.swift */,
+				1F0009D31E9C7CB5008912FC /* PointAnnotationView.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -891,12 +897,14 @@
 				D0E9B2801E24D0E200101277 /* PostDetailViewController.swift in Sources */,
 				D007D8821E25DD780005DC21 /* LatestMessagesViewController.swift in Sources */,
 				D0F5B1541E91D86B0024F29B /* CompanyRoute.swift in Sources */,
+				1F0009D41E9C7CB5008912FC /* PointAnnotationView.swift in Sources */,
 				D0E9B2B41E24ED2E00101277 /* AmazonS3SignatureHelpers.m in Sources */,
 				D097AE9D1E553D1300615728 /* Array.swift in Sources */,
 				D0E9B2861E24DA0000101277 /* ProfileViewController.swift in Sources */,
 				D007D88D1E25F8BC0005DC21 /* CompanyAnnotation.swift in Sources */,
 				D0F6E2BD1E24CDC2000B0EC3 /* HomeViewController.swift in Sources */,
 				29BE7E121AC54224008110B4 /* Util.swift in Sources */,
+				1F11ED9D1E9B8852007BC836 /* ClusterAnnotationView.swift in Sources */,
 				D0E9B28B1E24E6C700101277 /* VoiceController.swift in Sources */,
 				D0A7C8BD1E1CDFC50046E571 /* LocationController.swift in Sources */,
 				D007D89B1E25FBD60005DC21 /* PushSettingViewController.swift in Sources */,

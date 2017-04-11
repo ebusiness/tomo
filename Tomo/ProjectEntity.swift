@@ -17,6 +17,8 @@ class ProjectEntity: Entity {
 
     var coordinate: [Double]?
 
+    var members = [Any]()
+
     required init(_ json: JSON) {
 
         id = json["id"].stringValue

@@ -81,6 +81,9 @@ extension MKMapView {
                 pointAnnotation.containedAnnotations = containedAnnotations
 
                 addAnnotation(pointAnnotation)
+                // Call this to refresh annotation layout
+                reloadAnnotationIfNeeded(pointAnnotation)
+
                 animateForExpand(annotation: pointAnnotation)
 
                 for annotation in containedAnnotations {
@@ -92,6 +95,33 @@ extension MKMapView {
         }
 
         removeOutsideAnnotations()
+    }
+
+    fileprivate func reloadAnnotationIfNeeded(_ newAnnotation: AggregatableAnnotation) {
+        let isContained = annotations.contains { $0.isEqual(newAnnotation) }
+        if isContained {
+            let _v = view(for: newAnnotation)
+            // ⚠️ Need a customize here
+            if let v = _v as? ClusterAnnotationView {
+                if newAnnotation.containedAnnotations.isEmpty {
+                    // Type changed, need to reload
+                    removeAnnotation(newAnnotation)
+                    addAnnotation(newAnnotation)
+                } else {
+                    // Type did not change
+                    v.rerender()
+                }
+            } else if let v = _v as? PointAnnotationView {
+                if newAnnotation.containedAnnotations.isEmpty {
+                    // Type did not change
+                    v.rerender()
+                } else {
+                    // Type changed, need to reload
+                    removeAnnotation(newAnnotation)
+                    addAnnotation(newAnnotation)
+                }
+            }
+        }
     }
 
     fileprivate func animateForExpand(annotation: AggregatableAnnotation) {

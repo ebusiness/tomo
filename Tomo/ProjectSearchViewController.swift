@@ -21,7 +21,8 @@ final class ProjectSearchViewController: UIViewController {
     fileprivate var searchHereButtonDisappearTimer: Timer?
     fileprivate var userDragToShowSearhButton = false
 
-    let annotationViewIdentifier = "annotationViewIdentifier"
+    let clusterAnnotationIdentifier = "clusterAnnotationIdentifier"
+    let pointAnnotationIdentifier = "pointAnnotationIdentifier"
 
     var annotationHolder = [String: ProjectAnnotation]()
     var lastQueryAnnotations: [ProjectAnnotation]?
@@ -111,6 +112,7 @@ extension ProjectSearchViewController {
 
         var parameters = Router.Project.FindParameters()
         parameters.box = [nwCoord.latitude, nwCoord.longitude, seCoord.latitude, seCoord.longitude]
+        parameters.size = Int(1e6)
 
         Router.Project.find(parameters: parameters).response { dataResponse in
 
@@ -246,18 +248,36 @@ extension ProjectSearchViewController: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 
-        return nil
-//        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationViewIdentifier)
-//
-//        if let annotationView = annotationView as? AggregatableAnnotationView {
-//            annotationView.annotation = annotation
-//            annotationView.setupDisplay()
-//        } else {
-//            annotationView = AggregatableAnnotationView(annotation: annotation,
-//                                                        reuseIdentifier: annotationViewIdentifier)
-//        }
-//
-//        return annotationView
+        if let annotation = annotation as? ProjectAnnotation {
+            if annotation.containedAnnotations.isEmpty {
+                // single point type
+                var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: pointAnnotationIdentifier)
+                    as? PointAnnotationView
+                if let uwAnnotationView = annotationView {
+                    uwAnnotationView.annotation = annotation
+                    uwAnnotationView.rerender()
+                } else {
+                    annotationView = PointAnnotationView(annotation: annotation,
+                                                           reuseIdentifier: pointAnnotationIdentifier)
+                }
+                return annotationView
+            } else {
+                // cluster type
+                var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: clusterAnnotationIdentifier)
+                    as? ClusterAnnotationView
+                if let uwAnnotationView = annotationView {
+                    uwAnnotationView.annotation = annotation
+                    uwAnnotationView.rerender()
+                } else {
+                    annotationView = ClusterAnnotationView(annotation: annotation,
+                                                           reuseIdentifier: clusterAnnotationIdentifier)
+                }
+                return annotationView
+            }
+        } else {
+            // system default type
+            return nil
+        }
     }
 
     func holdAnnotations(_ annotations: [ProjectAnnotation]) {

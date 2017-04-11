@@ -40,6 +40,7 @@ extension Router {
 extension Router.Project {
     struct FindParameters {
         var box: [Double]?
+        var size: Int?
 
         init() {
         }
@@ -48,6 +49,7 @@ extension Router.Project {
             var parameters = [String: Any]()
 
             parameters["box"] = box
+            parameters["size"] = size
 
             return parameters
         }
