@@ -101,6 +101,7 @@ extension MKMapView {
         let isContained = annotations.contains { $0.isEqual(newAnnotation) }
         if isContained {
             let _v = view(for: newAnnotation)
+
             // ⚠️ Need a customize here
             if let v = _v as? ClusterAnnotationView {
                 if newAnnotation.containedAnnotations.isEmpty {

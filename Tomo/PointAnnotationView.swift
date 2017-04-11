@@ -10,15 +10,28 @@ import Foundation
 
 class PointAnnotationView: MKAnnotationView {
     private var icon: UIImageView
+    private var strokeLabel: UILabel
+    private var fillLabel: UILabel
+
+    private let strokeAttribute: [String: Any] = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14.0),
+                                                  NSForegroundColorAttributeName: #colorLiteral(red: 0.3647058824, green: 0.2509803922, blue: 0.2156862745, alpha: 1),
+                                                  NSStrokeWidthAttributeName: 8.0,
+                                                  NSStrokeColorAttributeName: UIColor.white]
+    private let fillAttribute: [String: Any] = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14.0),
+                                                NSForegroundColorAttributeName: #colorLiteral(red: 0.3647058824, green: 0.2509803922, blue: 0.2156862745, alpha: 1)]
 
     required init?(coder aDecoder: NSCoder) {
         icon = aDecoder.decodeObject(of: UIImageView.self, forKey: "icon")!
+        fillLabel = aDecoder.decodeObject(of: UILabel.self, forKey: "fillLabel")!
+        strokeLabel = aDecoder.decodeObject(of: UILabel.self, forKey: "strokeLabel")!
         super.init(coder: aDecoder)
     }
 
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
 
         icon = UIImageView()
+        fillLabel = UILabel()
+        strokeLabel = UILabel()
 
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
 
@@ -26,6 +39,31 @@ class PointAnnotationView: MKAnnotationView {
 
         frame = CGRect(x: 0, y: 0, width: 60, height: 60)
         addSubview(icon)
+
+        // Add icon's autolayout constraints
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        icon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+
+        addSubview(strokeLabel)
+        addSubview(fillLabel)
+        fillLabel.numberOfLines = 0
+        strokeLabel.numberOfLines = 0
+        fillLabel.adjustsFontSizeToFitWidth = true
+        strokeLabel.adjustsFontSizeToFitWidth = true
+
+        // Add label's autolayout constraints
+        fillLabel.translatesAutoresizingMaskIntoConstraints = false
+        fillLabel.leftAnchor.constraint(equalTo: icon.rightAnchor, constant: 4.0).isActive = true
+        fillLabel.centerYAnchor.constraint(equalTo: icon.centerYAnchor).isActive = true
+        fillLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 120).isActive = true
+        fillLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 60).isActive = true
+
+        strokeLabel.translatesAutoresizingMaskIntoConstraints = false
+        strokeLabel.leftAnchor.constraint(equalTo: icon.rightAnchor, constant: 4.0).isActive = true
+        strokeLabel.centerYAnchor.constraint(equalTo: icon.centerYAnchor).isActive = true
+        strokeLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 120).isActive = true
+        strokeLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 60).isActive = true
 
         rerender()
     }
@@ -36,6 +74,13 @@ class PointAnnotationView: MKAnnotationView {
         guard let annotation = annotation as? ProjectAnnotation else {
             return
         }
+
+        let strokeString = NSAttributedString(string: annotation.project.name,
+                                              attributes: strokeAttribute)
+        let fillString = NSAttributedString(string: annotation.project.name,
+                                            attributes: fillAttribute)
+        strokeLabel.attributedText = strokeString
+        fillLabel.attributedText = fillString
         switch annotation.project.members.count {
         case 0, 1:
             icon.image = #imageLiteral(resourceName: "businessCenter300")
@@ -52,6 +97,5 @@ class PointAnnotationView: MKAnnotationView {
         default:
             icon.image = #imageLiteral(resourceName: "businessCenter900")
         }
-        icon.sizeToFit()
     }
 }
