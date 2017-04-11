@@ -132,37 +132,17 @@ extension RegViewController {
     }
 
     @IBAction func login_wechat(_ sender: Any) {
-        WechatManager.shared.rxCheckAuth()
-            .subscribe(onNext: { _ in
-                self.signWithOpenid()
-            }, onError: { _ in
+        WechatManager.shared.checkAuth { response in
+            guard response.isSuccess else {
                 self.failure()
-            })
+                return
+            }
+            self.signWithOpenid()
+        }
     }
 
     private func signWithOpenid() {
         Router.Signin.weChat(openid: WechatManager.shared.openid, access_token: WechatManager.shared.accessToken)
-            .response { res in
-                if res.result.isSuccess {
-                    self.success(res: res.result.value!)
-                } else {
-                    self.getWeChatInfo()
-                }
-            }
-    }
-
-    private func getWeChatInfo() {
-        WechatManager.shared.rxGetUserInfo()
-            .subscribe(onNext: { userInfo in
-                self.registByWechatInfo(userInfo: userInfo)
-            })
-    }
-
-    private func registByWechatInfo(userInfo: [String: Any]) {
-        Router.Signup.weChat(openid: WechatManager.shared.openid,
-                             nickname: userInfo["nickname"] as? String ?? "",
-                             gender: userInfo["sex"] as? String,
-                             headimgurl: userInfo["headimgurl"] as? String)
             .response { res in
                 if res.result.isSuccess {
                     self.success(res: res.result.value!)
