@@ -9,7 +9,6 @@
 import Foundation
 
 extension MKMapView {
-    // swiftlint:disable:next function_body_length
     func updateVisibleAnnotations(candidateAnnotations: [AggregatableAnnotation]) {
 
         // This value to controls the number of off screen annotations are displayed.
@@ -34,28 +33,10 @@ extension MKMapView {
         let leftCoordinate = convert(CGPoint.zero, toCoordinateFrom: self)
         let rightCoordinate = convert(CGPoint(x: CGFloat(bucketSize), y: CGFloat(0.0)), toCoordinateFrom: self)
 
-        // determine how wide each bucket will be, as a MKMapRect square
-        let gridSize = MKMapPointForCoordinate(rightCoordinate).x - MKMapPointForCoordinate(leftCoordinate).x
-        var gridMapRect = MKMapRectMake(0, 0, gridSize, gridSize)
-
-        // condense annotations, with a padding of two squares, around the visibleMapRect
-        let startX = floor(MKMapRectGetMinX(adjustedVisibleMapRect) / gridSize) * gridSize
-        let startY = floor(MKMapRectGetMinY(adjustedVisibleMapRect) / gridSize) * gridSize
-        let endX = floor(MKMapRectGetMaxX(adjustedVisibleMapRect) / gridSize) * gridSize
-        let endY = floor(MKMapRectGetMaxY(adjustedVisibleMapRect) / gridSize) * gridSize
-
         // create all squares
-        var squares = [AnnotationSquare]()
-        gridMapRect.origin.y = startY
-        while MKMapRectGetMinY(gridMapRect) <= endY {
-
-            gridMapRect.origin.x = startX
-            while MKMapRectGetMinX(gridMapRect) <= endX {
-                squares.append(AnnotationSquare(gridMapRect))
-                gridMapRect.origin.x += gridSize
-            }
-            gridMapRect.origin.y += gridSize
-        }
+        var squares = createSquares(leftCoordinate: leftCoordinate,
+                                    rightCoordinate: rightCoordinate,
+                                    adjustedVisibleMapRect: adjustedVisibleMapRect)
 
         // put annotation into the proper square
         for annotation in candidateAnnotations {
@@ -95,6 +76,49 @@ extension MKMapView {
         }
 
         removeOutsideAnnotations()
+    }
+
+    fileprivate func createSquares(leftCoordinate: CLLocationCoordinate2D,
+                                   rightCoordinate: CLLocationCoordinate2D,
+                                   adjustedVisibleMapRect: MKMapRect) -> [AnnotationSquare] {
+        var squares = [AnnotationSquare]()
+
+        // determine how wide each bucket will be, as a MKMapRect square
+        let mapPointDistance = MKMapPointForCoordinate(rightCoordinate).x - MKMapPointForCoordinate(leftCoordinate).x
+
+        // distance may less than 0 when meet situation below
+        // |LeftPoint|<-->|Longitude 180°|<-->|RightPoint|
+        // make sure girdSize is correctly calculated
+        let gridSize = rightCoordinate.longitude > leftCoordinate.longitude ?
+            mapPointDistance : MKMapSizeWorld.width + mapPointDistance
+
+        // condense annotations, with a padding of two squares, around the visibleMapRect
+        let startX = floor(MKMapRectGetMinX(adjustedVisibleMapRect) / gridSize) * gridSize
+        let startY = floor(MKMapRectGetMinY(adjustedVisibleMapRect) / gridSize) * gridSize
+        var endX = floor(MKMapRectGetMaxX(adjustedVisibleMapRect) / gridSize) * gridSize
+        let endY = floor(MKMapRectGetMaxY(adjustedVisibleMapRect) / gridSize) * gridSize
+
+        // make sure endX is greater than startX
+        endX = endX > startX ? endX : endX + MKMapSizeWorld.width
+
+        // generate squares
+        var gridIterator = MKMapRectMake(0, 0, gridSize, gridSize)
+        gridIterator.origin.y = startY
+        while MKMapRectGetMinY(gridIterator) <= endY {
+
+            gridIterator.origin.x = startX
+            while MKMapRectGetMinX(gridIterator) <= endX {
+                let iteratorX = gridIterator.origin.x
+                let gridX = iteratorX <= MKMapSizeWorld.width ? iteratorX : iteratorX - MKMapSizeWorld.width
+                let gridRect = MKMapRect(origin: MKMapPointMake(gridX, gridIterator.origin.y),
+                                         size: gridIterator.size)
+                squares.append(AnnotationSquare(gridRect))
+                gridIterator.origin.x += gridSize
+            }
+            gridIterator.origin.y += gridSize
+        }
+
+        return squares
     }
 
     fileprivate func reloadAnnotationIfNeeded(_ newAnnotation: AggregatableAnnotation) {
