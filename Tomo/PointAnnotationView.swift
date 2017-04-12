@@ -15,7 +15,7 @@ class PointAnnotationView: MKAnnotationView {
 
     private let strokeAttribute: [String: Any] = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14.0),
                                                   NSForegroundColorAttributeName: #colorLiteral(red: 0.3647058824, green: 0.2509803922, blue: 0.2156862745, alpha: 1),
-                                                  NSStrokeWidthAttributeName: 8.0,
+                                                  NSStrokeWidthAttributeName: 12.0,
                                                   NSStrokeColorAttributeName: UIColor.white]
     private let fillAttribute: [String: Any] = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14.0),
                                                 NSForegroundColorAttributeName: #colorLiteral(red: 0.3647058824, green: 0.2509803922, blue: 0.2156862745, alpha: 1)]
